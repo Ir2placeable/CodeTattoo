@@ -1,8 +1,8 @@
-# CodeTattoo
-타투 웹 사이트 프로젝트
+# 코드타투 : CodeTattoo
+### 👀 웹 사이트에서 타투를 검색하세요
+### ✍🏻 타투 시술을 받으세요
+### 🔒 모든 기록은 블록체인에 저장됩니다
 
-## 사용 기술
-HyperLedger
-React for web
-Node.js
+</br>
+
 
