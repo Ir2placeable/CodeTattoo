@@ -75,3 +75,12 @@ exports.tattooistEnroll = async function(body, res) {
         })
 
 }
+
+
+// 관리자용 함수
+exports.users = function(body, res) {
+    User.find().then(result => { res.send(result) })
+}
+exports.tattooists = function(body, res) {
+    Tattooist.find().then(result => {res.send(result) })
+}
