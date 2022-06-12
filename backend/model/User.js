@@ -14,6 +14,9 @@ const userSchema = mongoose.Schema({
     },
     location : {
         type : String
+    },
+    isTattooist : {
+        type : Boolean
     }
 })
 
