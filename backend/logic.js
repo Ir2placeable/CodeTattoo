@@ -14,7 +14,6 @@ mongoose.connect(config.mongoURI)
 exports.entry = function(res) {
     res.send({ success : true, message : 'entry hello world' })
 }
-
 exports.register = async function(body, res) {
     const user = await User.findOne({ email : body.email })
     if (user) {
@@ -30,7 +29,6 @@ exports.register = async function(body, res) {
             res.send({ success : true })
         })
 }
-
 exports.login = async function(body, res) {
     const user = await User.findOne({ email : body.email })
     if(!user) {
@@ -56,7 +54,6 @@ exports.login = async function(body, res) {
         res.send({ success : true, user_info : user_info })
     })
 }
-
 exports.tattooistEnroll = async function(body, res) {
     const user = await User.findOne({ _id : body.user_id })
     if(!user) {
@@ -81,7 +78,6 @@ exports.tattooistEnroll = async function(body, res) {
         })
 
 }
-
 exports.newDraft = async function(body, res) {
     const tattooist = await Tattooist.findOne({ _id : body.tattooist_id })
     if(!tattooist) {
@@ -90,25 +86,24 @@ exports.newDraft = async function(body, res) {
         return
     }
 
-    // body.image.data는 Base64 이므로 이를 이미지 DB에 저장하고 접근 url를 만들어야 한다.
-    // return 값은 url이 되어야 한다.
-    // body.image.data = url 로 변경한다.
+    body.image.data = await imageStorage.upload(body)
 
     const new_draft = new Draft(body);
     new_draft.save()
         .then(() => {
-            Tattooist.updateOne({ _id : body.tattooist}, {$push : { drafts : new_draft }})
+            Tattooist.updateOne({ _id : body.drawer}, {$push : { drafts : new_draft }})
         })
         .then(() => {
             console.log('새로운 도안 등록')
             res.send({ success : true })
         })
 }
-
 exports.browseDraft = async function(body, res) {
-
+    Draft.find()
+        .then((drafts) => {
+            res.send({ success : true, drafts : drafts })
+        })
 }
-
 exports.likeDraft = async function(body, res) {
 
 }
@@ -120,7 +115,4 @@ exports.users = function(body, res) {
 }
 exports.tattooists = function(body, res) {
     Tattooist.find().then(result => {res.send(result) })
-}
-exports.image_test = async function(body, res) {
-    await imageStorage.imageUpload(body).then(() => { res.send('done') })
 }

@@ -22,10 +22,12 @@ const tattooistSchema = mongoose.Schema({
     office : {
         type : office
     },
+    // 실제 수행한 작업물
     artworks : {
         type : [String]
     },
-    draft : {
+    // 등록한 도안
+    drafts : {
         type : [String]
     },
     medallion : {

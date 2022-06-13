@@ -17,7 +17,8 @@ const userSchema = mongoose.Schema({
     },
     isTattooist : {
         type : String
-    }
+    },
+    
 })
 
 userSchema.pre('save', function (next) {
