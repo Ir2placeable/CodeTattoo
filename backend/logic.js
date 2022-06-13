@@ -3,7 +3,8 @@ const {Tattooist} = require("./model/Tattooist")
 const {Draft} = require('./model/Draft')
 
 const mongoose = require("mongoose");
-const db_config = require('./config/url')
+//const db_config = require('./config/url')
+const db_config = 'mongodb+srv://kaplan:dkxh97zld99!@tattoproj.a1e7fyy.mongodb.net/?retryWrites=true&w=majority'
 
 mongoose.connect(db_config)
     .then(() => { console.log('db connected')} )
@@ -45,11 +46,12 @@ exports.login = async function(body, res) {
         }
 
         const user_info = {
-            user_id : isMatch._id,
-            name : isMatch.name,
-            location : isMatch.location,
-            isTattooist : isMatch.isTattooist
+            user_id : String(user._id),
+            name : user.name,
+            location : user.location,
+            isTattooist : user.isTattooist
         }
+        console.log(user_info)
         res.send({ success : true, user_info : user_info })
     })
 }

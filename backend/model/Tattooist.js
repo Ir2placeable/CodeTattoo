@@ -8,7 +8,7 @@ const office = mongoose.Schema({
         type : String
     },
     contact : {
-        type : Number
+        type : String
     }
 })
 
