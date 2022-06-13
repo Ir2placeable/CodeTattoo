@@ -52,7 +52,7 @@ server.post('/tattooists', (req, res) => {
 })
 server.post('/image_test', (req, res) => {
     routing_to.image_test(req.body, res)
-        // .catch(() => { console.log('error')})
+        .catch(() => { console.log('imageSave function error')})
 })
 
 server.listen(port, () => {
