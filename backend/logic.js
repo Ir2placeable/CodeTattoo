@@ -61,7 +61,7 @@ exports.tattooistEnroll = async function(body, res) {
         res.send({ success : false, message : 'no user' })
         return
     }
-    if(user['isTattooist'] === true) {
+    if(user['isTattooist']) {
         console.log('tattooistEnroll fail, already enrolled')
         res.send({ success : false, message : 'already enrolled' })
         return
@@ -80,6 +80,33 @@ exports.tattooistEnroll = async function(body, res) {
 }
 
 exports.newDraft = async function(body, res) {
+    const tattooist = await Tattooist.findOne({ _id : body.tattooist_id })
+    if(!tattooist) {
+        console.log('newDraft fail, no tattooist')
+        res.send({ success : false, message : 'no tattooist'})
+        return
+    }
+
+    // body.image.data는 Base64 이므로 이를 이미지 DB에 저장하고 접근 url를 만들어야 한다.
+    // return 값은 url이 되어야 한다.
+    // body.image.data = url 로 변경한다.
+
+    const new_draft = new Draft(body);
+    new_draft.save()
+        .then(() => {
+            Tattooist.updateOne({ _id : body.tattooist}, {$push : { drafts : new_draft }})
+        })
+        .then(() => {
+            console.log('새로운 도안 등록')
+            res.send({ success : true })
+        })
+}
+
+exports.browseDraft = async function(body, res) {
+
+}
+
+exports.likeDraft = async function(body, res) {
 
 }
 

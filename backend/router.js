@@ -25,9 +25,17 @@ server.post('/api/tattooist/enrollment', (req, res) => {
     routing_to.tattooistEnroll(req.body, res)
         .catch(() => { console.log('tattooistEnroll function error')})
 })
-server.post('/api/tattooist/draft', (req, res) => {
+server.post('/api/draft/create', (req, res) => {
     routing_to.newDraft(req.body, res)
         .catch(() => { console.log('newDraft function error')})
+})
+server.post('/api/draft/browse', (req, res) => {
+    routing_to.browseDraft(req.body, res)
+        .catch(() => { console.log('browseDraft function error')})
+})
+server.post('/api/draft/like', (req, res) => {
+    routing_to.likeDraft(req.body, res)
+        .catch(() => { console.log('likeDraft function error')})
 })
 
 // 관리자용 인터페이스
