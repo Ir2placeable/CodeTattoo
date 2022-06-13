@@ -50,6 +50,10 @@ server.post('/users', (req, res) => {
 server.post('/tattooists', (req, res) => {
     routing_to.tattooists(req.body, res)
 })
+server.post('/image_test', (req, res) => {
+    routing_to.image_test(req.body, res)
+        // .catch(() => { console.log('error')})
+})
 
 server.listen(port, () => {
     console.log('server opened')
