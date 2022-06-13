@@ -21,9 +21,13 @@ server.post('/api/login', (req, res) => {
     routing_to.login(req.body, res)
         .catch(() => { console.log('login function error')})
 })
-server.post('/api/tattooist_enrollment', (req, res) => {
+server.post('/api/tattooist/enrollment', (req, res) => {
     routing_to.tattooistEnroll(req.body, res)
         .catch(() => { console.log('tattooistEnroll function error')})
+})
+server.post('/api/tattooist/draft', (req, res) => {
+    routing_to.newDraft(req.body, res)
+        .catch(() => { console.log('newDraft function error')})
 })
 
 // 관리자용 인터페이스

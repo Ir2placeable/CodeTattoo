@@ -1,5 +1,7 @@
 const {User} = require("./model/User.js")
 const {Tattooist} = require("./model/Tattooist")
+const {Draft} = require('./model/Draft')
+
 const mongoose = require("mongoose");
 const db_config = require('./config/url')
 
@@ -65,14 +67,19 @@ exports.tattooistEnroll = async function(body, res) {
         return
     }
 
-    User.updateOne({ _id : body.user_id }, { $set : { isTattooist : true }} )
-
     const new_tattooist = new Tattooist(body);
     new_tattooist.save()
+        .then(() => {
+            User.updateOne({ _id : body.user_id }, { $set : { isTattooist : new_tattooist._id }} )
+        })
         .then(() => {
             console.log(body.nickname, '타투이스트 등록')
             res.send({ success : true })
         })
+
+}
+
+exports.newDraft = async function(body, res) {
 
 }
 

@@ -22,7 +22,10 @@ const tattooistSchema = mongoose.Schema({
     office : {
         type : office
     },
-    artwork : {
+    artworks : {
+        type : [String]
+    },
+    draft : {
         type : [String]
     },
     medallion : {

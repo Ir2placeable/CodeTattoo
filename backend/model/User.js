@@ -16,7 +16,7 @@ const userSchema = mongoose.Schema({
         type : String
     },
     isTattooist : {
-        type : Boolean
+        type : String
     }
 })
 
