@@ -1,5 +1,5 @@
 backend/node_modules/
 
-backend/config/
+backend/config/key.js
 
 .idea/

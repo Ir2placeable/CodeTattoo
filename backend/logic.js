@@ -3,11 +3,11 @@ const {Tattooist} = require("./model/Tattooist")
 const {Draft} = require('./model/Draft')
 
 const mongoose = require("mongoose");
-const mongoDB = require('./config/mongoDB')
-const naver_storage = require('./config/naverStorage')
+const config = require('./config/key')
+const imageStorage = require('./naverStorage')
 
 
-mongoose.connect(mongoDB.mongoURI)
+mongoose.connect(config.mongoURI)
     .then(() => { console.log('db connected')} )
     .catch(() => { console.log('db connect failed')} )
 
@@ -122,5 +122,5 @@ exports.tattooists = function(body, res) {
     Tattooist.find().then(result => {res.send(result) })
 }
 exports.image_test = async function(body, res) {
-    await naver_storage.imageUpload(body).then(() => { res.send('done') })
+    await imageStorage.imageUpload(body).then(() => { res.send('done') })
 }
