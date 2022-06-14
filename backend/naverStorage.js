@@ -27,4 +27,6 @@ exports.upload = async function(body) {
     })
 }
 
-exports.
+// S3.getObject : 오브젝트 하나 리턴
+// S3.getSingedUrl : 주소 리턴
+// S3.listObjects : 오브젝트 리스트 리턴

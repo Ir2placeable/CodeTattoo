@@ -29,7 +29,6 @@ server.post('/api/tattooist/enrollment', (req, res) => {
         .catch(() => { console.log('tattooistEnroll function error')})
 })
 server.post('/api/draft/create', (req, res) => {
-    console.log(req.body)
     routing_to.newDraft(req.body, res)
         .catch(() => { console.log('newDraft function error')})
 })
@@ -51,6 +50,9 @@ server.post('/users', (req, res) => {
 })
 server.post('/tattooists', (req, res) => {
     routing_to.tattooists(req.body, res)
+})
+server.post('/drafts', (req, res) => {
+    routing_to.drafts(req.body, res)
 })
 
 

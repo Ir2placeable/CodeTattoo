@@ -74,12 +74,12 @@ exports.tattooistEnroll = async function(body, res) {
         })
         .then(() => {
             console.log(body.nickname, '타투이스트 등록')
-            res.send({ success : true })
+            res.send({ success : true , tattooist_id : new_tattooist._id })
         })
 
 }
 exports.newDraft = async function(body, res) {
-    const tattooist = await Tattooist.findOne({ _id : body.tattooist_id })
+    const tattooist = await Tattooist.findOne({ _id : body.drawer })
     if(!tattooist) {
         console.log('newDraft fail, no tattooist')
         res.send({ success : false, message : 'no tattooist'})
@@ -89,14 +89,20 @@ exports.newDraft = async function(body, res) {
     body.image.data = await imageStorage.upload(body)
 
     const new_draft = new Draft(body);
-    new_draft.save()
-        .then(() => {
-            Tattooist.updateOne({ _id : body.drawer}, {$push : { drafts : new_draft }})
-        })
-        .then(() => {
-            console.log('새로운 도안 등록')
-            res.send({ success : true })
-        })
+
+    await new_draft.save();
+    await Tattooist.updateOne({ _id : body.drawer }, {$push : { drafts : new_draft._id }})
+
+    res.send({ success : true })
+    // await new_draft.save()
+    //
+    //     .then(() => {
+    //         Tattooist.updateOne({ _id : body.drawer }, { $push : { drafts : new_draft._id } })
+    //     })
+    //     .then(() => {
+    //         console.log('새로운 도안 등록')
+    //         res.send({ success : true })
+    //     })
 }
 exports.browseDraft = async function(body, res) {
     Draft.find()
@@ -105,7 +111,17 @@ exports.browseDraft = async function(body, res) {
         })
 }
 exports.likeDraft = async function(body, res) {
+    const user = await User.findOne({ _id : body.user_id })
+    if(!user) {
+        console.log('likeDraft fail, no user')
+        res.send({ success : false, message : 'no user' })
+        return
+    }
 
+    await User.updateOne({ _id : body.user_id}, {$push : { scraps : body.draft_id }})
+    await Draft.updateOne({ _id : body.draft_id}, {$inc : { like : 1 }})
+
+    res.send({ success : true })
 }
 
 
@@ -115,4 +131,7 @@ exports.users = function(body, res) {
 }
 exports.tattooists = function(body, res) {
     Tattooist.find().then(result => {res.send(result) })
+}
+exports.drafts = function(body, res) {
+    Draft.find().then(result => { res.send(result) })
 }
