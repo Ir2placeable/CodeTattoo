@@ -52,7 +52,7 @@ const App = () => {
             setCookie={setCookie} />} />
 
           {/* User */}
-          <Route path="/user/mypage" element={<MyPage />} />
+          <Route path="/tattooist/mypage" element={<MyPage />} />
 
           {/* Tattoist */}
           <Route path='/tattooist/img_load' element={<ImgLoad 
