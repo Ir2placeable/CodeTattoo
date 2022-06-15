@@ -9,13 +9,21 @@ import {
   DraftImgInfo,
   DraftTattooistDiv,
   DraftImgTitle, 
-  EmptyDraftBox
+  EmptyDraftBox,
 } from '../styledComponents';
+import UploadDraftBtn from './UploadDraftBtn';
+
 
 const ShowDraftList = ({ text, drafts }) => {
   return (
     <>
       <DraftMainDiv>
+
+        { text === "Tattooist drafts" ? (
+          <UploadDraftBtn />
+        ) : (
+          <div></div>
+        )}
 
         <CategoryTitle>
           {text}

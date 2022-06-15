@@ -275,7 +275,7 @@ export const DraftsBtn = styled.div`
 box-sizing: border-box;
 border: 3px solid black;
 position: absolute;
-top: 30px;
+top: 100px;
 right: 30px;
 color: white;
 background-color: #000;
@@ -355,6 +355,8 @@ display: flex;
 flex-direction: column;
 justify-content: stretch;
 align-items: center;
+
+position: relative;
 `;
 
 export const CategoryTitle = styled.div`
@@ -421,6 +423,144 @@ export const DraftImgTitle = styled.p`
 font-size: 18px;
 text-align: center;
 `
+
+
+// MY PAGE
+export const MyPageMainDiv = styled.div`
+margin: 0 auto;
+min-height: 725px;
+width: 1400px;
+
+display: flex;
+flex-direction: column;
+justify-content: stretch;
+align-items: center;
+`
+
+export const MyPageInfoDiv = styled.div`
+height: 150px;
+width: 100%;
+
+display: flex;
+justify-content: stretch;
+align-items: center;
+
+position: relative;
+`;
+
+export const UserImgDiv = styled.div`
+width: 100px;
+height: 100px;
+border: 3px solid black;
+border-radius: 50%;
+
+background-color: white;
+margin-left: 50px;
+
+text-align: center;
+`
+
+export const UserIcon = styled.i`
+font-size: 70px;
+line-height: 100px;
+`
+
+export const userIconStyle = {
+  fontSize: "70px",
+  marginTop: "15px"
+}
+
+export const UserTextDiv = styled.div`
+margin-left: 40px;
+`
+
+export const UserTextUl = styled.ul`
+`
+
+export const UserTextLi = styled.li`
+font-weight: bold;
+margin-bottom: 10px;
+list-style-type: disc;
+`
+
+export const MyPageLine = styled.div`
+height: 2px;
+width: 100%;
+background-color: black;
+position: absolute;
+bottom: 0;
+`
+
+export const MyPageMenu = styled.div`
+display: flex;
+position: absolute;
+bottom: 0;
+right: 300px;
+`
+
+export const MyPageMenuBtn = styled.div`
+background-color: black;
+border-radius: 10px 10px 0 0;
+border: 3px solid black;
+font-weight: bold;
+width: 120px;
+line-height: 40px;
+text-align: center;
+color: white;
+cursor: pointer;
+`
+
+export const menuBtnClickedStyle = {
+  backgroundColor: 'white',
+  color: 'black',
+  borderBottomColor: 'white'
+}
+
+export const ForTattooistDiv = styled.div`
+position: absolute;
+top: 0;
+bottom: 0;
+right: 100px;
+
+display: flex;
+flex-direction: column;
+justify-content: center;
+`
+
+export const BookingBtn = styled.div`
+background-color: black;
+color: white;
+line-height: 35px;
+margin-bottom: 20px;
+width: 100px;
+border: 3px solid black;
+font-weight: bold;
+text-align: center;
+border-radius: 8px;
+transition: .45s;
+cursor: pointer;
+`
+export const bookingBtnHoverStyle = {
+  backgroundColor: 'white',
+  color: 'black'
+}
+
+export const LikeDiv = styled.div`
+text-align: center;
+`
+
+export const LikeIcon = styled.i`
+font-size: 30px;
+
+cursor: pointer;
+color: red;
+`
+
+export const heartStyle = {
+  fontSize: '30px',
+  cursor: 'pointer',
+  color: 'red',
+}
 
 
 

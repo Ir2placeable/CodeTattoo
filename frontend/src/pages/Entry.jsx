@@ -58,4 +58,4 @@ const Entry = ({ cookies }) => {
   );
 };
 
-export default Entry;
+export default React.memo(Entry);

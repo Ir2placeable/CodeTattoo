@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import Btn from './Btn';
 import { HeaderDiv, HeaderInner, HeaderSubMenu, HeaderTitle } from '../styledComponents';
 
+
 const Header = ({ cookies, removeCookie }) => {
   const [isLogin, setIsLogin] = useState(false);
 

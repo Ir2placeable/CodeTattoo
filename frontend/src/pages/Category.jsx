@@ -21,6 +21,12 @@ const Category = () => {
   }
 
   // Tattoo
+  const goBestDrafts = () => {
+    navigate('/tattoo/best');
+  }
+  const goRecentDrafts = () => {
+    navigate('/tattoo/recent');
+  }
   const goAllDrafts = () => {
     navigate('/tattoo/all');
   }
@@ -51,8 +57,8 @@ const Category = () => {
 
           <CategoryUl>
             <CategorySubText>Tattoo</CategorySubText>
-            <CategoryLi>Best drafts</CategoryLi>
-            <CategoryLi>Recent drafts</CategoryLi>
+            <CategoryLi onClick={goBestDrafts}>Best drafts</CategoryLi>
+            <CategoryLi onClick={goRecentDrafts}>Recent drafts</CategoryLi>
             <CategoryLi onClick={goAllDrafts}>
               All drafts
             </CategoryLi>

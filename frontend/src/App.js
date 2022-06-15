@@ -11,62 +11,22 @@ import Category from './pages/Category';
 import { EntrySection } from './styledComponents';
 import Entry from './pages/Entry';
 import ImgLoad from './pages/ImgLoad';
-import CookieTest from './pages/CookieTest';
 import TattooistDrafts from './pages/TattooistDrafts';
 
 import { useCookies } from 'react-cookie';
 import axios from 'axios';
 import AllDrafts from './pages/AllDrafts';
+import BestDrafts from './pages/BestDrafts';
+import RecentDrafts from './pages/RecentDrafts';
+import MyPage from './pages/MyPage';
 
-const apiUrl = "http://3.39.196.91:3001/api";
+import { APIURL } from './config/key';
+
+const apiUrl = APIURL;
 
 const App = () => {
   const [cookies, setCookie, removeCookie] = useCookies([
     'user_id', 'name', 'location', 'isTattooist']);
-
-  // const sendRequest = async() => {
-  //   const res = await axios.post(`${apiUrl}/draft/browse`, {});
-  //   console.log(res)
-  //   console.log(res.data.drafts[8])
-  // }
-  // useEffect(() => {
-  //   sendRequest();
-  // }, []);
-  
-  // useEffect(()=>{
-  //   removeCookie('user_id');
-  //   removeCookie('name');
-  //   removeCookie('location');
-  //   removeCookie('isTattooist')
-  // }, []);
-
-  // useEffect(() => {
-  //   getCookieFunc();
-  //   setCookie('id', 1234, {maxAge:2000})
-  //   setCookie('temp', 'temp', {maxAge:2000})
-  //   removeCookie('id');
-  //   removeCookie('temp')
-  // }, []);
-
-  // const setCookieFunc = () => {
-  //   let random = Math.floor(Math.random() * (10 - 0) + 0);
-  //   setCookie('rememberNumber', random, {maxAge:2000});
-  //   window.location.replace('/');
-  //   let result = "setCookie : "+random;
-  //   setText(result);
-  // }
-
-  // const getCookieFunc = (param) => {
-  //   let result = "getCookie : "+cookies.rememberNumber;
-  //   setText(result);
-  // }
-
-  // const removeCookieFunc = () => {
-  //   removeCookie('rememberNumber');
-  //   window.location.replace('/');
-  //   setText("removeCookie");
-  // }
-
 
   return (
     <div className='main-font'>
@@ -92,7 +52,7 @@ const App = () => {
             setCookie={setCookie} />} />
 
           {/* User */}
-
+          <Route path="/user/mypage" element={<MyPage />} />
 
           {/* Tattoist */}
           <Route path='/tattooist/img_load' element={<ImgLoad 
@@ -101,6 +61,8 @@ const App = () => {
           <Route path="/tattooist/drafts" element={<TattooistDrafts apiUrl={apiUrl} />} />
 
           {/* Tattoo */}
+          <Route path="/tattoo/best" element={<BestDrafts apiUrl={apiUrl} />} />
+          <Route path="/tattoo/recent" element={<RecentDrafts apiUrl={apiUrl} />} />
           <Route path="/tattoo/all" element={<AllDrafts apiUrl={apiUrl} />} />
 
           {/* Board */}

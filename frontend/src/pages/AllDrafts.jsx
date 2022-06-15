@@ -16,12 +16,6 @@ const AllDrafts = ({ apiUrl }) => {
   }, []);
   return (
     <>
-      {/* {drafts.map(draft => (
-        <div key={draft._id}>
-          <p>{draft.title}</p>
-          <img style={{objectFit: 'contain'}} width={`${draft.image.width}px`} height={`${draft.image.height}px`} src={draft.image.url} alt={draft.title} />
-        </div>
-      ))} */}
       <ShowDraftList text={'All Drafts'} drafts={drafts} />
     </>
   );
