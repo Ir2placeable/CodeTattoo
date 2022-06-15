@@ -1,12 +1,8 @@
 # Front-end React
 
-<hr>
-<br>
-
 ## React App 실행
 
-<br>
-```bash
+```plaintext
 $ cd frontend
 $ npm run start
 ```
