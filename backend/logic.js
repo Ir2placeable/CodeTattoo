@@ -101,19 +101,16 @@ exports.browseDraft = async function(body, res) {
         })
 }
 exports.likeDraft = async function(body, res) {
-    const user = await User.findOne({ _id : body.user_id })
-    if(!user) {
-        console.log('likeDraft fail, no user')
-        res.send({ success : false, message : 'no user' })
-        return
-    }
-
     await User.updateOne({ _id : body.user_id}, {$push : { scraps : body.draft_id }})
     await Draft.updateOne({ _id : body.draft_id}, {$inc : { like : 1 }})
 
     res.send({ success : true })
 }
+exports.followTattooist = async function(body, res) {
+    await User.updateOne({ _id : body.user_id }, {$push : { follow : body.tattooist_id }})
 
+    res.send({ success : true })
+}
 
 // 관리자용 함수
 exports.users = function(body, res) {
