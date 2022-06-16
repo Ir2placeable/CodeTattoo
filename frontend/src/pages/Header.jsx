@@ -43,8 +43,15 @@ const Header = ({ cookies, removeCookie }) => {
     removeCookie('isTattooist');
     window.location.replace('/');
   }
-  const goMyPage = () => {
 
+  // <Route path="/user/mypage/:user_id" />
+  // <Route path="/tatooist/mypage/:tattooist_id" />
+  const goMyPage = () => {
+    if(cookies.isTattooist){
+      navigate(`/tattooist/mypage/${cookies.isTattooist}`);
+    } else {
+      navigate(`/user/mypage/${cookies.user_id}`)
+    }
   }
 
   return (

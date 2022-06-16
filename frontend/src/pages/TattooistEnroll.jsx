@@ -15,6 +15,7 @@ import {
 } from '../styledComponents';
 
 const TattooistEnroll = ({ apiUrl, cookies, setCookie }) => {
+
   const input1 = useRef();
   const input2 = useRef();
   const input3 = useRef();
@@ -94,6 +95,10 @@ const TattooistEnroll = ({ apiUrl, cookies, setCookie }) => {
       console.log('빈 문자열 발생')
       alert('모든 정보를 입력해주세요!')
       return
+    }
+    if(cookies.isTattooist){
+      alert('이미 등록된 타투이스트입니다.')
+      navigate('/');
     }
     enrollment();
     //navigate('/');

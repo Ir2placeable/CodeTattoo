@@ -295,6 +295,20 @@ transition: .45s;
 // top: 100px;
 // `
 
+// margin: 0 auto;
+// width: 1400px;
+// min-height: 725px;
+// position: relative;
+
+export const UploadDiv = styled.div`
+background-color: #F6F6F6;
+width: 800px;
+height: 700px;
+margin: 0 auto;
+
+border-radius: 10px;
+`
+
 export const ImgInputDiv = styled.div`
 margin: 50px auto;
 color: #fff;
@@ -319,6 +333,7 @@ text-align: center;
 `
 export const LoadedImg = styled.img`
 box-shadow: 5px 5px 20px rgba(0, 0, 0, .4);
+background-color: #fff;
 width: 300px;
 height: 300px;
 object-fit: contain;
@@ -346,6 +361,12 @@ cursor: pointer;
 
 // Draft List
 // ShowDraftList
+export const DraftListBigDiv = styled.div`
+display: flex;
+flex-direction: column;
+margin: 0 auto;
+`;
+
 export const DraftMainDiv = styled.div`
 margin: 0 auto;
 min-height: 725px;
@@ -470,6 +491,11 @@ export const userIconStyle = {
   marginTop: "15px"
 }
 
+export const ttIconStyle = {
+  fontSize: '24px',
+  marginTop: "5px"
+}
+
 export const UserTextDiv = styled.div`
 margin-left: 40px;
 `
@@ -527,7 +553,7 @@ flex-direction: column;
 justify-content: center;
 `
 
-export const BookingBtn = styled.div`
+export const MyPageBtn = styled.div`
 background-color: black;
 color: white;
 line-height: 35px;
@@ -540,7 +566,7 @@ border-radius: 8px;
 transition: .45s;
 cursor: pointer;
 `
-export const bookingBtnHoverStyle = {
+export const MyPageBtnHoverStyle = {
   backgroundColor: 'white',
   color: 'black'
 }
@@ -555,12 +581,68 @@ font-size: 30px;
 cursor: pointer;
 color: red;
 `
+export const MyPageContentDiv = styled.div`
+width: 100%;
+min-height: 600px;
+margin: 0 auto;
 
-export const heartStyle = {
-  fontSize: '30px',
-  cursor: 'pointer',
-  color: 'red',
-}
+display: flex;
+flex-wrap: wrap;
+padding: 80px 0 50px;
+
+position: relative;
+`
+
+export const DraftUploadDiv = styled.div`
+position: absolute;
+top: 30px;
+right: 30px;
+`
+
+// cursor: pointer;
+// margin: 20px 20px 50px;
+
+export const ImgBox = styled.div`
+margin: 20px 20px 50px;
+position: relative;
+`
+
+export const ImgHeartBox = styled.div`
+position: absolute;
+top: 260px;
+right: 15px;
+`
+
+export const MyPageDraftImg = styled.img`
+object-fit: contain;
+box-sizing: border-box;
+border-radius: 8px;
+box-shadow: 5px 5px 20px rgba(0, 0, 0, .4);
+background-color: white;
+`
+
+export const ImgInfoDiv = styled.div`
+margin-top: 20px;
+margin-left: 20px;
+display: flex;
+align-items: center;
+`
+
+export const TattooistImg = styled.div`
+width: 35px;
+height: 35px;
+background-color: white;
+margin-right: 10px;
+border-radius: 50%;
+border: 3px solid black;
+cursor: pointer;
+text-align: center;
+`
+
+export const DraftTitle = styled.p`
+text-align: center;
+`
+
 
 
 

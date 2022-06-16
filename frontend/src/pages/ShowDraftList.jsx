@@ -4,39 +4,46 @@ import {
   DraftMainDiv,
   CategoryTitle,
   DraftMainBox,
-  DraftImgBox,
+  ImgBox,
   DraftImg,
   DraftImgInfo,
-  DraftTattooistDiv,
+  TattooistImg,
   DraftImgTitle, 
   EmptyDraftBox,
+  ImgHeartBox,
 } from '../styledComponents';
-import UploadDraftBtn from './UploadDraftBtn';
+
+import HeartIcon from './HeartIcon';
 
 
-const ShowDraftList = ({ text, drafts }) => {
+
+const ShowDraftList = ({ text, drafts, tattooist }) => {
+  //console.log('drafts: ',drafts)
   return (
     <>
       <DraftMainDiv>
 
-        { text === "Tattooist drafts" ? (
-          <UploadDraftBtn />
-        ) : (
-          <div></div>
-        )}
+        {
+          text ? (
+            <CategoryTitle>
+              {text}
+            </CategoryTitle>
+          ) : (
+            <div></div>
+          )
+        }
 
-        <CategoryTitle>
-          {text}
-        </CategoryTitle>
-
-        {drafts ? (
+        {drafts.length === 0 ? (
           <EmptyDraftBox>
             아직 도안이 없습니다.
           </EmptyDraftBox>
         ) : (
           <DraftMainBox>
             {drafts.map(draft => (
-              <DraftImgBox key={draft._id}>
+              <ImgBox key={draft._id}>
+                <ImgHeartBox style={tattooist ? {display: 'none'} : {}}>
+                  <HeartIcon size={28} />
+                </ImgHeartBox>
                 <DraftImg
                   width={`${draft.image.width}px`}
                   height={`${draft.image.height}px`}
@@ -45,10 +52,10 @@ const ShowDraftList = ({ text, drafts }) => {
                 />
 
                 <DraftImgInfo>
-                  <DraftTattooistDiv></DraftTattooistDiv>
+                  <TattooistImg></TattooistImg>
                   <DraftImgTitle>{draft.title}</DraftImgTitle>
                 </DraftImgInfo>
-              </DraftImgBox>
+              </ImgBox>
             ))}
           </DraftMainBox>
         )}

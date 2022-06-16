@@ -16,8 +16,8 @@ const Category = () => {
 
 
   // Tattooist
-  const goTattooistDrafts = () => {
-    navigate('/tattooist/drafts')
+  const goTattooists = () => {
+    
   }
 
   // Tattoo
@@ -41,18 +41,10 @@ const Category = () => {
         <CategoryBox>
 
           <CategoryUl>
-            <CategorySubText>User</CategorySubText>
-            <CategoryLi>My drafts list</CategoryLi>
-            <CategoryLi>My tattooists list</CategoryLi>
-          </CategoryUl>
-
-          <CategoryUl>
             <CategorySubText>Tattooist</CategorySubText>
-            <CategoryLi onClick={goTattooistDrafts}>
-              My drafts list
+            <CategoryLi onClick={goTattooists}>
+              Tattooists List
             </CategoryLi>
-            <CategoryLi>Calendar</CategoryLi>
-            <CategoryLi>Contact</CategoryLi>
           </CategoryUl>
 
           <CategoryUl>
@@ -68,7 +60,6 @@ const Category = () => {
             <CategorySubText>Board</CategorySubText>
             <CategoryLi>Q n A</CategoryLi>
             <CategoryLi>Ask</CategoryLi>
-            <CategoryLi>Contact</CategoryLi>
           </CategoryUl>
 
         </CategoryBox>

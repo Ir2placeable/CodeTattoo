@@ -21,6 +21,7 @@ import RecentDrafts from './pages/RecentDrafts';
 import MyPage from './pages/MyPage';
 
 import { APIURL } from './config/key';
+import UserMyPage from './pages/UserMyPage';
 
 const apiUrl = APIURL;
 
@@ -51,14 +52,20 @@ const App = () => {
             cookies={cookies}
             setCookie={setCookie} />} />
 
-          {/* User */}
-          <Route path="/tattooist/mypage" element={<MyPage />} />
+          {/* My Page */}
+          <Route path="/user/mypage/:user_id" element={<UserMyPage apiUrl={apiUrl} cookies={cookies} />} />
+          <Route path="/tattooist/mypage/:tattooist_id" element={<MyPage apiUrl={apiUrl} cookies={cookies} />}>
+          </Route>
 
+          {/* User */}
+        
+          <Route path="/imgload" element={<ImgLoad apiUrl={apiUrl} cookies={cookies} />}></Route>
+        
           {/* Tattoist */}
-          <Route path='/tattooist/img_load' element={<ImgLoad 
+          {/* <Route path='/tattooist/img_load' element={<ImgLoad 
             apiUrl={apiUrl}
             cookies={cookies} />} />
-          <Route path="/tattooist/drafts" element={<TattooistDrafts apiUrl={apiUrl} />} />
+          <Route path="/tattooist/drafts" element={<TattooistDrafts apiUrl={apiUrl} />} /> */}
 
           {/* Tattoo */}
           <Route path="/tattoo/best" element={<BestDrafts apiUrl={apiUrl} />} />
