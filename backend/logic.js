@@ -7,7 +7,8 @@ const config = require('./config/key')
 const imageStorage = require('./naverStorage')
 
 const showLimit = 16
-let cache_DraftCount = await Draft.count()
+let cache_DraftCount;
+Draft.count().then((result) => { cache_DraftCount = result})
 
 mongoose.connect(config.mongoURI)
     .then(() => { console.log('db connected')} )

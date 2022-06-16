@@ -15,35 +15,42 @@ server.get('/api', (req, res) => {
 })
 // Page : 회원가입
 server.post('/api/register', (req, res) => {
+    console.log(req.body)
     routing_to.register(req.body, res)
         .catch(() => { console.log('register function error')})
 })
 // Page : 로그인
 server.post('/api/login', (req, res) => {
+    console.log(req.body)
     routing_to.login(req.body, res)
         .catch(() => { console.log('login function error')})
 })
 // Page : 타투이스트 등록
 server.post('/api/tattooist/enrollment', (req, res) => {
+    console.log(req.body)
     routing_to.tattooistEnroll(req.body, res)
         .catch(() => { console.log('tattooistEnroll function error')})
 })
 // Page : 도안 생성(Only Tattooist)
 server.post('/api/draft/create', (req, res) => {
+    console.log(req.body)
     routing_to.newDraft(req.body, res)
         .catch(() => { console.log('newDraft function error')})
 })
 // Page : 도안 검색
 server.get('/api/draft/browse/:filter/:page_number', (req, res) => {
+    console.log(req.body)
     routing_to.browseDraft(req.params, res)
 })
 // Page : 도안 찜
 server.post('/api/draft/like', (req, res) => {
+    console.log(req.body)
     routing_to.likeDraft(req.body, res)
         .catch(() => { console.log('likeDraft function error')})
 })
 // Page : 타투이스트 팔로우
 server.post('/api/follow', (req, res) => {
+    console.log(req.body)
     routing_to.followTattooist(req.body, res)
         .catch(() => { console.log('followTattooist function error')})
 })
