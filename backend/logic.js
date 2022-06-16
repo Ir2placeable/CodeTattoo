@@ -143,7 +143,12 @@ exports.followTattooist = async function(body, res) {
     res.send({ success : true })
 }
 exports.tattooistPage = async function(body, res) {
-    const tattooist = await Tattooist.find({ _id : body.tattooist_id})
+    const tattooist = await Tattooist.findOne({ _id : body.tattooist_id })
+    if(!tattooist) {
+        console.log('tattooist page fail, no tattooist')
+        res.send({ success : false, message : 'no tattooist'})
+        return
+    }
 
     const tattooist_info = {
         nickname : tattooist.nickname,
