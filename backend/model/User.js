@@ -16,7 +16,8 @@ const userSchema = mongoose.Schema({
         type : String
     },
     isTattooist : {
-        type : String
+        type : String,
+        default : ""
     },
     scraps : {
         type : [String]

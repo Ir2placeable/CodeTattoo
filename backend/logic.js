@@ -7,8 +7,7 @@ const config = require('./config/key')
 const imageStorage = require('./naverStorage')
 
 const showLimit = 16
-let cache_DraftCount;
-Draft.count().then((result) => { cache_DraftCount = result})
+let cache_DraftCount = Draft.count()
 
 mongoose.connect(config.mongoURI)
     .then(() => { console.log('db connected')} )
@@ -39,31 +38,34 @@ exports.login = async function(body, res) {
         return
     }
 
-    const isMatch = await user.comparePassword(body.pwd)
-    if (!isMatch) {
-        console.log('login fail, wrong password')
-        res.send({ success : false })
-        return
-    }
+    user.comparePassword(body.pwd, (err, isMatch) => {
+        if (!isMatch) {
+            console.log('login fail, wrong password')
+            res.send({ success : false })
+            return
+        }
 
-    // user_info for browser cookie
-    const user_info = {
-        user_id : String(user._id),
-        name : user.name,
-        location : user.location,
-        isTattooist : user.isTattooist
-    }
-    console.log(user.name, "로그인 성공")
-    res.send({ success : true, user_info : user_info })
+        // user_info for browser cookie
+        const user_info = {
+            user_id : String(user._id),
+            name : user.name,
+            location : user.location,
+            isTattooist : user.isTattooist
+        }
+        console.log(user.name, "로그인 성공")
+        res.send({ success : true, user_info : user_info })
+    })
 }
 exports.tattooistEnroll = async function(body, res) {
     const user = await User.findOne({ _id : body.user_id })
+    // 유저 입력값 오류
     if(!user) {
         console.log('tattooistEnroll fail, no user')
         res.send({ success : false, message : 'no user' })
         return
     }
-    if(user['isTattooist']) {
+    // 이미 등록된 타투이스트
+    if(user['isTattooist'] !== "") {
         console.log('tattooistEnroll fail, already enrolled')
         res.send({ success : false, message : 'already enrolled' })
         return
@@ -72,13 +74,14 @@ exports.tattooistEnroll = async function(body, res) {
     const new_tattooist = new Tattooist(body);
     await new_tattooist.save();
 
-    await User.updateOne({ _id : body.user_id }, { $set : { isTattooist : new_tattooist._id }} )
-    console.log(user.name, "named ", body.nickname, "타투이스트 등록 완료")
-    res.send({ success : true, tattooist_id : new_tattooist._id})
+    await User.updateOne({ _id : body.user_id }, { $set : { isTattooist : String(new_tattooist._id) }} )
+    console.log(user.name, " (", body.nickname, ") 타투이스트 등록 완료")
+    res.send({ success : true, tattooist_id : String(new_tattooist._id) })
 }
 exports.newDraft = async function(body, res) {
     const tattooist = await Tattooist.findOne({ _id : body.drawer })
-    if(!tattooist) {
+    // 타투이스트 등록하지 않음
+    if(tattooist === "") {
         console.log('newDraft fail, no tattooist')
         res.send({ success : false, message : 'no tattooist'})
         return
@@ -89,7 +92,7 @@ exports.newDraft = async function(body, res) {
     const new_draft = new Draft(body);
 
     await new_draft.save();
-    await Tattooist.updateOne({ _id : body.drawer }, {$push : { drafts : new_draft._id }})
+    await Tattooist.updateOne({ _id : body.drawer }, {$push : { drafts : String(new_draft._id) }})
 
     console.log(tattooist.nickname, "도안 등록 완료")
     res.send({ success : true })
@@ -102,13 +105,16 @@ exports.browseDraft = function(params, res) {
     const item_index_start = showLimit * (page_number-1)
 
     if (params.filter === 'init') {
-        res.send({ success : true, count : cache_DraftCount})
+        res.send({ success : true, count : cache_DraftCount })
     } else if (params.filter === 'best') {
         browseDraft_best(item_index_start, res)
+            .catch(() => { res.send({ success : false , message : 'unexpected error'})})
     } else if (params.filter === 'recent') {
         browseDraft_recent(item_index_start, res)
+            .catch(() => { res.send({ success : false , message : 'unexpected error'})})
     } else if (params.filter === 'all') {
         browseDraft_all(item_index_start, res)
+            .catch(() => { res.send({ success : false , message : 'unexpected error'})})
     } else {
         res.send({ success : false, message : "wrong filter" })
     }
