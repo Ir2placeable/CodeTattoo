@@ -34,9 +34,8 @@ server.post('/api/draft/create', (req, res) => {
         .catch(() => { console.log('newDraft function error')})
 })
 // Page : 도안 검색
-server.post('/api/draft/browse', (req, res) => {
-    routing_to.browseDraft(req.body, res)
-        .catch(() => { console.log('browseDraft function error')})
+server.get('/api/draft/browse/:filter/:page_number', (req, res) => {
+    routing_to.browseDraft(req.params, res)
 })
 // Page : 도안 찜
 server.post('/api/draft/like', (req, res) => {

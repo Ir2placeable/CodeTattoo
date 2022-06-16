@@ -6,6 +6,7 @@ const mongoose = require("mongoose");
 const config = require('./config/key')
 const imageStorage = require('./naverStorage')
 
+const showLimit = 16
 
 mongoose.connect(config.mongoURI)
     .then(() => { console.log('db connected')} )
@@ -95,11 +96,31 @@ exports.newDraft = async function(body, res) {
 
     res.send({ success : true })
 }
-exports.browseDraft = async function(body, res) {
-    Draft.find()
-        .then((drafts) => {
-            res.send({ success : true, drafts : drafts })
-        })
+exports.browseDraft = function(params, res) {
+    const page_number = parseInt(params.page_number)
+    const item_index_start = showLimit * (page_number-1)
+
+    if (params.filter === 'best') {
+        browseDraft_best(item_index_start, res)
+    } else if (params.filter === 'recent') {
+        browseDraft_recent(item_index_start, res)
+    } else if (params.filter === 'all') {
+        browseDraft_all(item_index_start, res)
+    } else {
+        res.send({ success : false, message : "wrong filter" })
+    }
+}
+const browseDraft_best = async function(item_index_start, res) {
+    await Draft.find().sort({ like : -1 }).skip(item_index_start).limit(showLimit)
+        .then((drafts) => { res.send({ success : true, drafts : drafts })})
+}
+const browseDraft_recent = async function(item_index_start, res) {
+    await Draft.find().sort({ timestamp : -1 }).skip(item_index_start).limit(showLimit)
+        .then((drafts) => { res.send({ success : true, drafts : drafts })})
+}
+const browseDraft_all = async function(item_index_start, res) {
+    await Draft.find().skip(item_index_start).limit(showLimit)
+        .then((drafts) => { res.send({ success : true, drafts : drafts })})
 }
 exports.likeDraft = async function(body, res) {
     await User.updateOne({ _id : body.user_id}, {$push : { scraps : body.draft_id }})
