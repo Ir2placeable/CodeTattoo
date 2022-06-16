@@ -93,15 +93,6 @@ exports.newDraft = async function(body, res) {
     await Tattooist.updateOne({ _id : body.drawer }, {$push : { drafts : new_draft._id }})
 
     res.send({ success : true })
-    // await new_draft.save()
-    //
-    //     .then(() => {
-    //         Tattooist.updateOne({ _id : body.drawer }, { $push : { drafts : new_draft._id } })
-    //     })
-    //     .then(() => {
-    //         console.log('새로운 도안 등록')
-    //         res.send({ success : true })
-    //     })
 }
 exports.browseDraft = async function(body, res) {
     Draft.find()

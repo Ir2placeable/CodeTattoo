@@ -14,17 +14,14 @@ server.get('/api', (req, res) => {
     routing_to.entry(res)
 })
 server.post('/api/register', (req, res) => {
-    console.log(req.body)
     routing_to.register(req.body, res)
         .catch(() => { console.log('register function error')})
 })
 server.post('/api/login', (req, res) => {
-    console.log(req.body)
     routing_to.login(req.body, res)
         .catch(() => { console.log('login function error')})
 })
 server.post('/api/tattooist/enrollment', (req, res) => {
-    console.log(req.body)
     routing_to.tattooistEnroll(req.body, res)
         .catch(() => { console.log('tattooistEnroll function error')})
 })
@@ -37,7 +34,6 @@ server.post('/api/draft/browse', (req, res) => {
         .catch(() => { console.log('browseDraft function error')})
 })
 server.post('/api/draft/like', (req, res) => {
-    console.log(req.body)
     routing_to.likeDraft(req.body, res)
         .catch(() => { console.log('likeDraft function error')})
 })
