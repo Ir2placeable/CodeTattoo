@@ -57,6 +57,7 @@ const SignUp = ({ apiUrl }) => {
     }
   }
 
+  const navigate = useNavigate();
   const submitLogin = async() => {
     const body = {
       name: name,
@@ -66,12 +67,22 @@ const SignUp = ({ apiUrl }) => {
     }
     const res = await axios.post(`${apiUrl}/register`, body)
     console.log(res);
+
+    // 이미 존재하는 이메일로 가입 시도했을 때
+    if(!res.data.success){
+      alert('이미 존재하는 이메일입니다.');
+    } else {
+      alert('회원가입 완료!')
+      navigate('/login');
+    }
   }
 
-  const navigate = useNavigate();
   const onSubmit = () => {
-    submitLogin();
-    navigate('/');
+    if(!name || !email || !pwd || !addr){
+      alert('모든 정보를 입력해주세요.');
+    } else {
+      submitLogin();
+    }
   }
 
   return (

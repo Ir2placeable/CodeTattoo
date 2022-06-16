@@ -16,7 +16,7 @@ const BestDrafts = ({ apiUrl }) => {
 
   return (
     <>
-      <ShowDraftList text={'Best Drafts'} drafts={[]} />    
+      <ShowDraftList text={'Best Drafts'} drafts={[]} tattooist={false} />    
     </>
   );
 };

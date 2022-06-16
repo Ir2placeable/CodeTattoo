@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { useParams } from 'react-router-dom';
 
-import { 
-  DraftsListDiv,
+import {
+  UploadDiv,
   EnrollImgBtn,
   ImgInput,
   ImgInputDiv,
@@ -16,7 +17,6 @@ const ImgLoad = ({ apiUrl, cookies }) => {
   // 이미지 소스
   const [src, setSrc] = useState(null);
   // info
-  const [drawer, setDrawer] = useState('');
   const [title, setTitle] = useState('');
   // 이미지 정보
   const [image, setImage] = useState({
@@ -73,12 +73,13 @@ const ImgLoad = ({ apiUrl, cookies }) => {
   const navigate = useNavigate();
   const onSubmit = () => {
     sendRequest();
-    navigate('/tattooist/drafts');
+    navigate(`/tattooist/mypage/${cookies.isTattooist}`);
   }
   return (
     <>
-      <DraftsListDiv>
-        {/* 파일 선택 */}
+    <UploadDiv>
+
+      {/* 부모: MyPageContentDiv */}
       <ImgInputDiv>
         <ImgInput type="file" onChange={onSelectFile} />
       </ImgInputDiv>
@@ -97,7 +98,7 @@ const ImgLoad = ({ apiUrl, cookies }) => {
           </LoadedImgDiv>
         )
       }
-      </DraftsListDiv>
+    </UploadDiv>
       
     </>
   );

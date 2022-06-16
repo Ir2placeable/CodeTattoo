@@ -43,7 +43,8 @@ const Login = ({ apiUrl, setCookie }) => {
     setCookie('user_id', data.user_id, {maxAge:3000})
     setCookie('name', data.name, {maxAge:3000})
     setCookie('location', data.location, {maxAge:3000})
-    setCookie('isTattooist', '', {maxAge:3000})
+    // 타투이스트 아이디 넣어야함
+    setCookie('isTattooist', data.isTattooist, {maxAge:3000})
   }
 
   const navigate = useNavigate();
@@ -53,13 +54,12 @@ const Login = ({ apiUrl, setCookie }) => {
       pwd: pwd
     }
     const res = await axios.post(`${apiUrl}/login`, body)
-    console.log(res.data);
+    console.log('login: ',res.data);
 
     if(res.data.success){
       pushCookie(res.data.user_info);
-      //window.location.replace('/');
       console.log('쿠키 저장 성공')
-      //navigate('/')
+      alert('로그인 되었습니다.')
       window.location.replace('/');
     } else {
       window.location.replace('/login');
@@ -67,7 +67,11 @@ const Login = ({ apiUrl, setCookie }) => {
     }
   }
   const onSubmit = () => {
-    submitLogin();
+    if(!email || !pwd){
+      alert('모든 정보를 입력해주세요.')
+    } else {
+      submitLogin();
+    }
   }
 
   return (
