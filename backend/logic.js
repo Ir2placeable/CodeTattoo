@@ -87,6 +87,7 @@ exports.newDraft = async function(body, res) {
     }
 
     body.image.url = await imageStorage.upload(body)
+    body.timestamp = Math.round(Date.now()/1000)
     const new_draft = new Draft(body);
 
     await new_draft.save();
