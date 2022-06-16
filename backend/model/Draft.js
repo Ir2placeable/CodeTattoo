@@ -23,6 +23,9 @@ const draftSchema = mongoose.Schema({
     },
     like : {
         type : Number
+    },
+    timestamp :{
+        type : Number
     }
 })
 

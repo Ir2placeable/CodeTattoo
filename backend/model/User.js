@@ -20,6 +20,9 @@ const userSchema = mongoose.Schema({
     },
     scraps : {
         type : [String]
+    },
+    follow : {
+        type : [String]
     }
 })
 

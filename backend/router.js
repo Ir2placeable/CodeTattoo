@@ -33,7 +33,6 @@ server.post('/api/draft/create', (req, res) => {
         .catch(() => { console.log('newDraft function error')})
 })
 server.post('/api/draft/browse', (req, res) => {
-    console.log(req.body)
     routing_to.browseDraft(req.body, res)
         .catch(() => { console.log('browseDraft function error')})
 })

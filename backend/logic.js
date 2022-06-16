@@ -86,8 +86,7 @@ exports.newDraft = async function(body, res) {
         return
     }
 
-    body.image.data = await imageStorage.upload(body)
-
+    body.image.url = await imageStorage.upload(body)
     const new_draft = new Draft(body);
 
     await new_draft.save();
