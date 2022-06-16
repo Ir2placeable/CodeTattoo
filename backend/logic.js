@@ -149,24 +149,6 @@ exports.tattooistPage = async function(body, res) {
         return
     }
 
-    const tattooist_info = {
-        nickname : tattooist.nickname,
-        specialize : tattooist.specialize,
-        location : tattooist.office.location,
-        contact : tattooist.office.contact,
-        drafts : tattooist.drafts
-    }
-    console.log(tattooist.nickname, "타투이스트 마이페이지 입장")
-    res.send({ success : true, tattooist_info : tattooist_info })
-}
-exports.tattooistDrafts = async function(body, res) {
-    const tattooist = await Tattooist.findOne({ _id : body.tattooist._id})
-    if(!tattooist) {
-        console.log('tattooist page fail, no tattooist')
-        res.send({ success : false, message : 'no tattooist'})
-        return
-    }
-
     let promise_list = []
     let draft_info_list = []
     tattooist.drafts.forEach((draft_id) => {
@@ -174,17 +156,25 @@ exports.tattooistDrafts = async function(body, res) {
             Draft.findOne({ _id : draft_id })
                 .then((draft) => {
                     const draft_info = {
+                        _id : draft._id,
                         title : draft.title,
                         image : draft.image,
                         timestamp : draft.timestamp
                     }
                     draft_info_list.push(draft_info)
-            })
+                })
         )
     })
-
     Promise.all(promise_list).then(() => {
-        res.send({ success : true, drafts : draft_info_list })
+        const tattooist_info = {
+            nickname : tattooist.nickname,
+            specialize : tattooist.specialize,
+            location : tattooist.office.location,
+            contact : tattooist.office.contact,
+            drafts : draft_info_list
+        }
+        console.log(tattooist.nickname, "타투이스트 마이페이지 입장")
+        res.send({ success : true, tattooist_info : tattooist_info })
     })
 }
 

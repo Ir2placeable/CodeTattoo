@@ -61,12 +61,6 @@ server.post('/api/tattooist/mypage', (req, res) => {
     routing_to.tattooistPage(req.body, res)
         .catch(() => { console.log('tattooist page function error')})
 })
-// Page : 타투이스트 페이지 -> 등록한 도안 보기
-server.post('/api/tattooist/mypage/drafts', (req,res) => {
-    console.log('tattooist page')
-    routing_to.tattooistDrafts(req.body, res)
-        .catch(() => { console.log('tattooist page drafts function error')})
-})
 
 
 // 관리자용 인터페이스 목록
