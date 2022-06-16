@@ -55,6 +55,13 @@ server.post('/api/follow', (req, res) => {
     routing_to.followTattooist(req.body, res)
         .catch(() => { console.log('followTattooist function error')})
 })
+// Page : 유저 개인 페이지
+server.post('/api/tattooist/mypage', (req, res) => {
+    console.log('tattooist page')
+    routing_to.tattooistPage(req.body, res)
+        .catch(() => { console.log('tattooist page function error')})
+})
+// Page :
 
 
 // 관리자용 인터페이스 목록

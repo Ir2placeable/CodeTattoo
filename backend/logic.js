@@ -142,6 +142,19 @@ exports.followTattooist = async function(body, res) {
 
     res.send({ success : true })
 }
+exports.tattooistPage = async function(body, res) {
+    const tattooist = await Tattooist.find({ _id : body.tattooist_id})
+
+    const tattooist_info = {
+        nickname : tattooist.nickname,
+        specialize : tattooist.specialize,
+        location : tattooist.office.location,
+        contact : tattooist.office.contact,
+        drafts : tattooist.drafts
+    }
+    console.log(tattooist.nickname, "타투이스트 마이페이지 입장")
+    res.send({ success : true, tattooist_info : tattooist_info })
+}
 
 // 관리자용 함수
 exports.users = function(body, res) {
