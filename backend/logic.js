@@ -26,11 +26,10 @@ exports.register = async function(body, res) {
     }
 
     const new_user = new User(body);
-    new_user.save()
-        .then(() => {
-            console.log(body.name, '회원가입')
-            res.send({ success : true })
-        })
+    await new_user.save()
+
+    console.log(body.name, '회원가입 완료')
+    res.send({ success : true })
 }
 exports.login = async function(body, res) {
     const user = await User.findOne({ email : body.email })
@@ -40,22 +39,22 @@ exports.login = async function(body, res) {
         return
     }
 
-    user.comparePassword(body.pwd, (err, isMatch) => {
-        if(!isMatch) {
-            console.log('login fail, wrong password')
-            res.send({ success : false })
-            return
-        }
+    const isMatch = await user.comparePassword(body.pwd)
+    if (!isMatch) {
+        console.log('login fail, wrong password')
+        res.send({ success : false })
+        return
+    }
 
-        const user_info = {
-            user_id : String(user._id),
-            name : user.name,
-            location : user.location,
-            isTattooist : user.isTattooist
-        }
-        console.log(user_info)
-        res.send({ success : true, user_info : user_info })
-    })
+    // user_info for browser cookie
+    const user_info = {
+        user_id : String(user._id),
+        name : user.name,
+        location : user.location,
+        isTattooist : user.isTattooist
+    }
+    console.log(user.name, "로그인 성공")
+    res.send({ success : true, user_info : user_info })
 }
 exports.tattooistEnroll = async function(body, res) {
     const user = await User.findOne({ _id : body.user_id })
@@ -71,15 +70,11 @@ exports.tattooistEnroll = async function(body, res) {
     }
 
     const new_tattooist = new Tattooist(body);
-    new_tattooist.save()
-        .then(() => {
-            User.updateOne({ _id : body.user_id }, { $set : { isTattooist : new_tattooist._id }} )
-        })
-        .then(() => {
-            console.log(body.nickname, '타투이스트 등록')
-            res.send({ success : true , tattooist_id : new_tattooist._id })
-        })
+    await new_tattooist.save();
 
+    await User.updateOne({ _id : body.user_id }, { $set : { isTattooist : new_tattooist._id }} )
+    console.log(user.name, "named ", body.nickname, "타투이스트 등록 완료")
+    res.send({ success : true, tattooist_id : new_tattooist._id})
 }
 exports.newDraft = async function(body, res) {
     const tattooist = await Tattooist.findOne({ _id : body.drawer })
@@ -96,6 +91,7 @@ exports.newDraft = async function(body, res) {
     await new_draft.save();
     await Tattooist.updateOne({ _id : body.drawer }, {$push : { drafts : new_draft._id }})
 
+    console.log(tattooist.nickname, "도안 등록 완료")
     res.send({ success : true })
 
     // cache update
