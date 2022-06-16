@@ -7,6 +7,7 @@ const config = require('./config/key')
 const imageStorage = require('./naverStorage')
 
 const showLimit = 16
+let cache_DraftCount = await Draft.count()
 
 mongoose.connect(config.mongoURI)
     .then(() => { console.log('db connected')} )
@@ -95,12 +96,17 @@ exports.newDraft = async function(body, res) {
     await Tattooist.updateOne({ _id : body.drawer }, {$push : { drafts : new_draft._id }})
 
     res.send({ success : true })
+
+    // cache update
+    cache_DraftCount += 1
 }
 exports.browseDraft = function(params, res) {
     const page_number = parseInt(params.page_number)
     const item_index_start = showLimit * (page_number-1)
 
-    if (params.filter === 'best') {
+    if (params.filter === 'init') {
+        res.send({ success : true, count : cache_DraftCount})
+    } else if (params.filter === 'best') {
         browseDraft_best(item_index_start, res)
     } else if (params.filter === 'recent') {
         browseDraft_recent(item_index_start, res)
