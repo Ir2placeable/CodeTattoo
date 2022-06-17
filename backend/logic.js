@@ -4,7 +4,7 @@ const {Draft} = require('./model/Draft')
 
 const mongoose = require("mongoose");
 const config = require('./config/key')
-const imageStorage = require('./naverStorage')
+const imageStorage = require('./imageStorage')
 
 const showLimit = 16
 
