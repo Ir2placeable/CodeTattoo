@@ -36,6 +36,8 @@ class CC_codeTattoo extends Chaincode {
         await cc.stub.putState(tattoo_id, Buffer.from(JSON.stringify(tattoo_data)));
     }
 
+    // params : { procedure }
+    // procedure = { activator_id, using_items, date }
     async endImprint(cc, tattoo_id, procedure) {
         const tattoo = await cc.stub.getState(tattoo_id);
         if (!tattoo || tattoo.length === 0) {
@@ -52,6 +54,8 @@ class CC_codeTattoo extends Chaincode {
         await cc.stub.putState(tattoo_id, Buffer.from(JSON.stringify(tattoo_data)));
     }
 
+    // params : { procedure }
+    // procedure = { activator_id, using_items, date }
     async startRemove(cc, tattoo_id, procedure) {
         const tattoo = await cc.stub.getState(tattoo_id);
         if (!tattoo || tattoo.length === 0) {
@@ -68,6 +72,8 @@ class CC_codeTattoo extends Chaincode {
         await cc.stub.putState(tattoo_id, Buffer.from(JSON.stringify(tattoo_data)));
     }
 
+    // params : { procedure }
+    // procedure = { activator_id, using_items, date }
     async endRemove(cc, tattoo_id, procedure) {
         const tattoo = await cc.stub.getState(tattoo_id);
         if (!tattoo || tattoo.length === 0) {
@@ -84,6 +90,8 @@ class CC_codeTattoo extends Chaincode {
         await cc.stub.putState(tattoo_id, Buffer.from(JSON.stringify(tattoo_data)));
     }
 
+    // params : { procedure }
+    // procedure = { activator_id, symptom }
     async addSideEffect(cc, tattoo_id, side_effect) {
         const tattoo = await cc.stub.getState(tattoo_id);
         if (!tattoo || tattoo.length === 0) {
