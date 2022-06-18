@@ -62,10 +62,10 @@ server.post('/api/tattooist/mypage', (req, res) => {
         .catch(() => { console.log('tattooist page function error')})
 })
 // Page : 타투이스트 프로필 이미지 등록
-server.post('/api/tattooist/mypage/profile', (req, res) => {
-    console.log('tattooist page profile')
-    routing_to.tattooistProfile(req.body, res)
-        .catch(() => { console.log('tattooist page profile function error')})
+server.post('/api/tattooist/mypage/edit', (req, res) => {
+    console.log('tattooist page edit')
+    routing_to.tattooistEdit(req.body, res)
+        .catch(() => { console.log('tattooist page edit function error')})
 })
 // Page : 타투 예약 페이지
 server.post('api/reservation', (req, res) => {
