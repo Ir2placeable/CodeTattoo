@@ -32,6 +32,14 @@ const tattooistSchema = mongoose.Schema({
     },
     medallion : {
         type : String
+    },
+    profile : {
+        description : {
+            type : String
+        },
+        image : {
+            type : String
+        }
     }
 })
 

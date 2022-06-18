@@ -4,10 +4,9 @@ const {Draft} = require('./model/Draft')
 
 const mongoose = require("mongoose");
 const config = require('./config/key')
-const imageStorage = require('./naverStorage')
+const imageStorage = require('./imageStorage')
 
 const showLimit = 16
-let cache_DraftCount = Draft.count()
 
 mongoose.connect(config.mongoURI)
     .then(() => { console.log('db connected')} )
@@ -25,10 +24,11 @@ exports.register = async function(body, res) {
     }
 
     const new_user = new User(body);
-    await new_user.save()
-
-    console.log(body.name, '회원가입 완료')
-    res.send({ success : true })
+    new_user.save()
+        .then(() => {
+            console.log(body.name, '회원가입 완료')
+            res.send({ success : true })
+        })
 }
 exports.login = async function(body, res) {
     const user = await User.findOne({ email : body.email })
@@ -96,16 +96,15 @@ exports.newDraft = async function(body, res) {
 
     console.log(tattooist.nickname, "도안 등록 완료")
     res.send({ success : true })
-
-    // cache update
-    cache_DraftCount += 1
 }
 exports.browseDraft = function(params, res) {
     const page_number = parseInt(params.page_number)
     const item_index_start = showLimit * (page_number-1)
 
     if (params.filter === 'init') {
-        res.send({ success : true, count : cache_DraftCount })
+        Draft.count().then((count) => {
+            res.send({ success : true, count : count})
+        })
     } else if (params.filter === 'best') {
         browseDraft_best(item_index_start, res)
             .catch(() => { res.send({ success : false , message : 'unexpected error'})})
@@ -143,17 +142,78 @@ exports.followTattooist = async function(body, res) {
     res.send({ success : true })
 }
 exports.tattooistPage = async function(body, res) {
-    const tattooist = await Tattooist.find({ _id : body.tattooist_id})
-
-    const tattooist_info = {
-        nickname : tattooist.nickname,
-        specialize : tattooist.specialize,
-        location : tattooist.office.location,
-        contact : tattooist.office.contact,
-        drafts : tattooist.drafts
+    const tattooist = await Tattooist.findOne({ _id : body.tattooist_id })
+    if(!tattooist) {
+        console.log('tattooist page fail, no tattooist')
+        res.send({ success : false, message : 'no tattooist'})
+        return
     }
-    console.log(tattooist.nickname, "타투이스트 마이페이지 입장")
-    res.send({ success : true, tattooist_info : tattooist_info })
+
+    let promise_list = []
+    let draft_info_list = []
+    tattooist.drafts.forEach((draft_id) => {
+        promise_list.push(
+            Draft.findOne({ _id : draft_id })
+                .then((draft) => {
+                    const draft_info = {
+                        _id : draft._id,
+                        title : draft.title,
+                        image : draft.image,
+                        timestamp : draft.timestamp
+                    }
+                    draft_info_list.push(draft_info)
+                })
+        )
+    })
+    Promise.all(promise_list).then(() => {
+        const tattooist_info = {
+            nickname : tattooist.nickname,
+            specialize : tattooist.specialize,
+            location : tattooist.office.location,
+            contact : tattooist.office.contact,
+            drafts : draft_info_list,
+            profile : tattooist.profile
+        }
+        console.log(tattooist.nickname, "타투이스트 마이페이지 입장")
+        res.send({ success : true, tattooist_info : tattooist_info })
+    })
+}
+exports.tattooistEdit = async function(body, res) {
+    const tattooist = await Tattooist.findOne({ _id : body.tattooist_id })
+    if(!tattooist) {
+        console.log('tattooist profile fail, no tattooist')
+        res.send({ success : false, message : 'no tattooist'})
+        return
+    }
+
+    body.image = await imageStorage.upload(body.image)
+    const new_profile = {
+        description : body.description,
+        image : body.image
+    }
+
+    await Tattooist.updateOne({ _id : body.tattooist_id }, {$set : { profile : new_profile }})
+
+    console.log(tattooist.nickname, "프로필 설정 완료")
+    res.send({ success : true })
+}
+exports.reservation = async function(body, res) {
+    const tattooist = await Tattooist.findOne({ _id : body.tattooist_id })
+    if(!tattooist) {
+        console.log('tattoo reservation fail, no tattooist')
+        res.send({ success : false, message : 'no tattooist'})
+        return
+    }
+    const user = await Tattooist.findOne({ _id : body.user_id })
+    if(!user) {
+        console.log('tattoo reservation fail, no user')
+        res.send({ success : false, message : 'no user'})
+        return
+    }
+
+    // blockchain transaction raise
+
+    res.send({ message : 'prototype'})
 }
 
 // 관리자용 함수
