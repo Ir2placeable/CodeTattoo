@@ -22,6 +22,7 @@ import MyPage from './pages/MyPage';
 
 import { APIURL } from './config/key';
 import UserMyPage from './pages/UserMyPage';
+import ProfileEdit from './pages/ProfileEdit';
 
 const apiUrl = APIURL;
 
@@ -54,18 +55,18 @@ const App = () => {
 
           {/* My Page */}
           <Route path="/user/mypage/:user_id" element={<UserMyPage apiUrl={apiUrl} cookies={cookies} />} />
-          <Route path="/tattooist/mypage/:tattooist_id" element={<MyPage apiUrl={apiUrl} cookies={cookies} />}>
+          <Route path="/tattooist/mypage/:tattooist_id" 
+            element={<MyPage apiUrl={apiUrl} cookies={cookies} setCookie={setCookie} />}>
           </Route>
+                    {/* parameter를 줄까말까... */}
+          <Route path="/tattooist/mypage/edit" 
+            element={<ProfileEdit apiUrl={apiUrl} cookies={cookies} setCookie={setCookie} />} />
 
           {/* User */}
         
           <Route path="/imgload" element={<ImgLoad apiUrl={apiUrl} cookies={cookies} />}></Route>
         
           {/* Tattoist */}
-          {/* <Route path='/tattooist/img_load' element={<ImgLoad 
-            apiUrl={apiUrl}
-            cookies={cookies} />} />
-          <Route path="/tattooist/drafts" element={<TattooistDrafts apiUrl={apiUrl} />} /> */}
 
           {/* Tattoo */}
           <Route path="/tattoo/best" element={<BestDrafts apiUrl={apiUrl} />} />
