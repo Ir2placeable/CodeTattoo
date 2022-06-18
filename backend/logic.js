@@ -178,6 +178,7 @@ exports.tattooistPage = async function(body, res) {
         res.send({ success : true, tattooist_info : tattooist_info })
     })
 }
+// prototype
 exports.tattooistEdit = async function(body, res) {
     const tattooist = await Tattooist.findOne({ _id : body.tattooist_id })
     if(!tattooist) {
