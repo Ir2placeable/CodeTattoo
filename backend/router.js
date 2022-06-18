@@ -61,6 +61,19 @@ server.post('/api/tattooist/mypage', (req, res) => {
     routing_to.tattooistPage(req.body, res)
         .catch(() => { console.log('tattooist page function error')})
 })
+// Page : 타투이스트 프로필 이미지 등록
+server.post('/api/tattooist/mypage/profile', (req, res) => {
+    console.log('tattooist page profile')
+    routing_to.tattooistProfile(req.body, res)
+        .catch(() => { console.log('tattooist page profile function error')})
+})
+// Page : 타투 예약 페이지
+server.post('api/reservation', (req, res) => {
+    console.log('tattoo reservation profile')
+    routing_to.reservation(req.body, res)
+        .catch(() => { console.log('tattoo reservation function error')})
+})
+
 
 
 // 관리자용 인터페이스 목록

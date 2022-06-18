@@ -171,11 +171,49 @@ exports.tattooistPage = async function(body, res) {
             specialize : tattooist.specialize,
             location : tattooist.office.location,
             contact : tattooist.office.contact,
-            drafts : draft_info_list
+            drafts : draft_info_list,
+            profile : tattooist.profile
         }
         console.log(tattooist.nickname, "타투이스트 마이페이지 입장")
         res.send({ success : true, tattooist_info : tattooist_info })
     })
+}
+exports.tattooistProfile = async function(body, res) {
+    const tattooist = await Tattooist.findOne({ _id : body.tattooist_id })
+    if(!tattooist) {
+        console.log('tattooist profile fail, no tattooist')
+        res.send({ success : false, message : 'no tattooist'})
+        return
+    }
+
+    body.image = await imageStorage.upload(body.image)
+    const new_profile = {
+        description : body.description,
+        image : body.image
+    }
+
+    await Tattooist.updateOne({ _id : body.tattooist_id }, {$set : { profile : new_profile }})
+
+    console.log(tattooist.nickname, "프로필 설정 완료")
+    res.send({ success : true })
+}
+exports.reservation = async function(body, res) {
+    const tattooist = await Tattooist.findOne({ _id : body.tattooist_id })
+    if(!tattooist) {
+        console.log('tattoo reservation fail, no tattooist')
+        res.send({ success : false, message : 'no tattooist'})
+        return
+    }
+    const user = await Tattooist.findOne({ _id : body.user_id })
+    if(!user) {
+        console.log('tattoo reservation fail, no user')
+        res.send({ success : false, message : 'no user'})
+        return
+    }
+
+    // blockchain transaction raise
+
+    res.send({ message : 'prototype'})
 }
 
 // 관리자용 함수
