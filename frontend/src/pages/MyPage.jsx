@@ -33,7 +33,7 @@ import MyPageText from './MyPageText';
 import MyPageMenuComp from './MyPageMenuComp';
 import ShowDraftList from './ShowDraftList';
 
-const MyPage = ({ apiUrl, cookies }) => {
+const MyPage = ({ apiUrl, cookies, setCookie }) => {
   const params = useParams();
   const [info, setInfo] = useState({
     nickname: '',
@@ -43,24 +43,29 @@ const MyPage = ({ apiUrl, cookies }) => {
     drafts: []
   });
 
+  const pushCookie = () => {
+    setCookie('nickname', info.nickname, {maxAge: 3000});
+    setCookie('specialize', info.specialize, {maxAge: 3000});
+    setCookie('address', info.location, {maxAge: 3000});
+    setCookie('contact', info.contact, {maxAge: 3000});
+  }
+
   const getMyPage = async() => {
     const res = await axios.post(`${apiUrl}/tattooist/mypage`, {
       tattooist_id: params.tattooist_id
     })
     console.log(res.data)
-    setInfo(res.data.tattooist_info);
-  };
-
-  const getDrafts = async() => {
-    const res = await axios.post(`${apiUrl}/tattooist/mypage/drafts`, {
-      tattooist_id: params.tattooist_id
-    })
-    console.log(res.data)
+    setInfo(res.data.tattooist_info)
+    
   }
 
   useEffect(() => {
     getMyPage();
   }, [])
+
+  useEffect(() => {
+    pushCookie();
+  }, [info])
 
   const [draftBtn, setDraftBtn] = useState(true);
 
@@ -74,9 +79,14 @@ const MyPage = ({ apiUrl, cookies }) => {
     navigate('/imgload');
   }
 
+  const onEdit = () => {
+    navigate('/tattooist/mypage/edit');
+  }
+
   const userMode = () => {
     navigate(`/user/mypage/${cookies.isTattooist}`)
   }
+
   return (
     <>
       <MyPageMainDiv>
@@ -111,7 +121,7 @@ const MyPage = ({ apiUrl, cookies }) => {
               </div>
             ) : (
               <div>
-                <MyPageButton onClick={onBooking} text={'편집하기'} />
+                <MyPageButton onClick={onEdit} text={'편집하기'} />
                 <MyPageButton onClick={userMode} text={'User Mode'} />
               </div>
             )}
@@ -133,24 +143,6 @@ const MyPage = ({ apiUrl, cookies }) => {
             ) : (
               <div></div>
             )}
-            
-
-            {/* <ImgBox>
-              <ImgHeartBox>
-                <HeartIcon size={28} />
-              </ImgHeartBox>
-              <MyPageDraftImg 
-                src={""}
-                alt={""}
-                width={'300px'}
-                height={'300px'} />
-              <ImgInfoDiv>
-                <TattooistImg>
-                  <FontAwesomeIcon style={ttIconStyle} icon={faUser} />
-                </TattooistImg>
-                <DraftTitle>도안 이름</DraftTitle>
-              </ImgInfoDiv>
-            </ImgBox> */}
 
             <ShowDraftList text={''} drafts={info.drafts} tattooist={true} />
 

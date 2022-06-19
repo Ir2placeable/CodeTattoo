@@ -192,6 +192,7 @@ cursor: pointer;
 export const EnrollDiv = styled.div`
 margin: 0 auto;
   padding: 60px;
+  min-height: 605px;
 `;
 
 export const EnrollBox = styled.div`
