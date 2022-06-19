@@ -15,13 +15,14 @@ const S3 = new AWS.S3({
     }
 })
 
-exports.upload = async function(body) {
+// params : { title, image(url), mime }
+exports.upload = async function(params) {
     return await S3.upload({
         Bucket : bucket_title,
-        Key : body.title,
+        Key : params.title,
         ACL : 'public-read',
-        Body : Buffer.from(body.image.data, 'base64'),
-        ContentType : body.image.mime
+        Body : Buffer.from(params.image, 'base64'),
+        ContentType : params.mime
     }).promise().then((data) => {
         return data.Location
     })
