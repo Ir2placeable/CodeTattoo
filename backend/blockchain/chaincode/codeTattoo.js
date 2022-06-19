@@ -9,7 +9,7 @@
 const { Chaincode } = require('fabric-contract-api');
 const { Tattoo } = require('./WorldStateSchema');
 
-class CC_codeTattoo extends Chaincode {
+class CodeTattoo extends Chaincode {
 
     // params : { customer_id }
     async newTattoo(cc, tattoo_id, params) {
@@ -145,5 +145,5 @@ class CC_codeTattoo extends Chaincode {
     }
 }
 
-module.exports = CC_codeTattoo;
+module.exports = CodeTattoo;
 

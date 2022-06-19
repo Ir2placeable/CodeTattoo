@@ -87,7 +87,9 @@ exports.newDraft = async function(body, res) {
         return
     }
 
-    body.image.url = await imageStorage.upload(body)
+    const params = { title : body.title, image : body.image.data, mime : body.image.mime }
+
+    body.image.url = await imageStorage.upload(params)
     body.timestamp = Math.round(Date.now()/1000)
     const new_draft = new Draft(body);
 
@@ -178,6 +180,10 @@ exports.tattooistPage = async function(body, res) {
         res.send({ success : true, tattooist_info : tattooist_info })
     })
 }
+// prototype
+// body : { tattooist_id, edit_data }
+// edit_data : { nickname, specialize, office, profile }
+// profile : { description, image }
 exports.tattooistEdit = async function(body, res) {
     const tattooist = await Tattooist.findOne({ _id : body.tattooist_id })
     if(!tattooist) {
@@ -186,17 +192,18 @@ exports.tattooistEdit = async function(body, res) {
         return
     }
 
-    body.image = await imageStorage.upload(body.image)
-    const new_profile = {
-        description : body.description,
-        image : body.image
-    }
+    const params = { title : body.tattooist_id, image : body.edit_data.profile.image, mime : body.edit_data.profile.mime}
+    body.edit_data.profile.image = await imageStorage.upload(params)
 
-    await Tattooist.updateOne({ _id : body.tattooist_id }, {$set : { profile : new_profile }})
+    await Tattooist.updateOne({ _id : body.tattooist_id }, {$set :
+            { nickname : body.edit_data.nickname, specialize : body.edit_data.specialize,
+                office : body.edit_data.office, profile : body.edit_data.profile }})
 
     console.log(tattooist.nickname, "프로필 설정 완료")
     res.send({ success : true })
 }
+
+// body : { user_id, tattooist_id, using_items }
 exports.reservation = async function(body, res) {
     const tattooist = await Tattooist.findOne({ _id : body.tattooist_id })
     if(!tattooist) {
