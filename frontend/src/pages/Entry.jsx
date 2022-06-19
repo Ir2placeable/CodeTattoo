@@ -25,7 +25,7 @@ const Entry = ({ cookies }) => {
   const navigate = useNavigate();
 
   const goUploadImage = () => {
-    navigate('/tattooist/img_load');
+    navigate('/imgload');
   }
 
   const goDrafts = () => {

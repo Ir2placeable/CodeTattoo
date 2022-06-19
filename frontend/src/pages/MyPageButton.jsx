@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { MyPageBtn, MyPageBtnHoverStyle } from '../styledComponents';
 
-const MyPageButton = ({ text, onClick }) => {
+
+const MyPageButton = ({ text, onClick, icon }) => {
   const [isHover, setIsHover] = useState(false);
 
   const onHover = () => {

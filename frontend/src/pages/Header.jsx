@@ -35,12 +35,19 @@ const Header = ({ cookies, removeCookie }) => {
   const goTattooistEnroll = () => {
     navigate('/tattooist_enrollment');
   }
-  const goLogout = () => {
+  const goLogout = async() => {
     alert('로그아웃 하시겠습니까?');
-    removeCookie('user_id');
-    removeCookie('name');
-    removeCookie('location');
-    removeCookie('isTattooist');
+
+    const keys = Object.keys(cookies);
+    console.log(keys)
+    for(let i=0; i<keys.length; i++){
+      removeCookie(keys[i]);
+    }
+    const keys2 = Object.keys(cookies);
+    console.log(keys2)
+    for(let i=0; i<keys2.length; i++){
+      removeCookie(keys2[i]);
+    }
     window.location.replace('/');
   }
 

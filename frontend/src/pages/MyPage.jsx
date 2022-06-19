@@ -8,6 +8,7 @@ import {
   MyPageMainDiv,
   MyPageInfoDiv,
   UserImgDiv,
+  UserImg,
   userIconStyle,
   ttIconStyle,
   MyPageLine,
@@ -40,14 +41,20 @@ const MyPage = ({ apiUrl, cookies, setCookie }) => {
     specialize: '',
     location: '',
     contact: '',
-    drafts: []
+    drafts: [],
+    profile: {
+      description: '',
+      image: ''
+    }
   });
 
   const pushCookie = () => {
-    setCookie('nickname', info.nickname, {maxAge: 3000});
-    setCookie('specialize', info.specialize, {maxAge: 3000});
-    setCookie('address', info.location, {maxAge: 3000});
-    setCookie('contact', info.contact, {maxAge: 3000});
+    setCookie('nickname', info.nickname, {maxAge: 3000, path: '/'});
+    setCookie('specialize', info.specialize, {maxAge: 3000, path: '/'});
+    setCookie('address', info.location, {maxAge: 3000, path: '/'});
+    setCookie('contact', info.contact, {maxAge: 3000, path: '/'});
+    setCookie('description', info.profile.description, {maxAge: 3000, path: '/'});
+    setCookie('image', info.profile.image, {maxAge: 3000, path: '/'});
   }
 
   const getMyPage = async() => {
@@ -56,11 +63,11 @@ const MyPage = ({ apiUrl, cookies, setCookie }) => {
     })
     console.log(res.data)
     setInfo(res.data.tattooist_info)
-    
   }
 
   useEffect(() => {
     getMyPage();
+    //console.log(Object.keys(cookies))
   }, [])
 
   useEffect(() => {
@@ -80,7 +87,8 @@ const MyPage = ({ apiUrl, cookies, setCookie }) => {
   }
 
   const onEdit = () => {
-    navigate('/tattooist/mypage/edit');
+    window.location.replace(`/tattooist/mypage/edit/${cookies.isTattooist}`);
+    // navigate(`/tattooist/mypage/edit/${cookies.isTattooist}`);
   }
 
   const userMode = () => {
@@ -94,7 +102,13 @@ const MyPage = ({ apiUrl, cookies, setCookie }) => {
         {/* User Information Section */}
         <MyPageInfoDiv>
           <UserImgDiv>
-            <FontAwesomeIcon style={userIconStyle} icon={faUser} />
+            {info.profile.image ? (
+              <div>
+                <UserImg src={info.profile.image} />
+              </div>
+            ):(
+              <FontAwesomeIcon style={userIconStyle} icon={faUser} />
+            )}
           </UserImgDiv>
 
           <MyPageText
@@ -102,7 +116,8 @@ const MyPage = ({ apiUrl, cookies, setCookie }) => {
               [{name: 'Tattooist', desc: info.nickname},
               {name: 'Specialize', desc: info.specialize},
               {name: 'Location', desc: info.location},
-              {name: 'Contact', desc: info.contact}]}
+              {name: 'Contact', desc: info.contact},
+              {name: 'Description', desc: info.profile.description}]}
           />
 
           <MyPageLine />
@@ -132,7 +147,6 @@ const MyPage = ({ apiUrl, cookies, setCookie }) => {
 
       
         {/* Contens Section */}
-        {/* <EmptyDraftBox>아직 도안이 없습니다.</EmptyDraftBox> */}
         { draftBtn ? (
           <MyPageContentDiv>
 
@@ -145,19 +159,12 @@ const MyPage = ({ apiUrl, cookies, setCookie }) => {
             )}
 
             <ShowDraftList text={''} drafts={info.drafts} tattooist={true} />
-
-            {/* <ImgLoad /> */}
-            {/* <ImgLoad apiUrl={apiUrl} cookies={cookies} /> */}
-            {/* <Routes>
-              <Route path='/img_load' element={<ImgLoad apiUrl={apiUrl} cookies={cookies} />} />
-            </Routes> */}
             
           </MyPageContentDiv>
         ) : (
           <div>Calendar 영역</div>
         )}
 
-      {/* <Outlet /> */}
       </MyPageMainDiv> 
     </>
   );

@@ -59,8 +59,8 @@ const Login = ({ apiUrl, setCookie }) => {
     if(res.data.success){
       pushCookie(res.data.user_info);
       console.log('쿠키 저장 성공')
-      alert('로그인 되었습니다.')
       window.location.replace('/');
+      alert('로그인 되었습니다.')
     } else {
       window.location.replace('/login');
       alert('Login 정보가 잘못되었습니다. 다시 시도해주세요.')

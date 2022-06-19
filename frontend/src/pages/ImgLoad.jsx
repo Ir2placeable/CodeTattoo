@@ -67,13 +67,14 @@ const ImgLoad = ({ apiUrl, cookies }) => {
     }
     //console.log(body)
     const res = await axios.post(`${apiUrl}/draft/create`, body);
-    //console.log(res);
+    console.log(res);
   }
 
   const navigate = useNavigate();
   const onSubmit = () => {
     sendRequest();
-    navigate(`/tattooist/mypage/${cookies.isTattooist}`);
+    // navigate(`/tattooist/mypage/${cookies.isTattooist}`);
+    window.location.replace(`/tattooist/mypage/${cookies.isTattooist}`);
   }
   return (
     <>

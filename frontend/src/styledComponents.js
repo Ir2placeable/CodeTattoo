@@ -460,7 +460,7 @@ align-items: center;
 `
 
 export const MyPageInfoDiv = styled.div`
-height: 150px;
+height: 200px;
 width: 100%;
 
 display: flex;
@@ -480,11 +480,18 @@ background-color: white;
 margin-left: 50px;
 
 text-align: center;
+overflow: hidden;
 `
 
 export const UserIcon = styled.i`
 font-size: 70px;
 line-height: 100px;
+`
+
+export const UserImg = styled.img`
+width: 100px;
+height: 100px;
+object-fit: contain;
 `
 
 export const userIconStyle = {
@@ -507,7 +514,6 @@ export const UserTextUl = styled.ul`
 export const UserTextLi = styled.li`
 font-weight: bold;
 margin-bottom: 10px;
-list-style-type: disc;
 `
 
 export const MyPageLine = styled.div`

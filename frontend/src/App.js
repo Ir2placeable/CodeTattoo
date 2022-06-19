@@ -28,7 +28,18 @@ const apiUrl = APIURL;
 
 const App = () => {
   const [cookies, setCookie, removeCookie] = useCookies([
-    'user_id', 'name', 'location', 'isTattooist']);
+    'user_id', 'name', 'location', 'isTattooist',
+    'nickname', 'specialize', 'address', 'contact', 'description', 'image',
+    'user_desc', 'user_image'
+  ]);
+
+  // useEffect(() => {
+  //   console.log(Object.keys(cookies))
+  //   const keys = Object.keys(cookies)
+  //   for(let i=0; i<keys.length; i++){
+  //     removeCookie(keys[i]);
+  //   }
+  // }, []);
 
   return (
     <div className='main-font'>
@@ -54,13 +65,13 @@ const App = () => {
             setCookie={setCookie} />} />
 
           {/* My Page */}
-          <Route path="/user/mypage/:user_id" element={<UserMyPage apiUrl={apiUrl} cookies={cookies} />} />
+          <Route path="/user/mypage/:user_id" element={<UserMyPage apiUrl={apiUrl} cookies={cookies} setCookie={setCookie} />} />
           <Route path="/tattooist/mypage/:tattooist_id" 
             element={<MyPage apiUrl={apiUrl} cookies={cookies} setCookie={setCookie} />}>
           </Route>
-                    {/* parameter를 줄까말까... */}
-          <Route path="/tattooist/mypage/edit" 
-            element={<ProfileEdit apiUrl={apiUrl} cookies={cookies} setCookie={setCookie} />} />
+                    
+          <Route path="/tattooist/mypage/edit/:tattooist_id" 
+            element={<ProfileEdit apiUrl={apiUrl} cookies={cookies} setCookie={setCookie} removeCookie={removeCookie} />} />
 
           {/* User */}
         

@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import ProfileImage from './ProfileImage';
+import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import { 
   MyPageMainDiv,
@@ -14,7 +15,8 @@ import {
   EnrollBtn,
 } from '../styledComponents';
 
-const ProfileEdit = ({ apiUrl, cookies, setCookie }) => {
+const ProfileEdit = ({ apiUrl, cookies, setCookie, removeCookie }) => {
+  const params = useParams();
   const [src, setSrc] = useState(null);
   const [image, setImage] = useState({
     width: 300,
@@ -26,10 +28,11 @@ const ProfileEdit = ({ apiUrl, cookies, setCookie }) => {
     nickname: cookies.nickname,
     specialize: cookies.specialize,
     address: cookies.address,
-    contact: cookies.contact
+    contact: cookies.contact,
+    description: cookies.description
   })
 
-  const { nickname, specialize, address, contact } = input;
+  const { nickname, specialize, address, contact, description } = input;
 
   const onChange = (e) => {
     const { name, value } = e.target;
@@ -48,7 +51,7 @@ const ProfileEdit = ({ apiUrl, cookies, setCookie }) => {
         contact: contact
       },
       profile: {
-        description: '',
+        description: description,
         image: image
       }
     }
@@ -58,9 +61,18 @@ const ProfileEdit = ({ apiUrl, cookies, setCookie }) => {
     })
     console.log(res);
   }
+  const removeCookies = () => {
+    removeCookie('specialize', {path: '/tattooist/mypage'})
+    removeCookie('nickname', {path: '/tattooist/mypage'})
+    removeCookie('address', {path: '/tattooist/mypage'})
+    removeCookie('contact', {path: '/tattooist/mypage'})
+    removeCookie('image', {path: '/tattooist/mypage'})
+    removeCookie('description', {path: '/tattooist/mypage'})
+  }
 
   const onSubmit = () => {
     sendRequest();
+    //removeCookies();
     window.location.replace(`/tattooist/mypage/${cookies.isTattooist}`);
   }
 
@@ -72,6 +84,21 @@ const ProfileEdit = ({ apiUrl, cookies, setCookie }) => {
         <EnrollUl>
           <EnrollText>Profile Image</EnrollText>
           <ProfileImage src={src} setSrc={setSrc} image={image} setImage={setImage} />
+        </EnrollUl>
+
+        <EnrollUl>
+          <EnrollText>Profile Description</EnrollText>
+          
+          <EnrollLi>
+            <EnrollLabel>자기소개
+              <EnrollInput
+                type="text"
+                name="description"
+                value={description}
+                onChange={onChange}
+                 />
+            </EnrollLabel>
+          </EnrollLi>
         </EnrollUl>
         <EnrollUl>
           <EnrollText>Information</EnrollText>
@@ -131,4 +158,4 @@ const ProfileEdit = ({ apiUrl, cookies, setCookie }) => {
   );
 };
 
-export default ProfileEdit;
+export default React.memo(ProfileEdit);
