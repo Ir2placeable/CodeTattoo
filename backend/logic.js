@@ -179,6 +179,10 @@ exports.tattooistPage = async function(body, res) {
     })
 }
 // prototype
+// body : { tattooist_id, edit_data }
+// edit_data : { nickname, specialize, office, profile }
+// profile : { description, image }
+
 exports.tattooistEdit = async function(body, res) {
     const tattooist = await Tattooist.findOne({ _id : body.tattooist_id })
     if(!tattooist) {
@@ -187,13 +191,11 @@ exports.tattooistEdit = async function(body, res) {
         return
     }
 
-    body.image = await imageStorage.upload(body.image)
-    const new_profile = {
-        description : body.description,
-        image : body.image
-    }
+    body.edit_data.profile.image = await imageStorage.upload(body.edit_data.profile.image)
 
-    await Tattooist.updateOne({ _id : body.tattooist_id }, {$set : { profile : new_profile }})
+    await Tattooist.updateOne({ _id : body.tattooist_id}, {$set :
+            { nickname : body.edit_data.nickname, specialize : body.edit_data.specialize,
+                office : body.edit_data.office, profile : body.edit_data.profile }})
 
     console.log(tattooist.nickname, "프로필 설정 완료")
     res.send({ success : true })
