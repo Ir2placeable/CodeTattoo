@@ -15,7 +15,7 @@ const S3 = new AWS.S3({
     }
 })
 
-// params : { title, image(url), mime }
+// params : { title, image, mime }
 exports.upload = async function(params) {
     return await S3.upload({
         Bucket : bucket_title,

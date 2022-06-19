@@ -88,6 +88,7 @@ exports.newDraft = async function(body, res) {
     }
 
     const params = { title : body.title, image : body.image.data, mime : body.image.mime }
+
     body.image.url = await imageStorage.upload(params)
     body.timestamp = Math.round(Date.now()/1000)
     const new_draft = new Draft(body);
@@ -194,7 +195,7 @@ exports.tattooistEdit = async function(body, res) {
     const params = { title : body.tattooist_id, image : body.edit_data.profile.image, mime : body.edit_data.profile.mime}
     body.edit_data.profile.image = await imageStorage.upload(params)
 
-    await Tattooist.updateOne({ _id : body.tattooist_id}, {$set :
+    await Tattooist.updateOne({ _id : body.tattooist_id }, {$set :
             { nickname : body.edit_data.nickname, specialize : body.edit_data.specialize,
                 office : body.edit_data.office, profile : body.edit_data.profile }})
 

@@ -3,26 +3,19 @@ const fs = require('fs');
 const path = require('path');
 
 const channel_title = 'mychannel'
+const ccpPath = path.resolve(__dirname, '/blockchain', 'connection-org1.json');
+const ccp = JSON.parse(fs.readFileSync(ccpPath, 'utf8'));
+const walletPath = path.join(process.cwd(), 'wallet');
+const wallet = await Wallets.newFileSystemWallet(walletPath);
+const identity = await wallet.get('appUser');
+if (!identity) {
+    console.log('An identity for the user "appUser" does not exist in the wallet');
+    console.log('Run the registerUser.js application before retrying');
+    return;
+}
 
-exports.retrieve = async function(params) {
+exports.query = async function(params) {
     try {
-        // load the network configuration
-        const ccpPath = path.resolve(__dirname, '..', 'connection-org1.json');
-        const ccp = JSON.parse(fs.readFileSync(ccpPath, 'utf8'));
-
-        // Create a new file system based wallet for managing identities.
-        const walletPath = path.join(process.cwd(), 'wallet');
-        const wallet = await Wallets.newFileSystemWallet(walletPath);
-        console.log(`Wallet path: ${walletPath}`);
-
-        // Check to see if we've already enrolled the user.
-        const identity = await wallet.get('appUser');
-        if (!identity) {
-            console.log('An identity for the user "appUser" does not exist in the wallet');
-            console.log('Run the registerUser.js application before retrying');
-            return;
-        }
-
         // Create a new gateway for connecting to our peer node.
         const gateway = new Gateway();
         await gateway.connect(ccp, { wallet, identity: 'appUser', discovery: { enabled: true, asLocalhost: true } });
@@ -31,7 +24,7 @@ exports.retrieve = async function(params) {
         const network = await gateway.getNetwork(channel_title);
 
         // Get the contract from the network.
-        const contract = network.getContract('CC_codeTattoo');
+        const contract = network.getContract('codeTattoo');
 
         // Evaluate the specified transaction.
         const result = await contract.evaluateTransaction(getTattooLatest, params);
@@ -45,25 +38,8 @@ exports.retrieve = async function(params) {
         process.exit(1);
     }
 }
-exports.retrieveAll = async function(params) {
+exports.queryAll = async function(params) {
     try {
-        // load the network configuration
-        const ccpPath = path.resolve(__dirname, '..', 'connection-org1.json');
-        const ccp = JSON.parse(fs.readFileSync(ccpPath, 'utf8'));
-
-        // Create a new file system based wallet for managing identities.
-        const walletPath = path.join(process.cwd(), 'wallet');
-        const wallet = await Wallets.newFileSystemWallet(walletPath);
-        console.log(`Wallet path: ${walletPath}`);
-
-        // Check to see if we've already enrolled the user.
-        const identity = await wallet.get('appUser');
-        if (!identity) {
-            console.log('An identity for the user "appUser" does not exist in the wallet');
-            console.log('Run the registerUser.js application before retrying');
-            return;
-        }
-
         // Create a new gateway for connecting to our peer node.
         const gateway = new Gateway();
         await gateway.connect(ccp, { wallet, identity: 'appUser', discovery: { enabled: true, asLocalhost: true } });
@@ -72,7 +48,7 @@ exports.retrieveAll = async function(params) {
         const network = await gateway.getNetwork(channel_title);
 
         // Get the contract from the network.
-        const contract = network.getContract('CC_codeTattoo');
+        const contract = network.getContract('codeTattoo');
 
         // Evaluate the specified transaction.
         const result = await contract.evaluateTransaction(getTattooHistory, params);
@@ -86,26 +62,8 @@ exports.retrieveAll = async function(params) {
         process.exit(1);
     }
 }
-
-exports.save = async function(function_name, params) {
+exports.invoke = async function(function_name, params) {
     try {
-        // load the network configuration
-        const ccpPath = path.resolve(__dirname, 'config', 'connection-org1.json');
-        let ccp = JSON.parse(fs.readFileSync(ccpPath, 'utf8'));
-
-        // Create a new file system based wallet for managing identities.
-        const walletPath = path.join(process.cwd(), 'wallet');
-        const wallet = await Wallets.newFileSystemWallet(walletPath);
-        console.log(`Wallet path: ${walletPath}`);
-
-        // Check to see if we've already enrolled the user.
-        const identity = await wallet.get('appUser');
-        if (!identity) {
-            console.log('An identity for the user "appUser" does not exist in the wallet');
-            console.log('Run the registerUser.js application before retrying');
-            return;
-        }
-
         // Create a new gateway for connecting to our peer node.
         const gateway = new Gateway();
         await gateway.connect(ccp, { wallet, identity: 'appUser', discovery: { enabled: true, asLocalhost: true } });
@@ -114,7 +72,7 @@ exports.save = async function(function_name, params) {
         const network = await gateway.getNetwork(channel_title);
 
         // Get the contract from the network.
-        const contract = network.getContract('CC_codeTattoo');
+        const contract = network.getContract('codeTattoo');
 
         await contract.submitTransaction(function_name, params);
         console.log('Transaction has been submitted');
