@@ -3,3 +3,5 @@ backend/node_modules/
 backend/config/
 
 backend/blockchainFiles/node_modules/
+
+testplace/

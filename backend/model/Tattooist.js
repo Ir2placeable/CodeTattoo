@@ -1,17 +1,5 @@
 const mongoose = require('mongoose');
 
-const office = mongoose.Schema({
-    name : {
-        type : String
-    },
-    location : {
-        type : String
-    },
-    contact : {
-        type : String
-    }
-})
-
 const tattooistSchema = mongoose.Schema({
     nickname : {
         type : String
@@ -20,7 +8,15 @@ const tattooistSchema = mongoose.Schema({
         type : String
     },
     office : {
-        type : office
+        name : {
+            type : String
+        },
+        location : {
+            type : String
+        },
+        contact : {
+            type : String
+        }
     },
     // 실제 수행한 작업물
     artworks : {
