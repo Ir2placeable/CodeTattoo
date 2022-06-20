@@ -9,6 +9,7 @@ server.use(bodyParser.json());
 server.use(bodyParser.urlencoded({ extends : true }))
 server.use(cors());
 
+
 // Page : entry
 server.get('/api', (req, res) => {
     console.log('entry page')
