@@ -8,11 +8,12 @@ import {
   faArrowRight,
 } from '@fortawesome/free-solid-svg-icons';
 import axios from 'axios';
+import { PageDiv, PageBox, CurrentPage } from '../styledComponents'
 
 const Pagination = ({ apiUrl, page, setPage, pages, setPages }) => {
   const getPageNum = async() => {
     const res = await axios.get(`${apiUrl}/draft/browse/init/1`);
-    console.log(res.data.count);
+    //console.log(res.data.count);
     const count = res.data.count;
     const lastPage = Math.ceil(count / 16);
     const tempPages = [];
@@ -24,45 +25,52 @@ const Pagination = ({ apiUrl, page, setPage, pages, setPages }) => {
   }
 
   useEffect(() => {
-    console.log('get page count')
+    //console.log('get page count')
     getPageNum();
   }, []);
 
   return (
     <>
+    <PageDiv>
+        <CurrentPage> {page} / {pages.length} </CurrentPage>
+    </PageDiv>
+    
+    <PageDiv>
       {/* 현재 페이지가 1보다 크면 ArrowLeft 보여주기 */}
       { page > 1 ? (
-        <div onClick={()=>{
+        <PageBox onClick={()=>{
           if(page > 1){
             setPage(page-1);
           }
         }}>
           <FontAwesomeIcon icon={faArrowLeft} />
-        </div>
+        </PageBox>
       ) : (
         <div></div>
       )}
 
       {/* pagination */}
       {pages.map(pageNum => (
-        <div key={pageNum} onClick={()=>{setPage(pageNum)}}>
+        <PageBox key={pageNum} onClick={()=>{setPage(pageNum)}}>
           {pageNum}
-        </div>
+        </PageBox>
       ))}
 
 
       {/* ArrowRight */}
       {page < pages.length ? (
-        <div onClick={() => {
+        <PageBox onClick={() => {
           if(page < pages.length){
             setPage(page+1);
           }
         }}>
           <FontAwesomeIcon icon={faArrowRight} />
-        </div>
+        </PageBox>
       ) : (
         <div></div>
       )}
+    </PageDiv>
+
     </>
   );
 };

@@ -23,6 +23,8 @@ import MyPage from './pages/MyPage';
 import { APIURL } from './config/key';
 import UserMyPage from './pages/UserMyPage';
 import ProfileEdit from './pages/ProfileEdit';
+import TattooistList from './pages/TattooistList';
+import ShowPostList from './pages/ShowPostList';
 
 const apiUrl = APIURL;
 
@@ -78,6 +80,7 @@ const App = () => {
           <Route path="/imgload" element={<ImgLoad apiUrl={apiUrl} cookies={cookies} />}></Route>
         
           {/* Tattoist */}
+          <Route path="/tattooists" element={<TattooistList apiUrl={apiUrl} cookies={cookies}  />} />
 
           {/* Tattoo */}
           <Route path="/tattoo/best" element={<BestDrafts apiUrl={apiUrl} />} />
@@ -85,6 +88,7 @@ const App = () => {
           <Route path="/tattoo/all" element={<AllDrafts apiUrl={apiUrl} />} />
 
           {/* Board */}
+          <Route path="/board" element={<ShowPostList apiUrl={apiUrl} />} />
         </Routes>
 
       </EntrySection>

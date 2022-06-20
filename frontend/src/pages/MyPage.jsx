@@ -33,6 +33,7 @@ import axios from 'axios';
 import MyPageText from './MyPageText';
 import MyPageMenuComp from './MyPageMenuComp';
 import ShowDraftList from './ShowDraftList';
+import CalendarComp from './CalendarComp';
 
 const MyPage = ({ apiUrl, cookies, setCookie }) => {
   const params = useParams();
@@ -61,7 +62,11 @@ const MyPage = ({ apiUrl, cookies, setCookie }) => {
     const res = await axios.post(`${apiUrl}/tattooist/mypage`, {
       tattooist_id: params.tattooist_id
     })
-    console.log(res.data)
+    console.log(res.data.tattooist_info.drafts)
+    const sorted_drafts = res.data.tattooist_info.drafts.sort(function(a, b){
+      return -(a.timestamp - b.timestamp)
+    })
+    console.log('sort: ',sorted_drafts)
     setInfo(res.data.tattooist_info)
   }
 
@@ -122,7 +127,8 @@ const MyPage = ({ apiUrl, cookies, setCookie }) => {
 
           <MyPageLine />
 
-          <MyPageMenuComp text1={'Drafts'} text2={'Calendar'} />
+          <MyPageMenuComp text1={'Drafts'} text2={'Calendar'}
+          draftBtn={draftBtn} setDraftBtn={setDraftBtn} />
 
           <ForTattooistDiv>
             {/* User 면 예약하기 & 하트 이모티콘 보여주고 */}
@@ -159,10 +165,12 @@ const MyPage = ({ apiUrl, cookies, setCookie }) => {
             )}
 
             <ShowDraftList text={''} drafts={info.drafts} tattooist={true} />
-            
           </MyPageContentDiv>
         ) : (
-          <div>Calendar 영역</div>
+          <MyPageContentDiv>
+            캘린더 영역
+            <CalendarComp />
+          </MyPageContentDiv>
         )}
 
       </MyPageMainDiv> 

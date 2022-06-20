@@ -6,8 +6,7 @@ import {
 } from '../styledComponents';
 import { useState } from 'react';
 
-const MyPageMenuComp = ({text1, text2 }) => {
-  const [draftBtn, setDraftBtn] = useState(true);
+const MyPageMenuComp = ({text1, text2, draftBtn, setDraftBtn }) => {
 
   const onClick1 = () => {
     setDraftBtn(true)
