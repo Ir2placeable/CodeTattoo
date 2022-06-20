@@ -9,34 +9,80 @@ server.use(bodyParser.json());
 server.use(bodyParser.urlencoded({ extends : true }))
 server.use(cors());
 
-// 엔트리 기능
-server.get('/api', (req, res) => {
+// 엔트리 페이지 기능
+server.get('/', (req, res) => {
     console.log('entry page')
     routing_to.entry(res)
 })
-server.post('/api/register', (req, res) => {
+server.post('/register', (req, res) => {
     console.log('register page')
     routing_to.register(req.body, res)
         .catch(() => { console.log('register function error')})
 })
-server.post('/api/login', (req, res) => {
+server.post('/login', (req, res) => {
     console.log('login page')
     routing_to.login(req.body, res)
         .catch(() => { console.log('login function error')})
 })
 
-// // 유저 기능
-// server.post('/api/user/mypage', (req, res) => {
-//
-// })
-// server.post('/api/user/mypage/edit', (req, res) => {
-//
-// })
+// 유저 기능
+server.get('/user/my-page', (req, res) => {
 
+})
+server.put('/user/my-page', (req, res) => {
+
+})
+server.post('/user/like', (req, res) => {
+
+})
+server.post('/user/follow', (req, res) => {
+
+})
+server.get('/user/my-tattoo', (req, res) => {
+
+})
 
 // 타투이스트 기능
+server.get('/tattooist', (req, res) => {
 
-// 타투시술 기능
+})
+server.post('/tattooist', (req, res) => {
+
+})
+server.get('/tattooist/my-page', (req, res) => {
+
+})
+server.put('/tattooist/my-page', (req, res) => {
+
+})
+
+// 도안 기능
+server.post('/draft', (req, res) => {
+
+})
+server.get('/draft/:filter/:page', (req, res) => {
+
+})
+
+// 타투 기능
+server.post('/imprint/reservation', (req, res) => {
+
+})
+server.post('/imprint', (req, res) => {
+
+})
+server.put('/imprint', (req, res) => {
+
+})
+server.post('/remove/reservation', (req, res) => {
+
+})
+server.post('/remove', (req, res) => {
+
+})
+server.put('/remove', (req, res) => {
+
+})
 
 // 타투제거 기능
 server.post('/api/tattooist/enrollment', (req, res) => {
