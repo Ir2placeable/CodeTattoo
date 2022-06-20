@@ -2,6 +2,4 @@ backend/node_modules/
 
 backend/config/
 
-backend/blockchain/key/
-
-.idea/
+backend/blockchainFiles/node_modules/

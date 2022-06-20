@@ -40,6 +40,9 @@ const tattooistSchema = mongoose.Schema({
         image : {
             type : String
         }
+    },
+    followers : {
+        type : Number
     }
 })
 

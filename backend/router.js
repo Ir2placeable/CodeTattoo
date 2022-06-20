@@ -68,23 +68,45 @@ server.post('/api/tattooist/mypage/edit', (req, res) => {
         .catch(() => { console.log('tattooist page edit function error')})
 })
 // Page : 타투 예약 페이지
-server.post('api/reservation', (req, res) => {
+server.post('/api/reservation', (req, res) => {
     console.log('tattoo reservation profile')
     routing_to.reservation(req.body, res)
         .catch(() => { console.log('tattoo reservation function error')})
 })
-
-
-
-// 관리자용 인터페이스 목록
-server.post('/users', (req, res) => {
-    routing_to.users(req.body, res)
+// Page : 타투이스트 리스트 보기
+server.post('/api/tattooist/list', (req, res) => {
+    console.log('tattooist list')
+    routing_to.tattooists(res)
+        .catch(() => { console.log('tattooist list function error')})
 })
-server.post('/tattooists', (req, res) => {
-    routing_to.tattooists(req.body, res)
+
+server.post('/api/tattoo/imprint/start', (req, res) => {
+    routing_to.imprintStart(req.body, res)
+        .catch(() => { console.log('tattoo imprint start function error')})
 })
-server.post('/drafts', (req, res) => {
-    routing_to.drafts(req.body, res)
+server.post('/api/tattoo/imprint/end', (req, res) => {
+    routing_to.imprintEnd(req.body, res)
+        .catch(() => { console.log('tattoo imprint end function error')})
+})
+server.post('/api/tattoo/remove/start', (req, res) => {
+    routing_to.removeStart(req.body, res)
+        .catch(() => { console.log('tattoo remove start function error')})
+})
+server.post('/api/tattoo/remove/end', (req, res) => {
+    routing_to.removeEnd(req.body, res)
+        .catch(() => { console.log('tattoo remove end function error')})
+})
+server.post('/api/tattoo/side_effect', (req, res) => {
+    routing_to.addSideEffect(req.body, res)
+        .catch(() => { console.log('add Side effect function error')})
+})
+server.post('/api/tattoo/info', (req, res) => {
+    routing_to.tattooInfo(req.body, res)
+        .catch(() => { console.log('tattoo info function error')})
+})
+server.post('/api/tattoo/history', (req, res) => {
+    routing_to.tattooHistory(req.body, res)
+        .catch(() => { console.log('tattoo history function error')})
 })
 
 

@@ -1,6 +1,8 @@
-const {User} = require("./model/User.js")
+const {User} = require("./model/User")
 const {Tattooist} = require("./model/Tattooist")
 const {Draft} = require('./model/Draft')
+const {Tattoo} = require('./model/Tattoo')
+const blockchain = require('./blockchainFiles/blockchain')
 
 const mongoose = require("mongoose");
 const config = require('./config/key')
@@ -180,10 +182,6 @@ exports.tattooistPage = async function(body, res) {
         res.send({ success : true, tattooist_info : tattooist_info })
     })
 }
-// prototype
-// body : { tattooist_id, edit_data }
-// edit_data : { nickname, specialize, office, profile }
-// profile : { description, image }
 exports.tattooistEdit = async function(body, res) {
     const tattooist = await Tattooist.findOne({ _id : body.tattooist_id })
     if(!tattooist) {
@@ -202,8 +200,6 @@ exports.tattooistEdit = async function(body, res) {
     console.log(tattooist.nickname, "프로필 설정 완료")
     res.send({ success : true })
 }
-
-// body : { user_id, tattooist_id, using_items }
 exports.reservation = async function(body, res) {
     const tattooist = await Tattooist.findOne({ _id : body.tattooist_id })
     if(!tattooist) {
@@ -218,18 +214,57 @@ exports.reservation = async function(body, res) {
         return
     }
 
-    // blockchain transaction raise
 
     res.send({ message : 'prototype'})
 }
+exports.tattooists = async function(res) {
+    await Tattooist.find().sort({ followers : -1 })
+        .then((tattooists) => { res.send({ success : true, tattooist_list : tattooists })})
+}
 
-// 관리자용 함수
-exports.users = function(body, res) {
-    User.find().then(result => { res.send(result) })
+exports.imprintStart = async function(body, res) {
+    const new_tattoo = new Tattoo()
+    new_tattoo.owner_id = body.user_id;
+
+    // new_tattoo.save()
+    // await User.updateOne({ _id : body.user_id }, {$push : { tattoos : new_tattoo }})
+
+    await blockchain.invoke('newTattoo', new_tattoo._id, body.user_id)
+
+    const procedure = [ body.tattooist_id, body.using_items, Math.round(Date.now()/1000) ]
+    await blockchain.invoke('startImprint', new_tattoo._id, procedure)
+
+    res.send({ success : true, tattoo_id : new_tattoo._id })
 }
-exports.tattooists = function(body, res) {
-    Tattooist.find().then(result => {res.send(result) })
+exports.imprintEnd = async function(body, res) {
+    const procedure = [ body.tattooist_id ]
+    await blockchain.invoke('endImprint', body.tattoo_id, procedure)
+
+    res.send({ success : true })
 }
-exports.drafts = function(body, res) {
-    Draft.find().then(result => { res.send(result) })
+exports.removeStart = async function(body, res) {
+    const procedure = [ body.hospital_id, body.using_items, Math.round(Date.now()/1000) ]
+    await blockchain.invoke('startRemove', body.tattoo_id, procedure)
+
+    res.send({ success : true })
+}
+exports.removeEnd = async function(body, res) {
+    const procedure = [ body.hospital_id ]
+    await blockchain.invoke('endRemove', body.tattoo_id, procedure)
+
+    res.send({ success : true })
+}
+exports.addSideEffect = async function(body, res) {
+    const side_effect = [ body.activator_id, body.symptom ]
+    await blockchain.invoke('addSideEffect', body.tattoo_id, side_effect)
+
+    res.send({ success : true })
+}
+exports.tattooInfo = async function(body, res) {
+    const tattoo_info = await blockchain.query(body.tattoo_id)
+    res.send({ success : true, tattoo_info : tattoo_info })
+}
+exports.tattooHistory = async function(body, res) {
+    const tattoo_history = await blockchain.history(body.tattoo_id)
+    res.send({ success : true, tattoo_history : tattoo_history })
 }
