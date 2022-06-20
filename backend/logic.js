@@ -1,6 +1,7 @@
 const {User} = require("./model/User.js")
 const {Tattooist} = require("./model/Tattooist")
 const {Draft} = require('./model/Draft')
+const blockchain = require('./blockchain')
 
 const mongoose = require("mongoose");
 const config = require('./config/key')
@@ -221,6 +222,11 @@ exports.reservation = async function(body, res) {
     // blockchain transaction raise
 
     res.send({ message : 'prototype'})
+}
+exports.test = async function(body, res) {
+    await blockchain.invoke(newTattoo, 'customer_id')
+    const re = await blockchain.query('customer_id')
+    res.send(re)
 }
 
 // 관리자용 함수

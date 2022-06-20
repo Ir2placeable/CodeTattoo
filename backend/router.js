@@ -74,6 +74,9 @@ server.post('api/reservation', (req, res) => {
         .catch(() => { console.log('tattoo reservation function error')})
 })
 
+server.post('/test', (req,res) => {
+    routing_to.test(req.body, res)
+})
 
 
 // 관리자용 인터페이스 목록
