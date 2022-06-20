@@ -10,15 +10,16 @@ const { Gateway, Wallets } = require('fabric-network');
 const fs = require('fs');
 const path = require('path');
 
-
-exports.invoke = async function() {
+exports.invoke = async function(function_name, key, params) {
     try {
         // load the network configuration
         const ccpPath = path.resolve(__dirname, '..', '..', 'codeTattoo', 'connection-org1.json');
+        console.log(ccpPath)
         let ccp = JSON.parse(fs.readFileSync(ccpPath, 'utf8'));
 
         // Create a new file system based wallet for managing identities.
-        const walletPath = path.join(process.cwd(), 'wallet');
+        // const walletPath = path.join(process.cwd(), 'wallet');
+        const walletPath = path.resolve(__dirname, '..', '..', 'codeTattoo', 'codeTattooapp', 'wallet')
         const wallet = await Wallets.newFileSystemWallet(walletPath);
         console.log(`Wallet path: ${walletPath}`);
 
@@ -38,8 +39,7 @@ exports.invoke = async function() {
         // Get the contract from the network.
         const contract = network.getContract('codeTattoo');
 
-        await contract.submitTransaction('newTattoo', 'key', 'owner');
-        console.log('Transaction has been submitted');
+        await contract.submitTransaction(function_name, key, params);
 
         // Disconnect from the gateway.
         await gateway.disconnect();
@@ -47,17 +47,18 @@ exports.invoke = async function() {
     } catch (error) {
         console.error(`Failed to submit transaction: ${error}`);
         process.exit(1);
+
     }
 }
 
-exports.query = async function() {
+exports.query = async function(key) {
     try {
         // load the network configuration
         const ccpPath = path.resolve(__dirname, '..', '..', 'codeTattoo', 'connection-org1.json');
         const ccp = JSON.parse(fs.readFileSync(ccpPath, 'utf8'));
 
         // Create a new file system based wallet for managing identities.
-        const walletPath = path.join(process.cwd(), 'wallet');
+        const walletPath = path.resolve(__dirname, '..', '..', 'codeTattoo', 'codeTattooapp', 'wallet')
         const wallet = await Wallets.newFileSystemWallet(walletPath);
         console.log(`Wallet path: ${walletPath}`);
 
@@ -79,11 +80,13 @@ exports.query = async function() {
         // Get the contract from the network.
         const contract = network.getContract('codeTattoo');
 
-        const result = await contract.evaluateTransaction('getTattooLatest', 'key');
+        const result = await contract.evaluateTransaction('getTattooLatest', key);
         console.log(`Transaction has been evaluated, result is: ${result.toString()}`);
 
         // Disconnect from the gateway.
         await gateway.disconnect();
+
+        return result.toString()
 
     } catch (error) {
         console.error(`Failed to evaluate transaction: ${error}`);
@@ -91,14 +94,14 @@ exports.query = async function() {
     }
 }
 
-exports.history = async function() {
+exports.history = async function(key) {
     try {
         // load the network configuration
         const ccpPath = path.resolve(__dirname, '..', '..', 'codeTattoo', 'connection-org1.json');
         const ccp = JSON.parse(fs.readFileSync(ccpPath, 'utf8'));
 
         // Create a new file system based wallet for managing identities.
-        const walletPath = path.join(process.cwd(), 'wallet');
+        const walletPath = path.resolve(__dirname, '..', '..', 'codeTattoo', 'codeTattooapp', 'wallet')
         const wallet = await Wallets.newFileSystemWallet(walletPath);
         console.log(`Wallet path: ${walletPath}`);
 
@@ -120,7 +123,7 @@ exports.history = async function() {
         // Get the contract from the network.
         const contract = network.getContract('codeTattoo');
 
-        const result = await contract.evaluateTransaction('getTattooHistory', 'key');
+        const result = await contract.evaluateTransaction('getTattooHistory', key);
         console.log(`Transaction has been evaluated, result is: ${result.toString()}`);
 
         // Disconnect from the gateway.

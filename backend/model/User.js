@@ -24,6 +24,9 @@ const userSchema = mongoose.Schema({
     },
     follow : {
         type : [String]
+    },
+    tattoos : {
+        type : [String]
     }
 })
 
