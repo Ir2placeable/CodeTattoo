@@ -99,6 +99,10 @@ exports.userFollow = async function(body, res) {
     res.send({ success : true })
 }
 exports.userMyTattoo = async function(body, res) {
+    // const tattoo_info = await blockchain.query(body.tattoo_id)
+    // res.send({ success : true, tattoo_info : tattoo_info })
+
+
     //prototype
 }
 exports.tattooHistory = async function(body, res) {
@@ -290,9 +294,3 @@ exports.removeEnd = async function(body, res) {
 
     res.send({ success : true })
 }
-
-exports.tattooInfo = async function(body, res) {
-    const tattoo_info = await blockchain.query(body.tattoo_id)
-    res.send({ success : true, tattoo_info : tattoo_info })
-}
-
