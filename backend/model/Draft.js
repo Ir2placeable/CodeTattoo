@@ -8,20 +8,21 @@ const draftSchema = mongoose.Schema({
         type : String
     },
     image : {
-        url : {
-            type : String
-        },
-        width : {
-            type : Number
-        },
-        height : {
-            type : Number
-        }
+        type : String
+    },
+    width : {
+        type : Number
+    },
+    height : {
+        type : Number
     },
     like : {
         type : Number
     },
-    timestamp :{
+    timestamp : {
+        type : Number
+    },
+    used : {
         type : Number
     }
 })
