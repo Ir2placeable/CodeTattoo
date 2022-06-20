@@ -2,14 +2,17 @@ const {User} = require("./model/User")
 const {Tattooist} = require("./model/Tattooist")
 const {Draft} = require('./model/Draft')
 const {Tattoo} = require('./model/Tattoo')
-const blockchain = require('./blockchainFiles/blockchain')
 
 const mongoose = require("mongoose");
-const config = require('./config/key')
 const imageStorage = require('./imageStorage')
+const blockchain = require('./blockchainFiles/blockchain')
+const user_module = require('./module_user')
+const draft_module = require('./module_draft')
+const tattooist_module = require('./module_tattooist')
 
 const showLimit = 16
 
+const config = require('./config/key')
 mongoose.connect(config.mongoURI)
     .then(() => { console.log('db connected')} )
     .catch(() => { console.log('db connect failed')} )
@@ -17,46 +20,14 @@ mongoose.connect(config.mongoURI)
 exports.entry = function(res) {
     res.send({ success : true, message : 'entry hello world' })
 }
-exports.register = async function(body, res) {
-    const user = await User.findOne({ email : body.email })
-    if (user) {
-        console.log('register fail, email existed')
-        res.send({ success : false, message : 'already existed email'})
-        return
-    }
-
-    const new_user = new User(body);
-    new_user.save()
-        .then(() => {
-            console.log(body.name, '회원가입 완료')
-            res.send({ success : true })
-        })
+exports.register = function(body, res) {
+    user_module.register(body, res).catch()
 }
-exports.login = async function(body, res) {
-    const user = await User.findOne({ email : body.email })
-    if(!user) {
-        console.log('login fail, no user')
-        res.send({ success : false })
-        return
-    }
-
-    user.comparePassword(body.pwd, (err, isMatch) => {
-        if (!isMatch) {
-            console.log('login fail, wrong password')
-            res.send({ success : false })
-            return
-        }
-
-        // user_info for browser cookie
-        const user_info = {
-            user_id : String(user._id),
-            name : user.name,
-            location : user.location,
-            isTattooist : user.isTattooist
-        }
-        console.log(user.name, "로그인 성공")
-        res.send({ success : true, user_info : user_info })
-    })
+exports.login = function(body, res) {
+    user_module.login(body, res).catch()
+}
+exports.userMyPage = function(query, res) {
+    user_module.userInfo(query, res).catch()
 }
 
 exports.tattooistEnroll = async function(body, res) {

@@ -9,25 +9,19 @@ server.use(bodyParser.json());
 server.use(bodyParser.urlencoded({ extends : true }))
 server.use(cors());
 
-// 엔트리 페이지 기능
 server.get('/', (req, res) => {
-    console.log('entry page')
     routing_to.entry(res)
-})
-server.post('/register', (req, res) => {
-    console.log('register page')
-    routing_to.register(req.body, res)
-        .catch(() => { console.log('register function error')})
-})
-server.post('/login', (req, res) => {
-    console.log('login page')
-    routing_to.login(req.body, res)
-        .catch(() => { console.log('login function error')})
 })
 
 // 유저 기능
+server.post('/register', (req, res) => {
+    routing_to.register(req.body, res)
+})
+server.post('/login', (req, res) => {
+    routing_to.login(req.body, res)
+})
 server.get('/user/my-page', (req, res) => {
-
+    routing_to.userMyPage(req.query, res)
 })
 server.put('/user/my-page', (req, res) => {
 
