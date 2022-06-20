@@ -2,6 +2,7 @@ const {User} = require("./model/User.js")
 const {Tattooist} = require("./model/Tattooist")
 const {Draft} = require('./model/Draft')
 const blockchain = require('./blockchain')
+const test = require('./test')
 
 const mongoose = require("mongoose");
 const config = require('./config/key')
@@ -223,19 +224,21 @@ exports.reservation = async function(body, res) {
 
     res.send({ message : 'prototype'})
 }
+exports.tattooists = async function(res) {
+    await Tattooist.find().sort({ followers : -1 })
+        .then((tattooists) => { res.send({ success : true, tattooist_list : tattooists })})
+}
 exports.test = async function(body, res) {
-    await blockchain.invoke(newTattoo, 'customer_id')
-    const re = await blockchain.query('customer_id')
-    res.send(re)
+    // function name, tattoo_id, user_id
+    console.log('test 입장')
+    blockchain.invoke();
 }
 
 // 관리자용 함수
 exports.users = function(body, res) {
     User.find().then(result => { res.send(result) })
 }
-exports.tattooists = function(body, res) {
-    Tattooist.find().then(result => {res.send(result) })
-}
+
 exports.drafts = function(body, res) {
     Draft.find().then(result => { res.send(result) })
 }

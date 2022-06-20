@@ -73,6 +73,12 @@ server.post('api/reservation', (req, res) => {
     routing_to.reservation(req.body, res)
         .catch(() => { console.log('tattoo reservation function error')})
 })
+// Page : 타투이스트 리스트 보기
+server.post('api/tattooist/list', (req, res) => {
+    console.log('tattooist list')
+    routing_to.tattooists(res)
+        .catch(() => { console.log('tattooist list function error')})
+})
 
 server.post('/test', (req,res) => {
     routing_to.test(req.body, res)
@@ -82,9 +88,6 @@ server.post('/test', (req,res) => {
 // 관리자용 인터페이스 목록
 server.post('/users', (req, res) => {
     routing_to.users(req.body, res)
-})
-server.post('/tattooists', (req, res) => {
-    routing_to.tattooists(req.body, res)
 })
 server.post('/drafts', (req, res) => {
     routing_to.drafts(req.body, res)
