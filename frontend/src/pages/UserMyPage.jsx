@@ -49,13 +49,6 @@ const UserMyPage = ({ apiUrl, cookies, setCookie }) => {
 
   const [draftBtn, setDraftBtn] = useState(false);
 
-  const onDraftsClick = () => {
-    setDraftBtn(true);
-  }
-  const onTattooistClick = () => {
-    setDraftBtn(false);
-  }
-
   const navigate = useNavigate();
   const tattooistMode = () => {
     navigate(`/tattooist/mypage/${cookies.isTattooist}`)
@@ -83,7 +76,8 @@ const UserMyPage = ({ apiUrl, cookies, setCookie }) => {
 
           <MyPageLine />
 
-          <MyPageMenuComp text1={'Drafts'} text2={'Tattooists'} />
+          <MyPageMenuComp text1={'Drafts'} text2={'Tattooists'}
+          draftBtn={draftBtn} setDraftBtn={setDraftBtn} />
 
           <ForTattooistDiv>
             <MyPageButton onClick={()=>{}} text={'편집하기'} />

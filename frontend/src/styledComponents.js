@@ -305,9 +305,10 @@ export const UploadDiv = styled.div`
 background-color: #F6F6F6;
 width: 800px;
 height: 700px;
-margin: 0 auto;
+margin: 50px auto;
 
 border-radius: 10px;
+box-shadow: 10px 10px 10px 0 #ececec;
 `
 
 export const ImgInputDiv = styled.div`
@@ -650,8 +651,185 @@ export const DraftTitle = styled.p`
 text-align: center;
 `
 
+// Pagination
+export const PageDiv = styled.div`
+  width: 100%;
+  margin-bottom: 30px;
 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`
 
+export const PageBox = styled.p`
+font-size: 18px;
+color: #afafaf;
+background-color: white;
+line-height: 30px;
+width: 30px;
+text-align: center;
+border-radius: 50%;
+border: 1px solid #afafaf;
+margin: 5px;
+cursor: pointer;
+`
+
+export const CurrentPage = styled.p`
+font-size: 18px;
+color: #afafaf;
+margin-top: 30px;
+`
+
+// Tattooist List
+export const TattooistListDiv = styled.div`
+background-color: rgb(255, 255, 255);
+border-radius: 10px;
+box-shadow: 5px 10px 20px #6e6e6e;
+margin: 0 auto 100px;
+padding: 150px 100px 100px;
+
+position: relative;
+`
+
+export const ListTextDiv = styled.div`
+width: 200px;
+line-height: 50px;
+font-size: 18px;
+font-weight: bold;
+text-align: center;
+border: 3px solid #6e6e6e;
+color: #6e6e6e;
+border-radius: 10px;
+position: absolute;
+top: 50px;
+left: 60px;
+`
+
+export const TattooistBox = styled.div`
+padding-bottom: 5px;
+border-bottom: 1px solid #d8d8d8;
+width: 900px;
+display: flex;
+justify-content: stretch;
+align-items: center;
+margin: 20px;
+
+position: relative;
+`
+
+export const RankingDiv = styled.div`
+line-height: 40px;
+width: 40px;
+border: 3px solid #6e6e6e;
+border-radius: 5px;
+font-size: 20px;
+text-align: center;
+`
+
+export const ListImgDiv = styled.div`
+width: 40px;
+height: 40px;
+background-color: white;
+border: 3px solid #6e6e6e;
+color: #6e6e6e;
+border-radius: 50%;
+margin-left: 20px;
+
+font-size: 25px;
+
+display: flex;
+justify-content: center;
+align-items: center;
+`
+
+export const ListDescDiv = styled.div`
+margin-left: 20px;
+font-size: 18px;
+color: #6e6e6e;
+`
+
+export const ListHeartDiv = styled.div`
+position: absolute;
+right: 20px;
+`
+
+// BOARD 
+
+export const PostListDiv = styled.div`
+width: 1370px;
+display: flex;
+justify-content: center;
+align-items: center;
+position: relative;
+margin-bottom: 80px;
+`
+
+export const WriteBtnDiv = styled.div`
+position: absolute;
+right: 170px;
+top: -50px;
+font-weight: bold;
+text-align: center;
+line-height: 30px;
+width: 90px;
+border: 3px solid black;
+background-color: black;
+color: white;
+border-radius: 10px;
+cursor: pointer;
+transition: .45s;
+`
+
+export const WriteBtnHoverStyle = {
+  backgroundColor: 'white',
+  color: 'black'
+}
+
+export const PostTable = styled.table`
+width: 1100px;
+border-radius: 10px;
+overflow: hidden;
+box-shadow: 5px 10px 20px 0 #b1b1b1;
+`
+
+export const PostTableHead = styled.thead`
+background-color: #6e6e6e;
+color: white;
+line-height: 50px;
+font-size: 18px;
+font-weight: bold;
+`
+export const TableHeadTr = styled.tr`
+`
+
+export const TableHeadTd = styled.td`
+text-align: center;
+`
+
+export const PostTableBody = styled.tbody`
+`
+
+export const TableBodyTr = styled.tr`
+line-height: 45px;
+border-bottom: 1px solid #d0d0d0;
+margin: 10px;
+`
+
+export const TitleTd = styled.td`
+width: 60%;
+padding-left: 50px;
+cursor: pointer;
+`
+
+export const DateTd = styled.td`
+width: 20%;
+text-align: center;
+`
+
+export const WriterTd = styled.td`
+width: 20%;
+text-align: center;
+`
 
 //  FOOTER
 export const FooterDiv = styled.footer`

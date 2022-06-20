@@ -17,7 +17,7 @@ const Category = () => {
 
   // Tattooist
   const goTattooists = () => {
-    
+    navigate('/tattooists')
   }
 
   // Tattoo
@@ -33,6 +33,9 @@ const Category = () => {
 
 
   // Board
+  const goBoard = () => {
+    navigate('/board')
+  }
   return (
     <>
       <CategoryDiv>
@@ -58,7 +61,7 @@ const Category = () => {
 
           <CategoryUl>
             <CategorySubText>Board</CategorySubText>
-            <CategoryLi>Q n A</CategoryLi>
+            <CategoryLi onClick={goBoard}>Board</CategoryLi>
             <CategoryLi>Ask</CategoryLi>
           </CategoryUl>
 

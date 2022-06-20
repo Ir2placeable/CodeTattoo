@@ -12,7 +12,7 @@ const AllDrafts = ({ apiUrl }) => {
 
   const sendRequest = async() => {
     const res = await axios.get(`${apiUrl}/draft/browse/all/${page}`);
-    console.log(res);
+    //console.log(res);
     setDrafts(res.data.drafts);
   };
 
@@ -25,14 +25,12 @@ const AllDrafts = ({ apiUrl }) => {
       <DraftListBigDiv>
         <ShowDraftList text={'All Drafts'} drafts={drafts} tattooist={false} />
 
-        <div  style={{backgroundColor: 'aqua'}}>
-          <Pagination 
+        <Pagination 
             apiUrl={apiUrl}
             page={page} 
             setPage={setPage} 
             pages={pages}
             setPages={setPages}/>
-        </div>
       </DraftListBigDiv>
     </>
   );
