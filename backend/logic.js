@@ -76,15 +76,15 @@ exports.userMyPage = async function(query, res) {
 }
 exports.userInfoEdit = async function(body, res) {
     await User.updateOne({ _id : body.user_id }, {$set : { name : body.name, location : body.location, profile : { description : body.description }}})
-    
+
     res.send({ success : true })
 }
 exports.userImageEdit = async function(body, res) {
     const params = { title : body.user_id, image : body.image, mime : body.mime }
     const url = await imageStorage.upload(params)
-    
+
     await User.updateOne({ _id : body.user_id }, {$set : { profile : { image : url }}})
-    
+
     res.send({ success : true })
 }
 exports.userScrap = async function(body, res) {
@@ -95,7 +95,7 @@ exports.userScrap = async function(body, res) {
 }
 exports.userFollow = async function(body, res) {
     await User.updateOne({ _id : body.user_id }, {$push : { follow : body.tattooist_id }})
-    
+
     res.send({ success : true })
 }
 exports.userMyTattoo = async function(body, res) {
@@ -295,3 +295,4 @@ exports.tattooInfo = async function(body, res) {
     const tattoo_info = await blockchain.query(body.tattoo_id)
     res.send({ success : true, tattoo_info : tattoo_info })
 }
+
