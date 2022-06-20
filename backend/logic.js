@@ -58,6 +58,7 @@ exports.login = async function(body, res) {
         res.send({ success : true, user_info : user_info })
     })
 }
+
 exports.tattooistEnroll = async function(body, res) {
     const user = await User.findOne({ _id : body.user_id })
     // 유저 입력값 오류
