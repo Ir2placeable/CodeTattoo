@@ -14,14 +14,12 @@ exports.invoke = async function(function_name, key, params) {
     try {
         // load the network configuration
         const ccpPath = path.resolve(__dirname, '..', '..', 'codeTattoo', 'connection-org1.json');
-        console.log(ccpPath)
         let ccp = JSON.parse(fs.readFileSync(ccpPath, 'utf8'));
 
         // Create a new file system based wallet for managing identities.
         // const walletPath = path.join(process.cwd(), 'wallet');
         const walletPath = path.resolve(__dirname, '..', '..', 'codeTattoo', 'codeTattooapp', 'wallet')
         const wallet = await Wallets.newFileSystemWallet(walletPath);
-        console.log(`Wallet path: ${walletPath}`);
 
         // Check to see if we've already enrolled the user.
         const identity = await wallet.get('appUser');
@@ -60,7 +58,6 @@ exports.query = async function(key) {
         // Create a new file system based wallet for managing identities.
         const walletPath = path.resolve(__dirname, '..', '..', 'codeTattoo', 'codeTattooapp', 'wallet')
         const wallet = await Wallets.newFileSystemWallet(walletPath);
-        console.log(`Wallet path: ${walletPath}`);
 
         // Check to see if we've already enrolled the user.
         const identity = await wallet.get('appUser');
@@ -81,12 +78,11 @@ exports.query = async function(key) {
         const contract = network.getContract('codeTattoo');
 
         const result = await contract.evaluateTransaction('getTattooLatest', key);
-        console.log(`Transaction has been evaluated, result is: ${result.toString()}`);
 
         // Disconnect from the gateway.
         await gateway.disconnect();
 
-        return result.toString()
+        return JSON.parse(result.toString())
 
     } catch (error) {
         console.error(`Failed to evaluate transaction: ${error}`);
@@ -103,7 +99,6 @@ exports.history = async function(key) {
         // Create a new file system based wallet for managing identities.
         const walletPath = path.resolve(__dirname, '..', '..', 'codeTattoo', 'codeTattooapp', 'wallet')
         const wallet = await Wallets.newFileSystemWallet(walletPath);
-        console.log(`Wallet path: ${walletPath}`);
 
         // Check to see if we've already enrolled the user.
         const identity = await wallet.get('appUser');
@@ -124,10 +119,11 @@ exports.history = async function(key) {
         const contract = network.getContract('codeTattoo');
 
         const result = await contract.evaluateTransaction('getTattooHistory', key);
-        console.log(`Transaction has been evaluated, result is: ${result.toString()}`);
 
         // Disconnect from the gateway.
         await gateway.disconnect();
+
+        return JSON.parse(result.toString())
 
     } catch (error) {
         console.error(`Failed to evaluate transaction: ${error}`);

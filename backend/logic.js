@@ -226,15 +226,15 @@ exports.imprintStart = async function(body, res) {
     const new_tattoo = new Tattoo()
     new_tattoo.owner_id = body.user_id;
 
-    await User.updateOne({ _id : body.user_id }, {$push : { tattoos : new_tattoo }})
+    // new_tattoo.save()
+    // await User.updateOne({ _id : body.user_id }, {$push : { tattoos : new_tattoo }})
 
     await blockchain.invoke('newTattoo', new_tattoo._id, body.user_id)
-        .then(() => { res.send({ success : true })})
 
     const procedure = [ body.tattooist_id, body.using_items, Math.round(Date.now()/1000) ]
     await blockchain.invoke('startImprint', new_tattoo._id, procedure)
 
-    res.send({ success : true })
+    res.send({ success : true, tattoo_id : new_tattoo._id })
 }
 exports.imprintEnd = async function(body, res) {
     const procedure = [ body.tattooist_id ]
@@ -267,16 +267,4 @@ exports.tattooInfo = async function(body, res) {
 exports.tattooHistory = async function(body, res) {
     const tattoo_history = await blockchain.history(body.tattoo_id)
     res.send({ success : true, tattoo_history : tattoo_history })
-}
-
-exports.tattooEnd = async function(res) {
-    await blockchain.invoke()
-        .then(() => { res.send({ success : true })})
-        .catch((err) => {
-            console.log(err)
-            res.send({ success : false, message : 'blockchain fail'})
-        })
-}
-exports.tattooInfo = async function(res) {
-
 }

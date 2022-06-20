@@ -9,11 +9,6 @@
 const { Contract } = require('fabric-contract-api');
 
 class CodeTattoo extends Contract {
-
-    async initLedger(ctx) {
-        console.info('start initLedger')
-    }
-
     // params : { owner_id }
     async newTattoo(ctx, key, owner_id) {
         let new_tattoo = {};
@@ -118,7 +113,6 @@ class CodeTattoo extends Contract {
             throw new Error(`${key} does not exist`);
         }
 
-        console.log(tattoo.toString());
         return tattoo.toString();
     }
 
