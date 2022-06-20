@@ -1,8 +1,7 @@
 const {User} = require("./model/User.js")
 const {Tattooist} = require("./model/Tattooist")
 const {Draft} = require('./model/Draft')
-const blockchain = require('./blockchain')
-const test = require('./test')
+const blockchain = require('./blockchainFiles/blockchain')
 
 const mongoose = require("mongoose");
 const config = require('./config/key')
@@ -182,10 +181,6 @@ exports.tattooistPage = async function(body, res) {
         res.send({ success : true, tattooist_info : tattooist_info })
     })
 }
-// prototype
-// body : { tattooist_id, edit_data }
-// edit_data : { nickname, specialize, office, profile }
-// profile : { description, image }
 exports.tattooistEdit = async function(body, res) {
     const tattooist = await Tattooist.findOne({ _id : body.tattooist_id })
     if(!tattooist) {
@@ -204,8 +199,6 @@ exports.tattooistEdit = async function(body, res) {
     console.log(tattooist.nickname, "프로필 설정 완료")
     res.send({ success : true })
 }
-
-// body : { user_id, tattooist_id, using_items }
 exports.reservation = async function(body, res) {
     const tattooist = await Tattooist.findOne({ _id : body.tattooist_id })
     if(!tattooist) {
@@ -220,7 +213,6 @@ exports.reservation = async function(body, res) {
         return
     }
 
-    // blockchain transaction raise
 
     res.send({ message : 'prototype'})
 }
@@ -228,11 +220,11 @@ exports.tattooists = async function(res) {
     await Tattooist.find().sort({ followers : -1 })
         .then((tattooists) => { res.send({ success : true, tattooist_list : tattooists })})
 }
-exports.test = async function(body, res) {
-    // function name, tattoo_id, user_id
-    console.log('test 입장')
-    blockchain.invoke();
+exports.tattooStart = async function() {
+    blockchain.invoke()
+        .catch((err) => { console.log(err)})
 }
+
 
 // 관리자용 함수
 exports.users = function(body, res) {

@@ -79,11 +79,11 @@ server.post('api/tattooist/list', (req, res) => {
     routing_to.tattooists(res)
         .catch(() => { console.log('tattooist list function error')})
 })
-
-server.post('/test', (req,res) => {
-    routing_to.test(req.body, res)
+// Page : 타투 시술 시작
+server.post('api/tattoo/start', (req, res) => {
+    routing_to.tattooStart()
+        .catch(() => { console.log('tattoo start function error')})
 })
-
 
 // 관리자용 인터페이스 목록
 server.post('/users', (req, res) => {
