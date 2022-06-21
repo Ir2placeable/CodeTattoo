@@ -9,108 +9,156 @@ server.use(bodyParser.json());
 server.use(bodyParser.urlencoded({ extends : true }))
 server.use(cors());
 
-// Page : entry
-server.get('/api', (req, res) => {
-    console.log('entry page')
+// 엔트리
+server.get('/', (req, res) => {
     routing_to.entry(res)
 })
-// Page : 회원가입
-server.post('/api/register', (req, res) => {
-    console.log('register page')
+// 회원가입
+server.post('/register', (req, res) => {
     routing_to.register(req.body, res)
-        .catch(() => { console.log('register function error')})
+        .catch(() => { console.log('error')})
 })
-// Page : 로그인
-server.post('/api/login', (req, res) => {
-    console.log('login page')
+// 로그인
+server.post('/login', (req, res) => {
     routing_to.login(req.body, res)
-        .catch(() => { console.log('login function error')})
-})
-// Page : 타투이스트 등록
-server.post('/api/tattooist/enrollment', (req, res) => {
-    console.log('tattooist enrollment')
-    routing_to.tattooistEnroll(req.body, res)
-        .catch(() => { console.log('tattooistEnroll function error')})
-})
-// Page : 도안 생성(Only Tattooist)
-server.post('/api/draft/create', (req, res) => {
-    console.log('new draft page')
-    routing_to.newDraft(req.body, res)
-        .catch(() => { console.log('newDraft function error')})
-})
-// Page : 도안 검색
-server.get('/api/draft/browse/:filter/:page_number', (req, res) => {
-    console.log('browse draft page')
-    routing_to.browseDraft(req.params, res)
-})
-// Page : 도안 찜
-server.post('/api/draft/like', (req, res) => {
-    console.log('like draft page')
-    routing_to.likeDraft(req.body, res)
-        .catch(() => { console.log('likeDraft function error')})
-})
-// Page : 타투이스트 팔로우
-server.post('/api/follow', (req, res) => {
-    console.log('follow tattooist page')
-    routing_to.followTattooist(req.body, res)
-        .catch(() => { console.log('followTattooist function error')})
-})
-// Page : 타투이스트 페이지
-server.post('/api/tattooist/mypage', (req, res) => {
-    console.log('tattooist page')
-    routing_to.tattooistPage(req.body, res)
-        .catch(() => { console.log('tattooist page function error')})
-})
-// Page : 타투이스트 프로필 이미지 등록
-server.post('/api/tattooist/mypage/edit', (req, res) => {
-    console.log('tattooist page edit')
-    routing_to.tattooistEdit(req.body, res)
-        .catch(() => { console.log('tattooist page edit function error')})
-})
-// Page : 타투 예약 페이지
-server.post('/api/reservation', (req, res) => {
-    console.log('tattoo reservation profile')
-    routing_to.reservation(req.body, res)
-        .catch(() => { console.log('tattoo reservation function error')})
-})
-// Page : 타투이스트 리스트 보기
-server.post('/api/tattooist/list', (req, res) => {
-    console.log('tattooist list')
-    routing_to.tattooists(res)
-        .catch(() => { console.log('tattooist list function error')})
+        .catch(() => { console.log('error')})
 })
 
-server.post('/api/tattoo/imprint/start', (req, res) => {
-    routing_to.imprintStart(req.body, res)
-        .catch(() => { console.log('tattoo imprint start function error')})
+// 유저 마이페이지
+server.get('/user/my-page', (req, res) => {
+    routing_to.userMyPage(req.query, res)
+        .catch(() => { console.log('error')})
 })
-server.post('/api/tattoo/imprint/end', (req, res) => {
-    routing_to.imprintEnd(req.body, res)
-        .catch(() => { console.log('tattoo imprint end function error')})
+// 유저 마이페이지 정보 수정
+server.put('/user/my-page', (req, res) => {
+    routing_to.userInfoEdit(req.body, res)
+        .catch(() => { console.log('error')})
 })
-server.post('/api/tattoo/remove/start', (req, res) => {
-    routing_to.removeStart(req.body, res)
-        .catch(() => { console.log('tattoo remove start function error')})
+// 유저 프로필 사진 변경
+server.put('/user/my-page/image', (req, res) => {
+    routing_to.userImageEdit(req.body, res)
+        .catch(() => { console.log('error')})
 })
-server.post('/api/tattoo/remove/end', (req, res) => {
-    routing_to.removeEnd(req.body, res)
-        .catch(() => { console.log('tattoo remove end function error')})
+// 유저 도안 좋아요
+server.post('/user/scrap', (req, res) => {
+    routing_to.userScrap(req.body, res)
+        .catch(() => { console.log('error')})
 })
-server.post('/api/tattoo/side_effect', (req, res) => {
+// 유저 타투이스트 팔로우
+server.post('/user/follow', (req, res) => {
+    routing_to.userFollow(req.body, res)
+        .catch(() => { console.log('error')})
+})
+// 유저 나의 타투 조회
+server.get('/user/my-tattoo', (req, res) => {
+    routing_to.userMyTattoo(req.query, res)
+        .catch(() => { console.log('error')})
+})
+// 유저 나의 타투 이력조회
+server.get('/user/my-tattoo/history', (req, res) => {
+    routing_to.tattooHistory(req.query, res)
+        .catch(() => { console.log('error')})
+})
+// 유저 타투 부작용 등록
+server.post('/user/my-tattoo/side_effect', (req, res) => {
     routing_to.addSideEffect(req.body, res)
-        .catch(() => { console.log('add Side effect function error')})
+        .catch(() => { console.log('error')})
 })
-server.post('/api/tattoo/info', (req, res) => {
-    routing_to.tattooInfo(req.body, res)
-        .catch(() => { console.log('tattoo info function error')})
+
+// 타투이스트 등록
+server.post('/tattooist', (req, res) => {
+    routing_to.tattooistEnroll(req.body, res)
+        .catch(() => { console.log('error')})
 })
-server.post('/api/tattoo/history', (req, res) => {
-    routing_to.tattooHistory(req.body, res)
-        .catch(() => { console.log('tattoo history function error')})
+// 타투이스트 리스트 조회
+server.get('/tattooist', (req, res) => {
+    routing_to.tattooistList(res)
+        .catch(() => { console.log('error')})
 })
+// 타투이스트 마이페이지
+server.get('/tattooist/my-page', (req, res) => {
+    routing_to.tattooistMyPage(req.query, res)
+        .catch(() => { console.log('error')})
+})
+// 타투이스트 마이페이지 정보 수정
+server.put('/tattooist/my-page', (req, res) => {
+    routing_to.tattooistInfoEdit(req.body, res)
+        .catch(() => { console.log('error')})
+})
+// 타투이스트 프로필 사진 변경
+server.put('/tattooist/my-page/image', (req, res) => {
+    routing_to.tattooistImageEdit(req.body, res)
+        .catch(() => { console.log('error')})
+})
+
+// 도안 생성
+server.post('/draft', (req, res) => {
+    routing_to.newDraft(req.body, res)
+        .catch(() => { console.log('error')})
+})
+// 도안 조회
+server.get('/api/draft/:filter/:page', (req, res) => {
+    routing_to.browseDraft(req.params, res)
+})
+
+// 타투시술 예약
+server.post('/imprint/reservation', (req, res) => {
+    routing_to.imprintReservation(req.body, res)
+        .catch(() => { console.log('error')})
+})
+// 타투시술 시작
+server.post('/imprint', (req, res) => {
+    routing_to.imprintStart(req.body, res)
+        .catch(() => { console.log('error')})
+})
+// 타투시술 완료
+server.put('/imprint/end', (req, res) => {
+    routing_to.imprintEnd(req.body, res)
+        .catch(() => { console.log('error')})
+})
+// 타투제거 예약
+server.post('/remove/reservation', (req, res) => {
+    routing_to.removeReservation(req.body, res)
+        .catch(() => { console.log('error')})
+})
+// 타투제거 시작
+server.post('/remove', (req, res) => {
+    routing_to.removeStart(req.body, res)
+        .catch(() => { console.log('error')})
+})
+// 타투제거 완료
+server.put('/remove', (req, res) => {
+    routing_to.removeEnd(req.body, res)
+        .catch(() => { console.log('error')})
+})
+
+
+// User 초기화
+server.get('/reset/user', (req, res) => {
+    routing_to.resetUser()
+        .then(() => { res.send({ success : true })})
+})
+// Draft 초기화
+server.get('/reset/draft', (req, res) => {
+    routing_to.resetDraft()
+        .then(() => { res.send({ success : true })})
+})
+// Tattooist 초기화
+server.get('/reset/tattooist', (req, res) => {
+    routing_to.resetUser()
+        .then(() => { res.send({ success : true })})
+})
+// Tattoo 초기화
+server.get('/reset/tattoo', (req, res) => {
+    routing_to.resetTattoo()
+        .then(() => { res.send({ success : true })})
+})
+
+
 
 
 server.listen(port, () => {
     console.log('server opened')
 })
+
 

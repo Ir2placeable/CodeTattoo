@@ -1,16 +1,5 @@
 const mongoose = require('mongoose');
 
-const image = mongoose.Schema({
-    url : {
-        type : String
-    },
-    width : {
-        type : Number
-    },
-    height : {
-        type : Number
-    }
-})
 const draftSchema = mongoose.Schema({
     drawer : {
         type : String
@@ -19,12 +8,21 @@ const draftSchema = mongoose.Schema({
         type : String
     },
     image : {
-        type : image
+        type : String
+    },
+    width : {
+        type : Number
+    },
+    height : {
+        type : Number
     },
     like : {
         type : Number
     },
-    timestamp :{
+    timestamp : {
+        type : Number
+    },
+    used : {
         type : Number
     }
 })
