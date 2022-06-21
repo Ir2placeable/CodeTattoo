@@ -12,7 +12,7 @@ import { PageDiv, PageBox, CurrentPage } from '../styledComponents'
 
 const Pagination = ({ apiUrl, page, setPage, pages, setPages }) => {
   const getPageNum = async() => {
-    const res = await axios.get(`${apiUrl}/draft/browse/init/1`);
+    const res = await axios.get(`${apiUrl}/draft/init/1`);
     //console.log(res.data.count);
     const count = res.data.count;
     const lastPage = Math.ceil(count / 16);
@@ -34,7 +34,7 @@ const Pagination = ({ apiUrl, page, setPage, pages, setPages }) => {
     <PageDiv>
         <CurrentPage> {page} / {pages.length} </CurrentPage>
     </PageDiv>
-    
+
     <PageDiv>
       {/* 현재 페이지가 1보다 크면 ArrowLeft 보여주기 */}
       { page > 1 ? (

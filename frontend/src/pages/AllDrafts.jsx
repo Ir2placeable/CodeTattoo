@@ -5,14 +5,14 @@ import { DraftListBigDiv } from '../styledComponents';
 
 import Pagination from './Pagination';
 
-const AllDrafts = ({ apiUrl }) => {
+const AllDrafts = ({ apiUrl, cookies }) => {
   const [drafts, setDrafts] = useState([]);
   const [page, setPage] = useState(1);
   const [pages, setPages] = useState([]);
 
   const sendRequest = async() => {
-    const res = await axios.get(`${apiUrl}/draft/browse/all/${page}`);
-    //console.log(res);
+    const res = await axios.get(`${apiUrl}/draft/all/${page}`);
+    console.log(res);
     setDrafts(res.data.drafts);
   };
 
@@ -23,7 +23,7 @@ const AllDrafts = ({ apiUrl }) => {
   return (
     <>
       <DraftListBigDiv>
-        <ShowDraftList text={'All Drafts'} drafts={drafts} tattooist={false} />
+        <ShowDraftList cookies={cookies} text={'All Drafts'} drafts={drafts} tattooist={false} />
 
         <Pagination 
             apiUrl={apiUrl}

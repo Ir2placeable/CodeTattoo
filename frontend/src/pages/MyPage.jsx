@@ -34,6 +34,7 @@ import MyPageText from './MyPageText';
 import MyPageMenuComp from './MyPageMenuComp';
 import ShowDraftList from './ShowDraftList';
 import CalendarComp from './CalendarComp';
+import FollowTattooist from './FollowTattooist';
 
 const MyPage = ({ apiUrl, cookies, setCookie }) => {
   const params = useParams();
@@ -43,10 +44,12 @@ const MyPage = ({ apiUrl, cookies, setCookie }) => {
     location: '',
     contact: '',
     drafts: [],
-    profile: {
-      description: '',
-      image: ''
-    }
+    // profile: {
+    //   description: '',
+    //   image: ''
+    // },
+    description: '',
+    image: ''
   });
 
   const pushCookie = () => {
@@ -54,25 +57,23 @@ const MyPage = ({ apiUrl, cookies, setCookie }) => {
     setCookie('specialize', info.specialize, {maxAge: 3000, path: '/'});
     setCookie('address', info.location, {maxAge: 3000, path: '/'});
     setCookie('contact', info.contact, {maxAge: 3000, path: '/'});
-    setCookie('description', info.profile.description, {maxAge: 3000, path: '/'});
-    setCookie('image', info.profile.image, {maxAge: 3000, path: '/'});
+    setCookie('description', info.description, {maxAge: 3000, path: '/'});
+    setCookie('image', info.image, {maxAge: 3000, path: '/'});
   }
 
   const getMyPage = async() => {
-    const res = await axios.post(`${apiUrl}/tattooist/mypage`, {
-      tattooist_id: params.tattooist_id
-    })
+    const res = await axios.get(`${apiUrl}/tattooist/my-page/?tattooist_id=${params.tattooist_id}`)
     console.log(res.data.tattooist_info.drafts)
     const sorted_drafts = res.data.tattooist_info.drafts.sort(function(a, b){
       return -(a.timestamp - b.timestamp)
     })
     console.log('sort: ',sorted_drafts)
+    console.log('get : ', res.data)
     setInfo(res.data.tattooist_info)
   }
 
   useEffect(() => {
     getMyPage();
-    //console.log(Object.keys(cookies))
   }, [])
 
   useEffect(() => {
@@ -97,7 +98,8 @@ const MyPage = ({ apiUrl, cookies, setCookie }) => {
   }
 
   const userMode = () => {
-    navigate(`/user/mypage/${cookies.isTattooist}`)
+    console.log(cookies.user_id)
+    navigate(`/user/mypage/${cookies.user_id}`)
   }
 
   return (
@@ -107,9 +109,9 @@ const MyPage = ({ apiUrl, cookies, setCookie }) => {
         {/* User Information Section */}
         <MyPageInfoDiv>
           <UserImgDiv>
-            {info.profile.image ? (
+            {info.image ? (
               <div>
-                <UserImg src={info.profile.image} />
+                <UserImg src={info.image} />
               </div>
             ):(
               <FontAwesomeIcon style={userIconStyle} icon={faUser} />
@@ -122,7 +124,7 @@ const MyPage = ({ apiUrl, cookies, setCookie }) => {
               {name: 'Specialize', desc: info.specialize},
               {name: 'Location', desc: info.location},
               {name: 'Contact', desc: info.contact},
-              {name: 'Description', desc: info.profile.description}]}
+              {name: 'Description', desc: info.description}]}
           />
 
           <MyPageLine />
@@ -134,10 +136,10 @@ const MyPage = ({ apiUrl, cookies, setCookie }) => {
             {/* User 면 예약하기 & 하트 이모티콘 보여주고 */}
             {/* Tattooist면 Edit 버튼 보여주기 */}
             {!cookies.isTattooist ? (
-              <div>
+              <div> 
                 <MyPageButton onClick={onBooking} text={'예약하기'} />
                 <LikeDiv>
-                  <HeartIcon size={30} />
+                  <FollowTattooist user_id={cookies.user_id} tattooist_id={params.tattooist_id} cookies={cookies} />
                 </LikeDiv>
               </div>
             ) : (
@@ -164,7 +166,7 @@ const MyPage = ({ apiUrl, cookies, setCookie }) => {
               <div></div>
             )}
 
-            <ShowDraftList text={''} drafts={info.drafts} tattooist={true} />
+            <ShowDraftList cookies={cookies} text={''} drafts={info.drafts} tattooist={true} />
           </MyPageContentDiv>
         ) : (
           <MyPageContentDiv>

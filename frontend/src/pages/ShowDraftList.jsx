@@ -18,7 +18,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrashCan } from '@fortawesome/free-solid-svg-icons';
 
 
-const ShowDraftList = ({ text, drafts, tattooist }) => {
+const ShowDraftList = ({ cookies, text, drafts, tattooist }) => {
   //console.log('drafts: ',drafts)
   const deleteDraft = () => {
     // 타투이스트 본인 도안 목록에서 지우기 
@@ -53,13 +53,13 @@ const ShowDraftList = ({ text, drafts, tattooist }) => {
                       icon={faTrashCan}
                       onClick={deleteDraft} />
                   ) : (
-                    <HeartIcon size={28} />
+                    <HeartIcon user_id={cookies.user_id} draft_id={draft._id} size={28} cookies={cookies} />
                   )}
                 </ImgHeartBox>
                 <DraftImg
-                  width={`${draft.image.width}px`}
-                  height={`${draft.image.height}px`}
-                  src={draft.image.url}
+                  width={`300px`}
+                  height={`300px`}
+                  src={draft.image}
                   alt={draft.title}
                 />
 

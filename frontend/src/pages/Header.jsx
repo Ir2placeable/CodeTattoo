@@ -43,11 +43,6 @@ const Header = ({ cookies, removeCookie }) => {
     for(let i=0; i<keys.length; i++){
       removeCookie(keys[i]);
     }
-    const keys2 = Object.keys(cookies);
-    console.log(keys2)
-    for(let i=0; i<keys2.length; i++){
-      removeCookie(keys2[i]);
-    }
     window.location.replace('/');
   }
 

@@ -21,7 +21,7 @@ const TattooistList = ({ apiUrl, cookies }) => {
   const [tattooists, setTattooists] = useState([]);
   
   const sendRequest = async() => {
-    const res = await axios.post(`${apiUrl}/tattooist/list`, {})
+    const res = await axios.get(`${apiUrl}/tattooist`)
     console.log(res);
   }
 

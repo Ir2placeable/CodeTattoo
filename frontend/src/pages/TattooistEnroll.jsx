@@ -77,7 +77,7 @@ const TattooistEnroll = ({ apiUrl, cookies, setCookie }) => {
       office: office
     }
 
-    const res = await axios.post(`${apiUrl}/tattooist/enrollment`, body);
+    const res = await axios.post(`${apiUrl}/tattooist`, body);
     console.log('response: ', res);
 
     if(res.data.success){
@@ -86,6 +86,8 @@ const TattooistEnroll = ({ apiUrl, cookies, setCookie }) => {
       window.location.replace('/');
     } else {
       console.log('enrollment fail');
+      alert('이미 등록된 타투이스트입니다.')
+      navigate('/');
     }
   }
   const navigate = useNavigate();
