@@ -67,16 +67,14 @@ exports.userMyPage = async function(query, res) {
         user_id : String(user._id),
         name : user.name,
         location : user.location,
-        isTattooist : user.isTattooist
+        isTattooist : user.isTattooist,
+        description : tattooist.description,
+        image : tattoist.image
     }
-    const profile = {
-        description : user.profile.description,
-        image : user.profile.image
-    }
-    res.send({ success : true, user_info : user_info, profile : profile })
+    res.send({ success : true, user_info : user_info })
 }
 exports.userInfoEdit = async function(body, res) {
-    await User.updateOne({ _id : body.user_id }, {$set : { name : body.name, location : body.location, profile : { description : body.description }}})
+    await User.updateOne({ _id : body.user_id }, {$set : { name : body.name, location : body.location, description : body.description }})
 
     res.send({ success : true })
 }
@@ -84,7 +82,7 @@ exports.userImageEdit = async function(body, res) {
     const params = { title : body.user_id, image : body.image, mime : body.mime }
     const url = await imageStorage.upload(params)
 
-    await User.updateOne({ _id : body.user_id }, {$set : { profile : { image : url }}})
+    await User.updateOne({ _id : body.user_id }, {$set : { image : url }})
 
     res.send({ success : true })
 }
@@ -178,13 +176,15 @@ exports.tattooistMyPage = async function(query, res) {
             location : tattooist.office.location,
             contact : tattooist.office.contact,
             drafts : draft_info_list,
-            profile : tattooist.profile
+            description : tattooist.description,
+            image : tattooist.image
         }
         res.send({ success : true, tattooist_info : tattooist_info })
     })
 }
 exports.tattooistInfoEdit = async function(body, res) {
-    await Tattooist.updateOne({ _id : body.tattooist_id }, {$set : { nickname : body.nickname, specialize : body.specialize, office : { location : body.location, contact : body.contact }, profile : { description : body.description } }})
+    console.log(body)
+    await Tattooist.updateOne({ _id : body.tattooist_id }, {$set : { nickname : body.nickname, specialize : body.specialize, office : { location : body.location, contact : body.contact }, description : body.description }})
 
     res.send({ success : true })
 }
@@ -192,7 +192,7 @@ exports.tattooistImageEdit = async function(body, res) {
     const params = { title : body.tattooist_id, image : body.image, mime : body.mime }
     const url = await imageStorage.upload(params)
 
-    await Tattooist.updateOne({ _id : body.tattooist_id }, {$set : { profile : { image : url }}})
+    await Tattooist.updateOne({ _id : body.tattooist_id }, {$set : { image : url }})
 
     res.send({ success : true })
 }
@@ -263,15 +263,14 @@ exports.imprintReservation = async function(body, res) {
         return
     }
 
-
     res.send({ error : 'prototype'})
 }
 exports.imprintStart = async function(body, res) {
     const new_tattoo = new Tattoo()
     new_tattoo.owner_id = body.user_id;
 
-    // new_tattoo.save()
-    // await User.updateOne({ _id : body.user_id }, {$push : { tattoos : new_tattoo }})
+    await new_tattoo.save()
+    await User.updateOne({ _id : body.user_id }, {$push : { tattoos : new_tattoo }})
 
     await blockchain.invoke('newTattoo', new_tattoo._id, body.user_id)
 

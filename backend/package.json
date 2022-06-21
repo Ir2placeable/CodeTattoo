@@ -17,6 +17,7 @@
     "fabric-ca-client": "^2.2.13",
     "fabric-contract-api": "^2.2.3",
     "fabric-network": "^2.2.13",
+    "formidable": "^2.0.1",
     "mongoose": "^6.3.6"
   }
 }

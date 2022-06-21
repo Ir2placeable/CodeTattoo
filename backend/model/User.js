@@ -28,13 +28,11 @@ const userSchema = mongoose.Schema({
     tattoos : {
         type : [String]
     },
-    profile : {
-        description : {
-            type : String
-        },
-        image : {
-            type : String
-        }
+    description : {
+        type : String
+    },
+    image : {
+        type : String
     }
 })
 
