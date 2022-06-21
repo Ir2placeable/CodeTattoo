@@ -56,6 +56,7 @@ exports.login = async function(body, res) {
 }
 
 exports.userMyPage = async function(query, res) {
+    console.log(query)
     const user = await User.findOne({ _id : query.user_id })
     if(!user) {
         res.send({ success : false, error : 'wrong user_id' })
@@ -99,19 +100,25 @@ exports.userFollow = async function(body, res) {
     res.send({ success : true })
 }
 exports.userMyTattoo = async function(body, res) {
-    // const tattoo_info = await blockchain.query(body.tattoo_id)
-    // res.send({ success : true, tattoo_info : tattoo_info })
+    const tattoo_list = await Tattoo.find({ _id : body.user_id })
 
+    let tattoo_info_list = []
+    for (let tattoo of tattoo_list) {
+        let tattoo_info = {}
+        tattoo_info['tattoo_id'] = tattoo._id
+        tattoo_info['tattoo_info'] = await blockchain.query(tattoo._id)
+        tattoo_info_list.push(tattoo_info)
+    }
 
-    //prototype
+    res.send({ success : true, tattoo_info_list : tattoo_info_list })
 }
-exports.tattooHistory = async function(body, res) {
-    const tattoo_history = await blockchain.history(body.tattoo_id)
+exports.tattooHistory = async function(query, res) {
+    const tattoo_history = await blockchain.history(query.tattoo_id)
     res.send({ success : true, tattoo_history : tattoo_history })
 }
-exports.addSideEffect = async function(body, res) {
-    const side_effect = [ body.user_id, body.symptom ]
-    await blockchain.invoke('addSideEffect', body.tattoo_id, side_effect)
+exports.addSideEffect = async function(query, res) {
+    const side_effect = [ query.user_id, query.symptom ]
+    await blockchain.invoke('addSideEffect', query.tattoo_id, side_effect)
 
     res.send({ success : true })
 }
@@ -293,4 +300,19 @@ exports.removeEnd = async function(body, res) {
     await blockchain.invoke('endRemove', body.tattoo_id, procedure)
 
     res.send({ success : true })
+}
+
+
+// 관리자함수
+exports.resetUser = async function() {
+    await User.remove({})
+}
+exports.resetDraft = async function() {
+    await Draft.remove({})
+}
+exports.resetTattooist = async function() {
+    await Tattooist.remove({})
+}
+exports.resetTattoo = async function() {
+    await Tattoo.remove({})
 }

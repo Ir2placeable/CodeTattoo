@@ -55,12 +55,12 @@ server.get('/user/my-tattoo', (req, res) => {
         .catch(() => { console.log('error')})
 })
 // 유저 나의 타투 이력조회
-server.post('/user/my-tattoo/history', (req, res) => {
-    routing_to.tattooHistory(req.body, res)
+server.get('/user/my-tattoo/history', (req, res) => {
+    routing_to.tattooHistory(req.query, res)
         .catch(() => { console.log('error')})
 })
 // 유저 타투 부작용 등록
-server.post('/api/tattoo/side_effect', (req, res) => {
+server.post('/user/my-tattoo/side_effect', (req, res) => {
     routing_to.addSideEffect(req.body, res)
         .catch(() => { console.log('error')})
 })
@@ -132,6 +132,27 @@ server.put('/remove', (req, res) => {
         .catch(() => { console.log('error')})
 })
 
+
+// User 초기화
+server.get('/reset/user', (req, res) => {
+    routing_to.resetUser()
+        .then(() => { res.send({ success : true })})
+})
+// Draft 초기화
+server.get('/reset/draft', (req, res) => {
+    routing_to.resetDraft()
+        .then(() => { res.send({ success : true })})
+})
+// Tattooist 초기화
+server.get('/reset/tattooist', (req, res) => {
+    routing_to.resetUser()
+        .then(() => { res.send({ success : true })})
+})
+// Tattoo 초기화
+server.get('/reset/tattoo', (req, res) => {
+    routing_to.resetTattoo()
+        .then(() => { res.send({ success : true })})
+})
 
 
 
