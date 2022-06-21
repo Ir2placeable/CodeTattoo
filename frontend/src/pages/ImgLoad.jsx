@@ -63,10 +63,13 @@ const ImgLoad = ({ apiUrl, cookies }) => {
     const body = {
       drawer: cookies.isTattooist,
       title: title,
-      image: image
+      image: image.data,
+      mime: image.mime,
+      width: image.width,
+      height: image.height
     }
     //console.log(body)
-    const res = await axios.post(`${apiUrl}/draft/create`, body);
+    const res = await axios.post(`${apiUrl}/draft`, body);
     console.log(res);
   }
 

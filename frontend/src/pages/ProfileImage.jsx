@@ -1,3 +1,5 @@
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faUser } from '@fortawesome/free-solid-svg-icons';
 import axios from 'axios';
 import React, { useState } from 'react';
 import { 
@@ -7,7 +9,8 @@ import {
   LoadedImg
 } from '../styledComponents';
 
-const ProfileImage = ({ src, setSrc, image, setImage }) => {
+const ProfileImage = ({ src, setSrc, image, setImage, 
+  isImgChange, setIsImgChange, cookies, userMode }) => {
 
   const onSelectFile = (e) => {
     if(e.target.files && e.target.files.length > 0){
@@ -31,6 +34,7 @@ const ProfileImage = ({ src, setSrc, image, setImage }) => {
       data: _data,
       mime: _mime
     })
+    setIsImgChange(true);
   }
 
   return (
@@ -39,9 +43,17 @@ const ProfileImage = ({ src, setSrc, image, setImage }) => {
         <ImgInput type="file" onChange={onSelectFile} />
       </ImgInputDiv>
 
-      { src && (
+      { src ? (
         <LoadedImgDiv>
           <LoadedImg src={src} onLoad={onLoad} /><br/>
+        </LoadedImgDiv>
+      ) : (
+        <LoadedImgDiv>
+          {userMode ? (
+            <LoadedImg src={cookies.user_image} />
+          ) : (
+            <LoadedImg src={cookies.image} />
+          )}
         </LoadedImgDiv>
       )}
     </>

@@ -25,21 +25,30 @@ import UserMyPage from './pages/UserMyPage';
 import ProfileEdit from './pages/ProfileEdit';
 import TattooistList from './pages/TattooistList';
 import ShowPostList from './pages/ShowPostList';
+import UserProfileEdit from './pages/UserProfileEdit';
+import HeartIcon from './pages/HeartIcon';
+import Calendar from 'react-calendar';
+import CalendarComp from './pages/CalendarComp';
 
 const apiUrl = APIURL;
+const temp_scraps = [
+  { _id: '123a' },
+  { _id: '456a' },
+  { _id: '789a' }
+]
 
 const App = () => {
   const [cookies, setCookie, removeCookie] = useCookies([
     'user_id', 'name', 'location', 'isTattooist',
     'nickname', 'specialize', 'address', 'contact', 'description', 'image',
-    'user_desc', 'user_image'
+    'user_desc', 'user_image', 'scraps', 'following'
   ]);
 
   // useEffect(() => {
-  //   console.log(Object.keys(cookies))
-  //   const keys = Object.keys(cookies)
-  //   for(let i=0; i<keys.length; i++){
-  //     removeCookie(keys[i]);
+  //   //setCookie('scraps', temp_scraps, {maxAge: 3000});
+  //   console.log(cookies.scraps)
+  //   for(let i=0; i<cookies.scraps.length; i++){
+  //     console.log(cookies.scraps[i]);
   //   }
   // }, []);
 
@@ -48,15 +57,17 @@ const App = () => {
       <Reset />
       <Header cookies={cookies} removeCookie={removeCookie} />
 
+      {/* <HeartIcon size={30} user_id="1" draft_id="123ab" cookies={cookies} /> */}
       {/* display: flex; */}
       {/* EntrySection: 카테고리랑 메인컨텐츠 flex 하려고 */}
       <EntrySection>  
         <Category />
 
         <Routes>
+          {/* Entry page */}
           <Route path='/' element={<Entry
             cookies={cookies} />} />
-          {/* Entry */}
+          {/* 로그인, 회원가입, 타투이스트 등록 */}
           <Route path='/login' element={<Login 
             apiUrl={apiUrl}
             setCookie={setCookie} />} />
@@ -74,21 +85,24 @@ const App = () => {
                     
           <Route path="/tattooist/mypage/edit/:tattooist_id" 
             element={<ProfileEdit apiUrl={apiUrl} cookies={cookies} setCookie={setCookie} removeCookie={removeCookie} />} />
+          <Route path="/user/mypage/edit/:user_id"
+            element={<UserProfileEdit apiUrl={apiUrl} cookies={cookies} />} />
 
-          {/* User */}
-        
+          {/* 도안 등록 */}
           <Route path="/imgload" element={<ImgLoad apiUrl={apiUrl} cookies={cookies} />}></Route>
         
-          {/* Tattoist */}
+          {/* Tattoist List */}
           <Route path="/tattooists" element={<TattooistList apiUrl={apiUrl} cookies={cookies}  />} />
 
-          {/* Tattoo */}
-          <Route path="/tattoo/best" element={<BestDrafts apiUrl={apiUrl} />} />
-          <Route path="/tattoo/recent" element={<RecentDrafts apiUrl={apiUrl} />} />
-          <Route path="/tattoo/all" element={<AllDrafts apiUrl={apiUrl} />} />
+          {/* Tattoo List */}
+          <Route path="/tattoo/best" element={<BestDrafts apiUrl={apiUrl} cookies={cookies} />} />
+          <Route path="/tattoo/recent" element={<RecentDrafts apiUrl={apiUrl} cookies={cookies} />} />
+          <Route path="/tattoo/all" element={<AllDrafts apiUrl={apiUrl} cookies={cookies} />} />
 
           {/* Board */}
-          <Route path="/board" element={<ShowPostList apiUrl={apiUrl} />} />
+          <Route path="/board" element={<ShowPostList apiUrl={apiUrl} cookies={cookies} />} />
+        
+          <Route path="/calendar" element={<CalendarComp apiUrl={apiUrl}  cookies={cookies} />} />
         </Routes>
 
       </EntrySection>

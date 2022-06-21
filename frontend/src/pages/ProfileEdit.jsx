@@ -14,10 +14,14 @@ import {
   EnrollInput,
   EnrollBtn,
 } from '../styledComponents';
+import { useNavigate } from 'react-router-dom';
 
 const ProfileEdit = ({ apiUrl, cookies, setCookie, removeCookie }) => {
   const params = useParams();
   const [src, setSrc] = useState(null);
+  const [isImgChange, setIsImgChange] = useState(false);
+  const [isChange, setIsChange] = useState(false);
+
   const [image, setImage] = useState({
     width: 300,
     height: 300,
@@ -40,40 +44,51 @@ const ProfileEdit = ({ apiUrl, cookies, setCookie, removeCookie }) => {
       ...input,
       [name]: value
     })
+    setIsChange(true)
   }
 
   const sendRequest = async() => {
-    const edit_data = {
+    const res = await axios.put(`${apiUrl}/tattooist/my-page`, {
+      tattooist_id: cookies.isTattooist,
       nickname: nickname,
       specialize: specialize,
-      office: {
-        location: address,
-        contact: contact
-      },
-      profile: {
-        description: description,
-        image: image
-      }
-    }
-    const res = await axios.post(`${apiUrl}/tattooist/mypage/edit`, {
-      tattooist_id: cookies.isTattooist,
-      edit_data: edit_data
+      location: address,
+      contact: contact,
+      description: description
     })
-    console.log(res);
-  }
-  const removeCookies = () => {
-    removeCookie('specialize', {path: '/tattooist/mypage'})
-    removeCookie('nickname', {path: '/tattooist/mypage'})
-    removeCookie('address', {path: '/tattooist/mypage'})
-    removeCookie('contact', {path: '/tattooist/mypage'})
-    removeCookie('image', {path: '/tattooist/mypage'})
-    removeCookie('description', {path: '/tattooist/mypage'})
+    console.log('정보 수정 : ',res);
+
+    if(res.data.success){
+      window.location.replace(`/tattooist/mypage/${cookies.isTattooist}`);
+    }
   }
 
+  const editProfileImage = async() => {
+    const res = await axios.put(`${apiUrl}/tattooist/my-page/image`, {
+      tattooist_id: cookies.isTattooist,
+      image: image.data,
+      mime: image.mime
+    });
+    console.log('사진 수정 : ',res);
+
+    if(res.data.success && !isChange){
+      window.location.replace(`/tattooist/mypage/${cookies.isTattooist}`);
+    }
+  }
+
+  const navigate = useNavigate();
   const onSubmit = () => {
-    sendRequest();
-    //removeCookies();
-    window.location.replace(`/tattooist/mypage/${cookies.isTattooist}`);
+    if(isImgChange && !isChange){
+      editProfileImage();
+    } else if (!isImgChange && isChange){
+      sendRequest();
+    } else if (isImgChange && isChange){
+      editProfileImage();
+      sendRequest();
+    }
+    
+    //navigate(`/tattooist/mypage/${cookies.isTattooist}`)
+    // window.location.replace(`/tattooist/mypage/${cookies.isTattooist}`);
   }
 
   return (
@@ -83,7 +98,11 @@ const ProfileEdit = ({ apiUrl, cookies, setCookie, removeCookie }) => {
         <EnrollBigText>Edit Information</EnrollBigText>
         <EnrollUl>
           <EnrollText>Profile Image</EnrollText>
-          <ProfileImage src={src} setSrc={setSrc} image={image} setImage={setImage} />
+          <ProfileImage 
+            src={src} setSrc={setSrc}
+            image={image} setImage={setImage}
+            isImgChange={isImgChange} setIsImgChange={setIsImgChange}
+            cookies={cookies} userMode={false} />
         </EnrollUl>
 
         <EnrollUl>
@@ -151,7 +170,7 @@ const ProfileEdit = ({ apiUrl, cookies, setCookie, removeCookie }) => {
 
         <EnrollBtn onClick={onSubmit}>
             <span>수정</span>
-          </EnrollBtn>
+        </EnrollBtn>
       </EnrollBox>
     </EnrollDiv>
     </>
