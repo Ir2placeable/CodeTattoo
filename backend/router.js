@@ -1,5 +1,5 @@
 const routing_to = require('./logic')
-const blockchain = require('./blockchainFiles/blockchain')
+const blockchain = require('./blockchain')
 const express = require('express')
 const fs = require('fs')
 const server = express()
@@ -117,8 +117,10 @@ server.post('/draft', (req, res) => {
         .catch(() => { console.log('error')})
 })
 // 도안 조회
-server.get('/api/draft/:filter/:page', (req, res) => {
+server.get('/draft/:filter/:page', (req, res) => {
     routing_to.browseDraft(req.params, res)
+        .then(() => { console.log('draft browse')})
+        .catch(() => { console.log('error')})
 })
 
 // // 타투시술 예약
@@ -127,7 +129,7 @@ server.get('/api/draft/:filter/:page', (req, res) => {
 //         .then(() => { console.log('tattoo reservation')})
 //         .catch(() => { console.log('error')})
 // })
-// // 타투시술 시작
+// 타투시술 시작
 // server.post('/imprint', (req, res) => {
 //     routing_to.imprintStart(req.body, res)
 //         .then(() => { console.log('tattoo imprint start')})
@@ -186,47 +188,88 @@ const formidable = require('formidable');
 server.get('/testplace', (req, res) => {
     const file = fs.readFileSync('./testplace/hospital.html')
     res.write(file)
+    res.end()
 })
 server.post('/imprint', (req, res) => {
     const form = new formidable.IncomingForm();
-    form.parse(req, async function (err, fields, files) {
+    form.parse(req, async function (err, fields) {
         const tattoo_id = fields.tattoo_id;
         const tattooist_id = fields.tattooist_id
         const using_item_list = fields.using_item_list
 
         await blockchain.invoke('newTattoo', tattoo_id, 'test_user')
-        const procedure = [ tattooist_id, using_item_list ]
+        const procedure = [ tattooist_id, using_item_list, Math.round(Date.now()/1000) ]
         await blockchain.invoke('startImprint', tattoo_id, procedure)
             .then(() => { res.send({ success : true, message : 'transaction submitted'}) })
             .catch(() => { res.send({ success : false, message : 'wrong state'})})
     });
 })
-server.put('/imprint', (req, res) => {
+server.post('/imprint/end', (req, res) => {
     const form = new formidable.IncomingForm();
-    form.parse(req, async function (err, fields, files) {
+    form.parse(req, async function (err, fields) {
         const tattoo_id = fields.tattoo_id;
         const tattooist_id = fields.tattooist_id
 
-        const procedure = [ tattooist_id ]
+        const procedure = [ tattooist_id, Math.round(Date.now()/1000) ]
         await blockchain.invoke('endImprint', tattoo_id, procedure)
             .then(() => { res.send({ success : true, message : 'transaction submitted'}) })
             .catch(() => { res.send({ success : false, message : 'wrong state'})})
     });
 })
 server.post('/remove', (req, res) => {
+    const form = new formidable.IncomingForm();
+    form.parse(req, async function (err, fields) {
+        const tattoo_id = fields.tattoo_id;
+        const tattooist_id = fields.tattooist_id
+        const using_item_list = fields.using_item_list
 
+        const procedure = [ tattooist_id, using_item_list, Math.round(Date.now()/1000) ]
+        await blockchain.invoke('startRemove', tattoo_id, procedure)
+            .then(() => { res.send({ success : true, message : 'transaction submitted'}) })
+            .catch(() => { res.send({ success : false, message : 'wrong state'})})
+    });
 })
-server.put('/remove', (req, res) => {
+server.post('/remove/end', (req, res) => {
+    const form = new formidable.IncomingForm();
+    form.parse(req, async function (err, fields) {
+        const tattoo_id = fields.tattoo_id;
+        const tattooist_id = fields.tattooist_id
 
+        const procedure = [ tattooist_id, Math.round(Date.now()/1000) ]
+        await blockchain.invoke('endRemove', tattoo_id, procedure)
+            .then(() => { res.send({ success : true, message : 'transaction submitted'}) })
+            .catch(() => { res.send({ success : false, message : 'wrong state'})})
+    });
 })
 server.post('/side-effect', (req, res) => {
+    const form = new formidable.IncomingForm();
+    form.parse(req, async function (err, fields) {
+        const tattoo_id = fields.tattoo_id;
+        const activator_id = fields.activator_id
+        const symptom = fields.symptom
 
+        const procedure = [ activator_id, symptom ]
+        await blockchain.invoke('addSideEffect', tattoo_id, procedure)
+            .then(() => { res.send({ success : true, message : 'transaction submitted'}) })
+            .catch(() => { res.send({ success : false, message : 'wrong state'})})
+    });
 })
-server.get('/state', (req, res) => {
+server.get('/state', async (req, res) => {
+    const tattoo_id = req.query.tattoo_id
 
+    await blockchain.query(tattoo_id).then((data) => {
+        res.send(data)
+    })
 })
-server.get('/history', (req, res) => {
+server.get('/history', async (req, res) => {
+    const tattoo_id = req.query.tattoo_id
 
+    await blockchain.history(tattoo_id).then((data) => {
+        res.send(data)
+    })
+})
+server.get('/test', (req, res) => {
+    routing_to.test(res)
 })
 
 

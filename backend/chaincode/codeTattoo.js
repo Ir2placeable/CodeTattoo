@@ -9,6 +9,11 @@
 const { Contract } = require('fabric-contract-api');
 
 class CodeTattoo extends Contract {
+    async initLedger(ctx) {
+        console.info('============= START : Initialize Ledger ===========');
+        console.info('============= END : Initialize Ledger ===========');
+    }
+
     // params : { owner_id }
     async newTattoo(ctx, key, owner_id) {
         let new_tattoo = {};
@@ -20,7 +25,7 @@ class CodeTattoo extends Contract {
 
         await ctx.stub.putState(key, Buffer.from(JSON.stringify(new_tattoo)));
     }
-    
+
     // params : { procedure }
     // procedure = { activator_id, using_items, date }
     async startImprint(ctx, key, procedure) {
