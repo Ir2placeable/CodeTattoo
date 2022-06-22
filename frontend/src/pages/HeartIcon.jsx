@@ -9,20 +9,20 @@ const apiUrl = APIURL;
 const HeartIcon = ({ size, user_id ,draft_id, cookies }) => {
   const [heartClick, setHeartClick] = useState(false);
 
-  async function isFollowed(){
-    console.log(draft_id)
-    for(let i = 0; i < cookies.scraps.length; i++){
-      if(cookies.scraps[i]._id === draft_id){
-        console.log(draft_id, cookies.scraps[i]._id)
-        setHeartClick(true);
-        break;
-      }
-    }
-  }
+  // async function isFollowed(){
+  //   console.log(draft_id)
+  //   for(let i = 0; i < cookies.scraps.length; i++){
+  //     if(cookies.scraps[i]._id === draft_id){
+  //       console.log(draft_id, cookies.scraps[i]._id)
+  //       setHeartClick(true);
+  //       break;
+  //     }
+  //   }
+  // }
 
-  useEffect(() => {
-    isFollowed()
-  }, []);
+  // useEffect(() => {
+  //   isFollowed()
+  // }, []);
 
   const heartIconStyle = {
     fontSize: `${size}px`,
@@ -36,6 +36,10 @@ const HeartIcon = ({ size, user_id ,draft_id, cookies }) => {
       draft_id: draft_id
     })
     console.log(res)
+
+    if(res.data.success){
+      const likes = cookies.scraps;
+    }
   }
   const unfollow = async() => {
     const res = await axios.post();

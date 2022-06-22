@@ -36,7 +36,7 @@ import ShowDraftList from './ShowDraftList';
 import CalendarComp from './CalendarComp';
 import FollowTattooist from './FollowTattooist';
 
-const MyPage = ({ apiUrl, cookies, setCookie }) => {
+const MyPage = ({ apiUrl, cookies, setCookie, removeCookie }) => {
   const params = useParams();
   const [info, setInfo] = useState({
     nickname: '',
@@ -44,10 +44,6 @@ const MyPage = ({ apiUrl, cookies, setCookie }) => {
     location: '',
     contact: '',
     drafts: [],
-    // profile: {
-    //   description: '',
-    //   image: ''
-    // },
     description: '',
     image: ''
   });
@@ -170,8 +166,7 @@ const MyPage = ({ apiUrl, cookies, setCookie }) => {
           </MyPageContentDiv>
         ) : (
           <MyPageContentDiv>
-            캘린더 영역
-            <CalendarComp />
+            <CalendarComp apiUrl={apiUrl} cookies={cookies} />
           </MyPageContentDiv>
         )}
 

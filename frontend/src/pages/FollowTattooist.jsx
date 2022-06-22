@@ -14,18 +14,18 @@ const heartIconStyle = {
 const FollowTattooist = ({ user_id, tattooist_id, cookies }) => {
   const [heartClick, setHeartClick] = useState(false);
 
-  async function isFollowed(){
-    console.log(tattooist_id);
-    for(let i = 0; i < cookies.following.length; i++){
-      if(cookies.following[i].tattooist_id === tattooist_id){
-        setHeartClick(true);
-        break;
-      }
-    }
-  }
-  useEffect(() => {
-    isFollowed();
-  }, []);
+  // async function isFollowed(){
+  //   console.log(tattooist_id);
+  //   for(let i = 0; i < cookies.following.length; i++){
+  //     if(cookies.following[i].tattooist_id === tattooist_id){
+  //       setHeartClick(true);
+  //       break;
+  //     }
+  //   }
+  // }
+  // useEffect(() => {
+  //   isFollowed();
+  // }, []);
 
   const follow = async() => {
     const res = await axios.post()

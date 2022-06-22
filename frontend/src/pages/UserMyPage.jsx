@@ -20,7 +20,7 @@ import MyPageMenuComp from './MyPageMenuComp';
 import MyPageButton from './MyPageButton';
 import ShowDraftList from './ShowDraftList';
 
-const UserMyPage = ({ apiUrl, cookies, setCookie }) => {
+const UserMyPage = ({ apiUrl, cookies, setCookie, removeCookie }) => {
   const params = useParams();
   const [info, setInfo] = useState({
     nickname: '',

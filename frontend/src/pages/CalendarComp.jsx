@@ -7,34 +7,56 @@ import '../calendar.css'
 import moment from 'moment'
 import { useEffect } from 'react';
 
-const marks = [
-  "15-06-2022",
-  "05-06-2022",
-  "10-06-2022",
-  "07-06-2022",
-  "21-06-2022"
-]
+import { BookingDescriptionDiv } from '../styledComponents'
 
 const CalendarComp = ({ apiUrl, cookies }) => {
-
-  // const [startDate, setStartDate] = useState(new Date());
   const [value, onChange] = useState(new Date());
+
+  // 예약 불가능한 날짜
+  const [marks, setMarks] = useState([
+    '13-06-2022',
+    '11-06-2022',
+    '30-06-2022',
+    '21-06-2022'
+  ]);
+
+  // 예약 있는 날짜
+  const [booking, setBooking] = useState([
+    '24-06-2022',
+    '20-06-2022',
+    '28-06-2022'
+  ])
   
+  // 예약 불가능한 날짜 세팅
   const onClickDay = (value, event) => {
     // value : Sat Jun 18 2022 00:00:00 GMT+0900
-    console.log('click: ', value)
 
     const str = moment(value).format("DD-MM-YYYY");
-    console.log(str)
+
+    let clickedButton = event.target;
+
+    if(event.target.tagName === 'ABBR'){
+      clickedButton = event.target.parentNode;
+    }
+
+    if(clickedButton.classList.contains('highlight')){
+      const tempMarks = marks.filter(mark => mark !== str);
+      setMarks(tempMarks)
+      clickedButton.classList.remove('highlight');
+    } else {
+      const tempMarks = marks;
+      tempMarks.push(str);
+      setMarks(tempMarks)
+      clickedButton.classList.add('highlight')
+    }
   }
 
   useEffect(() => {
-    console.log('캘린더: ', value)
+
   }, []);
 
   return (
     <>
-      {/* <DatePicker selected={startDate} onChange={(date) => setStartDate(date)} /> */}
       <Calendar 
         onChange={onChange} 
         value={value}
@@ -43,7 +65,20 @@ const CalendarComp = ({ apiUrl, cookies }) => {
           if(marks.find((x) => x === moment(date).format("DD-MM-YYYY"))){
             return 'highlight'
           }
-        }} />
+        }} 
+        tileContent={({ activeStartDate, date, view}) => {
+          if(booking.find((x) => x === moment(date).format("DD-MM-YYYY"))){
+            return (
+              <div className='booking'></div>
+            )
+          }
+        }}
+        />
+
+        <BookingDescriptionDiv>
+          * 예약 불가능한 날짜를 클릭해주세요<br/>
+          * 예약이 확정된 날짜는 <span style={{color: 'rgb(60, 187, 60)', fontWeight: 'bold'}}>초록색</span> 원이 표시됩니다.
+        </BookingDescriptionDiv>
     </>
   );
 };

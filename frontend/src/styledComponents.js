@@ -645,6 +645,13 @@ border-radius: 50%;
 border: 3px solid black;
 cursor: pointer;
 text-align: center;
+overflow: hidden;
+`
+
+export const TattooistSmallImg = styled.img`
+width: 35px;
+height: 35px;
+object-fit: contain;
 `
 
 export const DraftTitle = styled.p`
@@ -829,6 +836,13 @@ text-align: center;
 export const WriterTd = styled.td`
 width: 20%;
 text-align: center;
+`
+
+// Booking
+export const BookingDescriptionDiv = styled.div`
+position: absolute;
+top: 200px;
+left: 50px;
 `
 
 //  FOOTER

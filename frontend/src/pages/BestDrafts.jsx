@@ -5,7 +5,7 @@ import ShowDraftList from './ShowDraftList';
 import { DraftListBigDiv } from '../styledComponents';
 import Pagination from './Pagination';
 
-const BestDrafts = ({ apiUrl, cookies }) => {
+const BestDrafts = ({ apiUrl, cookies, setCookie, removeCookie }) => {
   const [drafts, setDrafts] = useState([]);
   const [page, setPage] = useState(1);
   const [pages, setPages] = useState([]);
@@ -23,7 +23,7 @@ const BestDrafts = ({ apiUrl, cookies }) => {
   return (
     <>
     <DraftListBigDiv>
-      <ShowDraftList cookies={cookies} text={'Best Drafts'} drafts={drafts} tattooist={false} />
+      <ShowDraftList cookies={cookies} text={'Best Drafts'} drafts={drafts} tattooist={false} setCookie={setCookie} removeCookie={removeCookie} />
 
       <Pagination 
         apiUrl={apiUrl}

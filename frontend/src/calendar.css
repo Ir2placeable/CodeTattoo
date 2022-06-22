@@ -103,6 +103,8 @@
   background: none;
   text-align: center;
   line-height: 50px;
+
+  position: relative;
 }
 
 .react-calendar__tile:disabled {
@@ -110,37 +112,54 @@
 }
 .react-calendar__tile:enabled:hover,
 .react-calendar__tile:enabled:focus {
-  background-color: #e6e6e6;
+  background-color: #f5f0f7;
 }
+
+/* 오늘 */
 .react-calendar__tile--now {
   background: #e8e1eb;
 }
+
 .react-calendar__tile--now:enabled:hover,
 .react-calendar__tile--now:enabled:focus {
   background: #e9d9ef;
 }
 .react-calendar__tile--hasActive {
-  background: #76baff;
+  background: #e9d9ef;
 }
 .react-calendar__tile--hasActive:enabled:hover,
 .react-calendar__tile--hasActive:enabled:focus {
   background: #a9d4ff;
 }
 .react-calendar__tile--active {
-  background: #006edc;
-  color: white;
+  /* background: #006edc;
+  color: white; */
 }
 .react-calendar__tile--active:enabled:hover,
 .react-calendar__tile--active:enabled:focus {
-  background: #1087ff;
+  /* background: #1087ff; */
 }
 .react-calendar--selectRange .react-calendar__tile--hover {
   background-color: #e6e6e6;
 }
 
+.react-calendar__tile.highlight {
+  background-color: #ececec;
+  color: #ababab;
+}
 
+.booking {
+  position: absolute;
+  /* top: 7px;
+  right: 7px; */
 
-.highlight {
-  font-weight: bold;
-  color: blue;
+  bottom: 10px;
+  left: 0;
+  right: 0;
+
+  width: 10px;
+  height: 10px;
+  margin: 0 auto;
+  border-radius: 50%;
+  background-color: rgb(60, 187, 60);
 }

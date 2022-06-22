@@ -58,6 +58,7 @@ const App = () => {
       <Header cookies={cookies} removeCookie={removeCookie} />
 
       {/* <HeartIcon size={30} user_id="1" draft_id="123ab" cookies={cookies} /> */}
+
       {/* display: flex; */}
       {/* EntrySection: 카테고리랑 메인컨텐츠 flex 하려고 */}
       <EntrySection>  
@@ -78,15 +79,17 @@ const App = () => {
             setCookie={setCookie} />} />
 
           {/* My Page */}
-          <Route path="/user/mypage/:user_id" element={<UserMyPage apiUrl={apiUrl} cookies={cookies} setCookie={setCookie} />} />
+          <Route path="/user/mypage/:user_id" element={<UserMyPage apiUrl={apiUrl} cookies={cookies} setCookie={setCookie} removeCookie={removeCookie}  />} />
           <Route path="/tattooist/mypage/:tattooist_id" 
-            element={<MyPage apiUrl={apiUrl} cookies={cookies} setCookie={setCookie} />}>
+            element={<MyPage apiUrl={apiUrl} cookies={cookies} setCookie={setCookie} removeCookie={removeCookie}  />}>
           </Route>
                     
           <Route path="/tattooist/mypage/edit/:tattooist_id" 
             element={<ProfileEdit apiUrl={apiUrl} cookies={cookies} setCookie={setCookie} removeCookie={removeCookie} />} />
           <Route path="/user/mypage/edit/:user_id"
             element={<UserProfileEdit apiUrl={apiUrl} cookies={cookies} />} />
+
+          {/* <Route path="/tattooist/calendar/:tattooist_id" element={<CalendarComp apiUrl={apiUrl}  cookies={cookies} />} /> */}
 
           {/* 도안 등록 */}
           <Route path="/imgload" element={<ImgLoad apiUrl={apiUrl} cookies={cookies} />}></Route>
@@ -95,14 +98,14 @@ const App = () => {
           <Route path="/tattooists" element={<TattooistList apiUrl={apiUrl} cookies={cookies}  />} />
 
           {/* Tattoo List */}
-          <Route path="/tattoo/best" element={<BestDrafts apiUrl={apiUrl} cookies={cookies} />} />
-          <Route path="/tattoo/recent" element={<RecentDrafts apiUrl={apiUrl} cookies={cookies} />} />
-          <Route path="/tattoo/all" element={<AllDrafts apiUrl={apiUrl} cookies={cookies} />} />
+          <Route path="/tattoo/best" element={<BestDrafts apiUrl={apiUrl} cookies={cookies} setCookie={setCookie} removeCookie={removeCookie} />} />
+          <Route path="/tattoo/recent" element={<RecentDrafts apiUrl={apiUrl} cookies={cookies} />} setCookie={setCookie} removeCookie={removeCookie} />
+          <Route path="/tattoo/all" element={<AllDrafts apiUrl={apiUrl} cookies={cookies} setCookie={setCookie} removeCookie={removeCookie} />} />
 
           {/* Board */}
           <Route path="/board" element={<ShowPostList apiUrl={apiUrl} cookies={cookies} />} />
         
-          <Route path="/calendar" element={<CalendarComp apiUrl={apiUrl}  cookies={cookies} />} />
+          
         </Routes>
 
       </EntrySection>
