@@ -2,7 +2,7 @@ const {User} = require("./model/User")
 const {Tattooist} = require("./model/Tattooist")
 const {Draft} = require('./model/Draft')
 const {Tattoo} = require('./model/Tattoo')
-const blockchain = require('./blockchainFiles/blockchain')
+const blockchain = require('./blockchain')
 
 const mongoose = require("mongoose");
 const config = require('./config/key')
@@ -67,16 +67,29 @@ exports.userMyPage = async function(query, res) {
         user_id : String(user._id),
         name : user.name,
         location : user.location,
-        isTattooist : user.isTattooist
+        description : user.description,
+        image : user.image,
     }
-    const profile = {
-        description : user.profile.description,
-        image : user.profile.image
-    }
-    res.send({ success : true, user_info : user_info, profile : profile })
+
+    let promise_list = []
+    let scraps = []
+    user.scraps.forEach((draft_id) => {
+        promise_list.push(Draft.findOne({ _id : draft_id }).then((draft) => {
+            const temp = {
+                _id : draft._id,
+                title : draft.title,
+                image : draft.image,
+                timestamp : draft.timestamp
+            }
+            scraps.push(temp)
+        }))
+    })
+    Promise.all(promise_list).then(() => {
+        res.send({ success : true, user_info : user_info, drafts : scraps })
+    })
 }
 exports.userInfoEdit = async function(body, res) {
-    await User.updateOne({ _id : body.user_id }, {$set : { name : body.name, location : body.location, profile : { description : body.description }}})
+    await User.updateOne({ _id : body.user_id }, {$set : { name : body.name, location : body.location, description : body.description }})
 
     res.send({ success : true })
 }
@@ -84,7 +97,7 @@ exports.userImageEdit = async function(body, res) {
     const params = { title : body.user_id, image : body.image, mime : body.mime }
     const url = await imageStorage.upload(params)
 
-    await User.updateOne({ _id : body.user_id }, {$set : { profile : { image : url }}})
+    await User.updateOne({ _id : body.user_id }, {$set : { image : url }})
 
     res.send({ success : true })
 }
@@ -178,13 +191,15 @@ exports.tattooistMyPage = async function(query, res) {
             location : tattooist.office.location,
             contact : tattooist.office.contact,
             drafts : draft_info_list,
-            profile : tattooist.profile
+            description : tattooist.description,
+            image : tattooist.image
         }
         res.send({ success : true, tattooist_info : tattooist_info })
     })
 }
 exports.tattooistInfoEdit = async function(body, res) {
-    await Tattooist.updateOne({ _id : body.tattooist_id }, {$set : { nickname : body.nickname, specialize : body.specialize, office : { location : body.location, contact : body.contact }, profile : { description : body.description } }})
+    console.log(body)
+    await Tattooist.updateOne({ _id : body.tattooist_id }, {$set : { nickname : body.nickname, specialize : body.specialize, office : { location : body.location, contact : body.contact }, description : body.description }})
 
     res.send({ success : true })
 }
@@ -192,7 +207,7 @@ exports.tattooistImageEdit = async function(body, res) {
     const params = { title : body.tattooist_id, image : body.image, mime : body.mime }
     const url = await imageStorage.upload(params)
 
-    await Tattooist.updateOne({ _id : body.tattooist_id }, {$set : { profile : { image : url }}})
+    await Tattooist.updateOne({ _id : body.tattooist_id }, {$set : { image : url }})
 
     res.send({ success : true })
 }
@@ -216,40 +231,48 @@ exports.newDraft = async function(body, res) {
 
     res.send({ success : true })
 }
-exports.browseDraft = function(params, res) {
+exports.browseDraft = async function(params, res) {
     const page_number = parseInt(params.page)
     const item_index_start = showLimit * (page_number-1)
 
+    let draft_list;
     if (params.filter === 'init') {
         Draft.count().then((count) => {
             res.send({ success : true, count : count })
         })
+        return
     } else if (params.filter === 'best') {
-        browseDraft_best(item_index_start, res)
-            .catch(() => { res.send({ success : false , error : 'unexpected error'})})
+        draft_list = await browseDraft_best(item_index_start)
     } else if (params.filter === 'recent') {
-        browseDraft_recent(item_index_start, res)
-            .catch(() => { res.send({ success : false , error : 'unexpected error'})})
+        draft_list = await browseDraft_recent(item_index_start)
     } else if (params.filter === 'all') {
-        browseDraft_all(item_index_start, res)
-            .catch(() => { res.send({ success : false , error : 'unexpected error'})})
+        draft_list = await browseDraft_all(item_index_start)
     } else {
         res.send({ success : false, error : "wrong filter" })
+        return
     }
-}
-const browseDraft_best = async function(item_index_start, res) {
-    await Draft.find().sort({ like : -1 }).skip(item_index_start).limit(showLimit)
-        .then((drafts) => { res.send({ success : true, drafts : drafts })})
-}
-const browseDraft_recent = async function(item_index_start, res) {
-    await Draft.find().sort({ timestamp : -1 }).skip(item_index_start).limit(showLimit)
-        .then((drafts) => { res.send({ success : true, drafts : drafts })})
-}
-const browseDraft_all = async function(item_index_start, res) {
-    await Draft.find().skip(item_index_start).limit(showLimit)
-        .then((drafts) => { res.send({ success : true, drafts : drafts })})
-}
 
+    let drafts = []
+    for(let draft of draft_list) {
+        const draft_info = {
+            _id : draft._id,
+            title : draft.title,
+            image : draft.image,
+            timestamp : draft.timestamp
+        }
+        drafts.push(draft_info)
+    }
+    res.send({ success : true, drafts : drafts })
+}
+const browseDraft_best = function(item_index_start) {
+    return Draft.find().sort({like: -1}).skip(item_index_start).limit(showLimit);
+}
+const browseDraft_recent = function(item_index_start) {
+    return Draft.find().sort({timestamp: -1}).skip(item_index_start).limit(showLimit);
+}
+const browseDraft_all = function(item_index_start) {
+    return Draft.find().skip(item_index_start).limit(showLimit)
+}
 
 exports.imprintReservation = async function(body, res) {
     const tattooist = await Tattooist.findOne({ _id : body.tattooist_id })
@@ -263,14 +286,13 @@ exports.imprintReservation = async function(body, res) {
         return
     }
 
-
     res.send({ error : 'prototype'})
 }
 exports.imprintStart = async function(body, res) {
     const new_tattoo = new Tattoo()
     new_tattoo.owner_id = body.user_id;
 
-    // new_tattoo.save()
+    // await new_tattoo.save()
     // await User.updateOne({ _id : body.user_id }, {$push : { tattoos : new_tattoo }})
 
     await blockchain.invoke('newTattoo', new_tattoo._id, body.user_id)
@@ -281,7 +303,7 @@ exports.imprintStart = async function(body, res) {
     res.send({ success : true, tattoo_id : new_tattoo._id })
 }
 exports.imprintEnd = async function(body, res) {
-    const procedure = [ body.tattooist_id ]
+    const procedure = [ body.tattooist_id, Math.round(Date.now()/1000) ]
     await blockchain.invoke('endImprint', body.tattoo_id, procedure)
 
     res.send({ success : true })
@@ -296,23 +318,28 @@ exports.removeStart = async function(body, res) {
     res.send({ success : true })
 }
 exports.removeEnd = async function(body, res) {
-    const procedure = [ body.hospital_id ]
+    const procedure = [ body.hospital_id, Math.round(Date.now()/1000) ]
     await blockchain.invoke('endRemove', body.tattoo_id, procedure)
 
+    res.send({ success : true })
+}
+
+exports.test = async function(res) {
+    await blockchain.invoke('newTattoo', 'key', 'params')
     res.send({ success : true })
 }
 
 
 // 관리자함수
 exports.resetUser = async function() {
-    await User.remove({})
+    await User.deleteMany({})
 }
 exports.resetDraft = async function() {
-    await Draft.remove({})
+    await Draft.deleteMany({})
 }
 exports.resetTattooist = async function() {
-    await Tattooist.remove({})
+    await Tattooist.deleteMany({})
 }
 exports.resetTattoo = async function() {
-    await Tattoo.remove({})
+    await Tattoo.deleteMany({})
 }
