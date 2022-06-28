@@ -41,19 +41,29 @@ server.post('/register', (req, res) => {
 })
 // 유저 메인 페이지 - 도안
 server.get('/user/main/draft/:filter/:page', (req, res) => {
-    if (req.params.filter === 'init') {
-        routing_to.mainDraftInit(req.params, res)
-            .catch(() => { console.log('error')})
-    } else {
-        routing_to.mainDraft(req.params, res)
-            .catch(() => { console.log('error')})
-    }
+    routing_to.mainDraft(req.params, res)
+        .catch(() => { console.log('error')})
 })
-
-
-
-
-
+// 도안 스크랩
+server.post('/scrap', (req, res) => {
+    routing_to.draftScrap(req.body, res)
+        .catch(() => { console.log('error')})
+})
+// 유저 마이 페이지
+server.get('/user/my-page', (req, res) => {
+    routing_to.userMyPage(req.query, res)
+        .catch(() => { console.log('error')})
+})
+// 유저 마이 페이지 : 정보수정
+server.put('/user/my-page', (req, res) => {
+    routing_to.userInfoEdit(req.body, res)
+        .catch(() => { console.log('error') })
+})
+// 유저 마이 페이지 : 이미지수정
+server.put('/user/my-page/image', (req, res) => {
+    routing_to.userImageEdit(req.body, res)
+        .catch(() => { console.log('error') })
+})
 
 
 

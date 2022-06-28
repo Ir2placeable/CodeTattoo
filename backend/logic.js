@@ -60,7 +60,6 @@ exports.tattooistLogin = async function(body, res) {
         res.send({ success : true, tattooist_info : return_value })
     })
 }
-
 // 회원가입 : 유저
 exports.userRegister = async function(body, res) {
     const user = await User.findOne({ email : body.email })
@@ -75,7 +74,6 @@ exports.userRegister = async function(body, res) {
             res.send({ success : true })
         })
 }
-
 // 회원가입 : 타투이스트
 exports.tattooistRegister = async function(body, res) {
     const tattooist = await Tattooist.findOne({ email : body.email })
@@ -90,15 +88,18 @@ exports.tattooistRegister = async function(body, res) {
             res.send({ success : true })
         })
 }
-
-// 유저 메인 페이지 - 도안 : 초기화
-exports.mainDraftInit = async function(params, res) {
-    const count = await Draft.count()
-    res.send({ success : true, count : count})
-}
 // 유저 메인 페이지 - 도안
 exports.mainDraft = async function(params, res) {
+    if (params.filter === 'init') {
+        const count = await Draft.count()
+        res.send({ success : true, count : count })
+        return
+    }
+
+    const user = await User.findOne({ _id : params.user_id })
+
     const item_index_start = showLimit * (parseInt(params.page)-1)
+
     let drafts = []
     if (params.filter === 'best') {
         drafts = await Draft.find().sort({ like : -1 }).skip(item_index_start).limit(showLimit)
@@ -106,24 +107,66 @@ exports.mainDraft = async function(params, res) {
         drafts = await Draft.find().sort({ timestamp : -1 }).skip(item_index_start).limit(showLimit);
     } else if (params.filter === 'all') {
         drafts = await Draft.find().skip(item_index_start).limit(showLimit)
+    } else if (params.filter === 'search') {
+        drafts = await Draft.find({ title : {$regex : params.title }})
     } else {
         res.send({ err : 'wrong filter'})
     }
 
     let return_value = []
     for (let draft of drafts) {
-        const temp = {
+        let isScraped = false
+        if (user.scraps.includes(draft._id)) {
+            isScraped = true
+        }
+
+        const item = {
             draft_id : draft._id,
             image : draft.image,
             title : draft.title,
-            like : draft.like
+            like : draft.like,
+            scraped : isScraped
         }
-        return_value.push(temp)
+        return_value.push(item)
     }
 
     res.send({ success : true, draft_list : return_value })
 }
+// 도안 스크랩
+exports.draftScrap = async function(body, res) {
+    User.updateOne({ _id : body.user_id }, {$push : { scraps : body.draft_id }})
+    Draft.updateOne({ _id : body.draft_id }, {$inc : { like : 1 }})
 
+    res.send({ success : true })
+}
+// 유저 마이 페이지
+exports.userMyPage = async function(query, res) {
+    const user = await User.findOne({ _id : query.user_id })
+
+    const return_value = {
+        user_id : user._id,
+        nickname : user.nickname,
+        description : user.description,
+        image : user.image
+    }
+
+    res.send({ success : true, user_info : return_value })
+}
+// 유저 마이 페이지 : 정보 수정 요청
+exports.userInfoEdit = async function(body, res) {
+    User.updateOne({ _id : body.user_id }, {$set : { nickname : body.nickname, description : body.description }})
+
+    res.send({ success : true })
+}
+// 유저 마이 페이지 : 이미지 수정 요청
+exports.userImageEdit = async function(body, res) {
+    const imageStorage_params = { title : body.user_id, image : body.image, mime : body.mime }
+    const image_url = await imageStorage.upload(imageStorage_params)
+
+    User.updateOne({ _id : body.user_id }, {$set : { image : image_url }})
+
+    res.send({ success : true })
+}
 
 // exports.userMyPage = async function(query, res) {
 //     console.log(query)
