@@ -22,9 +22,6 @@ const draftSchema = mongoose.Schema({
     timestamp : {
         type : Number
     },
-    used : {
-        type : Number
-    }
 })
 
 const Draft = mongoose.model('Draft', draftSchema)

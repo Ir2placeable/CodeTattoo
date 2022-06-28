@@ -1,47 +1,71 @@
 const mongoose = require('mongoose');
+const bcrypt = require('bcrypt');
+const saltRounds = 10;
 
 const tattooistSchema = mongoose.Schema({
-    nickname : {
-        type : String
+    email: {
+        type: String
     },
-    specialize : {
-        type : String
+    pwd: {
+        type: String
     },
-    office : {
-        name : {
-            type : String
-        },
-        location : {
-            type : String
-        },
-        contact : {
-            type : String
-        }
+    nickname: {
+        type: String
     },
-    // 실제 수행한 작업물
-    artworks : {
-        type : [String]
-    },
-    // 등록한 도안
-    drafts : {
-        type : [String]
-    },
-    medallion : {
+    image : {
         type : String
     },
     description : {
         type : String
     },
-    image : {
+    specialize : {
         type : String
     },
-    followers : {
+    contact : {
+        type : String
+    },
+    office : {
+        type : String
+    },
+    medallion : {
+        type : Boolean
+    },
+    artworks : {
+        type : [String]
+    },
+    drafts : {
+        type : String
+    },
+    follower : {
         type : Number
     }
 })
 
+tattooistSchema.pre('save', function (next) {
+    var tattooist = this;
 
+    if (tattooist.isModified('pwd')) {
+        // 비밀번호를 암호화 시킨다.
+        bcrypt.genSalt(saltRounds, function (err, salt) {
+            if (err) return next(err)
+            bcrypt.hash(tattooist.pwd, salt, function (err, hash) {
+                if (err) return next(err)
+                tattooist.pwd = hash
+                next()
+            });
+        });
+    } else {
+        next();
+    }
+})
 
-const Tattooist = mongoose.model('Tattooist', tattooistSchema)
+tattooistSchema.methods.comparePassword = function (plainPassword, cb) {
+    bcrypt.compare(plainPassword, this.pwd, function (err, isMatch) {
+        if (err) return cb(err);
+        cb(null, isMatch);
+    });
+};
 
-module.exports = { Tattooist }
+const tattooist = mongoose.model('tattooist', tattooistSchema)
+
+module.exports = { tattooist }

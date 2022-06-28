@@ -9,30 +9,23 @@ const userSchema = mongoose.Schema({
     pwd: {
         type: String
     },
-    name: {
+    nickname: {
         type: String
     },
-    location : {
+    image : {
         type : String
-    },
-    isTattooist : {
-        type : String,
-        default : ""
-    },
-    scraps : {
-        type : [String]
-    },
-    follow : {
-        type : [String]
-    },
-    tattoos : {
-        type : [String]
     },
     description : {
         type : String
     },
-    image : {
-        type : String
+    scraps : {
+        type : [String]
+    },
+    follows : {
+        type : [String]
+    },
+    tattoos : {
+        type : [String]
     }
 })
 
