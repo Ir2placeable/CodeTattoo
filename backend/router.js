@@ -15,113 +15,149 @@ server.use(cors());
 server.get('/', (req, res) => {
     routing_to.entry(res)
 })
-// 회원가입
-server.post('/register', (req, res) => {
-    routing_to.register(req.body, res)
-        .then(() => { console.log('register')})
-        .catch(() => { console.log('error')})
-})
 // 로그인
 server.post('/login', (req, res) => {
-    routing_to.login(req.body, res)
-        .then(() => { console.log('login')})
-        .catch(() => { console.log('error')})
+    if (req.body.filter === 'user') {
+        routing_to.userLogin(req.body, res)
+            .catch(() => { console.log('error')})
+    } else if (req.body.filter === 'tattooist') {
+        routing_to.tattooistLogin(req.body, res)
+            .catch(() => { console.log('error')})
+    } else {
+        res.send({ err : 'wrong filter'})
+    }
+})
+// 회원가입
+server.post('/register', (req, res) => {
+    if (req.body.filter === 'user') {
+        routing_to.userRegister(req.body, res)
+            .catch(() => { console.log('error')})
+    } else if (req.body.filter === 'tattooist') {
+        routing_to.tattooistRegister(req.body, res)
+            .catch(() => { console.log('error')})
+    } else {
+        res.send({ err : 'wrong filter'})
+    }
+})
+// 유저 메인 페이지 - 도안
+server.get('/user/main/draft/:filter/:page', (req, res) => {
+    if (req.params.filter === 'init') {
+        routing_to.mainDraftInit(req.params, res)
+            .catch(() => { console.log('error')})
+    } else {
+        routing_to.mainDraft(req.params, res)
+            .catch(() => { console.log('error')})
+    }
 })
 
-// 유저 마이페이지
-server.get('/user/my-page', (req, res) => {
-    routing_to.userMyPage(req.query, res)
-        .then(() => { console.log('user mypage')})
-        .catch(() => { console.log('error')})
-})
-// 유저 마이페이지 정보 수정
-server.put('/user/my-page', (req, res) => {
-    routing_to.userInfoEdit(req.body, res)
-        .then(() => { console.log('user info edit')})
-        .catch(() => { console.log('error')})
-})
-// 유저 프로필 사진 변경
-server.put('/user/my-page/image', (req, res) => {
-    routing_to.userImageEdit(req.body, res)
-        .then(() => { console.log('user image edit')})
-        .catch(() => { console.log('error')})
-})
-// 유저 도안 좋아요
-server.post('/user/scrap', (req, res) => {
-    routing_to.userScrap(req.body, res)
-        .then(() => { console.log('user scrap')})
-        .catch(() => { console.log('error')})
-})
-// 유저 타투이스트 팔로우
-server.post('/user/follow', (req, res) => {
-    routing_to.userFollow(req.body, res)
-        .then(() => { console.log('user follow')})
-        .catch(() => { console.log('error')})
-})
-// 유저 나의 타투 조회
-server.get('/user/my-tattoo', (req, res) => {
-    routing_to.userMyTattoo(req.query, res)
-        .then(() => { console.log('user my tattoo')})
-        .catch(() => { console.log('error')})
-})
-// 유저 나의 타투 이력조회
-server.get('/user/my-tattoo/history', (req, res) => {
-    routing_to.tattooHistory(req.query, res)
-        .then(() => { console.log('user my tattoo history')})
-        .catch(() => { console.log('error')})
-})
-// 유저 타투 부작용 등록
-server.post('/user/my-tattoo/side_effect', (req, res) => {
-    routing_to.addSideEffect(req.body, res)
-        .then(() => { console.log('user my tattoo side effect')})
-        .catch(() => { console.log('error')})
-})
 
-// 타투이스트 등록
-server.post('/tattooist', (req, res) => {
-    routing_to.tattooistEnroll(req.body, res)
-        .then(() => { console.log('tattooist enroll')})
-        .catch(() => { console.log('error')})
-})
-// 타투이스트 리스트 조회
-server.get('/tattooist', (req, res) => {
-    routing_to.tattooistList(res)
-        .then(() => { console.log('tattooist list')})
-        .catch(() => { console.log('error')})
-})
-// 타투이스트 마이페이지
-server.get('/tattooist/my-page', (req, res) => {
-    routing_to.tattooistMyPage(req.query, res)
-        .then(() => { console.log('tattooist mypage')})
-        .catch(() => { console.log('error')})
-})
-// 타투이스트 마이페이지 정보 수정
-server.put('/tattooist/my-page', (req, res) => {
-    console.log('tattooist info edit')
-    console.log(req.body)
-    routing_to.tattooistInfoEdit(req.body, res)
-        .then(() => { console.log('tattooist mypage edit')})
-        .catch(() => { console.log('error')})
-})
-// 타투이스트 프로필 사진 변경
-server.put('/tattooist/my-page/image', (req, res) => {
-    routing_to.tattooistImageEdit(req.body, res)
-        .then(() => { console.log('tattooist image edit')})
-        .catch(() => { console.log('error')})
-})
 
-// 도안 생성
-server.post('/draft', (req, res) => {
-    routing_to.newDraft(req.body, res)
-        .then(() => { console.log('new draft')})
-        .catch(() => { console.log('error')})
-})
-// 도안 조회
-server.get('/draft/:filter/:page', (req, res) => {
-    routing_to.browseDraft(req.params, res)
-        .then(() => { console.log('draft browse')})
-        .catch(() => { console.log('error')})
-})
+
+
+
+
+
+
+
+
+
+
+
+
+// // 유저 마이페이지
+// server.get('/user/my-page', (req, res) => {
+//     routing_to.userMyPage(req.query, res)
+//         .then(() => { console.log('user mypage')})
+//         .catch(() => { console.log('error')})
+// })
+// // 유저 마이페이지 정보 수정
+// server.put('/user/my-page', (req, res) => {
+//     routing_to.userInfoEdit(req.body, res)
+//         .then(() => { console.log('user info edit')})
+//         .catch(() => { console.log('error')})
+// })
+// // 유저 프로필 사진 변경
+// server.put('/user/my-page/image', (req, res) => {
+//     routing_to.userImageEdit(req.body, res)
+//         .then(() => { console.log('user image edit')})
+//         .catch(() => { console.log('error')})
+// })
+// // 유저 도안 좋아요
+// server.post('/user/scrap', (req, res) => {
+//     routing_to.userScrap(req.body, res)
+//         .then(() => { console.log('user scrap')})
+//         .catch(() => { console.log('error')})
+// })
+// // 유저 타투이스트 팔로우
+// server.post('/user/follow', (req, res) => {
+//     routing_to.userFollow(req.body, res)
+//         .then(() => { console.log('user follow')})
+//         .catch(() => { console.log('error')})
+// })
+// // 유저 나의 타투 조회
+// server.get('/user/my-tattoo', (req, res) => {
+//     routing_to.userMyTattoo(req.query, res)
+//         .then(() => { console.log('user my tattoo')})
+//         .catch(() => { console.log('error')})
+// })
+// // 유저 나의 타투 이력조회
+// server.get('/user/my-tattoo/history', (req, res) => {
+//     routing_to.tattooHistory(req.query, res)
+//         .then(() => { console.log('user my tattoo history')})
+//         .catch(() => { console.log('error')})
+// })
+// // 유저 타투 부작용 등록
+// server.post('/user/my-tattoo/side_effect', (req, res) => {
+//     routing_to.addSideEffect(req.body, res)
+//         .then(() => { console.log('user my tattoo side effect')})
+//         .catch(() => { console.log('error')})
+// })
+//
+// // 타투이스트 등록
+// server.post('/tattooist', (req, res) => {
+//     routing_to.tattooistEnroll(req.body, res)
+//         .then(() => { console.log('tattooist enroll')})
+//         .catch(() => { console.log('error')})
+// })
+// // 타투이스트 리스트 조회
+// server.get('/tattooist', (req, res) => {
+//     routing_to.tattooistList(res)
+//         .then(() => { console.log('tattooist list')})
+//         .catch(() => { console.log('error')})
+// })
+// // 타투이스트 마이페이지
+// server.get('/tattooist/my-page', (req, res) => {
+//     routing_to.tattooistMyPage(req.query, res)
+//         .then(() => { console.log('tattooist mypage')})
+//         .catch(() => { console.log('error')})
+// })
+// // 타투이스트 마이페이지 정보 수정
+// server.put('/tattooist/my-page', (req, res) => {
+//     console.log('tattooist info edit')
+//     console.log(req.body)
+//     routing_to.tattooistInfoEdit(req.body, res)
+//         .then(() => { console.log('tattooist mypage edit')})
+//         .catch(() => { console.log('error')})
+// })
+// // 타투이스트 프로필 사진 변경
+// server.put('/tattooist/my-page/image', (req, res) => {
+//     routing_to.tattooistImageEdit(req.body, res)
+//         .then(() => { console.log('tattooist image edit')})
+//         .catch(() => { console.log('error')})
+// })
+//
+// // 도안 생성
+// server.post('/draft', (req, res) => {
+//     routing_to.newDraft(req.body, res)
+//         .then(() => { console.log('new draft')})
+//         .catch(() => { console.log('error')})
+// })
+// // 도안 조회
+// server.get('/draft/:filter/:page', (req, res) => {
+//     routing_to.browseDraft(req.params, res)
+//         .then(() => { console.log('draft browse')})
+//         .catch(() => { console.log('error')})
+// })
 
 // // 타투시술 예약
 // server.post('/imprint/reservation', (req, res) => {
@@ -181,98 +217,6 @@ server.get('/reset/tattoo', (req, res) => {
     routing_to.resetTattoo()
         .then(() => { res.send({ success : true })})
 })
-
-const formidable = require('formidable');
-
-// testplace
-server.get('/testplace', (req, res) => {
-    const file = fs.readFileSync('./testplace/hospital.html')
-    res.write(file)
-    res.end()
-})
-server.post('/imprint', (req, res) => {
-    const form = new formidable.IncomingForm();
-    form.parse(req, async function (err, fields) {
-        const tattoo_id = fields.tattoo_id;
-        const tattooist_id = fields.tattooist_id
-        const using_item_list = fields.using_item_list
-
-        await blockchain.invoke('newTattoo', tattoo_id, 'test_user')
-        const procedure = [ tattooist_id, using_item_list, Math.round(Date.now()/1000) ]
-        await blockchain.invoke('startImprint', tattoo_id, procedure)
-            .then(() => { res.send({ success : true, message : 'transaction submitted'}) })
-            .catch(() => { res.send({ success : false, message : 'wrong state'})})
-    });
-})
-server.post('/imprint/end', (req, res) => {
-    const form = new formidable.IncomingForm();
-    form.parse(req, async function (err, fields) {
-        const tattoo_id = fields.tattoo_id;
-        const tattooist_id = fields.tattooist_id
-
-        const procedure = [ tattooist_id, Math.round(Date.now()/1000) ]
-        await blockchain.invoke('endImprint', tattoo_id, procedure)
-            .then(() => { res.send({ success : true, message : 'transaction submitted'}) })
-            .catch(() => { res.send({ success : false, message : 'wrong state'})})
-    });
-})
-server.post('/remove', (req, res) => {
-    const form = new formidable.IncomingForm();
-    form.parse(req, async function (err, fields) {
-        const tattoo_id = fields.tattoo_id;
-        const tattooist_id = fields.tattooist_id
-        const using_item_list = fields.using_item_list
-
-        const procedure = [ tattooist_id, using_item_list, Math.round(Date.now()/1000) ]
-        await blockchain.invoke('startRemove', tattoo_id, procedure)
-            .then(() => { res.send({ success : true, message : 'transaction submitted'}) })
-            .catch(() => { res.send({ success : false, message : 'wrong state'})})
-    });
-})
-server.post('/remove/end', (req, res) => {
-    const form = new formidable.IncomingForm();
-    form.parse(req, async function (err, fields) {
-        const tattoo_id = fields.tattoo_id;
-        const tattooist_id = fields.tattooist_id
-
-        const procedure = [ tattooist_id, Math.round(Date.now()/1000) ]
-        await blockchain.invoke('endRemove', tattoo_id, procedure)
-            .then(() => { res.send({ success : true, message : 'transaction submitted'}) })
-            .catch(() => { res.send({ success : false, message : 'wrong state'})})
-    });
-})
-server.post('/side-effect', (req, res) => {
-    const form = new formidable.IncomingForm();
-    form.parse(req, async function (err, fields) {
-        const tattoo_id = fields.tattoo_id;
-        const activator_id = fields.activator_id
-        const symptom = fields.symptom
-
-        const procedure = [ activator_id, symptom ]
-        await blockchain.invoke('addSideEffect', tattoo_id, procedure)
-            .then(() => { res.send({ success : true, message : 'transaction submitted'}) })
-            .catch(() => { res.send({ success : false, message : 'wrong state'})})
-    });
-})
-server.get('/state', async (req, res) => {
-    const tattoo_id = req.query.tattoo_id
-
-    await blockchain.query(tattoo_id).then((data) => {
-        res.send(data)
-    })
-})
-server.get('/history', async (req, res) => {
-    const tattoo_id = req.query.tattoo_id
-
-    await blockchain.history(tattoo_id).then((data) => {
-        res.send(data)
-    })
-})
-server.get('/test', (req, res) => {
-    routing_to.test(res)
-})
-
-
 
 server.listen(port, () => {
     console.log('server opened')

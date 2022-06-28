@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const tattooSchema = mongoose.Schema({
-    owner_id : {
+    owner : {
         type : String
     }
 })
