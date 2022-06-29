@@ -85,12 +85,14 @@ width: 50%;
 line-height: 50px;
 border-radius: 15px 15px 0 0;
 text-align: center;
+color: rgba(72, 72, 72, .5);
 border-bottom: 1px solid rgba(72, 72, 72, .3);
 cursor: pointer;
 `
 
 export const AccountNavigateHover = {
-  borderBottom: '3px solid #484848'
+  borderBottom: '3px solid #484848',
+  color: '#484848'
 }
 
 export const AccountInputDiv = styled.div`
@@ -100,6 +102,14 @@ width: min-content;
 
 export const AccountInputBox = styled.div`
 margin-bottom: 20px;
+position: relative;
+`
+
+export const InputErrorText = styled.div`
+font-size: 13px;
+position: absolute;
+right: 0;
+color: red;
 `
 
 export const AccountLabel = styled.div`

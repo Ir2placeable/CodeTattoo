@@ -64,9 +64,18 @@ const LoginInput = ({ isTattooist, setCookie }) => {
     })
 
     if(res.data.success){
+      // 쿠키에 nickname, id 저장
       pushCookie(res.data);
-    } else {
+      //console.log(res.data)
 
+      setTimeout(() => {
+        window.location.replace('/');
+      }, 500)
+      
+    } else {
+      // 로그인 실패 : email or pwd 오류
+      alert('이메일 또는 비밀번호가 불일치합니다.')
+      window.location.replace('/login')
     }
   }
   const onSubmit = () => {
