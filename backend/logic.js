@@ -179,6 +179,29 @@ exports.userMainTattooist = async function(params, res) {
 
     res.send({ success : true, tattooist_list : return_value })
 }
+// 유저 메인 페이지 - 스크랩
+exports.userMainScrap = async function(params, res) {
+    const user = await User.findOne({ _id : params.user_id })
+
+    let drafts = []
+    for await (let draft_id of user.scraps) {
+        await Draft.findOne({ _id : draft_id }).then((draft) => { drafts.push(draft) })
+    }
+
+    let return_value = []
+    for (let draft of drafts) {
+        const item = {
+            draft_id : draft._id,
+            image : draft.image,
+            title : draft.title,
+            like : draft.like,
+            isScraped : true
+        }
+        return_value.push(item)
+    }
+
+    res.send({ success : true, draft_list : return_value })
+}
 
 
 

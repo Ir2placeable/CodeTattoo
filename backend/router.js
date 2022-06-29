@@ -49,7 +49,10 @@ server.get('/user/main/tattooist/:filter/:page', (req, res) => {
     routing_to.userMainTattooist(req.params, res)
         .catch(() => { console.log('error')})
 })
-
+server.get('/user/main/scrap/:page', (req, res) => {
+    routing_to.userMainScrap(req.params, res)
+        .catch(() => { console.log('error')})
+})
 
 // 도안 스크랩
 server.post('/scrap', (req, res) => {
