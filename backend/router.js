@@ -34,10 +34,10 @@ server.post('/register', (req, res) => {
     console.log('register')
     if (req.body.filter === 'user') {
         routing_to.userRegister(req.body, res)
-            .catch(() => { console.log('error')})
+            .catch((err) => { console.log(err)})
     } else if (req.body.filter === 'tattooist') {
         routing_to.tattooistRegister(req.body, res)
-            .catch(() => { console.log('error')})
+            .catch((err) => { console.log(err)})
     } else {
         res.send({ err : 'wrong filter'})
     }
