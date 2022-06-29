@@ -2,11 +2,13 @@ const {User} = require("./model/User")
 const {Tattooist} = require("./model/Tattooist")
 const {Draft} = require('./model/Draft')
 const {Tattoo} = require('./model/Tattoo')
+const {Reservaton} = require('./model/Reservation')
+
 const blockchain = require('./blockchain')
+const imageStorage = require('./imageStorage')
 
 const mongoose = require("mongoose");
 const config = require('./config/key')
-const imageStorage = require('./imageStorage')
 
 const draftShowLimit = 16
 const tattooistShowLimit = 8
@@ -90,7 +92,7 @@ exports.tattooistRegister = async function(body, res) {
         })
 }
 // 유저 메인 페이지 - 도안
-exports.userMainDraft = async function(params, res) {
+exports.MainDraft = async function(params, res) {
     if (params.filter === 'init') {
         const count = await Draft.count()
         res.send({ success : true, count : count })
@@ -134,7 +136,7 @@ exports.userMainDraft = async function(params, res) {
     res.send({ success : true, draft_list : return_value })
 }
 // 유저 메인 페이지 - 타투이스트
-exports.userMainTattooist = async function(params, res) {
+exports.MainTattooist = async function(params, res) {
     if (params.filter === 'init') {
         const count = await Tattooist.count()
         res.send({ success : true, count : count })
@@ -180,7 +182,7 @@ exports.userMainTattooist = async function(params, res) {
     res.send({ success : true, tattooist_list : return_value })
 }
 // 유저 메인 페이지 - 스크랩
-exports.userMainScrap = async function(params, res) {
+exports.MainScrap = async function(params, res) {
     const user = await User.findOne({ _id : params.user_id })
 
     let drafts = []
@@ -203,7 +205,7 @@ exports.userMainScrap = async function(params, res) {
     res.send({ success : true, draft_list : return_value })
 }
 // 유저 메인 페이지 - 마이타투
-exports.userMainMyTattoo = async function(params, res) {
+exports.MainMyTattoo = async function(params, res) {
     const user = await User.findOne({ _id : params.user_id })
 
     // 블록체인에서 타투 이력 조회
@@ -220,7 +222,33 @@ exports.userMainMyTattoo = async function(params, res) {
 
     res.send({ success : true, tattoo_list : return_value })
 }
+// 유저 예약확인 페이지
+exports.userReservation = async function(params, res) {
+    const reservations = await Reservaton.find({ customer_id : params.user_id })
 
+    if (!reservations) {
+        res.send({ success : false, err : 1 })
+        return
+    }
+
+    let return_value = []
+    for await (let reservation of reservations) {
+        const draft = await Draft.findOne({ _id : reservation.draft_id })
+        const tattooist = await Tattooist.findOne({ _id : reservation.tattooist_id })
+
+        const item = {
+            image : draft.image,
+            date : reservation.date,
+            tattooist_nickname : tattooist.nickname,
+            office : tattooist.office,
+            contact : tattooist.contact,
+            cost : reservation.cost
+        }
+
+        return_value.push(item)
+    }
+    res.send({ success : true, reservation_list : return_value })
+}
 
 
 // 도안 스크랩

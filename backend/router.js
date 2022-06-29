@@ -40,27 +40,30 @@ server.post('/register', (req, res) => {
     }
 })
 // 유저 메인 페이지 - 도안
-server.get('/user/main/draft/:filter/:page', (req, res) => {
-    routing_to.userMainDraft(req.params, res)
+server.get('/main/draft/:filter/:page', (req, res) => {
+    routing_to.MainDraft(req.params, res)
         .catch(() => { console.log('error')})
 })
 // 유저 메인 페이지 - 타투이스트
-server.get('/user/main/tattooist/:filter/:page', (req, res) => {
-    routing_to.userMainTattooist(req.params, res)
+server.get('/main/tattooist/:filter/:page', (req, res) => {
+    routing_to.MainTattooist(req.params, res)
         .catch(() => { console.log('error')})
 })
 // 유저 메인 페이지 - 스크랩
-server.get('/user/main/scrap/:page', (req, res) => {
-    routing_to.userMainScrap(req.params, res)
+server.get('/main/scrap/:page', (req, res) => {
+    routing_to.MainScrap(req.params, res)
         .catch(() => { console.log('error')})
 })
 // 유저 메인 페이지 - 마이 타투
-server.get('/user/main/my-tattoo', (req, res) => {
-    routing_to.userMainMyTattoo(req.params, res)
+server.get('/main/my-tattoo', (req, res) => {
+    routing_to.MainMyTattoo(req.params, res)
         .catch(() => { console.log('error')})
 })
-// 유저 예약 확인 페이지
-server
+// 유저 예약확인 페이지
+server.get('/user/reservation', (req, res) => {
+    routing_to.userReservation(req.params, res)
+        .catch(() => { console.log('error')})
+})
 
 // 도안 스크랩
 server.post('/scrap', (req, res) => {
