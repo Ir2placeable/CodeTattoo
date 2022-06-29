@@ -202,7 +202,24 @@ exports.userMainScrap = async function(params, res) {
 
     res.send({ success : true, draft_list : return_value })
 }
+// 유저 메인 페이지 - 마이타투
+exports.userMainMyTattoo = async function(params, res) {
+    const user = await User.findOne({ _id : params.user_id })
 
+    // 블록체인에서 타투 이력 조회
+    let tattoo_histories = []
+    for await (let tattoo_id of user.tattoos) {
+        await blockchain.history(tattoo_id).then((histories) => { tattoo_histories.push(histories) })
+    }
+
+    // 타투 이력 데이터 가공
+    let return_value = []
+    for (let history of tattoo_histories) {
+
+    }
+    
+    res.send({ success : true, tattoo_list : return_value })
+}
 
 
 

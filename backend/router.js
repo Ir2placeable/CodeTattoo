@@ -49,8 +49,14 @@ server.get('/user/main/tattooist/:filter/:page', (req, res) => {
     routing_to.userMainTattooist(req.params, res)
         .catch(() => { console.log('error')})
 })
+// 유저 메인 페이지 - 스크랩
 server.get('/user/main/scrap/:page', (req, res) => {
     routing_to.userMainScrap(req.params, res)
+        .catch(() => { console.log('error')})
+})
+// 유저 메인 페이지 - 마이 타투
+server.get('/user/main/my-tattoo', (req, res) => {
+    routing_to.userMainMyTattoo(req.params, res)
         .catch(() => { console.log('error')})
 })
 
