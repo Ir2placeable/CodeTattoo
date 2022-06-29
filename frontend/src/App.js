@@ -15,6 +15,7 @@ import Register from './components/account/Register';
 import MainPage from './components/main/MainPage';
 
 import { APIURL } from './config/key';
+import { MainPageDiv } from './styledComponents';
 
 const App = () => {
   const [cookies, setCookie, removeCookie] = useCookies([
@@ -46,11 +47,11 @@ const App = () => {
       <Header cookies={cookies} removeCookie={removeCookie} />
 
       {/* Main Container */}
-      <div>
+      <MainPageDiv>
 
         <Routes>
           {/* Main page */}
-          <Route path="/" element={<MainPage />} />
+          <Route path="/" element={<MainPage cookies={cookies} />} />
 
           {/* 로그인, 회원가입 */}
           <Route path="/login" element={<Login setCookie={setCookie} />} />
@@ -58,7 +59,7 @@ const App = () => {
 
         </Routes>
 
-      </div>
+      </MainPageDiv>
 
       {/* FOOTER */}
       <Footer />

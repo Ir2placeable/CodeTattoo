@@ -150,7 +150,99 @@ cursor: pointer;
 margin: 0 10px;
 `
 
+// *** Main Page ***
+export const MainPageDiv = styled.div`
+width: 100%;
+margin: 0 auto;
+`
 
+export const MainNavigation = styled.div`
+border-bottom: 1px solid rgba(72, 72, 72, .5);
+height: 50px;
+`
+
+export const MainNavigationInner = styled.div`
+margin: 0 auto;
+width: 1500px;
+height: 100%;
+position: relative;
+
+display: flex;
+justify-content: center;
+align-items: center;
+`
+
+export const MainNavigationBtn = styled.div`
+box-sizing: border-box;
+height: 100%;
+font-size: 20px;
+font-weight: bold;
+color: rgba(72, 72, 72, .5);
+border: 3px solid white;
+width: 25%;
+
+display: flex;
+justify-content: center;
+align-items: center;
+cursor: pointer;
+`
+
+export const MainNavigationBtnStyle = {
+  color: 'black',
+  borderBottom: '3px solid black'
+}
+
+export const MainContentsDiv = styled.div`
+width: 1500px;
+margin: 0 auto;
+position: relative;
+`
+
+export const SmallNavigation = styled.div`
+width: max-content;
+height: 40px;
+display: flex;
+justify-content: center;
+align-items: center;
+box-shadow: 5px 5px 10px 0 rgba(72, 72, 72, .3);
+border-radius: 8px;
+
+position: absolute;
+top: 30px;
+`
+
+export const SmallNavigationBtn = styled.div`
+font-size: 18px;
+height: 100%;
+width: 180px;
+display: flex;
+justify-content: center;
+align-items: center;
+position: relative;
+color: rgba(72, 72, 72, .3);
+font-weight: bold;
+cursor: pointer;
+`
+
+export const SearchInput = styled.input`
+box-sizing: border-box;
+border: 1px solid rgba(72, 72, 72, .3);
+height: 24px;
+border-radius: 5px;
+width: 150px;
+`
+
+export const SearchIconStyle = {
+  fontSize: '14px',
+  color: 'rgba(72, 72, 72, .5)',
+  position: 'absolute',
+  right: '22px',
+  cursor: 'pointer'
+}
+
+export const ContentsDiv = styled.div`
+min-height: 733px;
+`
 
 // =================== FOOTER ==========================
 export const FooterDiv = styled.footer`
