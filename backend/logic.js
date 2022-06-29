@@ -8,7 +8,8 @@ const mongoose = require("mongoose");
 const config = require('./config/key')
 const imageStorage = require('./imageStorage')
 
-const showLimit = 16
+const draftShowLimit = 16
+const tattooistShowLimit = 8
 
 mongoose.connect(config.mongoURI)
     .then(() => { console.log('db connected')} )
@@ -89,7 +90,7 @@ exports.tattooistRegister = async function(body, res) {
         })
 }
 // 유저 메인 페이지 - 도안
-exports.mainDraft = async function(params, res) {
+exports.userMainDraft = async function(params, res) {
     if (params.filter === 'init') {
         const count = await Draft.count()
         res.send({ success : true, count : count })
@@ -98,15 +99,15 @@ exports.mainDraft = async function(params, res) {
 
     const user = await User.findOne({ _id : params.user_id })
 
-    const item_index_start = showLimit * (parseInt(params.page)-1)
+    const item_index_start = draftShowLimit * (parseInt(params.page)-1)
 
     let drafts = []
     if (params.filter === 'best') {
-        drafts = await Draft.find().sort({ like : -1 }).skip(item_index_start).limit(showLimit)
+        drafts = await Draft.find().sort({ like : -1 }).skip(item_index_start).limit(draftShowLimit)
     } else if (params.filter === 'recent') {
-        drafts = await Draft.find().sort({ timestamp : -1 }).skip(item_index_start).limit(showLimit);
+        drafts = await Draft.find().sort({ timestamp : -1 }).skip(item_index_start).limit(draftShowLimit);
     } else if (params.filter === 'all') {
-        drafts = await Draft.find().skip(item_index_start).limit(showLimit)
+        drafts = await Draft.find().skip(item_index_start).limit(draftShowLimit)
     } else if (params.filter === 'search') {
         drafts = await Draft.find({ title : {$regex : params.title }})
     } else {
@@ -125,13 +126,63 @@ exports.mainDraft = async function(params, res) {
             image : draft.image,
             title : draft.title,
             like : draft.like,
-            scraped : isScraped
+            isScraped : isScraped
         }
         return_value.push(item)
     }
 
     res.send({ success : true, draft_list : return_value })
 }
+// 유저 메인 페이지 - 타투이스트
+exports.userMainTattooist = async function(params, res) {
+    if (params.filter === 'init') {
+        const count = await Tattooist.count()
+        res.send({ success : true, count : count })
+        return
+    }
+
+    const user = await User.findOne({ _id : params.user_id })
+
+    const item_index_start = tattooistShowLimit * (parseInt(params.page)-1)
+
+    let tattooists = []
+    if (params.filter === 'best') {
+        tattooists = await Tattooist.find().sort({ follower : -1 }).skip(item_index_start).limit(tattooistShowLimit)
+    } else if (params.filter === 'all') {
+        tattooists = await Tattooist.find().skip(item_index_start).limit(tattooistShowLimit)
+    } else if (params.filter === 'search') {
+        tattooists = await Tattooist.find({ title : {$regex : params.nickname }})
+    } else {
+        res.send({ err : 'wrong filter'})
+    }
+
+    let return_value = []
+    for (let tattooist of tattooists) {
+        let isFollowed = false
+        if (user.follows.includes(tattooist._id)) {
+            isFollowed = true
+        }
+
+        const item = {
+            tattooist_id : tattooist._id,
+            image : tattooist.image,
+            nickname : tattooist.nickname,
+            office : tattooist.office,
+            contact : tattooist.contact,
+            description : tattooist.description,
+            specialize : tattooist.specialize,
+            followers : tattooist.follower,
+            isFollowed : isFollowed
+        }
+        return_value.push(item)
+    }
+
+    res.send({ success : true, tattooist_list : return_value })
+}
+
+
+
+
 // 도안 스크랩
 exports.draftScrap = async function(body, res) {
     User.updateOne({ _id : body.user_id }, {$push : { scraps : body.draft_id }})
@@ -167,6 +218,10 @@ exports.userImageEdit = async function(body, res) {
 
     res.send({ success : true })
 }
+
+
+
+
 
 // exports.userMyPage = async function(query, res) {
 //     console.log(query)
@@ -356,7 +411,7 @@ exports.userImageEdit = async function(body, res) {
 // }
 // exports.browseDraft = async function(params, res) {
 //     const page_number = parseInt(params.page)
-//     const item_index_start = showLimit * (page_number-1)
+//     const item_index_start = draftShowLimit * (page_number-1)
 //
 //     let draft_list;
 //     if (params.filter === 'init') {

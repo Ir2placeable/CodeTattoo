@@ -41,9 +41,16 @@ server.post('/register', (req, res) => {
 })
 // 유저 메인 페이지 - 도안
 server.get('/user/main/draft/:filter/:page', (req, res) => {
-    routing_to.mainDraft(req.params, res)
+    routing_to.userMainDraft(req.params, res)
         .catch(() => { console.log('error')})
 })
+// 유저 메인 페이지 - 타투이스트
+server.get('/user/main/tattooist/:filter/:page', (req, res) => {
+    routing_to.userMainTattooist(req.params, res)
+        .catch(() => { console.log('error')})
+})
+
+
 // 도안 스크랩
 server.post('/scrap', (req, res) => {
     routing_to.draftScrap(req.body, res)
