@@ -217,7 +217,7 @@ exports.userMainMyTattoo = async function(params, res) {
     for (let history of tattoo_histories) {
 
     }
-    
+
     res.send({ success : true, tattoo_list : return_value })
 }
 
@@ -227,6 +227,13 @@ exports.userMainMyTattoo = async function(params, res) {
 exports.draftScrap = async function(body, res) {
     User.updateOne({ _id : body.user_id }, {$push : { scraps : body.draft_id }})
     Draft.updateOne({ _id : body.draft_id }, {$inc : { like : 1 }})
+
+    res.send({ success : true })
+}
+// 타투이스트 팔로우
+exports.followTattooist = async function(body, res) {
+    User.updateOne({ _id : body.user_id }, {$push : { follows : body.tattooist_id }})
+    Tattooist.updateOne({ _id : body.tattooist_id }, {$inc : { follower : 1 }})
 
     res.send({ success : true })
 }

@@ -59,10 +59,17 @@ server.get('/user/main/my-tattoo', (req, res) => {
     routing_to.userMainMyTattoo(req.params, res)
         .catch(() => { console.log('error')})
 })
+// 유저 예약 확인 페이지
+server
 
 // 도안 스크랩
 server.post('/scrap', (req, res) => {
     routing_to.draftScrap(req.body, res)
+        .catch(() => { console.log('error')})
+})
+// 타투이스트 팔로우
+server.post('/follow', (req, res) => {
+    routing_to.followTattooist(req.body, res)
         .catch(() => { console.log('error')})
 })
 // 유저 마이 페이지
