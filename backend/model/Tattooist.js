@@ -34,7 +34,7 @@ const tattooistSchema = mongoose.Schema({
         type : [String]
     },
     drafts : {
-        type : String
+        type : [String]
     },
     follower : {
         type : Number

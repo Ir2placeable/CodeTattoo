@@ -16,6 +16,9 @@ const draftSchema = mongoose.Schema({
     height : {
         type : Number
     },
+    description : {
+        type : String
+    },
     like : {
         type : Number
     },

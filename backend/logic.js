@@ -247,6 +247,7 @@ exports.userReservation = async function(params, res) {
 
         return_value.push(item)
     }
+
     res.send({ success : true, reservation_list : return_value })
 }
 
