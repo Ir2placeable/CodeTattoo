@@ -14,9 +14,11 @@ server.use(cors());
 // 엔트리
 server.get('/', (req, res) => {
     routing_to.entry(res)
+    console.log('entry')
 })
 // 로그인
 server.post('/login', (req, res) => {
+    console.log('login')
     if (req.body.filter === 'user') {
         routing_to.userLogin(req.body, res)
             .catch(() => { console.log('error')})
@@ -29,6 +31,7 @@ server.post('/login', (req, res) => {
 })
 // 회원가입
 server.post('/register', (req, res) => {
+    console.log('register')
     if (req.body.filter === 'user') {
         routing_to.userRegister(req.body, res)
             .catch(() => { console.log('error')})
@@ -41,21 +44,25 @@ server.post('/register', (req, res) => {
 })
 // 유저 메인 페이지 - 도안
 server.get('/main/draft/:filter/:page', (req, res) => {
+    console.log('main/draft')
     routing_to.MainDraft(req.params, res)
         .catch(() => { console.log('error')})
 })
 // 유저 메인 페이지 - 타투이스트
 server.get('/main/tattooist/:filter/:page', (req, res) => {
+    console.log('main/tattooist')
     routing_to.MainTattooist(req.params, res)
         .catch(() => { console.log('error')})
 })
 // 유저 메인 페이지 - 스크랩
 server.get('/main/scrap/:page', (req, res) => {
+    console.log('main/scrap')
     routing_to.MainScrap(req.params, res)
         .catch(() => { console.log('error')})
 })
 // 유저 메인 페이지 - 마이 타투
 server.get('/main/my-tattoo', (req, res) => {
+    console.log('main/my-tattoo')
     routing_to.MainMyTattoo(req.params, res)
         .catch(() => { console.log('error')})
 })
