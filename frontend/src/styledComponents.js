@@ -237,7 +237,7 @@ export const SearchIconStyle = {
   color: 'rgba(72, 72, 72, .5)',
   position: 'absolute',
   right: '22px',
-  cursor: 'pointer'
+  cursor: 'pointer',
 }
 
 export const ContentsDiv = styled.div`
