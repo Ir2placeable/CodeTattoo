@@ -6,11 +6,13 @@ import {
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons'
-
+import { useNavigate, useLocation } from 'react-router-dom';
 // texts(string): 버튼 텍스트
 // searchBox(boolean): 검색창 유무
 // location(int, 0~3): 네비게이션 위치
-const SmallNavigationComp = ({ texts, searchBox, location }) => {
+// [value, setValue] = useState({click: false, path: ''})
+const SmallNavigationComp = ({ 
+  texts, searchBox, location }) => {
   const [isClicked, setIsClicked] = useState({
     btn0: true,
     btn1: false

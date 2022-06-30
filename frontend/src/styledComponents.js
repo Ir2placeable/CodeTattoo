@@ -242,6 +242,81 @@ export const SearchIconStyle = {
 
 export const ContentsDiv = styled.div`
 min-height: 733px;
+padding-top: 130px;
+`
+
+// *** Show Draft List ***
+export const DraftListDiv = styled.div`
+width: 100%;
+display: flex;
+flex-direction: column;
+justify-content: stretch;
+align-items: center;
+
+position: relative;
+`
+
+export const EmptyDraftBox = styled.div`
+margin-top: 150px;
+color: #6e6e6e;
+font-weight: bold;
+font-size: 20px;
+border-radius: 20px;
+width: 400px;
+line-height: 35px;
+text-align: center;
+box-shadow: 5px 5px 15px 0px rgba(72, 72, 72, .5);
+`;
+
+export const DraftMainBox = styled.div`
+width: 1500px;
+display: flex;
+justify-content: stretch;
+align-items: stretch;
+flex-wrap: wrap;
+`;
+
+export const DraftImgBox = styled.div`
+margin: 20px 30px 50px;
+`;
+
+export const DraftImg = styled.img`
+width: 300px;
+height: 300px;
+object-fit: contain;
+box-sizing: border-box;
+border-radius: 8px;
+box-shadow: 5px 5px 20px rgba(0, 0, 0, .4);
+background-color: white;
+cursor: pointer;
+`;
+
+export const DraftImgInfo = styled.div`
+margin-top: 20px;
+margin-left: 20px;
+display: flex;
+align-items: center;
+position: relative;
+`;
+
+export const DraftHeartBox = styled.div`
+width: 35px;
+height: 35px;
+display: flex;
+align-items: center;
+justify-content: center;
+`
+export const DraftHeartCount = styled.div`
+font-size: 14px;
+position: absolute;
+right: 20px;
+color: #7C7C7C;
+`
+
+export const DraftImgTitle = styled.p`
+font-size: 18px;
+margin-left: 20px;
+text-align: center;
 `
 
 // =================== FOOTER ==========================
