@@ -21,10 +21,10 @@ server.post('/login', (req, res) => {
     console.log('login')
     if (req.body.filter === 'user') {
         routing_to.userLogin(req.body, res)
-            .catch(() => { console.log('error')})
+            .catch((err) => { console.log(err)})
     } else if (req.body.filter === 'tattooist') {
         routing_to.tattooistLogin(req.body, res)
-            .catch(() => { console.log('error')})
+            .catch((err) => { console.log(err)})
     } else {
         res.send({ err : 'wrong filter'})
     }
@@ -44,48 +44,48 @@ server.post('/register', (req, res) => {
 })
 // 유저 메인 페이지 - 도안
 server.get('/main/draft/:filter/:page', (req, res) => {
-    console.log('main/draft')
+    console.log('main page - draft')
     routing_to.MainDraft(req.params, res)
-        .catch(() => { console.log('error')})
+        .catch((err) => { console.log(err)})
 })
 // 유저 메인 페이지 - 타투이스트
 server.get('/main/tattooist/:filter/:page', (req, res) => {
-    console.log('main/tattooist')
+    console.log('main page - tattooist')
     routing_to.MainTattooist(req.params, res)
-        .catch(() => { console.log('error')})
+        .catch((err) => { console.log(err)})
 })
 // 유저 메인 페이지 - 스크랩
-server.get('/main/scrap/:page', (req, res) => {
-    console.log('main/scrap')
+server.get('/main/scrap/:filter/:page', (req, res) => {
+    console.log('main page - scrap')
     routing_to.MainScrap(req.params, res)
-        .catch(() => { console.log('error')})
+        .catch((err) => { console.log(err)})
 })
 // 유저 메인 페이지 - 마이 타투
 server.get('/main/my-tattoo', (req, res) => {
-    console.log('main/my-tattoo')
+    console.log('main page - my tattoo')
     routing_to.MainMyTattoo(req.params, res)
-        .catch(() => { console.log('error')})
+        .catch((err) => { console.log(err)})
 })
 // 유저 예약확인 페이지
 server.get('/user/reservation', (req, res) => {
     routing_to.userReservation(req.params, res)
-        .catch(() => { console.log('error')})
+        .catch((err) => { console.log(err)})
 })
 
 // 도안 스크랩
 server.post('/scrap', (req, res) => {
     routing_to.draftScrap(req.body, res)
-        .catch(() => { console.log('error')})
+        .catch((err) => { console.log(err)})
 })
 // 타투이스트 팔로우
 server.post('/follow', (req, res) => {
     routing_to.followTattooist(req.body, res)
-        .catch(() => { console.log('error')})
+        .catch((err) => { console.log(err)})
 })
 // 유저 마이 페이지
 server.get('/user/my-page', (req, res) => {
     routing_to.userMyPage(req.query, res)
-        .catch(() => { console.log('error')})
+        .catch((err) => { console.log(err)})
 })
 // 유저 마이 페이지 : 정보수정
 server.put('/user/my-page', (req, res) => {
