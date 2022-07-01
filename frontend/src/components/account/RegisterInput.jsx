@@ -4,15 +4,22 @@ import { APIURL } from '../../config/key';
 import axios from 'axios'
 import { 
   AccountInputDiv, AccountInputBox, AccountLabel,
-  AccountInput, AccountBtn, AccountText
+  AccountInput, AccountBtn, AccountText, InputErrorText
 } from '../../styledComponents';
+import { useNavigate } from 'react-router-dom';
 
 const errorBox = {
   borderColor: 'red'
 }
 
 const RegisterInput = ({ isTattooist }) => {
-  const [isErr, setIsErr] = useState(false);
+  // 이메일 유효성 검사
+  const [isRightEmail, setIsRightEmail] = useState(true);
+  // 비밀번호 8자 미만일 시 true -> 비밀번호 재입력칸 비활성화
+  const [isPwdRight, setIsPwdRight] = useState(false);
+  // 비밀번호 재입력 일치하지 않았을 때
+  const [isPwdDiff, setIsPwdDiff] = useState(false);
+
   const [info, setInfo] = useState({
     email: '',
     pwd: '',
@@ -30,21 +37,66 @@ const RegisterInput = ({ isTattooist }) => {
   const officeInput = useRef();
   const contactInput = useRef();
 
+  useEffect(() => {
+    emailInput.current.focus();
+  }, [])
+
+  // 이메일 유효성 검사
+  useEffect(() => {
+    if(!email){
+      setIsRightEmail(true)
+      return
+    }
+
+    var regExp = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i
+    // 형식에 맞는 경우 true 리턴
+    //console.log('이메일 유효성 검사 :: ', regExp.test(email))
+
+    if(regExp.test(email)){
+      setIsRightEmail(true)
+    } else {
+      setIsRightEmail(false)
+    }
+
+  }, [email])
+
+  // 비밀번호 유효성 검사
+  useEffect(() => {
+    var regExp = /^(?=.*\d)(?=.*[a-zA-Z])[0-9a-zA-Z]{8,16}$/
+    // 형식에 맞는 경우 true 리턴
+    //console.log('비밀번호 유효성 검사 :: ', regExp.test(pwd))
+
+    if(regExp.test(pwd)){
+      setIsPwdRight(true);
+    } else {
+      setIsPwdRight(false);
+    }
+
+  }, [pwd])
+
+  // 비밀번호 재입력 유효성 검사
+  useEffect(() => {
+    if(pwd2 === ''){
+      setIsPwdDiff(false)
+      return
+    }
+
+    if(pwd2 !== pwd){
+      setIsPwdDiff(true)
+    } else {
+      setIsPwdDiff(false)
+    }
+  }, [pwd2])
+
+  
   const onChange = (e) => {
     const { value, name } = e.target;
     setInfo({
       ...info,
       [name]: value
     })
-
-    if(name === 'pwd'){
-      if(pwd.length < 8){
-        setIsErr(true);
-      } else {
-        setIsErr(false)
-      }
-    }
   }
+
   const onKeyUp = (e) => {
     if(e.key === "Enter"){
       if(e.target.name === 'email'){
@@ -67,9 +119,46 @@ const RegisterInput = ({ isTattooist }) => {
     }
   }
 
-  const onSubmit = () => {
+  const navigate = useNavigate();
+  const registerRequest = async() => {
+    const body = {
+      filter: 'user',
+      email: email,
+      pwd: pwd,
+      nickname: nickname
+    }
 
+    if(isTattooist){
+      body.filter = 'tattooist';
+      body.office = office;
+      body.contact = contact;
+    }
+
+    console.log('body', body)
+
+    const res = await axios.post(`${APIURL}/register`, body)
+    //console.log(res)
+
+    if(res.data.success) {
+      // 회원가입 성공 : 로그인 페이지로
+      alert('회원가입 성공! 환영합니다.')
+      navigate('/login');
+    } else {
+      // 회원가입 실패 : 이메일 중복
+      alert('이미 존재하는 이메일입니다.')
+      window.location.replace('/register')
+    }
+    
   }
+
+  const onSubmit = () => {
+    if(!email || !pwd || !nickname || (isTattooist && (!office || !contact))){
+      alert('모든 정보를 입력해주세요.')
+    } else {
+      registerRequest();
+    }
+  }
+
   return (
     <>
       <AccountInputDiv>
@@ -86,6 +175,14 @@ const RegisterInput = ({ isTattooist }) => {
             onChange={onChange}
             onKeyUp={onKeyUp}
           />
+
+          {isRightEmail ? (
+            <div></div>
+          ) : (
+            <InputErrorText>
+              올바른 이메일 표현식이 아닙니다.
+            </InputErrorText>
+          )}
         </AccountInputBox>
 
         <AccountInputBox>
@@ -93,13 +190,12 @@ const RegisterInput = ({ isTattooist }) => {
           <AccountInput 
             type="password"
             name="pwd"
-            placeholder='영문, 숫자, 특수문자 조합 최소 8자'
+            placeholder='영문, 숫자 조합 8~16자'
             autoComplete='nope'
             value={pwd}
             ref={pwdInput}
             onChange={onChange}
             onKeyUp={onKeyUp}
-            style={isErr ? errorBox : {}}
           />
           <AccountInput 
             type="password"
@@ -110,7 +206,25 @@ const RegisterInput = ({ isTattooist }) => {
             ref={pwd2Input}
             onChange={onChange}
             onKeyUp={onKeyUp}
+            disabled={isPwdRight ? false : true}
           />
+
+          {isPwdRight ? (
+            <div></div>
+          ) : (
+            <InputErrorText>
+
+            </InputErrorText>
+          )}
+
+          {isPwdDiff ? (
+            <InputErrorText>
+              비밀번호가 일치하지 않습니다.
+            </InputErrorText>
+          ) : (
+            <div></div>
+          )}
+          
         </AccountInputBox>
 
         <AccountInputBox>

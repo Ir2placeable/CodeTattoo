@@ -7,14 +7,27 @@ import axios from 'axios';
 import { Routes, Route } from 'react-router-dom';
 import { useCookies } from 'react-cookie';
 
+import { APIURL } from './config/key';
+import { MainPageDiv } from './styledComponents';
+
 // Components
 import Header from './components/header/Header';
 import Footer from './components/footer/Footer';
 import Login from './components/account/Login';
 import Register from './components/account/Register';
 import MainPage from './components/main/MainPage';
-
-import { APIURL } from './config/key';
+import ShowDraftList from './components/main/ShowDraftList';
+import ShowTattooistList from './components/main/ShowTattooistList';
+import ShowScrap from './components/main/ShowScrap';
+import ShowMyTattoo from './components/main/ShowMyTattoo';
+import ShowManageWork from './components/main/ShowManageWork';
+import ShowManageDraft from './components/main/ShowManageDraft';
+import DraftList from './components/main/DraftList';
+import ScrapDraft from './components/main/ScrapDraft';
+import ScrapTattooist from './components/main/ScrapTattooist';
+import User from './components/mypage/User';
+import Tattooist from './components/mypage/Tattooist';
+import SearchDraft from './components/main/SearchDraft';
 
 const App = () => {
   const [cookies, setCookie, removeCookie] = useCookies([
@@ -46,19 +59,49 @@ const App = () => {
       <Header cookies={cookies} removeCookie={removeCookie} />
 
       {/* Main Container */}
-      <div>
+      <MainPageDiv>
 
         <Routes>
           {/* Main page */}
-          <Route path="/" element={<MainPage />} />
+          <Route path="/" element={<MainPage cookies={cookies} />}>
+
+            {/* 도안 목록 */}
+            <Route path="draft" element={<ShowDraftList />}>
+              <Route path="best" element={<DraftList cookies={cookies} filter={"best"} />} />
+              <Route path="all"  element={<DraftList cookies={cookies} filter={"all"} />} />
+              <Route path="search/:title" element={<SearchDraft cookies={cookies} />}  />
+            </Route>
+
+            {/* 타투이스트 목록 */}
+            <Route path="tattooist" element={<ShowTattooistList />} />
+
+            {/* 스크랩 목록 */}
+            <Route path="scrap" element={<ShowScrap />} >
+              <Route path="draft" element={<ScrapDraft />} />
+              <Route path="tattooist" element={<ScrapTattooist />} />
+            </Route>
+
+            {/* 마이 타투 목록 */}
+            <Route path="myTattoo" element={<ShowMyTattoo />} />
+
+            {/* 작업물 관리 */}
+            <Route path="manageWork" element={<ShowManageWork />} />
+
+            {/* 도안 관리 */}
+            <Route path="manageDraft" element={<ShowManageDraft />} />
+
+          </Route>
 
           {/* 로그인, 회원가입 */}
           <Route path="/login" element={<Login setCookie={setCookie} />} />
           <Route path="/register" element={<Register setCookie={setCookie}/>} />
 
+          {/* 마이 페이지 */}
+          <Route path="/mypage/user/:user_id" element={<User />} />
+          <Route path="/mypage/tattooist/:tattooist_id" element={<Tattooist />} />
         </Routes>
 
-      </div>
+      </MainPageDiv>
 
       {/* FOOTER */}
       <Footer />

@@ -85,12 +85,14 @@ width: 50%;
 line-height: 50px;
 border-radius: 15px 15px 0 0;
 text-align: center;
+color: rgba(72, 72, 72, .5);
 border-bottom: 1px solid rgba(72, 72, 72, .3);
 cursor: pointer;
 `
 
 export const AccountNavigateHover = {
-  borderBottom: '3px solid #484848'
+  borderBottom: '3px solid #484848',
+  color: '#484848'
 }
 
 export const AccountInputDiv = styled.div`
@@ -100,6 +102,14 @@ width: min-content;
 
 export const AccountInputBox = styled.div`
 margin-bottom: 20px;
+position: relative;
+`
+
+export const InputErrorText = styled.div`
+font-size: 13px;
+position: absolute;
+right: 0;
+color: red;
 `
 
 export const AccountLabel = styled.div`
@@ -140,7 +150,174 @@ cursor: pointer;
 margin: 0 10px;
 `
 
+// *** Main Page ***
+export const MainPageDiv = styled.div`
+width: 100%;
+margin: 0 auto;
+`
 
+export const MainNavigation = styled.div`
+border-bottom: 1px solid rgba(72, 72, 72, .5);
+height: 50px;
+`
+
+export const MainNavigationInner = styled.div`
+margin: 0 auto;
+width: 1500px;
+height: 100%;
+position: relative;
+
+display: flex;
+justify-content: center;
+align-items: center;
+`
+
+export const MainNavigationBtn = styled.div`
+box-sizing: border-box;
+height: 100%;
+font-size: 20px;
+font-weight: bold;
+color: rgba(72, 72, 72, .5);
+border: 3px solid white;
+width: 25%;
+
+display: flex;
+justify-content: center;
+align-items: center;
+cursor: pointer;
+`
+
+export const MainNavigationBtnStyle = {
+  color: 'black',
+  borderBottom: '3px solid black'
+}
+
+export const MainContentsDiv = styled.div`
+width: 1500px;
+margin: 0 auto;
+position: relative;
+`
+
+export const SmallNavigation = styled.div`
+width: max-content;
+height: 40px;
+display: flex;
+justify-content: center;
+align-items: center;
+box-shadow: 5px 5px 10px 0 rgba(72, 72, 72, .3);
+border-radius: 8px;
+
+position: absolute;
+top: 30px;
+`
+
+export const SmallNavigationBtn = styled.div`
+font-size: 18px;
+height: 100%;
+width: 180px;
+display: flex;
+justify-content: center;
+align-items: center;
+position: relative;
+color: rgba(72, 72, 72, .3);
+font-weight: bold;
+cursor: pointer;
+`
+
+export const SearchInput = styled.input`
+box-sizing: border-box;
+border: 1px solid rgba(72, 72, 72, .3);
+height: 24px;
+border-radius: 5px;
+width: 150px;
+`
+
+export const SearchIconStyle = {
+  fontSize: '14px',
+  color: 'rgba(72, 72, 72, .5)',
+  position: 'absolute',
+  right: '22px',
+  cursor: 'pointer',
+}
+
+export const ContentsDiv = styled.div`
+min-height: 733px;
+padding-top: 130px;
+`
+
+// *** Show Draft List ***
+export const DraftListDiv = styled.div`
+width: 100%;
+display: flex;
+flex-direction: column;
+justify-content: stretch;
+align-items: center;
+
+position: relative;
+`
+
+export const EmptyDraftBox = styled.div`
+margin-top: 150px;
+color: #6e6e6e;
+font-weight: bold;
+font-size: 20px;
+border-radius: 20px;
+width: 400px;
+line-height: 35px;
+text-align: center;
+box-shadow: 5px 5px 15px 0px rgba(72, 72, 72, .5);
+`;
+
+export const DraftMainBox = styled.div`
+width: 1500px;
+display: flex;
+justify-content: stretch;
+align-items: stretch;
+flex-wrap: wrap;
+`;
+
+export const DraftImgBox = styled.div`
+margin: 20px 30px 50px;
+`;
+
+export const DraftImg = styled.img`
+width: 300px;
+height: 300px;
+object-fit: contain;
+box-sizing: border-box;
+border-radius: 8px;
+box-shadow: 5px 5px 20px rgba(0, 0, 0, .4);
+background-color: white;
+cursor: pointer;
+`;
+
+export const DraftImgInfo = styled.div`
+margin-top: 20px;
+margin-left: 20px;
+display: flex;
+align-items: center;
+position: relative;
+`;
+
+export const DraftHeartBox = styled.div`
+width: 35px;
+height: 35px;
+display: flex;
+align-items: center;
+justify-content: center;
+`
+export const DraftHeartCount = styled.div`
+font-size: 14px;
+position: absolute;
+right: 20px;
+color: #7C7C7C;
+`
+
+export const DraftImgTitle = styled.p`
+font-size: 18px;
+margin-left: 20px;
+text-align: center;
+`
 
 // =================== FOOTER ==========================
 export const FooterDiv = styled.footer`

@@ -21,7 +21,7 @@ const HeaderBtnComp = ({ text, cookies, removeCookie }) => {
 
       setTimeout(() => {
         window.location.replace('/')
-      }, 3000);
+      }, 500);
 
     } else if(text === "로그인"){
       navigate('/login');
