@@ -8,8 +8,8 @@ import SmallNavigationComp from './SmallNavigationComp';
 const ShowTattooistList = () => {
   return (
     <>
-      <SmallNavigationComp texts={["Best", "All"]}
-        searchBox={true} location={1} />
+      {/* <SmallNavigationComp texts={["Best", "All"]}
+        searchBox={true} location={1} /> */}
 
       <ContentsDiv>
         
