@@ -28,7 +28,6 @@ const SmallNavigationComp = ({ data, searchBox, location }) => {
   const currLocation = useLocation();
 
   useEffect(() => {  // 버튼 스타일 세팅
-    console.log('SmallNavigationComp rerendering')
     const path = currLocation.pathname;
 
     if (path === data[0].path || path === data[1].path) {

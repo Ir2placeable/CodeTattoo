@@ -6,7 +6,7 @@ import {
   faArrowRight,
 } from '@fortawesome/free-solid-svg-icons';
 import axios from 'axios';
-import { PageDiv, PageBox, CurrentPage } from '../../styledComponents'
+import { PageDiv, PageBox, CurrentPage, PagenationDiv } from '../../styledComponents'
 import { useLocation } from 'react-router-dom';
 import { APIURL } from '../../config/key';
 
@@ -23,9 +23,11 @@ const Pagination = ({ filter, cookies ,
 
     const res = await axios.get(`${APIURL}/main/${filter}/init/1/?${_name}_id=${_id}`);
     
-    if(res.data.success){
-      console.log('pagination success')
+    if(!res.data.success){
+      console.log('pagination fail')
+      return;
     }
+
     const count = res.data.count;
     //const count = 23;
     const lastPage = Math.ceil(count / 16);
@@ -44,8 +46,8 @@ const Pagination = ({ filter, cookies ,
 
   return (
     <>
-
-    <PageDiv style={{margin: '30px 0 10px'}}>
+    <PagenationDiv>
+    <PageDiv>
       {/* 현재 페이지가 1보다 크면 ArrowLeft 보여주기 */}
       { page > 1 ? (
         <PageBox onClick={()=>{
@@ -82,9 +84,9 @@ const Pagination = ({ filter, cookies ,
     </PageDiv>
 
     <PageDiv>
-        <CurrentPage> {page} / {pages.length} </CurrentPage>
+        <CurrentPage> {page} / {pages.length === 0 ? 1 : pages.length} </CurrentPage>
     </PageDiv>
-
+    </PagenationDiv>
     </>
   );
 };

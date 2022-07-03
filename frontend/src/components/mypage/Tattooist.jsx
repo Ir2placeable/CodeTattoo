@@ -1,10 +1,14 @@
 import React from 'react';
+import MyPageInfo from './MyPageInfo';
+import { ContentsDiv } from '../../styledComponents';
 
-const Tattooist = () => {
+const Tattooist = ({ cookies }) => {
   return (
-    <div>
+    <ContentsDiv>
+
+      <MyPageInfo cookies={cookies} />
       
-    </div>
+    </ContentsDiv>
   );
 };
 

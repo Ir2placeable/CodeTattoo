@@ -35,7 +35,7 @@ const Header = ({ cookies, removeCookie }) => {
           { isLogin ? (
             <HeaderSubMenu>
               <HeaderBtnComp text={"예약조회"} />
-              <HeaderBtnComp text={"내 정보"} />
+              <HeaderBtnComp text={"내 정보"} cookies={cookies} />
               <HeaderBtnComp text={"로그아웃"} cookies={cookies} removeCookie={removeCookie} />
             </HeaderSubMenu>
           ) : (

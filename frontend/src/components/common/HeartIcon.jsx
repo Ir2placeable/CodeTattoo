@@ -38,10 +38,7 @@ const HeartIcon = ({ size, cookies, draft_id, isScraped }) => {
   }
 
   const sendDeleteScrap = async() => {
-    const res = await axios.delete(`${APIURL}/scrap`, {
-      user_id: cookies.user_id,
-      draft_id: draft_id
-    })
+    const res = await axios.delete(`${APIURL}/scrap/?user_id=${cookies.user_id}&draft_id=${draft_id}`)
 
     if(res.data.success){
       console.log('scrap delete success')
@@ -53,11 +50,11 @@ const HeartIcon = ({ size, cookies, draft_id, isScraped }) => {
     if(heartClick){
       // 스크랩 해제
       setHeartClick(false);
-      //sendDeleteScrap();
+      sendDeleteScrap();
     } else {
       // 스크랩
       setHeartClick(true);
-      //sendScrap();
+      sendScrap();
     }
   }
 

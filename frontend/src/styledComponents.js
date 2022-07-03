@@ -242,6 +242,8 @@ export const ContentsDiv = styled.div`
 min-height: 733px;
 padding-top: 130px;
 padding-bottom: 130px;
+
+position: relative;
 `;
 
 export const ListDiv = styled.div`
@@ -524,8 +526,14 @@ margin-left: -225px;
 `
 
 // *** Pagination ***
+export const PagenationDiv = styled.div`
+width: 100%;
+position: absolute;
+bottom: 50px;
+`
 export const PageDiv = styled.div`
   width: 100%;
+  margin: 0 0 20px;
 
   display: flex;
   justify-content: center;
@@ -548,8 +556,132 @@ cursor: pointer;
 export const CurrentPage = styled.p`
 font-size: 18px;
 color: #afafaf;
-margin-top: 30px;
 `
+
+// *** My Page ***
+export const MyPageInfoDiv = styled.div`
+width: 100%;
+margin-top: -130px;
+background-color: black;
+padding: 30px 0;
+`
+
+export const MyPageInfoInner = styled.div`
+width: 1300px;
+margin: 0 auto;
+display: flex;
+position: relative;
+`
+
+export const ProfileImgDiv = styled.div`
+width: max-content;
+position: relative;
+`
+
+export const ProfileImg = styled.img`
+width: 150px;
+height: 150px;
+object-fit: contain;
+border-radius: 50%;
+border: 2px solid rgba(72, 72, 72, .5);
+background-color: white;
+`
+
+export const ProfileIconDiv = styled.div`
+width: 150px;
+line-height: 150px;
+font-size: 80px;
+text-align: center;
+border-radius: 50%;
+border: 2px solid rgba(72, 72, 72, .5);
+background-color: white;
+`
+
+export const ProfileImgEdit = styled.div`
+background-color: black;
+border: 3px solid white;
+color: white;
+border-radius: 50%;
+width: 35px;
+line-height: 35px;
+text-align: center;
+position: absolute;
+bottom: 5px;
+right: 5px;
+z-index: 10;
+cursor: pointer;
+`
+
+export const ProfileDescDiv = styled.div`
+margin-left: 50px;
+font-weight: bold;
+color: white;
+
+display: flex;
+flex-direction: column;
+justify-content: center;
+`
+
+export const NicknameDiv = styled.div`
+font-size: 30px;
+margin: 10px;
+`
+
+export const DescDiv = styled.div`
+margin: 10px;
+color: rgb(210, 210, 210);
+`
+
+export const ProfileEdit = styled.div`
+width: 100px;
+height: 30px;
+border: 2px solid white;
+color: white;
+font-weight: bold;
+border-radius: 7px;
+display: flex;
+justify-content: center;
+align-items: center;
+position: absolute;
+right: 10px;
+cursor: pointer;
+transition: .45s;
+`
+
+export const ProfileEditHoverStyle = {
+  backgroundColor: '#444'
+}
+
+export const MyPageContentDiv = styled.div`
+width: 100%;
+display: flex;
+`
+
+export const MyPageCategory = styled.div`
+box-sizing: border-box;
+width: 250px;
+padding: 50px 30px;
+`
+
+export const CategoryBigText = styled.div`
+font-weight: bold;
+font-size: 24px;
+margin-bottom: 40px;
+`
+
+export const CategoryUl = styled.ul`
+margin-left: 20px;
+`
+
+export const CategoryLi = styled.li`
+margin-bottom: 20px;
+cursor: pointer;
+`
+
+export const MyPageContentBox = styled.div`
+width: calc((100%) - 250px)
+`
+
 
 // =================== FOOTER ==========================
 export const FooterDiv = styled.footer`

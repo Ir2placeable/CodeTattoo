@@ -39,6 +39,9 @@ const App = () => {
     // for tattooist
     "office",
     "contact",
+    // my page info
+    "profile_img_src",
+    "profile_desc"
   ]);
 
   const sendRequest = async () => {
@@ -121,10 +124,11 @@ const App = () => {
           />
 
           {/* 마이 페이지 */}
-          <Route path="/mypage/user/:user_id" element={<User />} />
+          <Route path="/mypage/:user_id" 
+            element={<User cookies={cookies} />} />
           <Route
-            path="/mypage/tattooist/:tattooist_id"
-            element={<Tattooist />}
+            path="/mypage/:tattooist_id"
+            element={<Tattooist cookies={cookies} />}
           />
         </Routes>
       </MainPageDiv>
