@@ -9,6 +9,8 @@ import {
 } from '../../styledComponents';
 
 import HeartIcon from '../common/HeartIcon';
+import Pagination from '../common/Pagination';
+import { useLocation } from 'react-router-dom';
 
 const tempDrafts = [
   {
@@ -23,7 +25,7 @@ const tempDrafts = [
     image: 'img/ex.PNG',
     title: '이미지',
     like: '123',
-    isScraped: false
+    isScraped: true
   },
   {
     draft_id: 'a3',
@@ -37,7 +39,7 @@ const tempDrafts = [
     image: 'img/ex.PNG',
     title: '이미지1',
     like: '6.2 K',
-    isScraped: false
+    isScraped: true
   },
   {
     draft_id: 'a5',
@@ -48,24 +50,40 @@ const tempDrafts = [
   }
 ]
 
-const DraftList = ({ filter, cookies }) => {
+// 도안 - http://3.39.196.91:3001/main/draft/:filter/:page
+//     - filter: init, best, all
+// 스크랩 도안 - - GET : http://3.39.196.91:3001/main/scrap/:filter/:page
+//    - filter : init / draft / tattooist
+// 도안 관리 - - GET : http://3.39.196.91:3001/main/my-draft/:filter/:page
+//    - filter : init / list
+
+const DraftList = ({ path, cookies, filter }) => {
   // draft_list = { draft_id, image, title, like, isScraped }
   const [drafts, setDrafts] = useState([]);
   const [page, setPage] = useState(1);
   const [pages, setPages] = useState([]);
 
   const sendRequest = async() => {
-    const res = await axios.get(`${APIURL}/main/draft/${filter}/${page}/?user_id=${cookies.user_id}`)
+    let _id = cookies.user_id;
+    let _name = 'user'
+    if(cookies.tattooist_id){
+      _id = cookies.tattooist_id;
+      _name = 'tattooist'
+    }
+
+    const res = await axios.get(`${APIURL}/${path}/${page}/?${_name}_id=${_id}`)
 
     if(res.data.success){
+      console.log('Draft List Get Request Success')
       setDrafts(res.data.draft_list)
     } else {
+      console.log(res.data)
       console.log('Draft List Get Request Fail');
     }
   }
 
   useEffect(() => {
-    //sendRequest();
+    sendRequest();
   }, [])
 
   const goDetail = (e) => {
@@ -77,14 +95,14 @@ const DraftList = ({ filter, cookies }) => {
     <>
       <DraftListDiv>
 
-        {tempDrafts.length === 0 ? (
+        {drafts.length === 0 ? (
           <EmptyDraftBox>
             아직 도안이 없습니다. 
           </EmptyDraftBox>
         ) : (
           <DraftMainBox>
             
-            {tempDrafts.map(draft => (
+            {drafts.map(draft => (
               <DraftImgBox key={draft.draft_id}>
 
                 <DraftImg 
@@ -96,7 +114,9 @@ const DraftList = ({ filter, cookies }) => {
 
                 <DraftImgInfo>
                   <DraftHeartBox>
-                    <HeartIcon size={35} />
+                    <HeartIcon size={35} 
+                      cookies={cookies} draft_id={draft.draft_id}
+                      isScraped={draft.isScraped} />
                   </DraftHeartBox>
                   <DraftImgTitle>{draft.title}</DraftImgTitle>
                   <DraftHeartCount>
@@ -107,8 +127,18 @@ const DraftList = ({ filter, cookies }) => {
               </DraftImgBox>
             ))}
 
+          <Pagination
+            filter={filter}
+            cookies={cookies}
+            page={page}
+            setPage={setPage}
+            pages={pages}
+            setPages={setPages}
+          />
+
           </DraftMainBox>
         )}
+
       </DraftListDiv>
     </>
   );
