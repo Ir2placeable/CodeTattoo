@@ -71,17 +71,6 @@ server.get('/user/reservation', (req, res) => {
     routing_to.userReservation(req.params, res)
         .catch((err) => { console.log(err)})
 })
-
-// 도안 스크랩
-server.post('/scrap', (req, res) => {
-    routing_to.draftScrap(req.body, res)
-        .catch((err) => { console.log(err)})
-})
-// 타투이스트 팔로우
-server.post('/follow', (req, res) => {
-    routing_to.followTattooist(req.body, res)
-        .catch((err) => { console.log(err)})
-})
 // 유저 마이 페이지
 server.get('/user/my-page', (req, res) => {
     routing_to.userMyPage(req.query, res)
@@ -98,6 +87,39 @@ server.put('/user/my-page/image', (req, res) => {
         .catch(() => { console.log('error') })
 })
 
+
+
+// 도안 스크랩
+server.post('/scrap', (req, res) => {
+    routing_to.ScrapDraft(req.body, res)
+        .catch((err) => { console.log(err)})
+})
+// 도안 스크랩 취소
+server.delete('/scrap', (req, res) => {
+    routing_to.unScrapDraft(req.body, res)
+        .catch((err) => { console.log(err)})
+})
+// 타투이스트 팔로우
+server.post('/follow', (req, res) => {
+    routing_to.followTattooist(req.body, res)
+        .catch((err) => { console.log(err)})
+})
+
+// 타투이스트 메인 페이지 - 작업물관리
+server.get('/main/artworks/:filter/:page', (req, res) => {
+    routing_to.MainArtworks(req.params, res)
+        .catch((err) => { console.log(err)})
+})
+// 타투이스트 메인 페이지 - 도안관리
+server.get('/main/my-draft/:filter/:page', (req, res) => {
+    routing_to.MainMyDraft(req.params, res)
+        .catch((err) => { console.log(err)})
+})
+// 타투이스트 메인 페이지 - 도안추가
+server.post('/main/my-draft', (req, res) => {
+    routing_to.newDraft(req.body, res)
+        .catch((err) => { console.log(err)})
+})
 
 
 // User 초기화
