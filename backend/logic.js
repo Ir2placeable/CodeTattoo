@@ -117,9 +117,11 @@ exports.MainDraft = async function(params, res) {
     }
 
     let return_value = []
+    const scraped_list = user.scraps
+
     for (let draft of drafts) {
         let isScraped = false
-        if (user.scraps.includes(draft._id)) {
+        if (scraped_list.includes(String(draft._id))) {
             isScraped = true
         }
 
@@ -159,9 +161,11 @@ exports.MainTattooist = async function(params, res) {
     }
 
     let return_value = []
+    const followed_list = user.follows
+
     for (let tattooist of tattooists) {
         let isFollowed = false
-        if (user.follows.includes(tattooist._id)) {
+        if (followed_list.includes(String(tattooist._id))) {
             isFollowed = true
         }
 
@@ -403,7 +407,8 @@ exports.MainMyDraft = async function(params, res) {
             draft_id : draft._id,
             image : draft.timestamp,
             title : draft.title,
-            like : draft.like
+            like : draft.like,
+            isScraped : true
         }
 
         return_value.push(item)
@@ -429,6 +434,38 @@ exports.newDraft = async function(body, res) {
 
     res.send({ success : true })
 }
+// 타투이스트 마이 페이지
+exports.tattooistMyPage = async function(query, res) {
+    const tattooist = await Tattooist.findOne({ _id : query.user_id })
+
+    const return_value = {
+        tattooist_id : tattooist._id,
+        nickname : tattooist.nickname,
+        description : tattooist.description,
+        image : tattooist.image,
+        specialize : tattooist.specialize,
+        office : tattooist.office,
+        contact : tattooist.contact
+    }
+
+    res.send({ success : true, tattooist_info : return_value })
+}
+// 타투이스트 마이 페이지 : 정보 수정 요청
+exports.tattooistInfoEdit = async function(body, res) {
+    Tattooist.updateOne({ _id : body.tattooist_id }, {$set : { nickname : body.nickname, description : body.description, specialize : body.specialize, office : body.office, contact : body.contact }})
+
+    res.send({ success : true })
+}
+// 타투이스트 마이 페이지 : 이미지 수정 요청
+exports.tattooistImageEdit = async function(body, res) {
+    const imageStorage_params = { title : body.tattooist_id, image : body.image, mime : body.mime }
+    const image_url = await imageStorage.upload(imageStorage_params)
+
+    Tattooist.updateOne({ _id : body.tattooist_id }, {$set : { image : image_url }})
+
+    res.send({ success : true })
+}
+
 
 
 

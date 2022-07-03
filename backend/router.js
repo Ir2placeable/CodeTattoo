@@ -1,7 +1,6 @@
 const routing_to = require('./logic')
 const blockchain = require('./blockchain')
 const express = require('express')
-const fs = require('fs')
 const server = express()
 const port = 3001
 
@@ -120,6 +119,22 @@ server.post('/main/my-draft', (req, res) => {
     routing_to.newDraft(req.body, res)
         .catch((err) => { console.log(err)})
 })
+// 타투이스트 마이 페이지
+server.get('/tattooist/my-page', (req, res) => {
+    routing_to.tattooistMyPage(req.query, res)
+        .catch((err) => { console.log(err)})
+})
+// 타투이스트 마이 페이지 : 정보수정
+server.put('/tattooist/my-page', (req, res) => {
+    routing_to.tattooistInfoEdit(req.body, res)
+        .catch(() => { console.log('error') })
+})
+// 타투이스트 마이 페이지 : 이미지수정
+server.put('/tattooist/my-page/image', (req, res) => {
+    routing_to.tattooistImageEdit(req.body, res)
+        .catch(() => { console.log('error') })
+})
+
 
 
 // User 초기화

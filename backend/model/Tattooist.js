@@ -31,10 +31,12 @@ const tattooistSchema = mongoose.Schema({
         type : Boolean
     },
     artworks : {
-        type : [String]
+        type : [String],
+        default : ""
     },
     drafts : {
-        type : [String]
+        type : [String],
+        default : ""
     },
     follower : {
         type : Number
