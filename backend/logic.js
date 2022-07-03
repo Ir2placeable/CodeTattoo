@@ -104,8 +104,6 @@ exports.MainDraft = async function(params, query, res) {
         return
     }
 
-    const user = await User.findOne({ _id : query.user_id })
-
     const item_index_start = draftShowLimit * (parseInt(params.page)-1)
 
     let drafts = []
@@ -120,23 +118,25 @@ exports.MainDraft = async function(params, query, res) {
     }
 
     let return_value = []
-
     for (let draft of drafts) {
-        let isScraped = false
-        console.log("1", draft._id)
-        console.log("2", draft.id)
-        if (user.scraps.includes(draft._id)) {
-            isScraped = true
-        }
-
         const item = {
             draft_id : draft._id,
             image : draft.image,
             title : draft.title,
             like : draft.like,
-            isScraped : isScraped
+            isScraped : false
         }
         return_value.push(item)
+    }
+
+    if (query.user_id) {
+        const user = await User.findOne({ _id : query.user_id })
+
+        for (let draft of return_value) {
+            if (!user.scraps && user.scraps.includes(String(draft._id))) {
+                draft['isScraped'] = true
+            }
+        }
     }
 
     res.send({ success : true, draft_list : return_value })
@@ -148,8 +148,6 @@ exports.MainTattooist = async function(params, query, res) {
         res.send({ success : true, count : count })
         return
     }
-
-    const user = await User.findOne({ _id : query.user_id })
 
     const item_index_start = tattooistShowLimit * (parseInt(params.page)-1)
 
@@ -167,13 +165,6 @@ exports.MainTattooist = async function(params, query, res) {
     let return_value = []
 
     for (let tattooist of tattooists) {
-        let isFollowed = false
-        console.log("1", tattooist._id)
-        console.log("2", tattooist.id)
-        if (user.follows.includes(tattooist._id)) {
-            isFollowed = true
-        }
-
         const item = {
             tattooist_id : tattooist._id,
             image : tattooist.image,
@@ -183,15 +174,32 @@ exports.MainTattooist = async function(params, query, res) {
             description : tattooist.description,
             specialize : tattooist.specialize,
             followers : tattooist.follower,
-            isFollowed : isFollowed
+            isFollowed : false
         }
         return_value.push(item)
     }
+
+    if (query.user_id) {
+        const user = await User.findOne({ _id : query.user_id })
+
+        for (let draft of return_value) {
+            if (!user.follows && user.follows.includes(String(draft._id))) {
+                draft['isFollowed'] = true
+            }
+        }
+    }
+
 
     res.send({ success : true, tattooist_list : return_value })
 }
 // 유저 메인 페이지 - 스크랩
 exports.MainScrap = async function(params, query, res) {
+    if (!query.user_id) {
+        console.log('no user_id')
+        res.send({ success : false, err : 'no user_id' })
+        return
+    }
+
     const user = await User.findOne({ _id : query.user_id })
 
     if (params.filter === 'init') {
@@ -253,6 +261,11 @@ exports.MainScrap = async function(params, query, res) {
 }
 // 유저 메인 페이지 - 마이타투
 exports.MainMyTattoo = async function(query, res) {
+    if (!query.user_id) {
+        console.log('no user_id')
+        res.send({ success : false, err : 'no user_id' })
+        return
+    }
     const user = await User.findOne({ _id : query.user_id })
 
     // 블록체인에서 타투 이력 조회
@@ -401,6 +414,12 @@ exports.MainMyDraft = async function(params, query, res) {
     let drafts = []
     for await (let draft_id of tattooist.drafts) {
         await Draft.findOne({ _id : draft_id }).then((draft) => { drafts.push(draft)})
+    }
+
+    if (drafts.length === 0) {
+        console.log('no drafts')
+        res.send({ success : false, err : 'no drafts' })
+        return
     }
 
     const item_index_start = draftShowLimit * (parseInt(params.page)-1)
