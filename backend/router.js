@@ -12,8 +12,8 @@ server.use(cors());
 
 // 엔트리
 server.get('/', (req, res) => {
-    routing_to.entry(res)
     console.log('entry')
+    routing_to.entry(res)
 })
 // 로그인
 server.post('/login', (req, res) => {
@@ -90,22 +90,26 @@ server.put('/user/my-page/image', (req, res) => {
 
 // 도안 스크랩
 server.post('/scrap', (req, res) => {
+    console.log('scrap')
     routing_to.ScrapDraft(req.body, res)
         .catch((err) => { console.log(err)})
 })
 // 도안 스크랩 취소
 server.delete('/scrap', (req, res) => {
-    routing_to.unScrapDraft(req.body, res)
+    console.log('unscrap')
+    routing_to.unScrapDraft(req.query, res)
         .catch((err) => { console.log(err)})
 })
 // 타투이스트 팔로우
 server.post('/follow', (req, res) => {
+    console.log('follow')
     routing_to.followTattooist(req.body, res)
         .catch((err) => { console.log(err)})
 })
 // 타투이스트 팔로우 취소
 server.delete('/follow', (req, res) => {
-    routing_to.unFollowTattooist(req.body, res)
+    console.log('unfollow')
+    routing_to.unFollowTattooist(req.query, res)
         .catch((err) => { console.log(err)})
 })
 

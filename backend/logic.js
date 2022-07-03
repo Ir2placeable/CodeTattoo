@@ -95,9 +95,6 @@ exports.tattooistRegister = async function(body, res) {
 
 // 유저 메인 페이지 - 도안
 exports.MainDraft = async function(params, query, res) {
-    console.log(params)
-    console.log(query)
-
     if (params.filter === 'init') {
         const count = await Draft.count()
         res.send({ success : true, count : count })
@@ -129,11 +126,12 @@ exports.MainDraft = async function(params, query, res) {
         return_value.push(item)
     }
 
+    // 스크랩 여부 검사
     if (query.user_id) {
         const user = await User.findOne({ _id : query.user_id })
 
         for (let draft of return_value) {
-            if (!user.scraps && user.scraps.includes(String(draft._id))) {
+            if (user.scraps.includes(String(draft.draft_id))) {
                 draft['isScraped'] = true
             }
         }
@@ -183,7 +181,7 @@ exports.MainTattooist = async function(params, query, res) {
         const user = await User.findOne({ _id : query.user_id })
 
         for (let draft of return_value) {
-            if (!user.follows && user.follows.includes(String(draft._id))) {
+            if (user.follows.includes(String(draft.draft_id))) {
                 draft['isFollowed'] = true
             }
         }
@@ -194,7 +192,7 @@ exports.MainTattooist = async function(params, query, res) {
 }
 // 유저 메인 페이지 - 스크랩
 exports.MainScrap = async function(params, query, res) {
-    if (!query.user_id) {
+    if (query.user_id === 'undefined') {
         console.log('no user_id')
         res.send({ success : false, err : 'no user_id' })
         return
@@ -214,7 +212,13 @@ exports.MainScrap = async function(params, query, res) {
         }
 
         const item_index_start = draftShowLimit * (parseInt(params.page)-1)
-        drafts = drafts[item_index_start, (item_index_start + draftShowLimit)]
+        drafts = drafts.slice(item_index_start, (item_index_start + draftShowLimit))
+
+        if (drafts.length === 0) {
+            console.log('no drafts')
+            res.send({ success : false, err : 'no drafts' })
+            return
+        }
 
         let return_value = []
         for (let draft of drafts) {
@@ -236,7 +240,7 @@ exports.MainScrap = async function(params, query, res) {
         }
 
         const item_index_start = tattooistShowLimit * (parseInt(params.page)-1)
-        tattooists = tattooists[item_index_start, (item_index_start + tattooistShowLimit)]
+        tattooists = tattooists.slice(item_index_start, (item_index_start + tattooistShowLimit))
 
         let return_value = []
         for (let tattooist of tattooists) {
@@ -261,7 +265,7 @@ exports.MainScrap = async function(params, query, res) {
 }
 // 유저 메인 페이지 - 마이타투
 exports.MainMyTattoo = async function(query, res) {
-    if (!query.user_id) {
+    if (query.user_id === 'undefined') {
         console.log('no user_id')
         res.send({ success : false, err : 'no user_id' })
         return
@@ -343,29 +347,29 @@ exports.userImageEdit = async function(body, res) {
 
 // 도안 스크랩
 exports.ScrapDraft = async function(body, res) {
-    User.updateOne({ _id : body.user_id }, {$push : { scraps : body.draft_id }})
-    Draft.updateOne({ _id : body.draft_id }, {$inc : { like : 1 }})
+    await User.updateOne({ _id : body.user_id }, {$push : { scraps : body.draft_id }})
+    await Draft.updateOne({ _id : body.draft_id }, {$inc : { like : 1 }})
 
     res.send({ success : true })
 }
 // 도안 스크랩 취소
-exports.unScrapDraft = async function(body, res) {
-    User.updateOne({ _id : body.user_id }, {$pull : { scrap : body.draft_id }})
-    Draft.updateOne({ _id : body.draft_id }, {$inc : { like : -1 }})
+exports.unScrapDraft = async function(query, res) {
+    await User.updateOne({ _id : query.user_id }, {$pull : { scraps : query.draft_id }})
+    await Draft.updateOne({ _id : query.draft_id }, {$inc : { like : -1 }})
 
     res.send({ success : true })
 }
 // 타투이스트 팔로우
 exports.followTattooist = async function(body, res) {
-    User.updateOne({ _id : body.user_id }, {$push : { follows : body.tattooist_id }})
-    Tattooist.updateOne({ _id : body.tattooist_id }, {$inc : { follower : 1 }})
+    await User.updateOne({ _id : body.user_id }, {$push : { follows : body.tattooist_id }})
+    await Tattooist.updateOne({ _id : body.tattooist_id }, {$inc : { follower : 1 }})
 
     res.send({ success : true })
 }
 // 타투이스트 팔로우 취소
-exports.unFollowTattooist = async function(body, res) {
-    User.updateOne({ _id : body.user_id }, {$pull : { follows : body.tattooist_id }})
-    Tattooist.updateOne({ _id : body.tattooist_id }, {$inc : { follower : -1 }})
+exports.unFollowTattooist = async function(query, res) {
+    await User.updateOne({ _id : query.user_id }, {$pull : { follows : query.tattooist_id }})
+    await Tattooist.updateOne({ _id : query.tattooist_id }, {$inc : { follower : -1 }})
 
     res.send({ success : true })
 }
@@ -423,7 +427,7 @@ exports.MainMyDraft = async function(params, query, res) {
     }
 
     const item_index_start = draftShowLimit * (parseInt(params.page)-1)
-    drafts = drafts[item_index_start, (item_index_start + draftShowLimit)]
+    drafts = drafts.slice(item_index_start, (item_index_start + draftShowLimit))
 
     let return_value = []
     for (let draft of drafts) {
