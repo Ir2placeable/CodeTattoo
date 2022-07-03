@@ -239,8 +239,9 @@ export const SearchIconStyle = {
 };
 // ***  ***
 export const ContentsDiv = styled.div`
-  min-height: 733px;
-  padding-top: 130px;
+min-height: 733px;
+padding-top: 130px;
+padding-bottom: 130px;
 `;
 
 export const ListDiv = styled.div`
@@ -410,6 +411,144 @@ export const DraftImgTitle = styled.p`
 font-size: 18px;
 margin-left: 20px;
 text-align: center;
+`
+
+// *** Image Upload ***
+export const UploadDiv = styled.div`
+background-color: #F9F9F9;
+width: 1300px;
+height: 700px;
+margin: 0 auto;
+
+border-radius: 10px;
+box-shadow: 10px 10px 10px 0 #ececec;
+position: relative;
+`
+
+export const ImgInputDiv = styled.div`
+position: absolute;
+top: 30px;
+right: 50px;
+
+color: #fff;
+background-color: #000;
+font-weight: bold;
+height: 40px;
+width: 200px;
+border-radius: 5px;
+
+display: flex;
+justify-content: center;
+align-items: center;
+`
+export const ImgInput = styled.input`
+display: block;
+margin-left: 10px;
+`
+
+export const ImgInfoDiv = styled.div`
+width: 100%;
+height: 90%;
+display: flex;
+justify-content: center;
+align-items: center;
+`
+
+export const LoadedImgDiv = styled.div`
+width: 50%;
+margin: 0 auto;
+text-align: center;
+`
+export const LoadedImg = styled.img`
+box-shadow: 5px 5px 20px rgba(0, 0, 0, .4);
+background-color: #fff;
+width: 300px;
+height: 300px;
+object-fit: contain;
+`
+
+export const EmptyImgDiv = styled.div`
+box-shadow: 5px 5px 20px rgba(0, 0, 0, .4);
+background-color: #fff;
+color: rgba(72, 72, 72, .5);
+width: 300px;
+line-height: 300px;
+margin: 0 auto;
+text-align: center;
+font-weight: bold;
+font-size: 18px;
+`
+
+export const LoadedImgDescDiv = styled.div`
+width: 50%;
+display: flex;
+flex-direction: column;
+`
+export const LoadedImgText = styled.div`
+color: rgba(72, 72, 72);
+margin-bottom: 10px;
+`
+
+export const LoadedImgTitle = styled.input`
+width: 350px;
+height: 35px;
+font-size: 18px;
+border-radius: 7px;
+border-color: rgba(0, 0, 0, .3);
+margin-bottom: 50px;
+`;
+
+export const LoadedImgDesc = styled.textarea`
+width: 450px;
+height: 100px;
+font-size: 18px;
+border-radius: 7px;
+border-color: rgba(0, 0, 0, .3);
+`
+
+export const EnrollImgBtn = styled.div`
+color: #fff;
+background-color: #000;
+font-weight: bold;
+font-size: 20px;
+width: 450px;
+line-height: 40px;
+text-align: center;
+border-radius: 7px;
+cursor: pointer;
+
+position: absolute;
+bottom: 50px;
+left: 50%;
+margin-left: -225px;
+`
+
+// *** Pagination ***
+export const PageDiv = styled.div`
+  width: 100%;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`
+
+export const PageBox = styled.p`
+font-size: 14px;
+color: #afafaf;
+background-color: white;
+line-height: 25px;
+width: 25px;
+text-align: center;
+border-radius: 5px;
+border: 1px solid #afafaf;
+margin: 1px;
+cursor: pointer;
+`
+
+export const CurrentPage = styled.p`
+font-size: 18px;
+color: #afafaf;
+margin-top: 30px;
 `
 
 // =================== FOOTER ==========================
