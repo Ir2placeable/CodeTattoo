@@ -1,21 +1,39 @@
 import React, { useState, useEffect } from "react";
-import {} from "../../styledComponents";
+import { useParams } from "react-router-dom";
+import {
+  EmptyBox,
+  ListDiv,
+  TattooistMainBox,
+  TattooistContainer,
+  TattooistImg,
+  TattooistInfoBox,
+  TattooistInfo,
+  TattooistControlBox,
+  TattooistBtn,
+} from "../../styledComponents";
 import { APIURL } from "../../config/key";
 import axios from "axios";
 
 const SearchTattooist = ({ cookies, filter }) => {
-  const [tattooist, setTattoist] = useState([]);
+  const params = useParams();
+  const nickname = params.nickname;
+
   const [page, setPage] = useState(1);
   const [pages, setPages] = useState([]);
+  const [tattooists, setTattoists] = useState([]);
+  const [noTattooist, setNoTattooist] = useState(false);
 
   const sendRequest = async () => {
-    const res = await axios.get(`${APIURL}/tattooist/${filter}`);
+    const res = await axios.get(
+      `${APIURL}/tattooist/search/?user_id=${cookies.user_id}&nickname=${nickname}`
+    );
     console.log(res);
 
     if (res.data.success) {
-      setTattoist(res.data.tattooist_list);
+      setTattoists(res.data.tattooist_list);
     } else {
-      console.log("Tattooist List Get Request Fail");
+      // 검색 결과 없음
+      setNoTattooist(true);
     }
   };
 
@@ -23,7 +41,31 @@ const SearchTattooist = ({ cookies, filter }) => {
     sendRequest();
   }, []);
 
-  return <></>;
+  return (
+    <>
+      <ListDiv>
+        {!noTattooist ? (
+          <EmptyBox>검색 결과가 없습니다.</EmptyBox>
+        ) : (
+          <TattooistMainBox>
+            <TattooistContainer>
+              <TattooistImg>Image</TattooistImg>
+              <TattooistInfoBox>
+                <TattooistInfo>Nickname : SpongeBob</TattooistInfo>
+                <TattooistInfo>Office : Bikini Bottom</TattooistInfo>
+                <TattooistInfo>Specialize : making hamberger</TattooistInfo>
+                <TattooistInfo>follwers 1.1K</TattooistInfo>
+              </TattooistInfoBox>
+              <TattooistControlBox>
+                <TattooistBtn>Follow</TattooistBtn>
+                <TattooistBtn>Reserve</TattooistBtn>
+              </TattooistControlBox>
+            </TattooistContainer>
+          </TattooistMainBox>
+        )}
+      </ListDiv>
+    </>
+  );
 };
 
 export default SearchTattooist;

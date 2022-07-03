@@ -24,7 +24,7 @@ const TattooistList = ({ cookies, filter }) => {
 
   const sendRequest = async () => {
     const res = await axios.get(
-      `${APIURL}/main/tattooist/${filter}/${page}/?user_id={cookies.user_id}`
+      `${APIURL}/main/tattooist/${filter}/${page}/?user_id=${cookies.user_id}`
     );
     console.log(res);
 
@@ -56,14 +56,37 @@ const TattooistList = ({ cookies, filter }) => {
               ) : (
                 <FontAwesomeIcon style={userIconStyle} icon={faUser} />
               )}
-              <TattooistInfoBox></TattooistInfoBox>
+              <TattooistInfoBox>
+                <TattooistInfo>Nickname : {tattooist.nickname}</TattooistInfo>
+                <TattooistInfo>Office : {tattooist.office}</TattooistInfo>
+                <TattooistInfo>Specialize : {tattooist.spcialize}</TattooistInfo>
+                <TattooistInfo>follwers {tattooist.follow}</TattooistInfo>
+              </TattooistInfoBox>
               <TattooistControlBox>
-                <TattooistBtn>Follow</TattooistBtn>
+              { tattooist.ifFollowed ? (
+                    <TattooistBtn>Unfollow</TattooistInfo>
+                ) : (
+                    <TattooistBtn>Follow</TattooistInfo>
+                ) }
                 <TattooistBtn>Reserve</TattooistBtn>
               </TattooistControlBox>
             </TattooistContainer>
             ))}     
         */}
+          <TattooistContainer>
+            <TattooistImg>Image</TattooistImg>
+            <TattooistInfoBox>
+              <TattooistInfo>Nickname : SpongeBob</TattooistInfo>
+              <TattooistInfo>Office : Bikini Bottom</TattooistInfo>
+              <TattooistInfo>Specialize : making hamberger</TattooistInfo>
+              <TattooistInfo>follwers 1.1K</TattooistInfo>
+            </TattooistInfoBox>
+            <TattooistControlBox>
+              <TattooistBtn>Follow</TattooistBtn>
+              <TattooistBtn>Reserve</TattooistBtn>
+            </TattooistControlBox>
+          </TattooistContainer>
+
           <TattooistContainer>
             <TattooistImg>Image</TattooistImg>
             <TattooistInfoBox>

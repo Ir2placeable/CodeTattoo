@@ -77,7 +77,10 @@ const App = () => {
               />
             </Route>
             <Route path="scrap" element={<ShowScrap />} />
-            <Route path="myTattoo" element={<ShowMyTattoo />} />
+            <Route
+              path="myTattoo"
+              element={<ShowMyTattoo cookies={cookies} />}
+            />
             <Route path="manageWork" element={<ShowManageWork />} />
             <Route path="manageDraft" element={<ShowManageDraft />} />
           </Route>

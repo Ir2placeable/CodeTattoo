@@ -281,6 +281,7 @@ export const TattooistContainer = styled.div`
   border-radius: 8px;
   justify-content: space-between;
   padding: 0 20px;
+  margin: 20px 0;
 `;
 
 export const TattooistInfoBox = styled.div`
