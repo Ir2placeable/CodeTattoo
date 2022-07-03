@@ -3,7 +3,7 @@ import axios from 'axios';
 import { APIURL } from '../../config/key';
 
 import { 
-  DraftListDiv, EmptyDraftBox, DraftMainBox,
+  ListDiv, EmptyBox, DraftMainBox,
   DraftImgBox, DraftImg, DraftImgInfo, 
   DraftHeartBox, DraftImgTitle, DraftHeartCount
 } from '../../styledComponents';
@@ -36,12 +36,12 @@ const SearchDraft = ({ cookies }) => {
 
   return (
     <>
-      <DraftListDiv>
+      <ListDiv>
 
         {noDraft ? (
-          <EmptyDraftBox>
+          <EmptyBox>
             검색 결과가 없습니다. 
-          </EmptyDraftBox>
+          </EmptyBox>
         ) : (
           <DraftMainBox>
             {drafts.map(draft => (
@@ -68,7 +68,7 @@ const SearchDraft = ({ cookies }) => {
           </DraftMainBox>
         )}
         
-      </DraftListDiv>
+      </ListDiv>
     </>
   );
 };
