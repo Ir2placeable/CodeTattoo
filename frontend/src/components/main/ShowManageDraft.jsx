@@ -8,8 +8,8 @@ import SmallNavigationComp from './SmallNavigationComp';
 const ShowManageDraft = () => {
   return (
     <>
-      <SmallNavigationComp texts={["관리", "추가"]}
-        searchBox={false} location={3} />
+      {/* <SmallNavigationComp texts={["관리", "추가"]}
+        searchBox={false} location={3} /> */}
 
       <ContentsDiv>
         

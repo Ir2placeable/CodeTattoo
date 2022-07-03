@@ -1,18 +1,25 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
-  ContentsDiv
+  ContentsDiv,
 } from '../../styledComponents';
+import { APIURL } from '../../config/key';
 
 import SmallNavigationComp from './SmallNavigationComp';
 
+import { Outlet } from 'react-router-dom';
 const ShowDraftList = () => {
+
   return (
     <>
-      <SmallNavigationComp texts={["Best", "All"]}
+      <SmallNavigationComp data={[
+        {text: 'root', path: '/draft'},
+        {text: 'Best', path: '/draft/best'},
+        {text: 'All', path: '/draft/all'}
+      ]}
         searchBox={true} location={0} />
 
       <ContentsDiv>
-        
+        <Outlet />
       </ContentsDiv>
     </>
   );

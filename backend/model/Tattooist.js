@@ -66,6 +66,6 @@ tattooistSchema.methods.comparePassword = function (plainPassword, cb) {
     });
 };
 
-const tattooist = mongoose.model('tattooist', tattooistSchema)
+const Tattooist = mongoose.model('Tattooist', tattooistSchema)
 
-module.exports = { tattooist }
+module.exports = { Tattooist }

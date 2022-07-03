@@ -91,6 +91,8 @@ exports.tattooistRegister = async function(body, res) {
             res.send({ success : true })
         })
 }
+
+
 // 유저 메인 페이지 - 도안
 exports.MainDraft = async function(params, res) {
     if (params.filter === 'init') {
@@ -106,10 +108,8 @@ exports.MainDraft = async function(params, res) {
     let drafts = []
     if (params.filter === 'best') {
         drafts = await Draft.find().sort({ like : -1 }).skip(item_index_start).limit(draftShowLimit)
-    } else if (params.filter === 'recent') {
-        drafts = await Draft.find().sort({ timestamp : -1 }).skip(item_index_start).limit(draftShowLimit);
     } else if (params.filter === 'all') {
-        drafts = await Draft.find().skip(item_index_start).limit(draftShowLimit)
+        drafts = await Draft.find().sort({ timestamp : -1 }).skip(item_index_start).limit(draftShowLimit);
     } else if (params.filter === 'search') {
         drafts = await Draft.find({ title : {$regex : params.title }})
     } else {
@@ -185,24 +185,62 @@ exports.MainTattooist = async function(params, res) {
 exports.MainScrap = async function(params, res) {
     const user = await User.findOne({ _id : params.user_id })
 
-    let drafts = []
-    for await (let draft_id of user.scraps) {
-        await Draft.findOne({ _id : draft_id }).then((draft) => { drafts.push(draft) })
+    if (params.filter === 'init') {
+        res.send({ success : true, draft_count : user.scraps.length, tattooist_count : user.follows.length })
+        return
     }
 
-    let return_value = []
-    for (let draft of drafts) {
-        const item = {
-            draft_id : draft._id,
-            image : draft.image,
-            title : draft.title,
-            like : draft.like,
-            isScraped : true
+    if (params.filter === 'draft') {
+        let drafts = []
+        for await (let draft_id of user.scraps) {
+            await Draft.findOne({ _id : draft_id }).then((draft) => { drafts.push(draft) })
         }
-        return_value.push(item)
+
+        const item_index_start = draftShowLimit * (parseInt(params.page)-1)
+        drafts = drafts[item_index_start, (item_index_start + draftShowLimit)]
+
+        let return_value = []
+        for (let draft of drafts) {
+            const item = {
+                draft_id : draft._id,
+                image : draft.image,
+                title : draft.title,
+                like : draft.like,
+                isScraped : true
+            }
+            return_value.push(item)
+        }
+
+        res.send({ success : true, draft_list : return_value })
+    } else if (params.filter === ' tattooist') {
+        let tattooists = []
+        for await (let tattooist_id of user.follows) {
+            await Tattooist.findOne({ _id : tattooist_id }).then((tattooist) => { tattooists.push(tattooist) })
+        }
+
+        const item_index_start = tattooistShowLimit * (parseInt(params.page)-1)
+        tattooists = tattooists[item_index_start, (item_index_start + tattooistShowLimit)]
+
+        let return_value = []
+        for (let tattooist of tattooists) {
+            const item = {
+                tattooist_id : tattooist._id,
+                image : tattooist.image,
+                nickname : tattooist.nickname,
+                office : tattooist.office,
+                contact : tattooist.contact,
+                specialize : tattooist.specialize,
+                followers : tattooist.followers,
+                isFollowed : true
+            }
+            return_value.push(item)
+        }
+
+        res.send({ success : true, tattooist_list : return_value })
+    } else {
+        res.send({ err : 'wrong filter'})
     }
 
-    res.send({ success : true, draft_list : return_value })
 }
 // 유저 메인 페이지 - 마이타투
 exports.MainMyTattoo = async function(params, res) {

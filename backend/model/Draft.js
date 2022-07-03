@@ -10,12 +10,6 @@ const draftSchema = mongoose.Schema({
     image : {
         type : String
     },
-    width : {
-        type : Number
-    },
-    height : {
-        type : Number
-    },
     description : {
         type : String
     },
