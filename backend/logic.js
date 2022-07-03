@@ -94,14 +94,17 @@ exports.tattooistRegister = async function(body, res) {
 
 
 // 유저 메인 페이지 - 도안
-exports.MainDraft = async function(params, res) {
+exports.MainDraft = async function(params, query, res) {
+    console.log(params)
+    console.log(query)
+
     if (params.filter === 'init') {
         const count = await Draft.count()
         res.send({ success : true, count : count })
         return
     }
 
-    const user = await User.findOne({ _id : params.user_id })
+    const user = await User.findOne({ _id : query.user_id })
 
     const item_index_start = draftShowLimit * (parseInt(params.page)-1)
 
@@ -111,17 +114,16 @@ exports.MainDraft = async function(params, res) {
     } else if (params.filter === 'all') {
         drafts = await Draft.find().sort({ timestamp : -1 }).skip(item_index_start).limit(draftShowLimit);
     } else if (params.filter === 'search') {
-        drafts = await Draft.find({ title : {$regex : params.title }})
+        drafts = await Draft.find({ title : {$regex : query.title }})
     } else {
         res.send({ err : 'wrong filter'})
     }
 
     let return_value = []
-    const scraped_list = user.scraps
 
     for (let draft of drafts) {
         let isScraped = false
-        if (scraped_list.includes(String(draft._id))) {
+        if (user.scraps.includes(String(draft._id))) {
             isScraped = true
         }
 
@@ -138,14 +140,14 @@ exports.MainDraft = async function(params, res) {
     res.send({ success : true, draft_list : return_value })
 }
 // 유저 메인 페이지 - 타투이스트
-exports.MainTattooist = async function(params, res) {
+exports.MainTattooist = async function(params, query, res) {
     if (params.filter === 'init') {
         const count = await Tattooist.count()
         res.send({ success : true, count : count })
         return
     }
 
-    const user = await User.findOne({ _id : params.user_id })
+    const user = await User.findOne({ _id : query.user_id })
 
     const item_index_start = tattooistShowLimit * (parseInt(params.page)-1)
 
@@ -155,17 +157,16 @@ exports.MainTattooist = async function(params, res) {
     } else if (params.filter === 'all') {
         tattooists = await Tattooist.find().skip(item_index_start).limit(tattooistShowLimit)
     } else if (params.filter === 'search') {
-        tattooists = await Tattooist.find({ title : {$regex : params.nickname }})
+        tattooists = await Tattooist.find({ title : {$regex : query.nickname }})
     } else {
         res.send({ err : 'wrong filter'})
     }
 
     let return_value = []
-    const followed_list = user.follows
 
     for (let tattooist of tattooists) {
         let isFollowed = false
-        if (followed_list.includes(String(tattooist._id))) {
+        if (user.follows.includes(String(tattooist._id))) {
             isFollowed = true
         }
 
@@ -186,8 +187,8 @@ exports.MainTattooist = async function(params, res) {
     res.send({ success : true, tattooist_list : return_value })
 }
 // 유저 메인 페이지 - 스크랩
-exports.MainScrap = async function(params, res) {
-    const user = await User.findOne({ _id : params.user_id })
+exports.MainScrap = async function(params, query, res) {
+    const user = await User.findOne({ _id : query.user_id })
 
     if (params.filter === 'init') {
         res.send({ success : true, draft_count : user.scraps.length, tattooist_count : user.follows.length })
@@ -247,8 +248,8 @@ exports.MainScrap = async function(params, res) {
 
 }
 // 유저 메인 페이지 - 마이타투
-exports.MainMyTattoo = async function(params, res) {
-    const user = await User.findOne({ _id : params.user_id })
+exports.MainMyTattoo = async function(query, res) {
+    const user = await User.findOne({ _id : query.user_id })
 
     // 블록체인에서 타투 이력 조회
     let tattoo_histories = []
@@ -265,8 +266,8 @@ exports.MainMyTattoo = async function(params, res) {
     res.send({ success : true, tattoo_list : return_value })
 }
 // 유저 예약확인 페이지
-exports.userReservation = async function(params, res) {
-    const reservations = await Reservaton.find({ customer_id : params.user_id })
+exports.userReservation = async function(query, res) {
+    const reservations = await Reservaton.find({ customer_id : query.user_id })
 
     if (!reservations) {
         res.send({ success : false, err : 1 })
@@ -354,8 +355,8 @@ exports.unFollowTattooist = async function(body, res) {
 
 
 // 타투이스트 메인 페이지 - 작업물관리
-exports.MainArtworks = async function(params, res) {
-    const tattooist = await Tattooist.findOne({ _id : params.tattooist_id })
+exports.MainArtworks = async function(params, query, res) {
+    const tattooist = await Tattooist.findOne({ _id : query.tattooist_id })
 
     if (params.filter === 'init') {
         res.send({ success : true, count : tattooist.artworks.length })
@@ -385,8 +386,8 @@ exports.MainArtworks = async function(params, res) {
     res.send({ success : true, artwork_list : return_value })
 }
 // 타투이스트 메인 페이지 - 도안관리
-exports.MainMyDraft = async function(params, res) {
-    const tattooist = await Tattooist.findOne({ _id : params.tattooist_id })
+exports.MainMyDraft = async function(params, query, res) {
+    const tattooist = await Tattooist.findOne({ _id : query.tattooist_id })
 
     if (params.filter === 'init') {
         res.send({ success : true, count : tattooist.drafts.length })
@@ -465,7 +466,11 @@ exports.tattooistImageEdit = async function(body, res) {
 
     res.send({ success : true })
 }
+exports.test = async function(body, res) {
+    const user = await User.findOne({ _id : body.user_id })
 
+    res.send({ user : user })
+}
 
 
 
