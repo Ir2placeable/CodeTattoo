@@ -103,6 +103,11 @@ server.post('/follow', (req, res) => {
     routing_to.followTattooist(req.body, res)
         .catch((err) => { console.log(err)})
 })
+// 타투이스트 팔로우 취소
+server.delete('/follow', (req, res) => {
+    routing_to.unFollowTattooist(req.body, res)
+        .catch((err) => { console.log(err)})
+})
 
 // 타투이스트 메인 페이지 - 작업물관리
 server.get('/main/artworks/:filter/:page', (req, res) => {

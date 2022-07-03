@@ -123,7 +123,9 @@ exports.MainDraft = async function(params, query, res) {
 
     for (let draft of drafts) {
         let isScraped = false
-        if (user.scraps.includes(String(draft._id))) {
+        console.log("1", draft._id)
+        console.log("2", draft.id)
+        if (user.scraps.includes(draft._id)) {
             isScraped = true
         }
 
@@ -166,7 +168,9 @@ exports.MainTattooist = async function(params, query, res) {
 
     for (let tattooist of tattooists) {
         let isFollowed = false
-        if (user.follows.includes(String(tattooist._id))) {
+        console.log("1", tattooist._id)
+        console.log("2", tattooist.id)
+        if (user.follows.includes(tattooist._id)) {
             isFollowed = true
         }
 
