@@ -46,6 +46,12 @@ const HeartIcon = ({ size, cookies, draft_id, isScraped }) => {
   }
 
   const onHeartClick = () => {
+    if(!cookies.user_id){
+      // 로그인 안 한 유저이거나 타투이스트일 때 스크랩 기능 지원 x
+      alert('스크랩 기능은 유저 로그인 상태에서 가능합니다.')
+      return;
+    }
+
     setHeartClick(heartClick ? false : true);
     if(heartClick){
       // 스크랩 해제

@@ -43,7 +43,6 @@ const SmallNavigationComp = ({ data, searchBox, location }) => {
 
   const onBtnClick = (e) => {
     setSearchInput("");
-
     // e.target.id : 경로 : /draft/best
     if (e.target.id === data[1].path) {
       setFirstBtn(true);

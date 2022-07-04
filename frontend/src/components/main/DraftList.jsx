@@ -10,6 +10,7 @@ import {
 
 import HeartIcon from '../common/HeartIcon';
 import Pagination from '../common/Pagination';
+import TrashIcon from '../common/TrashIcon';
 import { useLocation } from 'react-router-dom';
 
 // 도안 - http://3.39.196.91:3001/main/draft/:filter/:page
@@ -24,6 +25,16 @@ const DraftList = ({ path, cookies, filter }) => {
   const [drafts, setDrafts] = useState([]);
   const [page, setPage] = useState(1);
   const [pages, setPages] = useState([]);
+  const [isManage, setIsManage] = useState(false);
+
+  useEffect(() => {
+    const [ , tempPath] = path.split('/');
+    //console.log(tempPath)
+    if(tempPath === 'my-draft'){
+      setIsManage(true);
+    }
+
+  }, []);
 
   const sendRequest = async() => {
     let _id = cookies.user_id;
@@ -36,7 +47,7 @@ const DraftList = ({ path, cookies, filter }) => {
     const res = await axios.get(`${APIURL}/${path}/${page}/?${_name}_id=${_id}`)
 
     if(res.data.success){
-      // console.log('Draft List Get Request Success', res.data.draft_list)
+      //console.log('Draft List Get Request Success', res.data.draft_list)
       setDrafts(res.data.draft_list)
     } else {
       console.log(res.data)
@@ -76,9 +87,15 @@ const DraftList = ({ path, cookies, filter }) => {
 
                 <DraftImgInfo>
                   <DraftHeartBox>
-                    <HeartIcon size={35} 
+                    {isManage ? (
+                      <TrashIcon size={25}
+                      cookies={cookies} draft_id={draft.draft_id}
+                      image={draft.image} />
+                    ) : (
+                      <HeartIcon size={35} 
                       cookies={cookies} draft_id={draft.draft_id}
                       isScraped={draft.isScraped} />
+                    )}
                   </DraftHeartBox>
                   <DraftImgTitle>{draft.title}</DraftImgTitle>
                   <DraftHeartCount>

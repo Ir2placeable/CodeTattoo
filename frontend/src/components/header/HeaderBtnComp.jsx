@@ -23,7 +23,7 @@ const HeaderBtnComp = ({ text, cookies, removeCookie }) => {
 
       const keys = Object.keys(cookies);
       for(let i = 0; i < keys.length; i++){
-        removeCookie(keys[i]);
+        removeCookie(keys[i], {path : '/'});
       }
 
       setTimeout(() => {

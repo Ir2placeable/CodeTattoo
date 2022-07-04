@@ -47,9 +47,7 @@ const App = () => {
   const sendRequest = async () => {
     const res = await axios.get(APIURL);
 
-    if (!res.data.success) {
-      alert("Server is down");
-    } else {
+    if (res.data.success) {
       console.log("Servier is connected");
     }
   };

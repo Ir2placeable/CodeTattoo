@@ -30,7 +30,8 @@ const Pagination = ({ filter, cookies ,
 
     const count = res.data.count;
     //const count = 23;
-    const lastPage = Math.ceil(count / 16);
+    console.log('page count', count)
+    const lastPage = Math.ceil(count / 12);
     const tempPages = [];
 
     for(let i = 1; i <= lastPage; i++){
