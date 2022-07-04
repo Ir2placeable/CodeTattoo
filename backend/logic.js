@@ -174,11 +174,11 @@ exports.MainDraft = async function(params, query, res) {
     }
 
     // 스크랩 여부 검사
-    if (query.user_id) {
+    if (query.user_id !== 'undefined') {
         const user = await User.findOne({ _id : query.user_id })
 
         for (let draft of return_value) {
-            if (user.scraps.includes(String(draft.draft_id))) {
+            if (user['scraps'].includes(String(draft.draft_id))) {
                 draft['isScraped'] = true
             }
         }
@@ -224,11 +224,11 @@ exports.MainTattooist = async function(params, query, res) {
         return_value.push(item)
     }
 
-    if (query.user_id) {
+    if (query.user_id !== 'undefined') {
         const user = await User.findOne({ _id : query.user_id })
 
         for (let draft of return_value) {
-            if (user.follows.includes(String(draft.draft_id))) {
+            if (user['follows'].includes(String(draft.draft_id))) {
                 draft['isFollowed'] = true
             }
         }
@@ -391,16 +391,17 @@ exports.MainMyDraft = async function(params, query, res) {
     for (let draft of drafts) {
         let item = {
             draft_id : draft._id,
-            image : draft.timestamp,
+            image : draft.image,
             title : draft.title,
             like : draft.like,
+            timestamp : draft.timestamp,
             isScraped : true
         }
 
         return_value.push(item)
     }
 
-    res.send({ success : true, artwork_list : return_value })
+    res.send({ success : true, draft_list : return_value })
 }
 // 메인 페이지 - 도안추가
 exports.newDraft = async function(body, res) {
@@ -417,6 +418,14 @@ exports.newDraft = async function(body, res) {
 
     await new_draft.save()
     await Tattooist.updateOne({ _id : body.tattooist_id }, {$push : { drafts : new_draft._id }})
+
+    res.send({ success : true })
+}
+// 메인 페이지 - 도안삭제
+exports.deleteDraft = async function(query, res) {
+    await Draft.deleteOne({ _id : query.draft_id })
+    await Tattooist.updateOne({ _id : query.tattooist_id }, {$pull : { drafts : query.draft_id }})
+    await User.updateMany({ scraps : {$eleMatch : query.draft_id }}, {$pull : { scraps : query.draft_id }})
 
     res.send({ success : true })
 }
@@ -559,10 +568,10 @@ exports.draftDetail = async function(query, res) {
 
     const user = await User.findOne({ _id : query.user_id })
     if (user) {
-        if (user.follows.includes(draft.drawer)) {
+        if (user['follows'].includes(draft.drawer)) {
             return_value['isFollowed'] = true
         }
-        if (user.scraps.includes(query.draft_id)) {
+        if (user['scraps'].includes(query.draft_id)) {
             return_value['isScraped'] = true
         }
     }

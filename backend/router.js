@@ -95,6 +95,11 @@ server.post('/main/my-draft', (req, res) => {
     routing_to.newDraft(req.body, res)
         .catch((err) => { console.log(err)})
 })
+// 메인 페이지 - 도안삭제
+server.delete('/main/my-draft', (req, res) => {
+    routing_to.deleteDraft(req.query, res)
+        .catch((err) => { console.log(err)})
+})
 
 
 // 유저 예약확인 페이지
