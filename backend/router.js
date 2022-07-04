@@ -41,6 +41,19 @@ server.post('/register', (req, res) => {
         res.send({ err : 'wrong filter'})
     }
 })
+// 회원탈퇴
+server.post('/unregister', (req, res) => {
+    console.log('unregister')
+    if (req.body.filter === 'user') {
+        routing_to.userUnRegister(req.body, res)
+            .catch((err) => { console.log(err)})
+    } else if (req.body.filter === 'tattooist') {
+        routing_to.tattooistUnRegister(req.body, res)
+            .catch((err) => { console.log(err)})
+    } else {
+        res.send({ err : 'wrong filter'})
+    }
+})
 
 
 // 메인 페이지 - 도안

@@ -91,6 +91,53 @@ exports.tattooistRegister = async function(body, res) {
             res.send({ success : true })
         })
 }
+// 회원탈퇴 : 유저
+exports.userUnRegister = async function(body, res) {
+    const user = await User.findOne({ email : body.email })
+
+    user.comparePassword(body.pwd, (err, isMatch) => {
+        if (!isMatch) {
+            res.send({ success : false, error : 1 })
+            return
+        }
+    })
+
+    // 관련 정보 삭제
+    const target_scraps = user.scraps
+    const target_follows = user.follows
+
+    await User.deleteOne({ email : body.email })
+    for await (let draft_id of target_scraps) {
+        await Draft.updateOne({ _id : draft_id }, {$inc : { like : -1 }})
+    }
+    for await (let tattooist_id of target_follows) {
+        await Tattooist.updateOne({ _id : tattooist_id }, {$inc : { follower : -1 }})
+    }
+
+    res.send({ success : true })
+}
+// 회원탈퇴 : 타투이스트
+exports.tattooistUnRegister = async function(body, res) {
+    const tattooist = await Tattooist.findOne({ email : body.email })
+    if(!tattooist) {
+        res.send({ success : false, error : 1 })
+        return
+    }
+
+    tattooist.comparePassword(body.pwd, (err, isMatch) => {
+        if (!isMatch) {
+            res.send({ success : false, error : 1 })
+            return
+        }
+    })
+
+    // 관련 정보 삭제
+    // const target_drafts = tattooist.drafts
+    // await Draft.deleteOne({ _id : {$all : target_drafts }})
+    // await User.updateMany({ scraps : {$all : target_drafts }}, {$pull :})
+
+    res.send({ success : true })
+}
 
 
 // 메인 페이지 - 도안
@@ -519,7 +566,7 @@ exports.draftDetail = async function(query, res) {
             return_value['isScraped'] = true
         }
     }
-    
+
     res.send({ success : true, draft_info : return_value })
 }
 
