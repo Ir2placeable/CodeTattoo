@@ -493,7 +493,6 @@ exports.userInfoEdit = async function(body, res) {
 }
 // 유저 마이 페이지 : 이미지 수정 요청
 exports.userImageEdit = async function(body, res) {
-    console.log(body)
     const imageStorage_params = { title : body.user_id, image : body.image, mime : body.mime }
     const image_url = await imageStorage.upload(imageStorage_params)
 
