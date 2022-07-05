@@ -42,12 +42,17 @@ const LoginInput = ({ isTattooist, setCookie }) => {
   const pushCookie = (data) => {
 
     if(isTattooist){
-      setCookie("nickname", data.tattooist_info.nickname, {maxAge: 3000})
-      setCookie("tattooist_id", data.tattooist_info.tattooist_id, {maxAge: 3000})
+      setCookie("nickname", data.tattooist_info.nickname, {maxAge: 3000, path: '/'})
+      setCookie("tattooist_id", data.tattooist_info.tattooist_id, {maxAge: 3000, path: '/'})
+      setCookie("profile_img_src", data.tattooist_info.image , {maxAge: 3000, path: '/'})
+      setCookie("profile_desc", data.tattooist_info.description , {maxAge: 3000, path: '/'})
     } else {
-      setCookie("nickname", data.user_info.nickname, {maxAge: 3000})
-      setCookie("user_id", data.user_info.user_id, {maxAge: 3000})
+      setCookie("nickname", data.user_info.nickname, {maxAge: 3000, path: '/'})
+      setCookie("user_id", data.user_info.user_id, {maxAge: 3000, path: '/'})
+      setCookie("profile_img_src", data.user_info.image , {maxAge: 3000, path: '/'})
+      setCookie("profile_desc", data.user_info.description , {maxAge: 3000, path: '/'})
     }
+    
   }
 
   const loginRequest = async() => {

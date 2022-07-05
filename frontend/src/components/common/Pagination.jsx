@@ -6,7 +6,7 @@ import {
   faArrowRight,
 } from '@fortawesome/free-solid-svg-icons';
 import axios from 'axios';
-import { PageDiv, PageBox, CurrentPage } from '../../styledComponents'
+import { PageDiv, PageBox, CurrentPage, PagenationDiv } from '../../styledComponents'
 import { useLocation } from 'react-router-dom';
 import { APIURL } from '../../config/key';
 
@@ -14,21 +14,23 @@ const Pagination = ({ filter, cookies ,
   page, setPage, pages, setPages }) => {
 
   const getPageNum = async() => {
-    let _id = cookies.user_id;
-    let _name = 'user'
+    let query = '';
     if(cookies.tattooist_id){
-      _id = cookies.tattooist_id;
-      _name = 'tattooist'
+      query = `?tattooist_id=${cookies.tattooist_id}`;
+    } else if(cookies.user_id){
+      query = `?user_id=${cookies.user_id}`;
     }
 
-    const res = await axios.get(`${APIURL}/main/${filter}/init/1/?${_name}_id=${_id}`);
+    const res = await axios.get(`${APIURL}/main/${filter}/init/1/${query}`);
     
-    if(res.data.success){
-      console.log('pagination success')
+    if(!res.data.success){
+      console.log('pagination fail')
+      return;
     }
+
     const count = res.data.count;
-    //const count = 23;
-    const lastPage = Math.ceil(count / 16);
+    //console.log('page count', count)
+    const lastPage = Math.ceil(count / 12);
     const tempPages = [];
 
     for(let i = 1; i <= lastPage; i++){
@@ -44,8 +46,8 @@ const Pagination = ({ filter, cookies ,
 
   return (
     <>
-
-    <PageDiv style={{margin: '30px 0 10px'}}>
+    <PagenationDiv>
+    <PageDiv>
       {/* 현재 페이지가 1보다 크면 ArrowLeft 보여주기 */}
       { page > 1 ? (
         <PageBox onClick={()=>{
@@ -82,9 +84,9 @@ const Pagination = ({ filter, cookies ,
     </PageDiv>
 
     <PageDiv>
-        <CurrentPage> {page} / {pages.length} </CurrentPage>
+        <CurrentPage> {page} / {pages.length === 0 ? 1 : pages.length} </CurrentPage>
     </PageDiv>
-
+    </PagenationDiv>
     </>
   );
 };

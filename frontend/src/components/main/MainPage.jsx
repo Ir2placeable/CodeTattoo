@@ -30,6 +30,15 @@ const MainPage = ({ cookies }) => {
   const navigate = useNavigate();
   const onBtnClick = (e) => {
     const _id = e.target.id;
+
+    if(!cookies.user_id && !cookies.tattooist_id){
+      if(_id === 'scrap' || _id === 'myTattoo'){
+        alert('로그인이 필요한 페이지입니다.');
+        navigate('/login');
+        return;
+      }
+    }
+
     const temp = {
       draft: false,
       tattooist: false,

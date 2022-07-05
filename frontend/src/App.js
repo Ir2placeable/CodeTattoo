@@ -30,6 +30,8 @@ import User from "./components/mypage/User";
 import Tattooist from "./components/mypage/Tattooist";
 import SearchDraft from "./components/main/SearchDraft";
 import ImageUpload from './components/main/ImageUpload';
+import ProfileImage from "./components/mypage/ProfileImage";
+import EditProfile from "./components/mypage/EditProfile";
 
 const App = () => {
   const [cookies, setCookie, removeCookie] = useCookies([
@@ -37,23 +39,40 @@ const App = () => {
     "nickname",
     "tattooist_id",
     // for tattooist
+    "specialize",
     "office",
     "contact",
+    // my page info
+    "profile_img_src",
+    "profile_desc"
   ]);
 
   const sendRequest = async () => {
     const res = await axios.get(APIURL);
 
-    if (!res.data.success) {
-      alert("Server is down");
-    } else {
+    if (res.data.success) {
       console.log("Servier is connected");
     }
   };
 
+  const resetUser = async() => {
+    const res = await axios.get(`${APIURL}/reset/user`);
+  }
+  const resetTattooist = async() => {
+    const res = await axios.get(`${APIURL}/reset/tattooist`);
+  }
+  const resetDraft = async() => {
+    const res = await axios.get(`${APIURL}/reset/draft`);
+  }
+
   useEffect(() => {
     sendRequest();
+    // resetUser();
+    // resetDraft();
+    // resetTattooist();
   }, []);
+
+  
 
   return (
     <div className="font-style">
@@ -121,11 +140,21 @@ const App = () => {
           />
 
           {/* 마이 페이지 */}
-          <Route path="/mypage/user/:user_id" element={<User />} />
+          <Route path="/mypage/user/:user_id" 
+            element={<User cookies={cookies} setCookie={setCookie} />}>
+              <Route path="image" 
+                element={<ProfileImage cookies={cookies} filter="user" setCookie={setCookie} />} />
+              <Route path="info"
+                element={<EditProfile cookies={cookies} filter="user" setCookie={setCookie} />} />
+          </Route>
           <Route
             path="/mypage/tattooist/:tattooist_id"
-            element={<Tattooist />}
-          />
+            element={<Tattooist cookies={cookies} setCookie={setCookie} />}>
+              <Route path="image" 
+                element={<ProfileImage cookies={cookies} filter="tattooist" setCookie={setCookie} />} />
+              <Route path="info"
+                element={<EditProfile cookies={cookies} filter="tattooist" setCookie={setCookie} />} />
+          </Route>
         </Routes>
       </MainPageDiv>
 

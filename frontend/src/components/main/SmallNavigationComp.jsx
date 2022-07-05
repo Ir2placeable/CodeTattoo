@@ -28,7 +28,6 @@ const SmallNavigationComp = ({ data, searchBox, location }) => {
   const currLocation = useLocation();
 
   useEffect(() => {  // 버튼 스타일 세팅
-    console.log('SmallNavigationComp rerendering')
     const path = currLocation.pathname;
 
     if (path === data[0].path || path === data[1].path) {
@@ -44,16 +43,17 @@ const SmallNavigationComp = ({ data, searchBox, location }) => {
 
   const onBtnClick = (e) => {
     setSearchInput("");
-
     // e.target.id : 경로 : /draft/best
     if (e.target.id === data[1].path) {
       setFirstBtn(true);
       setSecondBtn(false);
-      navigate(data[1].path);
+      //navigate(data[1].path);
+      window.location.replace(data[1].path);
     } else if (e.target.id === data[2].path) {
       setFirstBtn(false);
       setSecondBtn(true);
-      navigate(data[2].path);
+      //navigate(data[2].path);
+      window.location.replace(data[2].path)
     }
   };
 
@@ -66,9 +66,15 @@ const SmallNavigationComp = ({ data, searchBox, location }) => {
     } else {
       setFirstBtn(false);
       setSecondBtn(false);
-      navigate(`${data[0].path}/search/${searchInput}`);
+      //navigate(`${data[0].path}/search/${searchInput}`);
+      window.location.replace(`${data[0].path}/search/${searchInput}`);
     }
   };
+  const onKeyUp = (e) => {
+    if(e.key === 'Enter'){
+      goSearch();
+    }
+  }
 
   const setStyle = (text) => {
     if (
@@ -107,6 +113,7 @@ const SmallNavigationComp = ({ data, searchBox, location }) => {
               placeholder="Search"
               value={searchInput}
               onChange={onChange}
+              onKeyUp={onKeyUp}
             />
             <FontAwesomeIcon
               style={SearchIconStyle}
