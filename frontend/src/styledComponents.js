@@ -414,6 +414,11 @@ margin-left: 20px;
 text-align: center;
 `
 
+export const SearchResText = styled.div`
+font-size: 20px;
+margin-bottom: 50px;
+`
+
 // *** Image Upload ***
 export const UploadDiv = styled.div `
 background-color: #F9F9F9;
@@ -573,7 +578,10 @@ position: relative;
 `
 
 export const ProfileImgDiv = styled.div `
-width: max-content;
+width: 150px;
+height: 150px;
+background-color: white;
+border-radius: 50%;
 position: relative;
 `
 

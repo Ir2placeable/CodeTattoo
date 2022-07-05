@@ -10,13 +10,12 @@ const HeaderBtnComp = ({ text, cookies, removeCookie }) => {
     if(text === "예약조회"){
 
     } else if(text === "내 정보"){
-      let _id = cookies.user_id;
-
-      if(_id === undefined){
-        _id = cookies.tattooist_id;
+      let filter = `user/${cookies.user_id}`
+      if(!cookies.user_id){
+        filter = `tattooist/${cookies.tattooist_id}`
       }
 
-      navigate(`/mypage/${_id}`);
+      navigate(`/mypage/${filter}`);
 
     } else if(text === "로그아웃"){
       alert('로그아웃 하시겠습니까?')

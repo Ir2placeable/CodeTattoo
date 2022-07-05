@@ -28,26 +28,24 @@ const DraftList = ({ path, cookies, filter }) => {
   const [isManage, setIsManage] = useState(false);
 
   useEffect(() => {
-    const [ , tempPath] = path.split('/');
-    //console.log(tempPath)
-    if(tempPath === 'my-draft'){
+    if(path === 'main/my-draft/list'){
       setIsManage(true);
     }
 
   }, []);
 
   const sendRequest = async() => {
-    let _id = cookies.user_id;
-    let _name = 'user'
+    let query = '';
     if(cookies.tattooist_id){
-      _id = cookies.tattooist_id;
-      _name = 'tattooist'
+      query = `?tattooist_id=${cookies.tattooist_id}`;
+    } else if(cookies.user_id){
+      query = `?user_id=${cookies.user_id}`;
     }
 
-    const res = await axios.get(`${APIURL}/${path}/${page}/?${_name}_id=${_id}`)
+    const res = await axios.get(`${APIURL}/${path}/${page}/${query}`)
 
     if(res.data.success){
-      //console.log('Draft List Get Request Success', res.data.draft_list)
+      console.log('Draft List Get Request Success', res.data.draft_list)
       setDrafts(res.data.draft_list)
     } else {
       console.log(res.data)
@@ -57,7 +55,7 @@ const DraftList = ({ path, cookies, filter }) => {
 
   useEffect(() => {
     sendRequest();
-  }, [])
+  }, [page])
 
   const goDetail = (e) => {
     const draft_id = e.target.id;

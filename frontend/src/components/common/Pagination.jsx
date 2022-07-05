@@ -14,14 +14,14 @@ const Pagination = ({ filter, cookies ,
   page, setPage, pages, setPages }) => {
 
   const getPageNum = async() => {
-    let _id = cookies.user_id;
-    let _name = 'user'
+    let query = '';
     if(cookies.tattooist_id){
-      _id = cookies.tattooist_id;
-      _name = 'tattooist'
+      query = `?tattooist_id=${cookies.tattooist_id}`;
+    } else if(cookies.user_id){
+      query = `?user_id=${cookies.user_id}`;
     }
 
-    const res = await axios.get(`${APIURL}/main/${filter}/init/1/?${_name}_id=${_id}`);
+    const res = await axios.get(`${APIURL}/main/${filter}/init/1/${query}`);
     
     if(!res.data.success){
       console.log('pagination fail')
@@ -29,8 +29,7 @@ const Pagination = ({ filter, cookies ,
     }
 
     const count = res.data.count;
-    //const count = 23;
-    console.log('page count', count)
+    //console.log('page count', count)
     const lastPage = Math.ceil(count / 12);
     const tempPages = [];
 

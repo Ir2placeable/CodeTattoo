@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { 
   MyPageInfoDiv, MyPageInfoInner, ProfileImgDiv,
   ProfileImg, ProfileImgEdit, ProfileDescDiv,
@@ -8,12 +8,26 @@ import {
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPen, faUser } from '@fortawesome/free-solid-svg-icons';
+import { useNavigate } from 'react-router-dom';
 
-const MyPageInfo = ({ cookies }) => {
+const MyPageInfo = ({ cookies, image, desc, filter }) => {
   const [isHover, setIsHover] = useState(false);
+  const [id, setId] = useState('');
 
+  useEffect(() => {
+    if(cookies.user_id){
+      setId(cookies.user_id)
+    } else if(cookies.tattooist_id){
+      setId(cookies.tattooist_id)
+    }
+  }, [])
+
+  const navigation = useNavigate();
+  const onImgEditClick = () => {
+    navigation(`/mypage/${filter}/${id}/image`)
+  }
   const onEditClick = () => {
-
+    navigation(`/mypage/${filter}/${id}/info`)
   }
 
   return (
@@ -22,9 +36,9 @@ const MyPageInfo = ({ cookies }) => {
       <MyPageInfoInner>
 
         <ProfileImgDiv>
-          {cookies.profile_img ? (
+          {image ? (
             <ProfileImg 
-              src={cookies.profile_img}
+              src={image}
             />
           ) : (
             <ProfileIconDiv>
@@ -34,7 +48,8 @@ const MyPageInfo = ({ cookies }) => {
           )}
 
           <ProfileImgEdit>
-            <FontAwesomeIcon icon={faPen} />
+            <FontAwesomeIcon icon={faPen} 
+              onClick={onImgEditClick} />
           </ProfileImgEdit>
           
         </ProfileImgDiv>
@@ -45,9 +60,9 @@ const MyPageInfo = ({ cookies }) => {
             {cookies.nickname}
           </NicknameDiv>
 
-          {cookies.profile_desc && (
+          {desc && (
             <DescDiv>
-              {cookies.profile_desc}
+              {desc}
             </DescDiv>
           )}
 
