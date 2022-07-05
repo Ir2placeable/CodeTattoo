@@ -13,10 +13,12 @@ const tattooistSchema = mongoose.Schema({
         type: String
     },
     image : {
-        type : String
+        type : String,
+        default : ""
     },
     description : {
-        type : String
+        type : String,
+        default : ""
     },
     specialize : {
         type : String

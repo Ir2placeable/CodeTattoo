@@ -59,6 +59,8 @@ server.post('/unregister', (req, res) => {
 // 메인 페이지 - 도안
 server.get('/main/draft/:filter/:page', (req, res) => {
     console.log('main page - draft')
+    console.log('1 : ', req.params)
+    console.log('2 :', req.query)
     routing_to.MainDraft(req.params, req.query, res)
         .catch((err) => { console.log(err)})
 })
@@ -113,16 +115,19 @@ server.get('/user/reservation', (req, res) => {
 })
 // 유저 마이 페이지
 server.get('/user/my-page', (req, res) => {
+    console.log('user mypage')
     routing_to.userMyPage(req.query, res)
         .catch((err) => { console.log(err)})
 })
 // 유저 마이 페이지 : 정보수정
 server.put('/user/my-page', (req, res) => {
+    console.log('user info edit')
     routing_to.userInfoEdit(req.body, res)
         .catch(() => { console.log('error') })
 })
 // 유저 마이 페이지 : 이미지수정
 server.put('/user/my-page/image', (req, res) => {
+    console.log('user image edit')
     routing_to.userImageEdit(req.body, res)
         .catch(() => { console.log('error') })
 })

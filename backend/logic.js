@@ -38,6 +38,8 @@ exports.userLogin = async function(body, res) {
         const return_value = {
             user_id : String(user._id),
             nickname : user.nickname,
+            image : user.image,
+            description : user.description
         }
         res.send({ success : true, user_info : return_value })
     })
@@ -59,6 +61,8 @@ exports.tattooistLogin = async function(body, res) {
         const return_value = {
             tattooist_id : String(tattooist._id),
             nickname : tattooist.nickname,
+            image : tattooist.image,
+            description : tattooist.description
         }
         res.send({ success : true, tattooist_info : return_value })
     })
@@ -156,7 +160,10 @@ exports.MainDraft = async function(params, query, res) {
     } else if (params.filter === 'all') {
         drafts = await Draft.find().sort({ timestamp : -1 }).skip(item_index_start).limit(draftShowLimit);
     } else if (params.filter === 'search') {
+        console.log('draft search')
+        console.log(query)
         drafts = await Draft.find({ title : {$regex : query.title }})
+        console.log(drafts)
     } else {
         res.send({ err : 'wrong filter'})
     }
@@ -173,7 +180,6 @@ exports.MainDraft = async function(params, query, res) {
         return_value.push(item)
     }
 
-    console.log(query)
     // 스크랩 여부 검사
     if (query.user_id !== undefined) {
         const user = await User.findOne({ _id : query.user_id })
@@ -481,16 +487,17 @@ exports.userMyPage = async function(query, res) {
 }
 // 유저 마이 페이지 : 정보 수정 요청
 exports.userInfoEdit = async function(body, res) {
-    User.updateOne({ _id : body.user_id }, {$set : { nickname : body.nickname, description : body.description }})
+    await User.updateOne({ _id : body.user_id }, {$set : { nickname : body.nickname, description : body.description }})
 
     res.send({ success : true })
 }
 // 유저 마이 페이지 : 이미지 수정 요청
 exports.userImageEdit = async function(body, res) {
+    console.log(body)
     const imageStorage_params = { title : body.user_id, image : body.image, mime : body.mime }
     const image_url = await imageStorage.upload(imageStorage_params)
 
-    User.updateOne({ _id : body.user_id }, {$set : { image : image_url }})
+    await User.updateOne({ _id : body.user_id }, {$set : { image : image_url }})
 
     res.send({ success : true })
 }
@@ -514,7 +521,7 @@ exports.tattooistMyPage = async function(query, res) {
 }
 // 타투이스트 마이 페이지 : 정보 수정 요청
 exports.tattooistInfoEdit = async function(body, res) {
-    Tattooist.updateOne({ _id : body.tattooist_id }, {$set : { nickname : body.nickname, description : body.description, specialize : body.specialize, office : body.office, contact : body.contact }})
+    await Tattooist.updateOne({ _id : body.tattooist_id }, {$set : { nickname : body.nickname, description : body.description, specialize : body.specialize, office : body.office, contact : body.contact }})
 
     res.send({ success : true })
 }
@@ -523,7 +530,7 @@ exports.tattooistImageEdit = async function(body, res) {
     const imageStorage_params = { title : body.tattooist_id, image : body.image, mime : body.mime }
     const image_url = await imageStorage.upload(imageStorage_params)
 
-    Tattooist.updateOne({ _id : body.tattooist_id }, {$set : { image : image_url }})
+    await Tattooist.updateOne({ _id : body.tattooist_id }, {$set : { image : image_url }})
 
     res.send({ success : true })
 }
