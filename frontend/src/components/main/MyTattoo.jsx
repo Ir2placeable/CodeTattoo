@@ -1,5 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { EmptyBox, ListDiv } from "../../styledComponents";
+import {
+  EmptyBox,
+  ListDiv,
+  MyTattooMainBox,
+  MyTattooImg,
+  MyTattooContainer,
+} from "../../styledComponents";
 import { APIURL } from "../../config/key";
 import axios from "axios";
 
@@ -15,7 +21,6 @@ const MyTattoo = ({ cookies }) => {
     if (res.data.success) {
       setTattoos(res.data.tattoo_list);
       /*
-        tattoo_list
         - tattoo_id
         - state
         - tattooist_id 
@@ -31,7 +36,14 @@ const MyTattoo = ({ cookies }) => {
   }, []);
   return (
     <>
-      <ListDiv></ListDiv>
+      <ListDiv>
+        <MyTattooMainBox>
+          <MyTattooContainer>
+            <MyTattooImg>Image</MyTattooImg>
+            <p>HI</p>
+          </MyTattooContainer>
+        </MyTattooMainBox>
+      </ListDiv>
     </>
   );
 };

@@ -263,6 +263,114 @@ export const EmptyBox = styled.div`
   text-align: center;
   box-shadow: 5px 5px 15px 0px rgba(72, 72, 72, 0.5);
 `;
+// *** Show MyTattoo ***
+
+export const MyTattooMainBox = styled.div`
+  width: 1500px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+`;
+
+export const MyTattooContainer = styled.div`
+  display: flex;
+  min-width: 1300px;
+  min-height: 450px;
+  justify-content: space-between;
+  align-items: center;
+  margin: 20px 0;
+  box-shadow: 5px 5px 15px 0px rgba(72, 72, 72, 0.5);
+`;
+
+export const MyTattooBtn = styled.div`
+  color: #ffffff;
+  line-height: 50px;
+  text-align: center;
+  width: 50px;
+  height: 50px;
+  border-radius: 70%;
+  background-color: rgba(72, 72, 72);
+  overflow: hidden;
+  cursor: pointer;
+`;
+
+export const MyTattooImg = styled.div`
+  color: #ffffff;
+  line-height: 250px;
+  text-align: center;
+  width: 250px;
+  height: 250px;
+  background-color: rgba(72, 72, 72);
+  margin: 0 20px;
+`;
+
+export const MyTattooStateBox = styled.div`
+  width: 1050px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px;
+`;
+
+export const MyTattooCardContainer = styled.div`
+  width: 900px;
+  display: flex;
+  justify-content: space-between;
+`;
+
+export const MyTattooCard = styled.div`
+  position: relative;
+  cursor: pointer;
+`;
+
+export const MyTattooCardFaceOne = styled.div`
+  position: relative;
+  width: 250px;
+  height: 200px;
+  transition: 0.5s;
+  display: flex;
+  background-color: rgba(172, 172, 172);
+  justify-content: center;
+  align-items: center;
+  z-index: 1;
+  transform: translateY(100px);
+
+  ${MyTattooCard}: hover & {
+    background-color: rgba(200, 200, 200);
+    transform: translateY(0);
+  }
+`;
+
+export const MyTattooContentOne = styled.div`
+  opacity: 0.8;
+  transition: 0.8s;
+  &: hover {
+    opacity: 1;
+  }
+  font-size: 24px;
+  font-weight: 750;
+`;
+
+export const MyTattooCardFaceTwo = styled.div`
+  position: relative;
+  width: 250px;
+  height: 200px;
+  transition: 0.5s;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  box-sizing: border-box;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+  transform: translateY(-100px);
+
+  ${MyTattooCard}: hover & {
+    transform: translateY(0);
+  }
+`;
+
+export const MyTattooContentTwo = styled.div``;
 
 // *** Show Tattooist List ***
 
@@ -337,80 +445,79 @@ export const TattooistBtn = styled.div`
   margin: 15px 0;
 `;
 
-
 // *** Show Draft List ***
 export const DraftListDiv = styled.div`
-width: 100%;
-display: flex;
-flex-direction: column;
-justify-content: stretch;
-align-items: center;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: stretch;
+  align-items: center;
 
-position: relative;
-`
+  position: relative;
+`;
 
 export const EmptyDraftBox = styled.div`
-margin-top: 150px;
-color: #6e6e6e;
-font-weight: bold;
-font-size: 20px;
-border-radius: 20px;
-width: 400px;
-line-height: 35px;
-text-align: center;
-box-shadow: 5px 5px 15px 0px rgba(72, 72, 72, .5);
+  margin-top: 150px;
+  color: #6e6e6e;
+  font-weight: bold;
+  font-size: 20px;
+  border-radius: 20px;
+  width: 400px;
+  line-height: 35px;
+  text-align: center;
+  box-shadow: 5px 5px 15px 0px rgba(72, 72, 72, 0.5);
 `;
 
 export const DraftMainBox = styled.div`
-width: 1500px;
-display: flex;
-justify-content: stretch;
-align-items: stretch;
-flex-wrap: wrap;
+  width: 1500px;
+  display: flex;
+  justify-content: stretch;
+  align-items: stretch;
+  flex-wrap: wrap;
 `;
 
 export const DraftImgBox = styled.div`
-margin: 20px 30px 50px;
+  margin: 20px 30px 50px;
 `;
 
 export const DraftImg = styled.img`
-width: 300px;
-height: 300px;
-object-fit: contain;
-box-sizing: border-box;
-border-radius: 8px;
-box-shadow: 5px 5px 20px rgba(0, 0, 0, .4);
-background-color: white;
-cursor: pointer;
+  width: 300px;
+  height: 300px;
+  object-fit: contain;
+  box-sizing: border-box;
+  border-radius: 8px;
+  box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.4);
+  background-color: white;
+  cursor: pointer;
 `;
 
 export const DraftImgInfo = styled.div`
-margin-top: 20px;
-margin-left: 20px;
-display: flex;
-align-items: center;
-position: relative;
+  margin-top: 20px;
+  margin-left: 20px;
+  display: flex;
+  align-items: center;
+  position: relative;
 `;
 
 export const DraftHeartBox = styled.div`
-width: 35px;
-height: 35px;
-display: flex;
-align-items: center;
-justify-content: center;
-`
+  width: 35px;
+  height: 35px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
 export const DraftHeartCount = styled.div`
-font-size: 14px;
-position: absolute;
-right: 20px;
-color: #7C7C7C;
-`
+  font-size: 14px;
+  position: absolute;
+  right: 20px;
+  color: #7c7c7c;
+`;
 
 export const DraftImgTitle = styled.p`
-font-size: 18px;
-margin-left: 20px;
-text-align: center;
-`
+  font-size: 18px;
+  margin-left: 20px;
+  text-align: center;
+`;
 
 // =================== FOOTER ==========================
 export const FooterDiv = styled.footer`

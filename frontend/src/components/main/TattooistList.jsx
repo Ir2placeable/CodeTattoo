@@ -26,11 +26,21 @@ const TattooistList = ({ cookies, filter }) => {
     const res = await axios.get(
       `${APIURL}/main/tattooist/${filter}/${page}/?user_id=${cookies.user_id}`
     );
-    console.log(res);
 
     if (res.data.success) {
       setTattooists(res.data.tattooist_list);
-      console.log(tattooists);
+      console.log(res.data.tattooist_list);
+      /* 
+        - tattooist_id 
+        - image
+        - nickname 
+        - office 
+        - contact
+        - description 
+        - specialize 
+        - followers 
+        - isFollowed
+      */
     } else {
       console.log("Tattooist List Get Request Fail");
     }
@@ -38,7 +48,7 @@ const TattooistList = ({ cookies, filter }) => {
 
   useEffect(() => {
     sendRequest();
-  }, []);
+  }, [page]);
 
   return (
     <>
