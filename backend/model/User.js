@@ -13,19 +13,21 @@ const userSchema = mongoose.Schema({
         type: String
     },
     image : {
-        type : String
+        type : String,
+        default : ""
     },
     description : {
-        type : String
+        type : String,
+        default : ""
     },
     scraps : {
-        type : [String]
+        type : [String],
     },
     follows : {
-        type : [String]
+        type : [String],
     },
     tattoos : {
-        type : [String]
+        type : [String],
     }
 })
 

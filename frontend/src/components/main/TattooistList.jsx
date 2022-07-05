@@ -16,7 +16,11 @@ import {
 import { APIURL } from "../../config/key";
 import axios from "axios";
 
-const TattooistList = ({ cookies, filter }) => {
+// tattooist_list = { 
+//   tattooist_id, image, nickname, 
+//   office, contact, description, 
+//   specialize, followers, isFollowed }
+const TattooistList = ({ cookies, filter, path }) => {
   const [page, setPage] = useState(1);
   const [pages, setPages] = useState([]);
   const [tattooists, setTattooists] = useState([]);
