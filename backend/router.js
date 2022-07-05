@@ -82,21 +82,25 @@ server.get('/main/my-tattoo', (req, res) => {
 })
 // 메인 페이지 - 작업물관리
 server.get('/main/artworks/:filter/:page', (req, res) => {
+    console.log('main page - artworks')
     routing_to.MainArtworks(req.params, req.query, res)
         .catch((err) => { console.log(err)})
 })
 // 메인 페이지 - 도안관리
 server.get('/main/my-draft/:filter/:page', (req, res) => {
+    console.log('main page - draft manage')
     routing_to.MainMyDraft(req.params, req.query, res)
         .catch((err) => { console.log(err)})
 })
 // 메인 페이지 - 도안추가
 server.post('/main/my-draft', (req, res) => {
+    console.log('new draft')
     routing_to.newDraft(req.body, res)
         .catch((err) => { console.log(err)})
 })
 // 메인 페이지 - 도안삭제
 server.delete('/main/my-draft', (req, res) => {
+    console.log('delete draft')
     routing_to.deleteDraft(req.query, res)
         .catch((err) => { console.log(err)})
 })

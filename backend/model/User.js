@@ -20,15 +20,12 @@ const userSchema = mongoose.Schema({
     },
     scraps : {
         type : [String],
-        default : []
     },
     follows : {
         type : [String],
-        default : []
     },
     tattoos : {
         type : [String],
-        default : []
     }
 })
 

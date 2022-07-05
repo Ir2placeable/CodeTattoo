@@ -10,7 +10,7 @@ const imageStorage = require('./imageStorage')
 const mongoose = require("mongoose");
 const config = require('./config/key')
 
-const draftShowLimit = 16
+const draftShowLimit = 12
 const tattooistShowLimit = 8
 
 mongoose.connect(config.mongoURI)
@@ -173,8 +173,9 @@ exports.MainDraft = async function(params, query, res) {
         return_value.push(item)
     }
 
+    console.log(query)
     // 스크랩 여부 검사
-    if (query.user_id !== 'undefined') {
+    if (query.user_id !== undefined) {
         const user = await User.findOne({ _id : query.user_id })
 
         for (let draft of return_value) {
@@ -188,6 +189,9 @@ exports.MainDraft = async function(params, query, res) {
 }
 // 메인 페이지 - 타투이스트
 exports.MainTattooist = async function(params, query, res) {
+    console.log('1 : ', params)
+    console.log('2 : ', query)
+
     if (params.filter === 'init') {
         const count = await Tattooist.count()
         res.send({ success : true, count : count })
@@ -224,7 +228,7 @@ exports.MainTattooist = async function(params, query, res) {
         return_value.push(item)
     }
 
-    if (query.user_id !== 'undefined') {
+    if (query.user_id !== undefined) {
         const user = await User.findOne({ _id : query.user_id })
 
         for (let draft of return_value) {
@@ -239,7 +243,7 @@ exports.MainTattooist = async function(params, query, res) {
 }
 // 메인 페이지 - 스크랩
 exports.MainScrap = async function(params, query, res) {
-    if (query.user_id === 'undefined') {
+    if (query.user_id === undefined) {
         console.log('no user_id')
         res.send({ success : false, err : 'no user_id' })
         return
@@ -261,6 +265,8 @@ exports.MainScrap = async function(params, query, res) {
         const item_index_start = draftShowLimit * (parseInt(params.page)-1)
         drafts = drafts.slice(item_index_start, (item_index_start + draftShowLimit))
 
+        console.log('drafts : ', drafts)
+        console.log('drafts length : ', drafts.length)
         if (drafts.length === 0) {
             console.log('no drafts')
             res.send({ success : false, err : 'no drafts' })
@@ -299,6 +305,7 @@ exports.MainScrap = async function(params, query, res) {
                 contact : tattooist.contact,
                 specialize : tattooist.specialize,
                 followers : tattooist.followers,
+                description : tattooist.description,
                 isFollowed : true
             }
             return_value.push(item)
@@ -312,7 +319,7 @@ exports.MainScrap = async function(params, query, res) {
 }
 // 메인 페이지 - 마이타투
 exports.MainMyTattoo = async function(query, res) {
-    if (query.user_id === 'undefined') {
+    if (query.user_id === undefined) {
         console.log('no user_id')
         res.send({ success : false, err : 'no user_id' })
         return

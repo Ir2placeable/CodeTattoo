@@ -32,11 +32,9 @@ const tattooistSchema = mongoose.Schema({
     },
     artworks : {
         type : [String],
-        default : []
     },
     drafts : {
         type : [String],
-        default : []
     },
     follower : {
         type : Number
