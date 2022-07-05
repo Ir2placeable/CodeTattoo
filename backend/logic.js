@@ -181,7 +181,7 @@ exports.MainDraft = async function(params, query, res) {
     }
 
     // 스크랩 여부 검사
-    if (query.user_id !== undefined) {
+    if (query.user_id !== undefined || query.user_id !== 'undefined') {
         const user = await User.findOne({ _id : query.user_id })
 
         for (let draft of return_value) {
@@ -212,6 +212,7 @@ exports.MainTattooist = async function(params, query, res) {
     } else if (params.filter === 'all') {
         tattooists = await Tattooist.find().skip(item_index_start).limit(tattooistShowLimit)
     } else if (params.filter === 'search') {
+        console.log('searched')
         tattooists = await Tattooist.find({ title : {$regex : query.nickname }})
     } else {
         res.send({ err : 'wrong filter'})
@@ -234,7 +235,7 @@ exports.MainTattooist = async function(params, query, res) {
         return_value.push(item)
     }
 
-    if (query.user_id !== undefined) {
+    if (query.user_id !== undefined || query.user_id !== 'undefined') {
         const user = await User.findOne({ _id : query.user_id })
 
         for (let draft of return_value) {
