@@ -16,9 +16,9 @@ import {
 import { APIURL } from "../../config/key";
 import axios from "axios";
 
-// tattooist_list = { 
-//   tattooist_id, image, nickname, 
-//   office, contact, description, 
+// tattooist_list = {
+//   tattooist_id, image, nickname,
+//   office, contact, description,
 //   specialize, followers, isFollowed }
 const TattooistList = ({ cookies, filter, path }) => {
   const [page, setPage] = useState(1);
@@ -58,8 +58,7 @@ const TattooistList = ({ cookies, filter, path }) => {
     <>
       <ListDiv>
         <TattooistMainBox>
-          {/* 데이터 주입
-           {tattooists.map((tattooist) => (
+          {tattooists.map((tattooist) => (
             <TattooistContainer key={tattooist.tattooist_id}>
               {tattooist.image ? (
                 <TattooistImg
@@ -68,25 +67,27 @@ const TattooistList = ({ cookies, filter, path }) => {
                   id={tattooist.id}
                 />
               ) : (
-                <FontAwesomeIcon style={userIconStyle} icon={faUser} />
+                <TattooistImg />
               )}
               <TattooistInfoBox>
                 <TattooistInfo>Nickname : {tattooist.nickname}</TattooistInfo>
                 <TattooistInfo>Office : {tattooist.office}</TattooistInfo>
-                <TattooistInfo>Specialize : {tattooist.spcialize}</TattooistInfo>
+                <TattooistInfo>
+                  Specialize : {tattooist.spcialize}
+                </TattooistInfo>
                 <TattooistInfo>follwers {tattooist.follow}</TattooistInfo>
               </TattooistInfoBox>
               <TattooistControlBox>
-              { tattooist.ifFollowed ? (
-                    <TattooistBtn>Unfollow</TattooistInfo>
+                {tattooist.ifFollowed ? (
+                  <TattooistBtn>Unfollow</TattooistBtn>
                 ) : (
-                    <TattooistBtn>Follow</TattooistInfo>
-                ) }
+                  <TattooistBtn>Follow</TattooistBtn>
+                )}
                 <TattooistBtn>Reserve</TattooistBtn>
               </TattooistControlBox>
             </TattooistContainer>
-            ))}     
-        */}
+          ))}
+          {/*
           <TattooistContainer>
             <TattooistImg>Image</TattooistImg>
             <TattooistInfoBox>
@@ -114,6 +115,7 @@ const TattooistList = ({ cookies, filter, path }) => {
               <TattooistBtn>Reserve</TattooistBtn>
             </TattooistControlBox>
           </TattooistContainer>
+        */}
         </TattooistMainBox>
       </ListDiv>
     </>

@@ -27,7 +27,8 @@ const SmallNavigationComp = ({ data, searchBox, location }) => {
   const navigate = useNavigate();
   const currLocation = useLocation();
 
-  useEffect(() => {  // 버튼 스타일 세팅
+  useEffect(() => {
+    // 버튼 스타일 세팅
     const path = currLocation.pathname;
 
     if (path === data[0].path || path === data[1].path) {
@@ -53,7 +54,7 @@ const SmallNavigationComp = ({ data, searchBox, location }) => {
       setFirstBtn(false);
       setSecondBtn(true);
       //navigate(data[2].path);
-      window.location.replace(data[2].path)
+      window.location.replace(data[2].path);
     }
   };
 
@@ -71,10 +72,10 @@ const SmallNavigationComp = ({ data, searchBox, location }) => {
     }
   };
   const onKeyUp = (e) => {
-    if(e.key === 'Enter'){
+    if (e.key === "Enter") {
       goSearch();
     }
-  }
+  };
 
   const setStyle = (text) => {
     if (
@@ -90,6 +91,20 @@ const SmallNavigationComp = ({ data, searchBox, location }) => {
   return (
     <>
       <SmallNavigation style={boxLocation}>
+        {data.map((_data, idx) => {
+          if (idx > 0) {
+            return (
+              <SmallNavigationBtn
+                id={_data.path}
+                key={_data.text}
+                onClick={onBtnClick}
+                style={setStyle(_data.text)}
+              >
+                {_data.text}
+              </SmallNavigationBtn>
+            );
+          }
+        })}
 
         {searchBox && (
           <SmallNavigationBtn>
