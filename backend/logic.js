@@ -313,7 +313,7 @@ exports.MainScrap = async function(params, query, res) {
         }
 
         res.send({ success : true, draft_list : return_value })
-    } else if (params.filter === ' tattooist') {
+    } else if (params.filter === 'tattooist') {
         let tattooists = []
         for await (let tattooist_id of user.follows) {
             await Tattooist.findOne({ _id : tattooist_id }).then((tattooist) => { tattooists.push(tattooist) })
@@ -589,6 +589,7 @@ exports.unScrapDraft = async function(query, res) {
 }
 // 타투이스트 팔로우요청
 exports.followTattooist = async function(body, res) {
+    console.log('body : ', body)
     await User.updateOne({ _id : body.user_id }, {$push : { follows : body.tattooist_id }})
     await Tattooist.updateOne({ _id : body.tattooist_id }, {$inc : { follower : 1 }})
 

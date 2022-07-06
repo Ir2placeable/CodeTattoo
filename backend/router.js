@@ -20,10 +20,10 @@ server.post('/login', (req, res) => {
     console.log('login')
     if (req.body.filter === 'user') {
         routing_to.userLogin(req.body, res)
-            .catch((err) => { console.log(err)})
+            .catch((err) => { res.send(err)})
     } else if (req.body.filter === 'tattooist') {
         routing_to.tattooistLogin(req.body, res)
-            .catch((err) => { console.log(err)})
+            .catch((err) => { res.send(err)})
     } else {
         res.send({ err : 'wrong filter'})
     }
@@ -33,10 +33,10 @@ server.post('/register', (req, res) => {
     console.log('register')
     if (req.body.filter === 'user') {
         routing_to.userRegister(req.body, res)
-            .catch((err) => { console.log(err)})
+            .catch((err) => { res.send(err)})
     } else if (req.body.filter === 'tattooist') {
         routing_to.tattooistRegister(req.body, res)
-            .catch((err) => { console.log(err)})
+            .catch((err) => { res.send(err)})
     } else {
         res.send({ err : 'wrong filter'})
     }
@@ -46,10 +46,10 @@ server.post('/unregister', (req, res) => {
     console.log('unregister')
     if (req.body.filter === 'user') {
         routing_to.userUnRegister(req.body, res)
-            .catch((err) => { console.log(err)})
+            .catch((err) => { res.send(err)})
     } else if (req.body.filter === 'tattooist') {
         routing_to.tattooistUnRegister(req.body, res)
-            .catch((err) => { console.log(err)})
+            .catch((err) => { res.send(err)})
     } else {
         res.send({ err : 'wrong filter'})
     }
@@ -62,62 +62,62 @@ server.get('/main/draft/:filter/:page', (req, res) => {
     console.log('1 : ', req.params)
     console.log('2 :', req.query)
     routing_to.MainDraft(req.params, req.query, res)
-        .catch((err) => { console.log(err)})
+        .catch((err) => { res.send(err)})
 })
 // 메인 페이지 - 타투이스트
 server.get('/main/tattooist/:filter/:page', (req, res) => {
     console.log('main page - tattooist')
     routing_to.MainTattooist(req.params, req.query, res)
-        .catch((err) => { console.log(err)})
+        .catch((err) => { res.send(err)})
 })
 // 메인 페이지 - 스크랩
 server.get('/main/scrap/:filter/:page', (req, res) => {
     console.log('main page - scrap')
     routing_to.MainScrap(req.params, req.query, res)
-        .catch((err) => { console.log(err)})
+        .catch((err) => { res.send(err)})
 })
 // 메인 페이지 - 마이 타투
 server.get('/main/my-tattoo', (req, res) => {
     console.log('main page - my tattoo')
     routing_to.MainMyTattoo(req.query, res)
-        .catch((err) => { console.log(err)})
+        .catch((err) => { res.send(err)})
 })
 // 메인 페이지 - 작업물관리
 server.get('/main/artworks/:filter/:page', (req, res) => {
     console.log('main page - artworks')
     routing_to.MainArtworks(req.params, req.query, res)
-        .catch((err) => { console.log(err)})
+        .catch((err) => { res.send(err)})
 })
 // 메인 페이지 - 도안관리
 server.get('/main/my-draft/:filter/:page', (req, res) => {
     console.log('main page - draft manage')
     routing_to.MainMyDraft(req.params, req.query, res)
-        .catch((err) => { console.log(err)})
+        .catch((err) => { res.send(err)})
 })
 // 메인 페이지 - 도안추가
 server.post('/main/my-draft', (req, res) => {
     console.log('new draft')
     routing_to.newDraft(req.body, res)
-        .catch((err) => { console.log(err)})
+        .catch((err) => { res.send(err)})
 })
 // 메인 페이지 - 도안삭제
 server.delete('/main/my-draft', (req, res) => {
     console.log('delete draft')
     routing_to.deleteDraft(req.query, res)
-        .catch((err) => { console.log(err)})
+        .catch((err) => { res.send(err)})
 })
 
 
 // 유저 예약확인 페이지
 server.get('/user/reservation', (req, res) => {
     routing_to.userReservation(req.query, res)
-        .catch((err) => { console.log(err)})
+        .catch((err) => { res.send(err)})
 })
 // 유저 마이 페이지
 server.get('/user/my-page', (req, res) => {
     console.log('user mypage')
     routing_to.userMyPage(req.query, res)
-        .catch((err) => { console.log(err)})
+        .catch((err) => { res.send(err)})
 })
 // 유저 마이 페이지 : 정보수정
 server.put('/user/my-page', (req, res) => {
@@ -136,7 +136,7 @@ server.put('/user/my-page/image', (req, res) => {
 // 타투이스트 마이 페이지
 server.get('/tattooist/my-page', (req, res) => {
     routing_to.tattooistMyPage(req.query, res)
-        .catch((err) => { console.log(err)})
+        .catch((err) => { res.send(err)})
 })
 // 타투이스트 마이 페이지 : 정보수정
 server.put('/tattooist/my-page', (req, res) => {
@@ -154,25 +154,25 @@ server.put('/tattooist/my-page/image', (req, res) => {
 server.post('/scrap', (req, res) => {
     console.log('scrap')
     routing_to.ScrapDraft(req.body, res)
-        .catch((err) => { console.log(err)})
+        .catch((err) => { res.send(err)})
 })
 // 도안 스크랩 취소요청
 server.delete('/scrap', (req, res) => {
     console.log('unscrap')
     routing_to.unScrapDraft(req.query, res)
-        .catch((err) => { console.log(err)})
+        .catch((err) => { res.send(err)})
 })
 // 타투이스트 팔로우 요청
 server.post('/follow', (req, res) => {
     console.log('follow')
     routing_to.followTattooist(req.body, res)
-        .catch((err) => { console.log(err)})
+        .catch((err) => { res.send(err)})
 })
 // 타투이스트 팔로우 취소요청
 server.delete('/follow', (req, res) => {
     console.log('unfollow')
     routing_to.unFollowTattooist(req.query, res)
-        .catch((err) => { console.log(err)})
+        .catch((err) => { res.send(err)})
 })
 
 
@@ -180,7 +180,7 @@ server.delete('/follow', (req, res) => {
 server.get('/draft', (req, res) => {
     console.log('draft detail')
     routing_to.draftDetail(req.query, res)
-        .catch((err) => { console.log(err)})
+        .catch((err) => { res.send(err)})
 })
 
 
