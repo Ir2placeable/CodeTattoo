@@ -1,11 +1,13 @@
-import React, { useEffect, useState } from 'react';
-import { 
-  MainNavigation, MainNavigationInner,
-  MainNavigationBtn, MainNavigationBtnStyle, 
-  MainContentsDiv, 
-} from '../../styledComponents';
+import React, { useEffect, useState } from "react";
+import {
+  MainNavigation,
+  MainNavigationInner,
+  MainNavigationBtn,
+  MainNavigationBtnStyle,
+  MainContentsDiv,
+} from "../../styledComponents";
 
-import { Outlet, useNavigate, useLocation } from 'react-router-dom';
+import { Outlet, useNavigate, useLocation } from "react-router-dom";
 
 const MainPage = ({ cookies }) => {
   // Navigation 버튼 상태 변수
@@ -15,22 +17,22 @@ const MainPage = ({ cookies }) => {
     scrap: false,
     myTattoo: false,
     manageWork: false,
-    manageDraft: false
-  })
+    manageDraft: false,
+  });
 
   const location = useLocation();
   useEffect(() => {
-    const [ , name] = location.pathname.split('/')
+    const [, name] = location.pathname.split("/");
 
     setIsClicked({
-      [name]: true
-    })
+      [name]: true,
+    });
   }, []);
 
   const navigate = useNavigate();
   const onBtnClick = (e) => {
     const _id = e.target.id;
-
+    /*
     if(!cookies.user_id && !cookies.tattooist_id){
       if(_id === 'scrap' || _id === 'myTattoo'){
         alert('로그인이 필요한 페이지입니다.');
@@ -38,28 +40,26 @@ const MainPage = ({ cookies }) => {
         return;
       }
     }
-
+    */
     const temp = {
       draft: false,
       tattooist: false,
       scrap: false,
       myTattoo: false,
       manageWork: false,
-      manageDraft: false
-    }
+      manageDraft: false,
+    };
     temp[_id] = true;
-    setIsClicked(temp)
+    setIsClicked(temp);
 
-    navigate(`/${_id}`)
-  }
+    navigate(`/${_id}`);
+  };
 
   return (
     <>
-    {/* --- Main Navigation --- */}
+      {/* --- Main Navigation --- */}
       <MainNavigation>
-
         <MainNavigationInner>
-
           <MainNavigationBtn
             onClick={onBtnClick}
             id="draft"
@@ -67,7 +67,6 @@ const MainPage = ({ cookies }) => {
           >
             도안
           </MainNavigationBtn>
-
 
           <MainNavigationBtn
             onClick={onBtnClick}
@@ -112,9 +111,7 @@ const MainPage = ({ cookies }) => {
               </MainNavigationBtn>
             </>
           )}
-
         </MainNavigationInner>
-
       </MainNavigation>
       {/* --- end Main Navigation --- */}
 

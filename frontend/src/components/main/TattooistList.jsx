@@ -13,6 +13,7 @@ import {
   TattooistBtn,
   userIconStyle,
 } from "../../styledComponents";
+import FollowBtn from "../common/FollowBtn";
 import { APIURL } from "../../config/key";
 import axios from "axios";
 
@@ -24,27 +25,22 @@ const TattooistList = ({ cookies, filter, path }) => {
   const [page, setPage] = useState(1);
   const [pages, setPages] = useState([]);
   const [tattooists, setTattooists] = useState([]);
-  const [noTattooist, setNoTattooist] = useState(false);
 
   const sendRequest = async () => {
+    let query = "";
+    if (cookies.tattooist_id) {
+      query = `?tattooist_id=${cookies.tattooist_id}`;
+    } else if (cookies.user_id) {
+      query = `?user_id=${cookies.user_id}`;
+    }
+
     const res = await axios.get(
-      `${APIURL}/main/tattooist/${filter}/${page}/?user_id=${cookies.user_id}`
+      `${APIURL}/main/tattooist/${filter}/${page}/${query}`
     );
 
     if (res.data.success) {
       setTattooists(res.data.tattooist_list);
       console.log(res.data.tattooist_list);
-      /* 
-        - tattooist_id 
-        - image
-        - nickname 
-        - office 
-        - contact
-        - description 
-        - specialize 
-        - followers 
-        - isFollowed
-      */
     } else {
       console.log("Tattooist List Get Request Fail");
     }
@@ -57,66 +53,45 @@ const TattooistList = ({ cookies, filter, path }) => {
   return (
     <>
       <ListDiv>
-        <TattooistMainBox>
-          {tattooists.map((tattooist) => (
-            <TattooistContainer key={tattooist.tattooist_id}>
-              {tattooist.image ? (
-                <TattooistImg
-                  src={tattooist.image}
-                  alt={tattooist.nickname}
-                  id={tattooist.id}
-                />
-              ) : (
-                <TattooistImg />
-              )}
-              <TattooistInfoBox>
-                <TattooistInfo>Nickname : {tattooist.nickname}</TattooistInfo>
-                <TattooistInfo>Office : {tattooist.office}</TattooistInfo>
-                <TattooistInfo>
-                  Specialize : {tattooist.spcialize}
-                </TattooistInfo>
-                <TattooistInfo>follwers {tattooist.follow}</TattooistInfo>
-              </TattooistInfoBox>
-              <TattooistControlBox>
-                {tattooist.ifFollowed ? (
-                  <TattooistBtn>Unfollow</TattooistBtn>
+        {tattooists.length === 0 ? (
+          <EmptyBox>아직 등록한 타투이스트가 없습니다.</EmptyBox>
+        ) : (
+          <TattooistMainBox>
+            {tattooists.map((tattooist) => (
+              <TattooistContainer key={tattooist.tattooist_id}>
+                {tattooist.image ? (
+                  <TattooistImg
+                    src={tattooist.image}
+                    alt={tattooist.nickname}
+                    id={tattooist.tattooist_id}
+                  />
                 ) : (
-                  <TattooistBtn>Follow</TattooistBtn>
+                  <TattooistImg />
                 )}
-                <TattooistBtn>Reserve</TattooistBtn>
-              </TattooistControlBox>
-            </TattooistContainer>
-          ))}
-          {/*
-          <TattooistContainer>
-            <TattooistImg>Image</TattooistImg>
-            <TattooistInfoBox>
-              <TattooistInfo>Nickname : SpongeBob</TattooistInfo>
-              <TattooistInfo>Office : Bikini Bottom</TattooistInfo>
-              <TattooistInfo>Specialize : making hamberger</TattooistInfo>
-              <TattooistInfo>follwers 1.1K</TattooistInfo>
-            </TattooistInfoBox>
-            <TattooistControlBox>
-              <TattooistBtn>Follow</TattooistBtn>
-              <TattooistBtn>Reserve</TattooistBtn>
-            </TattooistControlBox>
-          </TattooistContainer>
-
-          <TattooistContainer>
-            <TattooistImg>Image</TattooistImg>
-            <TattooistInfoBox>
-              <TattooistInfo>Nickname : SpongeBob</TattooistInfo>
-              <TattooistInfo>Office : Bikini Bottom</TattooistInfo>
-              <TattooistInfo>Specialize : making hamberger</TattooistInfo>
-              <TattooistInfo>follwers 1.1K</TattooistInfo>
-            </TattooistInfoBox>
-            <TattooistControlBox>
-              <TattooistBtn>Follow</TattooistBtn>
-              <TattooistBtn>Reserve</TattooistBtn>
-            </TattooistControlBox>
-          </TattooistContainer>
-        */}
-        </TattooistMainBox>
+                <TattooistInfoBox>
+                  <TattooistInfo>Nickname : {tattooist.nickname}</TattooistInfo>
+                  <TattooistInfo>Office : {tattooist.office}</TattooistInfo>
+                  <TattooistInfo>
+                    Specialize : {tattooist.spcialize}
+                  </TattooistInfo>
+                  <TattooistInfo>follwers : {tattooist.follow}</TattooistInfo>
+                </TattooistInfoBox>
+                {cookies.user_id ? (
+                  <TattooistControlBox>
+                    <FollowBtn
+                      cookies={cookies}
+                      tattooist_id={tattooist.tattooist_id}
+                      isFollowed={tattooist.isFollowed}
+                    ></FollowBtn>
+                    <TattooistBtn>Reserve</TattooistBtn>
+                  </TattooistControlBox>
+                ) : (
+                  <div></div>
+                )}
+              </TattooistContainer>
+            ))}
+          </TattooistMainBox>
+        )}
       </ListDiv>
     </>
   );

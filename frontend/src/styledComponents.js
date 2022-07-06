@@ -2,6 +2,26 @@ import styled from "styled-components";
 
 // ======================  COMMON  =====================
 
+export const Btn = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 150px;
+  height: 60px;
+  font-size: 20px;
+  position: relative;
+  background-color: rgba(72, 72, 72, 0.3);
+  border-radius: 24px;
+  color: rgba(72, 72, 72);
+  font-weight: bold;
+  cursor: pointer;
+  margin: 15px 0;
+
+  &: hover {
+    opacity: 1;
+  }
+`;
+
 // =========================  HEADER  ======================
 export const HeaderDiv = styled.header`
   background-color: #f6f6f6;
@@ -419,9 +439,10 @@ export const TattooistImg = styled.img`
   width: 210px;
   height: 210px;
   border-radius: 70%;
-  background-color: rgba(72, 72, 72);
   overflow: hidden;
   margin: 25px 0;
+  object-fit: contain;
+  z-index: 1;
 `;
 
 export const TattooistControlBox = styled.div`
@@ -439,7 +460,7 @@ export const TattooistBtn = styled.div`
   font-size: 20px;
   position: relative;
   background-color: rgba(72, 72, 72, 0.3);
-  border-radius: 8px;
+  border-radius: 24px;
   color: rgba(72, 72, 72);
   font-weight: bold;
   cursor: pointer;
