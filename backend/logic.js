@@ -181,9 +181,8 @@ exports.MainDraft = async function(params, query, res) {
     }
 
     // 스크랩 여부 검사
-    if (query.user_id !== undefined || query.user_id !== 'undefined') {
-        const user = await User.findOne({ _id : query.user_id })
-
+    const user = await User.findOne({ _id : query.user_id })
+    if (user) {
         for (let draft of return_value) {
             if (user['scraps'].includes(String(draft.draft_id))) {
                 draft['isScraped'] = true
@@ -192,6 +191,18 @@ exports.MainDraft = async function(params, query, res) {
     }
 
     res.send({ success : true, draft_list : return_value })
+
+    // if (query.user_id !== undefined || query.user_id !== 'undefined') {
+    //     const user = await User.findOne({ _id : query.user_id })
+    //
+    //     for (let draft of return_value) {
+    //         if (user['scraps'].includes(String(draft.draft_id))) {
+    //             draft['isScraped'] = true
+    //         }
+    //     }
+    // }
+    //
+    // res.send({ success : true, draft_list : return_value })
 }
 // 메인 페이지 - 타투이스트
 exports.MainTattooist = async function(params, query, res) {
@@ -235,9 +246,9 @@ exports.MainTattooist = async function(params, query, res) {
         return_value.push(item)
     }
 
-    if (query.user_id !== undefined || query.user_id !== 'undefined') {
-        const user = await User.findOne({ _id : query.user_id })
-
+    // user로 접속한 경우에만 판별
+    const user = await User.findOne({ _id : query.user_id })
+    if (user) {
         for (let draft of return_value) {
             if (user['follows'].includes(String(draft.draft_id))) {
                 draft['isFollowed'] = true
@@ -245,8 +256,17 @@ exports.MainTattooist = async function(params, query, res) {
         }
     }
 
-
     res.send({ success : true, tattooist_list : return_value })
+    // if (query.user_id !== undefined || query.user_id !== 'undefined') {
+    //     const user = await User.findOne({ _id : query.user_id })
+    //
+    //     for (let draft of return_value) {
+    //         if (user['follows'].includes(String(draft.draft_id))) {
+    //             draft['isFollowed'] = true
+    //         }
+    //     }
+    // }
+    // res.send({ success : true, tattooist_list : return_value })
 }
 // 메인 페이지 - 스크랩
 exports.MainScrap = async function(params, query, res) {
