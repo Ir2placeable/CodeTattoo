@@ -6,7 +6,8 @@ import { APIURL } from '../../config/key';
 
 import { 
   DeleteDiv, DeleteText, DeleteImgDiv, 
-  DeleteImg, DeleteDesc, DeleteBtn
+  DeleteImg, DeleteDesc, DeleteBtn,
+  DeleteBigDiv
 } from '../../styledComponents';
 
 // - DELETE : http://3.39.196.91:3001/main/my-draft
@@ -46,6 +47,7 @@ const TrashIcon = ({ size, cookies, draft_id, image }) => {
       />
 
       {isClick && (
+      <DeleteBigDiv>
         <DeleteDiv>
           <DeleteText>
             DELETE
@@ -62,6 +64,7 @@ const TrashIcon = ({ size, cookies, draft_id, image }) => {
           <DeleteBtn onClick={onDelete}>삭제</DeleteBtn>
           <DeleteBtn onClick={() => setIsClick(false)}>취소</DeleteBtn>
         </DeleteDiv>
+      </DeleteBigDiv>
       )}
       
     </>

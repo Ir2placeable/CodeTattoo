@@ -10,11 +10,12 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPen, faUser } from '@fortawesome/free-solid-svg-icons';
 import { useNavigate } from 'react-router-dom';
 
-const MyPageInfo = ({ cookies, image, desc, filter }) => {
+const MyPageInfo = ({ cookies, filter, image }) => {
   const [isHover, setIsHover] = useState(false);
   const [id, setId] = useState('');
 
   useEffect(() => {
+    console.log('mypage info rendering count')
     if(cookies.user_id){
       setId(cookies.user_id)
     } else if(cookies.tattooist_id){
@@ -29,6 +30,9 @@ const MyPageInfo = ({ cookies, image, desc, filter }) => {
   const onEditClick = () => {
     navigation(`/mypage/${filter}/${id}/info`)
   }
+  const onClick = () => {
+    window.location.replace(`/mypage/${filter}/${id}`)
+  }
 
   return (
     <MyPageInfoDiv>
@@ -39,6 +43,8 @@ const MyPageInfo = ({ cookies, image, desc, filter }) => {
           {image ? (
             <ProfileImg 
               src={image}
+              onLoad={() => {console.log('프로필 이미지 로드')}}
+              onError={() => {console.log('이미지 로드 에러')}}
             />
           ) : (
             <ProfileIconDiv>
@@ -56,13 +62,13 @@ const MyPageInfo = ({ cookies, image, desc, filter }) => {
 
         <ProfileDescDiv>
 
-          <NicknameDiv>
+          <NicknameDiv onClick={onClick}>
             {cookies.nickname}
           </NicknameDiv>
 
-          {desc && (
+          {cookies.profile_desc && (
             <DescDiv>
-              {desc}
+              {cookies.profile_desc}
             </DescDiv>
           )}
 

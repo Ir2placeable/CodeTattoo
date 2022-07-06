@@ -72,6 +72,21 @@ const App = () => {
     // resetTattooist();
   }, []);
 
+  // useEffect(() => {
+  //   //console.log('d')
+  //   if(
+  //     cookies.user_id === undefined &&
+  //     cookies.tattooist_id === undefined
+  //     ){
+  //       const keys = Object.keys(cookies);
+  //       for(let i = 0; i < keys.length; i++){
+  //         removeCookie(keys[i], {path: '/'})
+  //       }
+  //       window.location.replace('/')
+  //       console.log('쿠키 만료')
+  //   }
+
+  // }, [cookies.user_id, cookies.tattooist_id])
   
 
   return (
@@ -146,6 +161,7 @@ const App = () => {
                 element={<ProfileImage cookies={cookies} filter="user" setCookie={setCookie} />} />
               <Route path="info"
                 element={<EditProfile cookies={cookies} filter="user" setCookie={setCookie} />} />
+              <Route path="scrap" element={<DraftList cookies={cookies} filter={'scrap'} path={"main/scrap/draft"} />} />
           </Route>
           <Route
             path="/mypage/tattooist/:tattooist_id"

@@ -243,6 +243,7 @@ min-height: 733px;
 padding-top: 130px;
 padding-bottom: 130px;
 `;
+// position: relative;
 
 
 export const ListDiv = styled.div `
@@ -563,6 +564,10 @@ color: #afafaf;
 `
 
 // *** My Page ***
+export const MyPageBigDiv = styled.div`
+min-height: 733px;
+padding-top: 130px;
+`
 export const MyPageInfoDiv = styled.div `
 width: 100%;
 margin-top: -130px;
@@ -632,6 +637,7 @@ justify-content: center;
 export const NicknameDiv = styled.div `
 font-size: 30px;
 margin: 10px;
+cursor: pointer;
 `
 
 export const DescDiv = styled.div `
@@ -662,13 +668,16 @@ export const ProfileEditHoverStyle = {
 export const MyPageContentDiv = styled.div `
 width: 100%;
 display: flex;
+position: relative;
 `
 
 export const MyPageCategory = styled.div `
 box-sizing: border-box;
 width: 250px;
 padding: 50px 30px;
+
 `
+//border-right: 1px solid rgba(72, 72, 72, .5);
 
 export const CategoryBigText = styled.div `
 font-weight: bold;
@@ -685,16 +694,31 @@ margin-bottom: 20px;
 cursor: pointer;
 `
 
+// min-height: 733px;
+// padding-top: 130px;
+// padding-bottom: 130px;
+// width: calc((100%) - 250px)
+
 export const MyPageContentBox = styled.div `
-width: calc((100%) - 250px)
+width: 100%;
+padding: 50px 0;
 `
 
 
 // *** delete draft style ***
+export const DeleteBigDiv = styled.div`
+position: fixed;
+top: 0;
+left: 0;
+z-index: 10;
+width: 100%;
+height: 100%;
+background-color: rgba(72, 72, 72, .3);
+`
 export const DeleteDiv = styled.div `
 width: 500px;
 height: 500px;
-position: fixed;
+position: absolute;
 top: 50%;
 left: 50%;
 z-index: 10;

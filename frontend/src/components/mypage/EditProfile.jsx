@@ -8,7 +8,7 @@ import { APIURL } from '../../config/key';
 // - PUT : http://3.39.196.91:3001/tattooist/my-page
 // - body : { tattooist_id, nickname, description, specialize, office, contact }
 // - return : { success }
-const EditProfile = ({ cookies, filter }) => {
+const EditProfile = ({ cookies, filter, setCookie }) => {
   const [info, setInfo] = useState({
     nickname: cookies.nickname,
     description: cookies.profile_desc,
@@ -21,7 +21,11 @@ const EditProfile = ({ cookies, filter }) => {
     office, contact } = info;
 
   const pushCookie = () => {
-    
+    setCookie('nickname', info.nickname, {maxAge: 3000, path: '/'});
+    setCookie('profile_desc', info.description, {maxAge: 3000, path: '/'});
+    setCookie('specialize', info.specialize, {maxAge: 3000, path: '/'});
+    setCookie('office', info.office, {maxAge: 3000, path: '/'});
+    setCookie('contact', info.contact, {maxAge: 3000, path: '/'});
   }
 
   const sendRequest = async() => {
@@ -40,6 +44,7 @@ const EditProfile = ({ cookies, filter }) => {
       if(!_id){
         _id = cookies.tattooist_id;
       }
+      pushCookie();
       window.location.replace(`/mypage/${filter}/${_id}`)
     }
   }
@@ -59,7 +64,7 @@ const EditProfile = ({ cookies, filter }) => {
 
   return (
     <>
-      <div>
+      <div>닉네임
         <input 
           type="text"
           name="nickname"
@@ -67,7 +72,7 @@ const EditProfile = ({ cookies, filter }) => {
           onChange={onChange}
         />
       </div>
-      <div>
+      <div>자기소개
         <input 
           type="text"
           name="description"
@@ -78,7 +83,7 @@ const EditProfile = ({ cookies, filter }) => {
 
       {filter === 'tattooist' && (
         <div>
-          <div>
+          <div>Specialize
             <input 
               type="text"
               name="specialize"
@@ -86,7 +91,7 @@ const EditProfile = ({ cookies, filter }) => {
               onChange={onChange}
             />
           </div>
-          <div>
+          <div>Office
             <input 
               type="text"
               name="office"
@@ -94,7 +99,7 @@ const EditProfile = ({ cookies, filter }) => {
               onChange={onChange}
             />
           </div>
-          <div>
+          <div>Contact
             <input 
               type="text"
               name="contact"

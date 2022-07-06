@@ -14,7 +14,7 @@ import { Outlet } from 'react-router-dom';
 // - return : { success, tattooist_info }
 //     - tattooist_info = { image, nickname, description, 
 //       specialize, office, contact }
-const Tattooist = ({ cookies }) => {
+const Tattooist = ({ cookies, setCookie }) => {
   const [info, setInfo] = useState({
     image: '',
     nickname: '',
@@ -31,6 +31,10 @@ const Tattooist = ({ cookies }) => {
     if(res.data.success){
       console.log(res.data);
       setInfo(res.data.tattooist_info)
+      setCookie('profile_img_src', res.data.tattooist_info.image, {
+        maxAge: 3000,
+        path: '/'
+      })
     }
   }
 
@@ -41,8 +45,7 @@ const Tattooist = ({ cookies }) => {
   return (
     <ContentsDiv>
 
-      <MyPageInfo cookies={cookies}
-        image={info.image} filter="tattooist" />
+      <MyPageInfo cookies={cookies} filter="tattooist" image={info.image} />
 
 
       <MyPageContentDiv>
