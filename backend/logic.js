@@ -326,7 +326,8 @@ exports.MainScrap = async function(params, query, res) {
 }
 // 메인 페이지 - 마이타투
 exports.MainMyTattoo = async function(query, res) {
-    if (query.user_id === undefined) {
+    console.log(query)
+    if (query.user_id === undefined || query.user_id === 'undefined') {
         console.log('no user_id')
         res.send({ success : false, err : 'no user_id' })
         return
@@ -334,16 +335,32 @@ exports.MainMyTattoo = async function(query, res) {
     const user = await User.findOne({ _id : query.user_id })
 
     // 블록체인에서 타투 이력 조회
-    let tattoo_histories = []
-    for await (let tattoo_id of user.tattoos) {
-        await blockchain.history(tattoo_id).then((histories) => { tattoo_histories.push(histories) })
-    }
+    // let tattoo_histories = []
+    // for await (let tattoo_id of user.tattoos) {
+    //     await blockchain.history(tattoo_id).then((histories) => { tattoo_histories.push(histories) })
+    // }
 
     // 타투 이력 데이터 가공
-    let return_value = []
-    for (let history of tattoo_histories) {
+    // let return_value = []
+    // for (let history of tattoo_histories) {
+    //
+    // }
 
-    }
+    // mock-up data
+    let return_value = []
+    let tattoo1 = []
+    const state1 = { tattoo_id : "test_tattoo", state : "created", ink : "black, red", niddle : "niddle123", tattooist_id : "test_id_1", customer_id : "test_id_1" }
+    const state2 = { tattoo_id : "test_tattoo", state : "imprinting", ink : "black, red", niddle : "niddle123", tattooist_id : "test_id_1", customer_id : "test_id_1" }
+    const state3 = { tattoo_id : "test_tattoo", state : "imprinted", ink : "black, red", niddle : "niddle123", tattooist_id : "test_id_1", customer_id : "test_id_1" }
+    let tattoo2 = []
+    const state4 = { tattoo_id : "test_tattoo2", state : "created", ink : "black, red", niddle : "niddle123", tattooist_id : "test_id_1", customer_id : "test_id_1" }
+    const state5 = { tattoo_id : "test_tattoo2", state : "imprinting", ink : "black, red", niddle : "niddle123", tattooist_id : "test_id_1", customer_id : "test_id_1" }
+    const state6 = { tattoo_id : "test_tattoo2", state : "imprinted", ink : "black, red", niddle : "niddle123", tattooist_id : "test_id_1", customer_id : "test_id_1" }
+    const state7 = { tattoo_id : "test_tattoo2", state : "side-effected", ink : "black, red", niddle : "niddle123", tattooist_id : "test_id_1", customer_id : "test_id_1" }
+
+    tattoo1.push(state1, state2, state3)
+    tattoo2.push(state4, state5, state6)
+    return_value.push(tattoo1, tattoo2)
 
     res.send({ success : true, tattoo_list : return_value })
 }
