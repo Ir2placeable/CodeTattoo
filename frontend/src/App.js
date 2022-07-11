@@ -17,15 +17,15 @@ import Login from "./components/account/Login";
 import Register from "./components/account/Register";
 import MainPage from "./components/main/MainPage";
 import ShowDraftList from "./components/main/ShowDraftList";
-import ShowTattooistList from "./components/main/ShowTattooistList";
-import TattooistList from "./components/main/TattooistList";
+import ShowTattooistList from "./pages/ShowTattooistList";
+import TattooistList from "./components/templates/TattooistList";
 import SearchTattooist from "./components/main/SearchTattooist";
 import ShowScrap from "./components/main/ShowScrap";
-import ShowMyTattoo from "./components/main/ShowMyTattoo";
+import ShowMyTattoo from "./pages/ShowMyTattoo";
 import ShowManageWork from "./components/main/ShowManageWork";
 import ShowManageDraft from "./components/main/ShowManageDraft";
 import DraftList from "./components/main/DraftList";
-import ScrapTattooist from "./components/main/ScrapTattooist";
+import DraftDetail from "./components/templates/DraftDetail";
 import User from "./components/mypage/User";
 import Tattooist from "./components/mypage/Tattooist";
 import SearchDraft from "./components/main/SearchDraft";
@@ -90,29 +90,21 @@ const App = () => {
             <Route path="draft" element={<ShowDraftList />}>
               <Route path="best" element={<DraftList cookies={cookies} filter={'draft'} path={"main/draft/best"} />} />
               <Route path="all"  element={<DraftList cookies={cookies} filter={'draft'} path={"main/draft/all"} />} />
-              <Route path="search/:title" element={<SearchDraft cookies={cookies} />}  />
+              <Route path="search/:title" element={<SearchDraft cookies={cookies} />} />
+              <Route path=":draft_id" element={<DraftDetail cookies={cookies}/>} />
             </Route>
 
             {/* 타투이스트 목록 */}
-            <Route path="tattooist" element={<ShowTattooistList />}>
-              <Route
-                path="best"
-                element={<TattooistList cookies={cookies} filter={"best"} />}
-              />
-              <Route
-                path="all"
-                element={<TattooistList cookies={cookies} filter={"all"} />}
-              />
-              <Route
-                path="search/:nickname"
-                element={<SearchTattooist cookies={cookies} />}
-              />
+            <Route path="tattooist" element={<ShowTattooistList cookies={cookies}/>}>
+              <Route path="best" element={<TattooistList/>} />
+              <Route path="all" element={<TattooistList/>} />
+              <Route path="search/:nickname" element={<TattooistList/>} />
             </Route>
 
             {/* 스크랩 목록 */}
             <Route path="scrap" element={<ShowScrap />} >
               <Route path="draft" element={<DraftList cookies={cookies} filter={'scrap'} path={"main/scrap/draft"} />} />
-              <Route path="tattooist" element={<ScrapTattooist />} />
+              <Route path="tattooist" element={<TattooistList cookies={cookies} filter={"scrap"} path={"main/scrap/tattooist"} />} />
             </Route>
 
             {/* 마이 타투 목록 */}

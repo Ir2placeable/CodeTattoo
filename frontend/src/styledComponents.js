@@ -16,9 +16,12 @@ export const Btn = styled.div`
   font-weight: bold;
   cursor: pointer;
   margin: 15px 0;
+  transition: 0.5s;
 
   &: hover {
-    opacity: 1;
+    background-color: white;
+    border: 1px solid black;
+    box-sizing: border-box;
   }
 `;
 

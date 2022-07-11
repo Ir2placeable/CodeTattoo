@@ -8,7 +8,7 @@ import SmallNavigationComp from './SmallNavigationComp';
 
 const ShowScrap = () => {
 
-
+  
   return (
   <>
       <SmallNavigationComp data={[

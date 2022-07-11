@@ -14,8 +14,8 @@ import {
   MyTattooCardFaceTwo,
   MyTattooContentOne,
   MyTattooContentTwo,
-} from "../../styledComponents";
-import { APIURL } from "../../config/key";
+} from "../styledComponents";
+import { APIURL } from "../config/key";
 import axios from "axios";
 // swiper
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -119,44 +119,4 @@ const ShowMyTattoo = ({ cookies }) => {
   );
 };
 
-/*
-<MyTattooCard>
-                    <MyTattooCardFaceOne>
-                      <MyTattooContentOne>
-                        <h3>State 0</h3>
-                      </MyTattooContentOne>
-                    </MyTattooCardFaceOne>
-                    <MyTattooCardFaceTwo>
-                      <MyTattooContentTwo>
-                        <p>State와 관련된 content를 보여주는 공간입니다.</p>
-                      </MyTattooContentTwo>
-                    </MyTattooCardFaceTwo>
-                  </MyTattooCard>
-
-                  <MyTattooCard>
-                    <MyTattooCardFaceOne>
-                      <MyTattooContentOne>
-                        <h1>State 1</h1>
-                      </MyTattooContentOne>
-                    </MyTattooCardFaceOne>
-                    <MyTattooCardFaceTwo>
-                      <MyTattooContentTwo>
-                        <p>State와 관련된 content를 보여주는 공간입니다.</p>
-                      </MyTattooContentTwo>
-                    </MyTattooCardFaceTwo>
-                  </MyTattooCard>
-
-                  <MyTattooCard>
-                    <MyTattooCardFaceOne>
-                      <MyTattooContentOne>
-                        <h3>State 2</h3>
-                      </MyTattooContentOne>
-                    </MyTattooCardFaceOne>
-                    <MyTattooCardFaceTwo>
-                      <MyTattooContentTwo>
-                        <p>State와 관련된 content를 보여주는 공간입니다.</p>
-                      </MyTattooContentTwo>
-                    </MyTattooCardFaceTwo>
-                  </MyTattooCard>
-*/
 export default ShowMyTattoo;

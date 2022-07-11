@@ -61,4 +61,4 @@ const FollowBtn = ({ cookies, tattooist_id, isFollowed }) => {
   );
 };
 
-export default FollowBtn;
+export default React.memo(FollowBtn);
