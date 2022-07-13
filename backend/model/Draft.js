@@ -16,6 +16,12 @@ const draftSchema = mongoose.Schema({
     like : {
         type : Number
     },
+    genre : {
+        type : String
+    },
+    keywords : {
+        type : [String]
+    },
     timestamp : {
         type : Number
     },

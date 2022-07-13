@@ -1,5 +1,8 @@
+const guest = require('./logic/guest')
+const user = require('./logic/user')
+const tattooist = require('./logic/tattooist')
+
 const routing_to = require('./logic')
-const blockchain = require('./blockchain')
 const express = require('express')
 const server = express()
 const port = 3001
@@ -59,8 +62,6 @@ server.post('/unregister', (req, res) => {
 // 메인 페이지 - 도안
 server.get('/main/draft/:filter/:page', (req, res) => {
     console.log('main page - draft')
-    console.log('1 : ', req.params)
-    console.log('2 :', req.query)
     routing_to.MainDraft(req.params, req.query, res)
         .catch((err) => { res.send(err)})
 })
