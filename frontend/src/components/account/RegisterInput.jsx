@@ -176,9 +176,7 @@ const RegisterInput = ({ isTattooist }) => {
             onKeyUp={onKeyUp}
           />
 
-          {isRightEmail ? (
-            <div></div>
-          ) : (
+          {!isRightEmail && (
             <InputErrorText>
               올바른 이메일 표현식이 아닙니다.
             </InputErrorText>
@@ -209,20 +207,10 @@ const RegisterInput = ({ isTattooist }) => {
             disabled={isPwdRight ? false : true}
           />
 
-          {isPwdRight ? (
-            <div></div>
-          ) : (
-            <InputErrorText>
-
-            </InputErrorText>
-          )}
-
-          {isPwdDiff ? (
+          {isPwdDiff && (
             <InputErrorText>
               비밀번호가 일치하지 않습니다.
             </InputErrorText>
-          ) : (
-            <div></div>
           )}
           
         </AccountInputBox>
@@ -287,4 +275,4 @@ const RegisterInput = ({ isTattooist }) => {
   );
 };
 
-export default RegisterInput;
+export default React.memo(RegisterInput);

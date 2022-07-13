@@ -8,7 +8,7 @@ import {
 } from '../../styledComponents';
 import RegisterInput from './RegisterInput';
 
-const Register = ({ setCookie }) => {
+const Register = () => {
   const [isTattooist, setIsTattooist] = useState(false);
 
   const onClick = (e) => {
@@ -26,8 +26,14 @@ const Register = ({ setCookie }) => {
         <AccountText>회원가입</AccountText>
 
         <AccountNavigateDiv>
-          <AccountNavigate onClick={onClick} style={isTattooist ? {} : AccountNavigateHover}>User</AccountNavigate>
-          <AccountNavigate onClick={onClick} style={isTattooist ? AccountNavigateHover : {}}>Tattooist</AccountNavigate>
+          <AccountNavigate onClick={onClick} 
+            style={isTattooist ? {} : AccountNavigateHover}>
+              User
+          </AccountNavigate>
+          <AccountNavigate onClick={onClick} 
+            style={isTattooist ? AccountNavigateHover : {}}>
+              Tattooist
+          </AccountNavigate>
         </AccountNavigateDiv>
 
         <RegisterInput isTattooist={isTattooist} />
@@ -37,4 +43,4 @@ const Register = ({ setCookie }) => {
   )
 };
 
-export default Register;
+export default React.memo(Register);

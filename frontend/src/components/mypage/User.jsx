@@ -28,16 +28,20 @@ const User = ({ cookies, setCookie }) => {
     if(res.data.success){
       console.log(res.data)
       setInfo(res.data.user_info)
-      setCookie('profile_img_src', res.data.user_info.image, {
-        maxAge: 3000,
-        path: '/'
-      })
+      console.log('서버 이미지', res.data.user_info.image)
     }
   }
 
   useEffect(() => {
     sendRequest();
+    console.log('쿠키 이미지',cookies.profile_img_src)
   }, [])
+
+  useEffect(() => {
+    setCookie('profile_img_src', info.image, { maxAge: 3000, path: '/'})
+    setCookie('nickname', info.nickname, { maxAge: 3000, path: '/'})
+    setCookie('profile_desc', info.description, { maxAge: 3000, path: '/'})
+  }, [info])
 
   const navigate = useNavigate();
   const onClick = (e) => {

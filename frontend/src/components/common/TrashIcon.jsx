@@ -29,7 +29,7 @@ const TrashIcon = ({ size, cookies, draft_id, image }) => {
     if(res.data.success){
       console.log('삭제 완료')
       setIsClick(false);
-      //window.location.replace('/manageDraft')
+      window.location.replace('/manageDraft')
     }
   }
 

@@ -43,7 +43,7 @@ const MyPageInfo = ({ cookies, filter, image }) => {
           {image ? (
             <ProfileImg 
               src={image}
-              onLoad={() => {console.log('프로필 이미지 로드')}}
+              onLoad={() => {console.log('프로필 이미지 로드', image)}}
               onError={() => {console.log('이미지 로드 에러')}}
             />
           ) : (

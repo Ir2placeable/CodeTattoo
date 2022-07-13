@@ -40,7 +40,7 @@ export const HeaderBtn = styled.div `
   color: #f6f6f6;
   font-size: 14px;
   line-height: 25px;
-  width: 70px;
+  width: 90px;
   border-radius: 5px;
   text-align: center;
   transition: 0.45s;

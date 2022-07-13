@@ -44,7 +44,7 @@ const EditProfile = ({ cookies, filter, setCookie }) => {
       if(!_id){
         _id = cookies.tattooist_id;
       }
-      pushCookie();
+      //pushCookie();
       window.location.replace(`/mypage/${filter}/${_id}`)
     }
   }

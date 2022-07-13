@@ -32,6 +32,7 @@ import SearchDraft from "./components/main/SearchDraft";
 import ImageUpload from './components/main/ImageUpload';
 import ProfileImage from "./components/mypage/ProfileImage";
 import EditProfile from "./components/mypage/EditProfile";
+import CookieTest from "./CookieTest";
 
 const App = () => {
   const [cookies, setCookie, removeCookie] = useCookies([
@@ -55,38 +56,9 @@ const App = () => {
     }
   };
 
-  const resetUser = async() => {
-    const res = await axios.get(`${APIURL}/reset/user`);
-  }
-  const resetTattooist = async() => {
-    const res = await axios.get(`${APIURL}/reset/tattooist`);
-  }
-  const resetDraft = async() => {
-    const res = await axios.get(`${APIURL}/reset/draft`);
-  }
-
   useEffect(() => {
     sendRequest();
-    // resetUser();
-    // resetDraft();
-    // resetTattooist();
   }, []);
-
-  // useEffect(() => {
-  //   //console.log('d')
-  //   if(
-  //     cookies.user_id === undefined &&
-  //     cookies.tattooist_id === undefined
-  //     ){
-  //       const keys = Object.keys(cookies);
-  //       for(let i = 0; i < keys.length; i++){
-  //         removeCookie(keys[i], {path: '/'})
-  //       }
-  //       window.location.replace('/')
-  //       console.log('쿠키 만료')
-  //   }
-
-  // }, [cookies.user_id, cookies.tattooist_id])
   
 
   return (
@@ -94,13 +66,14 @@ const App = () => {
       <Reset />
 
       {/* HEADER */}
-      <Header cookies={cookies} removeCookie={removeCookie} />
+      <Header />
 
+      {/* <CookieTest /> */}
       {/* Main Container */}
       <MainPageDiv>
         <Routes>
           {/* Main page */}
-          <Route path="/" element={<MainPage cookies={cookies} />}>
+          <Route path="/" element={<MainPage />}>
             {/* 도안 목록 */}
             <Route path="draft" element={<ShowDraftList />}>
               <Route path="best" element={<DraftList cookies={cookies} filter={'draft'} path={"main/draft/best"} />} />
@@ -148,10 +121,10 @@ const App = () => {
           </Route>
 
           {/* 로그인, 회원가입 */}
-          <Route path="/login" element={<Login setCookie={setCookie} />} />
+          <Route path="/login" element={<Login />} />
           <Route
             path="/register"
-            element={<Register setCookie={setCookie} />}
+            element={<Register />}
           />
 
           {/* 마이 페이지 */}

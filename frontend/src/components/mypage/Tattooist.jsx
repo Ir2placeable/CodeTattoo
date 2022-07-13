@@ -42,6 +42,15 @@ const Tattooist = ({ cookies, setCookie }) => {
     sendRequest();
   }, []);
 
+  useEffect(() => {
+    setCookie('profile_img_src', info.image, { maxAge: 3000, path: '/'})
+    setCookie('nickname', info.nickname, { maxAge: 3000, path: '/'})
+    setCookie('profile_desc', info.description, { maxAge: 3000, path: '/'})
+    setCookie('office', info.office, {maxAge: 3000, path: '/'});
+    setCookie('contact', info.contact, {maxAge: 3000, path: '/'});
+    setCookie('specialize', info.specialize, {maxAge: 3000, path: '/'})
+  }, [info])
+
   return (
     <ContentsDiv>
 
