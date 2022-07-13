@@ -4,5 +4,3 @@
 ### 🔒 시술 기록은 블록체인에 저장됩니다
 
 </br>
-
-### [notion](https://elfin-bottle-d20.notion.site/CodeTattoo-Project-2bd3fa04072145d4a0778d08d9e3df22)
