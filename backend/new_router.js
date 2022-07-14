@@ -162,14 +162,46 @@ server.get('/tattooists/:id', (req, res) => {
 })
 
 
-server.get('/', (req, res) => {
+server.get('/user/my-page/:id', (req, res) => {
+    console.log('\n')
+    console.log('page : User My page')
+    console.log('params : ', req.params)
 
+    user.pageMyPage(req.params)
+        .then((returned) => {
+            res.send({ success : true, user_info : returned })
+        })
+        .catch((err) => {
+            res.send({ success : false, code : err })
+        })
 })
-server.get('/', (req, res) => {
+server.patch('/user/my-page/:id', (req, res) => {
+    console.log('\n')
+    console.log('command : User Info Edit')
+    console.log('params : ', req.params)
+    console.log('body : ', req.body)
 
+    user.userInfoEdit(req.params, req.body)
+        .then((returned) => {
+            res.send({ success : true })
+        })
+        .catch((err) => {
+            res.send({ success : false, code : err })
+        })
 })
-server.get('/', (req, res) => {
+server.post('/user/my-page/:id', (req, res) => {
+    console.log('\n')
+    console.log('command : User Image Edit')
+    console.log('params : ', req.params)
+    console.log('body : ', req.body)
 
+    user.userImageEdit(req.params, req.body)
+        .then((returned) => {
+            res.send({ success : true })
+        })
+        .catch((err) => {
+            res.send({ success : false, code : err })
+        })
 })
 server.get('/', (req, res) => {
 
