@@ -112,26 +112,51 @@ server.get('/drafts/:filter/:page', (req, res) => {
     console.log('params : ', req.params)
     console.log('query : ', req.query)
 
-    guest.pageDraft(req.params, req.query)
-        .then((returned) => {
-            res.send({ success : true, count : returned.count, drafts : returned.return_value })
-        })
-        .catch((err) => {
-            res.send({ success : false, code : err })
-        })
+    if (req.query['user_id']) {
+        console.log('user view')
+        user.pageDraft(req.params, req.query)
+            .then((returned) => {
+                res.send({ success : true, count : returned.count, drafts : returned.return_value })
+            })
+            .catch((err) => {
+                res.send({ success : false, code : err })
+            })
+    }
+    else {
+        console.log('guest view')
+        guest.pageDraft(req.params, req.query)
+            .then((returned) => {
+                res.send({ success : true, count : returned.count, drafts : returned.return_value })
+            })
+            .catch((err) => {
+                res.send({ success : false, code : err })
+            })
+    }
 })
 server.get('/drafts/:id', (req, res) => {
     console.log('\n')
     console.log('page : Draft detail')
     console.log('params : ', req.params)
+    console.log('query : ', req.query)
 
-    guest.pageDraftDetail(req.params)
-        .then((returned) => {
-            res.send({ success : true, draft : returned })
-        })
-        .catch((err) => {
-            res.send({ success : false, code : err })
-        })
+    if (req.query['user_id']) {
+        console.log('user view')
+        user.pageDraftDetail(req.params, req.query)
+            .then((returned) => {
+                res.send({ success : true, draft : returned })
+            })
+            .catch((err) => {
+                res.send({ success : false, code : err })
+            })
+    } else {
+        guest.pageDraftDetail(req.params)
+            .then((returned) => {
+                res.send({ success : true, draft : returned })
+            })
+            .catch((err) => {
+                res.send({ success : false, code : err })
+            })
+    }
 })
 server.get('/tattooists/:filter/:page', (req, res) => {
     console.log('\n')
@@ -139,26 +164,47 @@ server.get('/tattooists/:filter/:page', (req, res) => {
     console.log('params : ', req.params)
     console.log('query : ', req.query)
 
-    guest.pageTattooist(req.params, req.query)
-        .then((returned) => {
-            res.send({ success : true, count : returned.count, tattooists : returned.return_value })
-        })
-        .catch((err) => {
-            res.send({ success : false, code : err })
-        })
+    if (req.query['user_id']) {
+        user.pageTattooist(req.params, req.query)
+            .then((returned) => {
+                res.send({ success : true, count : returned.count, tattooists : returned.return_value })
+            })
+            .catch((err) => {
+                res.send({ success : false, code : err })
+            })
+    } else {
+        guest.pageTattooist(req.params, req.query)
+            .then((returned) => {
+                res.send({ success : true, count : returned.count, tattooists : returned.return_value })
+            })
+            .catch((err) => {
+                res.send({ success : false, code : err })
+            })
+    }
 })
 server.get('/tattooists/:id', (req, res) => {
     console.log('\n')
     console.log('page : Tattooist detail')
     console.log('params : ', req.params)
+    console.log('query : ', req.query)
 
-    guest.pageTattooistDetail(req.params)
-        .then((returned) => {
-            res.send({ success : true, tattooist : returned })
-        })
-        .catch((err) => {
-            res.send({ success : false, code : err })
-        })
+    if (req.query['user_id']) {
+        user.pageTattooistDetail(req.params, req.query)
+            .then((returned) => {
+                res.send({ success : true, tattooist : returned })
+            })
+            .catch((err) => {
+                res.send({ success : false, code : err })
+            })
+    } else {
+        guest.pageTattooistDetail(req.params)
+            .then((returned) => {
+                res.send({ success : true, tattooist : returned })
+            })
+            .catch((err) => {
+                res.send({ success : false, code : err })
+            })
+    }
 })
 
 
@@ -203,7 +249,7 @@ server.post('/user/my-page/:id', (req, res) => {
             res.send({ success : false, code : err })
         })
 })
-server.get('/', (req, res) => {
+server.get('', (req, res) => {
 
 })
 server.get('/', (req, res) => {
