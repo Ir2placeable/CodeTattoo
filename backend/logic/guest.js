@@ -128,7 +128,7 @@ exports.tattooistSignOut = async function(body) {
 }
 
 
-exports.pageEntry = function() {
+exports.pageEntry = async function() {
     connections += 1
 }
 exports.pageDraft = async function(params, query) {
@@ -175,7 +175,7 @@ exports.pageDraft = async function(params, query) {
         return_value.push(item)
     }
 
-    return count, return_value
+    return {count, return_value}
 }
 exports.pageDraftDetail = function() {
 
