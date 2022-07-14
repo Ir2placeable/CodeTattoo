@@ -177,13 +177,95 @@ exports.pageDraft = async function(params, query) {
 
     return {count, return_value}
 }
-exports.pageDraftDetail = function() {
+exports.pageDraftDetail = async function(params) {
+    const draft = await Draft.findOne({ _id : params.id })
+    if (!draft) {
+        // 해당 도안 없음 오류
+        console.log(ErrorTable["7"])
+        throw 7
+    }
 
+    const return_value = {
+        draft_id : draft['_id'],
+        drawer : draft['drawer'],
+        image : draft['image'],
+        title : draft['title'],
+        like : draft['like'],
+        isScraped : 'unavailable',
+        isFollowed : 'unavailable'
+    }
+
+    return return_value
 }
-exports.pageTattooist = async function() {
+exports.pageTattooist = async function(params, query) {
     const count = await Tattooist.count()
-}
-exports.pageTattooistDetail = function() {
+    // 탐색 결과 없음 오류
+    if(count === 0) {
+        console.log(ErrorTable['5'])
+        throw 5
+    }
 
+    const item_index_start = Global.tattooistShowLimit * (parseInt(params.page)-1)
+
+    let tattooists;
+    if (params.filter === 'best') {
+        tattooists = await Tattooist.find().sort({ follower : -1 }).skip(item_index_start).limit(Global.tattooistShowLimit)
+    } else if (params.filter === 'all') {
+        tattooists = await Tattooist.find().skip(item_index_start).limit(Global.tattooistShowLimit);
+    } else if (params.filter === 'search') {
+        tattooists = await Tattooist.find({ title : {$regex : query.title }})
+
+        // 검색 결과 없음 오류
+        if (tattooists.length === 0) {
+            console.log(ErrorTable['6'])
+            throw 6
+        }
+    } else {
+        // filter 입력 오류
+        console.log(ErrorTable["12"])
+        throw 12
+    }
+
+    let return_value = []
+    for (let tattooist of tattooists) {
+        const item = {
+            tattooist_id : tattooist['_id'],
+            image : tattooist['image'],
+            nickname: tattooist['nickname'],
+            office: tattooist['office'],
+            contact: tattooist['contact'],
+            description: tattooist['description'],
+            specialize: tattooist['specialize'],
+            followers: tattooist['followers'],
+            isFollowed : 'unavailable'
+        }
+
+        return_value.push(item)
+    }
+
+    return {count, return_value}
+}
+exports.pageTattooistDetail = async function(params) {
+    const tattooist = await Tattooist.findOne({ _id : params.id })
+    if (!tattooist) {
+        // 해당 타투이스트 없음 오류
+        console.log(ErrorTable["8"])
+        throw 8
+    }
+
+    const return_value = {
+        tattooist_id : tattooist['_id'],
+        image : tattooist['image'],
+        nickname : tattooist['nickname'],
+        office : tattooist['office'],
+        contact : tattooist['contact'],
+        description : tattooist['description'],
+        specialize : tattooist['specialize'],
+        followers : tattooist['followers'],
+        isFollowed : 'unavailable',
+        schedules : 'mocked-up'
+    }
+
+    return return_value
 }
 

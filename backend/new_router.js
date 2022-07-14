@@ -125,7 +125,7 @@ server.get('/drafts/:id', (req, res) => {
     console.log('page : Draft detail')
     console.log('params : ', req.params)
 
-    guest.pageDraftDetail()
+    guest.pageDraftDetail(req.params)
         .then((returned) => {
             res.send({ success : true, draft : returned })
         })
@@ -152,7 +152,7 @@ server.get('/tattooists/:id', (req, res) => {
     console.log('page : Tattooist detail')
     console.log('params : ', req.params)
 
-    guest.pageTattooistDetail()
+    guest.pageTattooistDetail(req.params)
         .then((returned) => {
             res.send({ success : true, tattooist : returned })
         })
