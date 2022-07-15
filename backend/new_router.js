@@ -249,11 +249,59 @@ server.post('/user/my-page/:id', (req, res) => {
             res.send({ success : false, code : err })
         })
 })
-server.get('', (req, res) => {
+server.get('/scraps/:filter/:page', (req, res) => {
+    console.log('\n')
+    console.log('command : User Scrap Page')
+    console.log('params : ', req.params)
+    console.log('body : ', req.query)
+
+    if (req.params.filter === 'draft') {
+        user.pageScrapDraft(req.params, req.query)
+            .then((returned) => {
+                res.send({ success : true, drafts : returned })
+            })
+            .catch((err) => {
+                res.send({ success : false, code : err })
+            })
+    } else if (req.params.filter === 'tattooist') {
+        user.pageScrapTattooist(req.params, req.query)
+            .then((returned) => {
+                res.send({ success : true, tattooists : returned })
+            })
+            .catch((err) => {
+                res.send({ success : false, code : err })
+            })
+    } else {
+        res.send({ success : false, code : 12 })
+    }
 
 })
-server.get('/', (req, res) => {
+server.get('/my-tattoos', (req, res) => {
+    console.log('\n')
+    console.log('command : User My-Tattoo Page')
+    console.log('body : ', req.query)
 
+    user.pageMyTattoo(req.query)
+        .then((returned) => {
+            res.send({ success : true, tattoos : returned })
+        })
+        .catch((err) => {
+            res.send({ success : false, code : err })
+        })
+})
+server.get('/my-tattoos/:id', (req, res) => {
+    console.log('\n')
+    console.log('command : User My-Tattoo Page')
+    console.log('params : ', req.params)
+    console.log('body : ', req.query)
+
+    user.pageMyTattooDetail(req.params, req.query)
+        .then((returned) => {
+            res.send({ success : true, tattoo : returned })
+        })
+        .catch((err) => {
+            res.send({ success : false, code : err })
+        })
 })
 
 server.listen(PORT, () => {

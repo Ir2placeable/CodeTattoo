@@ -191,6 +191,8 @@ exports.pageDraftDetail = async function(params) {
         image : draft['image'],
         title : draft['title'],
         like : draft['like'],
+        genre : draft['genre'],
+        keywords : draft['keywords'],
         isScraped : 'unavailable',
         isFollowed : 'unavailable'
     }
