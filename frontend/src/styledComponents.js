@@ -502,7 +502,7 @@ height: 35px;
 font-size: 18px;
 border-radius: 7px;
 border-color: rgba(0, 0, 0, .3);
-margin-bottom: 50px;
+margin-bottom: 20px;
 `;
 
 export const LoadedImgDesc = styled.textarea `
@@ -767,6 +767,138 @@ font-size: 18px;
 font-weight: bold;
 cursor: pointer;
 `
+
+// *** Drom Down Menu ***
+export const DropDownMenu = styled.div`
+width: 120px;
+position: relative;
+margin-right: 30px;
+`
+
+export const DropDownDiv = styled.div`
+height: 35px;
+width: 120px;
+background-color: white;
+border-radius: 7px;
+border: 1px solid rgba(0, 0, 0, .3);
+overflow: hidden;
+z-index: 10;
+margin-bottom: 20px;
+cursor: pointer;
+display: flex;
+justify-content: center;
+align-items: center;
+`
+export const DropDownText = styled.div`
+width: 90px;
+line-height: 35px;
+text-align: center;
+`
+export const DropDownArrow = {
+  cursor: 'pointer'
+}
+
+export const DropList = styled.div`
+width: 143px;
+height: 250px;
+background-color: #e9e9e9;
+border-radius: 7px;
+overflow: scroll;
+position: absolute;
+top: 40px;
+z-index: 20;
+`
+
+export const DropItem = styled.div`
+line-height: 35px;
+width: 100%;
+text-align: center;
+cursor: pointer;
+`
+
+export const ChoiceItem = styled.div`
+line-height: 35px;
+width: 120px;
+text-align: center;
+background-color: #444;
+color: white;
+font-weight: bold;
+border-radius: 7px;
+border: 1px solid rgba(0, 0, 0, .3);
+overflow: hidden;
+margin-top: -15px;
+margin-bottom: 20px;
+`
+
+export const SelfInput = styled.input`
+display: block;
+height: 33px;
+width: 117px;
+font-weight: bold;
+background-color: white;
+border-radius: 7px;
+border: 1px solid rgba(0, 0, 0, .3);
+margin-top: -15px;
+margin-bottom: 20px;
+`
+
+export const DropTagsDiv = styled.div`
+background-color: #e9e9e9;
+display: flex;
+position: absolute;
+top: 45px;
+z-index: 20;
+`
+export const DropTagsBox = styled.div`
+width: 150px;
+border-right: 1px solid rgba(72, 72, 72, .3);
+`
+
+export const DropTagsText = styled.div`
+line-height: 35px;
+width: 100%;
+text-align: center;
+font-weight: bold;
+border-bottom: 1px solid rgba(72, 72, 72, .3);
+`
+
+export const DropTagsList = styled.div`
+width: calc(120px * 3 + 30px);
+display: flex;
+flex-wrap: wrap;
+margin-top: -15px;
+margin-bottom: 20px;
+`
+
+export const DropTagsInput = styled.input`
+display: block;
+width: 90%;
+height: 30px;
+margin: 10px auto;
+border-radius: 5px;
+border: 1px solid rgba(72, 72, 72, .3);
+`
+export const DropTagChoose = styled.div`
+background-color: #666;
+color: white;
+width: 120px;
+border-radius: 20px;
+margin: 10px auto;
+display: flex;
+justify-content: center;
+align-items: center;
+`
+export const TagChooseText = styled.div`
+width: 70%;
+line-height: 35px;
+text-align: center;
+`
+
+export const XMarkStyle = {
+  cursor: 'pointer',
+  width: '15px',
+  height: '15px',
+}
 
 // =================== FOOTER ==========================
 export const FooterDiv = styled.footer `

@@ -39,7 +39,7 @@ const SmallNavigationComp = ({ data, searchBox, location }) => {
     } else if (path === data[2].path) {
       setSecondBtn(true);
     }
-  }, []);
+  }, [currLocation.pathname]);
 
   const onBtnClick = (e) => {
     setSearchInput("");

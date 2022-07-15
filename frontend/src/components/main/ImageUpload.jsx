@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { APIURL } from '../../config/key';
@@ -6,8 +6,11 @@ import {
   UploadDiv, ImgInputDiv, ImgInput,
   LoadedImgDiv, LoadedImg, LoadedImgTitle,
   EnrollImgBtn, ImgInfoDiv, LoadedImgDescDiv,
-  LoadedImgDesc, EmptyImgDiv, LoadedImgText
+  LoadedImgDesc, EmptyImgDiv, LoadedImgText,
 } from '../../styledComponents';
+import DropDown from '../common/DropDown';
+import DropTags from '../common/DropTags';
+import { genre, keywords } from '../../data';
 
 const ImageUpload = ({ cookies }) => {
   // 이미지 소스
@@ -24,6 +27,9 @@ const ImageUpload = ({ cookies }) => {
     data: '',
     mime: ''
   })
+  // genre, keywords
+  const [inputGenre, setInputGenre] = useState('');
+  const [inputKeywords, setInputKeywords] = useState([]);
 
   const titleInput = useRef();
   const descInput = useRef();
@@ -74,15 +80,16 @@ const ImageUpload = ({ cookies }) => {
 
 
   const sendRequest = async() => {
-    const body = {
+
+    const res = await axios.post(`${APIURL}/main/my-draft`, {
       tattooist_id: cookies.tattooist_id,
       image: image.data,
       mime: image.mime,
       title: info.title,
-      description: info.description
-    }
-
-    const res = await axios.post(`${APIURL}/main/my-draft`, body);
+      description: info.description,
+      genre: inputGenre,
+      keywords: inputKeywords
+    });
     
     if(res.data.success){
       console.log('도안 업로드 성공')
@@ -139,6 +146,13 @@ const ImageUpload = ({ cookies }) => {
             onKeyUp={onKeyUp}
             ref={titleInput}
           />
+
+          <div style={{display: 'flex'}}>
+            <DropDown input={inputGenre} setInput={setInputGenre} 
+              text="장르" data={genre} />
+            <DropTags input={inputKeywords} setInput={setInputKeywords} 
+              text="주제" data={keywords} />
+          </div>
 
           <LoadedImgText>
             도안 설명 <span style={{color: 'red'}}>*</span>
