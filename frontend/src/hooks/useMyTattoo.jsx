@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 import { APIURL } from "../config/key";
 
 const useMyTattoo = ({ cookies }) => {
@@ -11,16 +11,18 @@ const useMyTattoo = ({ cookies }) => {
     );
 
     if (res.data.success) {
-        setTattoos(res.data.tattoo_list);
-        console.log(res.data.tattoo_list);
+      setTattoos(res.data.tattoo_list);
+      console.log(res.data.tattoo_list);
     } else {
-        console.log("Tattoo List Get Request Fail");
+      console.log("Tattoo List Get Request Fail");
     }
   };
 
   useEffect(() => {
     sendRequest();
-  },[]);
+  }, []);
 
   return tattoos;
 };
+
+export default useMyTattoo;
