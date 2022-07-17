@@ -5,7 +5,7 @@ import { Pagination, Navigation } from "swiper";
 import "swiper/css";
 import "swiper/css/pagination";
 
-const MyTattooSwiper = ({ state }) => {
+const MyTattooSwiper = ({ states }) => {
   const navigationNextRef = useRef(null);
   const navigationPrevRef = useRef(null);
   return (
@@ -20,6 +20,9 @@ const MyTattooSwiper = ({ state }) => {
         }}
         modules={[Pagination]}
       >
+        {/*states.map((state) => (
+          <SwiperSlide></SwiperSlide>
+        ))*/}
         <SwiperSlide>Slide 1</SwiperSlide>
         <SwiperSlide>Slide 2</SwiperSlide>
         <SwiperSlide>Slide 3</SwiperSlide>

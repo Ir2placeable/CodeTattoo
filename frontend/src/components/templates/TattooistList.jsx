@@ -10,13 +10,12 @@ import {
 import Tattooist from "../organisms/Tattooist";
 import FollowBtn from "../common/FollowBtn";
 
-const TattooistList = ({ list }) => {
+const TattooistList = ({ tattooists }) => {
   console.log("Tattooist List");
-  console.log(list);
   return (
     <>
       <TattooistMainBox>
-        {list.map((tattooist) => (
+        {tattooists.map((tattooist) => (
           <TattooistContainer key={tattooist.tattooist_id}>
             <Tattooist tattooist={tattooist} />
             {/*<TattooistControlBox>

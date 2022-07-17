@@ -325,6 +325,7 @@ export const MyTattooStateBox = styled.div`
   padding: 0 20px;
 `;
 
+
 // *** Show Tattooist List ***
 
 export const TattooistMainBox = styled.div`

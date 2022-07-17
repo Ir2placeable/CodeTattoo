@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useEffect } from "react";
 import { useState } from "react";
+import { useParams } from "react-router-dom";
 import { APIURL } from "../config/key";
 
 // tattooist_list = {
@@ -8,15 +9,17 @@ import { APIURL } from "../config/key";
 //   office, contact, description,
 //   specialize, followers, isFollowed }
 
-const useTattooistList = (cookies, path, page, param) => {
+const useTattooistList = (cookies, path, page) => {
   console.log("Use Tattooist List");
-  const [tattooist, setTattooists] = useState([]);
+  const param = useParams();
+  const nickname = param.nickname
+  const [tattooists, setTattooists] = useState([]);
 
   const sendRequest = async () => {
     let url = `${APIURL}/${path}/${page}/?user_id=${cookies.user_id}`;
     let res = {};
     if (path === "main/tattooist/search") {
-      res = await axios.get(`${url}&nickname=${param.nickname}`);
+      res = await axios.get(`${url}&nickname=${nickname}`);
     } else {
       res = await axios.get(`${url}`);
     }
@@ -35,7 +38,7 @@ const useTattooistList = (cookies, path, page, param) => {
     sendRequest();
   }, [page]);
 
-  return tattooist;
+  return tattooists;
 };
 
 export default useTattooistList;

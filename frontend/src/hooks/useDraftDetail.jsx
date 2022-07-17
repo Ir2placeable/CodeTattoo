@@ -4,8 +4,8 @@ import { useParams } from "react-router-dom";
 import { APIURL } from "../config/key";
 
 const useDraftDetail = ({ cookies }) => {
-  const params = useParams();
-  const draft_id = params.draft_id;
+  const param = useParams();
+  const draft_id = param.draft_id;
   const [draft, setDraft] = useState({
     image: "",
     drawer: "",

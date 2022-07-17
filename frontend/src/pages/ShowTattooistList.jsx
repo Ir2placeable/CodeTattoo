@@ -19,7 +19,10 @@ const ShowTattooistList = ({ cookies }) => {
   } else {
     path = `main${location.pathname}`;
   }
-  const tattooists = useTattooistList(cookies, path, page, param);
+  /*
+   * Scrap URL 추가 
+   */
+  const tattooists = useTattooistList(cookies, path, page);
 
   console.log(`Show Tattooist List`);
   return (
@@ -39,7 +42,7 @@ const ShowTattooistList = ({ cookies }) => {
           {tattooists.length === 0 ? (
             <EmptyBox>No Tattooist</EmptyBox>
           ) : (
-            <Outlet list={tattooists} />
+            <Outlet tattooists={tattooists} />
           )}
         </ListDiv>
       </ContentsDiv>

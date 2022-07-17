@@ -19,13 +19,12 @@ import MainPage from "./components/main/MainPage";
 import ShowDraftList from "./components/main/ShowDraftList";
 import ShowTattooistList from "./pages/ShowTattooistList";
 import TattooistList from "./components/templates/TattooistList";
-import SearchTattooist from "./components/main/SearchTattooist";
-import ShowScrap from "./components/main/ShowScrap";
+import ShowScrap from "./pages/ShowScrap";
 import ShowMyTattoo from "./pages/ShowMyTattoo";
 import ShowManageWork from "./components/main/ShowManageWork";
 import ShowManageDraft from "./components/main/ShowManageDraft";
 import DraftList from "./components/main/DraftList";
-import DraftDetail from "./components/templates/DraftDetail";
+import ShowDraftDetail from "./components/templates/DraftDetail";
 import User from "./components/mypage/User";
 import Tattooist from "./components/mypage/Tattooist";
 import SearchDraft from "./components/main/SearchDraft";
@@ -91,8 +90,10 @@ const App = () => {
               <Route path="best" element={<DraftList cookies={cookies} filter={'draft'} path={"main/draft/best"} />} />
               <Route path="all"  element={<DraftList cookies={cookies} filter={'draft'} path={"main/draft/all"} />} />
               <Route path="search/:title" element={<SearchDraft cookies={cookies} />} />
-              <Route path=":draft_id" element={<DraftDetail cookies={cookies}/>} />
             </Route>
+
+            {/* 도안 상세 */}
+            <Route path="draft/:draft_id" element={<ShowDraftDetail cookies={cookies}/>} />
 
             {/* 타투이스트 목록 */}
             <Route path="tattooist" element={<ShowTattooistList cookies={cookies}/>}>
@@ -102,16 +103,13 @@ const App = () => {
             </Route>
 
             {/* 스크랩 목록 */}
-            <Route path="scrap" element={<ShowScrap />} >
+            <Route path="scrap" element={<ShowScrap cookies={cookies} />} >
               <Route path="draft" element={<DraftList cookies={cookies} filter={'scrap'} path={"main/scrap/draft"} />} />
-              <Route path="tattooist" element={<TattooistList cookies={cookies} filter={"scrap"} path={"main/scrap/tattooist"} />} />
+              <Route path="tattooist" element={<TattooistList/>} />
             </Route>
 
             {/* 마이 타투 목록 */}
-            <Route
-              path="myTattoo"
-              element={<ShowMyTattoo cookies={cookies} />}
-            />
+            <Route path="myTattoo" element={<ShowMyTattoo cookies={cookies}/>}/>
 
             {/* 작업물 관리 */}
             <Route path="manageWork" element={<ShowManageWork />} />
@@ -126,26 +124,16 @@ const App = () => {
 
           {/* 로그인, 회원가입 */}
           <Route path="/login" element={<Login setCookie={setCookie} />} />
-          <Route
-            path="/register"
-            element={<Register setCookie={setCookie} />}
-          />
+          <Route path="/register" element={<Register setCookie={setCookie} />} />
 
           {/* 마이 페이지 */}
-          <Route path="/mypage/user/:user_id" 
-            element={<User cookies={cookies} setCookie={setCookie} />}>
-              <Route path="image" 
-                element={<ProfileImage cookies={cookies} filter="user" setCookie={setCookie} />} />
-              <Route path="info"
-                element={<EditProfile cookies={cookies} filter="user" setCookie={setCookie} />} />
+          <Route path="/mypage/user/:user_id" element={<User cookies={cookies} setCookie={setCookie} />}>
+            <Route path="image" element={<ProfileImage cookies={cookies} filter="user" setCookie={setCookie} />} />
+            <Route path="info" element={<EditProfile cookies={cookies} filter="user" setCookie={setCookie} />} />
           </Route>
-          <Route
-            path="/mypage/tattooist/:tattooist_id"
-            element={<Tattooist cookies={cookies} setCookie={setCookie} />}>
-              <Route path="image" 
-                element={<ProfileImage cookies={cookies} filter="tattooist" setCookie={setCookie} />} />
-              <Route path="info"
-                element={<EditProfile cookies={cookies} filter="tattooist" setCookie={setCookie} />} />
+          <Route path="/mypage/tattooist/:tattooist_id" element={<Tattooist cookies={cookies} setCookie={setCookie} />}>
+            <Route path="image" element={<ProfileImage cookies={cookies} filter="tattooist" setCookie={setCookie} />} />
+            <Route path="info" element={<EditProfile cookies={cookies} filter="tattooist" setCookie={setCookie} />} />
           </Route>
         </Routes>
       </MainPageDiv>
