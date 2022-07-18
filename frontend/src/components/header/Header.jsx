@@ -6,13 +6,16 @@ import {
   HeaderSubMenu,
 } from '../../styledComponents';
 import HeaderBtnComp from './HeaderBtnComp';
+import { getCookie } from '../../config/cookie';
+import LogoutBtn from './LogoutBtn';
+import GoMypage from './GoMypage';
 
-const Header = ({ cookies, removeCookie }) => {
+const Header = () => {
   const [isLogin, setIsLogin] = useState(false);
 
   useEffect(() => {
 
-    if(cookies.user_id || cookies.tattooist_id){
+    if(getCookie('user_id') || getCookie('tattooist_id')){
       setIsLogin(true);
     } else {
       setIsLogin(false);
@@ -34,14 +37,14 @@ const Header = ({ cookies, removeCookie }) => {
 
           { isLogin ? (
             <HeaderSubMenu>
-              <HeaderBtnComp text={"예약조회"} />
-              <HeaderBtnComp text={"내 정보"} cookies={cookies} />
-              <HeaderBtnComp text={"로그아웃"} cookies={cookies} removeCookie={removeCookie} />
+              {/* <HeaderBtnComp text={"예약조회"} /> */}
+              <GoMypage />
+              <LogoutBtn />
             </HeaderSubMenu>
           ) : (
             <HeaderSubMenu>
-              <HeaderBtnComp text={"로그인"} />
-              <HeaderBtnComp text={"회원가입"} />
+              <HeaderBtnComp path="login" text="로그인" />
+              <HeaderBtnComp path="register" text="회원가입" />
             </HeaderSubMenu>
           )}
           

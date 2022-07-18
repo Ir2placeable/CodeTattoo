@@ -1,4 +1,4 @@
-const config = require('./config/key')
+const config = require('../config/key')
 const AWS = require('aws-sdk')
 
 const endpoint = 'kr.object.ncloudstorage.com'

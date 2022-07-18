@@ -7,8 +7,9 @@ import {
   AccountInput, AccountBtn, AccountOtherDiv, AccountOtherBtn
 } from '../../styledComponents';
 import { useNavigate } from 'react-router-dom';
+import { setCookie } from '../../config/cookie';
 
-const LoginInput = ({ isTattooist, setCookie }) => {
+const LoginInput = ({ isTattooist }) => {
   const [info, setInfo] = useState({
     email: '',
     pwd: ''
@@ -145,4 +146,4 @@ const LoginInput = ({ isTattooist, setCookie }) => {
   );
 };
 
-export default LoginInput;
+export default React.memo(LoginInput);

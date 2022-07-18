@@ -4,8 +4,8 @@ const {Draft} = require('./model/Draft')
 const {Tattoo} = require('./model/Tattoo')
 const {Reservaton} = require('./model/Reservation')
 
-const blockchain = require('./blockchain')
-const imageStorage = require('./imageStorage')
+const blockchain = require('./module/blockchain')
+const imageStorage = require('./module/imageStorage')
 
 const mongoose = require("mongoose");
 const config = require('./config/key')
@@ -111,9 +111,11 @@ exports.userUnRegister = async function(body, res) {
     const target_follows = user.follows
 
     await User.deleteOne({ email : body.email })
+
     for await (let draft_id of target_scraps) {
         await Draft.updateOne({ _id : draft_id }, {$inc : { like : -1 }})
     }
+
     for await (let tattooist_id of target_follows) {
         await Tattooist.updateOne({ _id : tattooist_id }, {$inc : { follower : -1 }})
     }
@@ -135,10 +137,11 @@ exports.tattooistUnRegister = async function(body, res) {
         }
     })
 
-    // 관련 정보 삭제
-    // const target_drafts = tattooist.drafts
-    // await Draft.deleteOne({ _id : {$all : target_drafts }})
-    // await User.updateMany({ scraps : {$all : target_drafts }}, {$pull :})
+    for await (let draft_id of tattooist.drafts) {
+        await Draft.deleteOne({ _id : draft_id })
+    }
+
+    await Tattooist.deleteOne({ email : body.email })
 
     res.send({ success : true })
 }
@@ -160,10 +163,7 @@ exports.MainDraft = async function(params, query, res) {
     } else if (params.filter === 'all') {
         drafts = await Draft.find().sort({ timestamp : -1 }).skip(item_index_start).limit(draftShowLimit);
     } else if (params.filter === 'search') {
-        console.log('draft search')
-        console.log(query)
         drafts = await Draft.find({ title : {$regex : query.title }})
-        console.log(drafts)
     } else {
         res.send({ err : 'wrong filter'})
     }
@@ -181,9 +181,8 @@ exports.MainDraft = async function(params, query, res) {
     }
 
     // 스크랩 여부 검사
-    if (query.user_id !== undefined) {
-        const user = await User.findOne({ _id : query.user_id })
-
+    const user = await User.findOne({ _id : query.user_id })
+    if (user) {
         for (let draft of return_value) {
             if (user['scraps'].includes(String(draft.draft_id))) {
                 draft['isScraped'] = true
@@ -195,9 +194,6 @@ exports.MainDraft = async function(params, query, res) {
 }
 // 메인 페이지 - 타투이스트
 exports.MainTattooist = async function(params, query, res) {
-    console.log('1 : ', params)
-    console.log('2 : ', query)
-
     if (params.filter === 'init') {
         const count = await Tattooist.count()
         res.send({ success : true, count : count })
@@ -234,16 +230,15 @@ exports.MainTattooist = async function(params, query, res) {
         return_value.push(item)
     }
 
-    if (query.user_id !== undefined) {
-        const user = await User.findOne({ _id : query.user_id })
-
+    // user로 접속한 경우에만 판별
+    const user = await User.findOne({ _id : query.user_id })
+    if (user) {
         for (let draft of return_value) {
             if (user['follows'].includes(String(draft.draft_id))) {
                 draft['isFollowed'] = true
             }
         }
     }
-
 
     res.send({ success : true, tattooist_list : return_value })
 }
@@ -265,14 +260,18 @@ exports.MainScrap = async function(params, query, res) {
     if (params.filter === 'draft') {
         let drafts = []
         for await (let draft_id of user.scraps) {
-            await Draft.findOne({ _id : draft_id }).then((draft) => { drafts.push(draft) })
+            const draft = await Draft.findOne({ _id : draft_id })
+            if(!draft) {
+                await User.updateOne({ _id : query.user_id }, {$pull : { scraps : draft_id }})
+                continue
+            }
+
+            drafts.push(draft)
         }
 
         const item_index_start = draftShowLimit * (parseInt(params.page)-1)
         drafts = drafts.slice(item_index_start, (item_index_start + draftShowLimit))
 
-        console.log('drafts : ', drafts)
-        console.log('drafts length : ', drafts.length)
         if (drafts.length === 0) {
             console.log('no drafts')
             res.send({ success : false, err : 'no drafts' })
@@ -292,10 +291,16 @@ exports.MainScrap = async function(params, query, res) {
         }
 
         res.send({ success : true, draft_list : return_value })
-    } else if (params.filter === ' tattooist') {
+    } else if (params.filter === 'tattooist') {
         let tattooists = []
         for await (let tattooist_id of user.follows) {
-            await Tattooist.findOne({ _id : tattooist_id }).then((tattooist) => { tattooists.push(tattooist) })
+            const tattooist = await Tattooist.findOne({ _id : tattooist_id })
+            if(!tattooist) {
+                await User.updateOne({ _id : query.user_id }, {$pull : { follows : tattooist_id }})
+                continue
+            }
+
+            tattooists.push(tattooist)
         }
 
         const item_index_start = tattooistShowLimit * (parseInt(params.page)-1)
@@ -325,7 +330,7 @@ exports.MainScrap = async function(params, query, res) {
 }
 // 메인 페이지 - 마이타투
 exports.MainMyTattoo = async function(query, res) {
-    if (query.user_id === undefined) {
+    if (query.user_id === undefined || query.user_id === 'undefined') {
         console.log('no user_id')
         res.send({ success : false, err : 'no user_id' })
         return
@@ -333,16 +338,32 @@ exports.MainMyTattoo = async function(query, res) {
     const user = await User.findOne({ _id : query.user_id })
 
     // 블록체인에서 타투 이력 조회
-    let tattoo_histories = []
-    for await (let tattoo_id of user.tattoos) {
-        await blockchain.history(tattoo_id).then((histories) => { tattoo_histories.push(histories) })
-    }
+    // let tattoo_histories = []
+    // for await (let tattoo_id of user.tattoos) {
+    //     await blockchain.history(tattoo_id).then((histories) => { tattoo_histories.push(histories) })
+    // }
 
     // 타투 이력 데이터 가공
-    let return_value = []
-    for (let history of tattoo_histories) {
+    // let return_value = []
+    // for (let history of tattoo_histories) {
+    //
+    // }
 
-    }
+    // mock-up data
+    let return_value = []
+    let tattoo1 = []
+    const state1 = { tattoo_id : "test_tattoo", state : "created", ink : "black, red", niddle : "niddle123", tattooist_id : "test_id_1", customer_id : "test_id_1" }
+    const state2 = { tattoo_id : "test_tattoo", state : "imprinting", ink : "black, red", niddle : "niddle123", tattooist_id : "test_id_1", customer_id : "test_id_1" }
+    const state3 = { tattoo_id : "test_tattoo", state : "imprinted", ink : "black, red", niddle : "niddle123", tattooist_id : "test_id_1", customer_id : "test_id_1" }
+    let tattoo2 = []
+    const state4 = { tattoo_id : "test_tattoo2", state : "created", ink : "black, red", niddle : "niddle123", tattooist_id : "test_id_1", customer_id : "test_id_1" }
+    const state5 = { tattoo_id : "test_tattoo2", state : "imprinting", ink : "black, red", niddle : "niddle123", tattooist_id : "test_id_1", customer_id : "test_id_1" }
+    const state6 = { tattoo_id : "test_tattoo2", state : "imprinted", ink : "black, red", niddle : "niddle123", tattooist_id : "test_id_1", customer_id : "test_id_1" }
+    const state7 = { tattoo_id : "test_tattoo2", state : "side-effected", ink : "black, red", niddle : "niddle123", tattooist_id : "test_id_1", customer_id : "test_id_1" }
+
+    tattoo1.push(state1, state2, state3)
+    tattoo2.push(state4, state5, state6)
+    return_value.push(tattoo1, tattoo2)
 
     res.send({ success : true, tattoo_list : return_value })
 }
@@ -351,31 +372,35 @@ exports.MainArtworks = async function(params, query, res) {
     const tattooist = await Tattooist.findOne({ _id : query.tattooist_id })
 
     if (params.filter === 'init') {
-        res.send({ success : true, count : tattooist.artworks.length })
+        res.send({ success : true, count : 3 })
+        // res.send({ success : true, count : tattooist.artworks.length })
         return
     }
 
     let drafts = []
-    for await (let draft_id of tattooist.artworks) {
-        await Draft.findOne({ _id : draft_id }).then((draft) => { drafts.push(draft)})
-    }
+    const mockup1 = { image : "test_image1", date : "test_date1", customer_id : "test_customer_id1", customer_nickname : "test_customer_nickname1", cost : "test_cost1"}
+    const mockup2 = { image : "test_image2", date : "test_date2", customer_id : "test_customer_id2", customer_nickname : "test_customer_nickname2", cost : "test_cost2"}
+    const mockup3 = { image : "test_image3", date : "test_date3", customer_id : "test_customer_id3", customer_nickname : "test_customer_nickname3", cost : "test_cost3"}
+    drafts.push(mockup1, mockup2, mockup3)
+
+    // 블록체인에서 데이터 끌어오기
 
     const item_index_start = draftShowLimit * (parseInt(params.page)-1)
-    drafts = drafts[item_index_start, (item_index_start + draftShowLimit)]
+    drafts = drafts.slice(item_index_start, (item_index_start + draftShowLimit))
 
-    let return_value = []
-    for (let draft of drafts) {
-        let item = {
-            image : "test_image",
-            date : draft.timestamp,
-            customer_nickname : "test_nickname",
-            cost : "test_cost"
-        }
+    // let return_value = []
+    // for (let draft of drafts) {
+    //     let item = {
+    //         image : "test_image",
+    //         date : draft.timestamp,
+    //         customer_nickname : "test_nickname",
+    //         cost : "test_cost"
+    //     }
+    //
+    //     return_value.push(item)
+    // }
 
-        return_value.push(item)
-    }
-
-    res.send({ success : true, artwork_list : return_value })
+    res.send({ success : true, artwork_list : drafts })
 }
 // 메인 페이지 - 도안관리
 exports.MainMyDraft = async function(params, query, res) {
@@ -438,7 +463,6 @@ exports.newDraft = async function(body, res) {
 exports.deleteDraft = async function(query, res) {
     await Draft.deleteOne({ _id : query.draft_id })
     await Tattooist.updateOne({ _id : query.tattooist_id }, {$pull : { drafts : query.draft_id }})
-    await User.updateMany({ scraps : {$eleMatch : query.draft_id }}, {$pull : { scraps : query.draft_id }})
 
     res.send({ success : true })
 }
