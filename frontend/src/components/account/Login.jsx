@@ -8,7 +8,7 @@ import {
 } from '../../styledComponents';
 import LoginInput from './LoginInput';
 
-const Login = ({ setCookie }) => {
+const Login = () => {
   const [isTattooist, setIsTattooist] = useState(false);
 
   const onClick = (e) => {
@@ -26,14 +26,20 @@ const Login = ({ setCookie }) => {
         <AccountText>로그인</AccountText>
 
         <AccountNavigateDiv>
-          <AccountNavigate onClick={onClick} style={isTattooist ? {} : AccountNavigateHover}>User</AccountNavigate>
-          <AccountNavigate onClick={onClick} style={isTattooist ? AccountNavigateHover : {}}>Tattooist</AccountNavigate>
+          <AccountNavigate onClick={onClick} 
+            style={isTattooist ? {} : AccountNavigateHover}>
+            User
+          </AccountNavigate>
+          <AccountNavigate onClick={onClick} 
+            style={isTattooist ? AccountNavigateHover : {}}>
+            Tattooist
+          </AccountNavigate>
         </AccountNavigateDiv>
 
-        <LoginInput setCookie={setCookie} isTattooist={isTattooist} />
+        <LoginInput isTattooist={isTattooist} />
       </AccountDiv>
     </>
   )
 };
 
-export default Login;
+export default React.memo(Login);

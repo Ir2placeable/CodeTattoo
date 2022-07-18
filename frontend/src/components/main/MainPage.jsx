@@ -1,57 +1,22 @@
 import React, { useEffect, useState } from 'react';
 import { 
   MainNavigation, MainNavigationInner,
-  MainNavigationBtn, MainNavigationBtnStyle, 
   MainContentsDiv, 
 } from '../../styledComponents';
 
-import { Outlet, useNavigate, useLocation } from 'react-router-dom';
+import { Outlet, useLocation } from 'react-router-dom';
+import { getCookie } from '../../config/cookie';
+import NavigationBtn from '../atomic/NavigationBtn';
 
-const MainPage = ({ cookies }) => {
+const MainPage = () => {
   // Navigation 버튼 상태 변수
-  const [isClicked, setIsClicked] = useState({
-    draft: false,
-    tattooist: false,
-    scrap: false,
-    myTattoo: false,
-    manageWork: false,
-    manageDraft: false
-  })
+  const [pathname, setPathname] = useState('');
 
   const location = useLocation();
   useEffect(() => {
     const [ , name] = location.pathname.split('/')
-
-    setIsClicked({
-      [name]: true
-    })
-  }, []);
-
-  const navigate = useNavigate();
-  const onBtnClick = (e) => {
-    const _id = e.target.id;
-
-    if(!cookies.user_id && !cookies.tattooist_id){
-      if(_id === 'scrap' || _id === 'myTattoo'){
-        alert('로그인이 필요한 페이지입니다.');
-        navigate('/login');
-        return;
-      }
-    }
-
-    const temp = {
-      draft: false,
-      tattooist: false,
-      scrap: false,
-      myTattoo: false,
-      manageWork: false,
-      manageDraft: false
-    }
-    temp[_id] = true;
-    setIsClicked(temp)
-
-    navigate(`/${_id}`)
-  }
+    setPathname(name);
+  }, [location.pathname]);
 
   return (
     <>
@@ -60,56 +25,29 @@ const MainPage = ({ cookies }) => {
 
         <MainNavigationInner>
 
-          <MainNavigationBtn
-            onClick={onBtnClick}
-            id="draft"
-            style={isClicked.draft ? MainNavigationBtnStyle : {}}
-          >
-            도안
-          </MainNavigationBtn>
+          <NavigationBtn 
+            text="도안" path="draft" pathname={pathname} />
 
+          <NavigationBtn 
+            text="타투이스트" path="tattooist" pathname={pathname} />
 
-          <MainNavigationBtn
-            onClick={onBtnClick}
-            id="tattooist"
-            style={isClicked.tattooist ? MainNavigationBtnStyle : {}}
-          >
-            타투이스트
-          </MainNavigationBtn>
-
-          {cookies.tattooist_id ? (
+          {getCookie('tattooist_id') ? (
             <>
-              <MainNavigationBtn
-                onClick={onBtnClick}
-                id="manageWork"
-                style={isClicked.manageWork ? MainNavigationBtnStyle : {}}
-              >
-                작업물 관리
-              </MainNavigationBtn>
-              <MainNavigationBtn
-                onClick={onBtnClick}
-                id="manageDraft"
-                style={isClicked.manageDraft ? MainNavigationBtnStyle : {}}
-              >
-                도안 관리
-              </MainNavigationBtn>
+              <NavigationBtn 
+                text="작업물관리" path="manageWork" 
+                pathname={pathname} />
+              <NavigationBtn 
+                text="도안관리" path="manageDraft" 
+                pathname={pathname} />
             </>
-          ) : (
+          ) : getCookie('user_id') && (
             <>
-              <MainNavigationBtn
-                onClick={onBtnClick}
-                id="scrap"
-                style={isClicked.scrap ? MainNavigationBtnStyle : {}}
-              >
-                스크랩
-              </MainNavigationBtn>
-              <MainNavigationBtn
-                onClick={onBtnClick}
-                id="myTattoo"
-                style={isClicked.myTattoo ? MainNavigationBtnStyle : {}}
-              >
-                마이 타투
-              </MainNavigationBtn>
+              <NavigationBtn 
+                text="스크랩" path="scrap" 
+                pathname={pathname} />
+              <NavigationBtn 
+                text="마이타투" path="myTattoo" 
+                pathname={pathname} />
             </>
           )}
 
