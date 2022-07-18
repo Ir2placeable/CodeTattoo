@@ -16,7 +16,6 @@ import Login from "./components/account/Login";
 import Register from "./components/account/Register";
 
 const App = () => {
-
   const sendRequest = async () => {
     const res = await axios.get(`${APIURL}`);
 
