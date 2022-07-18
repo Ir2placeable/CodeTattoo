@@ -2,6 +2,29 @@ import styled from "styled-components";
 
 // ======================  COMMON  =====================
 
+export const Btn = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 150px;
+  height: 60px;
+  font-size: 20px;
+  position: relative;
+  background-color: rgba(72, 72, 72, 0.3);
+  border-radius: 24px;
+  color: rgba(72, 72, 72);
+  font-weight: bold;
+  cursor: pointer;
+  margin: 15px 0;
+  transition: 0.5s;
+
+  &: hover {
+    background-color: white;
+    border: 1px solid black;
+    box-sizing: border-box;
+  }
+`;
+
 // =========================  HEADER  ======================
 export const HeaderDiv = styled.header `
   background-color: #f6f6f6;
@@ -264,6 +287,44 @@ export const EmptyBox = styled.div `
   box-shadow: 5px 5px 15px 0px rgba(72, 72, 72, 0.5);
 `;
 
+// *** Show MyTattoo ***
+
+export const MyTattooMainBox = styled.div`
+  width: 1500px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+`;
+
+export const MyTattooContainer = styled.div`
+  display: flex;
+  min-width: 1300px;
+  min-height: 450px;
+  justify-content: space-between;
+  align-items: center;
+  margin: 20px 0;
+  box-shadow: 5px 5px 15px 0px rgba(72, 72, 72, 0.5);
+`;
+
+export const MyTattooImg = styled.img`
+  color: #ffffff;
+  line-height: 250px;
+  text-align: center;
+  width: 250px;
+  height: 250px;
+  background-color: rgba(72, 72, 72);
+  margin: 0 20px;
+`;
+
+export const MyTattooStateBox = styled.div`
+  width: 1050px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px;
+`;
+
 // *** Show Tattooist List ***
 
 export const TattooistMainBox = styled.div `
@@ -310,9 +371,10 @@ export const TattooistImg = styled.div `
   width: 210px;
   height: 210px;
   border-radius: 70%;
-  background-color: rgba(72, 72, 72);
   overflow: hidden;
   margin: 25px 0;
+  object-fit: contain;
+  z-index: 1;
 `;
 
 export const TattooistControlBox = styled.div `
@@ -330,7 +392,7 @@ export const TattooistBtn = styled.div `
   font-size: 20px;
   position: relative;
   background-color: rgba(72, 72, 72, 0.3);
-  border-radius: 8px;
+  border-radius: 24px;
   color: rgba(72, 72, 72);
   font-weight: bold;
   cursor: pointer;
