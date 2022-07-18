@@ -27,7 +27,6 @@ const App = () => {
   useEffect(() => {
     sendRequest();
   }, []);
-  
 
   return (
     <div className="font-style">
@@ -41,10 +40,7 @@ const App = () => {
         <Routes>
           {/* 로그인, 회원가입 */}
           <Route path="/login" element={<Login />} />
-          <Route
-            path="/register"
-            element={<Register />}
-          />
+          <Route path="/register" element={<Register />} />
         </Routes>
       </MainPageDiv>
 
