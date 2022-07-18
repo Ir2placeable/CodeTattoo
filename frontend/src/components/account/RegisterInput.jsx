@@ -154,6 +154,8 @@ const RegisterInput = ({ isTattooist }) => {
   const onSubmit = () => {
     if(!email || !pwd || !nickname || (isTattooist && (!office || !contact))){
       alert('모든 정보를 입력해주세요.')
+    } else if( pwd !== pwd2 ){
+      alert('비밀번호가 불일치합니다.')
     } else {
       registerRequest();
     }
