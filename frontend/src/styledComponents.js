@@ -73,7 +73,6 @@ export const AccountNavigateDiv = styled.div `
   display: flex;
   justify-content: center;
   align-items: center;
-
   height: 60px;
   font-size: 20px;
   font-weight: bold;
@@ -165,7 +164,6 @@ export const MainNavigationInner = styled.div `
   width: 1500px;
   height: 100%;
   position: relative;
-
   display: flex;
   justify-content: center;
   align-items: center;
@@ -179,7 +177,6 @@ export const MainNavigationBtn = styled.div `
   color: rgba(72, 72, 72, 0.5);
   border: 3px solid white;
   width: 25%;
-
   display: flex;
   justify-content: center;
   align-items: center;
@@ -348,7 +345,6 @@ display: flex;
 flex-direction: column;
 justify-content: stretch;
 align-items: center;
-
 position: relative;
 `
 
@@ -426,7 +422,6 @@ background-color: #F9F9F9;
 width: 1300px;
 height: 700px;
 margin: 0 auto;
-
 border-radius: 10px;
 box-shadow: 10px 10px 10px 0 #ececec;
 position: relative;
@@ -436,14 +431,12 @@ export const ImgInputDiv = styled.div `
 position: absolute;
 top: 30px;
 right: 50px;
-
 color: #fff;
 background-color: #000;
 font-weight: bold;
 height: 40px;
 width: 200px;
 border-radius: 5px;
-
 display: flex;
 justify-content: center;
 align-items: center;
@@ -523,7 +516,6 @@ line-height: 40px;
 text-align: center;
 border-radius: 7px;
 cursor: pointer;
-
 position: absolute;
 bottom: 50px;
 left: 50%;
@@ -539,7 +531,6 @@ bottom: 50px;
 export const PageDiv = styled.div `
   width: 100%;
   margin: 0 0 20px;
-
   display: flex;
   justify-content: center;
   align-items: center;
@@ -628,7 +619,6 @@ export const ProfileDescDiv = styled.div `
 margin-left: 50px;
 font-weight: bold;
 color: white;
-
 display: flex;
 flex-direction: column;
 justify-content: center;
@@ -675,7 +665,6 @@ export const MyPageCategory = styled.div `
 box-sizing: border-box;
 width: 250px;
 padding: 50px 30px;
-
 `
 //border-right: 1px solid rgba(72, 72, 72, .5);
 
