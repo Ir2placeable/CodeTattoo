@@ -148,6 +148,27 @@ export const AccountOtherBtn = styled.div `
   margin: 0 10px;
 `;
 
+// *** Entry page ***
+export const EntryDiv = styled.div`
+width: 100%;
+height: 800px;
+display: flex;
+justify-content: center;
+align-items: center;
+`
+export const EntryBtnDiv = styled.div`
+width: 300px;
+line-height: 300px;
+text-align: center;
+margin: 0 30px;
+background-color: black;
+font-weight: bold;
+font-size: 30px;
+color: white;
+cursor: pointer;
+border-radius: 10px;
+`
+
 // *** Main Page ***
 export const MainPageDiv = styled.div `
   width: 100%;
