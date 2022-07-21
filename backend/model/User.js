@@ -3,31 +3,29 @@ const bcrypt = require('bcrypt');
 const saltRounds = 10;
 
 const userSchema = mongoose.Schema({
-    email: {
+    email : {
         type: String
     },
-    pwd: {
+    pwd : {
         type: String
     },
-    nickname: {
+    nickname : {
         type: String
+    },
+    location : {
+        type : String
     },
     image : {
-        type : String,
-        default : ""
-    },
-    description : {
-        type : String,
-        default : ""
+        type : String
     },
     scraps : {
-        type : [String],
+        type : [String]
     },
     follows : {
-        type : [String],
+        type : [String]
     },
     tattoos : {
-        type : [String],
+        type : [String]
     }
 })
 

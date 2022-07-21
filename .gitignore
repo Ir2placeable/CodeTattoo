@@ -4,4 +4,4 @@ backend/config/
 
 backend/blockchainFiles/
 
-test/
+backend/test.js
