@@ -1,8 +1,6 @@
 import React from "react";
 import { ContentsDiv, EmptyBox, ListDiv } from "../styledComponents";
 import { Outlet, useParams } from "react-router-dom";
-import SmallNavigationComp from "../components/main/SmallNavigationComp";
-import Pagination from "../components/common/Pagination";
 import useTattooistList from "../hooks/useTattooistList";
 import { useLocation } from "react-router-dom";
 import { useState } from "react";
@@ -19,15 +17,36 @@ const ShowTattooistList = ({ cookies }) => {
   } else {
     path = `main${location.pathname}`;
   }
-  /*
-   * Scrap URL 추가 
-   */
-  const tattooists = useTattooistList(cookies, path, page);
+
+  // const tattooists = useTattooistList(path, page);
+
+  const tattooists = [
+    {
+      tattooist_id: 1,
+      image: "",
+      nickname: "spongebob",
+      location: "Bikini Bottom",
+      specialize: "making hamberger",
+      followers: "1.1K",
+      description: "good morning",
+      isFollowed: false,
+    },
+    {
+      tattooist_id: 2,
+      image: "",
+      nickname: "sponge",
+      location: "Bikini",
+      specialize: "making",
+      followers: "2.2K",
+      description: "good evening",
+      isFollowed: true,
+    },
+  ];
 
   console.log(`Show Tattooist List`);
   return (
     <>
-      <SmallNavigationComp
+      {/*<SmallNavigationComp
         data={[
           { text: "root", path: "/tattooist" },
           { text: "Best", path: "/tattooist/best" },
@@ -35,14 +54,14 @@ const ShowTattooistList = ({ cookies }) => {
         ]}
         searchBox={true}
         location={1}
-      />
+      /> */}
 
       <ContentsDiv>
         <ListDiv>
           {tattooists.length === 0 ? (
             <EmptyBox>No Tattooist</EmptyBox>
           ) : (
-            <Outlet tattooists={tattooists} />
+            <Outlet context={{ tattooists }} />
           )}
         </ListDiv>
       </ContentsDiv>

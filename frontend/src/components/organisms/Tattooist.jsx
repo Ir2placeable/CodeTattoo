@@ -6,7 +6,7 @@ import {
 } from "../../styledComponents";
 
 const Tattooist = ({ tattooist }) => {
-  console.log("Tattooist is rendering");
+  console.log("Tattooist");
   return (
     <>
       {tattooist.image ? (
@@ -20,9 +20,9 @@ const Tattooist = ({ tattooist }) => {
       )}
       <TattooistInfoBox>
         <TattooistInfo>Nickname : {tattooist.nickname}</TattooistInfo>
-        <TattooistInfo>Office : {tattooist.office}</TattooistInfo>
-        <TattooistInfo>Specialize : {tattooist.spcialize}</TattooistInfo>
-        <TattooistInfo>follwers : {tattooist.follow}</TattooistInfo>
+        <TattooistInfo>Office : {tattooist.location}</TattooistInfo>
+        <TattooistInfo>Specialize : {tattooist.specialize}</TattooistInfo>
+        <TattooistInfo>follwers : {tattooist.followers}</TattooistInfo>
       </TattooistInfoBox>
     </>
   );

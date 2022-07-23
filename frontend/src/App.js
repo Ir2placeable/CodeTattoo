@@ -14,6 +14,11 @@ import Header from "./components/header/Header";
 import Footer from "./components/footer/Footer";
 import Login from "./components/account/Login";
 import Register from "./components/account/Register";
+import MainPage from "./pages/MainPage";
+import ShowDraftDetail from "./pages/ShowDraftDetail";
+import ShowMyTattoo from "./pages/ShowMyTattoo";
+import ShowTattooistList from "./pages/ShowTattooistList";
+import TattooistList from "./components/templates/TattooistList";
 
 const App = () => {
   const sendRequest = async () => {
@@ -38,6 +43,21 @@ const App = () => {
       {/* Main Container */}
       <MainPageDiv>
         <Routes>
+          {/* Main page */}
+          <Route path="/" element={<MainPage />}>
+            {/* 도안 상세 */}
+            <Route path="draft/:draft_id" element={<ShowDraftDetail />} />
+
+            {/* 타투이스트 목록 */}
+            <Route path="tattooist" element={<ShowTattooistList />}>
+              <Route path="best" element={<TattooistList />} />
+              <Route path="all" element={<TattooistList />} />
+              <Route path="search/:nickname" element={<TattooistList />} />
+            </Route>
+
+            {/* 마이 타투 목록 */}
+            <Route path="myTattoo" element={<ShowMyTattoo />} />
+          </Route>
           {/* 로그인, 회원가입 */}
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
