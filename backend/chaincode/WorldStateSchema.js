@@ -19,9 +19,21 @@ const Activator = new mongoose.Schema({
     }
 })
 
+const SideEffect = new mongoose.Schema({
+    image : {
+        type : String
+    },
+    symptom : {
+        type : String
+    },
+    date : {
+        type : Number
+    }
+})
+
 const TattooInfo  = new mongoose.Schema({
     state : {
-        type : TattooState
+        type : String
     },
     activator : {
         type : Activator
@@ -42,26 +54,17 @@ const TattooInfo  = new mongoose.Schema({
         type : [String]
     },
     niddle : {
-        type : String
+        type : [String]
     },
     depth : {
         type : Number
     },
     machine : {
         type : String
+    },
+    side_effects : {
+        type : [SideEffect]
     }
 })
 
-const SideEffect = new mongoose.Schema({
-    image : {
-        type : String
-    },
-    symptom : {
-        type : String
-    },
-    date : {
-        type : Number
-    }
-})
-
-module.exports = { Activator, TattooInfo, SideEffect }
+module.exports = { TattooState, Activator, SideEffect, TattooInfo }

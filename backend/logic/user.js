@@ -2,7 +2,7 @@ const {User} = require("../model/User")
 const {Tattooist} = require("../model/Tattooist")
 const {Draft} = require('../model/Draft')
 const {Tattoo} = require('../model/Tattoo')
-const imageStorage = require('./module/imageStorage')
+const imageStorage = require('../module/imageStorage')
 
 const Global = require('../GlobalVariable')
 const ErrorTable = require('../ErrorTable')
