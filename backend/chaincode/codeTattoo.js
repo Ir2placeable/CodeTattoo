@@ -104,6 +104,7 @@ class CodeTattoo extends Contract {
         await ctx.stub.putState(key, Buffer.from(JSON.stringify(tattoo)));
     }
 
+    // owner_info example : { id "0x123abc", nickname : "ato" }
     async suspend(ctx, key, owner_info) {
         let tattoo = await ctx.stub.getState(key);
         if (!tattoo || tattoo.length === 0) {
