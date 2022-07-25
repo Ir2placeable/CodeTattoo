@@ -9,10 +9,10 @@
 const { Contract } = require('fabric-contract-api');
 
 class CodeTattoo extends Contract {
-    async initLedger(ctx) {
-        console.info('============= START : Initialize Ledger ===========');
-        console.info('============= END : Initialize Ledger ===========');
-    }
+    // async initLedger(ctx) {
+    //     console.info('============= START : Initialize Ledger ===========');
+    //     console.info('============= END : Initialize Ledger ===========');
+    // }
 
     // params : { owner_id }
     async newTattoo(ctx, key, owner_id) {
