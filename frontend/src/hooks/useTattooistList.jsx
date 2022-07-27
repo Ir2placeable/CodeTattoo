@@ -16,20 +16,20 @@ const useTattooistList = (path, page) => {
   const [tattooists, setTattooists] = useState([]);
 
   const sendRequest = async () => {
+    // Guest / User / Tattooist
     let url = `${APIURL}/${path}/${page}`;
     if (getCookie("user_id") && !getCookie("tattooist_id"))
       url += `/?user_id=${getCookie("user_id")}`;
     else if (!getCookie("user_id") && getCookie("tattooist_id"))
       url += `/?tattooist_id=${getCookie("tattooist_id")}`;
 
+    // filter
     let res = {};
     if (path === "main/tattooist/search") {
       res = await axios.get(`${url}&nickname=${nickname}`);
     } else {
       res = await axios.get(`${url}`);
     }
-
-    console.log(res);
 
     if (res.data.success) {
       setTattooists(res.data.tattooist_list);

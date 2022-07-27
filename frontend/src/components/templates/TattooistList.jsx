@@ -1,7 +1,7 @@
 import React from "react";
 import { TattooistMainBox, TattooistContainer } from "../../styledComponents";
-import Tattooist from "../organisms/Tattooist";
-import TattooistControlBox from "../organisms/TattooistControlBox";
+import Tattooist from "../organisms/tattooist/Tattooist";
+import TattooistControlBox from "../organisms/tattooist/TattooistControlBox";
 import { useOutletContext } from "react-router-dom";
 
 const TattooistList = () => {

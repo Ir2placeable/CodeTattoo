@@ -46,7 +46,7 @@ const App = () => {
           {/* Main page */}
           <Route path="/" element={<MainPage />}>
             {/* 도안 상세 */}
-            <Route path="draft/:draft_id" element={<ShowDraftDetail />} />
+            <Route path="draft" element={<ShowDraftDetail />} />
 
             {/* 타투이스트 목록 */}
             <Route path="tattooist" element={<ShowTattooistList />}>

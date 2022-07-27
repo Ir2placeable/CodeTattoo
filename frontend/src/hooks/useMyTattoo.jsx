@@ -1,13 +1,15 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
+import { getCookie } from "../config/cookie";
 import { APIURL } from "../config/key";
 
-const useMyTattoo = ({ cookies }) => {
+const useMyTattoo = () => {
+  console.log("Use MyTattoo");
   const [tattoos, setTattoos] = useState([]);
 
   const sendRequest = async () => {
     const res = await axios.get(
-      `${APIURL}/main/my-tattoo/?user_id=${cookies.user_id}`
+      `${APIURL}/main/my-tattoo/?user_id=${getCookie("user_id")}`
     );
 
     if (res.data.success) {

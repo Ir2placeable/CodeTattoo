@@ -1,10 +1,12 @@
 import React from "react";
 import { TattooistButton } from "../../../styledComponents";
 
-const TattooistBtn = ({ event, content }) => {
+const TattooistBtn = ({ event, content, size }) => {
   return (
     <>
-      <TattooistButton onClick={event}>{content}</TattooistButton>
+      <TattooistButton size={size} onClick={event}>
+        {content}
+      </TattooistButton>
     </>
   );
 };

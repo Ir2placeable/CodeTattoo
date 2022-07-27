@@ -3,7 +3,7 @@ import {
   TattooistImg,
   TattooistInfoBox,
   TattooistInfo,
-} from "../../styledComponents";
+} from "../../../styledComponents";
 
 const Tattooist = ({ tattooist }) => {
   console.log("Tattooist");
@@ -11,12 +11,13 @@ const Tattooist = ({ tattooist }) => {
     <>
       {tattooist.image ? (
         <TattooistImg
+          size="medium"
           src={tattooist.image}
           alt={tattooist.nickname}
           id={tattooist.tattooist_id}
         />
       ) : (
-        <TattooistImg />
+        <TattooistImg size="medium" />
       )}
       <TattooistInfoBox>
         <TattooistInfo>Nickname : {tattooist.nickname}</TattooistInfo>

@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 // ======================  COMMON  =====================
 
@@ -23,6 +23,40 @@ export const Btn = styled.div`
     border: 1px solid black;
     box-sizing: border-box;
   }
+`;
+
+export const HorizontalLine = styled.div`
+  width: 80%;
+  border-bottom: 1px solid #aaa;
+  margin: 10px 0 20px;
+`;
+
+export const ContentsDiv = styled.div`
+  min-height: 733px;
+  padding-top: 130px;
+  padding-bottom: 130px;
+`;
+// position: relative;
+
+export const ListDiv = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: stretch;
+  align-items: center;
+  position: relative;
+`;
+
+export const EmptyBox = styled.div`
+  margin-top: 150px;
+  color: #6e6e6e;
+  font-weight: bold;
+  font-size: 20px;
+  border-radius: 20px;
+  width: 400px;
+  line-height: 35px;
+  text-align: center;
+  box-shadow: 5px 5px 15px 0px rgba(72, 72, 72, 0.5);
 `;
 
 // =========================  HEADER  ======================
@@ -257,34 +291,6 @@ export const SearchIconStyle = {
   right: "22px",
   cursor: "pointer",
 };
-// ***  ***
-export const ContentsDiv = styled.div`
-  min-height: 733px;
-  padding-top: 130px;
-  padding-bottom: 130px;
-`;
-// position: relative;
-
-export const ListDiv = styled.div`
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: stretch;
-  align-items: center;
-  position: relative;
-`;
-
-export const EmptyBox = styled.div`
-  margin-top: 150px;
-  color: #6e6e6e;
-  font-weight: bold;
-  font-size: 20px;
-  border-radius: 20px;
-  width: 400px;
-  line-height: 35px;
-  text-align: center;
-  box-shadow: 5px 5px 15px 0px rgba(72, 72, 72, 0.5);
-`;
 
 // *** Show MyTattoo ***
 
@@ -319,8 +325,6 @@ export const MyTattooImg = styled.img`
 export const MyTattooStateBox = styled.div`
   width: 1050px;
   display: flex;
-  justify-content: space-between;
-  align-items: center;
   padding: 0 20px;
 `;
 
@@ -365,15 +369,29 @@ export const TattooistInfo = styled.div`
 
 export const TattooistImg = styled.div`
   color: #ffffff;
-  line-height: 210px;
   text-align: center;
-  width: 210px;
-  height: 210px;
   border-radius: 70%;
   overflow: hidden;
   margin: 25px 0;
   object-fit: contain;
   z-index: 1;
+
+  ${(props) =>
+    props.size === "medium" &&
+    css`
+      width: 210px;
+      height: 210px;
+      line-height: 210px;
+    `}
+
+  ${(props) =>
+    props.size === "small" &&
+    css`
+      width: 150px;
+      height: 150px;
+      line-height: 150px;
+      box-shadow: 5px 5px 10px 0 rgba(72, 72, 72, 0.3);
+    `}
 `;
 
 export const TattooistControl = styled.div`
@@ -386,8 +404,6 @@ export const TattooistButton = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 150px;
-  height: 60px;
   font-size: 20px;
   position: relative;
   background-color: rgba(72, 72, 72, 0.3);
@@ -396,7 +412,107 @@ export const TattooistButton = styled.div`
   font-weight: bold;
   cursor: pointer;
   margin: 15px 0;
+
+  ${(props) =>
+    props.size === "medium" &&
+    css`
+      width: 150px;
+      height: 60px;
+      font-size: 20px;
+    `}
+
+  ${(props) =>
+    props.size === "small" &&
+    css`
+      width: 100px;
+      height: 45px;
+      font-size: 14px;
+    `}
 `;
+// *** Show Draft Detail ***
+export const DraftDetailMainBox = styled.div`
+  width: 100%;
+  min-height: 550px;
+  display: flex;
+  justify-content: space-between;
+`;
+
+export const SmallDraftBox = styled.div`
+  flex-basis: 35%;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 5px 5px 15px 0px rgba(72, 72, 72, 0.5);
+`;
+
+export const SmallDraftInfoBox = styled.div`
+  display: flex;
+  width: 300px;
+  justify-content: space-between;
+  align-items: center;
+`;
+
+export const SmallDraftTitle = styled.div`
+  padding: 10px;
+  font-size: 20px;
+  font-weight: 700;
+`;
+
+export const SmallTattooistBox = styled.div`
+  flex-basis: 55%;
+  padding: 20px;
+  box-shadow: 5px 5px 15px 0px rgba(72, 72, 72, 0.5);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
+
+export const SmallTattooistProfileBox = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 550px;
+`;
+
+export const SmallTattooistInfoBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100px;
+`;
+
+export const SmallTattooistNickname = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 38px;
+  font-weight: 700;
+  width: 350px;
+`;
+
+export const SmallTattooistLocation = styled.div`
+  font-size: 20px;
+`;
+
+export const TattooistGenreBox = styled.div`
+  display: flex;
+  align-items: center;
+  width: 500px;
+  font-size: 24px;
+`;
+
+export const TattooistKeywordBox = styled.div`
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  width: 300px;
+  font-size: 14px;
+`;
+
+export const TattooistKeyword = styled.div``;
 
 // *** Show Draft List ***
 export const DraftListDiv = styled.div`
