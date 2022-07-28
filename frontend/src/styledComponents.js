@@ -1,21 +1,78 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 // ======================  COMMON  =====================
 
+export const Btn = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 150px;
+  height: 60px;
+  font-size: 20px;
+  position: relative;
+  background-color: rgba(72, 72, 72, 0.3);
+  border-radius: 24px;
+  color: rgba(72, 72, 72);
+  font-weight: bold;
+  cursor: pointer;
+  margin: 15px 0;
+  transition: 0.5s;
+
+  &: hover {
+    background-color: white;
+    border: 1px solid black;
+    box-sizing: border-box;
+  }
+`;
+
+export const HorizontalLine = styled.div`
+  width: 90%;
+  border-bottom: 1px solid #aaa;
+  margin: 10px 0 20px;
+`;
+
+export const ContentsDiv = styled.div`
+  min-height: 733px;
+  padding-top: 130px;
+  padding-bottom: 130px;
+`;
+// position: relative;
+
+export const ListDiv = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: stretch;
+  align-items: center;
+  position: relative;
+`;
+
+export const EmptyBox = styled.div`
+  margin-top: 150px;
+  color: #6e6e6e;
+  font-weight: bold;
+  font-size: 20px;
+  border-radius: 20px;
+  width: 400px;
+  line-height: 35px;
+  text-align: center;
+  box-shadow: 5px 5px 15px 0px rgba(72, 72, 72, 0.5);
+`;
+
 // =========================  HEADER  ======================
-export const HeaderDiv = styled.header `
+export const HeaderDiv = styled.header`
   background-color: #f6f6f6;
   height: 90px;
 `;
 
-export const HeaderInner = styled.div `
+export const HeaderInner = styled.div`
   height: 100%;
   width: 1200px;
   margin: 0 auto;
   position: relative;
 `;
 
-export const HeaderTitle = styled.div `
+export const HeaderTitle = styled.div`
   font-size: 35px;
   font-weight: bold;
   width: max-content;
@@ -26,14 +83,14 @@ export const HeaderTitle = styled.div `
   text-shadow: 5px 7px 10px #b7b7b7;
 `;
 
-export const HeaderSubMenu = styled.div `
+export const HeaderSubMenu = styled.div`
   display: flex;
   position: absolute;
   top: 10px;
   right: 0;
 `;
 
-export const HeaderBtn = styled.div `
+export const HeaderBtn = styled.div`
   margin-right: 5px;
   background-color: #484848;
   border: 2px solid #484848;
@@ -55,21 +112,21 @@ export const HeaderBtnHover = {
 // =============== Main Container ===========================
 
 // *** Account ***
-export const AccountDiv = styled.div `
+export const AccountDiv = styled.div`
   width: 600px;
   margin: 150px auto;
   box-shadow: 5px 10px 20px #484848;
   border-radius: 8px;
   padding-bottom: 50px;
 `;
-export const AccountText = styled.div `
+export const AccountText = styled.div`
   font-size: 20px;
   font-weight: bold;
   line-height: 60px;
   text-align: center;
 `;
 
-export const AccountNavigateDiv = styled.div `
+export const AccountNavigateDiv = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -78,7 +135,7 @@ export const AccountNavigateDiv = styled.div `
   font-weight: bold;
 `;
 
-export const AccountNavigate = styled.div `
+export const AccountNavigate = styled.div`
   width: 50%;
   line-height: 50px;
   border-radius: 15px 15px 0 0;
@@ -93,29 +150,29 @@ export const AccountNavigateHover = {
   color: "#484848",
 };
 
-export const AccountInputDiv = styled.div `
+export const AccountInputDiv = styled.div`
   margin: 30px auto;
   width: min-content;
 `;
 
-export const AccountInputBox = styled.div `
+export const AccountInputBox = styled.div`
   margin-bottom: 20px;
   position: relative;
 `;
 
-export const InputErrorText = styled.div `
+export const InputErrorText = styled.div`
   font-size: 13px;
   position: absolute;
   right: 0;
   color: red;
 `;
 
-export const AccountLabel = styled.div `
+export const AccountLabel = styled.div`
   font-weight: bold;
   padding-bottom: 7px;
 `;
 
-export const AccountInput = styled.input `
+export const AccountInput = styled.input`
   width: 350px;
   height: 30px;
   margin-bottom: 5px;
@@ -123,7 +180,7 @@ export const AccountInput = styled.input `
   border-radius: 5px;
 `;
 
-export const AccountBtn = styled.div `
+export const AccountBtn = styled.div`
   margin: 0 auto;
   width: 350px;
   line-height: 40px;
@@ -136,13 +193,13 @@ export const AccountBtn = styled.div `
   cursor: pointer;
 `;
 
-export const AccountOtherDiv = styled.div `
+export const AccountOtherDiv = styled.div`
   width: max-content;
   margin: 30px auto 0;
   display: flex;
 `;
 
-export const AccountOtherBtn = styled.div `
+export const AccountOtherBtn = styled.div`
   text-decoration: underline;
   cursor: pointer;
   margin: 0 10px;
@@ -170,17 +227,17 @@ border-radius: 10px;
 `
 
 // *** Main Page ***
-export const MainPageDiv = styled.div `
+export const MainPageDiv = styled.div`
   width: 100%;
   margin: 0 auto;
 `;
 
-export const MainNavigation = styled.div `
+export const MainNavigation = styled.div`
   border-bottom: 1px solid rgba(72, 72, 72, 0.5);
   height: 50px;
 `;
 
-export const MainNavigationInner = styled.div `
+export const MainNavigationInner = styled.div`
   margin: 0 auto;
   width: 1500px;
   height: 100%;
@@ -190,7 +247,7 @@ export const MainNavigationInner = styled.div `
   align-items: center;
 `;
 
-export const MainNavigationBtn = styled.div `
+export const MainNavigationBtn = styled.div`
   box-sizing: border-box;
   height: 100%;
   font-size: 20px;
@@ -209,13 +266,13 @@ export const MainNavigationBtnStyle = {
   borderBottom: "3px solid black",
 };
 
-export const MainContentsDiv = styled.div `
+export const MainContentsDiv = styled.div`
   width: 1500px;
   margin: 0 auto;
   position: relative;
 `;
 
-export const SmallNavigation = styled.div `
+export const SmallNavigation = styled.div`
   width: max-content;
   height: 40px;
   display: flex;
@@ -227,7 +284,7 @@ export const SmallNavigation = styled.div `
   top: 30px;
 `;
 
-export const SmallNavigationBtn = styled.div `
+export const SmallNavigationBtn = styled.div`
   font-size: 18px;
   height: 100%;
   width: 180px;
@@ -240,7 +297,7 @@ export const SmallNavigationBtn = styled.div `
   cursor: pointer;
 `;
 
-export const SearchInput = styled.input `
+export const SearchInput = styled.input`
   box-sizing: border-box;
   border: 1px solid rgba(72, 72, 72, 0.3);
   height: 24px;
@@ -255,16 +312,305 @@ export const SearchIconStyle = {
   right: "22px",
   cursor: "pointer",
 };
-// ***  ***
-export const ContentsDiv = styled.div `
-min-height: 733px;
-padding-top: 130px;
-padding-bottom: 130px;
+
+// *** Show MyTattoo ***
+
+export const MyTattooMainBox = styled.div`
+  width: 1500px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
 `;
-// position: relative;
 
+export const MyTattooContainer = styled.div`
+  display: flex;
+  min-width: 1500px;
+  min-height: 450px;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+`;
 
-export const ListDiv = styled.div `
+export const MyTattooImg = styled.img`
+  color: #ffffff;
+  line-height: 250px;
+  text-align: center;
+  width: 300px;
+  height: 300px;
+  background-color: rgba(72, 72, 72);
+  margin: 0 60px;
+`;
+
+export const MyTattooStateBox = styled.div`
+  width: 1050px;
+  display: flex;
+  padding: 0 20px;
+`;
+
+// *** Show Tattooist List ***
+
+export const TattooistMainBox = styled.div`
+  width: 1500px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+`;
+
+export const TattooistContainer = styled.div`
+  display: flex;
+  min-width: 1000px;
+  min-height: 260px;
+  border-radius: 8px;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px;
+  margin: 20px 0;
+`;
+
+export const TattooistInfoBox = styled.div`
+  width: 700px;
+  height: 210px;
+  box-shadow: 5px 5px 10px 0 rgba(72, 72, 72, 0.3);
+  border-radius: 8px;
+  position: relative;
+  left: -110px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
+
+export const TattooistInfo = styled.div`
+  font-size: 18px;
+  padding: 10px 0;
+`;
+
+export const TattooistControl = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+`;
+
+export const TattooistButton = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 20px;
+  position: relative;
+  background-color: rgba(72, 72, 72, 0.3);
+  border-radius: 24px;
+  color: rgba(72, 72, 72);
+  font-weight: bold;
+  cursor: pointer;
+  margin: 15px 0;
+
+  ${(props) =>
+    props.size === "medium" &&
+    css`
+      width: 150px;
+      height: 60px;
+      font-size: 20px;
+    `}
+
+  ${(props) =>
+    props.size === "small" &&
+    css`
+      width: 100px;
+      height: 45px;
+      font-size: 14px;
+    `}
+`;
+
+// *** Show Draft Detail ***
+export const DraftDetailMainBox = styled.div`
+  width: 100%;
+  min-height: 550px;
+  display: flex;
+  justify-content: space-between;
+`;
+
+export const SmallDraftBox = styled.div`
+  flex-basis: 35%;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 5px 5px 15px 0px rgba(72, 72, 72, 0.5);
+`;
+
+export const SmallDraftInfoBox = styled.div`
+  display: flex;
+  width: 300px;
+  justify-content: space-between;
+  align-items: center;
+`;
+
+export const SmallDraftTitle = styled.div`
+  padding: 10px;
+  font-size: 20px;
+  font-weight: 700;
+`;
+
+export const SmallTattooistBox = styled.div`
+  flex-basis: 55%;
+  padding: 20px;
+  box-shadow: 5px 5px 15px 0px rgba(72, 72, 72, 0.5);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
+
+export const SmallTattooistProfileBox = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 550px;
+`;
+
+export const SmallTattooistInfoBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100px;
+`;
+
+export const SmallTattooistNickname = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 38px;
+  font-weight: 700;
+  width: 350px;
+`;
+
+export const SmallTattooistLocation = styled.div`
+  font-size: 20px;
+`;
+
+export const TattooistGenreBox = styled.div`
+  display: flex;
+  align-items: center;
+  width: 500px;
+  font-size: 24px;
+`;
+
+export const TattooistKeywordBox = styled.div`
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  width: 300px;
+`;
+
+export const TattooistKeyword = styled.div`
+  font-size: 14px;
+`;
+
+// *** My Page ***
+export const MyPageProfileBox = styled.div`
+  width: 1500px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 30px 0;
+`;
+
+export const ProfileImgBox = styled.div`
+  ${(props) =>
+    props.size === "profile" &&
+    css`
+      width: 210px;
+      height: 210px;
+      line-height: 210px;
+    `}
+
+  ${(props) =>
+    props.size === "tattooist" &&
+    css`
+      width: 150px;
+      height: 150px;
+      line-height: 150px;
+    `}
+`;
+
+export const ProfileImg = styled.div`
+  color: #ffffff;
+  text-align: center;
+  border-radius: 70%;
+  object-fit: contain;
+  z-index: 1;
+  background-color: #777;
+  ${(props) =>
+    props.size === "profile" &&
+    css`
+      width: 210px;
+      height: 210px;
+      line-height: 210px;
+      overflow: hidden;
+    `}
+
+  ${(props) =>
+    props.size === "tattooist" &&
+    css`
+      width: 150px;
+      height: 150px;
+      line-height: 150px;
+      box-shadow: 5px 5px 10px 0 rgba(72, 72, 72, 0.3);
+    `}
+`;
+
+export const ProfileImgEdit = styled.div`
+  width: 30px;
+  height: 30px;
+  position: relative;
+  top: -40px;
+  left: 160px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  z-index: 2;
+`;
+
+export const MyPageProfileInfoBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  width: 700px;
+  height: 210px;
+  margin-left: 100px;
+`;
+
+export const MyPageProfileNickname = styled.div`
+  font-size: 30px;
+  font-weight: 700;
+`;
+
+export const MyPageProfileInfoList = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
+export const MyPageProfileInfo = styled.div`
+  font-size: 24px;
+  margin-right: 30px;
+`;
+
+export const MyPageProfileDescription = styled.div`
+  font-size: 20px;
+`;
+
+export const ProfileEdit = styled.div`
+  position: relative;
+  top: -75px;
+  cursor: pointer;
+`;
+
+// *** Show Draft List ***
+export const DraftListDiv = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -273,7 +619,7 @@ export const ListDiv = styled.div `
   position: relative;
 `;
 
-export const EmptyBox = styled.div `
+export const EmptyDraftBox = styled.div`
   margin-top: 150px;
   color: #6e6e6e;
   font-weight: bold;
@@ -285,633 +631,488 @@ export const EmptyBox = styled.div `
   box-shadow: 5px 5px 15px 0px rgba(72, 72, 72, 0.5);
 `;
 
-// *** Show Tattooist List ***
-
-export const TattooistMainBox = styled.div `
+export const DraftMainBox = styled.div`
   width: 1500px;
   display: flex;
-  justify-content: center;
-  align-items: center;
+  justify-content: stretch;
+  align-items: stretch;
   flex-wrap: wrap;
 `;
 
-export const TattooistContainer = styled.div `
-  display: flex;
-  min-width: 1000px;
-  min-height: 260px;
+export const DraftImgBox = styled.div`
+  margin: 20px 30px 50px;
+`;
+
+export const DraftImg = styled.img`
+  width: 300px;
+  height: 300px;
+  object-fit: contain;
+  box-sizing: border-box;
   border-radius: 8px;
-  justify-content: space-between;
-  padding: 0 20px;
-  margin: 20px 0;
-`;
-
-export const TattooistInfoBox = styled.div `
-  width: 700px;
-  height: 210px;
-  box-shadow: 5px 5px 10px 0 rgba(72, 72, 72, 0.3);
-  border-radius: 8px;
-  margin: 25px 0;
-  position: relative;
-  left: -110px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-`;
-
-export const TattooistInfo = styled.div `
-  font-size: 18px;
-  padding: 10px 0;
-`;
-
-export const TattooistImg = styled.div `
-  color: #ffffff;
-  line-height: 210px;
-  text-align: center;
-  width: 210px;
-  height: 210px;
-  border-radius: 70%;
-  background-color: rgba(72, 72, 72);
-  overflow: hidden;
-  margin: 25px 0;
-`;
-
-export const TattooistControlBox = styled.div `
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-`;
-
-export const TattooistBtn = styled.div `
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 150px;
-  height: 60px;
-  font-size: 20px;
-  position: relative;
-  background-color: rgba(72, 72, 72, 0.3);
-  border-radius: 8px;
-  color: rgba(72, 72, 72);
-  font-weight: bold;
+  box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.4);
+  background-color: white;
   cursor: pointer;
-  margin: 15px 0;
 `;
 
-
-// *** Show Draft List ***
-export const DraftListDiv = styled.div `
-width: 100%;
-display: flex;
-flex-direction: column;
-justify-content: stretch;
-align-items: center;
-position: relative;
-`
-
-export const EmptyDraftBox = styled.div `
-margin-top: 150px;
-color: #6e6e6e;
-font-weight: bold;
-font-size: 20px;
-border-radius: 20px;
-width: 400px;
-line-height: 35px;
-text-align: center;
-box-shadow: 5px 5px 15px 0px rgba(72, 72, 72, .5);
+export const DraftImgInfo = styled.div`
+  margin-top: 20px;
+  margin-left: 20px;
+  display: flex;
+  align-items: center;
+  position: relative;
 `;
 
-export const DraftMainBox = styled.div `
-width: 1500px;
-display: flex;
-justify-content: stretch;
-align-items: stretch;
-flex-wrap: wrap;
+export const DraftHeartBox = styled.div`
+  width: 35px;
+  height: 35px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+export const DraftHeartCount = styled.div`
+  font-size: 14px;
+  position: absolute;
+  right: 20px;
+  color: #7c7c7c;
 `;
 
-export const DraftImgBox = styled.div `
-margin: 20px 30px 50px;
+export const DraftImgTitle = styled.p`
+  font-size: 18px;
+  margin-left: 20px;
+  text-align: center;
 `;
-
-export const DraftImg = styled.img `
-width: 300px;
-height: 300px;
-object-fit: contain;
-box-sizing: border-box;
-border-radius: 8px;
-box-shadow: 5px 5px 20px rgba(0, 0, 0, .4);
-background-color: white;
-cursor: pointer;
-`;
-
-export const DraftImgInfo = styled.div `
-margin-top: 20px;
-margin-left: 20px;
-display: flex;
-align-items: center;
-position: relative;
-`;
-
-export const DraftHeartBox = styled.div `
-width: 35px;
-height: 35px;
-display: flex;
-align-items: center;
-justify-content: center;
-`
-export const DraftHeartCount = styled.div `
-font-size: 14px;
-position: absolute;
-right: 20px;
-color: #7C7C7C;
-`
-
-export const DraftImgTitle = styled.p `
-font-size: 18px;
-margin-left: 20px;
-text-align: center;
-`
 
 export const SearchResText = styled.div`
-font-size: 20px;
-margin-bottom: 50px;
-`
-
-// *** Image Upload ***
-export const UploadDiv = styled.div `
-background-color: #F9F9F9;
-width: 1300px;
-height: 700px;
-margin: 0 auto;
-border-radius: 10px;
-box-shadow: 10px 10px 10px 0 #ececec;
-position: relative;
-`
-
-export const ImgInputDiv = styled.div `
-position: absolute;
-top: 30px;
-right: 50px;
-color: #fff;
-background-color: #000;
-font-weight: bold;
-height: 40px;
-width: 200px;
-border-radius: 5px;
-display: flex;
-justify-content: center;
-align-items: center;
-`
-export const ImgInput = styled.input `
-display: block;
-margin-left: 10px;
-`
-
-export const ImgInfoDiv = styled.div `
-width: 100%;
-height: 90%;
-display: flex;
-justify-content: center;
-align-items: center;
-`
-
-export const LoadedImgDiv = styled.div `
-width: 50%;
-margin: 0 auto;
-text-align: center;
-`
-export const LoadedImg = styled.img `
-box-shadow: 5px 5px 20px rgba(0, 0, 0, .4);
-background-color: #fff;
-width: 300px;
-height: 300px;
-object-fit: contain;
-`
-
-export const EmptyImgDiv = styled.div `
-box-shadow: 5px 5px 20px rgba(0, 0, 0, .4);
-background-color: #fff;
-color: rgba(72, 72, 72, .5);
-width: 300px;
-line-height: 300px;
-margin: 0 auto;
-text-align: center;
-font-weight: bold;
-font-size: 18px;
-`
-
-export const LoadedImgDescDiv = styled.div `
-width: 50%;
-display: flex;
-flex-direction: column;
-`
-export const LoadedImgText = styled.div `
-color: rgba(72, 72, 72);
-margin-bottom: 10px;
-`
-
-export const LoadedImgTitle = styled.input `
-width: 350px;
-height: 35px;
-font-size: 18px;
-border-radius: 7px;
-border-color: rgba(0, 0, 0, .3);
-margin-bottom: 20px;
+  font-size: 20px;
+  margin-bottom: 50px;
 `;
 
-export const LoadedImgDesc = styled.textarea `
-width: 450px;
-height: 100px;
-font-size: 18px;
-border-radius: 7px;
-border-color: rgba(0, 0, 0, .3);
-`
+// *** Image Upload ***
+export const UploadDiv = styled.div`
+  background-color: #f9f9f9;
+  width: 1300px;
+  height: 700px;
+  margin: 0 auto;
+  border-radius: 10px;
+  box-shadow: 10px 10px 10px 0 #ececec;
+  position: relative;
+`;
 
-export const EnrollImgBtn = styled.div `
-color: #fff;
-background-color: #000;
-font-weight: bold;
-font-size: 20px;
-width: 450px;
-line-height: 40px;
-text-align: center;
-border-radius: 7px;
-cursor: pointer;
-position: absolute;
-bottom: 50px;
-left: 50%;
-margin-left: -225px;
-`
+export const ImgInputDiv = styled.div`
+  position: absolute;
+  top: 30px;
+  right: 50px;
+  color: #fff;
+  background-color: #000;
+  font-weight: bold;
+  height: 40px;
+  width: 200px;
+  border-radius: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+export const ImgInput = styled.input`
+  display: block;
+  margin-left: 10px;
+`;
+
+export const ImgInfoDiv = styled.div`
+  width: 100%;
+  height: 90%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+export const LoadedImgDiv = styled.div`
+  width: 50%;
+  margin: 0 auto;
+  text-align: center;
+`;
+export const LoadedImg = styled.img`
+  box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.4);
+  background-color: #fff;
+  width: 300px;
+  height: 300px;
+  object-fit: contain;
+`;
+
+export const EmptyImgDiv = styled.div`
+  box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.4);
+  background-color: #fff;
+  color: rgba(72, 72, 72, 0.5);
+  width: 300px;
+  line-height: 300px;
+  margin: 0 auto;
+  text-align: center;
+  font-weight: bold;
+  font-size: 18px;
+`;
+
+export const LoadedImgDescDiv = styled.div`
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+`;
+export const LoadedImgText = styled.div`
+  color: rgba(72, 72, 72);
+  margin-bottom: 10px;
+`;
+
+export const LoadedImgTitle = styled.input`
+  width: 350px;
+  height: 35px;
+  font-size: 18px;
+  border-radius: 7px;
+  border-color: rgba(0, 0, 0, 0.3);
+  margin-bottom: 20px;
+`;
+
+export const LoadedImgDesc = styled.textarea`
+  width: 450px;
+  height: 100px;
+  font-size: 18px;
+  border-radius: 7px;
+  border-color: rgba(0, 0, 0, 0.3);
+`;
+
+export const EnrollImgBtn = styled.div`
+  color: #fff;
+  background-color: #000;
+  font-weight: bold;
+  font-size: 20px;
+  width: 450px;
+  line-height: 40px;
+  text-align: center;
+  border-radius: 7px;
+  cursor: pointer;
+  position: absolute;
+  bottom: 50px;
+  left: 50%;
+  margin-left: -225px;
+`;
 
 // *** Pagination ***
-export const PagenationDiv = styled.div `
-width: 100%;
-position: absolute;
-bottom: 50px;
-`
-export const PageDiv = styled.div `
+export const PagenationDiv = styled.div`
+  width: 100%;
+  position: absolute;
+  bottom: 50px;
+`;
+export const PageDiv = styled.div`
   width: 100%;
   margin: 0 0 20px;
   display: flex;
   justify-content: center;
   align-items: center;
-`
+`;
 
-export const PageBox = styled.p `
-font-size: 14px;
-color: #afafaf;
-background-color: white;
-line-height: 25px;
-width: 25px;
-text-align: center;
-border-radius: 5px;
-border: 1px solid #afafaf;
-margin: 1px;
-cursor: pointer;
-`
+export const PageBox = styled.p`
+  font-size: 14px;
+  color: #afafaf;
+  background-color: white;
+  line-height: 25px;
+  width: 25px;
+  text-align: center;
+  border-radius: 5px;
+  border: 1px solid #afafaf;
+  margin: 1px;
+  cursor: pointer;
+`;
 
-export const CurrentPage = styled.p `
-font-size: 18px;
-color: #afafaf;
-`
+export const CurrentPage = styled.p`
+  font-size: 18px;
+  color: #afafaf;
+`;
 
 // *** My Page ***
 export const MyPageBigDiv = styled.div`
-min-height: 733px;
-padding-top: 130px;
-`
-export const MyPageInfoDiv = styled.div `
-width: 100%;
-margin-top: -130px;
-background-color: black;
-padding: 30px 0;
-`
+  min-height: 733px;
+  padding-top: 130px;
+`;
+export const MyPageInfoDiv = styled.div`
+  width: 100%;
+  margin-top: -130px;
+  background-color: black;
+  padding: 30px 0;
+`;
 
-export const MyPageInfoInner = styled.div `
-width: 1300px;
-margin: 0 auto;
-display: flex;
-position: relative;
-`
+export const MyPageInfoInner = styled.div`
+  width: 1300px;
+  margin: 0 auto;
+  display: flex;
+  position: relative;
+`;
 
-export const ProfileImgDiv = styled.div `
-width: 150px;
-height: 150px;
-background-color: white;
-border-radius: 50%;
-position: relative;
-`
+export const ProfileIconDiv = styled.div`
+  width: 150px;
+  line-height: 150px;
+  font-size: 80px;
+  text-align: center;
+  border-radius: 50%;
+  border: 2px solid rgba(72, 72, 72, 0.5);
+  background-color: white;
+`;
 
-export const ProfileImg = styled.img `
-width: 150px;
-height: 150px;
-object-fit: contain;
-border-radius: 50%;
-border: 2px solid rgba(72, 72, 72, .5);
-background-color: white;
-`
+export const ProfileDescDiv = styled.div`
+  margin-left: 50px;
+  font-weight: bold;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+`;
 
-export const ProfileIconDiv = styled.div `
-width: 150px;
-line-height: 150px;
-font-size: 80px;
-text-align: center;
-border-radius: 50%;
-border: 2px solid rgba(72, 72, 72, .5);
-background-color: white;
-`
+export const NicknameDiv = styled.div`
+  font-size: 30px;
+  margin: 10px;
+  cursor: pointer;
+`;
 
-export const ProfileImgEdit = styled.div `
-background-color: black;
-border: 3px solid white;
-color: white;
-border-radius: 50%;
-width: 35px;
-line-height: 35px;
-text-align: center;
-position: absolute;
-bottom: 5px;
-right: 5px;
-z-index: 10;
-cursor: pointer;
-`
-
-export const ProfileDescDiv = styled.div `
-margin-left: 50px;
-font-weight: bold;
-color: white;
-display: flex;
-flex-direction: column;
-justify-content: center;
-`
-
-export const NicknameDiv = styled.div `
-font-size: 30px;
-margin: 10px;
-cursor: pointer;
-`
-
-export const DescDiv = styled.div `
-margin: 10px;
-color: rgb(210, 210, 210);
-`
-
-export const ProfileEdit = styled.div `
-width: 100px;
-height: 30px;
-border: 2px solid white;
-color: white;
-font-weight: bold;
-border-radius: 7px;
-display: flex;
-justify-content: center;
-align-items: center;
-position: absolute;
-right: 10px;
-cursor: pointer;
-transition: .45s;
-`
+export const DescDiv = styled.div`
+  margin: 10px;
+  color: rgb(210, 210, 210);
+`;
 
 export const ProfileEditHoverStyle = {
-  backgroundColor: '#444'
-}
+  backgroundColor: "#444",
+};
 
-export const MyPageContentDiv = styled.div `
-width: 100%;
-display: flex;
-position: relative;
-`
+export const MyPageContentDiv = styled.div`
+  width: 100%;
+  display: flex;
+  position: relative;
+`;
 
-export const MyPageCategory = styled.div `
-box-sizing: border-box;
-width: 250px;
-padding: 50px 30px;
-`
+export const MyPageCategory = styled.div`
+  box-sizing: border-box;
+  width: 250px;
+  padding: 50px 30px;
+`;
 //border-right: 1px solid rgba(72, 72, 72, .5);
 
-export const CategoryBigText = styled.div `
-font-weight: bold;
-font-size: 24px;
-margin-bottom: 40px;
-`
+export const CategoryBigText = styled.div`
+  font-weight: bold;
+  font-size: 24px;
+  margin-bottom: 40px;
+`;
 
-export const CategoryUl = styled.ul `
-margin-left: 20px;
-`
+export const CategoryUl = styled.ul`
+  margin-left: 20px;
+`;
 
-export const CategoryLi = styled.li `
-margin-bottom: 20px;
-cursor: pointer;
-`
+export const CategoryLi = styled.li`
+  margin-bottom: 20px;
+  cursor: pointer;
+`;
 
 // min-height: 733px;
 // padding-top: 130px;
 // padding-bottom: 130px;
 // width: calc((100%) - 250px)
 
-export const MyPageContentBox = styled.div `
-width: 100%;
-padding: 50px 0;
-`
-
+export const MyPageContentBox = styled.div`
+  width: 100%;
+  padding: 50px 0;
+`;
 
 // *** delete draft style ***
 export const DeleteBigDiv = styled.div`
-position: fixed;
-top: 0;
-left: 0;
-z-index: 10;
-width: 100%;
-height: 100%;
-background-color: rgba(72, 72, 72, .3);
-`
-export const DeleteDiv = styled.div `
-width: 500px;
-height: 500px;
-position: absolute;
-top: 50%;
-left: 50%;
-z-index: 10;
-margin-top: -250px;
-margin-left: -250px;
-background-color: black;
-border-radius: 10px;
-`
-export const DeleteText = styled.div `
-margin: 20px auto;
-color: red;
-font-size: 20px;
-text-align: center;
-font-weight: bold;
-`
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 10;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(72, 72, 72, 0.3);
+`;
+export const DeleteDiv = styled.div`
+  width: 500px;
+  height: 500px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  z-index: 10;
+  margin-top: -250px;
+  margin-left: -250px;
+  background-color: black;
+  border-radius: 10px;
+`;
+export const DeleteText = styled.div`
+  margin: 20px auto;
+  color: red;
+  font-size: 20px;
+  text-align: center;
+  font-weight: bold;
+`;
 
-export const DeleteImgDiv = styled.div `
-background-color: white;
-width: 150px;
-height: 150px;
-border-radius: 8px;
-margin: 50px auto 20px;
-`
+export const DeleteImgDiv = styled.div`
+  background-color: white;
+  width: 150px;
+  height: 150px;
+  border-radius: 8px;
+  margin: 50px auto 20px;
+`;
 
-export const DeleteImg = styled.img `
-width: 150px;
-height: 150px;
-object-fit: contain;
-`
+export const DeleteImg = styled.img`
+  width: 150px;
+  height: 150px;
+  object-fit: contain;
+`;
 
-export const DeleteDesc = styled.div `
-color: #f6f6f6;
-margin: 30px auto 60px;
-width: max-content;
-`
+export const DeleteDesc = styled.div`
+  color: #f6f6f6;
+  margin: 30px auto 60px;
+  width: max-content;
+`;
 
-export const DeleteBtn = styled.div `
-width: 300px;
-line-height: 40px;
-border: 3px solid #f6f6f6;
-border-radius: 8px;
-margin: 20px auto;
-color: #f6f6f6;
-text-align: center;
-font-size: 18px;
-font-weight: bold;
-cursor: pointer;
-`
+export const DeleteBtn = styled.div`
+  width: 300px;
+  line-height: 40px;
+  border: 3px solid #f6f6f6;
+  border-radius: 8px;
+  margin: 20px auto;
+  color: #f6f6f6;
+  text-align: center;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+`;
 
 // *** Drom Down Menu ***
 export const DropDownMenu = styled.div`
-width: 120px;
-position: relative;
-margin-right: 30px;
-`
+  width: 120px;
+  position: relative;
+  margin-right: 30px;
+`;
 
 export const DropDownDiv = styled.div`
-height: 35px;
-width: 120px;
-background-color: white;
-border-radius: 7px;
-border: 1px solid rgba(0, 0, 0, .3);
-overflow: hidden;
-z-index: 10;
-margin-bottom: 20px;
-cursor: pointer;
-display: flex;
-justify-content: center;
-align-items: center;
-`
+  height: 35px;
+  width: 120px;
+  background-color: white;
+  border-radius: 7px;
+  border: 1px solid rgba(0, 0, 0, 0.3);
+  overflow: hidden;
+  z-index: 10;
+  margin-bottom: 20px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
 export const DropDownText = styled.div`
-width: 90px;
-line-height: 35px;
-text-align: center;
-`
+  width: 90px;
+  line-height: 35px;
+  text-align: center;
+`;
 export const DropDownArrow = {
-  cursor: 'pointer'
-}
+  cursor: "pointer",
+};
 
 export const DropList = styled.div`
-width: 143px;
-height: 250px;
-background-color: #e9e9e9;
-border-radius: 7px;
-overflow: scroll;
-position: absolute;
-top: 40px;
-z-index: 20;
-`
+  width: 143px;
+  height: 250px;
+  background-color: #e9e9e9;
+  border-radius: 7px;
+  overflow: scroll;
+  position: absolute;
+  top: 40px;
+  z-index: 20;
+`;
 
 export const DropItem = styled.div`
-line-height: 35px;
-width: 100%;
-text-align: center;
-cursor: pointer;
-`
+  line-height: 35px;
+  width: 100%;
+  text-align: center;
+  cursor: pointer;
+`;
 
 export const ChoiceItem = styled.div`
-line-height: 35px;
-width: 120px;
-text-align: center;
-background-color: #444;
-color: white;
-font-weight: bold;
-border-radius: 7px;
-border: 1px solid rgba(0, 0, 0, .3);
-overflow: hidden;
-margin-top: -15px;
-margin-bottom: 20px;
-`
+  line-height: 35px;
+  width: 120px;
+  text-align: center;
+  background-color: #444;
+  color: white;
+  font-weight: bold;
+  border-radius: 7px;
+  border: 1px solid rgba(0, 0, 0, 0.3);
+  overflow: hidden;
+  margin-top: -15px;
+  margin-bottom: 20px;
+`;
 
 export const SelfInput = styled.input`
-display: block;
-height: 33px;
-width: 117px;
-font-weight: bold;
-background-color: white;
-border-radius: 7px;
-border: 1px solid rgba(0, 0, 0, .3);
-margin-top: -15px;
-margin-bottom: 20px;
-`
+  display: block;
+  height: 33px;
+  width: 117px;
+  font-weight: bold;
+  background-color: white;
+  border-radius: 7px;
+  border: 1px solid rgba(0, 0, 0, 0.3);
+  margin-top: -15px;
+  margin-bottom: 20px;
+`;
 
 export const DropTagsDiv = styled.div`
-background-color: #e9e9e9;
-display: flex;
-position: absolute;
-top: 45px;
-z-index: 20;
-`
+  background-color: #e9e9e9;
+  display: flex;
+  position: absolute;
+  top: 45px;
+  z-index: 20;
+`;
 export const DropTagsBox = styled.div`
-width: 150px;
-border-right: 1px solid rgba(72, 72, 72, .3);
-`
+  width: 150px;
+  border-right: 1px solid rgba(72, 72, 72, 0.3);
+`;
 
 export const DropTagsText = styled.div`
-line-height: 35px;
-width: 100%;
-text-align: center;
-font-weight: bold;
-border-bottom: 1px solid rgba(72, 72, 72, .3);
-`
+  line-height: 35px;
+  width: 100%;
+  text-align: center;
+  font-weight: bold;
+  border-bottom: 1px solid rgba(72, 72, 72, 0.3);
+`;
 
 export const DropTagsList = styled.div`
-width: calc(120px * 3 + 30px);
-display: flex;
-flex-wrap: wrap;
-margin-top: -15px;
-margin-bottom: 20px;
-`
+  width: calc(120px * 3 + 30px);
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: -15px;
+  margin-bottom: 20px;
+`;
 
 export const DropTagsInput = styled.input`
-display: block;
-width: 90%;
-height: 30px;
-margin: 10px auto;
-border-radius: 5px;
-border: 1px solid rgba(72, 72, 72, .3);
-`
+  display: block;
+  width: 90%;
+  height: 30px;
+  margin: 10px auto;
+  border-radius: 5px;
+  border: 1px solid rgba(72, 72, 72, 0.3);
+`;
 export const DropTagChoose = styled.div`
-background-color: #666;
-color: white;
-width: 120px;
-border-radius: 20px;
-margin: 10px auto;
-display: flex;
-justify-content: center;
-align-items: center;
-`
+  background-color: #666;
+  color: white;
+  width: 120px;
+  border-radius: 20px;
+  margin: 10px auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
 export const TagChooseText = styled.div`
-width: 70%;
-line-height: 35px;
-text-align: center;
-`
+  width: 70%;
+  line-height: 35px;
+  text-align: center;
+`;
 
 export const XMarkStyle = {
-  cursor: 'pointer',
-  width: '15px',
-  height: '15px',
-}
+  cursor: "pointer",
+  width: "15px",
+  height: "15px",
+};
 
 // =================== FOOTER ==========================
-export const FooterDiv = styled.footer `
+export const FooterDiv = styled.footer`
   background-color: #484848;
   width: 100%;
   height: 130px;
