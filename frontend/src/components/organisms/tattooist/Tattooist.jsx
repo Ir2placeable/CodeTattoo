@@ -1,6 +1,6 @@
 import React from "react";
 import {
-  TattooistImg,
+  ProfileImg,
   TattooistInfoBox,
   TattooistInfo,
 } from "../../../styledComponents";
@@ -10,14 +10,14 @@ const Tattooist = ({ tattooist }) => {
   return (
     <>
       {tattooist.image ? (
-        <TattooistImg
-          size="medium"
+        <ProfileImg
+          size="profile"
           src={tattooist.image}
           alt={tattooist.nickname}
           id={tattooist.tattooist_id}
         />
       ) : (
-        <TattooistImg size="medium" />
+        <ProfileImg size="profile" />
       )}
       <TattooistInfoBox>
         <TattooistInfo>Nickname : {tattooist.nickname}</TattooistInfo>

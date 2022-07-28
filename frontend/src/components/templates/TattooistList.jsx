@@ -11,12 +11,13 @@ const TattooistList = () => {
   return (
     <>
       <TattooistMainBox>
-        {tattooists.map((tattooist) => (
-          <TattooistContainer key={tattooist.tattooist_id}>
-            <Tattooist tattooist={tattooist} />
-            <TattooistControlBox tattooist={tattooist} />
-          </TattooistContainer>
-        ))}
+        {tattooists &&
+          tattooists.map((tattooist) => (
+            <TattooistContainer key={tattooist.tattooist_id}>
+              <Tattooist tattooist={tattooist} />
+              <TattooistControlBox tattooist={tattooist} />
+            </TattooistContainer>
+          ))}
       </TattooistMainBox>
     </>
   );

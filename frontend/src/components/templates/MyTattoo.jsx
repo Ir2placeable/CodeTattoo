@@ -4,7 +4,6 @@ import MyTattooSwiper from "../organisms/MyTattooSwiper";
 
 const MyTattoo = ({ tattoo }) => {
   console.log("MyTattoo");
-  console.log(tattoo);
   return (
     <>
       {tattoo.image ? (

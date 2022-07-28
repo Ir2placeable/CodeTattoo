@@ -19,6 +19,7 @@ import ShowDraftDetail from "./pages/ShowDraftDetail";
 import ShowMyTattoo from "./pages/ShowMyTattoo";
 import ShowTattooistList from "./pages/ShowTattooistList";
 import TattooistList from "./components/templates/TattooistList";
+import ShowMyPage from "./pages/ShowMyPage";
 
 const App = () => {
   const sendRequest = async () => {
@@ -55,8 +56,11 @@ const App = () => {
               <Route path="search/:nickname" element={<TattooistList />} />
             </Route>
 
-            {/* 마이 타투 목록 */}
-            <Route path="myTattoo" element={<ShowMyTattoo />} />
+            {/* 마이 페이지 */}
+            <Route path="my-page" element={<ShowMyPage />}>
+              <Route path="user" element={<ShowMyTattoo />} />
+              <Route path="tattooist" />
+            </Route>
           </Route>
           {/* 로그인, 회원가입 */}
           <Route path="/login" element={<Login />} />

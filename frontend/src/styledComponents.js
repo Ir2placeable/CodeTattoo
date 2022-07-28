@@ -26,7 +26,7 @@ export const Btn = styled.div`
 `;
 
 export const HorizontalLine = styled.div`
-  width: 80%;
+  width: 90%;
   border-bottom: 1px solid #aaa;
   margin: 10px 0 20px;
 `;
@@ -304,22 +304,21 @@ export const MyTattooMainBox = styled.div`
 
 export const MyTattooContainer = styled.div`
   display: flex;
-  min-width: 1300px;
+  min-width: 1500px;
   min-height: 450px;
   justify-content: space-between;
   align-items: center;
-  margin: 20px 0;
-  box-shadow: 5px 5px 15px 0px rgba(72, 72, 72, 0.5);
+  margin-bottom: 20px;
 `;
 
 export const MyTattooImg = styled.img`
   color: #ffffff;
   line-height: 250px;
   text-align: center;
-  width: 250px;
-  height: 250px;
+  width: 300px;
+  height: 300px;
   background-color: rgba(72, 72, 72);
-  margin: 0 20px;
+  margin: 0 60px;
 `;
 
 export const MyTattooStateBox = styled.div`
@@ -344,6 +343,7 @@ export const TattooistContainer = styled.div`
   min-height: 260px;
   border-radius: 8px;
   justify-content: space-between;
+  align-items: center;
   padding: 0 20px;
   margin: 20px 0;
 `;
@@ -353,7 +353,6 @@ export const TattooistInfoBox = styled.div`
   height: 210px;
   box-shadow: 5px 5px 10px 0 rgba(72, 72, 72, 0.3);
   border-radius: 8px;
-  margin: 25px 0;
   position: relative;
   left: -110px;
   display: flex;
@@ -365,33 +364,6 @@ export const TattooistInfoBox = styled.div`
 export const TattooistInfo = styled.div`
   font-size: 18px;
   padding: 10px 0;
-`;
-
-export const TattooistImg = styled.div`
-  color: #ffffff;
-  text-align: center;
-  border-radius: 70%;
-  overflow: hidden;
-  margin: 25px 0;
-  object-fit: contain;
-  z-index: 1;
-
-  ${(props) =>
-    props.size === "medium" &&
-    css`
-      width: 210px;
-      height: 210px;
-      line-height: 210px;
-    `}
-
-  ${(props) =>
-    props.size === "small" &&
-    css`
-      width: 150px;
-      height: 150px;
-      line-height: 150px;
-      box-shadow: 5px 5px 10px 0 rgba(72, 72, 72, 0.3);
-    `}
 `;
 
 export const TattooistControl = styled.div`
@@ -429,6 +401,7 @@ export const TattooistButton = styled.div`
       font-size: 14px;
     `}
 `;
+
 // *** Show Draft Detail ***
 export const DraftDetailMainBox = styled.div`
   width: 100%;
@@ -509,10 +482,111 @@ export const TattooistKeywordBox = styled.div`
   justify-content: space-around;
   align-items: center;
   width: 300px;
+`;
+
+export const TattooistKeyword = styled.div`
   font-size: 14px;
 `;
 
-export const TattooistKeyword = styled.div``;
+// *** My Page ***
+export const MyPageProfileBox = styled.div`
+  width: 1500px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 30px 0;
+`;
+
+export const ProfileImgBox = styled.div`
+  ${(props) =>
+    props.size === "profile" &&
+    css`
+      width: 210px;
+      height: 210px;
+      line-height: 210px;
+    `}
+
+  ${(props) =>
+    props.size === "tattooist" &&
+    css`
+      width: 150px;
+      height: 150px;
+      line-height: 150px;
+    `}
+`;
+
+export const ProfileImg = styled.div`
+  color: #ffffff;
+  text-align: center;
+  border-radius: 70%;
+  object-fit: contain;
+  z-index: 1;
+  background-color: #777;
+  ${(props) =>
+    props.size === "profile" &&
+    css`
+      width: 210px;
+      height: 210px;
+      line-height: 210px;
+      overflow: hidden;
+    `}
+
+  ${(props) =>
+    props.size === "tattooist" &&
+    css`
+      width: 150px;
+      height: 150px;
+      line-height: 150px;
+      box-shadow: 5px 5px 10px 0 rgba(72, 72, 72, 0.3);
+    `}
+`;
+
+export const ProfileImgEdit = styled.div`
+  width: 30px;
+  height: 30px;
+  position: relative;
+  top: -40px;
+  left: 160px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  z-index: 2;
+`;
+
+export const MyPageProfileInfoBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  width: 700px;
+  height: 210px;
+  margin-left: 100px;
+`;
+
+export const MyPageProfileNickname = styled.div`
+  font-size: 30px;
+  font-weight: 700;
+`;
+
+export const MyPageProfileInfoList = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
+export const MyPageProfileInfo = styled.div`
+  font-size: 24px;
+  margin-right: 30px;
+`;
+
+export const MyPageProfileDescription = styled.div`
+  font-size: 20px;
+`;
+
+export const ProfileEdit = styled.div`
+  position: relative;
+  top: -75px;
+  cursor: pointer;
+`;
 
 // *** Show Draft List ***
 export const DraftListDiv = styled.div`
@@ -749,23 +823,6 @@ export const MyPageInfoInner = styled.div`
   position: relative;
 `;
 
-export const ProfileImgDiv = styled.div`
-  width: 150px;
-  height: 150px;
-  background-color: white;
-  border-radius: 50%;
-  position: relative;
-`;
-
-export const ProfileImg = styled.img`
-  width: 150px;
-  height: 150px;
-  object-fit: contain;
-  border-radius: 50%;
-  border: 2px solid rgba(72, 72, 72, 0.5);
-  background-color: white;
-`;
-
 export const ProfileIconDiv = styled.div`
   width: 150px;
   line-height: 150px;
@@ -774,21 +831,6 @@ export const ProfileIconDiv = styled.div`
   border-radius: 50%;
   border: 2px solid rgba(72, 72, 72, 0.5);
   background-color: white;
-`;
-
-export const ProfileImgEdit = styled.div`
-  background-color: black;
-  border: 3px solid white;
-  color: white;
-  border-radius: 50%;
-  width: 35px;
-  line-height: 35px;
-  text-align: center;
-  position: absolute;
-  bottom: 5px;
-  right: 5px;
-  z-index: 10;
-  cursor: pointer;
 `;
 
 export const ProfileDescDiv = styled.div`
@@ -809,22 +851,6 @@ export const NicknameDiv = styled.div`
 export const DescDiv = styled.div`
   margin: 10px;
   color: rgb(210, 210, 210);
-`;
-
-export const ProfileEdit = styled.div`
-  width: 100px;
-  height: 30px;
-  border: 2px solid white;
-  color: white;
-  font-weight: bold;
-  border-radius: 7px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: absolute;
-  right: 10px;
-  cursor: pointer;
-  transition: 0.45s;
 `;
 
 export const ProfileEditHoverStyle = {

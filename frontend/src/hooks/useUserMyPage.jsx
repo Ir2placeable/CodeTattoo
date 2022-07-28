@@ -3,18 +3,24 @@ import { useState, useEffect } from "react";
 import { getCookie } from "../config/cookie";
 import { APIURL } from "../config/key";
 
-const useMyTattoo = () => {
-  console.log("Use MyTattoo");
+const useUserMyPage = () => {
+  console.log("Use MyUserMyPage");
   const [tattoos, setTattoos] = useState([]);
+  const [infos, setInfos] = useState([]);
+
+  const data = {
+    tattoos: tattoos,
+    infos: infos,
+  };
 
   const sendRequest = async () => {
     const res = await axios.get(
-      `${APIURL}/main/my-tattoo/?user_id=${getCookie("user_id")}`
+      `${APIURL}/my-page/user/?user_id=${getCookie("user_id")}`
     );
 
     if (res.data.success) {
-      setTattoos(res.data.tattoo_list);
-      console.log(res.data.tattoo_list);
+      setTattoos(res.data.tattoos);
+      setInfos(res.data.user_info);
     } else {
       console.log("Tattoo List Get Request Fail");
     }
@@ -24,7 +30,7 @@ const useMyTattoo = () => {
     sendRequest();
   }, []);
 
-  return tattoos;
+  return data;
 };
 
-export default useMyTattoo;
+export default useUserMyPage;

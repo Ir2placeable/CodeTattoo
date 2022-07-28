@@ -40,7 +40,7 @@ const TattooistControlBox = ({ tattooist }) => {
           event={tattooist.isFollowed ? UnFollowing : Following}
           size={"medium"}
         />
-        <TattooistBtn content={"Reserve"} />
+        <TattooistBtn content={"Reservation"} size={"medium"} />
       </TattooistControl>
     </>
   );

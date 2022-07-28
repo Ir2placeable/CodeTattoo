@@ -1,6 +1,6 @@
 import {
   SmallTattooistProfileBox,
-  TattooistImg,
+  ProfileImg,
   SmallTattooistInfoBox,
   SmallTattooistNickname,
   SmallTattooistLocation,
@@ -39,8 +39,8 @@ const SmallTattooist = ({ tattooist }) => {
   return (
     <>
       <SmallTattooistProfileBox>
-        <TattooistImg
-          size="small"
+        <ProfileImg
+          size="tattooist"
           src={tattooist.drawer_image}
           alt={tattooist.drawer_id}
         />
