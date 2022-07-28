@@ -11,11 +11,13 @@ import {
 import usePagination from '../../../hooks/usePagination';
 
 const Pagination = ({ filter, page, setPage, pages, setPages }) => {
-  const count = usePagination({
-    filter: filter
+  const [count, sendRequest] = usePagination({
+    filter: filter,
   });
 
   useEffect(() => {
+
+    sendRequest();
     const lastPage = Math.ceil(count / 12);
     const temp = [];
 

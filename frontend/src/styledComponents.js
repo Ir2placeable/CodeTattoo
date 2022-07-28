@@ -632,16 +632,52 @@ export const EmptyDraftBox = styled.div`
 `;
 
 export const DraftMainBox = styled.div`
-  width: 1500px;
+  //width: 1550px;
+  width: calc(380px * 4);
   display: flex;
   justify-content: stretch;
   align-items: stretch;
   flex-wrap: wrap;
+  //background-color: orange;
 `;
 
 export const DraftImgBox = styled.div`
-  margin: 20px 30px 50px;
+  margin: 20px 15px;
+  background-color: #E4E8F0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  //align-items: center;
+  height: 430px;
+  //width: 340px;
+  padding: 0 25px;
+  border-radius: 8px;
 `;
+
+export const DraftDrawerDiv = styled.div`
+display: flex;
+justify-content: stretch;
+align-items: center;
+//background-color: orange;
+margin-bottom: 10px;
+width: max-content;
+cursor: pointer;
+margin-left: 20px;
+`
+
+export const DraftDrawer = styled.p`
+margin-left: 20px;
+`
+
+export const DraftDrawerImg = styled.img`
+display: inline-block;
+width: 35px;
+height: 35px;
+background-color: black;
+border-radius: 50%;
+border: 2px solid black;
+object-fit: contain;
+`
 
 export const DraftImg = styled.img`
   width: 300px;

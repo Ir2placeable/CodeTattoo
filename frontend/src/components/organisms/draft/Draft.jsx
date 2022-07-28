@@ -1,6 +1,7 @@
 import React from 'react';
 import { 
   DraftImgBox, DraftImgInfo, DraftHeartBox,
+  DraftDrawerDiv, DraftDrawerImg, DraftDrawer
 } from '../../../styledComponents';
 
 import DraftTitle from '../../atomic/draft/DraftTitle';
@@ -13,6 +14,11 @@ const Draft = ({ draft_id, image, title, like, drawer_id,
   return (
     <>
       <DraftImgBox>
+
+        <DraftDrawerDiv>
+          <DraftDrawerImg src={drawer_image} />
+          <DraftDrawer>{drawer_nickname}</DraftDrawer>
+        </DraftDrawerDiv>
 
         <DraftImage src={image} alt={title} id={draft_id} />
 

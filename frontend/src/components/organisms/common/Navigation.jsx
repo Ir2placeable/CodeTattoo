@@ -22,7 +22,14 @@ const Navigation = () => {
     setPrev(e.target);
     e.target.style.color = "black";
     e.target.style.borderBottom = "3px solid black";
-    //navigate(`/${path}`);
+
+    if(path === 'draft' || path === 'tattooist'){
+      navigate(`/${path}/best`);
+    } else if(path === 'scrap'){
+      navigate(`/${path}/draft`);
+    }else {
+      navigate(`/${path}`);
+    }
   }, [prev]);
 
   return (

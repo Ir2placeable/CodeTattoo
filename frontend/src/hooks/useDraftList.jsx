@@ -2,6 +2,25 @@ import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import { APIURL } from '../config/key';
 
+// ### 게스트 페이지 : 도안
+
+// - GET : /drafts/:filter/:page
+//     - filter : count, best, all, search
+//     - page : 1,2,3 …
+// - Query : { title }
+//     - filter : search 인 경우에만 사용
+// - Return : filter = count → { count }
+// - Return
+//     - filter : count → { count }
+//     - filter : best, all, search = { success, [drafts] }
+//         - drafts = { draft_id, image, title, like, drawer_id, drawer_image, drawer_nickname, isScraped }
+// - Error code
+//     - err 5 : 탐색 결과 없음
+//     - err 6 : 검색 결과 없음
+//     - err 12 : filter 입력 오류
+
+// ### 유저 페이지 : 도안
+
 // - GET : /drafts/:filter/:page
 //     - filter : count, best, all, search
 //     - page : integer type
@@ -10,23 +29,31 @@ import { APIURL } from '../config/key';
 // - Return
 //     - filter : count → { count }
 //     - filter : best, all, search → { success, count, [drafts] }
-//         - drafts = { draft_id, drawer, image, title, like, genre, [keywords], isScraped }
+//         - drafts = { draft_id, image, title, like, drawer_id, drawer_image, drawer_nickname, isScraped }
+// - Error code
+//     - err 5 : 탐색 결과 없음
+//     - err 6 : 검색 결과 없음
+//     - err 10 : user_id 전달 오류
+//     - err 12 : filter 입력 오류
+
 
 const useDraftList = ({ filter, page }) => {
   const [drafts, setDrafts] = useState([]);
 
-  useEffect(async() => {
+  const sendRequest = async() => {
     const res = await axios.get(`${APIURL}/drafts/${filter}/${page}`);
 
+    //console.log(res);
     if(res.data.success){
       setDrafts(res.data.drafts);
     } else {
       // 오류
+      console.log('useDraftList error');
+      console.log(res.data);
     }
+  }
 
-  }, []);
-
-  return drafts;
+  return [drafts, sendRequest];
 };
 
 export default useDraftList;
