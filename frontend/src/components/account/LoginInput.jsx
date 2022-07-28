@@ -63,7 +63,7 @@ const LoginInput = ({ isTattooist }) => {
       _filter = "tattooist";
     }
 
-    const res = await axios.post(`${APIURL}/login`, {
+    const res = await axios.post(`${APIURL}/login/${_filter}`, {
       filter: _filter,
       email: email,
       pwd: pwd

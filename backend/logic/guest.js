@@ -1,6 +1,8 @@
 const {User} = require("../model/User")
 const {Tattooist} = require("../model/Tattooist")
 const {Draft} = require('../model/Draft')
+const {Tattoo} = require('../model/Tattoo')
+
 const Global = require('../GlobalVariable')
 const ErrorTable = require('../ErrorTable')
 
@@ -127,16 +129,22 @@ exports.tattooistSignOut = async function(body) {
     await Tattooist.deleteOne({ email : body.email })
 }
 
-
-exports.pageEntry = async function() {
+exports.pageEntry = function() {
     connections += 1
 }
 exports.pageDraft = async function(params, query) {
-    const count = await Draft.count()
-    // 탐색 결과 없음 오류
-    if(count === 0) {
-        console.log(ErrorTable['5'])
-        throw 5
+    let count
+    let return_value
+
+    if (params.filter === 'count') {
+        count = await Draft.count()
+        // 탐색 결과 없음 오류
+        if(count === 0) {
+            console.log(ErrorTable['5'])
+            throw 5
+        }
+
+        return {count, return_value}
     }
 
     const item_index_start = Global.draftShowLimit * (parseInt(params.page)-1)
@@ -160,16 +168,18 @@ exports.pageDraft = async function(params, query) {
         throw 12
     }
 
-    let return_value = []
-    for (let draft of drafts) {
+    return_value = []
+    for await (let draft of drafts) {
+        const drawer = await Tattooist.findOne({ _id : draft.drawer })
         const item = {
             draft_id : draft['_id'],
             image : draft['image'],
             title : draft['title'],
             like : draft['like'],
-            genre : draft['genre'],
-            keywords : draft['keywords'],
-            isScraped : 'unavailable'
+            drawer_id : drawer['_id'],
+            drawer_image : drawer['image'],
+            drawer_nickname : drawer['nickname'],
+            isScraped : false
         }
 
         return_value.push(item)
@@ -184,27 +194,36 @@ exports.pageDraftDetail = async function(params) {
         console.log(ErrorTable["7"])
         throw 7
     }
-
+    const drawer = await Tattooist.findOne({ _id : draft['drawer'] })
     const return_value = {
         draft_id : draft['_id'],
-        drawer : draft['drawer'],
         image : draft['image'],
         title : draft['title'],
         like : draft['like'],
+        drawer_id : drawer['_id'],
+        drawer_nickname : drawer['nickname'],
+        drawer_location : drawer['location'],
         genre : draft['genre'],
         keywords : draft['keywords'],
-        isScraped : 'unavailable',
-        isFollowed : 'unavailable'
+        isScraped : false,
+        isFollowed : false
     }
 
     return return_value
 }
 exports.pageTattooist = async function(params, query) {
-    const count = await Tattooist.count()
-    // 탐색 결과 없음 오류
-    if(count === 0) {
-        console.log(ErrorTable['5'])
-        throw 5
+    let count
+    let return_value
+
+    if (params.filter === 'count') {
+        count = await Tattooist.count()
+        // 탐색 결과 없음 오류
+        if(count === 0) {
+            console.log(ErrorTable['5'])
+            throw 5
+        }
+
+        return {count, return_value}
     }
 
     const item_index_start = Global.tattooistShowLimit * (parseInt(params.page)-1)
@@ -228,18 +247,17 @@ exports.pageTattooist = async function(params, query) {
         throw 12
     }
 
-    let return_value = []
+    return_value = []
     for (let tattooist of tattooists) {
         const item = {
             tattooist_id : tattooist['_id'],
             image : tattooist['image'],
             nickname: tattooist['nickname'],
-            office: tattooist['office'],
-            contact: tattooist['contact'],
-            description: tattooist['description'],
+            location: tattooist['location'],
             specialize: tattooist['specialize'],
             followers: tattooist['followers'],
-            isFollowed : 'unavailable'
+            description: tattooist['description'],
+            isFollowed : false
         }
 
         return_value.push(item)
@@ -255,7 +273,7 @@ exports.pageTattooistDetail = async function(params) {
         throw 8
     }
 
-    const return_value = {
+    const tattooist_info = {
         tattooist_id : tattooist['_id'],
         image : tattooist['image'],
         nickname : tattooist['nickname'],
@@ -264,10 +282,53 @@ exports.pageTattooistDetail = async function(params) {
         description : tattooist['description'],
         specialize : tattooist['specialize'],
         followers : tattooist['followers'],
-        isFollowed : 'unavailable',
+        isFollowed : false,
         schedules : 'mocked-up'
     }
 
-    return return_value
+    let return_value = []
+    if (params.filter === 'draft') {
+        for await (let draft_id of tattooist['drafts']) {
+            const draft = await Draft.findOne({ _id : draft_id })
+            const item = {
+                draft_id : draft['_id'],
+                image : draft['image'],
+                like : draft['like']
+            }
+
+            return_value.push(item)
+        }
+    } else if (params.filter === 'artwork') {
+        // mock-up
+        return_value.push({
+            artwork_id : "test_id",
+            image : "test_image",
+            cost : "test_cost",
+            time : "test_time"
+        })
+
+        // for await (let artwork_id of tattooist['artworks']) {
+        //     const artwork = await Tattoo.findOne({ _id : artwork_id })
+        //     const item = {
+        //         artwork_id : artwork['_id'],
+        //         image : artwork['image'],
+        //         cost : artwork['cost'],
+        //         time : artwork['time']
+        //     }
+        //
+        //     return_value.push(item)
+        // }
+    } else if (params.filter === 'reservation') {
+        return_value = tattooist['schedules']
+    } else {
+        console.log(ErrorTable['12'])
+        throw 12
+    }
+
+    return {tattooist_info, return_value}
 }
 
+exports.getConnections = function() {
+    console.log('connections : ', connections)
+    return connections
+}

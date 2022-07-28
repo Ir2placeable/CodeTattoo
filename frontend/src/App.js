@@ -20,10 +20,13 @@ import ShowMyTattoo from "./pages/ShowMyTattoo";
 import ShowTattooistList from "./pages/ShowTattooistList";
 import TattooistList from "./components/templates/TattooistList";
 import ShowMyPage from "./pages/ShowMyPage";
+import Navigation from "./components/organisms/common/Navigation";
+import ShowEntry from "./pages/ShowEntry";
+import ShowDraftList from "./pages/ShowDraftList";
 
 const App = () => {
   const sendRequest = async () => {
-    const res = await axios.get(`${APIURL}`);
+    const res = await axios.get(`${APIURL}/entry`);
 
     if (res.data.success) {
       console.log("Servier is connected");
@@ -40,7 +43,7 @@ const App = () => {
 
       {/* HEADER */}
       <Header />
-
+      <Navigation />
       {/* Main Container */}
       <MainPageDiv>
         <Routes>
@@ -65,6 +68,18 @@ const App = () => {
           {/* 로그인, 회원가입 */}
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
+          
+          {/* 엔트리 페이지 */}
+          <Route path="/" element={<ShowEntry />} />
+
+          {/* 메인 페이지 */}
+          <Route path="/draft" element={<ShowDraftList filter="best" />} />
+          {/* <Route path="/main">
+
+            <Route path="draft" element={<ShowDraftList filter="best" />} />
+
+
+          </Route> */}
         </Routes>
       </MainPageDiv>
 

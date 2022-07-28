@@ -13,99 +13,95 @@ server.use(bodyParser.urlencoded({ extended : true }))
 const cors = require('cors');
 server.use(cors());
 
-server.get('/', (req, res) => {
+// 엔트리 페이지
+server.get('/entry', (req, res) => {
     console.log('\n')
     console.log('page : entry')
-    console.log('query : ', req.query)
 
     guest.pageEntry()
-        .then(() => {
-            res.send({ success : true })
-        })
-        .catch((err) => {
-            res.send({ success : false, code : err })
-        })
+    res.send({ success : true })
 })
-server.post('/register/user', (req, res) => {
+
+// 회원가입
+server.post('/register/:type', (req, res) => {
     console.log('\n')
-    console.log('command : register user')
+    console.log('command : register for', req.params.type)
     console.log('body : ', req.body)
 
-    guest.userRegister(req.body)
-        .then(() => {
-            res.send({ success : true })
-        })
-        .catch((err) => {
-            res.send({ success : false, code : err })
-        })
+    if (req.params.type === 'user') {
+        guest.userRegister(req.body)
+            .then(() => {
+                res.send({ success : true })
+            })
+            .catch((err) => {
+                res.send({ success : false, code : err })
+            })
+    } else if (req.params.type === 'tattooist') {
+        guest.tattooistRegister(req.body)
+            .then(() => {
+                res.send({ success : true })
+            })
+            .catch((err) => {
+                res.send({ success : false, code : err })
+            })
+    } else {
+        res.send({ success : false, code : 12 })
+    }
 })
-server.post('/register/tattooist', (req, res) => {
+// 로그인
+server.post('/login/:type', (req, res) => {
     console.log('\n')
-    console.log('command : register tattooist')
+    console.log('command : login for ', req.params.type)
     console.log('body : ', req.body)
 
-    guest.tattooistRegister(req.body)
-        .then(() => {
-            res.send({ success : true })
-        })
-        .catch((err) => {
-            res.send({ success : false, code : err })
-        })
+    if (req.params.type === 'user') {
+        guest.userLogin(req.body)
+            .then((returned) => {
+                res.send({ success : true, user_info : returned })
+            })
+            .catch((err) => {
+                res.send({ success : false, code : err })
+            })
+    } else if (req.params.type === 'tattooist') {
+        guest.tattooistLogin(req.body)
+            .then((returned) => {
+                res.send({ success : true, tattooist_info : returned })
+            })
+            .catch((err) => {
+                res.send({ success : false, code : err })
+            })
+    } else {
+        res.send({ success : false, code : 12 })
+    }
 })
-server.post('/login/user', (req, res) => {
+// 회원탈퇴
+server.post('sign-out/:type', (req, res) => {
     console.log('\n')
-    console.log('command : user login')
+    console.log('command : sign-out for ', req.params.type)
     console.log('body : ', req.body)
 
-    guest.userLogin(req.body)
-        .then((returned) => {
-            res.send({ success : true, user_info : returned })
-        })
-        .catch((err) => {
-            res.send({ success : false, code : err })
-        })
-})
-server.post('/login/tattooist', (req, res) => {
-    console.log('\n')
-    console.log('command : tattooist login')
-    console.log('body : ', req.body)
-
-    guest.tattooistLogin(req.body)
-        .then((returned) => {
-            res.send({ success : true, tattooist_info : returned })
-        })
-        .catch((err) => {
-            res.send({ success : false, code : err })
-        })
-})
-server.post('/sign-out/user', (req, res) => {
-    console.log('\n')
-    console.log('command : user sign-out')
-    console.log('body : ', req.body)
-
-    guest.userSignOut(req.body)
-        .then((returned) => {
-            res.send({ success : true })
-        })
-        .catch((err) => {
-            res.send({ success : false, code : err })
-        })
-})
-server.post('/sign-out/tattooist', (req, res) => {
-    console.log('\n')
-    console.log('command : tattooist sign-out')
-    console.log('body : ', req.body)
-
-    guest.tattooistSignOut(req.body)
-        .then((returned) => {
-            res.send({ success : true })
-        })
-        .catch((err) => {
-            res.send({ success : false, code : err })
-        })
+    if (req.params.type === 'user') {
+        guest.userSignOut(req.body)
+            .then((returned) => {
+                res.send({ success : true })
+            })
+            .catch((err) => {
+                res.send({ success : false, code : err })
+            })
+    } else if (req.params.type === 'tattooist') {
+        guest.tattooistSignOut(req.body)
+            .then((returned) => {
+                res.send({ success : true })
+            })
+            .catch((err) => {
+                res.send({ success : false, code : err })
+            })
+    } else {
+        res.send({ success : false, code : 12 })
+    }
 })
 
-
+// 도안 페이지
 server.get('/drafts/:filter/:page', (req, res) => {
     console.log('\n')
     console.log('page : Draft')
@@ -122,7 +118,10 @@ server.get('/drafts/:filter/:page', (req, res) => {
                 res.send({ success : false, code : err })
             })
     }
-    else {
+    else if (req.query['tattooist_id']) {
+        console.log('tattooist view')
+
+    } else {
         console.log('guest view')
         guest.pageDraft(req.params, req.query)
             .then((returned) => {
@@ -133,13 +132,14 @@ server.get('/drafts/:filter/:page', (req, res) => {
             })
     }
 })
-server.get('/drafts/:id', (req, res) => {
+// 도안 세부페이지
+server.get('/draft/:id', (req, res) => {
     console.log('\n')
     console.log('page : Draft detail')
     console.log('params : ', req.params)
-    console.log('query : ', req.query)
 
     if (req.query['user_id']) {
+        console.log('query : ', req.query)
         console.log('user view')
         user.pageDraftDetail(req.params, req.query)
             .then((returned) => {
@@ -148,7 +148,13 @@ server.get('/drafts/:id', (req, res) => {
             .catch((err) => {
                 res.send({ success : false, code : err })
             })
+    } else if (req.query['tattooist_id']) {
+        console.log('query : ', req.query)
+        console.log('tattooist view')
+
+
     } else {
+        console.log('guest view')
         guest.pageDraftDetail(req.params)
             .then((returned) => {
                 res.send({ success : true, draft : returned })
@@ -158,6 +164,7 @@ server.get('/drafts/:id', (req, res) => {
             })
     }
 })
+// 타투이스트 페이지
 server.get('/tattooists/:filter/:page', (req, res) => {
     console.log('\n')
     console.log('page : Tattooist')
@@ -165,6 +172,7 @@ server.get('/tattooists/:filter/:page', (req, res) => {
     console.log('query : ', req.query)
 
     if (req.query['user_id']) {
+        console.log('user view')
         user.pageTattooist(req.params, req.query)
             .then((returned) => {
                 res.send({ success : true, count : returned.count, tattooists : returned.return_value })
@@ -172,7 +180,12 @@ server.get('/tattooists/:filter/:page', (req, res) => {
             .catch((err) => {
                 res.send({ success : false, code : err })
             })
+    } else if (req.query['tattooist_id']) {
+        console.log('tattooist view')
+
+
     } else {
+        console.log('guest view')
         guest.pageTattooist(req.params, req.query)
             .then((returned) => {
                 res.send({ success : true, count : returned.count, tattooists : returned.return_value })
@@ -182,73 +195,39 @@ server.get('/tattooists/:filter/:page', (req, res) => {
             })
     }
 })
-server.get('/tattooists/:id', (req, res) => {
+// 타투이스트 세부 페이지
+server.get('/tattooist/:filter/:id', (req, res) => {
     console.log('\n')
     console.log('page : Tattooist detail')
     console.log('params : ', req.params)
-    console.log('query : ', req.query)
 
     if (req.query['user_id']) {
+        console.log('query : ', req.query)
+        console.log('user view')
         user.pageTattooistDetail(req.params, req.query)
             .then((returned) => {
-                res.send({ success : true, tattooist : returned })
+                res.send({ success : true, tattooist : returned.tattooist_info, data : returned.return_value })
             })
             .catch((err) => {
                 res.send({ success : false, code : err })
             })
+    } else if (req.query['tattooist_id']) {
+        console.log('query : ', req.query)
+        console.log('tattooist view')
+
+
     } else {
+        console.log('guest view')
         guest.pageTattooistDetail(req.params)
             .then((returned) => {
-                res.send({ success : true, tattooist : returned })
+                res.send({ success : true, tattooist : returned.tattooist_info, data : returned.return_value })
             })
             .catch((err) => {
                 res.send({ success : false, code : err })
             })
     }
 })
-
-
-server.get('/user/my-page/:id', (req, res) => {
-    console.log('\n')
-    console.log('page : User My page')
-    console.log('params : ', req.params)
-
-    user.pageMyPage(req.params)
-        .then((returned) => {
-            res.send({ success : true, user_info : returned })
-        })
-        .catch((err) => {
-            res.send({ success : false, code : err })
-        })
-})
-server.patch('/user/my-page/:id', (req, res) => {
-    console.log('\n')
-    console.log('command : User Info Edit')
-    console.log('params : ', req.params)
-    console.log('body : ', req.body)
-
-    user.userInfoEdit(req.params, req.body)
-        .then((returned) => {
-            res.send({ success : true })
-        })
-        .catch((err) => {
-            res.send({ success : false, code : err })
-        })
-})
-server.post('/user/my-page/:id', (req, res) => {
-    console.log('\n')
-    console.log('command : User Image Edit')
-    console.log('params : ', req.params)
-    console.log('body : ', req.body)
-
-    user.userImageEdit(req.params, req.body)
-        .then((returned) => {
-            res.send({ success : true })
-        })
-        .catch((err) => {
-            res.send({ success : false, code : err })
-        })
-})
+// 스크랩 페이지
 server.get('/scraps/:filter/:page', (req, res) => {
     console.log('\n')
     console.log('command : User Scrap Page')
@@ -271,38 +250,100 @@ server.get('/scraps/:filter/:page', (req, res) => {
             .catch((err) => {
                 res.send({ success : false, code : err })
             })
-    } else {
+    } else if (req.params.filter === 'count') {
+        user.pageScrapCount(req.params, req.query)
+            .then((returned) => {
+                res.send({ success : true, draft_count : returned.draft_count, tattooist_count : returned.tattooist_count })
+            })
+            .catch((err) => {
+                res.send({ success : false, code : err })
+            })
+    }
+    else {
         res.send({ success : false, code : 12 })
     }
 
 })
-server.get('/my-tattoos', (req, res) => {
-    console.log('\n')
-    console.log('command : User My-Tattoo Page')
-    console.log('body : ', req.query)
+// 예약 페이지
+server.get('/reservations', (req, res) => {
 
-    user.pageMyTattoo(req.query)
-        .then((returned) => {
-            res.send({ success : true, tattoos : returned })
-        })
-        .catch((err) => {
-            res.send({ success : false, code : err })
-        })
 })
-server.get('/my-tattoos/:id', (req, res) => {
+
+// 유저 채팅 리스트 페이지
+server.get('/user/direct/inbox', (req, res) => {
     console.log('\n')
-    console.log('command : User My-Tattoo Page')
+    console.log('Page : User Chatting Page')
     console.log('params : ', req.params)
     console.log('body : ', req.query)
 
-    user.pageMyTattooDetail(req.params, req.query)
+    res.send({ success : false, code : 'not developed' })
+})
+// 유저 마이페이지
+server.get('/user/my-page/:id', (req, res) => {
+    console.log('\n')
+    console.log('page : User My page')
+    console.log('params : ', req.params)
+
+    user.pageMyPage(req.params)
         .then((returned) => {
-            res.send({ success : true, tattoo : returned })
+            res.send({ success : true, user_info : returned.user_info, tattoos : returned.return_value })
         })
         .catch((err) => {
             res.send({ success : false, code : err })
         })
 })
+// 유저 정보 수정
+server.patch('/user/my-page/:id', (req, res) => {
+    console.log('\n')
+    console.log('command : User Info Edit')
+    console.log('params : ', req.params)
+    console.log('body : ', req.body)
+
+    user.userInfoEdit(req.params, req.body)
+        .then((returned) => {
+            res.send({ success : true })
+        })
+        .catch((err) => {
+            res.send({ success : false, code : err })
+        })
+})
+// 유저 이미지 수정
+server.post('/user/my-page/:id', (req, res) => {
+    console.log('\n')
+    console.log('command : User Image Edit')
+    console.log('params : ', req.params)
+    console.log('body : ', req.body)
+
+    user.userImageEdit(req.params, req.body)
+        .then((returned) => {
+            res.send({ success : true })
+        })
+        .catch((err) => {
+            res.send({ success : false, code : err })
+        })
+})
+
+
+// 타투이스트 마이페이지
+server.get('/tattooist/my-page/:filter/:id', (req, res) => {
+
+})
+// 타투이스트 정보 수정
+server.patch('/tattooist/my-page/:filter/:id', (req, res) => {
+
+})
+// 타투이스트 이미지 수정
+server.post('/tattooist/my-page/:filter/:id', (req, res) => {
+
+})
+
+
+// admin
+server.get('/connections', (req, res) => {
+    const connections = guest.getConnections()
+    res.send({ connections : connections })
+})
+
 
 server.listen(PORT, () => {
     console.log('server opened')

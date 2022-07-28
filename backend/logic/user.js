@@ -1,8 +1,9 @@
 const {User} = require("../model/User")
 const {Tattooist} = require("../model/Tattooist")
 const {Draft} = require('../model/Draft')
+const {Tattoo} = require('../model/Tattoo')
+const imageStorage = require('../module/imageStorage')
 
-const imageStorage = require('./module/imageStorage')
 const Global = require('../GlobalVariable')
 const ErrorTable = require('../ErrorTable')
 
@@ -13,18 +14,43 @@ exports.pageMyPage = async function(params) {
         throw 10
     }
 
-    const return_value = {
+    const user_info = {
         user_id : user['_id'],
         nickname : user['nickname'],
-        description : user['description'],
+        location : user['location'],
         image : user['image']
     }
 
-    return return_value
+    let return_value = []
+    // mock-up
+    let tattoo1 = []
+    const state1 = { tattoo_id : "test_tattoo", state : "created", ink : "black, red", niddle : "niddle123", tattooist_id : "test_id_1", customer_id : "test_id_1" }
+    const state2 = { tattoo_id : "test_tattoo", state : "imprinting", ink : "black, red", niddle : "niddle123", tattooist_id : "test_id_1", customer_id : "test_id_1" }
+    const state3 = { tattoo_id : "test_tattoo", state : "imprinted", ink : "black, red", niddle : "niddle123", tattooist_id : "test_id_1", customer_id : "test_id_1" }
+    let tattoo2 = []
+    const state4 = { tattoo_id : "test_tattoo2", state : "created", ink : "black, red", niddle : "niddle123", tattooist_id : "test_id_1", customer_id : "test_id_1" }
+    const state5 = { tattoo_id : "test_tattoo2", state : "imprinting", ink : "black, red", niddle : "niddle123", tattooist_id : "test_id_1", customer_id : "test_id_1" }
+    const state6 = { tattoo_id : "test_tattoo2", state : "imprinted", ink : "black, red", niddle : "niddle123", tattooist_id : "test_id_1", customer_id : "test_id_1" }
+    const state7 = { tattoo_id : "test_tattoo2", state : "side-effected", ink : "black, red", niddle : "niddle123", tattooist_id : "test_id_1", customer_id : "test_id_1" }
+
+    tattoo1.push(state1, state2, state3)
+    tattoo2.push(state4, state5, state6, state7)
+    return_value.push(tattoo1, tattoo2)
+
+    // Real logic
+    // for await (let tattoo_id of user['tattoos']) {
+    //     const tattoo = await Tattoo.findOne({ _id : tattoo_id })
+    //
+    //     const item = {
+    //
+    //     }
+    // }
+
+    return {user_info, return_value}
 }
 
 exports.userInfoEdit = async function(params, body) {
-    await User.updateOne({ _id : params.id }, {$set : { nickname : body.nickname, description : body.nickname }}, (err, user) => {
+    await User.updateOne({ _id : params.id }, {$set : { nickname : body.nickname, location : body.location }}, (err, user) => {
         if(!user) {
             console.log(ErrorTable["10"])
             throw 10
@@ -53,11 +79,18 @@ exports.userImageEdit = async function(params, body) {
 }
 
 exports.pageDraft = async function(params, query) {
-    const count = await Draft.count()
-    // 탐색 결과 없음 오류
-    if(count === 0) {
-        console.log(ErrorTable['5'])
-        throw 5
+    let count
+    let return_value
+
+    if (params.filter === 'count') {
+        count = await Draft.count()
+        // 탐색 결과 없음 오류
+        if(count === 0) {
+            console.log(ErrorTable['5'])
+            throw 5
+        }
+
+        return {count, return_value}
     }
 
     const item_index_start = Global.draftShowLimit * (parseInt(params.page)-1)
@@ -81,16 +114,18 @@ exports.pageDraft = async function(params, query) {
         throw 12
     }
 
-    let return_value = []
-    for (let draft of drafts) {
+    return_value = []
+    for await (let draft of drafts) {
+        const drawer = await Tattooist.findOne({ _id : draft.drawer })
         const item = {
             draft_id : draft['_id'],
             image : draft['image'],
             title : draft['title'],
             like : draft['like'],
-            genre : draft['genre'],
-            keywords : draft['keywords'],
-            isScraped : 'unavailable'
+            drawer_id : drawer['_id'],
+            drawer_image : drawer['image'],
+            drawer_nickname : drawer['nickname'],
+            isScraped : false
         }
 
         return_value.push(item)
@@ -120,16 +155,19 @@ exports.pageDraftDetail = async function(params, query) {
         throw 7
     }
 
+    const drawer = await Tattooist.findOne({ _id : draft['drawer'] })
     let return_value = {
         draft_id : draft['_id'],
-        drawer : draft['drawer'],
         image : draft['image'],
         title : draft['title'],
         like : draft['like'],
+        drawer_id : drawer['_id'],
+        drawer_nickname : drawer['nickname'],
+        drawer_location : drawer['location'],
         genre : draft['genre'],
         keywords : draft['keywords'],
-        isScraped : 'unavailable',
-        isFollowed : 'unavailable'
+        isScraped : false,
+        isFollowed : false
     }
 
     const user = await User.findOne({ _id : query.user_id })
@@ -149,11 +187,18 @@ exports.pageDraftDetail = async function(params, query) {
 }
 
 exports.pageTattooist = async function(params, query) {
-    const count = await Tattooist.count()
-    // 탐색 결과 없음 오류
-    if(count === 0) {
-        console.log(ErrorTable['5'])
-        throw 5
+    let count
+    let return_value
+
+    if (params.filter === 'count') {
+        count = await Tattooist.count()
+        // 탐색 결과 없음 오류
+        if(count === 0) {
+            console.log(ErrorTable['5'])
+            throw 5
+        }
+
+        return {count, return_value}
     }
 
     const item_index_start = Global.tattooistShowLimit * (parseInt(params.page)-1)
@@ -177,18 +222,17 @@ exports.pageTattooist = async function(params, query) {
         throw 12
     }
 
-    let return_value = []
+    return_value = []
     for (let tattooist of tattooists) {
         const item = {
             tattooist_id : tattooist['_id'],
             image : tattooist['image'],
             nickname: tattooist['nickname'],
-            office: tattooist['office'],
-            contact: tattooist['contact'],
-            description: tattooist['description'],
+            location: tattooist['location'],
             specialize: tattooist['specialize'],
             followers: tattooist['followers'],
-            isFollowed : 'unavailable'
+            description: tattooist['description'],
+            isFollowed : false
         }
 
         return_value.push(item)
@@ -217,7 +261,7 @@ exports.pageTattooistDetail = async function(params, query) {
         throw 8
     }
 
-    const return_value = {
+    let tattooist_info = {
         tattooist_id : tattooist['_id'],
         image : tattooist['image'],
         nickname : tattooist['nickname'],
@@ -226,10 +270,9 @@ exports.pageTattooistDetail = async function(params, query) {
         description : tattooist['description'],
         specialize : tattooist['specialize'],
         followers : tattooist['followers'],
-        isFollowed : 'unavailable',
+        isFollowed : false,
         schedules : 'mocked-up'
     }
-
     const user = await User.findOne({ _id : query.user_id })
     if (!user) {
         console.log(ErrorTable["10"])
@@ -237,19 +280,65 @@ exports.pageTattooistDetail = async function(params, query) {
     }
 
     if (user['follows'].includes(tattooist['_id'])) {
-        return_value['isFollowed'] = true
+        tattooist_info['isFollowed'] = true
     }
 
-    return return_value
+    let return_value = []
+    if (params.filter === 'draft') {
+        for await (let draft_id of tattooist['drafts']) {
+            const draft = await Draft.findOne({ _id : draft_id })
+            const item = {
+                draft_id : draft['_id'],
+                image : draft['image'],
+                like : draft['like']
+            }
+
+            return_value.push(item)
+        }
+    } else if (params.filter === 'artwork') {
+        // mock-up
+        return_value.push({
+            artwork_id : "test_id",
+            image : "test_image",
+            cost : "test_cost",
+            time : "test_time"
+        })
+
+        // for await (let artwork_id of tattooist['artworks']) {
+        //     const artwork = await Tattoo.findOne({ _id : artwork_id })
+        //     const item = {
+        //         artwork_id : artwork['_id'],
+        //         image : artwork['image'],
+        //         cost : artwork['cost'],
+        //         time : artwork['time']
+        //     }
+        //
+        //     return_value.push(item)
+        // }
+    } else if (params.filter === 'reservation') {
+        return_value = tattooist['schedules']
+    } else {
+        console.log(ErrorTable['12'])
+        throw 12
+    }
+
+    return {tattooist_info, return_value}
+}
+
+exports.pageScrapCount = async function(params, query) {
+    const user = await User.findOne({ _id : query.user_id })
+    if (!user) {
+        console.log(ErrorTable["10"])
+        throw 10
+    }
+
+    const draft_count = user['scraps'].length
+    const tattooist_count = user['follows'].length
+
+    return {draft_count, tattooist_count}
 }
 
 exports.pageScrapDraft = async function(params, query) {
-    const count = await Draft.count()
-    if (count === 0) {
-        console.log(ErrorTable["5"])
-        throw 5
-    }
-
     const user = await User.findOne({ _id : query.user_id })
     if (!user) {
         console.log(ErrorTable["10"])
@@ -257,7 +346,7 @@ exports.pageScrapDraft = async function(params, query) {
     }
 
     let drafts = []
-    for await (let draft_id of user.scraps) {
+    for await (let draft_id of user['scraps']) {
         const draft = await Draft.findOne({ _id : draft_id })
         if(!draft) {
             await User.updateOne({ _id : query.user_id }, {$pull : { scraps : draft_id }})
@@ -271,30 +360,26 @@ exports.pageScrapDraft = async function(params, query) {
     drafts = drafts.slice(item_index_start, (item_index_start + Global.draftShowLimit))
 
     let return_value = []
-    for (let draft of drafts) {
+    for await (let draft of drafts) {
+        const drawer = await Tattooist.findOne({ _id : draft.drawer })
         const item = {
             draft_id : draft['_id'],
             image : draft['image'],
             title : draft['title'],
             like : draft['like'],
-            genre : draft['genre'],
-            keywords : draft['keywords'],
+            drawer_id : drawer['_id'],
+            drawer_image : drawer['image'],
+            drawer_nickname : drawer['nickname'],
             isScraped : true
         }
 
         return_value.push(item)
     }
 
-    return {count, return_value}
+    return return_value
 }
 
 exports.pageScrapTattooist = async function(params, query) {
-    const count = await Tattooist.count()
-    if (count === 0) {
-        console.log(ErrorTable["5"])
-        throw 5
-    }
-
     const user = await User.findOne({ _id : query.user_id })
     if (!user) {
         console.log(ErrorTable["10"])
@@ -302,7 +387,7 @@ exports.pageScrapTattooist = async function(params, query) {
     }
 
     let tattooists = []
-    for await (let tattooist_id of user.follows) {
+    for await (let tattooist_id of user['follows']) {
         const tattooist = await Tattooist.findOne({ _id : tattooist_id })
         if(!tattooist) {
             await User.updateOne({ _id : query.user_id }, {$pull : { follows : tattooist_id }})
@@ -320,60 +405,16 @@ exports.pageScrapTattooist = async function(params, query) {
         const item = {
             tattooist_id : tattooist['_id'],
             image : tattooist['image'],
-            nickname : tattooist['nickname'],
-            office : tattooist['office'],
-            contact : tattooist['contact'],
-            specialize : tattooist['specialize'],
-            followers : tattooist['followers'],
-            description : tattooist['description'],
+            nickname: tattooist['nickname'],
+            location: tattooist['location'],
+            specialize: tattooist['specialize'],
+            followers: tattooist['followers'],
+            description: tattooist['description'],
             isFollowed : true
         }
 
         return_value.push(item)
     }
 
-    return {count, return_value}
-}
-
-exports.pageMyTattoo = async function(query) {
-    const user = await User.findOne({ _id : query.user_id })
-    if (!user) {
-        console.log(ErrorTable["10"])
-        throw 10
-    }
-
-    // 탐색 결과 없음 오류
-    // if (user['tattoos'].length === 0) {
-    //     console.log(ErrorTable["5"])
-    //     throw 5
-    // }
-
-    // mock-up data
-    // original : interact with blockchain
-    let return_value = []
-    let tattoo1 = []
-    const state1 = { tattoo_id : "test_tattoo", state : "created", ink : "black, red", niddle : "niddle123", tattooist_id : "test_id_1", customer_id : "test_id_1" }
-    const state2 = { tattoo_id : "test_tattoo", state : "imprinting", ink : "black, red", niddle : "niddle123", tattooist_id : "test_id_1", customer_id : "test_id_1" }
-    const state3 = { tattoo_id : "test_tattoo", state : "imprinted", ink : "black, red", niddle : "niddle123", tattooist_id : "test_id_1", customer_id : "test_id_1" }
-    let tattoo2 = []
-    const state4 = { tattoo_id : "test_tattoo2", state : "created", ink : "black, red", niddle : "niddle123", tattooist_id : "test_id_1", customer_id : "test_id_1" }
-    const state5 = { tattoo_id : "test_tattoo2", state : "imprinting", ink : "black, red", niddle : "niddle123", tattooist_id : "test_id_1", customer_id : "test_id_1" }
-    const state6 = { tattoo_id : "test_tattoo2", state : "imprinted", ink : "black, red", niddle : "niddle123", tattooist_id : "test_id_1", customer_id : "test_id_1" }
-    const state7 = { tattoo_id : "test_tattoo2", state : "side-effected", ink : "black, red", niddle : "niddle123", tattooist_id : "test_id_1", customer_id : "test_id_1" }
-
-    tattoo1.push(state1, state2, state3)
-    tattoo2.push(state4, state5, state6, state7)
-    return_value.push(tattoo1, tattoo2)
-
     return return_value
-}
-
-exports.pageMyTattooDetail = async function(params, query) {
-    const user = await User.findOne({ _id : query.user_id })
-    if (!user) {
-        console.log(ErrorTable["10"])
-        throw 10
-    }
-
-    return "have not coded yet"
 }

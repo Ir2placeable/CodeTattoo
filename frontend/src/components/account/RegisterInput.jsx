@@ -136,7 +136,7 @@ const RegisterInput = ({ isTattooist }) => {
 
     console.log('body', body)
 
-    const res = await axios.post(`${APIURL}/register`, body)
+    const res = await axios.post(`${APIURL}/register/${body.filter}`, body)
     //console.log(res)
 
     if(res.data.success) {

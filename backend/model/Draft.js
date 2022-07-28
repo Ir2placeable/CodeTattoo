@@ -10,9 +10,6 @@ const draftSchema = mongoose.Schema({
     image : {
         type : String
     },
-    description : {
-        type : String
-    },
     like : {
         type : Number
     },

@@ -1,43 +1,70 @@
-const procedure = {
-    activator_id : {
-        type : String
-    },
-    using_items : {
-        type : [String]
-    },
-    date : {
-        type : Number
-    }
+const mongoose = require('mongoose')
+
+const TattooState = {
+    0 : "Created",
+    1 : "Reserved",
+    2 : "Tattooing",
+    3 : "Tattooed",
+    4 : "Retouched",
+    5 : "Covered-up",
+    6 : "Suspended"
 }
 
-const side_effect = {
-    activator_id : {
+const Activator = new mongoose.Schema({
+    id : {
+        type : String
+    },
+    nickname : {
+        type : String
+    }
+})
+
+const SideEffect = new mongoose.Schema({
+    image : {
         type : String
     },
     symptom : {
         type : String
+    },
+    date : {
+        type : Number
     }
-}
+})
 
-const world_state = {
-    // tattoo_id : {
-    //     type : String
-    // },
-    owner_id : {
+const TattooInfo  = new mongoose.Schema({
+    state : {
         type : String
     },
-    procedure : {
-        type: procedure
+    activator : {
+        type : Activator
     },
-    // state : { created, imprinting, imprinted, removing, removed }
-    state : {
-        type : String,
-        default : 'created'
+    timestamp : {
+        type : Number
+    },
+    cost : {
+        type : Number
+    },
+    image : {
+        type : [String]
+    },
+    body_part : {
+        type : String
+    },
+    inks : {
+        type : [String]
+    },
+    niddle : {
+        type : [String]
+    },
+    depth : {
+        type : Number
+    },
+    machine : {
+        type : String
     },
     side_effects : {
-        type : [side_effect]
+        type : [SideEffect]
     }
-}
+})
 
-
-module.exports = { world_state }
+module.exports = { TattooState, Activator, SideEffect, TattooInfo }
