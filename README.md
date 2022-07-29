@@ -16,7 +16,14 @@
 
 ## 영상자료
 
+<br/>
+
+
 ## 시스템 구성도
+
+<img width="700" alt="코드타투 시스템 구성도" src="https://user-images.githubusercontent.com/24891555/181719277-65bfb1b5-99a2-4ab7-8439-8b26d5477945.png">
+
+<br/>
 
 ## 팀원 소개
 
