@@ -16,22 +16,20 @@ exports.userLogin = async function(body) {
         throw 3
     }
 
-    user.comparePassword(body.pwd, (err, isMatch) => {
-        if(!isMatch) {
+    return await user.comparePassword(body.pwd).then((isMatch) => {
+        if (!isMatch) {
             // pwd 불일치 오류
             console.log(ErrorTable["2"])
             throw 2
         }
 
-        const return_value = {
-            user_id : user['_id'],
-            nickname : user['nickname'],
-            image : user['image'],
-            description : user['description']
+        return {
+            user_id: String(user['_id']),
+            nickname: user['nickname'],
+            image: user['image'],
+            description: user['description']
         }
-
-        return return_value
-    })
+    });
 }
 exports.userRegister = async function(body) {
     const user = await User.findOne({ email : body.email })
@@ -52,7 +50,7 @@ exports.userSignOut = async function(body) {
         throw 3
     }
 
-    user.comparePassword(body.pwd, (err, isMatch) => {
+    await user.comparePassword(body.pwd, (err, isMatch) => {
         if(!isMatch) {
             // pwd 불일치 오류
             console.log(ErrorTable["2"])
@@ -78,22 +76,20 @@ exports.tattooistLogin = async function(body) {
         throw 4
     }
 
-    tattooist.comparePassword(body.pwd, (err, isMatch) => {
-        if(!isMatch) {
+    return await tattooist.comparePassword(body.pwd).then((isMatch) => {
+        if (!isMatch) {
             // pwd 불일치 오류
             console.log(ErrorTable["2"])
             throw 2
         }
 
-        const return_value = {
-            tattooist_id : tattooist['_id'],
+        return {
+            tattooist_id : String(tattooist['_id']),
             nickname : tattooist['nickname'],
             image : tattooist['image'],
             description : tattooist['description']
         }
-
-        return return_value
-    })
+    });
 }
 exports.tattooistRegister = async function(body) {
     const tattooist = await Tattooist.findOne({ email : body.email })

@@ -1,6 +1,10 @@
 const guest = require('./logic/guest')
 const user = require('./logic/user')
 const tattooist = require('./logic/tattooist')
+const admin = require('./logic/admin')
+
+const mongoose = require("mongoose");
+const config = require('./config/key')
 
 const express = require('express')
 const server = express()
@@ -34,6 +38,7 @@ server.post('/register/:type', (req, res) => {
                 res.send({ success : true })
             })
             .catch((err) => {
+                console.log(err)
                 res.send({ success : false, code : err })
             })
     } else if (req.params.type === 'tattooist') {
@@ -57,7 +62,7 @@ server.post('/login/:type', (req, res) => {
     if (req.params.type === 'user') {
         guest.userLogin(req.body)
             .then((returned) => {
-                res.send({ success : true, user_info : returned })
+                res.send({success : true, user_info : returned })
             })
             .catch((err) => {
                 res.send({ success : false, code : err })
@@ -343,8 +348,30 @@ server.get('/connections', (req, res) => {
     const connections = guest.getConnections()
     res.send({ connections : connections })
 })
-
+// User 초기화
+server.get('/reset/user', (req, res) => {
+    admin.resetUser()
+        .then(() => { res.send({ success : true })})
+})
+// Draft 초기화
+server.get('/reset/draft', (req, res) => {
+    admin.resetDraft()
+        .then(() => { res.send({ success : true })})
+})
+// Tattooist 초기화
+server.get('/reset/tattooist', (req, res) => {
+    admin.resetUser()
+        .then(() => { res.send({ success : true })})
+})
+// Tattoo 초기화
+server.get('/reset/tattoo', (req, res) => {
+    admin.resetTattoo()
+        .then(() => { res.send({ success : true })})
+})
 
 server.listen(PORT, () => {
     console.log('server opened')
+    mongoose.connect(config.mongoURI)
+        .then(() => { console.log('db connected')} )
+        .catch(() => { console.log('db connect failed')} )
 })

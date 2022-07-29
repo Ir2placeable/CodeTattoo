@@ -62,12 +62,9 @@ tattooistSchema.pre('save', function (next) {
     }
 })
 
-tattooistSchema.methods.comparePassword = function (plainPassword, cb) {
-    bcrypt.compare(plainPassword, this.pwd, function (err, isMatch) {
-        if (err) return cb(err);
-        cb(null, isMatch);
-    });
-};
+tattooistSchema.methods.comparePassword = async function (plainPassword) {
+    return await bcrypt.compare(plainPassword, this.pwd)
+}
 
 const Tattooist = mongoose.model('Tattooist', tattooistSchema)
 
