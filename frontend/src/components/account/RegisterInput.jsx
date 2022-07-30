@@ -8,9 +8,17 @@ import {
 } from '../../styledComponents';
 import { useNavigate } from 'react-router-dom';
 
-const errorBox = {
-  borderColor: 'red'
-}
+// - POST : /register/user
+// - Body : { email, pwd, nickname, location }
+// - Return : { success }
+// - Error code
+//     - err 1 : email 중복
+
+// - POST : /register/tattooist
+// - Body : { email, pwd, nickname, location, office_detail, contact }
+// - Return : { success }
+// - Error code
+//     - err 1 : email 중복
 
 const RegisterInput = ({ isTattooist }) => {
   // 이메일 유효성 검사
@@ -25,15 +33,17 @@ const RegisterInput = ({ isTattooist }) => {
     pwd: '',
     pwd2: '',
     nickname: '',
+    location: '',
     office: '',
     contact: ''
   })
 
-  const { email, pwd, pwd2, nickname, office, contact } = info;
+  const { email, pwd, pwd2, nickname, location, office, contact } = info;
   const emailInput = useRef();
   const pwdInput = useRef();
   const pwd2Input = useRef();
   const nickInput = useRef();
+  const locInput = useRef();
   const officeInput = useRef();
   const contactInput = useRef();
 
@@ -106,12 +116,14 @@ const RegisterInput = ({ isTattooist }) => {
       } else if(e.target.name === 'pwd2'){
         nickInput.current.focus();
       } else if(e.target.name === 'nickname') {
+        locInput.current.focus();
+      } else if(e.target.name === 'location'){
         if(!isTattooist){
           onSubmit();
         } else {
           officeInput.current.focus();
         }
-      } else if(e.target.name === 'office') {
+      }else if(e.target.name === 'office') {
         contactInput.current.focus();
       } else if(e.target.name === 'contact') {
         onSubmit();
@@ -125,7 +137,8 @@ const RegisterInput = ({ isTattooist }) => {
       filter: 'user',
       email: email,
       pwd: pwd,
-      nickname: nickname
+      nickname: nickname,
+      location: location,
     }
 
     if(isTattooist){
@@ -137,7 +150,7 @@ const RegisterInput = ({ isTattooist }) => {
     console.log('body', body)
 
     const res = await axios.post(`${APIURL}/register/${body.filter}`, body)
-    //console.log(res)
+    console.log(res)
 
     if(res.data.success) {
       // 회원가입 성공 : 로그인 페이지로
@@ -146,7 +159,7 @@ const RegisterInput = ({ isTattooist }) => {
     } else {
       // 회원가입 실패 : 이메일 중복
       alert('이미 존재하는 이메일입니다.')
-      window.location.replace('/register')
+      //window.location.replace('/register')
     }
     
   }
@@ -226,6 +239,20 @@ const RegisterInput = ({ isTattooist }) => {
             autoComplete='nope'
             value={nickname}
             ref={nickInput}
+            onChange={onChange}
+            onKeyUp={onKeyUp}
+          />
+        </AccountInputBox>
+
+        <AccountInputBox>
+          <AccountLabel>사는곳 <span style={{color: 'red'}}>*</span></AccountLabel>
+          <AccountInput 
+            type="text"
+            name="location"
+            placeholder='닉네임을 입력해주세요'
+            autoComplete='nope'
+            value={location}
+            ref={locInput}
             onChange={onChange}
             onKeyUp={onKeyUp}
           />

@@ -23,6 +23,7 @@ import ShowMyPage from "./pages/ShowMyPage";
 import Navigation from "./components/organisms/common/Navigation";
 import ShowEntry from "./pages/ShowEntry";
 import ShowDraftList from "./pages/ShowDraftList";
+import DraftList from "./components/templates/DraftList";
 
 const App = () => {
   const sendRequest = async () => {
@@ -50,7 +51,12 @@ const App = () => {
           {/* Main page */}
           <Route path="/" element={<MainPage />}>
             {/* 도안 상세 */}
-            <Route path="draft" element={<ShowDraftDetail />} />
+            {/* <Route path="draft" element={<ShowDraftDetail />} */}
+            <Route path="draft" element={<ShowDraftList />}>
+              <Route path="best" element={<DraftList filter="best" />} />
+              <Route path="all" element={<DraftList filter="all" />} />
+              <Route path="search/:title" />
+            </Route>
 
             {/* 타투이스트 목록 */}
             <Route path="tattooist" element={<ShowTattooistList />}>

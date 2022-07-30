@@ -5,6 +5,8 @@ import useTattooistList from "../hooks/useTattooistList";
 import { useLocation } from "react-router-dom";
 import { useState } from "react";
 
+import SmallNav from "../components/organisms/common/SmallNav";
+
 const ShowTattooistList = ({ cookies }) => {
   const [page, setPage] = useState(1);
   const [pages, setPages] = useState([]);
@@ -46,15 +48,15 @@ const ShowTattooistList = ({ cookies }) => {
   console.log(`Show Tattooist List`);
   return (
     <>
-      {/*<SmallNavigationComp
+      <SmallNav
         data={[
           { text: "root", path: "/tattooist" },
           { text: "Best", path: "/tattooist/best" },
           { text: "All", path: "/tattooist/all" },
         ]}
-        searchBox={true}
-        location={1}
-      /> */}
+        isSearch={true}
+        loc={2}
+      />
 
       <ContentsDiv>
         <ListDiv>

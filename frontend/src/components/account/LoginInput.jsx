@@ -9,6 +9,27 @@ import {
 import { useNavigate } from 'react-router-dom';
 import { setCookie } from '../../config/cookie';
 
+// ### 로그인 페이지 : 유저
+
+// - POST : /login/user
+// - Body : { email, pwd }
+// - Return : { success, user_info }
+//     - user_info = { user_id, nickname, image }
+// - Error code
+//     - err 2 : email + pwd 조합 불일치
+//     - err 3 : 해당 user 없음
+// - [기능정리링크](https://www.notion.so/a78a53207d0740eba3637a8316c1b0a0)
+
+// ### 로그인 페이지 : 타투이스트
+
+// - POST : /login/tattooist
+// - Body : { email, pwd }
+// - Return : { success, tattooist_info }
+//     - tattooist_info = { tattooist_id, nickname, image, description }
+// - Error code
+//     - err 2 : email + pwd 조합 불일치
+//     - err 4 : 해당 tattooist 없음
+
 const LoginInput = ({ isTattooist }) => {
   const [info, setInfo] = useState({
     email: '',
@@ -53,7 +74,6 @@ const LoginInput = ({ isTattooist }) => {
       setCookie("profile_img_src", data.user_info.image , {maxAge: 3000, path: '/'})
       setCookie("profile_desc", data.user_info.description , {maxAge: 3000, path: '/'})
     }
-    
   }
 
   const loginRequest = async() => {
@@ -68,6 +88,8 @@ const LoginInput = ({ isTattooist }) => {
       email: email,
       pwd: pwd
     })
+
+    console.log('login response: ',res);
 
     if(res.data.success){
       // 쿠키에 nickname, id 저장
@@ -84,6 +106,7 @@ const LoginInput = ({ isTattooist }) => {
       window.location.replace('/login')
     }
   }
+
   const onSubmit = () => {
     if(!email || !pwd){
       alert('모든 정보를 입력해주세요.')
