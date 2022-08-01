@@ -210,15 +210,15 @@ exports.pageDraftDetail = async function(params) {
         console.log(ErrorTable["7"])
         throw 7
     }
-    const drawer = await Tattooist.findOne({ _id : draft['drawer'] })
+    const tattooist = await Tattooist.findOne({ _id : draft['drawer'] })
     const return_value = {
         draft_id : draft['_id'],
         image : draft['image'],
         title : draft['title'],
         like : draft['like'],
-        drawer_id : drawer['_id'],
-        drawer_nickname : drawer['nickname'],
-        drawer_location : drawer['location'],
+        drawer_id : tattooist['_id'],
+        drawer_nickname : tattooist['nickname'],
+        drawer_location : tattooist['location'],
         genre : draft['genre'],
         keywords : draft['keywords'],
         isScraped : false,

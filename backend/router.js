@@ -90,7 +90,7 @@ server.post('/login/:type', (req, res) => {
     }
 })
 // 회원탈퇴
-server.post('sign-out/:type', (req, res) => {
+server.post('/sign-out/:type', (req, res) => {
     console.log('\n')
     console.log('command : sign-out for ', req.params.type)
     console.log('body : ', req.body)
@@ -184,8 +184,13 @@ server.get('/draft/:id', (req, res) => {
     else if (req.query['tattooist_id']) {
         console.log('query : ', req.query)
         console.log('tattooist view')
-
-
+        tattooist.pageDraftDetail(req.params, req.query)
+            .then((returned) => {
+                res.send({ success : true, draft : returned })
+            })
+            .catch((err) => {
+                res.send({ success : false, code : err })
+            })
     }
     // guest view
     else {
@@ -220,8 +225,13 @@ server.get('/tattooists/:filter/:page', (req, res) => {
     // tattooist view
     else if (req.query['tattooist_id']) {
         console.log('tattooist view')
-
-
+        tattooist.pageTattooist(req.params, req.query)
+            .then((returned) => {
+                res.send({ success : true, count : returned.count, tattooists : returned.return_value })
+            })
+            .catch((err) => {
+                res.send({ success : false, code : err })
+            })
     }
     // guest view
     else {
@@ -257,8 +267,13 @@ server.get('/tattooist/:filter/:id', (req, res) => {
     else if (req.query['tattooist_id']) {
         console.log('query : ', req.query)
         console.log('tattooist view')
-
-
+        tattooist.pageTattooistDetail(req.params, req.query)
+            .then((returned) => {
+                res.send({ success : true, tattooist : returned.tattooist_info, data : returned.return_value })
+            })
+            .catch((err) => {
+                res.send({ success : false, code : err })
+            })
     }
     // guest view
     else {
@@ -377,7 +392,17 @@ server.post('/user/my-page/:id', (req, res) => {
 
 // 타투이스트 마이페이지
 server.get('/tattooist/my-page/:filter/:id', (req, res) => {
+    console.log('\n')
+    console.log('page : Tattooist My page')
+    console.log('params : ', req.params)
 
+    tattooist.pageMyPage(req.params)
+        .then((returned) => {
+            res.send({ success : true, tattooist : returned.user_info, tattoos : returned.return_value })
+        })
+        .catch((err) => {
+            res.send({ success : false, code : err })
+        })
 })
 // 타투이스트 정보 수정
 server.patch('/tattooist/my-page/:filter/:id', (req, res) => {
