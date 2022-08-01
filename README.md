@@ -1,4 +1,7 @@
 # 코드타투 : CodeTattoo
+<img src="https://user-images.githubusercontent.com/24891555/182070581-23c06bf7-0e51-4e19-8a96-564450bb1793.png" width=300>
+
+
 [2022 공개SW 개발자대회](https://www.oss.kr/dev_competition)에 출품하는 프로젝트임을 밝힙니다.
 
 <br/>
