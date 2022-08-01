@@ -9,6 +9,7 @@ const ErrorTable = require('../ErrorTable')
 let connections = 0
 
 exports.userLogin = async function(body) {
+    // 입력한 email 데이터 존재 여부 확인
     const user = await User.findOne({ email : body.email })
     if(!user) {
         // 해당 user 없음 오류
@@ -16,13 +17,15 @@ exports.userLogin = async function(body) {
         throw 3
     }
 
+    // hashed password 일치 여부 확인
     return await user.comparePassword(body.pwd).then((isMatch) => {
         if (!isMatch) {
-            // pwd 불일치 오류
+            // hashed password 불일치 오류
             console.log(ErrorTable["2"])
             throw 2
         }
 
+        // hashed password 일치하는 경우 Cookie로 사용될 데이터 반환
         return {
             user_id: String(user['_id']),
             nickname: user['nickname'],
@@ -32,17 +35,20 @@ exports.userLogin = async function(body) {
     });
 }
 exports.userRegister = async function(body) {
+    // email 중복 파악하기
     const user = await User.findOne({ email : body.email })
     if (user) {
-        // email 중복 오류
+        // email 중복 오류 시 Return Error Code
         console.log(ErrorTable["1"])
         throw 1
     }
 
+    // email 중복이 없는 경우에는, 입력된 데이터를 DB에 저장
     const new_user = new User(body)
     await new_user.save()
 }
 exports.userSignOut = async function(body) {
+    // 입력한 email 데이터 존재 여부 확인
     const user = await User.findOne({ email : body.email })
     if(!user) {
         // 해당 user 없음 오류
@@ -50,6 +56,7 @@ exports.userSignOut = async function(body) {
         throw 3
     }
 
+    // hashed password 일치 여부 확인
     await user.comparePassword(body.pwd, (err, isMatch) => {
         if(!isMatch) {
             // pwd 불일치 오류
@@ -58,17 +65,21 @@ exports.userSignOut = async function(body) {
         }
     })
 
+    // 유저가 스크랩한 도안의 좋아요 수 감소
     for await (let draft_id of user['scraps']) {
         await Draft.updateOne({ _id : draft_id }, {$inc : { like : -1 }})
     }
+    // 유저가 팔로우한 타투이스트의 팔로우 수 감소
     for await (let tattooist_id of user['follows']) {
         await Tattooist.updateOne({ _id : tattooist_id }, {$inc : { follower : -1 }})
     }
 
+    // 유저 데이터 삭제
     await User.deleteOne({ email : body.email })
 }
 
 exports.tattooistLogin = async function(body) {
+    // 입력한 email 데이터 존재 여부 확인
     const tattooist = await Tattooist.findOne({ email : body.email })
     if(!tattooist) {
         // 해당 tattooist 없음 오류
@@ -76,6 +87,7 @@ exports.tattooistLogin = async function(body) {
         throw 4
     }
 
+    // hashed password 일치 여부 확인
     return await tattooist.comparePassword(body.pwd).then((isMatch) => {
         if (!isMatch) {
             // pwd 불일치 오류
@@ -83,6 +95,7 @@ exports.tattooistLogin = async function(body) {
             throw 2
         }
 
+        // hashed password 일치하는 경우 Cookie로 사용될 데이터 반환
         return {
             tattooist_id : String(tattooist['_id']),
             nickname : tattooist['nickname'],
@@ -92,17 +105,20 @@ exports.tattooistLogin = async function(body) {
     });
 }
 exports.tattooistRegister = async function(body) {
+    // email 중복 파악하기
     const tattooist = await Tattooist.findOne({ email : body.email })
     if (tattooist) {
-        // email 중복 오류
+        // email 중복 오류 시 Return Error Code
         console.log(ErrorTable["1"])
         throw 1
     }
 
+    // email 중복이 없는 경우에는, 입력된 데이터를 DB에 저장
     const new_tattooist = new Tattooist(body)
     await new_tattooist.save()
 }
 exports.tattooistSignOut = async function(body) {
+    // 입력한 email 데이터 존재 여부 확인
     const tattooist = await Tattooist.findOne({ email : body.email })
     if(!tattooist) {
         // 해당 tattooist 없음 오류
@@ -110,7 +126,8 @@ exports.tattooistSignOut = async function(body) {
         throw 4
     }
 
-    tattooist.comparePassword(body.pwd, (err, isMatch) => {
+    // hashed password 일치 여부 확인
+    await tattooist.comparePassword(body.pwd, (err, isMatch) => {
         if(!isMatch) {
             // pwd 불일치 오류
             console.log(ErrorTable["2"])
@@ -118,14 +135,17 @@ exports.tattooistSignOut = async function(body) {
         }
     })
 
+    // 타투이스트가 생성한 도안 데이터 삭제
     for await (let draft_id of tattooist['drafts']) {
         await Draft.deleteOne({ _id : draft_id })
     }
 
+    // 타투이스트 데이터 삭제
     await Tattooist.deleteOne({ email : body.email })
 }
 
 exports.pageEntry = function() {
+    // 접속자 수 파악을 위한 변수 connections
     connections += 1
 }
 exports.pageDraft = async function(params, query) {

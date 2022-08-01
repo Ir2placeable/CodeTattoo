@@ -32,6 +32,7 @@ server.post('/register/:type', (req, res) => {
     console.log('command : register for', req.params.type)
     console.log('body : ', req.body)
 
+    // user view
     if (req.params.type === 'user') {
         guest.userRegister(req.body)
             .then(() => {
@@ -41,7 +42,9 @@ server.post('/register/:type', (req, res) => {
                 console.log(err)
                 res.send({ success : false, code : err })
             })
-    } else if (req.params.type === 'tattooist') {
+    }
+    // tattooist view
+    else if (req.params.type === 'tattooist') {
         guest.tattooistRegister(req.body)
             .then(() => {
                 res.send({ success : true })
@@ -49,7 +52,9 @@ server.post('/register/:type', (req, res) => {
             .catch((err) => {
                 res.send({ success : false, code : err })
             })
-    } else {
+    }
+    // wrong type error
+    else {
         res.send({ success : false, code : 12 })
     }
 })
@@ -59,6 +64,7 @@ server.post('/login/:type', (req, res) => {
     console.log('command : login for ', req.params.type)
     console.log('body : ', req.body)
 
+    // user view
     if (req.params.type === 'user') {
         guest.userLogin(req.body)
             .then((returned) => {
@@ -67,7 +73,9 @@ server.post('/login/:type', (req, res) => {
             .catch((err) => {
                 res.send({ success : false, code : err })
             })
-    } else if (req.params.type === 'tattooist') {
+    }
+    // tattooist view
+    else if (req.params.type === 'tattooist') {
         guest.tattooistLogin(req.body)
             .then((returned) => {
                 res.send({ success : true, tattooist_info : returned })
@@ -75,7 +83,9 @@ server.post('/login/:type', (req, res) => {
             .catch((err) => {
                 res.send({ success : false, code : err })
             })
-    } else {
+    }
+    // wrong type error
+    else {
         res.send({ success : false, code : 12 })
     }
 })
@@ -85,6 +95,7 @@ server.post('sign-out/:type', (req, res) => {
     console.log('command : sign-out for ', req.params.type)
     console.log('body : ', req.body)
 
+    // user view
     if (req.params.type === 'user') {
         guest.userSignOut(req.body)
             .then((returned) => {
@@ -93,7 +104,9 @@ server.post('sign-out/:type', (req, res) => {
             .catch((err) => {
                 res.send({ success : false, code : err })
             })
-    } else if (req.params.type === 'tattooist') {
+    }
+    // tattooist view
+    else if (req.params.type === 'tattooist') {
         guest.tattooistSignOut(req.body)
             .then((returned) => {
                 res.send({ success : true })
@@ -101,7 +114,9 @@ server.post('sign-out/:type', (req, res) => {
             .catch((err) => {
                 res.send({ success : false, code : err })
             })
-    } else {
+    }
+    // wrong type error
+    else {
         res.send({ success : false, code : 12 })
     }
 })
@@ -113,6 +128,7 @@ server.get('/drafts/:filter/:page', (req, res) => {
     console.log('params : ', req.params)
     console.log('query : ', req.query)
 
+    // user view
     if (req.query['user_id']) {
         console.log('user view')
         user.pageDraft(req.params, req.query)
@@ -123,10 +139,19 @@ server.get('/drafts/:filter/:page', (req, res) => {
                 res.send({ success : false, code : err })
             })
     }
+    // tattooist view
     else if (req.query['tattooist_id']) {
         console.log('tattooist view')
-
-    } else {
+        tattooist.pageDraft(req.params, req.query)
+            .then((returned) => {
+                res.send({ success : true, count : returned.count, drafts : returned.return_value })
+            })
+            .catch((err) => {
+                res.send({ success : false, code : err })
+            })
+    }
+    // guest view
+    else {
         console.log('guest view')
         guest.pageDraft(req.params, req.query)
             .then((returned) => {
@@ -143,6 +168,7 @@ server.get('/draft/:id', (req, res) => {
     console.log('page : Draft detail')
     console.log('params : ', req.params)
 
+    // user view
     if (req.query['user_id']) {
         console.log('query : ', req.query)
         console.log('user view')
@@ -153,12 +179,16 @@ server.get('/draft/:id', (req, res) => {
             .catch((err) => {
                 res.send({ success : false, code : err })
             })
-    } else if (req.query['tattooist_id']) {
+    }
+    // tattooist view
+    else if (req.query['tattooist_id']) {
         console.log('query : ', req.query)
         console.log('tattooist view')
 
 
-    } else {
+    }
+    // guest view
+    else {
         console.log('guest view')
         guest.pageDraftDetail(req.params)
             .then((returned) => {
@@ -176,6 +206,7 @@ server.get('/tattooists/:filter/:page', (req, res) => {
     console.log('params : ', req.params)
     console.log('query : ', req.query)
 
+    // user view
     if (req.query['user_id']) {
         console.log('user view')
         user.pageTattooist(req.params, req.query)
@@ -185,11 +216,15 @@ server.get('/tattooists/:filter/:page', (req, res) => {
             .catch((err) => {
                 res.send({ success : false, code : err })
             })
-    } else if (req.query['tattooist_id']) {
+    }
+    // tattooist view
+    else if (req.query['tattooist_id']) {
         console.log('tattooist view')
 
 
-    } else {
+    }
+    // guest view
+    else {
         console.log('guest view')
         guest.pageTattooist(req.params, req.query)
             .then((returned) => {
@@ -206,6 +241,7 @@ server.get('/tattooist/:filter/:id', (req, res) => {
     console.log('page : Tattooist detail')
     console.log('params : ', req.params)
 
+    // user view
     if (req.query['user_id']) {
         console.log('query : ', req.query)
         console.log('user view')
@@ -216,12 +252,16 @@ server.get('/tattooist/:filter/:id', (req, res) => {
             .catch((err) => {
                 res.send({ success : false, code : err })
             })
-    } else if (req.query['tattooist_id']) {
+    }
+    // tattooist view
+    else if (req.query['tattooist_id']) {
         console.log('query : ', req.query)
         console.log('tattooist view')
 
 
-    } else {
+    }
+    // guest view
+    else {
         console.log('guest view')
         guest.pageTattooistDetail(req.params)
             .then((returned) => {
@@ -239,6 +279,7 @@ server.get('/scraps/:filter/:page', (req, res) => {
     console.log('params : ', req.params)
     console.log('body : ', req.query)
 
+    // scrap : draft menu
     if (req.params.filter === 'draft') {
         user.pageScrapDraft(req.params, req.query)
             .then((returned) => {
@@ -247,7 +288,9 @@ server.get('/scraps/:filter/:page', (req, res) => {
             .catch((err) => {
                 res.send({ success : false, code : err })
             })
-    } else if (req.params.filter === 'tattooist') {
+    }
+    // scrap : tattooist menu
+    else if (req.params.filter === 'tattooist') {
         user.pageScrapTattooist(req.params, req.query)
             .then((returned) => {
                 res.send({ success : true, tattooists : returned })
@@ -255,7 +298,9 @@ server.get('/scraps/:filter/:page', (req, res) => {
             .catch((err) => {
                 res.send({ success : false, code : err })
             })
-    } else if (req.params.filter === 'count') {
+    }
+    // scrap : initialize
+    else if (req.params.filter === 'count') {
         user.pageScrapCount(req.params, req.query)
             .then((returned) => {
                 res.send({ success : true, draft_count : returned.draft_count, tattooist_count : returned.tattooist_count })
@@ -264,6 +309,7 @@ server.get('/scraps/:filter/:page', (req, res) => {
                 res.send({ success : false, code : err })
             })
     }
+    // wrong filter error
     else {
         res.send({ success : false, code : 12 })
     }
@@ -344,6 +390,7 @@ server.post('/tattooist/my-page/:filter/:id', (req, res) => {
 
 
 // admin
+// entry page 접속자 수 확인
 server.get('/connections', (req, res) => {
     const connections = guest.getConnections()
     res.send({ connections : connections })
