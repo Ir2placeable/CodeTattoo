@@ -24,6 +24,9 @@ import Navigation from "./components/organisms/common/Navigation";
 import ShowEntry from "./pages/ShowEntry";
 import ShowDraftList from "./pages/ShowDraftList";
 import DraftList from "./components/templates/DraftList";
+import ShowDraftUpload from "./pages/ShowDraftUpload";
+import DraftUpload from "./components/templates/DraftUpload";
+import ShowScrap from "./pages/ShowScrap";
 import ShowTattooistDetail from "./pages/ShowTattooistDetail";
 import TattooistDetailDraft from "./components/templates/TattooistDetailDraft";
 import TattooistDetailArtwork from "./components/templates/TattooistDetailArtwork";
@@ -48,10 +51,11 @@ const App = () => {
 
       {/* HEADER */}
       <Header />
-      <Navigation />
+      {/* <Navigation /> */}
       {/* Main Container */}
       <MainPageDiv>
         <Routes>
+
           {/* Main page */}
           <Route path="/" element={<MainPage />}>
             {/* 도안 목록 */}
@@ -60,8 +64,13 @@ const App = () => {
               <Route path="all" element={<DraftList filter="all" />} />
               <Route path="search/:title" />
             </Route>
+
+            {/* 도안 등록 - 타투이스트만 해당 */}
+            <Route path="upload" element={<ShowDraftUpload />}/>
+
             {/* 도안 상세 */}
             <Route path="draft/:draft_id" element={<ShowDraftDetail />} />
+
             {/* 타투이스트 목록 */}
             <Route path="tattooists" element={<ShowTattooistList />}>
               <Route path="best" element={<TattooistList />} />
@@ -79,7 +88,19 @@ const App = () => {
             <Route path="my-page" element={<ShowMyPage />}>
               <Route path="user/:user_id" element={<ShowMyTattoo />} />
             </Route>
+
+            {/* 예약 */}
+            <Route path="reservation" element={<div>예약</div>} />
+
+            {/* 스크랩 */}
+            <Route path="scrap" element={<ShowScrap />} >
+              <Route path="draft" element={<div>냥</div>} />
+              <Route path="tattooist" element={<div>냥</div>} />
+            </Route>
+
           </Route>
+
+
           {/* 로그인, 회원가입 */}
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />

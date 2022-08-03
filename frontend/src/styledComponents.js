@@ -1195,6 +1195,21 @@ export const XMarkStyle = {
   height: "15px",
 };
 
+// Draft upload button
+export const GoUpload = styled.div`
+background-color: black;
+width: 100px;
+line-height: 40px;
+text-align: center;
+border-radius: 8px;
+color: white;
+font-weight: bold;
+cursor: pointer;
+position: absolute;
+top: 30px;
+right: 0;
+`
+
 // =================== FOOTER ==========================
 export const FooterDiv = styled.footer`
   background-color: #484848;
