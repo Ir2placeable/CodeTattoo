@@ -1,5 +1,6 @@
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
+import { getCookie } from '../config/cookie';
 import { APIURL } from '../config/key';
 
 // ### 게스트 페이지 : 도안
@@ -41,7 +42,13 @@ const useDraftList = ({ filter, page }) => {
   const [drafts, setDrafts] = useState([]);
 
   const sendRequest = async() => {
-    const res = await axios.get(`${APIURL}/drafts/${filter}/${page}`);
+    let query = ""
+
+    if(getCookie('user_id')){
+      query = `?user_id=${getCookie('user_id')}`
+    }
+
+    const res = await axios.get(`${APIURL}/drafts/${filter}/${page}${query}`);
 
     //console.log(res);
     if(res.data.success){

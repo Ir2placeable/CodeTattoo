@@ -6,7 +6,7 @@ import {
   HeaderSubMenu,
 } from '../../styledComponents';
 import HeaderBtnComp from './HeaderBtnComp';
-import { getCookie } from '../../config/cookie';
+import { getAllCookie, getCookie } from '../../config/cookie';
 import LogoutBtn from './LogoutBtn';
 import GoMypage from './GoMypage';
 
@@ -21,10 +21,10 @@ const Header = () => {
       setIsLogin(false);
     }
 
-  }, []);
+  }, [getCookie('user_id'), getCookie('tattooist_id')]);
 
   const goHome = () => {
-    window.location.replace('/')
+    window.location.replace('/draft/best')
   }
 
   return (
