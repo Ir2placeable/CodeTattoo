@@ -28,7 +28,7 @@ export const Btn = styled.div`
 export const HorizontalLine = styled.div`
   width: 90%;
   border-bottom: 1px solid #aaa;
-  margin: 10px 0 20px;
+  margin: 10px 0 15px;
 `;
 
 export const ContentsDiv = styled.div`
@@ -207,24 +207,24 @@ export const AccountOtherBtn = styled.div`
 
 // *** Entry page ***
 export const EntryDiv = styled.div`
-width: 100%;
-height: 800px;
-display: flex;
-justify-content: center;
-align-items: center;
-`
+  width: 100%;
+  height: 800px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
 export const EntryBtnDiv = styled.div`
-width: 300px;
-line-height: 300px;
-text-align: center;
-margin: 0 30px;
-background-color: black;
-font-weight: bold;
-font-size: 30px;
-color: white;
-cursor: pointer;
-border-radius: 10px;
-`
+  width: 300px;
+  line-height: 300px;
+  text-align: center;
+  margin: 0 30px;
+  background-color: black;
+  font-weight: bold;
+  font-size: 30px;
+  color: white;
+  cursor: pointer;
+  border-radius: 10px;
+`;
 
 // *** Main Page ***
 export const MainPageDiv = styled.div`
@@ -316,7 +316,7 @@ export const SearchIconStyle = {
 // *** Show MyTattoo ***
 
 export const MyTattooMainBox = styled.div`
-  width: 1500px;
+  width: 1350px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -325,7 +325,7 @@ export const MyTattooMainBox = styled.div`
 
 export const MyTattooContainer = styled.div`
   display: flex;
-  min-width: 1500px;
+  width: 1350px;
   min-height: 450px;
   justify-content: space-between;
   align-items: center;
@@ -339,11 +339,11 @@ export const MyTattooImg = styled.img`
   width: 300px;
   height: 300px;
   background-color: rgba(72, 72, 72);
-  margin: 0 60px;
+  margin-left: 30px;
 `;
 
 export const MyTattooStateBox = styled.div`
-  width: 1050px;
+  width: 950px;
   display: flex;
   padding: 0 20px;
 `;
@@ -423,6 +423,20 @@ export const TattooistButton = styled.div`
     `}
 `;
 
+// *** Show Tattooist Detil ***
+
+export const GridDiv = styled.div`
+  width: 990px;
+  display: flex;
+  flex-wrap: wrap;
+`;
+
+export const Item = styled.div`
+  width: 300px;
+  height: 300px;
+  background-color: #444;
+  margin: 15px;
+`;
 // *** Show Draft Detail ***
 export const DraftDetailMainBox = styled.div`
   width: 100%;
@@ -609,6 +623,40 @@ export const ProfileEdit = styled.div`
   cursor: pointer;
 `;
 
+export const MyPageNavigation = styled.div`
+  border-bottom: 1px solid rgba(72, 72, 72, 0.5);
+  width: 70%;
+  height: 50px;
+`;
+
+export const MyPageNavigationInner = styled.div`
+  margin: 0 auto;
+  height: 100%;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+export const MyPageNavigationBtn = styled.div`
+  box-sizing: border-box;
+  height: 100%;
+  font-size: 16px;
+  font-weight: bold;
+  color: rgba(72, 72, 72, 0.5);
+  border: 3px solid white;
+  width: 20%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+`;
+
+export const MyPageNavigationBtnStyle = {
+  color: "black",
+  borderBottom: "3px solid black",
+};
+
 // *** Show Draft List ***
 export const DraftListDiv = styled.div`
   width: 100%;
@@ -643,7 +691,7 @@ export const DraftMainBox = styled.div`
 
 export const DraftImgBox = styled.div`
   margin: 20px 15px;
-  background-color: #E4E8F0;
+  background-color: #e4e8f0;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -655,29 +703,29 @@ export const DraftImgBox = styled.div`
 `;
 
 export const DraftDrawerDiv = styled.div`
-display: flex;
-justify-content: stretch;
-align-items: center;
-//background-color: orange;
-margin-bottom: 10px;
-width: max-content;
-cursor: pointer;
-margin-left: 20px;
-`
+  display: flex;
+  justify-content: stretch;
+  align-items: center;
+  //background-color: orange;
+  margin-bottom: 10px;
+  width: max-content;
+  cursor: pointer;
+  margin-left: 20px;
+`;
 
 export const DraftDrawer = styled.p`
-margin-left: 20px;
-`
+  margin-left: 20px;
+`;
 
 export const DraftDrawerImg = styled.img`
-display: inline-block;
-width: 35px;
-height: 35px;
-background-color: black;
-border-radius: 50%;
-border: 2px solid black;
-object-fit: contain;
-`
+  display: inline-block;
+  width: 35px;
+  height: 35px;
+  background-color: black;
+  border-radius: 50%;
+  border: 2px solid black;
+  object-fit: contain;
+`;
 
 export const DraftImg = styled.img`
   width: 300px;

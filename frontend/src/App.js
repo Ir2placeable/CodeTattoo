@@ -24,6 +24,10 @@ import Navigation from "./components/organisms/common/Navigation";
 import ShowEntry from "./pages/ShowEntry";
 import ShowDraftList from "./pages/ShowDraftList";
 import DraftList from "./components/templates/DraftList";
+import ShowTattooistDetail from "./pages/ShowTattooistDetail";
+import TattooistDetailDraft from "./components/templates/TattooistDetailDraft";
+import TattooistDetailArtwork from "./components/templates/TattooistDetailArtwork";
+import TattooistDetailReservation from "./components/templates/TattooistDetailReservation";
 
 const App = () => {
   const sendRequest = async () => {
@@ -50,42 +54,38 @@ const App = () => {
         <Routes>
           {/* Main page */}
           <Route path="/" element={<MainPage />}>
-            {/* 도안 상세 */}
-            {/* <Route path="draft" element={<ShowDraftDetail />} */}
-            <Route path="draft" element={<ShowDraftList />}>
+            {/* 도안 목록 */}
+            <Route path="drafts" element={<ShowDraftList />}>
               <Route path="best" element={<DraftList filter="best" />} />
               <Route path="all" element={<DraftList filter="all" />} />
               <Route path="search/:title" />
             </Route>
-
+            {/* 도안 상세 */}
+            <Route path="draft/:draft_id" element={<ShowDraftDetail />} />
             {/* 타투이스트 목록 */}
-            <Route path="tattooist" element={<ShowTattooistList />}>
+            <Route path="tattooists" element={<ShowTattooistList />}>
               <Route path="best" element={<TattooistList />} />
               <Route path="all" element={<TattooistList />} />
               <Route path="search/:nickname" element={<TattooistList />} />
             </Route>
-
+            {/* 타투이스트 상세 */}
+            <Route path="tattooist" element={<ShowTattooistDetail />}>
+              <Route path="draft" element={<TattooistDetailDraft />} />
+              <Route path="artwork" element={<TattooistDetailArtwork />} />
+              <Route path="reservation" element={<TattooistDetailReservation />}
+              />
+            </Route>
             {/* 마이 페이지 */}
             <Route path="my-page" element={<ShowMyPage />}>
-              <Route path="user" element={<ShowMyTattoo />} />
-              <Route path="tattooist" />
+              <Route path="user/:user_id" element={<ShowMyTattoo />} />
             </Route>
           </Route>
           {/* 로그인, 회원가입 */}
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
-          
+
           {/* 엔트리 페이지 */}
           <Route path="/" element={<ShowEntry />} />
-
-          {/* 메인 페이지 */}
-          <Route path="/draft" element={<ShowDraftList filter="best" />} />
-          {/* <Route path="/main">
-
-            <Route path="draft" element={<ShowDraftList filter="best" />} />
-
-
-          </Route> */}
         </Routes>
       </MainPageDiv>
 
