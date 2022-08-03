@@ -18,7 +18,7 @@ const GoMypage = () => {
       filter = 'tattooist';
     }
 
-    navigate(`/mypage/${filter}/${_id}`);
+    navigate(`/my-page/${filter}/${_id}`);
   }, []);
 
   return (

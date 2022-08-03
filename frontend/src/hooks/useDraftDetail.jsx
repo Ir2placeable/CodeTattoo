@@ -17,9 +17,7 @@ const useDraftDetail = () => {
 
   const sendRequest = async () => {
     const res = await axios.get(
-      `${APIURL}/draft/${draft_id}/?user_id=${getCookie(
-        "user_id"
-      )}&draft_id=${draft_id}`
+      `${APIURL}/drafts/${draft_id}/?user_id=${getCookie("user_id")}`
     );
 
     if (res.data.success) {

@@ -27,6 +27,10 @@ import DraftList from "./components/templates/DraftList";
 import ShowDraftUpload from "./pages/ShowDraftUpload";
 import DraftUpload from "./components/templates/DraftUpload";
 import ShowScrap from "./pages/ShowScrap";
+import ShowTattooistDetail from "./pages/ShowTattooistDetail";
+import TattooistDetailDraft from "./components/templates/TattooistDetailDraft";
+import TattooistDetailArtwork from "./components/templates/TattooistDetailArtwork";
+import TattooistDetailReservation from "./components/templates/TattooistDetailReservation";
 
 const App = () => {
   const sendRequest = async () => {
@@ -54,11 +58,8 @@ const App = () => {
 
           {/* Main page */}
           <Route path="/" element={<MainPage />}>
-            {/* 도안 상세 */}
-            {/* <Route path="draft" element={<ShowDraftDetail />} */}
-
-            {/* 도안 */}
-            <Route path="draft" element={<ShowDraftList />}>
+            {/* 도안 목록 */}
+            <Route path="drafts" element={<ShowDraftList />}>
               <Route path="best" element={<DraftList filter="best" />} />
               <Route path="all" element={<DraftList filter="all" />} />
               <Route path="search/:title" />
@@ -67,17 +68,25 @@ const App = () => {
             {/* 도안 등록 - 타투이스트만 해당 */}
             <Route path="upload" element={<ShowDraftUpload />}/>
 
+            {/* 도안 상세 */}
+            <Route path="draft/:draft_id" element={<ShowDraftDetail />} />
+
             {/* 타투이스트 목록 */}
-            <Route path="tattooist" element={<ShowTattooistList />}>
+            <Route path="tattooists" element={<ShowTattooistList />}>
               <Route path="best" element={<TattooistList />} />
               <Route path="all" element={<TattooistList />} />
               <Route path="search/:nickname" element={<TattooistList />} />
             </Route>
-
+            {/* 타투이스트 상세 */}
+            <Route path="tattooist" element={<ShowTattooistDetail />}>
+              <Route path="draft" element={<TattooistDetailDraft />} />
+              <Route path="artwork" element={<TattooistDetailArtwork />} />
+              <Route path="reservation" element={<TattooistDetailReservation />}
+              />
+            </Route>
             {/* 마이 페이지 */}
             <Route path="my-page" element={<ShowMyPage />}>
-              <Route path="user" element={<ShowMyTattoo />} />
-              <Route path="tattooist" />
+              <Route path="user/:user_id" element={<ShowMyTattoo />} />
             </Route>
 
             {/* 예약 */}
@@ -96,14 +105,8 @@ const App = () => {
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
 
-          
-          {/* <Route path="/draft" element={<ShowDraftList filter="best" />} /> */}
-          {/* <Route path="/main">
-
-            <Route path="draft" element={<ShowDraftList filter="best" />} />
-
-
-          </Route> */}
+          {/* 엔트리 페이지 */}
+          <Route path="/" element={<ShowEntry />} />
         </Routes>
       </MainPageDiv>
 
