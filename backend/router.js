@@ -405,12 +405,34 @@ server.get('/tattooist/my-page/:filter/:id', (req, res) => {
         })
 })
 // 타투이스트 정보 수정
-server.patch('/tattooist/my-page/:filter/:id', (req, res) => {
+server.patch('/tattooist/my-page/:id', (req, res) => {
+    console.log('\n')
+    console.log('command : Tattooist Info Edit')
+    console.log('params : ', req.params)
+    console.log('body : ', req.body)
 
+    tattooist.tattooistInfoEdit(req.params, req.body)
+        .then((returned) => {
+            res.send({ success : true })
+        })
+        .catch((err) => {
+            res.send({ success : false, code : err })
+        })
 })
 // 타투이스트 이미지 수정
-server.post('/tattooist/my-page/:filter/:id', (req, res) => {
+server.post('/tattooist/my-page/:id', (req, res) => {
+    console.log('\n')
+    console.log('command : Tattooist Image Edit')
+    console.log('params : ', req.params)
+    console.log('body : ', req.body)
 
+    tattooist.tattooistImageEdit(req.params, req.body)
+        .then((returned) => {
+            res.send({ success : true })
+        })
+        .catch((err) => {
+            res.send({ success : false, code : err })
+        })
 })
 
 
