@@ -11,7 +11,7 @@ const EntryBtn = ({ text }) => {
     } else if(text === '회원가입'){
       navigate('/register');
     } else if(text === '둘러보기'){
-
+      navigate('/draft/best')
     }
   }, []);
 
