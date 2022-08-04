@@ -499,7 +499,6 @@ server.post('/create/draft/:id', (req, res) => {
     console.log('\n')
     console.log('command : Create draft')
     console.log('params : ', req.params)
-    console.log('body : ', req.body)
 
     tattooist.createDraft(req.params, req.body)
         .then((returned) => {

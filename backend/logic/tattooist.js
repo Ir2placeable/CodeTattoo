@@ -302,7 +302,7 @@ exports.createDraft = async function(params, body) {
         throw 8
     }
 
-    const imageStorage_params = { title : params.id, image : body.image, mime : body.mime }
+    const imageStorage_params = { title : body.title, image : body.image, mime : body.mime }
     const image_url = await imageStorage.upload(imageStorage_params)
 
     const draft_schema = {
