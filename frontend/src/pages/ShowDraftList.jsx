@@ -4,6 +4,8 @@ import Pagination from '../components/organisms/common/Pagination';
 import { ContentsDiv } from '../styledComponents';
 import SmallNav from '../components/organisms/common/SmallNav';
 import { Outlet } from 'react-router-dom';
+import GoUploadBtn from '../components/atomic/draft/GoUploadBtn';
+import { getCookie } from '../config/cookie';
 
 const ShowDraftList = () => {
   const [page, setPage] = useState(1);
@@ -18,6 +20,10 @@ const ShowDraftList = () => {
         {text: 'All', path: '/draft/all'}
       ]}
         isSearch={true} loc={0} />
+
+    {getCookie('tattooist_id') && (
+      <GoUploadBtn />
+    )}
 
     <ContentsDiv>
       <Outlet context={{ page }} />

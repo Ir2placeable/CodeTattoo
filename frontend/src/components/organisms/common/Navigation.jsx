@@ -5,23 +5,13 @@ import {
 } from '../../../styledComponents';
 import NavigationBtn from '../../atomic/common/NavigationBtn';
 import { getCookie } from '../../../config/cookie';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
+import { useEffect } from 'react';
 
 const Navigation = () => {
-  const [prev, setPrev] = useState(null);
-
   const navigate = useNavigate();
   const onClick = useCallback((e) => {
     const path = e.target.id;
-
-    if(prev !== null){
-      prev.style.color = "rgba(72, 72, 72, .5)";
-      prev.style.borderBottom = "3px solid white";
-    }
-
-    setPrev(e.target);
-    e.target.style.color = "black";
-    e.target.style.borderBottom = "3px solid black";
 
     if(path === 'draft' || path === 'tattooist'){
       navigate(`/${path}/best`);
@@ -30,7 +20,7 @@ const Navigation = () => {
     }else {
       navigate(`/${path}`);
     }
-  }, [prev]);
+  }, []);
 
   return (
     <>
