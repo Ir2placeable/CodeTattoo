@@ -388,6 +388,66 @@ server.post('/user/my-page/:id', (req, res) => {
             res.send({ success : false, code : err })
         })
 })
+// 유저 도안 스크랩
+server.post('/scrap/:id', (req, res) => {
+    console.log('\n')
+    console.log('command : User Scrap Draft')
+    console.log('params : ', req.params)
+    console.log('body : ', req.body)
+
+    user.scrapDraft(req.params, req.body)
+        .then((returned) => {
+            res.send({ success : true })
+        })
+        .catch((err) => {
+            res.send({ success : false, code : err })
+        })
+})
+// 유저 도안 스크랩 취소
+server.post('/unscrap/:id', (req, res) => {
+    console.log('\n')
+    console.log('command : User UnScrap Draft')
+    console.log('params : ', req.params)
+    console.log('body : ', req.body)
+
+    user.unScrapDraft(req.params, req.body)
+        .then((returned) => {
+            res.send({ success : true })
+        })
+        .catch((err) => {
+            res.send({ success : false, code : err })
+        })
+})
+// 유저 타투이스트 팔로우
+server.post('/follow/:id', (req, res) => {
+    console.log('\n')
+    console.log('command : User Follow Tattooist')
+    console.log('params : ', req.params)
+    console.log('body : ', req.body)
+
+    user.followTattooist(req.params, req.body)
+        .then((returned) => {
+            res.send({ success : true })
+        })
+        .catch((err) => {
+            res.send({ success : false, code : err })
+        })
+})
+// 유저 타투이스트 언팔로우
+server.post('/unfollow/:id', (req, res) => {
+    console.log('\n')
+    console.log('command : User UnFollow Tattooist')
+    console.log('params : ', req.params)
+    console.log('body : ', req.body)
+
+    user.unFollowTattooist(req.params, req.body)
+        .then((returned) => {
+            res.send({ success : true })
+        })
+        .catch((err) => {
+            res.send({ success : false, code : err })
+        })
+})
 
 
 // 타투이스트 마이페이지
@@ -405,14 +465,50 @@ server.get('/tattooist/my-page/:filter/:id', (req, res) => {
         })
 })
 // 타투이스트 정보 수정
-server.patch('/tattooist/my-page/:filter/:id', (req, res) => {
+server.patch('/tattooist/my-page/:id', (req, res) => {
+    console.log('\n')
+    console.log('command : Tattooist Info Edit')
+    console.log('params : ', req.params)
+    console.log('body : ', req.body)
 
+    tattooist.tattooistInfoEdit(req.params, req.body)
+        .then((returned) => {
+            res.send({ success : true })
+        })
+        .catch((err) => {
+            res.send({ success : false, code : err })
+        })
 })
 // 타투이스트 이미지 수정
-server.post('/tattooist/my-page/:filter/:id', (req, res) => {
+server.post('/tattooist/my-page/:id', (req, res) => {
+    console.log('\n')
+    console.log('command : Tattooist Image Edit')
+    console.log('params : ', req.params)
+    console.log('body : ', req.body)
 
+    tattooist.tattooistImageEdit(req.params, req.body)
+        .then((returned) => {
+            res.send({ success : true })
+        })
+        .catch((err) => {
+            res.send({ success : false, code : err })
+        })
 })
+// 타투이스트 도안 생성
+server.post('/create/draft/:id', (req, res) => {
+    console.log('\n')
+    console.log('command : Create draft')
+    console.log('params : ', req.params)
+    console.log('body : ', req.body)
 
+    tattooist.createDraft(req.params, req.body)
+        .then((returned) => {
+            res.send({ success : true })
+        })
+        .catch((err) => {
+            res.send({ success : false, code : err })
+        })
+})
 
 // admin
 // entry page 접속자 수 확인
