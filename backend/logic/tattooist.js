@@ -293,3 +293,29 @@ exports.tattooistImageEdit = async function(params, body) {
         }
     })
 }
+
+exports.createDraft = async function(params, body) {
+    const tattooist = await Tattooist.findOne({ _id : params.id })
+    if (!tattooist) {
+        // 해당 타투이스트 없음 오류
+        console.log(ErrorTable["8"])
+        throw 8
+    }
+
+    const imageStorage_params = { title : params.id, image : body.image, mime : body.mime }
+    const image_url = await imageStorage.upload(imageStorage_params)
+
+    const draft_schema = {
+        drawer : tattooist['_id'],
+        title : body['title'],
+        image : image_url,
+        genre : body['genre'],
+        keywords : body['keywords'],
+        timestamp : Date.now()
+    }
+
+    const new_draft = new Draft(draft_schema)
+    await new_draft.save()
+
+    await Tattooist.updateOne({ _id : params.id }, {$push : { drafts : new_draft['_id'] }})
+}
