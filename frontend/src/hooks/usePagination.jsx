@@ -43,13 +43,14 @@ const usePagination = ({ filter }) => {
       setQuery(`/?tattooist_id=${getCookie('tattooist_id')}`)
     }
   }, []);
-  
+
 
   const sendRequest = async() => {
-    console.log(query)
+    //console.log(query)
     const res = await axios.get(`${APIURL}/${filter}/count/0${query}`);
 
     if(res.data.success){
+      console.log('usePagination success: ', res.data.count)
       setCount(res.data.count);
     } else {
       console.log('usePagination error');
@@ -58,7 +59,11 @@ const usePagination = ({ filter }) => {
 
   }
 
-  return [count, sendRequest];
+  useEffect(() => {
+    sendRequest();
+  }, [])
+
+  return count;
 };
 
 export default usePagination;
