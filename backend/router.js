@@ -508,6 +508,21 @@ server.post('/create/draft/:id', (req, res) => {
             res.send({ success : false, code : err })
         })
 })
+// 타투이스트 도안 삭제
+server.post('/remove/draft/:id', (req, res) => {
+    console.log('\n')
+    console.log('command : Remove draft')
+    console.log('params : ', req.params)
+    console.log('body : ', req.body)
+
+    tattooist.removeDraft(req.params, req.body)
+        .then((returned) => {
+            res.send({ success : true })
+        })
+        .catch((err) => {
+            res.send({ success : false, code : err })
+        })
+})
 
 // admin
 // entry page 접속자 수 확인
