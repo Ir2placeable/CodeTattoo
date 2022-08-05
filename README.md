@@ -38,8 +38,8 @@
 소속 : 서강대학교 컴퓨터공학과 4학년
 이메일 : eileel@naver.com
 역할 : 프론트엔드
-    • example1
-    • exmaple2
+    • 웹 서버
+    • 웹 QA
 ```
 
 
@@ -64,8 +64,8 @@
 소속 : 상명대학교 컴퓨터과학과 3학년
 이메일 : pmsu2008@gmail.com
 역할 : 프론트엔드
-    • example1
-    • exmaple2
+    • 웹 서버
+    • 웹 QA
 ```
 
 

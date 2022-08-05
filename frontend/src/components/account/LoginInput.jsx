@@ -97,7 +97,7 @@ const LoginInput = ({ isTattooist }) => {
       //console.log(res.data)
 
       setTimeout(() => {
-        window.location.replace('/');
+        window.location.replace('/draft/best');
       }, 500)
       
     } else {

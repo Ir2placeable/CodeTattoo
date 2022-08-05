@@ -53,6 +53,7 @@ const useDraftList = ({ filter, page }) => {
     //console.log(res);
     if(res.data.success){
       setDrafts(res.data.drafts);
+      //console.log(res.data.drafts)
     } else {
       // 오류
       console.log('useDraftList error');
@@ -60,7 +61,12 @@ const useDraftList = ({ filter, page }) => {
     }
   }
 
-  return [drafts, sendRequest];
+  useEffect(() => {
+    sendRequest();
+    //console.log('drafts: ',drafts)
+  }, [])
+
+  return drafts;
 };
 
 export default useDraftList;

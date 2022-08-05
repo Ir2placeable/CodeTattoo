@@ -29,3 +29,56 @@ export const keywords = [
   { text: '해골', name: 'skull' },
   { text: '가족', name: 'family' },
 ]
+
+export const drafts = [
+  {
+    draft_id: 1,
+    image: '../../img/ex.jpg',
+    title: 'express',
+    like: 3,
+    isScraped: true,
+    drawer_id: 10,
+    drawer_image: '../../img/ex.jpg',
+    drawer_nickname: 'ahyoung',
+  },
+  {
+    draft_id: 2,
+    image: '../../img/react.jpg',
+    title: 'react',
+    like: 31,
+    isScraped: false,
+    drawer_id: 20,
+    drawer_image: '../../img/react.jpg',
+    drawer_nickname: 'minsoo',
+  },
+  {
+    draft_id: 3,
+    image: '../../img/react.jpg',
+    title: 'react',
+    like: 31,
+    isScraped: false,
+    drawer_id: 30,
+    drawer_image: '../../img/react.jpg',
+    drawer_nickname: 'minsoo',
+  },
+  {
+    draft_id: 4,
+    image: '../../img/react.jpg',
+    title: 'react',
+    like: 31,
+    isScraped: false,
+    drawer_id: 40,
+    drawer_image: '../../img/react.jpg',
+    drawer_nickname: 'minsoo',
+  },
+  {
+    draft_id: 5,
+    image: '../../img/react.jpg',
+    title: 'react',
+    like: 31,
+    isScraped: true,
+    drawer_id: 50,
+    drawer_image: '../../img/react.jpg',
+    drawer_nickname: 'minsoo',
+  }
+];

@@ -11,72 +11,19 @@ import { useOutletContext } from 'react-router-dom';
 //- drafts = { draft_id, image, title, like, drawer_id, 
 //       drawer_image, drawer_nickname, isScraped }
 const DraftList = ({ filter }) => {
-  // const drafts = useDraftList({
-  //   filter, page
-  // });
-  const drafts = [
-    {
-      draft_id: 1,
-      image: '../../img/ex.jpg',
-      title: 'express',
-      like: 3,
-      isScraped: true,
-      drawer_id: 10,
-      drawer_image: '../../img/ex.jpg',
-      drawer_nickname: 'ahyoung',
-    },
-    {
-      draft_id: 2,
-      image: '../../img/react.jpg',
-      title: 'react',
-      like: 31,
-      isScraped: false,
-      drawer_id: 20,
-      drawer_image: '../../img/react.jpg',
-      drawer_nickname: 'minsoo',
-    },
-    {
-      draft_id: 3,
-      image: '../../img/react.jpg',
-      title: 'react',
-      like: 31,
-      isScraped: false,
-      drawer_id: 30,
-      drawer_image: '../../img/react.jpg',
-      drawer_nickname: 'minsoo',
-    },
-    {
-      draft_id: 4,
-      image: '../../img/react.jpg',
-      title: 'react',
-      like: 31,
-      isScraped: false,
-      drawer_id: 40,
-      drawer_image: '../../img/react.jpg',
-      drawer_nickname: 'minsoo',
-    },
-    {
-      draft_id: 5,
-      image: '../../img/react.jpg',
-      title: 'react',
-      like: 31,
-      isScraped: true,
-      drawer_id: 50,
-      drawer_image: '../../img/react.jpg',
-      drawer_nickname: 'minsoo',
-    }
-  ];
 
   const { page } = useOutletContext();
-  const [temp, sendRequest] = useDraftList({
+  
+  const drafts = useDraftList({
     filter: filter,
     page: page
   })
 
-  useEffect(() => {
-    sendRequest();
-    console.log(page, filter);
-  }, []);
+  // useEffect(() => {
+  //   //sendRequest();
+  //   console.log(page, filter);
+  //   console.log('drafts list: ',drafts);
+  // }, [drafts]);
 
   return (
     <>

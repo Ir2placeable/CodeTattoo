@@ -55,7 +55,7 @@ const App = () => {
           {/* Main page */}
           <Route path="/" element={<MainPage />}>
             {/* 도안 상세 */}
-            {/* <Route path="draft" element={<ShowDraftDetail />} */}
+            <Route path="draft/1" element={<ShowDraftDetail />} />
 
             {/* 도안 */}
             <Route path="draft" element={<ShowDraftList />}>

@@ -1,16 +1,29 @@
 import React from 'react';
 import { 
   DraftImgBox, DraftImgInfo, DraftHeartBox,
-  DraftDrawerDiv, DraftDrawerImg, DraftDrawer
+  DraftDrawerDiv, DraftDrawerImg, DraftDrawer,
+  DraftImgDiv,
+  DraftImgHoverDiv
 } from '../../../styledComponents';
 
 import DraftTitle from '../../atomic/draft/DraftTitle';
 import DraftImage from '../../atomic/draft/DraftImage';
 import DraftLikes from '../../atomic/draft/DraftLikes';
 import HeartIcon from '../../atomic/draft/HeartIcon';
+import { useState } from 'react';
 
 const Draft = ({ draft_id, image, title, like, drawer_id,
   drawer_image, drawer_nickname, isScraped }) => {
+  const [hover, setHover] = useState(false);
+
+  const onHover = (e) => {
+    setHover(hover? false : true);
+  } 
+
+  const goDetail = () => {
+    console.log('click');
+  }
+
   return (
     <>
       <DraftImgBox>
@@ -20,17 +33,26 @@ const Draft = ({ draft_id, image, title, like, drawer_id,
           <DraftDrawer>{drawer_nickname}</DraftDrawer>
         </DraftDrawerDiv>
 
-        <DraftImage src={image} alt={title} id={draft_id} />
+        <DraftImgDiv onClick={goDetail}>
+          <DraftImage src={image} alt={title} id={draft_id}
+            onHover={onHover} />
+
+          { hover && (
+            <DraftImgHoverDiv onMouseLeave={onHover}>
+              {like} likes
+            </DraftImgHoverDiv>
+          )}
+        </DraftImgDiv>
 
         <DraftImgInfo>
+
+          <DraftTitle title={title} />
 
           <DraftHeartBox>
             <HeartIcon isScraped={isScraped} draft_id={draft_id} />
           </DraftHeartBox>
 
-          <DraftTitle title={title} />
-
-          <DraftLikes like={like} />
+          {/* <DraftLikes like={like} /> */}
 
         </DraftImgInfo>
 

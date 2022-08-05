@@ -15,7 +15,7 @@ const ShowScrap = () => {
           { text: "Tattooist", path: "/scrap/tattooist" },
         ]}
         isSearch={false}
-        location={2}
+        loc={2.3}
       />
 
       <ContentsDiv>
