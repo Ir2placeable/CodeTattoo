@@ -3,14 +3,17 @@ import {
   DraftImgBox, DraftImgInfo, DraftHeartBox,
   DraftDrawerDiv, DraftDrawerImg, DraftDrawer,
   DraftImgDiv,
-  DraftImgHoverDiv
+  DraftImgHoverDiv, DraftDrawerImgDiv
 } from '../../../styledComponents';
 
 import DraftTitle from '../../atomic/draft/DraftTitle';
 import DraftImage from '../../atomic/draft/DraftImage';
 import DraftLikes from '../../atomic/draft/DraftLikes';
 import HeartIcon from '../../atomic/draft/HeartIcon';
+import UserIcon from '../../atomic/common/UserIcon';
 import { useState } from 'react';
+
+
 
 const Draft = ({ draft_id, image, title, like, drawer_id,
   drawer_image, drawer_nickname, isScraped }) => {
@@ -23,13 +26,23 @@ const Draft = ({ draft_id, image, title, like, drawer_id,
   const goDetail = () => {
     console.log('click');
   }
+  const goTattooist = () => {
+    console.log('go tattooist')
+  }
 
   return (
     <>
       <DraftImgBox>
 
-        <DraftDrawerDiv>
-          <DraftDrawerImg src={drawer_image} />
+        <DraftDrawerDiv onClick={goTattooist}>
+          <DraftDrawerImgDiv>
+            {drawer_image ? (
+              <DraftDrawerImg src={drawer_image} />
+            ) : (
+              <UserIcon />
+            )}
+          </DraftDrawerImgDiv>
+      
           <DraftDrawer>{drawer_nickname}</DraftDrawer>
         </DraftDrawerDiv>
 

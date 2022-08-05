@@ -27,13 +27,14 @@ import DraftList from "./components/templates/DraftList";
 import ShowDraftUpload from "./pages/ShowDraftUpload";
 import DraftUpload from "./components/templates/DraftUpload";
 import ShowScrap from "./pages/ShowScrap";
+import DraftSearch from "./components/templates/DraftSearch";
 
 const App = () => {
   const sendRequest = async () => {
     const res = await axios.get(`${APIURL}/entry`);
 
     if (res.data.success) {
-      console.log("Servier is connected");
+      console.log("Server is connected");
     }
   };
 
@@ -58,17 +59,17 @@ const App = () => {
             <Route path="draft/1" element={<ShowDraftDetail />} />
 
             {/* 도안 */}
-            <Route path="draft" element={<ShowDraftList />}>
-              <Route path="best" element={<DraftList filter="best" />} />
-              <Route path="all" element={<DraftList filter="all" />} />
-              <Route path="search/:title" />
+            <Route path="drafts" element={<ShowDraftList />}>
+              <Route path="best" element={<DraftList filter="drafts/best" />} />
+              <Route path="all" element={<DraftList filter="drafts/all" />} />
+              <Route path="search/:title" element={<DraftSearch />} />
             </Route>
 
             {/* 도안 등록 - 타투이스트만 해당 */}
             <Route path="upload" element={<ShowDraftUpload />}/>
 
             {/* 타투이스트 목록 */}
-            <Route path="tattooist" element={<ShowTattooistList />}>
+            <Route path="tattooists" element={<ShowTattooistList />}>
               <Route path="best" element={<TattooistList />} />
               <Route path="all" element={<TattooistList />} />
               <Route path="search/:nickname" element={<TattooistList />} />
@@ -84,8 +85,8 @@ const App = () => {
             <Route path="reservation" element={<div>예약</div>} />
 
             {/* 스크랩 */}
-            <Route path="scrap" element={<ShowScrap />} >
-              <Route path="draft" element={<div>냥</div>} />
+            <Route path="scraps" element={<ShowScrap />} >
+              <Route path="draft" element={<DraftList filter="scraps/draft" />} />
               <Route path="tattooist" element={<div>냥</div>} />
             </Route>
 

@@ -39,8 +39,9 @@ const DropTags = memo(({ tags, setTags }) => {
     if(e.key === 'Enter'){
       setTags([
         ...tags,
-        selfInput
+        e.target.value
       ])
+      setIsChoice(true);
       setSelfInput('');
     }
   }

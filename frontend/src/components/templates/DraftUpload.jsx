@@ -69,7 +69,7 @@ const DraftUpload = () => {
 
     if(res.data.success){
       console.log('도안 등록 성공')
-      //window.location.replace('/draft/best')
+      window.location.replace('/drafts/best')
     } else {
       console.log('도안 등록 실패')
     }

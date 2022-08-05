@@ -660,7 +660,7 @@ export const DraftDrawerDiv = styled.div`
 display: flex;
 justify-content: stretch;
 align-items: center;
-//background-color: black;
+// background-color: orange;
 margin-bottom: 10px;
 width: max-content;
 cursor: pointer;
@@ -671,13 +671,30 @@ export const DraftDrawer = styled.p`
 margin-left: 20px;
 `
 
-export const DraftDrawerImg = styled.img`
-display: inline-block;
+export const UserIconStyle = {
+  color: 'white',
+  fontSize: '20px'
+}
+
+export const DraftDrawerImgDiv = styled.div`
 width: 35px;
 height: 35px;
+overflow: hidden;
 background-color: black;
 border-radius: 50%;
 border: 2px solid black;
+display: flex;
+justify-content: center;
+align-items: center;
+`
+
+export const DraftDrawerImg = styled.img`
+// display: inline-block;
+width: 35px;
+height: 35px;
+// background-color: black;
+// border-radius: 50%;
+// border: 2px solid black;
 object-fit: contain;
 `
 export const DraftImgDiv = styled.div`

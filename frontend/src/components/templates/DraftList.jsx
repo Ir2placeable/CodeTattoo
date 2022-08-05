@@ -6,7 +6,7 @@ import {
   DraftHeartBox, DraftImgTitle, DraftHeartCount
 } from '../../styledComponents';
 import Draft from '../organisms/draft/Draft';
-import { useOutletContext } from 'react-router-dom';
+import { useOutletContext, useLocation } from 'react-router-dom';
 
 //- drafts = { draft_id, image, title, like, drawer_id, 
 //       drawer_image, drawer_nickname, isScraped }
@@ -18,6 +18,7 @@ const DraftList = ({ filter }) => {
     filter: filter,
     page: page
   })
+
 
   // useEffect(() => {
   //   //sendRequest();

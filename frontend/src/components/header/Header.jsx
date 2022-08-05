@@ -24,7 +24,7 @@ const Header = () => {
   }, [getCookie('user_id'), getCookie('tattooist_id')]);
 
   const goHome = () => {
-    window.location.replace('/draft/best')
+    window.location.replace('/drafts/best')
   }
 
   return (
