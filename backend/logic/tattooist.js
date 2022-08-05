@@ -302,7 +302,7 @@ exports.createDraft = async function(params, body) {
         throw 8
     }
 
-    const imageStorage_params = { title : params.id, image : body.image, mime : body.mime }
+    const imageStorage_params = { title : body.title, image : body.image, mime : body.mime }
     const image_url = await imageStorage.upload(imageStorage_params)
 
     const draft_schema = {
@@ -311,11 +311,16 @@ exports.createDraft = async function(params, body) {
         image : image_url,
         genre : body['genre'],
         keywords : body['keywords'],
-        timestamp : Date.now()
+        timestamp : Math.floor(Date.now() / 1000)
     }
 
     const new_draft = new Draft(draft_schema)
     await new_draft.save()
 
     await Tattooist.updateOne({ _id : params.id }, {$push : { drafts : new_draft['_id'] }})
+}
+
+exports.removeDraft = async function(params, body) {
+    await Tattooist.updateOne({ _id : params.id }, {$pull : { drafts : body.draft_id }})
+    await Draft.deleteOne({ _id : body.draft_id })
 }

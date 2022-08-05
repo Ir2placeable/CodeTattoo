@@ -419,9 +419,9 @@ exports.pageScrapTattooist = async function(params, query) {
     return return_value
 }
 
-exports.scrapDraft = async function(params, query) {
-    await Draft.updateOne({ _id : query.draft_id }, {$inc : { like : 1 }})
-    await User.updateOne({ _id : params.id }, {$push : { scraps : query.draft_id }})
+exports.scrapDraft = async function(params, body) {
+    await Draft.updateOne({ _id : body.draft_id }, {$inc : { like : 1 }})
+    await User.updateOne({ _id : params.id }, {$push : { scraps : body.draft_id }})
 }
 
 exports.unScrapDraft = async function(params, query) {
