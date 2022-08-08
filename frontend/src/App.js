@@ -33,6 +33,7 @@ import TattooistDetailArtwork from "./components/templates/TattooistDetailArtwor
 import TattooistDetailReservation from "./components/templates/TattooistDetailReservation";
 import DraftSearch from "./components/templates/DraftSearch";
 
+
 const App = () => {
   const sendRequest = async () => {
     const res = await axios.get(`${APIURL}/entry`);
@@ -47,7 +48,9 @@ const App = () => {
   }, []);
 
   return (
-    <div className="font-style">
+    <div className="font-style" style={{
+      minHeight: '100vh', position: 'relative',
+      paddingBottom: '130px'}}>
       <Reset />
 
       {/* HEADER */}
@@ -80,12 +83,13 @@ const App = () => {
               <Route path="search/:nickname" element={<TattooistList />} />
             </Route>
             {/* 타투이스트 상세 */}
-            <Route path="tattooist" element={<ShowTattooistDetail />}>
+            <Route path="tattooist/:tattooist_id" element={<ShowTattooistDetail />}>
               <Route path="draft" element={<TattooistDetailDraft />} />
               <Route path="artwork" element={<TattooistDetailArtwork />} />
               <Route path="reservation" element={<TattooistDetailReservation />}
               />
             </Route>
+
             {/* 마이 페이지 */}
             <Route path="my-page" element={<ShowMyPage />}>
               <Route path="user/:user_id" element={<ShowMyTattoo />} />

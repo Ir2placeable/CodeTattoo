@@ -36,6 +36,10 @@ export const ContentsDiv = styled.div`
   padding-top: 130px;
   padding-bottom: 130px;
 `;
+
+export const MyPageDiv = styled.div`
+padding: 50px 0;
+`
 // position: relative;
 
 export const ListDiv = styled.div`
@@ -1273,6 +1277,9 @@ export const FooterDiv = styled.footer`
   background-color: #484848;
   width: 100%;
   height: 130px;
+  position: absolute;
+  bottom: 0;
+  left: 0;
 `;
 
 // temporary

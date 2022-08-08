@@ -9,6 +9,7 @@ import HeaderBtnComp from './HeaderBtnComp';
 import { getAllCookie, getCookie } from '../../config/cookie';
 import LogoutBtn from './LogoutBtn';
 import GoMypage from './GoMypage';
+import { Cookies } from 'react-cookie';
 
 const Header = () => {
   const [isLogin, setIsLogin] = useState(false);
@@ -20,6 +21,7 @@ const Header = () => {
     } else {
       setIsLogin(false);
     }
+
 
   }, [getCookie('user_id'), getCookie('tattooist_id')]);
 
