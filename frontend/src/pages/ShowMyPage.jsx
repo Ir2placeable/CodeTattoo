@@ -39,11 +39,19 @@ const ShowMyPage = () => {
       tattooist_id: 103,
     },
   ];
+
+  const profile = {
+    image: "../../img/react.jpg",
+    user_id: 1,
+    nickname: "Sponge Bob",
+    location: "Bikini Bottom",
+  };
+
   return (
     <>
       <ContentsDiv>
         <ListDiv>
-          <MyPageProfile />
+          <MyPageProfile profile={profile} />
           <HorizontalLine></HorizontalLine>
           {/*getCookie("user_id") ? (<Outlet context={{ tattoos }} />) : (<Outlet />)*/}
           <Outlet context={{ tattoos }} />
