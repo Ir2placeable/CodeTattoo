@@ -8,21 +8,22 @@ import { useState } from "react";
 import SmallNav from "../components/organisms/common/SmallNav";
 import { getCookie } from "../config/cookie";
 
-const ShowTattooistList = ({ cookies }) => {
+const ShowTattooistList = () => {
   const [page, setPage] = useState(1);
   const [pages, setPages] = useState([]);
   const param = useParams();
   const location = useLocation();
 
   let path = "";
-  if (param.length === 0) {
-    path = `main/tattooist/search`;
+  if (param.length !== undefined) {
+    path = `/tattooists/search`;
   } else {
-    path = `main${location.pathname}`;
+    path = `${location.pathname}`;
   }
 
-  // const tattooists = useTattooistList(path, page);
+  console.log(`path: ${path}`);
 
+  // const tattooists = useTattooistList(path, page);
   const tattooists = [
     {
       tattooist_id: 1,

@@ -20,15 +20,15 @@ const MyPageProfile = ({ profile }) => {
     <>
       <MyPageProfileBox>
         <ProfileImgBox size="profile">
-          <ProfileImg size="profile" />
+          <ProfileImg size="profile" src={profile.image} />
           <ProfileImgEdit>
             <FontAwesomeIcon icon={faPenToSquare} size="2x" />
           </ProfileImgEdit>
         </ProfileImgBox>
         <MyPageProfileInfoBox>
-          <MyPageProfileNickname>Sponge Bob</MyPageProfileNickname>
+          <MyPageProfileNickname>{profile.nickname}</MyPageProfileNickname>
           <MyPageProfileInfoList>
-            <MyPageProfileInfo>Location : Bikini Bottom</MyPageProfileInfo>
+            <MyPageProfileInfo>Location : {profile.location}</MyPageProfileInfo>
             <MyPageProfileInfo>Specialize : Making Hamberger</MyPageProfileInfo>
           </MyPageProfileInfoList>
           <MyPageProfileDescription>
