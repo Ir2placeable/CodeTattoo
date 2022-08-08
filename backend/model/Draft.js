@@ -11,7 +11,8 @@ const draftSchema = mongoose.Schema({
         type : String
     },
     like : {
-        type : Number
+        type : Number,
+        default : 0
     },
     genre : {
         type : String

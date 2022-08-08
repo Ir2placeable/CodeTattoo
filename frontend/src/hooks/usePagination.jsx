@@ -3,12 +3,13 @@ import axios from 'axios';
 import { APIURL } from '../config/key';
 import { useEffect, useState } from 'react';
 import { getCookie } from '../config/cookie';
+import { useLocation } from 'react-router-dom';
 
 // ### 게스트 페이지 : 도안
 
 // - GET : /drafts/:filter/:page
-//     - filter : count, best, all, search
-//     - page : 1,2,3 …
+//     - filter : best, all, search
+//     - page : 0,1,2,3 …
 // - Query : { title }
 //     - filter : search 인 경우에만 사용
 // - Return : filter = count → { count }
@@ -18,7 +19,7 @@ import { getCookie } from '../config/cookie';
 // ### 유저 페이지 : 도안
 
 // - GET : /drafts/:filter/:page
-//     - filter : count, best, all, search
+//     - filter : best, all, search
 //     - page : integer type
 // - Query : { user_id, title }
 //     - **검색하는 경우가 아니면 title 요청 X**
@@ -34,22 +35,26 @@ import { getCookie } from '../config/cookie';
 
 const usePagination = ({ filter }) => {
   const [count, setCount] = useState(0);
-  const [query, setQuery] = useState("");
-
-  useEffect(() => {
-    if(getCookie('user_id')){
-      setQuery(`/?user_id=${getCookie('user_id')}`)
-    } else if(getCookie('tattooist_id')){
-      setQuery(`/?tattooist_id=${getCookie('tattooist_id')}`)
-    }
-  }, []);
-  
 
   const sendRequest = async() => {
-    console.log(query)
-    const res = await axios.get(`${APIURL}/${filter}/count/0${query}`);
+    let query = "";
+    let _filter = filter;
+
+    if(getCookie('user_id')){
+      query = `/?user_id=${getCookie('user_id')}`
+    }
+    // console.log(filter.split('/')[2])
+    if(filter.split('/')[2] === 'search'){
+      const [ , a, b] = filter.split('/');
+      _filter = `/${a}/${b}`
+      //console.log(_filter)
+    }
+
+    //console.log(filter, query)
+    const res = await axios.get(`${APIURL}${_filter}/0${query}`);
 
     if(res.data.success){
+      //console.log('usePagination success: ', res.data)
       setCount(res.data.count);
     } else {
       console.log('usePagination error');
@@ -58,7 +63,12 @@ const usePagination = ({ filter }) => {
 
   }
 
-  return [count, sendRequest];
+
+  useEffect(() => {
+    sendRequest();
+  }, [filter])
+
+  return count;
 };
 
 export default usePagination;

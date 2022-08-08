@@ -3,7 +3,7 @@ import DraftList from '../components/templates/DraftList';
 import Pagination from '../components/organisms/common/Pagination';
 import { ContentsDiv } from '../styledComponents';
 import SmallNav from '../components/organisms/common/SmallNav';
-import { Outlet } from 'react-router-dom';
+import { Outlet, useLocation } from 'react-router-dom';
 import GoUploadBtn from '../components/atomic/draft/GoUploadBtn';
 import { getCookie } from '../config/cookie';
 
@@ -15,9 +15,9 @@ const ShowDraftList = () => {
     <>
 
     <SmallNav data={[
-        {text: 'root', path: '/draft'},
-        {text: 'Best', path: '/draft/best'},
-        {text: 'All', path: '/draft/all'}
+        {text: 'root', path: '/drafts'},
+        {text: 'Best', path: '/drafts/best'},
+        {text: 'All', path: '/drafts/all'}
       ]}
         isSearch={true} loc={0} />
 
@@ -28,7 +28,7 @@ const ShowDraftList = () => {
     <ContentsDiv>
       <Outlet context={{ page }} />
 
-      <Pagination filter="drafts"
+      <Pagination
         page={page} setPage={setPage}
         pages={pages} setPages={setPages}
       />

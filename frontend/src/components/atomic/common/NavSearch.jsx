@@ -5,16 +5,19 @@ import {
 } from '../../../styledComponents';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
+import { useNavigate } from 'react-router-dom';
 
 const NavSearch = ({ path, search, setSearch }) => {
 
-  const goSearch = useCallback(() => {
+  const navigate = useNavigate();
+  const goSearch = () => {
     if(!search){
       alert('검색어를 입력해주세요!');
     } else {
-      window.location.replace(`${path}/search/${search}`);
+      //window.location.replace(`${path}/search/${search}`);
+      navigate(`${path}/search/${search}`)
     }
-  }, [search]);
+  }
 
   const onChange = (e) => {
     setSearch(e.target.value);

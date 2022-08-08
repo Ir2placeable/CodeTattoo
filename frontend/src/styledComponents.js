@@ -45,6 +45,8 @@ export const ListDiv = styled.div`
   justify-content: stretch;
   align-items: center;
   position: relative;
+  // background-color: aqua;
+  margin-bottom: 50px;
 `;
 
 export const EmptyBox = styled.div`
@@ -696,54 +698,102 @@ export const DraftImgBox = styled.div`
   flex-direction: column;
   justify-content: center;
   //align-items: center;
-  height: 430px;
+  height: 440px;
   //width: 340px;
   padding: 0 25px;
   border-radius: 8px;
 `;
 
 export const DraftDrawerDiv = styled.div`
-  display: flex;
-  justify-content: stretch;
-  align-items: center;
-  //background-color: orange;
-  margin-bottom: 10px;
-  width: max-content;
-  cursor: pointer;
-  margin-left: 20px;
-`;
+display: flex;
+justify-content: stretch;
+align-items: center;
+// background-color: orange;
+margin-bottom: 10px;
+width: max-content;
+cursor: pointer;
+margin-left: 20px;
+`
+
 
 export const DraftDrawer = styled.p`
   margin-left: 20px;
 `;
 
-export const DraftDrawerImg = styled.img`
-  display: inline-block;
-  width: 35px;
-  height: 35px;
-  background-color: black;
-  border-radius: 50%;
-  border: 2px solid black;
-  object-fit: contain;
-`;
 
+export const UserIconStyle = {
+  color: 'white',
+  fontSize: '20px'
+}
+
+export const DraftDrawerImgDiv = styled.div`
+width: 35px;
+height: 35px;
+overflow: hidden;
+background-color: black;
+border-radius: 50%;
+border: 2px solid black;
+display: flex;
+justify-content: center;
+align-items: center;
+`
+
+export const DraftDrawerImg = styled.img`
+// display: inline-block;
+width: 35px;
+height: 35px;
+// background-color: black;
+// border-radius: 50%;
+// border: 2px solid black;
+object-fit: contain;
+`
+export const DraftImgDiv = styled.div`
+width: 300px;
+height: 300px;
+border-radius: 8px;
+box-sizing: border-box;
+overflow: hidden;
+box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.4);
+position: relative;
+z-index: 15;
+`
 export const DraftImg = styled.img`
   width: 300px;
   height: 300px;
   object-fit: contain;
-  box-sizing: border-box;
-  border-radius: 8px;
-  box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.4);
+  // box-sizing: border-box;
+  // border-radius: 8px;
+  // box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.4);
   background-color: white;
   cursor: pointer;
+  position: absolute;
 `;
 
+export const DraftImgHoverDiv = styled.div`
+background-color: rgba(0, 0, 0, .4);
+color: white;
+font-weight: bold;
+font-size: 18px;
+// border-radius: 8px;
+width: 300px;
+height: 300px;
+cursor: pointer;
+position: absolute;
+z-index: 10;
+display: flex;
+justify-content: center;
+align-items: center;
+`
+
 export const DraftImgInfo = styled.div`
-  margin-top: 20px;
-  margin-left: 20px;
+  // margin-top: 15px;
+  margin: 15px 15px 0;
+  height: 35px;
   display: flex;
   align-items: center;
   position: relative;
+
+  // background-color: orange;
 `;
 
 export const DraftHeartBox = styled.div`
@@ -752,6 +802,10 @@ export const DraftHeartBox = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  
+  position: absolute;
+  top: 0;
+  right: 0;
 `;
 export const DraftHeartCount = styled.div`
   font-size: 14px;
@@ -764,6 +818,7 @@ export const DraftImgTitle = styled.p`
   font-size: 18px;
   margin-left: 20px;
   text-align: center;
+  font-weight: bold;
 `;
 
 export const SearchResText = styled.div`
@@ -836,8 +891,10 @@ export const EmptyImgDiv = styled.div`
 
 export const LoadedImgDescDiv = styled.div`
   width: 50%;
-  display: flex;
-  flex-direction: column;
+  height: 220px;
+  // display: flex;
+  // flex-direction: column;
+  // background-color: orange;
 `;
 export const LoadedImgText = styled.div`
   color: rgba(72, 72, 72);
@@ -880,6 +937,7 @@ export const EnrollImgBtn = styled.div`
 // *** Pagination ***
 export const PagenationDiv = styled.div`
   width: 100%;
+  // background-color: orange;
   position: absolute;
   bottom: 50px;
 `;

@@ -13,9 +13,9 @@ const Navigation = () => {
   const onClick = useCallback((e) => {
     const path = e.target.id;
 
-    if(path === 'draft' || path === 'tattooist'){
+    if(path === 'drafts' || path === 'tattooists'){
       navigate(`/${path}/best`);
-    } else if(path === 'scrap'){
+    } else if(path === 'scraps'){
       navigate(`/${path}/draft`);
     }else {
       navigate(`/${path}`);
@@ -27,11 +27,11 @@ const Navigation = () => {
     <MainNavigation>
       <MainNavigationInner>
 
-        <NavigationBtn onClick={onClick} text="도안" path="draft" />
-        <NavigationBtn onClick={onClick} text="타투이스트" path="tattooist" />
+        <NavigationBtn onClick={onClick} text="도안" path="drafts" />
+        <NavigationBtn onClick={onClick} text="타투이스트" path="tattooists" />
 
         { getCookie('user_id') ? (
-          <NavigationBtn onClick={onClick} text="스크랩" path="scrap" />
+          <NavigationBtn onClick={onClick} text="스크랩" path="scraps" />
         ) : getCookie('tattooist_id') ? (
           <NavigationBtn onClick={onClick} text="예약" path="reservation" />
         ) : (

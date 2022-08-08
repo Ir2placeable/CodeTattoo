@@ -47,12 +47,16 @@ userSchema.pre('save', function (next) {
     }
 })
 
-userSchema.methods.comparePassword = function (plainPassword, cb) {
-    bcrypt.compare(plainPassword, this.pwd, function (err, isMatch) {
-        if (err) return cb(err);
-        cb(null, isMatch);
-    });
-};
+// userSchema.methods.comparePassword = function (plainPassword, cb) {
+//     bcrypt.compare(plainPassword, this.pwd, function (err, isMatch) {
+//         if (err) return cb(err);
+//         cb(null, isMatch);
+//     });
+// };
+
+userSchema.methods.comparePassword = async function (plainPassword) {
+    return await bcrypt.compare(plainPassword, this.pwd)
+}
 
 const User = mongoose.model('User', userSchema)
 

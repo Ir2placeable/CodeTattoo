@@ -1,7 +1,7 @@
 import React from 'react';
 import { DraftImg } from '../../../styledComponents';
 
-const DraftImage = ({ src, alt, id }) => {
+const DraftImage = ({ src, alt, id, onHover }) => {
 
   return (
     <>
@@ -9,6 +9,7 @@ const DraftImage = ({ src, alt, id }) => {
         src={src}
         alt={alt}
         id={id}
+        onMouseEnter={onHover}
       />
     </>
   );
