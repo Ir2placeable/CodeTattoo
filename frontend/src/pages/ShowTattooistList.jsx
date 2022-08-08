@@ -51,9 +51,9 @@ const ShowTattooistList = ({ cookies }) => {
     <>
       <SmallNav
         data={[
-          { text: "root", path: "/tattooist" },
-          { text: "Best", path: "/tattooist/best" },
-          { text: "All", path: "/tattooist/all" },
+          { text: "root", path: "/tattooists" },
+          { text: "Best", path: "/tattooists/best" },
+          { text: "All", path: "/tattooists/all" },
         ]}
         isSearch={true}
         loc={getCookie('user_id') || getCookie('tattooist_id') ? 1 : 2}
