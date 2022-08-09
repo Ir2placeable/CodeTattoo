@@ -298,7 +298,7 @@ server.get('/scraps/:filter/:page', (req, res) => {
     if (req.params.filter === 'draft') {
         user.pageScrapDraft(req.params, req.query)
             .then((returned) => {
-                res.send({ success : true, drafts : returned })
+                res.send({ success : true, count : returned.count, drafts : returned.return_value })
             })
             .catch((err) => {
                 res.send({ success : false, code : err })
@@ -308,17 +308,7 @@ server.get('/scraps/:filter/:page', (req, res) => {
     else if (req.params.filter === 'tattooist') {
         user.pageScrapTattooist(req.params, req.query)
             .then((returned) => {
-                res.send({ success : true, tattooists : returned })
-            })
-            .catch((err) => {
-                res.send({ success : false, code : err })
-            })
-    }
-    // scrap : initialize
-    else if (req.params.filter === 'count') {
-        user.pageScrapCount(req.params, req.query)
-            .then((returned) => {
-                res.send({ success : true, draft_count : returned.draft_count, tattooist_count : returned.tattooist_count })
+                res.send({ success : true, count : returned.count, tattooists : returned.return_value })
             })
             .catch((err) => {
                 res.send({ success : false, code : err })

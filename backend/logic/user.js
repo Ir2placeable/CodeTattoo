@@ -82,7 +82,7 @@ exports.pageDraft = async function(params, query) {
     let count
     let return_value
 
-    if (params.filter === 'count') {
+    if (params.page === '0') {
         count = await Draft.count()
         // 탐색 결과 없음 오류
         if(count === 0) {
@@ -190,7 +190,7 @@ exports.pageTattooist = async function(params, query) {
     let count
     let return_value
 
-    if (params.filter === 'count') {
+    if (params.page === '0') {
         count = await Tattooist.count()
         // 탐색 결과 없음 오류
         if(count === 0) {
@@ -325,24 +325,38 @@ exports.pageTattooistDetail = async function(params, query) {
     return {tattooist_info, return_value}
 }
 
-exports.pageScrapCount = async function(params, query) {
-    const user = await User.findOne({ _id : query.user_id })
-    if (!user) {
-        console.log(ErrorTable["10"])
-        throw 10
-    }
-
-    const draft_count = user['scraps'].length
-    const tattooist_count = user['follows'].length
-
-    return {draft_count, tattooist_count}
-}
+// exports.pageScrapCount = async function(params, query) {
+//     const user = await User.findOne({ _id : query.user_id })
+//     if (!user) {
+//         console.log(ErrorTable["10"])
+//         throw 10
+//     }
+//
+//     const draft_count = user['scraps'].length
+//     const tattooist_count = user['follows'].length
+//
+//     return {draft_count, tattooist_count}
+// }
 
 exports.pageScrapDraft = async function(params, query) {
     const user = await User.findOne({ _id : query.user_id })
     if (!user) {
         console.log(ErrorTable["10"])
         throw 10
+    }
+
+    let count
+    let return_value;
+
+    if (params.page === '0') {
+        count = user['scraps'].length
+        // 탐색 결과 없음 오류
+        if(count === 0) {
+            console.log(ErrorTable['5'])
+            throw 5
+        }
+
+        return {count, return_value}
     }
 
     let drafts = []
@@ -359,7 +373,7 @@ exports.pageScrapDraft = async function(params, query) {
     const item_index_start = Global.draftShowLimit * (parseInt(params.page)-1)
     drafts = drafts.slice(item_index_start, (item_index_start + Global.draftShowLimit))
 
-    let return_value = []
+    return_value = []
     for await (let draft of drafts) {
         const drawer = await Tattooist.findOne({ _id : draft.drawer })
         const item = {
@@ -376,7 +390,7 @@ exports.pageScrapDraft = async function(params, query) {
         return_value.push(item)
     }
 
-    return return_value
+    return {count, return_value}
 }
 
 exports.pageScrapTattooist = async function(params, query) {
@@ -384,6 +398,20 @@ exports.pageScrapTattooist = async function(params, query) {
     if (!user) {
         console.log(ErrorTable["10"])
         throw 10
+    }
+
+    let count
+    let return_value
+
+    if (params.page === '0') {
+        count = user['follows'].length
+        // 탐색 결과 없음 오류
+        if(count === 0) {
+            console.log(ErrorTable['5'])
+            throw 5
+        }
+
+        return {count, return_value}
     }
 
     let tattooists = []
@@ -400,7 +428,7 @@ exports.pageScrapTattooist = async function(params, query) {
     const item_index_start = Global.tattooistShowLimit * (parseInt(params.page)-1)
     tattooists = tattooists.slice(item_index_start, (item_index_start + Global.tattooistShowLimit))
 
-    let return_value = []
+    return_value = []
     for (let tattooist of tattooists) {
         const item = {
             tattooist_id : tattooist['_id'],
@@ -416,7 +444,7 @@ exports.pageScrapTattooist = async function(params, query) {
         return_value.push(item)
     }
 
-    return return_value
+    return {count, return_value}
 }
 
 exports.scrapDraft = async function(params, body) {

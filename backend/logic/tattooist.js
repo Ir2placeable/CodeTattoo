@@ -9,7 +9,7 @@ exports.pageDraft = async function(params, query) {
     let count
     let return_value
 
-    if (params.filter === 'count') {
+    if (params.page === '0') {
         count = await Draft.count()
         // 탐색 결과 없음 오류
         if(count === 0) {
@@ -88,7 +88,7 @@ exports.pageTattooist = async function(params, query) {
     let count
     let return_value
 
-    if (params.filter === 'count') {
+    if (params.page === '0') {
         count = await Tattooist.count()
         // 탐색 결과 없음 오류
         if(count === 0) {
