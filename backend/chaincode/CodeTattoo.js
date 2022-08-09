@@ -181,7 +181,6 @@ class CodeTattoo extends Contract {
 
         return tattoo['side-effects'].toString();
     }
-
 }
 
 module.exports = CodeTattoo;

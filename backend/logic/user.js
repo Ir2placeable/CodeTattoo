@@ -418,3 +418,23 @@ exports.pageScrapTattooist = async function(params, query) {
 
     return return_value
 }
+
+exports.scrapDraft = async function(params, body) {
+    await Draft.updateOne({ _id : body.draft_id }, {$inc : { like : 1 }})
+    await User.updateOne({ _id : params.id }, {$push : { scraps : body.draft_id }})
+}
+
+exports.unScrapDraft = async function(params, query) {
+    await Draft.updateOne({ _id : query.draft_id }, {$inc : { like : -1 }})
+    await User.updateOne({ _id : params.id }, {$pull : { scraps : query.draft_id }})
+}
+
+exports.followTattooist = async function(params, query) {
+    await Tattooist.updateOne({ _id : query.tattooist_id }, {$inc : { follower : 1 }})
+    await User.updateOne({ _id : params.id }, {$push : { follows : query.tattooist_id }})
+}
+
+exports.unFollowTattooist = async function(params, query) {
+    await Tattooist.updateOne({ _id : query.tattooist_id }, {$inc : { follower : -1 }})
+    await User.updateOne({ _id : params.id }, {$pull : { follows : query.tattooist_id }})
+}

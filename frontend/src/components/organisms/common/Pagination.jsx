@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
@@ -9,15 +9,18 @@ import {
   PageDiv, PageBox, CurrentPage, PagenationDiv 
 } from '../../../styledComponents'
 import usePagination from '../../../hooks/usePagination';
+import { useLocation } from 'react-router-dom';
 
-const Pagination = ({ filter, page, setPage, pages, setPages }) => {
-  const [count, sendRequest] = usePagination({
-    filter: filter,
+const Pagination = ({ page, setPage, pages, setPages }) => {
+  const location = useLocation();
+  
+  const count = usePagination({
+    filter: location.pathname
   });
 
   useEffect(() => {
-
-    sendRequest();
+    //console.log(filter)
+    //sendRequest();
     const lastPage = Math.ceil(count / 12);
     const temp = [];
 
@@ -25,7 +28,7 @@ const Pagination = ({ filter, page, setPage, pages, setPages }) => {
       temp.push(i);
     }
     setPages(temp);
-  }, []);
+  }, [count]);
 
   return (
     <>

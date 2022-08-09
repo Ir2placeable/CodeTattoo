@@ -6,6 +6,7 @@ import { useLocation } from "react-router-dom";
 import { useState } from "react";
 
 import SmallNav from "../components/organisms/common/SmallNav";
+import { getCookie } from "../config/cookie";
 
 const ShowTattooistList = () => {
   const [page, setPage] = useState(1);
@@ -55,7 +56,7 @@ const ShowTattooistList = () => {
           { text: "All", path: "/tattooists/all" },
         ]}
         isSearch={true}
-        loc={2}
+        loc={getCookie('user_id') || getCookie('tattooist_id') ? 1 : 2}
       />
 
       <ContentsDiv>

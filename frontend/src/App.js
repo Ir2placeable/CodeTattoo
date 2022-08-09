@@ -31,13 +31,14 @@ import ShowTattooistDetail from "./pages/ShowTattooistDetail";
 import TattooistDetailDraft from "./components/templates/TattooistDetailDraft";
 import TattooistDetailArtwork from "./components/templates/TattooistDetailArtwork";
 import TattooistDetailReservation from "./components/templates/TattooistDetailReservation";
+import DraftSearch from "./components/templates/DraftSearch";
 
 const App = () => {
   const sendRequest = async () => {
     const res = await axios.get(`${APIURL}/entry`);
 
     if (res.data.success) {
-      console.log("Servier is connected");
+      console.log("Server is connected");
     }
   };
 
@@ -58,11 +59,12 @@ const App = () => {
 
           {/* Main page */}
           <Route path="/" element={<MainPage />}>
-            {/* 도안 목록 */}
+          
+            {/* 도안 */}
             <Route path="drafts" element={<ShowDraftList />}>
-              <Route path="best" element={<DraftList filter="best" />} />
-              <Route path="all" element={<DraftList filter="all" />} />
-              <Route path="search/:title" />
+              <Route path="best" element={<DraftList filter="drafts/best" />} />
+              <Route path="all" element={<DraftList filter="drafts/all" />} />
+              <Route path="search/:title" element={<DraftSearch />} />
             </Route>
 
             {/* 도안 등록 - 타투이스트만 해당 */}
@@ -93,8 +95,8 @@ const App = () => {
             <Route path="reservation" element={<div>예약</div>} />
 
             {/* 스크랩 */}
-            <Route path="scrap" element={<ShowScrap />} >
-              <Route path="draft" element={<div>냥</div>} />
+            <Route path="scraps" element={<ShowScrap />} >
+              <Route path="draft" element={<DraftList filter="scraps/draft" />} />
               <Route path="tattooist" element={<div>냥</div>} />
             </Route>
 
