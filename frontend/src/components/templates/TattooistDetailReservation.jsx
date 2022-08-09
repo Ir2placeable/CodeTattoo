@@ -4,11 +4,29 @@ import Calendar from 'react-calendar'
 import '../../calendar.css'
 import moment from "moment";
 
+import { 
+  CalendarDiv, ReservationDiv, 
+  DateDiv, TimeDiv, TimeText, Time
+} from "../../styledComponents";
+
 const mark = [
-  "2022-08-08",
-  "2022-08-01",
+  "2022-08-10",
+  "2022-08-11",
   "2022-08-27",
-  "2022-09-28"
+  "2022-09-28",
+  "2022-08-15",
+  "2022-08-17",
+  "2022-08-20",
+  "2022-08-21",
+  "2022-08-22",
+  "2022-08-23",
+]
+const time = [
+  "09",
+  "11",
+  "12",
+  "14",
+  "16"
 ]
 
 const dotStyle = {
@@ -32,29 +50,48 @@ const TattooistDetailReservation = () => {
   return (
     <>
 
-    <div>
-      <p>작업 가능 날짜</p>
+    <CalendarDiv>
       <Calendar 
         onChange={onChange} 
         value={value}
-        tileContent={({ date, view }) => {
-          if(mark.find((x) => x === moment(date).format("YYYY-MM-DD"))){
-            return (
-              <>
-                <div className="flex justify-center items-center absoluteDiv">
-                  <div style={dotStyle}></div>
-                </div>
-              </>
-            )
+        // tileContent={({ date, view }) => {
+        //   if(mark.find((x) => x === moment(date).format("YYYY-MM-DD"))){
+            
+        //     return (
+        //       <>
+        //         <div className="flex justify-center items-center absoluteDiv">
+        //           <div style={dotStyle}></div>
+        //         </div>
+        //       </>
+        //     )
+        //   }
+        // }}
+        tileClassName={({ date, view }) => {
+          if (mark.find((x) => x === moment(date).format("YYYY-MM-DD"))) {
+            return "highlight";
           }
         }}
       />
-    </div>
 
-        {/* 클릭한 날짜 */}
-      <div>
-        {moment(value).format("YYYY년 MM월 DD일")}
-      </div>
+      {/* 클릭한 날짜 */}
+      <ReservationDiv>
+        <DateDiv>
+          {moment(value).format("YYYY년 MM월 DD일")}
+        </DateDiv>
+        <TimeDiv>
+          <TimeText>
+            예약 가능 시간
+          </TimeText>
+
+          {time.map((t, idx) => (
+            <Time key={idx}>
+              {t}:00
+            </Time>
+          ))}
+        </TimeDiv>
+      </ReservationDiv>
+
+    </CalendarDiv>
     </>
   );
 };

@@ -12,6 +12,7 @@ import DraftLikes from '../../atomic/draft/DraftLikes';
 import HeartIcon from '../../atomic/draft/HeartIcon';
 import UserIcon from '../../atomic/common/UserIcon';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 
 
@@ -19,13 +20,16 @@ const Draft = ({ draft_id, image, title, like, drawer_id,
   drawer_image, drawer_nickname, isScraped }) => {
   const [hover, setHover] = useState(false);
 
+  const navigate = useNavigate();
   const onHover = (e) => {
     setHover(hover? false : true);
   } 
 
   const goDetail = () => {
-    console.log('click');
+    console.log('click ', draft_id);
+    navigate(`/draft/${draft_id}`)
   }
+
   const goTattooist = () => {
     console.log('go tattooist')
   }

@@ -8,7 +8,7 @@ import {
 } from "../../../styledComponents";
 
 const SmallDraft = ({ draft }) => {
-  console.log("Small Draft");
+  console.log("Small Draft", draft);
   return (
     <>
       <DraftImg src={draft.image} alt={draft.draft_id} />

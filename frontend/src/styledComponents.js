@@ -828,6 +828,9 @@ export const DraftImgTitle = styled.p`
 export const SearchResText = styled.div`
   font-size: 20px;
   margin-bottom: 50px;
+  // background-color: orange;
+  text-align: center;
+  font-weight: bold;
 `;
 
 // *** Image Upload ***
@@ -1287,3 +1290,46 @@ export const userIconStyle = {
   fontSize: "70px",
   marginTop: "15px",
 };
+
+
+// Calenar
+export const CalendarDiv = styled.div`
+// background-color: orange;
+margin: 60px auto;
+display: flex;
+`
+export const ReservationDiv = styled.div`
+// background-color: whitesmoke;
+margin-left: 80px;
+`
+
+export const DateDiv = styled.div`
+// line-height: 32px;
+text-align: center;
+`
+
+export const TimeDiv = styled.div`
+// background-color: aqua;
+width: 300px;
+`
+export const TimeText = styled.div`
+font-size: 18px;
+font-weight: bold;
+width: 100%;
+line-height: 40px;
+text-align: center;
+border-bottom: 1px solid rgba(72, 72, 72, .5);
+`
+
+export const Time = styled.div`
+width: 80%;
+background-color: rgba(72, 72, 72);
+line-height: 35px;
+text-align: center;
+color: white;
+font-size: 18px;
+font-weight: bold;
+border-radius: 5px;
+margin: 20px auto 0;
+cursor: pointer;
+`
