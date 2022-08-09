@@ -162,7 +162,10 @@ exports.pageTattooistDetail = async function(params) {
     let return_value = []
     if (params.filter === 'draft') {
         for await (let draft_id of tattooist['drafts']) {
-            const draft = await Draft.findOne({ _id : draft_id })
+            const draft = await Draft.findOne({ _id : "62eb72cc3a3e044bee8a8ea1" })
+            if (!draft) {
+                continue
+            }
             const item = {
                 draft_id : draft['_id'],
                 image : draft['image'],
@@ -251,9 +254,13 @@ exports.createDraft = async function(params, body) {
     }
 
     const new_draft = new Draft(draft_schema)
+    console.log('new_draft_id : ', new_draft._id)
     await new_draft.save()
 
-    await Tattooist.updateOne({ _id : params.id }, {$push : { drafts : new_draft['_id'] }})
+    await Tattooist.updateOne({ _id : params.id }, {$push : { drafts : new_draft._id }})
+
+    const temp = await Tattooist.findOne({ _id : params.id })
+    console.log(temp['drafts'])
 }
 
 exports.removeDraft = async function(params, body) {

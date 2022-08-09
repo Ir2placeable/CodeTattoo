@@ -15,3 +15,15 @@ exports.resetTattooist = async function() {
 exports.resetTattoo = async function() {
     await Tattoo.deleteMany({})
 }
+
+exports.getDraft = async function() {
+    return Draft.find()
+}
+
+exports.getTattooist = async function() {
+    return Tattooist.find()
+}
+
+exports.getUser = async function() {
+    return User.find()
+}

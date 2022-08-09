@@ -525,6 +525,19 @@ server.get('/reset/tattoo', (req, res) => {
     admin.resetTattoo()
         .then(() => { res.send({ success : true })})
 })
+// Draft 찾기
+server.get('/get/draft', (req, res) => {
+    admin.getDraft().then((result) => { res.send({ drafts : result}) })
+})
+// Tattooist 찾기
+server.get('/get/tattooist', (req, res) => {
+    admin.getTattooist().then((result) => { res.send({ tattooists : result}) })
+})
+// User 찾기
+server.get('/get/user', (req, res) => {
+    admin.getUser().then((result) => { res.send({ users : result}) })
+})
+
 
 server.listen(PORT, () => {
     console.log('server opened')
