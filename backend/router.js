@@ -246,7 +246,7 @@ server.get('/tattooists/:filter/:page', (req, res) => {
     }
 })
 // 타투이스트 세부 페이지
-server.get('/tattooist/:filter/:id', (req, res) => {
+server.get('/tattooist/:id/:filter', (req, res) => {
     console.log('\n')
     console.log('page : Tattooist detail')
     console.log('params : ', req.params)
@@ -439,21 +439,6 @@ server.post('/unfollow/:id', (req, res) => {
         })
 })
 
-
-// 타투이스트 마이페이지
-server.get('/tattooist/my-page/:filter/:id', (req, res) => {
-    console.log('\n')
-    console.log('page : Tattooist My page')
-    console.log('params : ', req.params)
-
-    tattooist.pageMyPage(req.params)
-        .then((returned) => {
-            res.send({ success : true, tattooist : returned.user_info, tattoos : returned.return_value })
-        })
-        .catch((err) => {
-            res.send({ success : false, code : err })
-        })
-})
 // 타투이스트 정보 수정
 server.patch('/tattooist/my-page/:id', (req, res) => {
     console.log('\n')

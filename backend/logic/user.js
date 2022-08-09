@@ -325,19 +325,6 @@ exports.pageTattooistDetail = async function(params, query) {
     return {tattooist_info, return_value}
 }
 
-// exports.pageScrapCount = async function(params, query) {
-//     const user = await User.findOne({ _id : query.user_id })
-//     if (!user) {
-//         console.log(ErrorTable["10"])
-//         throw 10
-//     }
-//
-//     const draft_count = user['scraps'].length
-//     const tattooist_count = user['follows'].length
-//
-//     return {draft_count, tattooist_count}
-// }
-
 exports.pageScrapDraft = async function(params, query) {
     const user = await User.findOne({ _id : query.user_id })
     if (!user) {
@@ -452,17 +439,17 @@ exports.scrapDraft = async function(params, body) {
     await User.updateOne({ _id : params.id }, {$push : { scraps : body.draft_id }})
 }
 
-exports.unScrapDraft = async function(params, query) {
-    await Draft.updateOne({ _id : query.draft_id }, {$inc : { like : -1 }})
-    await User.updateOne({ _id : params.id }, {$pull : { scraps : query.draft_id }})
+exports.unScrapDraft = async function(params, body) {
+    await Draft.updateOne({ _id : body.draft_id }, {$inc : { like : -1 }})
+    await User.updateOne({ _id : params.id }, {$pull : { scraps : body.draft_id }})
 }
 
-exports.followTattooist = async function(params, query) {
-    await Tattooist.updateOne({ _id : query.tattooist_id }, {$inc : { follower : 1 }})
-    await User.updateOne({ _id : params.id }, {$push : { follows : query.tattooist_id }})
+exports.followTattooist = async function(params, body) {
+    await Tattooist.updateOne({ _id : body.tattooist_id }, {$inc : { follower : 1 }})
+    await User.updateOne({ _id : params.id }, {$push : { follows : body.tattooist_id }})
 }
 
-exports.unFollowTattooist = async function(params, query) {
-    await Tattooist.updateOne({ _id : query.tattooist_id }, {$inc : { follower : -1 }})
-    await User.updateOne({ _id : params.id }, {$pull : { follows : query.tattooist_id }})
+exports.unFollowTattooist = async function(params, body) {
+    await Tattooist.updateOne({ _id : body.tattooist_id }, {$inc : { follower : -1 }})
+    await User.updateOne({ _id : params.id }, {$pull : { follows : body.tattooist_id }})
 }
