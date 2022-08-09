@@ -15,7 +15,7 @@ const useUserMyPage = () => {
 
   const sendRequest = async () => {
     const res = await axios.get(
-      `${APIURL}/my-page/user/?user_id=${getCookie("user_id")}`
+      `${APIURL}/user/my-page/${getCookie("user_id")}`
     );
 
     if (res.data.success) {

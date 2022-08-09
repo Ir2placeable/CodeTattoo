@@ -78,7 +78,7 @@ const App = () => {
               <Route path="search/:nickname" element={<TattooistList />} />
             </Route>
             {/* 타투이스트 상세 */}
-            <Route path="tattooist" element={<ShowTattooistDetail />}>
+            <Route path="tattooist/:tattooist_id" element={<ShowTattooistDetail />}>
               <Route path="draft" element={<TattooistDetailDraft />} />
               <Route path="artwork" element={<TattooistDetailArtwork />} />
               <Route path="reservation" element={<TattooistDetailReservation />}

@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useCallback } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   ProfileImg,
   TattooistInfoBox,
@@ -7,18 +8,20 @@ import {
 
 const Tattooist = ({ tattooist }) => {
   console.log("Tattooist");
+  const navigate = useNavigate();
+
+  const goDetail = useCallback(() => {
+    navigate(`/tattooist/${tattooist.tattooist_id}/draft`);
+  }, []);
+
   return (
     <>
-      {tattooist.image ? (
-        <ProfileImg
-          size="profile"
-          src={tattooist.image}
-          alt={tattooist.nickname}
-          id={tattooist.tattooist_id}
-        />
-      ) : (
-        <ProfileImg size="profile" />
-      )}
+      <ProfileImg
+        size="profile"
+        src={tattooist.image}
+        alt={tattooist.tattooist_id}
+        onClick={goDetail}
+      />
       <TattooistInfoBox>
         <TattooistInfo>Nickname : {tattooist.nickname}</TattooistInfo>
         <TattooistInfo>Office : {tattooist.location}</TattooistInfo>

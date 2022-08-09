@@ -13,6 +13,7 @@ import {
 } from "../../../styledComponents";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPenToSquare } from "@fortawesome/free-regular-svg-icons";
+import { getCookie } from "../../../config/cookie";
 
 const MyPageProfile = ({ profile }) => {
   // ProfileEdit Event 추가
@@ -28,12 +29,22 @@ const MyPageProfile = ({ profile }) => {
         <MyPageProfileInfoBox>
           <MyPageProfileNickname>{profile.nickname}</MyPageProfileNickname>
           <MyPageProfileInfoList>
-            <MyPageProfileInfo>Location : {profile.location}</MyPageProfileInfo>
-            <MyPageProfileInfo>Specialize : Making Hamberger</MyPageProfileInfo>
+            {profile.location ? (
+              <MyPageProfileInfo>
+                Location : {profile.location}
+              </MyPageProfileInfo>
+            ) : null}
+            {profile.specialize ? (
+              <MyPageProfileInfo>
+                Specialize : {profile.specialize}
+              </MyPageProfileInfo>
+            ) : null}
           </MyPageProfileInfoList>
-          <MyPageProfileDescription>
-            한 줄 소개 입니다.
-          </MyPageProfileDescription>
+          {profile.description ? (
+            <MyPageProfileDescription>
+              {profile.description}
+            </MyPageProfileDescription>
+          ) : null}
         </MyPageProfileInfoBox>
         <ProfileEdit>
           <FontAwesomeIcon icon={faPenToSquare} size="2x" />
@@ -43,4 +54,4 @@ const MyPageProfile = ({ profile }) => {
   );
 };
 
-export default MyPageProfile;
+export default React.memo(MyPageProfile);

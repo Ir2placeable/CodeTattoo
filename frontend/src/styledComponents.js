@@ -423,20 +423,21 @@ export const TattooistButton = styled.div`
     `}
 `;
 
-// *** Show Tattooist Detil ***
+// *** Show Tattooist Detail ***
 
 export const GridDiv = styled.div`
   width: 990px;
   display: flex;
   flex-wrap: wrap;
+  margin: 30px 0;
 `;
 
-export const Item = styled.div`
+export const DetailDraftImg = styled.img`
   width: 300px;
   height: 300px;
-  background-color: #444;
   margin: 15px;
 `;
+
 // *** Show Draft Detail ***
 export const DraftDetailMainBox = styled.div`
   width: 100%;
@@ -550,13 +551,13 @@ export const ProfileImgBox = styled.div`
     `}
 `;
 
-export const ProfileImg = styled.div`
-  color: #ffffff;
+export const ProfileImg = styled.img`
+  color: #000;
   text-align: center;
   border-radius: 70%;
   object-fit: contain;
   z-index: 1;
-  background-color: #777;
+  cursor: pointer;
   ${(props) =>
     props.size === "profile" &&
     css`
@@ -580,7 +581,7 @@ export const ProfileImgEdit = styled.div`
   width: 30px;
   height: 30px;
   position: relative;
-  top: -40px;
+  top: -150px;
   left: 160px;
   display: flex;
   justify-content: center;
@@ -1197,18 +1198,18 @@ export const XMarkStyle = {
 
 // Draft upload button
 export const GoUpload = styled.div`
-background-color: black;
-width: 100px;
-line-height: 40px;
-text-align: center;
-border-radius: 8px;
-color: white;
-font-weight: bold;
-cursor: pointer;
-position: absolute;
-top: 30px;
-right: 0;
-`
+  background-color: black;
+  width: 100px;
+  line-height: 40px;
+  text-align: center;
+  border-radius: 8px;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  position: absolute;
+  top: 30px;
+  right: 0;
+`;
 
 // =================== FOOTER ==========================
 export const FooterDiv = styled.footer`

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { ContentsDiv, EmptyBox, ListDiv } from "../styledComponents";
 import { Outlet, useParams } from "react-router-dom";
 import useTattooistList from "../hooks/useTattooistList";
@@ -20,40 +20,39 @@ const ShowTattooistList = () => {
     path = `${location.pathname}`;
   }
 
-  console.log(`path: ${path}`);
+  const tattooists = useTattooistList(path, page);
 
-  // const tattooists = useTattooistList(path, page);
-  const tattooists = [
-    {
-      tattooist_id: 1,
-      image: "",
-      nickname: "spongebob",
-      location: "Bikini Bottom",
-      specialize: "making hamberger",
-      followers: "1.1K",
-      description: "good morning",
-      isFollowed: false,
-    },
-    {
-      tattooist_id: 2,
-      image: "",
-      nickname: "sponge",
-      location: "Bikini",
-      specialize: "making",
-      followers: "2.2K",
-      description: "good evening",
-      isFollowed: true,
-    },
-  ];
+  // const tattooists = [
+  //   {
+  //     tattooist_id: 1,
+  //     image: "",
+  //     nickname: "spongebob",
+  //     location: "Bikini Bottom",
+  //     specialize: "making hamberger",
+  //     followers: "1.1K",
+  //     description: "good morning",
+  //     isFollowed: false,
+  //   },
+  //   {
+  //     tattooist_id: 2,
+  //     image: "",
+  //     nickname: "sponge",
+  //     location: "Bikini",
+  //     specialize: "making",
+  //     followers: "2.2K",
+  //     description: "good evening",
+  //     isFollowed: true,
+  //   },
+  // ];
 
   console.log(`Show Tattooist List`);
   return (
     <>
       <SmallNav
         data={[
-          { text: "root", path: "/tattooist" },
-          { text: "Best", path: "/tattooist/best" },
-          { text: "All", path: "/tattooist/all" },
+          { text: "root", path: "/tattooists" },
+          { text: "Best", path: "/tattooists/best" },
+          { text: "All", path: "/tattooists/all" },
         ]}
         isSearch={true}
         loc={2}

@@ -1,21 +1,16 @@
 import React from "react";
-import { GridDiv, Item } from "../../styledComponents";
+import { useOutletContext } from "react-router-dom";
+import { GridDiv, DetailDraftImg } from "../../styledComponents";
 
 const TattooistDetailDraft = () => {
+  const { drafts } = useOutletContext();
   return (
     <>
       <GridDiv>
-        <Item></Item>
-        <Item></Item>
-        <Item></Item>
-        <Item></Item>
-        <Item></Item>
-        <Item></Item>
-        <Item></Item>
-        <Item></Item>
-        <Item></Item>
-        <Item></Item>
-        <Item></Item>
+        {drafts &&
+          drafts.map((draft) => (
+            <DetailDraftImg key={draft.draft_id} src={draft.image} />
+          ))}
       </GridDiv>
     </>
   );

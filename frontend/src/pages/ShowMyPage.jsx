@@ -3,10 +3,12 @@ import { Outlet } from "react-router-dom";
 import MyPageProfile from "../components/organisms/mypage/MyPageProfile";
 import { getCookie } from "../config/cookie";
 import { ContentsDiv, HorizontalLine, ListDiv } from "../styledComponents";
+import useUserMyPage from "../hooks/useUserMyPage";
 
 const ShowMyPage = () => {
   /* User My Page Data */
-  //const data = useUserMyPage();
+  const data = useUserMyPage();
+  console.log(data);
   const tattoos = [
     {
       tattoo_id: 1,
@@ -40,21 +42,13 @@ const ShowMyPage = () => {
     },
   ];
 
-  const profile = {
-    image: "../../img/react.jpg",
-    user_id: 1,
-    nickname: "Sponge Bob",
-    location: "Bikini Bottom",
-  };
-
   return (
     <>
       <ContentsDiv>
         <ListDiv>
-          <MyPageProfile profile={profile} />
+          <MyPageProfile profile={data.infos} />
           <HorizontalLine></HorizontalLine>
-          {/*getCookie("user_id") ? (<Outlet context={{ tattoos }} />) : (<Outlet />)*/}
-          <Outlet context={{ tattoos }} />
+          {getCookie("user_id") ? <Outlet context={{ tattoos }} /> : <Outlet />}
         </ListDiv>
       </ContentsDiv>
     </>

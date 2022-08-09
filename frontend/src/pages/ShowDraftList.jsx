@@ -15,9 +15,9 @@ const ShowDraftList = () => {
     <>
 
     <SmallNav data={[
-        {text: 'root', path: '/draft'},
-        {text: 'Best', path: '/draft/best'},
-        {text: 'All', path: '/draft/all'}
+        {text: 'root', path: '/drafts'},
+        {text: 'Best', path: '/drafts/best'},
+        {text: 'All', path: '/drafts/all'}
       ]}
         isSearch={true} loc={0} />
 
