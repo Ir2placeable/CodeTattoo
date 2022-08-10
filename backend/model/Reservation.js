@@ -24,6 +24,9 @@ const reservationSchema = mongoose.Schema({
     },
     cost : {
         type : Number
+    },
+    procedure_status : {
+        type : Boolean
     }
 })
 

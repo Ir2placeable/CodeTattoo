@@ -292,7 +292,7 @@ server.get('/scraps/:filter/:page', (req, res) => {
     console.log('\n')
     console.log('command : User Scrap Page')
     console.log('params : ', req.params)
-    console.log('body : ', req.query)
+    console.log('query : ', req.query)
 
     // scrap : draft menu
     if (req.params.filter === 'draft') {
@@ -320,9 +320,19 @@ server.get('/scraps/:filter/:page', (req, res) => {
     }
 
 })
-// 예약 페이지
+// 타투이스트 예약 페이지
 server.get('/reservations', (req, res) => {
+    console.log('\n')
+    console.log('command : Tattooist Reservation Page')
+    console.log('params : ', req.params)
 
+    tattooist.pageReservation(req.params)
+        .then((returned) => {
+            res.send({ success : true, reservations : returned})
+        })
+        .catch((err) => {
+            res.send({ success : false, code : err })
+        })
 })
 
 // 유저 채팅 리스트 페이지

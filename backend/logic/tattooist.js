@@ -3,6 +3,8 @@ const ErrorTable = require("../ErrorTable");
 const Global = require("../GlobalVariable");
 const {Tattooist} = require("../model/Tattooist");
 const {User} = require("../model/User");
+const {Reservation} = require("../model/Reservation");
+
 const imageStorage = require("../module/imageStorage");
 
 exports.pageDraft = async function(params, query) {
@@ -262,4 +264,34 @@ exports.createDraft = async function(params, body) {
 exports.removeDraft = async function(params, body) {
     await Tattooist.updateOne({ _id : params.id }, {$pull : { drafts : body.draft_id }})
     await Draft.deleteOne({ _id : body.draft_id })
+}
+
+exports.pageReservation = async function(params) {
+    const tattooist = await Tattooist.findOne({ _id : params.id })
+    if (!tattooist) {
+        // 해당 타투이스트 없음 오류
+        console.log(ErrorTable["8"])
+        throw 8
+    }
+
+    let return_value = []
+    for await (let reservation_id of tattooist['reservations']) {
+        const reservation = await Reservation.findOne({ _id : reservation_id })
+        if (!reservation) { continue }
+        const user = await User.findOne({ _id : reservation.customer_id })
+
+        const item = {
+            reservation_id : reservation_id,
+            image : reservation['image'],
+            user_id : user['_id'],
+            user_nickname : user['nickname'],
+            date : String(reservation['year']) + '-' + String(reservation['month']) + '-' + String(reservation['day']) + '-' + String(reservation['time_slot']),
+            cost : reservation['cost'],
+            procedure_status : reservation['procedure_status']
+        }
+
+        return_value.push(item)
+    }
+    
+    return return_value
 }
