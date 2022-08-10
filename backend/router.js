@@ -11,8 +11,8 @@ const server = express()
 const PORT = 3001
 
 const bodyParser = require('body-parser');
-server.use(bodyParser.json());
-server.use(bodyParser.urlencoded({ extended : true }))
+server.use(bodyParser.json({ limit : "50mb"}));
+server.use(bodyParser.urlencoded({ limit : "50mb", extended : true }))
 
 const cors = require('cors');
 server.use(cors());
