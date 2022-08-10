@@ -23,29 +23,6 @@ const ShowTattooistList = () => {
 
   const tattooists = useTattooistList(path, page);
 
-  // const tattooists = [
-  //   {
-  //     tattooist_id: 1,
-  //     image: "",
-  //     nickname: "spongebob",
-  //     location: "Bikini Bottom",
-  //     specialize: "making hamberger",
-  //     followers: "1.1K",
-  //     description: "good morning",
-  //     isFollowed: false,
-  //   },
-  //   {
-  //     tattooist_id: 2,
-  //     image: "",
-  //     nickname: "sponge",
-  //     location: "Bikini",
-  //     specialize: "making",
-  //     followers: "2.2K",
-  //     description: "good evening",
-  //     isFollowed: true,
-  //   },
-  // ];
-
   console.log(`Show Tattooist List`);
   return (
     <>
@@ -56,7 +33,7 @@ const ShowTattooistList = () => {
           { text: "All", path: "/tattooists/all" },
         ]}
         isSearch={true}
-        loc={getCookie('user_id') || getCookie('tattooist_id') ? 1 : 2}
+        loc={getCookie("user_id") || getCookie("tattooist_id") ? 1 : 2}
       />
 
       <ContentsDiv>

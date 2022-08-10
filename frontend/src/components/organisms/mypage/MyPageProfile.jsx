@@ -14,17 +14,20 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPenToSquare } from "@fortawesome/free-regular-svg-icons";
 import { getCookie } from "../../../config/cookie";
+import { useNavigate } from "react-router-dom";
 
 const MyPageProfile = ({ profile }) => {
   // ProfileEdit Event 추가
+  const navigate = useNavigate();
+  const goEdit = () => {
+    navigate("/edit");
+  };
+
   return (
     <>
       <MyPageProfileBox>
         <ProfileImgBox size="profile">
           <ProfileImg size="profile" src={profile.image} />
-          <ProfileImgEdit>
-            <FontAwesomeIcon icon={faPenToSquare} size="2x" />
-          </ProfileImgEdit>
         </ProfileImgBox>
         <MyPageProfileInfoBox>
           <MyPageProfileNickname>{profile.nickname}</MyPageProfileNickname>
@@ -46,7 +49,7 @@ const MyPageProfile = ({ profile }) => {
             </MyPageProfileDescription>
           ) : null}
         </MyPageProfileInfoBox>
-        <ProfileEdit>
+        <ProfileEdit onClick={goEdit}>
           <FontAwesomeIcon icon={faPenToSquare} size="2x" />
         </ProfileEdit>
       </MyPageProfileBox>

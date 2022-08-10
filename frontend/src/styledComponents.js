@@ -434,10 +434,33 @@ export const GridDiv = styled.div`
   margin: 30px 0;
 `;
 
-export const DetailDraftImg = styled.img`
+export const DetailDraftImgBox = styled.div`
+  box-sizing: border-box;
   width: 300px;
   height: 300px;
   margin: 15px;
+`;
+
+export const DetailDraftImg = styled.img`
+  width: 300px;
+  height: 300px;
+  cursor: pointer;
+`;
+
+export const DetailDraftImgHover = styled.div`
+  background-color: rgba(0, 0, 0, 0.4);
+  color: white;
+  font-weight: bold;
+  font-size: 18px;
+  width: 300px;
+  height: 300px;
+  cursor: pointer;
+  z-index: 10;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  top: -300px;
 `;
 
 // *** Show Draft Detail ***
@@ -456,6 +479,16 @@ export const SmallDraftBox = styled.div`
   justify-content: center;
   align-items: center;
   box-shadow: 5px 5px 15px 0px rgba(72, 72, 72, 0.5);
+`;
+
+export const SmallDraftImg = styled.img`
+  width: 300px;
+  height: 300px;
+  object-fit: contain;
+  box-sizing: border-box;
+  border-radius: 8px;
+  background-color: white;
+  cursor: pointer;
 `;
 
 export const SmallDraftInfoBox = styled.div`
@@ -706,58 +739,56 @@ export const DraftImgBox = styled.div`
 `;
 
 export const DraftDrawerDiv = styled.div`
-display: flex;
-justify-content: stretch;
-align-items: center;
-// background-color: orange;
-margin-bottom: 10px;
-width: max-content;
-cursor: pointer;
-margin-left: 20px;
-`
-
+  display: flex;
+  justify-content: stretch;
+  align-items: center;
+  // background-color: orange;
+  margin-bottom: 10px;
+  width: max-content;
+  cursor: pointer;
+  margin-left: 20px;
+`;
 
 export const DraftDrawer = styled.p`
   margin-left: 20px;
 `;
 
-
 export const UserIconStyle = {
-  color: 'white',
-  fontSize: '20px'
-}
+  color: "white",
+  fontSize: "20px",
+};
 
 export const DraftDrawerImgDiv = styled.div`
-width: 35px;
-height: 35px;
-overflow: hidden;
-background-color: black;
-border-radius: 50%;
-border: 2px solid black;
-display: flex;
-justify-content: center;
-align-items: center;
-`
+  width: 35px;
+  height: 35px;
+  overflow: hidden;
+  background-color: black;
+  border-radius: 50%;
+  border: 2px solid black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
 
 export const DraftDrawerImg = styled.img`
-// display: inline-block;
-width: 35px;
-height: 35px;
-// background-color: black;
-// border-radius: 50%;
-// border: 2px solid black;
-object-fit: contain;
-`
+  // display: inline-block;
+  width: 35px;
+  height: 35px;
+  // background-color: black;
+  // border-radius: 50%;
+  // border: 2px solid black;
+  object-fit: contain;
+`;
 export const DraftImgDiv = styled.div`
-width: 300px;
-height: 300px;
-border-radius: 8px;
-box-sizing: border-box;
-overflow: hidden;
-box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.4);
-position: relative;
-z-index: 15;
-`
+  width: 300px;
+  height: 300px;
+  border-radius: 8px;
+  box-sizing: border-box;
+  overflow: hidden;
+  box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.4);
+  position: relative;
+  z-index: 15;
+`;
 export const DraftImg = styled.img`
   width: 300px;
   height: 300px;
@@ -771,20 +802,20 @@ export const DraftImg = styled.img`
 `;
 
 export const DraftImgHoverDiv = styled.div`
-background-color: rgba(0, 0, 0, .4);
-color: white;
-font-weight: bold;
-font-size: 18px;
-// border-radius: 8px;
-width: 300px;
-height: 300px;
-cursor: pointer;
-position: absolute;
-z-index: 10;
-display: flex;
-justify-content: center;
-align-items: center;
-`
+  background-color: rgba(0, 0, 0, 0.4);
+  color: white;
+  font-weight: bold;
+  font-size: 18px;
+  // border-radius: 8px;
+  width: 300px;
+  height: 300px;
+  cursor: pointer;
+  position: absolute;
+  z-index: 10;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
 
 export const DraftImgInfo = styled.div`
   // margin-top: 15px;
@@ -803,7 +834,7 @@ export const DraftHeartBox = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  
+
   position: absolute;
   top: 0;
   right: 0;

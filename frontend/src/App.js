@@ -97,8 +97,8 @@ const App = () => {
             {/* 스크랩 */}
             <Route path="scraps" element={<ShowScrap />} >
               <Route path="draft" element={<DraftList filter="scraps/draft" />} />
-              <Route path="tattooist" element={<div>냥</div>} />
             </Route>
+            <Route path="scraps/tattooist" element={<ShowTattooistList/>}/>
 
           </Route>
 

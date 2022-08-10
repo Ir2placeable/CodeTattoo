@@ -7,7 +7,7 @@ import { APIURL } from "../config/key";
 
 const useTattooistDetail = (path) => {
   const [tattooist, setTattooist] = useState({});
-  const [data, setData] = useState({});
+  const [data, setData] = useState();
 
   const sendRequest = async () => {
     let query = "";
@@ -18,7 +18,6 @@ const useTattooistDetail = (path) => {
     }
 
     const res = await axios.get(`${APIURL}${path}/${query}`);
-    console.log(`${APIURL}${path}/${query}`);
     if (res.data.success) {
       setTattooist(res.data.tattooist);
       setData(res.data.data);
