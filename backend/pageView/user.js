@@ -1,8 +1,6 @@
-const {User} = require("../model/User")
-const {Tattooist} = require("../model/Tattooist")
-const {Draft} = require('../model/Draft')
-const {Tattoo} = require('../model/Tattoo')
-const imageStorage = require('../module/imageStorage')
+const {User} = require("../DBModel/User")
+const {Tattooist} = require("../DBModel/Tattooist")
+const {Draft} = require('../DBModel/Draft')
 
 const Global = require('../GlobalVariable')
 const ErrorTable = require('../ErrorTable')
@@ -47,35 +45,6 @@ exports.pageMyPage = async function(params) {
     // }
 
     return {user_info, return_value}
-}
-
-exports.userInfoEdit = async function(params, body) {
-    await User.updateOne({ _id : params.id }, {$set : { nickname : body.nickname, location : body.location }}, (err, user) => {
-        if(!user) {
-            console.log(ErrorTable["10"])
-            throw 10
-        }
-        if(err) {
-            console.log(ErrorTable["9"])
-            throw 9
-        }
-    })
-}
-
-exports.userImageEdit = async function(params, body) {
-    const imageStorage_params = { title : params.id, image : body.image, mime : body.mime }
-    const image_url = await imageStorage.upload(imageStorage_params)
-
-    await User.updateOne({ _id : params.id }, {$set : { image : image_url }}, (err, user) => {
-        if(!user) {
-            console.log(ErrorTable["10"])
-            throw 10
-        }
-        if(err) {
-            console.log(ErrorTable["9"])
-            throw 9
-        }
-    })
 }
 
 exports.pageDraft = async function(params, query) {
@@ -146,7 +115,6 @@ exports.pageDraft = async function(params, query) {
 
     return {count, return_value}
 }
-
 exports.pageDraftDetail = async function(params, query) {
     const draft = await Draft.findOne({ _id : params.id })
     if (!draft) {
@@ -252,7 +220,6 @@ exports.pageTattooist = async function(params, query) {
 
     return {count, return_value}
 }
-
 exports.pageTattooistDetail = async function(params, query) {
     const tattooist = await Tattooist.findOne({ _id : params.id })
     if (!tattooist) {
@@ -382,7 +349,6 @@ exports.pageScrapDraft = async function(params, query) {
 
     return {count, return_value}
 }
-
 exports.pageScrapTattooist = async function(params, query) {
     const user = await User.findOne({ _id : query.user_id })
     if (!user) {
@@ -435,24 +401,4 @@ exports.pageScrapTattooist = async function(params, query) {
     }
 
     return {count, return_value}
-}
-
-exports.scrapDraft = async function(params, body) {
-    await Draft.updateOne({ _id : body.draft_id }, {$inc : { like : 1 }})
-    await User.updateOne({ _id : params.id }, {$push : { scraps : body.draft_id }})
-}
-
-exports.unScrapDraft = async function(params, body) {
-    await Draft.updateOne({ _id : body.draft_id }, {$inc : { like : -1 }})
-    await User.updateOne({ _id : params.id }, {$pull : { scraps : body.draft_id }})
-}
-
-exports.followTattooist = async function(params, body) {
-    await Tattooist.updateOne({ _id : body.tattooist_id }, {$inc : { follower : 1 }})
-    await User.updateOne({ _id : params.id }, {$push : { follows : body.tattooist_id }})
-}
-
-exports.unFollowTattooist = async function(params, body) {
-    await Tattooist.updateOne({ _id : body.tattooist_id }, {$inc : { follower : -1 }})
-    await User.updateOne({ _id : params.id }, {$pull : { follows : body.tattooist_id }})
 }

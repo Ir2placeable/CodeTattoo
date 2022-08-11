@@ -1,7 +1,7 @@
-const {User} = require("../model/User")
-const {Tattooist} = require("../model/Tattooist")
-const {Draft} = require('../model/Draft')
-const {Tattoo} = require('../model/Tattoo')
+const {User} = require("../DBModel/User")
+const {Tattooist} = require("../DBModel/Tattooist")
+const {Draft} = require('../DBModel/Draft')
+const {Tattoo} = require('../DBModel/Tattoo')
 
 exports.resetUser = async function() {
     await User.deleteMany({})

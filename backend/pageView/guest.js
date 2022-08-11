@@ -1,11 +1,17 @@
-const {Draft} = require("../model/Draft");
-const ErrorTable = require("../ErrorTable");
-const Global = require("../GlobalVariable");
-const {Tattooist} = require("../model/Tattooist");
-const {User} = require("../model/User");
-const {Reservation} = require("../model/Reservation");
+const {User} = require("../DBModel/User")
+const {Tattooist} = require("../DBModel/Tattooist")
+const {Draft} = require('../DBModel/Draft')
+const {Tattoo} = require('../DBModel/Tattoo')
 
-const imageStorage = require("../module/imageStorage");
+const Global = require('../GlobalVariable')
+const ErrorTable = require('../ErrorTable')
+
+let connections = 0
+
+exports.pageEntry = function() {
+    // 접속자 수 파악을 위한 변수 connections
+    connections += 1
+}
 
 exports.pageDraft = async function(params, query) {
     let count
@@ -86,6 +92,7 @@ exports.pageDraftDetail = async function(params) {
 
     return return_value
 }
+
 exports.pageTattooist = async function(params, query) {
     let count
     let return_value
@@ -206,92 +213,3 @@ exports.pageTattooistDetail = async function(params) {
     return {tattooist_info, return_value}
 }
 
-exports.tattooistInfoEdit = async function(params, body) {
-    await Tattooist.updateOne({ _id : params.id }, {$set : { nickname : body.nickname, location : body.location, specialize : body.specialize, description : body.description }}, (err, tattooist) => {
-        if(!tattooist) {
-            console.log(ErrorTable["10"])
-            throw 10
-        }
-        if(err) {
-            console.log(ErrorTable["9"])
-            throw 9
-        }
-    })
-}
-
-exports.tattooistImageEdit = async function(params, body) {
-    const imageStorage_params = { title : params.id, image : body.image, mime : body.mime }
-    const image_url = await imageStorage.upload(imageStorage_params)
-
-    await Tattooist.updateOne({ _id : params.id }, {$set : { image : image_url }}, (err, tattooist) => {
-        if(!tattooist) {
-            console.log(ErrorTable["10"])
-            throw 10
-        }
-        if(err) {
-            console.log(ErrorTable["9"])
-            throw 9
-        }
-    })
-}
-
-exports.createDraft = async function(params, body) {
-    const tattooist = await Tattooist.findOne({ _id : params.id })
-    if (!tattooist) {
-        // 해당 타투이스트 없음 오류
-        console.log(ErrorTable["8"])
-        throw 8
-    }
-
-    const imageStorage_params = { title : body.title, image : body.image, mime : body.mime }
-    const image_url = await imageStorage.upload(imageStorage_params)
-
-    const draft_schema = {
-        drawer : tattooist['_id'],
-        title : body['title'],
-        image : image_url,
-        genre : body['genre'],
-        keywords : body['keywords'],
-        timestamp : Math.floor(Date.now() / 1000)
-    }
-
-    const new_draft = new Draft(draft_schema)
-    await new_draft.save()
-
-    await Tattooist.updateOne({ _id : params.id }, {$push : { drafts : new_draft._id }})
-}
-
-exports.removeDraft = async function(params, body) {
-    await Tattooist.updateOne({ _id : params.id }, {$pull : { drafts : body.draft_id }})
-    await Draft.deleteOne({ _id : body.draft_id })
-}
-
-exports.pageReservation = async function(params) {
-    const tattooist = await Tattooist.findOne({ _id : params.id })
-    if (!tattooist) {
-        // 해당 타투이스트 없음 오류
-        console.log(ErrorTable["8"])
-        throw 8
-    }
-
-    let return_value = []
-    for await (let reservation_id of tattooist['reservations']) {
-        const reservation = await Reservation.findOne({ _id : reservation_id })
-        if (!reservation) { continue }
-        const user = await User.findOne({ _id : reservation.customer_id })
-
-        const item = {
-            reservation_id : reservation_id,
-            image : reservation['image'],
-            user_id : user['_id'],
-            user_nickname : user['nickname'],
-            date : String(reservation['year']) + '-' + String(reservation['month']) + '-' + String(reservation['day']) + '-' + String(reservation['time_slot']),
-            cost : reservation['cost'],
-            procedure_status : reservation['procedure_status']
-        }
-
-        return_value.push(item)
-    }
-    
-    return return_value
-}
