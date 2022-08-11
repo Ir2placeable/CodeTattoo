@@ -32,6 +32,7 @@ import TattooistDetailDraft from "./components/templates/TattooistDetailDraft";
 import TattooistDetailArtwork from "./components/templates/TattooistDetailArtwork";
 import TattooistDetailReservation from "./components/templates/TattooistDetailReservation";
 import DraftSearch from "./components/templates/DraftSearch";
+import ShowReservation from "./pages/ShowReservation";
 
 
 const App = () => {
@@ -96,7 +97,7 @@ const App = () => {
             </Route>
 
             {/* 예약 */}
-            <Route path="reservation" element={<div>예약</div>} />
+            <Route path="reservation" element={<ShowReservation />} />
 
             {/* 스크랩 */}
             <Route path="scraps" element={<ShowScrap />} >

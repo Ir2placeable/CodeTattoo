@@ -1333,3 +1333,90 @@ border-radius: 5px;
 margin: 20px auto 0;
 cursor: pointer;
 `
+
+
+// reservation
+export const ReservDiv = styled.div`
+// background-color: white;
+width: 70%;
+margin: 0 auto 50px;
+display: flex;
+justify-content: space-between;
+`
+export const ReservInfoDiv = styled.div`
+// background-color: #A6C3D3;
+background-color: #D8D8D8;
+border-radius: 20px;
+padding: 30px 50px;
+display: flex;
+// width: 70%;
+width: 100%;
+`
+
+export const ReservDraftImg = styled.img`
+display: inline-block;
+width: 200px;
+height: 200px;
+background-color: white;
+object-fit: contain;
+border-radius: 5px;
+`
+
+export const ReservTextDiv = styled.div`
+// background-color: orange;
+width: calc(100% - 400px);
+padding: 0 20px;
+display: flex;
+flex-direction: column;
+justify-content: center;
+`
+
+export const ReservText = styled.p`
+font-size: 18px;
+font-weight: bold;
+// background-color: aqua;
+line-height: 40px;
+margin: 5px 0;
+`
+
+export const ReservLabel = styled.span`
+display: inline-block;
+width: 110px;
+`
+export const ReservTextBox = styled.span`
+width: 300px;
+padding: 0 10px;
+display: inline-block;
+background-color: #eee;
+border-radius: 5px;
+`
+
+export const ReservBtnDiv = styled.div`
+// width: 20%;
+// background-color: aqua;
+display: flex;
+flex-direction: column;
+justify-content: space-evenly;
+`
+
+export const ReservBtn = styled.div`
+// background-color: #A6C3D3;
+background-color: black;
+width: 200px;
+height: 20%;
+color: white;
+font-size: 20px;
+font-weight: bold;
+border: 3px solid black;
+border-radius: 30px;
+display: flex;
+justify-content: center;
+align-items: center;
+cursor: pointer;
+transition: .45s;
+
+&:hover{
+  color: black;
+  background-color: white;
+}
+`
