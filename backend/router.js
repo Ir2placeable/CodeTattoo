@@ -2,6 +2,7 @@ const guest = require('./logic/guest')
 const user = require('./logic/user')
 const tattooist = require('./logic/tattooist')
 const admin = require('./logic/admin')
+const command = require('./logic/command')
 
 const mongoose = require("mongoose");
 const config = require('./config/key')
@@ -508,6 +509,22 @@ server.post('/remove/draft/:id', (req, res) => {
             res.send({ success : false, code : err })
         })
 })
+// 예약 생성
+server.post('/create/reservation/:id', (req, res) => {
+    console.log('\n')
+    console.log('command : Create reservation')
+    console.log('params : ', req.params)
+    console.log('body : ', req.body)
+
+    command.createReservation(req.params, req.body)
+        .then((returned) => {
+            res.send({ success : true })
+        })
+        .catch((err) => {
+            res.send({ success : false, code : err })
+        })
+})
+
 
 // admin
 // entry page 접속자 수 확인
