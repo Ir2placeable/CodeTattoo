@@ -25,7 +25,7 @@ const SmallNav = ({ data, isSearch, loc }) => {
       setSecondBtn(true);
     } else {
       setFirstBtn(false);
-      setSecondBtn(false);
+      setSearch('');
     }
   }, [location.pathname]);
 

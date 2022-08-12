@@ -34,6 +34,8 @@ import TattooistDetailReservation from "./components/templates/TattooistDetailRe
 import DraftSearch from "./components/templates/DraftSearch";
 import ShowProfileEdit from "./pages/ShowProfileEdit";
 import ProfileEdit from "./components/templates/ProfileEdit";
+import ShowReservation from "./pages/ShowReservation";
+
 
 const App = () => {
   const sendRequest = async () => {
@@ -49,7 +51,9 @@ const App = () => {
   }, []);
 
   return (
-    <div className="font-style">
+    <div className="font-style" style={{
+      minHeight: '100vh', position: 'relative',
+      paddingBottom: '130px'}}>
       <Reset />
 
       {/* HEADER */}
@@ -88,6 +92,7 @@ const App = () => {
               <Route path="reservation" element={<TattooistDetailReservation />}
               />
             </Route>
+
             {/* 마이 페이지 */}
             <Route path="my-page" element={<ShowMyPage />}>
               <Route path="user/:user_id" element={<ShowMyTattoo />} />
@@ -98,7 +103,7 @@ const App = () => {
               <Route path="password" />
             </Route>
             {/* 예약 */}
-            <Route path="reservation" element={<div>예약</div>} />
+            <Route path="reservation" element={<ShowReservation />} />
 
             {/* 스크랩 */}
             <Route path="scraps" element={<ShowScrap />} >

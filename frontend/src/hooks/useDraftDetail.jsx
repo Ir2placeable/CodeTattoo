@@ -50,14 +50,18 @@ const useDraftDetail = () => {
     }
     const res = await axios.get(`${APIURL}/draft/${draft_id}${query}`);
     if (res.data.success) {
-      setDraft(res.data.draft_info);
-      console.log(res.data.draft_info);
+      setDraft(res.data.draft);
+      console.log(res.data.draft);
     } else {
       console.log("Draft Detail Get Request Fail");
     }
   };
 
-  return [draft, sendRequest];
+  useEffect(() => {
+    sendRequest();
+  }, [])
+
+  return draft
 };
 
 export default useDraftDetail;

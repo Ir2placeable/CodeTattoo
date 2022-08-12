@@ -10,23 +10,28 @@ const MyPageNav = () => {
   const [prev, setPrev] = useState(null);
 
   const navigate = useNavigate();
-  const onClick = useCallback(
-    (e) => {
-      const path = e.target.id;
-      console.log(path);
-      if (prev !== null) {
-        prev.style.color = "rgba(72, 72, 72, .5)";
-        prev.style.borderBottom = "3px solid white";
-      }
+  // const onClick = useCallback(
+  //   (e) => {
+  //     const path = e.target.id;
+  //     console.log(path);
+  //     if (prev !== null) {
+  //       prev.style.color = "rgba(72, 72, 72, .5)";
+  //       prev.style.borderBottom = "3px solid white";
+  //     }
 
-      setPrev(e.target);
-      e.target.style.color = "black";
-      e.target.style.borderBottom = "3px solid black";
+  //     setPrev(e.target);
+  //     e.target.style.color = "black";
+  //     e.target.style.borderBottom = "3px solid black";
 
-      navigate(`${path}`);
-    },
-    [prev]
-  );
+  //     navigate(`${path}`);
+  //   },
+  //   [prev]
+  // );
+  const onClick = useCallback((e) => {
+    const path = e.target.id;
+    //console.log(path)
+    navigate(`${path}`)
+  }, [])
 
   return (
     <>
