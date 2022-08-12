@@ -1,7 +1,7 @@
 import React, { useCallback, useState } from 'react';
 import { HeaderBtn, HeaderBtnHover } from '../../styledComponents';
 
-import { getAllCookie, removeCookie, getCookie } from '../../config/cookie';
+import { getAllCookie, removeCookie, getCookie, resetCookie } from '../../config/cookie';
 import { useNavigate } from 'react-router-dom';
 
 const LogoutBtn = () => {
@@ -14,12 +14,13 @@ const LogoutBtn = () => {
     console.log(keys)
     for(let i = 0; i < keys.length; i++){
       //console.log('remove ', keys[i], ", ", getCookie(keys[i]))
-      removeCookie(keys[i], {path : '/'})
+      //removeCookie(keys[i], {path : '/'})
+      resetCookie(keys[i])
     }
 
     setTimeout(() => {
       window.location.replace('/')
-    }, 500);
+    }, 1000);
   }, []);
 
   return (

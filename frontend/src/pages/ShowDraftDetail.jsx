@@ -5,7 +5,7 @@ import { ContentsDiv, EmptyBox } from "../styledComponents";
 
 const ShowDraftDetail = () => {
   const detail = useDraftDetail();
-  //console.log(detail)
+  console.log('detail: ', detail)
 
   // const detail = {
   //   draft_id: 1,

@@ -6,6 +6,7 @@ import {
   ContentsDiv, HorizontalLine, ListDiv,
   MyPageDiv
 } from "../styledComponents";
+import useUserMyPage from "../hooks/useUserMyPage";
 
 
 const ShowMyPage = () => {

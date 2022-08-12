@@ -4,11 +4,14 @@ import {
   SmallTattooistInfoBox,
   SmallTattooistNickname,
   SmallTattooistLocation,
+  ProfileImgIcon,
 } from "../../../styledComponents";
 import TattooistBtn from "../../atomic/tattooist/TattooistBtn";
 import { APIURL } from "../../../config/key";
 import axios from "axios";
 import { getCookie } from "../../../config/cookie";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faUser } from "@fortawesome/free-solid-svg-icons";
 
 const SmallTattooist = ({ tattooist }) => {
   console.log("Small Tattooist");
@@ -39,11 +42,19 @@ const SmallTattooist = ({ tattooist }) => {
   return (
     <>
       <SmallTattooistProfileBox>
-        <ProfileImg
-          size="tattooist"
-          src={tattooist.drawer_image}
-          alt={tattooist.drawer_id}
-        />
+        {tattooist.drawer_image ? (
+          <ProfileImg 
+            size="tattooist"
+            src={tattooist.drawer_image}
+            alt={tattooist.drawer_id}
+          />
+        ) : (
+          <ProfileImgIcon size="tattooist">
+            <FontAwesomeIcon 
+              style={{fontSize: '80px'}} icon={faUser} />
+          </ProfileImgIcon>
+        )}
+        
         <SmallTattooistInfoBox>
           <SmallTattooistNickname>
             {tattooist.drawer_nickname}

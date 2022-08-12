@@ -23,7 +23,7 @@ const GoMypage = () => {
     if(getCookie('user_id')){
       navigate(`/my-page/user/${getCookie('user_id')}`);
     } else {
-      navigate(`/tattooist/${getCookie('tattooist_id')}`);
+      navigate(`/tattooist/${getCookie('tattooist_id')}/draft`);
     }
   }, []);
 

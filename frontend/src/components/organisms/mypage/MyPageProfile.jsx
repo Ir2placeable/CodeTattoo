@@ -9,12 +9,13 @@ import {
   MyPageProfileInfoList,
   MyPageProfileInfo,
   MyPageProfileDescription,
-  ProfileEdit,
+  ProfileEdit, ProfileImgIcon
 } from "../../../styledComponents";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPenToSquare } from "@fortawesome/free-regular-svg-icons";
 import { getCookie } from "../../../config/cookie";
 import { useNavigate } from "react-router-dom";
+import { faUser } from "@fortawesome/free-solid-svg-icons";
 
 const MyPageProfile = ({ profile }) => {
   // ProfileEdit Event 추가
@@ -27,7 +28,15 @@ const MyPageProfile = ({ profile }) => {
     <>
       <MyPageProfileBox>
         <ProfileImgBox size="profile">
-          <ProfileImg size="profile" src={profile.image} />
+          {profile.image ? (
+            <ProfileImg size="profile" src={profile.image} />
+          ) : (
+            <ProfileImgIcon size="profile">
+              <FontAwesomeIcon 
+                style={{fontSize: '100px'}} icon={faUser} />
+            </ProfileImgIcon>
+          )}
+          
         </ProfileImgBox>
         <MyPageProfileInfoBox>
           <MyPageProfileNickname>{profile.nickname}</MyPageProfileNickname>

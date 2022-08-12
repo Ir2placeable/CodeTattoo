@@ -34,7 +34,7 @@ import { APIURL } from "../config/key";
 //     - err 8 : 해당 타투이스트 없음
 //     - err 10 : user_id 전달 오류
 // - [기능정리링크](https://www.notion.so/a78a53207d0740eba3637a8316c1b0a0)
-const useTattooistDetail = memo(( filter, tattooist_id ) => {
+const useTattooistDetail = (path) => {
   const [tattooist, setTattooist] = useState({});
   const [data, setData] = useState();
 
@@ -45,13 +45,14 @@ const useTattooistDetail = memo(( filter, tattooist_id ) => {
     } else if (getCookie("tattooist_id")) {
       query = `?tattooist_id=${getCookie("tattooist_id")}`;
     }
+    console.log(`${APIURL}${path}/${query}`)
 
     const res = await axios.get(`${APIURL}${path}/${query}`);
     if (res.data.success) {
       setTattooist(res.data.tattooist);
       setData(res.data.data);
     }
-  };
+  }
 
   useEffect(() => {
     sendRequest();
