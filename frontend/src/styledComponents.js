@@ -429,20 +429,44 @@ export const TattooistButton = styled.div`
     `}
 `;
 
-// *** Show Tattooist Detil ***
+// *** Show Tattooist Detail ***
 
 export const GridDiv = styled.div`
   width: 990px;
   display: flex;
   flex-wrap: wrap;
+  margin: 30px 0;
 `;
 
-export const Item = styled.div`
+export const DetailDraftImgBox = styled.div`
+  box-sizing: border-box;
   width: 300px;
   height: 300px;
-  background-color: #444;
   margin: 15px;
 `;
+
+export const DetailDraftImg = styled.img`
+  width: 300px;
+  height: 300px;
+  cursor: pointer;
+`;
+
+export const DetailDraftImgHover = styled.div`
+  background-color: rgba(0, 0, 0, 0.4);
+  color: white;
+  font-weight: bold;
+  font-size: 18px;
+  width: 300px;
+  height: 300px;
+  cursor: pointer;
+  z-index: 10;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  top: -300px;
+`;
+
 // *** Show Draft Detail ***
 export const DraftDetailMainBox = styled.div`
   width: 100%;
@@ -459,6 +483,16 @@ export const SmallDraftBox = styled.div`
   justify-content: center;
   align-items: center;
   box-shadow: 5px 5px 15px 0px rgba(72, 72, 72, 0.5);
+`;
+
+export const SmallDraftImg = styled.img`
+  width: 300px;
+  height: 300px;
+  object-fit: contain;
+  box-sizing: border-box;
+  border-radius: 8px;
+  background-color: white;
+  cursor: pointer;
 `;
 
 export const SmallDraftInfoBox = styled.div`
@@ -554,15 +588,23 @@ export const ProfileImgBox = styled.div`
       height: 150px;
       line-height: 150px;
     `}
+
+    ${(props) =>
+    props.size === "edit" &&
+    css`
+      width: 100px;
+      height: 100px;
+      line-height: 100px;
+    `}
 `;
 
-export const ProfileImg = styled.div`
-  color: #ffffff;
+export const ProfileImg = styled.img`
+  color: #000;
   text-align: center;
   border-radius: 70%;
   object-fit: contain;
   z-index: 1;
-  background-color: #777;
+  cursor: pointer;
   ${(props) =>
     props.size === "profile" &&
     css`
@@ -580,13 +622,29 @@ export const ProfileImg = styled.div`
       line-height: 150px;
       box-shadow: 5px 5px 10px 0 rgba(72, 72, 72, 0.3);
     `}
+
+    ${(props) =>
+    props.size === "edit" &&
+    css`
+      width: 100px;
+      height: 100px;
+      line-height: 100px;
+      overflow: hidden;
+      background-color: #777;
+    `}
+`;
+
+export const ProfileNickname = styled.div`
+  font-size: 36px;
+  font-weight: 700px;
+  margin: 0 30px;
 `;
 
 export const ProfileImgEdit = styled.div`
   width: 30px;
   height: 30px;
   position: relative;
-  top: -40px;
+  top: -150px;
   left: 160px;
   display: flex;
   justify-content: center;
@@ -662,6 +720,85 @@ export const MyPageNavigationBtnStyle = {
   color: "black",
   borderBottom: "3px solid black",
 };
+// *** Profile Edit ***
+export const ProfileEditBox = styled.div`
+  display: flex;
+  width: 1250px;
+  margin: 0 auto;
+  border-radius: 3px;
+  border: 1px solid #777;
+  box-sizing: border-box;
+`;
+
+export const SideNavBox = styled.div`
+  flex-basis: 250px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 50px 0;
+  border-right: 1px solid rgba(72, 72, 72, 0.5);
+`;
+
+export const SideNavigationBtn = styled.div`
+  box-sizing: border-box;
+  height: 75px;
+  font-size: 20px;
+  font-weight: bold;
+  color: rgba(72, 72, 72, 0.5);
+  border: 3px solid white;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+`;
+
+export const ProfileEditorBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 1000px;
+  margin: 50px 0;
+`;
+
+export const EditImgBox = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 50px;
+`;
+
+export const ProfileImgInputLabel = styled.label`
+  border-radius: 6px;
+  background-color: #2374e1;
+  color: white;
+  padding: 12px 10px;
+  margin-right: 20px;
+`;
+
+export const ProfileImgInput = styled.input`
+  display: none;
+`;
+
+export const ProfileInfoInputBox = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 75px;
+`;
+
+export const ProfileInfoInputLabel = styled.label`
+  flex-basis: 100px;
+  margin-left: 100px;
+  font-size: 32px;
+  font-weight: 900;
+`;
+
+export const ProfileInfoInput = styled.input`
+  flex-basis: 500px;
+  line-height: 40px;
+  font-size: 18px;
+  margin-right: 150px;
+`;
 
 // *** Show Draft List ***
 export const DraftListDiv = styled.div`
@@ -709,58 +846,56 @@ export const DraftImgBox = styled.div`
 `;
 
 export const DraftDrawerDiv = styled.div`
-display: flex;
-justify-content: stretch;
-align-items: center;
-// background-color: orange;
-margin-bottom: 10px;
-width: max-content;
-cursor: pointer;
-margin-left: 20px;
-`
-
+  display: flex;
+  justify-content: stretch;
+  align-items: center;
+  // background-color: orange;
+  margin-bottom: 10px;
+  width: max-content;
+  cursor: pointer;
+  margin-left: 20px;
+`;
 
 export const DraftDrawer = styled.p`
   margin-left: 20px;
 `;
 
-
 export const UserIconStyle = {
-  color: 'white',
-  fontSize: '20px'
-}
+  color: "white",
+  fontSize: "20px",
+};
 
 export const DraftDrawerImgDiv = styled.div`
-width: 35px;
-height: 35px;
-overflow: hidden;
-background-color: black;
-border-radius: 50%;
-border: 2px solid black;
-display: flex;
-justify-content: center;
-align-items: center;
-`
+  width: 35px;
+  height: 35px;
+  overflow: hidden;
+  background-color: black;
+  border-radius: 50%;
+  border: 2px solid black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
 
 export const DraftDrawerImg = styled.img`
-// display: inline-block;
-width: 35px;
-height: 35px;
-// background-color: black;
-// border-radius: 50%;
-// border: 2px solid black;
-object-fit: contain;
-`
+  // display: inline-block;
+  width: 35px;
+  height: 35px;
+  // background-color: black;
+  // border-radius: 50%;
+  // border: 2px solid black;
+  object-fit: contain;
+`;
 export const DraftImgDiv = styled.div`
-width: 300px;
-height: 300px;
-border-radius: 8px;
-box-sizing: border-box;
-overflow: hidden;
-box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.4);
-position: relative;
-z-index: 15;
-`
+  width: 300px;
+  height: 300px;
+  border-radius: 8px;
+  box-sizing: border-box;
+  overflow: hidden;
+  box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.4);
+  position: relative;
+  z-index: 15;
+`;
 export const DraftImg = styled.img`
   width: 300px;
   height: 300px;
@@ -774,20 +909,20 @@ export const DraftImg = styled.img`
 `;
 
 export const DraftImgHoverDiv = styled.div`
-background-color: rgba(0, 0, 0, .4);
-color: white;
-font-weight: bold;
-font-size: 18px;
-// border-radius: 8px;
-width: 300px;
-height: 300px;
-cursor: pointer;
-position: absolute;
-z-index: 10;
-display: flex;
-justify-content: center;
-align-items: center;
-`
+  background-color: rgba(0, 0, 0, 0.4);
+  color: white;
+  font-weight: bold;
+  font-size: 18px;
+  // border-radius: 8px;
+  width: 300px;
+  height: 300px;
+  cursor: pointer;
+  position: absolute;
+  z-index: 10;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
 
 export const DraftImgInfo = styled.div`
   // margin-top: 15px;
@@ -806,7 +941,7 @@ export const DraftHeartBox = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  
+
   position: absolute;
   top: 0;
   right: 0;
@@ -1262,18 +1397,18 @@ export const XMarkStyle = {
 
 // Draft upload button
 export const GoUpload = styled.div`
-background-color: black;
-width: 100px;
-line-height: 40px;
-text-align: center;
-border-radius: 8px;
-color: white;
-font-weight: bold;
-cursor: pointer;
-position: absolute;
-top: 30px;
-right: 0;
-`
+  background-color: black;
+  width: 100px;
+  line-height: 40px;
+  text-align: center;
+  border-radius: 8px;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  position: absolute;
+  top: 30px;
+  right: 0;
+`;
 
 // =================== FOOTER ==========================
 export const FooterDiv = styled.footer`

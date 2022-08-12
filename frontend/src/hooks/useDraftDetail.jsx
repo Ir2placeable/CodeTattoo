@@ -45,13 +45,10 @@ const useDraftDetail = () => {
 
   const sendRequest = async () => {
     let query = "";
-
-    if(getCookie('user_id')){
-      query = `?user_id=${getCookie('user_id')}`
+    if (getCookie("user_id")) {
+      query = `?user_id=${getCookie("user_id")}`;
     }
-
-    const res = await axios.get(`${APIURL}/draft/${draft_id}${query}`)
-
+    const res = await axios.get(`${APIURL}/draft/${draft_id}${query}`);
     if (res.data.success) {
       setDraft(res.data.draft);
       console.log(res.data.draft);

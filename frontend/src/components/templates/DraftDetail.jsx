@@ -22,7 +22,7 @@ const DraftDetail = ({ detail }) => {
     drawer_image: detail.drawer_image,
     drawer_nickname: detail.drawer_nickname,
     drawer_location: detail.drawer_location,
-    isFollowed: true,
+    isFollowed: detail.isFollowed,
   };
   const genre = {
     genre: detail.genre,

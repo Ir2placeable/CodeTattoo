@@ -1,7 +1,9 @@
-import axios from 'axios';
-import React, { memo } from 'react';
-import { getCookie } from '../config/cookie';
-import { APIURL } from '../config/key';
+import axios from "axios";
+import React, { memo, useState } from "react";
+import { useEffect } from "react";
+import { useLocation } from "react-router-dom";
+import { getCookie } from "../config/cookie";
+import { APIURL } from "../config/key";
 
 
 // ### 게스트 페이지 : 타투이스트 세부
@@ -34,23 +36,28 @@ import { APIURL } from '../config/key';
 // - [기능정리링크](https://www.notion.so/a78a53207d0740eba3637a8316c1b0a0)
 const useTattooistDetail = memo(( filter, tattooist_id ) => {
   const [tattooist, setTattooist] = useState({});
-  const [data, setData] = useState({});
+  const [data, setData] = useState();
 
-  const sendRequest = async() => {
-    let query = ""
-
-    if(getCookie('user_id')){
-      query = `?user_id=${getCookie('user_id')}`
+  const sendRequest = async () => {
+    let query = "";
+    if (getCookie("user_id")) {
+      query = `?user_id=${getCookie("user_id")}`;
+    } else if (getCookie("tattooist_id")) {
+      query = `?tattooist_id=${getCookie("tattooist_id")}`;
     }
 
-    const res = await axios.get(`${APIURL}/tattooist/${filter}/${tattooist_id}${query}`)
-
-    if(res.data.success){
+    const res = await axios.get(`${APIURL}${path}/${query}`);
+    if (res.data.success) {
       setTattooist(res.data.tattooist);
       setData(res.data.data);
     }
-  }
-  return [tattooist, data, sendRequest]
-});
+  };
+
+  useEffect(() => {
+    sendRequest();
+  }, []);
+
+  return [tattooist, data];
+};
 
 export default useTattooistDetail;

@@ -1,17 +1,15 @@
 import React from "react";
-import { Outlet } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
 import MyPageProfile from "../components/organisms/mypage/MyPageProfile";
 import { getCookie } from "../config/cookie";
 import { ContentsDiv, ListDiv, MyPageDiv } from "../styledComponents";
 import MyPageNav from "../components/organisms/common/MyPageNav";
+import useTattooistDetail from "../hooks/useTattooistDetail";
 
 const ShowTattooistDetail = () => {
-  const profile = {
-    image: "../../img/react.jpg",
-    user_id: 1,
-    nickname: "Sponge Bob",
-    location: "Bikini Bottom",
-  };
+  const location = useLocation();
+  const path = location.pathname; // tattooist/tattooist_id/filter
+  const [profile, items] = useTattooistDetail(path);
 
   return (
     <>
@@ -19,7 +17,7 @@ const ShowTattooistDetail = () => {
         <ListDiv>
           <MyPageProfile profile={profile} />
           <MyPageNav />
-          <Outlet />
+          <Outlet context={items} />
         </ListDiv>
       </MyPageDiv>
     </>

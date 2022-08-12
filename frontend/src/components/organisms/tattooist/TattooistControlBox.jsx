@@ -1,34 +1,29 @@
 import axios from "axios";
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useCallback } from "react";
 import { useNavigate } from "react-router-dom";
-import { getCookie } from "../../../config/cookie";
-import { APIURL } from "../../../config/key";
+import useFollowClick from "../../../hooks/useFollowClick";
 import { TattooistControl } from "../../../styledComponents";
 import TattooistBtn from "../../atomic/tattooist/TattooistBtn";
 
 const TattooistControlBox = ({ tattooist }) => {
-  const Following = async () => {
-    const res = await axios.post(`${APIURL}/follow`, {
-      user_id: getCookie("user_id"),
-      tattooist_id: tattooist.tattooist_id,
-    });
+  const tattooist_id = tattooist.tattooist_id;
+  const [follow, unfollow] = useFollowClick({ tattooist_id });
+  const [following, setFollowing] = useState(false);
 
-    if (res.data.success) {
-      console.log("following success");
+  useEffect(() => {
+    if (tattooist.isFollowed) setFollowing(true);
+  }, []);
+
+  const onClick = useCallback(() => {
+    if (following) {
+      setFollowing(false);
+      unfollow();
+    } else {
+      setFollowing(true);
+      follow();
     }
-  };
-
-  const UnFollowing = async () => {
-    const res = await axios.delete(
-      `${APIURL}/follow/?user_id=${getCookie("user_id")}&tattooist_id=${
-        tattooist.tattooist_id
-      }`
-    );
-
-    if (res.data.success) {
-      console.log("unfollowing success");
-    }
-  };
+  }, []);
 
   // reserve 이동 추가해야 함
 
@@ -36,8 +31,8 @@ const TattooistControlBox = ({ tattooist }) => {
     <>
       <TattooistControl>
         <TattooistBtn
-          content={tattooist.isFollowed ? "UnFollowed" : "Followed"}
-          event={tattooist.isFollowed ? UnFollowing : Following}
+          content={following ? "UnFollow" : "Follow"}
+          event={onClick}
           size={"medium"}
         />
         <TattooistBtn content={"Reservation"} size={"medium"} />
@@ -46,4 +41,4 @@ const TattooistControlBox = ({ tattooist }) => {
   );
 };
 
-export default TattooistControlBox;
+export default React.memo(TattooistControlBox);
