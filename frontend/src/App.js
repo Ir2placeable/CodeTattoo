@@ -32,6 +32,8 @@ import TattooistDetailDraft from "./components/templates/TattooistDetailDraft";
 import TattooistDetailArtwork from "./components/templates/TattooistDetailArtwork";
 import TattooistDetailReservation from "./components/templates/TattooistDetailReservation";
 import DraftSearch from "./components/templates/DraftSearch";
+import ShowProfileEdit from "./pages/ShowProfileEdit";
+import ProfileEdit from "./components/templates/ProfileEdit";
 
 const App = () => {
   const sendRequest = async () => {
@@ -90,7 +92,11 @@ const App = () => {
             <Route path="my-page" element={<ShowMyPage />}>
               <Route path="user/:user_id" element={<ShowMyTattoo />} />
             </Route>
-
+            {/* 프로필 편집 */}
+            <Route path="edit" element={<ShowProfileEdit/>}>
+              <Route path="profile" element={<ProfileEdit/>}/>
+              <Route path="password" />
+            </Route>
             {/* 예약 */}
             <Route path="reservation" element={<div>예약</div>} />
 

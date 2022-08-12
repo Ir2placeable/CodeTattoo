@@ -584,6 +584,14 @@ export const ProfileImgBox = styled.div`
       height: 150px;
       line-height: 150px;
     `}
+
+    ${(props) =>
+    props.size === "edit" &&
+    css`
+      width: 100px;
+      height: 100px;
+      line-height: 100px;
+    `}
 `;
 
 export const ProfileImg = styled.img`
@@ -610,6 +618,22 @@ export const ProfileImg = styled.img`
       line-height: 150px;
       box-shadow: 5px 5px 10px 0 rgba(72, 72, 72, 0.3);
     `}
+
+    ${(props) =>
+    props.size === "edit" &&
+    css`
+      width: 100px;
+      height: 100px;
+      line-height: 100px;
+      overflow: hidden;
+      background-color: #777;
+    `}
+`;
+
+export const ProfileNickname = styled.div`
+  font-size: 36px;
+  font-weight: 700px;
+  margin: 0 30px;
 `;
 
 export const ProfileImgEdit = styled.div`
@@ -692,6 +716,85 @@ export const MyPageNavigationBtnStyle = {
   color: "black",
   borderBottom: "3px solid black",
 };
+// *** Profile Edit ***
+export const ProfileEditBox = styled.div`
+  display: flex;
+  width: 1250px;
+  margin: 0 auto;
+  border-radius: 3px;
+  border: 1px solid #777;
+  box-sizing: border-box;
+`;
+
+export const SideNavBox = styled.div`
+  flex-basis: 250px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 50px 0;
+  border-right: 1px solid rgba(72, 72, 72, 0.5);
+`;
+
+export const SideNavigationBtn = styled.div`
+  box-sizing: border-box;
+  height: 75px;
+  font-size: 20px;
+  font-weight: bold;
+  color: rgba(72, 72, 72, 0.5);
+  border: 3px solid white;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+`;
+
+export const ProfileEditorBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 1000px;
+  margin: 50px 0;
+`;
+
+export const EditImgBox = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 50px;
+`;
+
+export const ProfileImgInputLabel = styled.label`
+  border-radius: 6px;
+  background-color: #2374e1;
+  color: white;
+  padding: 12px 10px;
+  margin-right: 20px;
+`;
+
+export const ProfileImgInput = styled.input`
+  display: none;
+`;
+
+export const ProfileInfoInputBox = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 75px;
+`;
+
+export const ProfileInfoInputLabel = styled.label`
+  flex-basis: 100px;
+  margin-left: 100px;
+  font-size: 32px;
+  font-weight: 900;
+`;
+
+export const ProfileInfoInput = styled.input`
+  flex-basis: 500px;
+  line-height: 40px;
+  font-size: 18px;
+  margin-right: 150px;
+`;
 
 // *** Show Draft List ***
 export const DraftListDiv = styled.div`
