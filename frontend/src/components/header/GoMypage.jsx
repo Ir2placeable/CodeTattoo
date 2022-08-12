@@ -10,15 +10,21 @@ const GoMypage = () => {
   const navigate = useNavigate();
 
   const onClick = useCallback(() => {
-    let _id = getCookie("user_id");
-    let filter = "user";
 
-    if (_id === undefined) {
-      _id = getCookie("tattooist_id");
-      filter = "tattooist";
+    // let _id = getCookie('user_id');
+    // let filter = 'user';
+
+    // if(_id === undefined){
+    //   _id = getCookie('tattooist_id');
+    //   filter = 'tattooist';
+    // }
+    // navigate(`/my-page/${filter}/${_id}`);
+
+    if(getCookie('user_id')){
+      navigate(`/my-page/user/${getCookie('user_id')}`);
+    } else {
+      navigate(`/tattooist/${getCookie('tattooist_id')}`);
     }
-
-    navigate(`my-page/${filter}/${_id}`);
   }, []);
 
   return (

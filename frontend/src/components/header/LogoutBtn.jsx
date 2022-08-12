@@ -1,7 +1,8 @@
 import React, { useCallback, useState } from 'react';
 import { HeaderBtn, HeaderBtnHover } from '../../styledComponents';
 
-import { getAllCookie, removeCookie } from '../../config/cookie';
+import { getAllCookie, removeCookie, getCookie } from '../../config/cookie';
+import { useNavigate } from 'react-router-dom';
 
 const LogoutBtn = () => {
   const [isHover, setIsHover] = useState(false);
@@ -12,7 +13,8 @@ const LogoutBtn = () => {
     const keys = Object.keys(getAllCookie());
     console.log(keys)
     for(let i = 0; i < keys.length; i++){
-      removeCookie(keys[i], {path : '/'});
+      //console.log('remove ', keys[i], ", ", getCookie(keys[i]))
+      removeCookie(keys[i], {path : '/'})
     }
 
     setTimeout(() => {

@@ -19,7 +19,7 @@ const DraftList = ({ filter }) => {
     page: page
   })
 
-
+  // console.log(drafts)
   // useEffect(() => {
   //   //sendRequest();
   //   console.log(page, filter);
@@ -32,7 +32,11 @@ const DraftList = ({ filter }) => {
 
         {drafts.length === 0 ? (
           <EmptyBox>
-            아직 도안이 없습니다. 
+            {filter === 'drafts/search' ? (
+              <>검색 결과가 없습니다.</>
+            ) : (
+              <>아직 도안이 없습니다.</>
+            )}
           </EmptyBox>
         ) : (
           <DraftMainBox >

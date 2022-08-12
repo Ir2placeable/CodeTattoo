@@ -2,8 +2,11 @@ import React from "react";
 import { Outlet } from "react-router-dom";
 import MyPageProfile from "../components/organisms/mypage/MyPageProfile";
 import { getCookie } from "../config/cookie";
-import { ContentsDiv, HorizontalLine, ListDiv } from "../styledComponents";
-import useUserMyPage from "../hooks/useUserMyPage";
+import { 
+  ContentsDiv, HorizontalLine, ListDiv,
+  MyPageDiv
+} from "../styledComponents";
+
 
 const ShowMyPage = () => {
   /* User My Page Data */
@@ -44,13 +47,13 @@ const ShowMyPage = () => {
 
   return (
     <>
-      <ContentsDiv>
+      <MyPageDiv>
         <ListDiv>
           <MyPageProfile profile={data.infos} />
           <HorizontalLine></HorizontalLine>
           {getCookie("user_id") ? <Outlet context={{ tattoos }} /> : <Outlet />}
         </ListDiv>
-      </ContentsDiv>
+      </MyPageDiv>
     </>
   );
 };
