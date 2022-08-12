@@ -1,20 +1,33 @@
 const mongoose = require('mongoose');
 
 const reservationSchema = mongoose.Schema({
+    year : {
+        type : Number
+    },
+    month : {
+        type : Number
+    },
+    day : {
+        type : Number
+    },
+    time_slot : {
+        type : Number
+    },
     customer_id : {
         type : String
     },
     tattooist_id : {
         type : String
     },
-    draft_id : {
+    image : {
         type : String
-    },
-    date : {
-        type : Date
     },
     cost : {
         type : Number
+    },
+    procedure_status : {
+        type : Boolean,
+        default : false
     }
 })
 
