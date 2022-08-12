@@ -29,6 +29,6 @@ const useTattooistDetail = (path) => {
   }, []);
 
   return [tattooist, data];
-};
+});
 
 export default useTattooistDetail;
