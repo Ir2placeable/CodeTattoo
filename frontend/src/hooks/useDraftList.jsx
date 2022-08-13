@@ -85,6 +85,7 @@ const useDraftList = ({ filter, page }) => {
       // 오류
       console.log('useDraftList error');
       console.log(res.data);
+      setDrafts([])
     }
   }
 

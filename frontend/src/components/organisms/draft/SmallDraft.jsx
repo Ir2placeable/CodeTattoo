@@ -2,19 +2,23 @@ import React from "react";
 
 import {
   DraftHeartBox,
-  DraftImg,
+  SmallDraftImg,
   SmallDraftInfoBox,
   SmallDraftTitle,
 } from "../../../styledComponents";
 
+import HeartIcon from "../../atomic/draft/HeartIcon";
+
 const SmallDraft = ({ draft }) => {
-  console.log("Small Draft");
+  console.log("Small Draft", draft); 
   return (
     <>
-      <DraftImg src={draft.image} alt={draft.draft_id} />
+      <SmallDraftImg src={draft.image} alt={draft.draft_id} />
       <SmallDraftInfoBox>
         <SmallDraftTitle>{draft.title}</SmallDraftTitle>
-        <DraftHeartBox style={{ padding: "10px" }}>하트</DraftHeartBox>
+        <DraftHeartBox>
+          <HeartIcon isScraped={draft.isScraped} draft_id={draft.draft_id} />
+        </DraftHeartBox>
       </SmallDraftInfoBox>
     </>
   );

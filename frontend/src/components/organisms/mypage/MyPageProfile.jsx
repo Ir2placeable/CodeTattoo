@@ -9,33 +9,56 @@ import {
   MyPageProfileInfoList,
   MyPageProfileInfo,
   MyPageProfileDescription,
-  ProfileEdit,
+  ProfileEdit, ProfileImgIcon
 } from "../../../styledComponents";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPenToSquare } from "@fortawesome/free-regular-svg-icons";
+import { getCookie } from "../../../config/cookie";
+import { useNavigate } from "react-router-dom";
+import { faUser } from "@fortawesome/free-solid-svg-icons";
 
 const MyPageProfile = ({ profile }) => {
   // ProfileEdit Event 추가
+  const navigate = useNavigate();
+  const goEdit = () => {
+    navigate("/edit");
+  };
+
   return (
     <>
       <MyPageProfileBox>
         <ProfileImgBox size="profile">
-          <ProfileImg size="profile" src={profile.image} />
-          <ProfileImgEdit>
-            <FontAwesomeIcon icon={faPenToSquare} size="2x" />
-          </ProfileImgEdit>
+          {profile.image ? (
+            <ProfileImg size="profile" src={profile.image} />
+          ) : (
+            <ProfileImgIcon size="profile">
+              <FontAwesomeIcon 
+                style={{fontSize: '100px'}} icon={faUser} />
+            </ProfileImgIcon>
+          )}
+          
         </ProfileImgBox>
         <MyPageProfileInfoBox>
           <MyPageProfileNickname>{profile.nickname}</MyPageProfileNickname>
           <MyPageProfileInfoList>
-            <MyPageProfileInfo>Location : {profile.location}</MyPageProfileInfo>
-            <MyPageProfileInfo>Specialize : Making Hamberger</MyPageProfileInfo>
+            {profile.location ? (
+              <MyPageProfileInfo>
+                Location : {profile.location}
+              </MyPageProfileInfo>
+            ) : null}
+            {profile.specialize ? (
+              <MyPageProfileInfo>
+                Specialize : {profile.specialize}
+              </MyPageProfileInfo>
+            ) : null}
           </MyPageProfileInfoList>
-          <MyPageProfileDescription>
-            한 줄 소개 입니다.
-          </MyPageProfileDescription>
+          {profile.description ? (
+            <MyPageProfileDescription>
+              {profile.description}
+            </MyPageProfileDescription>
+          ) : null}
         </MyPageProfileInfoBox>
-        <ProfileEdit>
+        <ProfileEdit onClick={goEdit}>
           <FontAwesomeIcon icon={faPenToSquare} size="2x" />
         </ProfileEdit>
       </MyPageProfileBox>
@@ -43,4 +66,4 @@ const MyPageProfile = ({ profile }) => {
   );
 };
 
-export default MyPageProfile;
+export default React.memo(MyPageProfile);

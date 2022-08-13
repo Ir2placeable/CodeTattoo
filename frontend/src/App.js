@@ -32,6 +32,10 @@ import TattooistDetailDraft from "./components/templates/TattooistDetailDraft";
 import TattooistDetailArtwork from "./components/templates/TattooistDetailArtwork";
 import TattooistDetailReservation from "./components/templates/TattooistDetailReservation";
 import DraftSearch from "./components/templates/DraftSearch";
+import ShowProfileEdit from "./pages/ShowProfileEdit";
+import ProfileEdit from "./components/templates/ProfileEdit";
+import ShowReservation from "./pages/ShowReservation";
+
 
 const App = () => {
   const sendRequest = async () => {
@@ -47,7 +51,9 @@ const App = () => {
   }, []);
 
   return (
-    <div className="font-style">
+    <div className="font-style" style={{
+      minHeight: '100vh', position: 'relative',
+      paddingBottom: '130px'}}>
       <Reset />
 
       {/* HEADER */}
@@ -80,25 +86,30 @@ const App = () => {
               <Route path="search/:nickname" element={<TattooistList />} />
             </Route>
             {/* 타투이스트 상세 */}
-            <Route path="tattooist" element={<ShowTattooistDetail />}>
+            <Route path="tattooist/:tattooist_id" element={<ShowTattooistDetail />}>
               <Route path="draft" element={<TattooistDetailDraft />} />
               <Route path="artwork" element={<TattooistDetailArtwork />} />
               <Route path="reservation" element={<TattooistDetailReservation />}
               />
             </Route>
+
             {/* 마이 페이지 */}
             <Route path="my-page" element={<ShowMyPage />}>
               <Route path="user/:user_id" element={<ShowMyTattoo />} />
             </Route>
-
+            {/* 프로필 편집 */}
+            <Route path="edit" element={<ShowProfileEdit/>}>
+              <Route path="profile" element={<ProfileEdit/>}/>
+              <Route path="password" />
+            </Route>
             {/* 예약 */}
-            <Route path="reservation" element={<div>예약</div>} />
+            <Route path="reservation" element={<ShowReservation />} />
 
             {/* 스크랩 */}
             <Route path="scraps" element={<ShowScrap />} >
               <Route path="draft" element={<DraftList filter="scraps/draft" />} />
-              <Route path="tattooist" element={<div>냥</div>} />
             </Route>
+            <Route path="scraps/tattooist" element={<ShowTattooistList/>}/>
 
           </Route>
 

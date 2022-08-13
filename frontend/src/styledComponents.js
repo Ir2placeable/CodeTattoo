@@ -36,6 +36,10 @@ export const ContentsDiv = styled.div`
   padding-top: 130px;
   padding-bottom: 130px;
 `;
+
+export const MyPageDiv = styled.div`
+padding: 50px 0;
+`
 // position: relative;
 
 export const ListDiv = styled.div`
@@ -425,20 +429,45 @@ export const TattooistButton = styled.div`
     `}
 `;
 
-// *** Show Tattooist Detil ***
+// *** Show Tattooist Detail ***
 
 export const GridDiv = styled.div`
   width: 990px;
   display: flex;
   flex-wrap: wrap;
+  margin: 30px 0;
 `;
 
-export const Item = styled.div`
+export const DetailDraftImgBox = styled.div`
+  box-sizing: border-box;
   width: 300px;
   height: 300px;
-  background-color: #444;
   margin: 15px;
 `;
+
+export const DetailDraftImg = styled.img`
+  width: 300px;
+  height: 300px;
+  cursor: pointer;
+  object-fit: contain;
+`;
+
+export const DetailDraftImgHover = styled.div`
+  background-color: rgba(0, 0, 0, 0.4);
+  color: white;
+  font-weight: bold;
+  font-size: 18px;
+  width: 300px;
+  height: 300px;
+  cursor: pointer;
+  z-index: 10;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  top: -300px;
+`;
+
 // *** Show Draft Detail ***
 export const DraftDetailMainBox = styled.div`
   width: 100%;
@@ -454,20 +483,35 @@ export const SmallDraftBox = styled.div`
   padding: 20px;
   justify-content: center;
   align-items: center;
+  // box-shadow: 5px 5px 15px 0px rgba(72, 72, 72, 0.5);
+`;
+
+export const SmallDraftImg = styled.img`
+  width: 400px;
+  height: 400px;
+  object-fit: contain;
+  box-sizing: border-box;
+  border-radius: 8px;
+  background-color: white;
+  cursor: pointer;
+  margin-bottom: 20px;
   box-shadow: 5px 5px 15px 0px rgba(72, 72, 72, 0.5);
 `;
 
 export const SmallDraftInfoBox = styled.div`
-  display: flex;
-  width: 300px;
-  justify-content: space-between;
-  align-items: center;
+// background-color: orange;
+  //display: flex;
+  width: 400px;
+  line-height: 35px;
+  // justify-content: space-between;
+  //align-items: center;
+  position: relative;
 `;
 
 export const SmallDraftTitle = styled.div`
-  padding: 10px;
-  font-size: 20px;
-  font-weight: 700;
+  padding: 0 20px;
+  font-size: 28px;
+  font-weight: 900;
 `;
 
 export const SmallTattooistBox = styled.div`
@@ -477,6 +521,7 @@ export const SmallTattooistBox = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
+  // justify-content: space-evenly;
   align-items: center;
 `;
 
@@ -484,7 +529,11 @@ export const SmallTattooistProfileBox = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 550px;
+  // width: 550px;
+  width: 80%;
+  // background-color: orange;
+  padding: 20px 10px;
+  border-bottom: 1px solid rgba(72, 72, 72, .5);
 `;
 
 export const SmallTattooistInfoBox = styled.div`
@@ -492,6 +541,8 @@ export const SmallTattooistInfoBox = styled.div`
   flex-direction: column;
   justify-content: space-between;
   height: 100px;
+  width: calc(100% - 180px);
+  // background-color: orange;
 `;
 
 export const SmallTattooistNickname = styled.div`
@@ -500,7 +551,8 @@ export const SmallTattooistNickname = styled.div`
   align-items: center;
   font-size: 38px;
   font-weight: 700;
-  width: 350px;
+  // width: 350px;
+  // width: calc(100% - 150px);
 `;
 
 export const SmallTattooistLocation = styled.div`
@@ -508,22 +560,47 @@ export const SmallTattooistLocation = styled.div`
 `;
 
 export const TattooistGenreBox = styled.div`
-  display: flex;
-  align-items: center;
-  width: 500px;
+// background-color: orange;
+  // display: flex;
+  // align-items: center;
+  // width: 500px;
+  width: 600px;
+  padding: 30px;
+  font-weight: bold;
   font-size: 24px;
 `;
 
 export const TattooistKeywordBox = styled.div`
   display: flex;
-  justify-content: space-around;
+  flex-wrap: wrap;
+  // justify-content: space-around;
   align-items: center;
-  width: 300px;
+  // width: 300px;
+  // background-color: aqua;
+  margin-top: 20px;
 `;
 
 export const TattooistKeyword = styled.div`
-  font-size: 14px;
+  // font-size: 16px;
+  margin: 0 5px;
+  background-color: #eee;
+  font-size: 18px;
+  line-height: 30px;
+  width: 90px;
+  text-align: center;
+  border-radius: 20px;
 `;
+
+export const TattooistGenreLabel = styled.span`
+display: inline-block;
+background-color: gray;
+color: white;
+border-radius: 5px;
+line-height: 40px;
+width: 100px;
+text-align: center;
+margin-right: 20px;
+`
 
 // *** My Page ***
 export const MyPageProfileBox = styled.div`
@@ -550,15 +627,25 @@ export const ProfileImgBox = styled.div`
       height: 150px;
       line-height: 150px;
     `}
+
+    ${(props) =>
+    props.size === "edit" &&
+    css`
+      width: 100px;
+      height: 100px;
+      line-height: 100px;
+    `}
 `;
 
-export const ProfileImg = styled.div`
-  color: #ffffff;
-  text-align: center;
+export const ProfileImgIcon = styled.div`
+background-color: black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
   border-radius: 70%;
-  object-fit: contain;
   z-index: 1;
-  background-color: #777;
+  cursor: pointer;
   ${(props) =>
     props.size === "profile" &&
     css`
@@ -576,13 +663,67 @@ export const ProfileImg = styled.div`
       line-height: 150px;
       box-shadow: 5px 5px 10px 0 rgba(72, 72, 72, 0.3);
     `}
+
+    ${(props) =>
+    props.size === "edit" &&
+    css`
+      width: 100px;
+      height: 100px;
+      line-height: 100px;
+      overflow: hidden;
+      background-color: #777;
+    `}
+`
+
+export const ProfileImg = styled.img`
+background-color: black;
+
+  color: #000;
+  text-align: center;
+  border-radius: 70%;
+  object-fit: contain;
+  z-index: 1;
+  cursor: pointer;
+  ${(props) =>
+    props.size === "profile" &&
+    css`
+      width: 210px;
+      height: 210px;
+      line-height: 210px;
+      overflow: hidden;
+    `}
+
+  ${(props) =>
+    props.size === "tattooist" &&
+    css`
+      width: 150px;
+      height: 150px;
+      line-height: 150px;
+      box-shadow: 5px 5px 10px 0 rgba(72, 72, 72, 0.3);
+    `}
+
+    ${(props) =>
+    props.size === "edit" &&
+    css`
+      width: 100px;
+      height: 100px;
+      line-height: 100px;
+      overflow: hidden;
+      background-color: #777;
+    `}
+`;
+
+export const ProfileNickname = styled.div`
+  font-size: 36px;
+  font-weight: 700px;
+  margin: 0 30px;
 `;
 
 export const ProfileImgEdit = styled.div`
   width: 30px;
   height: 30px;
   position: relative;
-  top: -40px;
+  top: -150px;
   left: 160px;
   display: flex;
   justify-content: center;
@@ -658,6 +799,85 @@ export const MyPageNavigationBtnStyle = {
   color: "black",
   borderBottom: "3px solid black",
 };
+// *** Profile Edit ***
+export const ProfileEditBox = styled.div`
+  display: flex;
+  width: 1250px;
+  margin: 0 auto;
+  border-radius: 3px;
+  border: 1px solid #777;
+  box-sizing: border-box;
+`;
+
+export const SideNavBox = styled.div`
+  flex-basis: 250px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 50px 0;
+  border-right: 1px solid rgba(72, 72, 72, 0.5);
+`;
+
+export const SideNavigationBtn = styled.div`
+  box-sizing: border-box;
+  height: 75px;
+  font-size: 20px;
+  font-weight: bold;
+  color: rgba(72, 72, 72, 0.5);
+  border: 3px solid white;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+`;
+
+export const ProfileEditorBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 1000px;
+  margin: 50px 0;
+`;
+
+export const EditImgBox = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 50px;
+`;
+
+export const ProfileImgInputLabel = styled.label`
+  border-radius: 6px;
+  background-color: #2374e1;
+  color: white;
+  padding: 12px 10px;
+  margin-right: 20px;
+`;
+
+export const ProfileImgInput = styled.input`
+  display: none;
+`;
+
+export const ProfileInfoInputBox = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 75px;
+`;
+
+export const ProfileInfoInputLabel = styled.label`
+  flex-basis: 100px;
+  margin-left: 100px;
+  font-size: 32px;
+  font-weight: 900;
+`;
+
+export const ProfileInfoInput = styled.input`
+  flex-basis: 500px;
+  line-height: 40px;
+  font-size: 18px;
+  margin-right: 150px;
+`;
 
 // *** Show Draft List ***
 export const DraftListDiv = styled.div`
@@ -705,58 +925,56 @@ export const DraftImgBox = styled.div`
 `;
 
 export const DraftDrawerDiv = styled.div`
-display: flex;
-justify-content: stretch;
-align-items: center;
-// background-color: orange;
-margin-bottom: 10px;
-width: max-content;
-cursor: pointer;
-margin-left: 20px;
-`
-
+  display: flex;
+  justify-content: stretch;
+  align-items: center;
+  // background-color: orange;
+  margin-bottom: 10px;
+  width: max-content;
+  cursor: pointer;
+  margin-left: 20px;
+`;
 
 export const DraftDrawer = styled.p`
   margin-left: 20px;
 `;
 
-
 export const UserIconStyle = {
-  color: 'white',
-  fontSize: '20px'
-}
+  color: "white",
+  fontSize: "20px",
+};
 
 export const DraftDrawerImgDiv = styled.div`
-width: 35px;
-height: 35px;
-overflow: hidden;
-background-color: black;
-border-radius: 50%;
-border: 2px solid black;
-display: flex;
-justify-content: center;
-align-items: center;
-`
+  width: 35px;
+  height: 35px;
+  overflow: hidden;
+  background-color: black;
+  border-radius: 50%;
+  border: 2px solid black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
 
 export const DraftDrawerImg = styled.img`
-// display: inline-block;
-width: 35px;
-height: 35px;
-// background-color: black;
-// border-radius: 50%;
-// border: 2px solid black;
-object-fit: contain;
-`
+  // display: inline-block;
+  width: 35px;
+  height: 35px;
+  // background-color: black;
+  // border-radius: 50%;
+  // border: 2px solid black;
+  object-fit: contain;
+`;
 export const DraftImgDiv = styled.div`
-width: 300px;
-height: 300px;
-border-radius: 8px;
-box-sizing: border-box;
-overflow: hidden;
-box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.4);
-position: relative;
-z-index: 15;
-`
+  width: 300px;
+  height: 300px;
+  border-radius: 8px;
+  box-sizing: border-box;
+  overflow: hidden;
+  box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.4);
+  position: relative;
+  z-index: 15;
+`;
 export const DraftImg = styled.img`
   width: 300px;
   height: 300px;
@@ -770,20 +988,20 @@ export const DraftImg = styled.img`
 `;
 
 export const DraftImgHoverDiv = styled.div`
-background-color: rgba(0, 0, 0, .4);
-color: white;
-font-weight: bold;
-font-size: 18px;
-// border-radius: 8px;
-width: 300px;
-height: 300px;
-cursor: pointer;
-position: absolute;
-z-index: 10;
-display: flex;
-justify-content: center;
-align-items: center;
-`
+  background-color: rgba(0, 0, 0, 0.4);
+  color: white;
+  font-weight: bold;
+  font-size: 18px;
+  // border-radius: 8px;
+  width: 300px;
+  height: 300px;
+  cursor: pointer;
+  position: absolute;
+  z-index: 10;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
 
 export const DraftImgInfo = styled.div`
   // margin-top: 15px;
@@ -802,7 +1020,9 @@ export const DraftHeartBox = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  
+
+  // background-color: aqua;
+
   position: absolute;
   top: 0;
   right: 0;
@@ -824,6 +1044,9 @@ export const DraftImgTitle = styled.p`
 export const SearchResText = styled.div`
   font-size: 20px;
   margin-bottom: 50px;
+  // background-color: orange;
+  text-align: center;
+  font-weight: bold;
 `;
 
 // *** Image Upload ***
@@ -1255,24 +1478,27 @@ export const XMarkStyle = {
 
 // Draft upload button
 export const GoUpload = styled.div`
-background-color: black;
-width: 100px;
-line-height: 40px;
-text-align: center;
-border-radius: 8px;
-color: white;
-font-weight: bold;
-cursor: pointer;
-position: absolute;
-top: 30px;
-right: 0;
-`
+  background-color: black;
+  width: 100px;
+  line-height: 40px;
+  text-align: center;
+  border-radius: 8px;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  position: absolute;
+  top: 30px;
+  right: 0;
+`;
 
 // =================== FOOTER ==========================
 export const FooterDiv = styled.footer`
   background-color: #484848;
   width: 100%;
   height: 130px;
+  position: absolute;
+  bottom: 0;
+  left: 0;
 `;
 
 // temporary
@@ -1280,3 +1506,133 @@ export const userIconStyle = {
   fontSize: "70px",
   marginTop: "15px",
 };
+
+
+// Calenar
+export const CalendarDiv = styled.div`
+// background-color: orange;
+margin: 60px auto;
+display: flex;
+`
+export const ReservationDiv = styled.div`
+// background-color: whitesmoke;
+margin-left: 80px;
+`
+
+export const DateDiv = styled.div`
+// line-height: 32px;
+text-align: center;
+`
+
+export const TimeDiv = styled.div`
+// background-color: aqua;
+width: 300px;
+`
+export const TimeText = styled.div`
+font-size: 18px;
+font-weight: bold;
+width: 100%;
+line-height: 40px;
+text-align: center;
+border-bottom: 1px solid rgba(72, 72, 72, .5);
+`
+
+export const Time = styled.div`
+width: 80%;
+background-color: rgba(72, 72, 72);
+line-height: 35px;
+text-align: center;
+color: white;
+font-size: 18px;
+font-weight: bold;
+border-radius: 5px;
+margin: 20px auto 0;
+cursor: pointer;
+`
+
+
+// reservation
+export const ReservDiv = styled.div`
+// background-color: white;
+width: 70%;
+margin: 0 auto 50px;
+display: flex;
+justify-content: space-between;
+`
+export const ReservInfoDiv = styled.div`
+// background-color: #A6C3D3;
+background-color: #D8D8D8;
+border-radius: 20px;
+padding: 30px 50px;
+display: flex;
+// width: 70%;
+width: 100%;
+`
+
+export const ReservDraftImg = styled.img`
+display: inline-block;
+width: 200px;
+height: 200px;
+background-color: white;
+object-fit: contain;
+border-radius: 5px;
+`
+
+export const ReservTextDiv = styled.div`
+// background-color: orange;
+width: calc(100% - 400px);
+padding: 0 20px;
+display: flex;
+flex-direction: column;
+justify-content: center;
+`
+
+export const ReservText = styled.p`
+font-size: 18px;
+font-weight: bold;
+// background-color: aqua;
+line-height: 40px;
+margin: 5px 0;
+`
+
+export const ReservLabel = styled.span`
+display: inline-block;
+width: 110px;
+`
+export const ReservTextBox = styled.span`
+width: 300px;
+padding: 0 10px;
+display: inline-block;
+background-color: #eee;
+border-radius: 5px;
+`
+
+export const ReservBtnDiv = styled.div`
+// width: 20%;
+// background-color: aqua;
+display: flex;
+flex-direction: column;
+justify-content: space-evenly;
+`
+
+export const ReservBtn = styled.div`
+// background-color: #A6C3D3;
+background-color: black;
+width: 200px;
+height: 20%;
+color: white;
+font-size: 20px;
+font-weight: bold;
+border: 3px solid black;
+border-radius: 30px;
+display: flex;
+justify-content: center;
+align-items: center;
+cursor: pointer;
+transition: .45s;
+
+&:hover{
+  color: black;
+  background-color: white;
+}
+`
