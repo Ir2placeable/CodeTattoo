@@ -163,7 +163,7 @@ exports.pageTattooistDetail = async function(params) {
     let return_value = []
     if (params.filter === 'draft') {
         for await (let draft_id of tattooist['drafts']) {
-            const draft = await Draft.findOne({ _id : "62eb72cc3a3e044bee8a8ea1" })
+            const draft = await Draft.findOne({ _id : draft_id })
             if (!draft) {
                 continue
             }
