@@ -7,19 +7,18 @@ import {
 } from "../../../styledComponents";
 
 const Tattooist = ({ tattooist }) => {
-  console.log("Tattooist");
+  const tattooist_id = tattooist.tattooist_id;
   const navigate = useNavigate();
-
   const goDetail = useCallback(() => {
-    navigate(`/tattooist/${tattooist.tattooist_id}/draft`);
-  }, []);
+    navigate(`/tattooist/${tattooist_id}/draft`);
+  }, [tattooist_id]);
 
   return (
     <>
       <ProfileImg
         size="profile"
         src={tattooist.image}
-        alt={tattooist.tattooist_id}
+        alt={tattooist_id}
         onClick={goDetail}
       />
       <TattooistInfoBox>

@@ -1,7 +1,6 @@
-import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useCallback } from "react";
-import { useNavigate } from "react-router-dom";
+import { getCookie } from "../../../config/cookie";
 import useFollowClick from "../../../hooks/useFollowClick";
 import { TattooistControl } from "../../../styledComponents";
 import TattooistBtn from "../../atomic/tattooist/TattooistBtn";
@@ -16,14 +15,18 @@ const TattooistControlBox = ({ tattooist }) => {
   }, []);
 
   const onClick = useCallback(() => {
-    if (following) {
-      setFollowing(false);
-      unfollow();
+    if (!getCookie("user_id")) {
+      alert("팔로우 기능은 유저 로그인 상태에서 가능합니다.");
     } else {
-      setFollowing(true);
-      follow();
+      if (following) {
+        setFollowing(false);
+        unfollow();
+      } else {
+        setFollowing(true);
+        follow();
+      }
     }
-  }, []);
+  }, [following]);
 
   // reserve 이동 추가해야 함
 

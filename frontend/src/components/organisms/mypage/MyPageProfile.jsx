@@ -20,7 +20,7 @@ const MyPageProfile = ({ profile }) => {
   // ProfileEdit Event 추가
   const navigate = useNavigate();
   const goEdit = () => {
-    navigate("/edit");
+    navigate("/edit/profile");
   };
 
   return (
@@ -49,9 +49,11 @@ const MyPageProfile = ({ profile }) => {
             </MyPageProfileDescription>
           ) : null}
         </MyPageProfileInfoBox>
-        <ProfileEdit onClick={goEdit}>
-          <FontAwesomeIcon icon={faPenToSquare} size="2x" />
-        </ProfileEdit>
+        {getCookie("tattooist_id") === profile.tattooist_id ? (
+          <ProfileEdit onClick={goEdit}>
+            <FontAwesomeIcon icon={faPenToSquare} size="2x" />
+          </ProfileEdit>
+        ) : null}
       </MyPageProfileBox>
     </>
   );

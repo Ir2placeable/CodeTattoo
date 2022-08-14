@@ -9,15 +9,20 @@ import {
 } from "../../../styledComponents";
 import ProfileUploadBtn from "../../atomic/edit/ProfileUploadBtn";
 
-const EditUserProfile = () => {
+const EditTattooistProfile = () => {
   const [info, setInfo] = useState({
     nickname: "",
     location: "",
+    specialize: "",
+    description: "",
   });
 
   const nicknameInput = useRef();
   const locationInput = useRef();
-  const { nickname, location } = info;
+  const specializeInput = useRef();
+  const descriptionInput = useRef();
+
+  const { nickname, location, specialize, description } = info;
 
   const onChange = (e) => {
     const { value, name } = e.target;
@@ -29,10 +34,12 @@ const EditUserProfile = () => {
 
   const sendRequest = async () => {
     const res = await axios.patch(
-      `${APIURL}/user/my-page/${getCookie("user_id")}`,
+      `${APIURL}/tattooist/my-page/${getCookie("tattooist_id")}`,
       {
         nickname: nickname,
         location: location,
+        specialize: specialize,
+        description: description,
       }
     );
 
@@ -45,7 +52,7 @@ const EditUserProfile = () => {
   };
 
   const onSubmit = () => {
-    if (nickname && location) {
+    if (nickname && location && specialize && description) {
       sendRequest();
     } else {
       alert("모든 정보를 입력해주세요");
@@ -80,9 +87,37 @@ const EditUserProfile = () => {
         />
       </ProfileInfoInputBox>
 
+      <ProfileInfoInputBox>
+        <ProfileInfoInputLabel htmlFor="input-specialize">
+          Specialize
+        </ProfileInfoInputLabel>
+        <ProfileInfoInput
+          type="text"
+          name="specialize"
+          id="input-specialize"
+          onChange={onChange}
+          value={specialize}
+          ref={specializeInput}
+        />
+      </ProfileInfoInputBox>
+
+      <ProfileInfoInputBox>
+        <ProfileInfoInputLabel htmlFor="input-description">
+          Description
+        </ProfileInfoInputLabel>
+        <ProfileInfoInput
+          type="text"
+          name="description"
+          id="input-description"
+          onChange={onChange}
+          value={description}
+          ref={descriptionInput}
+        />
+      </ProfileInfoInputBox>
+
       <ProfileUploadBtn onSubmit={onSubmit} />
     </>
   );
 };
 
-export default EditUserProfile;
+export default EditTattooistProfile;

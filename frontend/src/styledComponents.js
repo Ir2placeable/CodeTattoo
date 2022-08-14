@@ -38,8 +38,8 @@ export const ContentsDiv = styled.div`
 `;
 
 export const MyPageDiv = styled.div`
-padding: 50px 0;
-`
+  padding: 50px 0;
+`;
 // position: relative;
 
 export const ListDiv = styled.div`
@@ -399,6 +399,11 @@ export const TattooistControl = styled.div`
   justify-content: center;
 `;
 
+export const TattooistControlDisabled = styled.div`
+  width: 150px;
+  height: 180px;
+`;
+
 export const TattooistButton = styled.div`
   display: flex;
   justify-content: center;
@@ -449,6 +454,7 @@ export const DetailDraftImg = styled.img`
   width: 300px;
   height: 300px;
   cursor: pointer;
+  object-fit: contain;
 `;
 
 export const DetailDraftImgHover = styled.div`
@@ -456,6 +462,7 @@ export const DetailDraftImgHover = styled.div`
   color: white;
   font-weight: bold;
   font-size: 18px;
+  box-sizing: border-box;
   width: 300px;
   height: 300px;
   cursor: pointer;
@@ -464,7 +471,7 @@ export const DetailDraftImgHover = styled.div`
   justify-content: center;
   align-items: center;
   position: relative;
-  top: -300px;
+  top: -303px;
 `;
 
 // *** Show Draft Detail ***
@@ -605,6 +612,8 @@ export const ProfileImg = styled.img`
   object-fit: contain;
   z-index: 1;
   cursor: pointer;
+  background-color: #aaa;
+
   ${(props) =>
     props.size === "profile" &&
     css`
@@ -630,7 +639,6 @@ export const ProfileImg = styled.img`
       height: 100px;
       line-height: 100px;
       overflow: hidden;
-      background-color: #777;
     `}
 `;
 
@@ -771,8 +779,9 @@ export const ProfileImgInputLabel = styled.label`
   border-radius: 6px;
   background-color: #2374e1;
   color: white;
-  padding: 12px 10px;
+  padding: 10px 10px;
   margin-right: 20px;
+  cursor: pointer;
 `;
 
 export const ProfileImgInput = styled.input`
@@ -788,7 +797,7 @@ export const ProfileInfoInputBox = styled.div`
 
 export const ProfileInfoInputLabel = styled.label`
   flex-basis: 100px;
-  margin-left: 100px;
+  margin-left: 150px;
   font-size: 32px;
   font-weight: 900;
 `;
@@ -798,6 +807,33 @@ export const ProfileInfoInput = styled.input`
   line-height: 40px;
   font-size: 18px;
   margin-right: 150px;
+  border: 0;
+  border-bottom: 2px solid #888;
+  &:focus {
+    outline: none;
+    border-bottom-color: #333;
+  }
+`;
+
+export const ProfileUploadButton = styled.div`
+  color: white;
+  background-color: black;
+  font-weight: bold;
+  font-size: 20px;
+  width: 200px;
+  line-height: 40px;
+  text-align: center;
+  border-radius: 7px;
+  border: solid 3px black;
+  cursor: pointer;
+  position: relative;
+  left: 400px;
+  transition: 0.5s;
+
+  &:hover {
+    color: black;
+    background-color: white;
+  }
 `;
 
 // *** Show Draft List ***
@@ -1426,132 +1462,130 @@ export const userIconStyle = {
   marginTop: "15px",
 };
 
-
 // Calenar
 export const CalendarDiv = styled.div`
-// background-color: orange;
-margin: 60px auto;
-display: flex;
-`
+  // background-color: orange;
+  margin: 60px auto;
+  display: flex;
+`;
 export const ReservationDiv = styled.div`
-// background-color: whitesmoke;
-margin-left: 80px;
-`
+  // background-color: whitesmoke;
+  margin-left: 80px;
+`;
 
 export const DateDiv = styled.div`
-// line-height: 32px;
-text-align: center;
-`
+  // line-height: 32px;
+  text-align: center;
+`;
 
 export const TimeDiv = styled.div`
-// background-color: aqua;
-width: 300px;
-`
+  // background-color: aqua;
+  width: 300px;
+`;
 export const TimeText = styled.div`
-font-size: 18px;
-font-weight: bold;
-width: 100%;
-line-height: 40px;
-text-align: center;
-border-bottom: 1px solid rgba(72, 72, 72, .5);
-`
+  font-size: 18px;
+  font-weight: bold;
+  width: 100%;
+  line-height: 40px;
+  text-align: center;
+  border-bottom: 1px solid rgba(72, 72, 72, 0.5);
+`;
 
 export const Time = styled.div`
-width: 80%;
-background-color: rgba(72, 72, 72);
-line-height: 35px;
-text-align: center;
-color: white;
-font-size: 18px;
-font-weight: bold;
-border-radius: 5px;
-margin: 20px auto 0;
-cursor: pointer;
-`
-
+  width: 80%;
+  background-color: rgba(72, 72, 72);
+  line-height: 35px;
+  text-align: center;
+  color: white;
+  font-size: 18px;
+  font-weight: bold;
+  border-radius: 5px;
+  margin: 20px auto 0;
+  cursor: pointer;
+`;
 
 // reservation
 export const ReservDiv = styled.div`
-// background-color: white;
-width: 70%;
-margin: 0 auto 50px;
-display: flex;
-justify-content: space-between;
-`
+  // background-color: white;
+  width: 70%;
+  margin: 0 auto 50px;
+  display: flex;
+  justify-content: space-between;
+`;
 export const ReservInfoDiv = styled.div`
-// background-color: #A6C3D3;
-background-color: #D8D8D8;
-border-radius: 20px;
-padding: 30px 50px;
-display: flex;
-// width: 70%;
-width: 100%;
-`
+  // background-color: #A6C3D3;
+  background-color: #d8d8d8;
+  border-radius: 20px;
+  padding: 30px 50px;
+  display: flex;
+  // width: 70%;
+  width: 100%;
+`;
 
 export const ReservDraftImg = styled.img`
-display: inline-block;
-width: 200px;
-height: 200px;
-background-color: white;
-object-fit: contain;
-border-radius: 5px;
-`
+  display: inline-block;
+  width: 200px;
+  height: 200px;
+  background-color: white;
+  object-fit: contain;
+  border-radius: 5px;
+`;
 
 export const ReservTextDiv = styled.div`
-// background-color: orange;
-width: calc(100% - 400px);
-padding: 0 20px;
-display: flex;
-flex-direction: column;
-justify-content: center;
-`
+  // background-color: orange;
+  width: calc(100% - 400px);
+  padding: 0 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+`;
 
 export const ReservText = styled.p`
-font-size: 18px;
-font-weight: bold;
-// background-color: aqua;
-line-height: 40px;
-margin: 5px 0;
-`
+  font-size: 18px;
+  font-weight: bold;
+  // background-color: aqua;
+  line-height: 40px;
+  margin: 5px 0;
+`;
 
 export const ReservLabel = styled.span`
-display: inline-block;
-width: 110px;
-`
+  display: inline-block;
+  width: 110px;
+`;
 export const ReservTextBox = styled.span`
-width: 300px;
-padding: 0 10px;
-display: inline-block;
-background-color: #eee;
-border-radius: 5px;
-`
+  width: 300px;
+  padding: 0 10px;
+  display: inline-block;
+  background-color: #eee;
+  border-radius: 5px;
+`;
 
 export const ReservBtnDiv = styled.div`
-// width: 20%;
-// background-color: aqua;
-display: flex;
-flex-direction: column;
-justify-content: space-evenly;
-`
+  // width: 20%;
+  // background-color: aqua;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+`;
 
 export const ReservBtn = styled.div`
-// background-color: #A6C3D3;
-background-color: black;
-width: 200px;
-height: 20%;
-color: white;
-font-size: 20px;
-font-weight: bold;
-border: 3px solid black;
-border-radius: 30px;
-display: flex;
-justify-content: center;
-align-items: center;
-cursor: pointer;
-transition: .45s;
+  // background-color: #A6C3D3;
+  background-color: black;
+  width: 200px;
+  height: 20%;
+  color: white;
+  font-size: 20px;
+  font-weight: bold;
+  border: 3px solid black;
+  border-radius: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: 0.45s;
 
-&:hover{
-  color: black;
-  background-color: white;
-}
-`
+  &:hover {
+    color: black;
+    background-color: white;
+  }
+`;

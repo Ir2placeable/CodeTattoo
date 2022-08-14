@@ -18,6 +18,7 @@ const EditImg = () => {
   });
 
   const onSelectFile = (e) => {
+    console.log(`onSelectFile start`);
     if (e.target.files && e.target.files.length > 0) {
       const reader = new FileReader();
 
@@ -28,13 +29,12 @@ const EditImg = () => {
         setSrc(reader.result);
       });
     }
-
-    sendRequest();
+    // console.log(src);
   };
 
   const onLoad = () => {
     const parsing = src.split(",");
-    let _mime = parsing[0].split(",")[0];
+    let _mime = parsing[0].split(";")[0];
     _mime = _mime.substr(5);
     let _data = parsing[1];
 
@@ -52,10 +52,10 @@ const EditImg = () => {
       url += `/tattooist/my-page/${getCookie("tattooist_id")}`;
 
     const res = await axios.post(url, {
-      image: null,
-      mime: null,
+      image: image.data,
+      mime: image.mime,
     });
-    console.log(res);
+
     if (res.data.success) {
       console.log("프로필 이미지 등록 성공");
       window.location.replace("/edit/profile");
@@ -68,10 +68,10 @@ const EditImg = () => {
     <>
       <EditImgBox>
         <ProfileImgBox size="edit">
-          <ProfileImg size="edit" src={image} />
+          <ProfileImg size="edit" src={src} onLoad={onLoad} />
         </ProfileImgBox>
         <ProfileNickname>Mingxoo</ProfileNickname>
-        <ProfileImgChoice onSelectFile={onSelectFile} onLoad={onLoad} />
+        <ProfileImgChoice onSelectFile={onSelectFile} />
       </EditImgBox>
     </>
   );
