@@ -17,3 +17,9 @@ export const removeCookie = (name) => {
 export const getAllCookie = () => {
   return cookies.getAll();
 }
+
+export function resetCookie(cName) {
+  var expireDate = new Date();
+  expireDate.setDate(expireDate.getDate() - 1);
+  document.cookie = cName + "= " + "; expires=" + expireDate.toGMTString() + "; path=/";
+}

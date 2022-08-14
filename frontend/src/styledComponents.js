@@ -489,30 +489,35 @@ export const SmallDraftBox = styled.div`
   padding: 20px;
   justify-content: center;
   align-items: center;
-  box-shadow: 5px 5px 15px 0px rgba(72, 72, 72, 0.5);
+  // box-shadow: 5px 5px 15px 0px rgba(72, 72, 72, 0.5);
 `;
 
 export const SmallDraftImg = styled.img`
-  width: 300px;
-  height: 300px;
+  width: 400px;
+  height: 400px;
   object-fit: contain;
   box-sizing: border-box;
   border-radius: 8px;
   background-color: white;
   cursor: pointer;
+  margin-bottom: 20px;
+  box-shadow: 5px 5px 15px 0px rgba(72, 72, 72, 0.5);
 `;
 
 export const SmallDraftInfoBox = styled.div`
-  display: flex;
-  width: 300px;
-  justify-content: space-between;
-  align-items: center;
+// background-color: orange;
+  //display: flex;
+  width: 400px;
+  line-height: 35px;
+  // justify-content: space-between;
+  //align-items: center;
+  position: relative;
 `;
 
 export const SmallDraftTitle = styled.div`
-  padding: 10px;
-  font-size: 20px;
-  font-weight: 700;
+  padding: 0 20px;
+  font-size: 28px;
+  font-weight: 900;
 `;
 
 export const SmallTattooistBox = styled.div`
@@ -522,6 +527,7 @@ export const SmallTattooistBox = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
+  // justify-content: space-evenly;
   align-items: center;
 `;
 
@@ -529,7 +535,11 @@ export const SmallTattooistProfileBox = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 550px;
+  // width: 550px;
+  width: 80%;
+  // background-color: orange;
+  padding: 20px 10px;
+  border-bottom: 1px solid rgba(72, 72, 72, .5);
 `;
 
 export const SmallTattooistInfoBox = styled.div`
@@ -537,6 +547,8 @@ export const SmallTattooistInfoBox = styled.div`
   flex-direction: column;
   justify-content: space-between;
   height: 100px;
+  width: calc(100% - 180px);
+  // background-color: orange;
 `;
 
 export const SmallTattooistNickname = styled.div`
@@ -545,7 +557,8 @@ export const SmallTattooistNickname = styled.div`
   align-items: center;
   font-size: 38px;
   font-weight: 700;
-  width: 350px;
+  // width: 350px;
+  // width: calc(100% - 150px);
 `;
 
 export const SmallTattooistLocation = styled.div`
@@ -553,22 +566,47 @@ export const SmallTattooistLocation = styled.div`
 `;
 
 export const TattooistGenreBox = styled.div`
-  display: flex;
-  align-items: center;
-  width: 500px;
+// background-color: orange;
+  // display: flex;
+  // align-items: center;
+  // width: 500px;
+  width: 600px;
+  padding: 30px;
+  font-weight: bold;
   font-size: 24px;
 `;
 
 export const TattooistKeywordBox = styled.div`
   display: flex;
-  justify-content: space-around;
+  flex-wrap: wrap;
+  // justify-content: space-around;
   align-items: center;
-  width: 300px;
+  // width: 300px;
+  // background-color: aqua;
+  margin-top: 20px;
 `;
 
 export const TattooistKeyword = styled.div`
-  font-size: 14px;
+  // font-size: 16px;
+  margin: 0 5px;
+  background-color: #eee;
+  font-size: 18px;
+  line-height: 30px;
+  width: 90px;
+  text-align: center;
+  border-radius: 20px;
 `;
+
+export const TattooistGenreLabel = styled.span`
+display: inline-block;
+background-color: gray;
+color: white;
+border-radius: 5px;
+line-height: 40px;
+width: 100px;
+text-align: center;
+margin-right: 20px;
+`
 
 // *** My Page ***
 export const MyPageProfileBox = styled.div`
@@ -605,7 +643,47 @@ export const ProfileImgBox = styled.div`
     `}
 `;
 
+export const ProfileImgIcon = styled.div`
+background-color: black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+  border-radius: 70%;
+  z-index: 1;
+  cursor: pointer;
+  ${(props) =>
+    props.size === "profile" &&
+    css`
+      width: 210px;
+      height: 210px;
+      line-height: 210px;
+      overflow: hidden;
+    `}
+
+  ${(props) =>
+    props.size === "tattooist" &&
+    css`
+      width: 150px;
+      height: 150px;
+      line-height: 150px;
+      box-shadow: 5px 5px 10px 0 rgba(72, 72, 72, 0.3);
+    `}
+
+    ${(props) =>
+    props.size === "edit" &&
+    css`
+      width: 100px;
+      height: 100px;
+      line-height: 100px;
+      overflow: hidden;
+      background-color: #777;
+    `}
+`
+
 export const ProfileImg = styled.img`
+background-color: black;
+
   color: #000;
   text-align: center;
   border-radius: 70%;
@@ -977,6 +1055,8 @@ export const DraftHeartBox = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+
+  // background-color: aqua;
 
   position: absolute;
   top: 0;

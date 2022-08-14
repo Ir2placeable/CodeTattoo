@@ -11,7 +11,7 @@ import Genre from "../organisms/tattooist/Genre";
 
 const DraftDetail = ({ detail }) => {
   const draft = {
-    draft_id: detail.draft_id,
+    draft_id: detail.draft_id, 
     image: detail.image,
     title: detail.title,
     like: detail.like,
@@ -37,7 +37,7 @@ const DraftDetail = ({ detail }) => {
         </SmallDraftBox>
         <SmallTattooistBox>
           <SmallTattooist tattooist={tattooist} />
-          <HorizontalLine />
+          {/* <HorizontalLine /> */}
           <Genre genre={genre} />
         </SmallTattooistBox>
       </DraftDetailMainBox>

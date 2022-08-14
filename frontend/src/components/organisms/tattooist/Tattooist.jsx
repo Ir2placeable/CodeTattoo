@@ -4,7 +4,10 @@ import {
   ProfileImg,
   TattooistInfoBox,
   TattooistInfo,
+  ProfileImgIcon
 } from "../../../styledComponents";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faUser } from "@fortawesome/free-solid-svg-icons";
 
 const Tattooist = ({ tattooist }) => {
   const tattooist_id = tattooist.tattooist_id;
@@ -15,12 +18,19 @@ const Tattooist = ({ tattooist }) => {
 
   return (
     <>
-      <ProfileImg
-        size="profile"
-        src={tattooist.image}
-        alt={tattooist_id}
-        onClick={goDetail}
-      />
+      {tattooist.image ? (
+        <ProfileImg
+          size="profile"
+          src={tattooist.image}
+          alt={tattooist_id}
+          onClick={goDetail}
+        />
+      ) : (
+        <ProfileImgIcon size="profile">
+          <FontAwesomeIcon 
+            style={{fontSize: '100px'}} icon={faUser} />
+        </ProfileImgIcon>
+      )}
       <TattooistInfoBox>
         <TattooistInfo>Nickname : {tattooist.nickname}</TattooistInfo>
         <TattooistInfo>Office : {tattooist.location}</TattooistInfo>
