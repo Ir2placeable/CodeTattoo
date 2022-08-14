@@ -49,6 +49,7 @@ const usePagination = ({ filter }) => {
       _filter = `/${a}/${b}`
       //console.log(_filter)
     }
+    console.log(_filter)
 
     //console.log(filter, query)
     const res = await axios.get(`${APIURL}${_filter}/0${query}`);

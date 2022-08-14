@@ -1,15 +1,26 @@
 
-
 @font-face {
-  font-family: 'MapoFlowerIsland';
-  src: url('./fonts/MapoFlowerIsland.ttf');
+  /* font-family: 'MapoFlowerIsland'; */
+  /* src: url('./fonts/MapoFlowerIsland.ttf'); */
   /* src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/MapoFlowerIslandA.woff') format('woff'); */
+  font-family: 'HeirofLightReqular';
+  src: url('./fonts/HeirofLightRegular.ttf');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  /* font-family: 'MapoFlowerIsland'; */
+  /* src: url('./fonts/MapoFlowerIsland.ttf'); */
+  /* src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/MapoFlowerIslandA.woff') format('woff'); */
+  font-family: 'HeirofLightOTFReqular';
+  src: url('./fonts/HeirofLightOTFRegular.otf');
   font-weight: normal;
   font-style: normal;
 }
 
 .font-style {
-  font-family: 'MapoFlowerIsland', sans-serif;
+  /* font-family: 'MapoFlowerIsland', sans-serif; */
+  font-family: 'HeirofLightRegular', 'HeirofLightOTFReqular', sans-serif;
   color: #333;
 }
 

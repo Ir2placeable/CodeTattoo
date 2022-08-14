@@ -79,15 +79,32 @@ export const HeaderInner = styled.div`
 `;
 
 export const HeaderTitle = styled.div`
-  font-size: 35px;
-  font-weight: bold;
+  // background-color: orange;
+
   width: max-content;
-  line-height: 90px;
-  margin-left: 10px;
-  text-align: center;
+  height: 90px;
   cursor: pointer;
-  text-shadow: 5px 7px 10px #b7b7b7;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
 `;
+
+export const HeaderLogo = styled.img`
+display: inline-block;
+height: 80%;
+object-fit: contain;
+`
+
+export const HeaderText = styled.div`
+font-size: 32px;
+font-weight: bold;
+line-height: 90px;
+// margin-left: 10px;
+text-align: center;
+text-shadow: 5px 7px 10px #b7b7b7;
+// background-color: aqua;
+`
 
 export const HeaderSubMenu = styled.div`
   display: flex;
@@ -521,6 +538,7 @@ export const SmallTattooistBox = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
+  border-radius: 8px;
   // justify-content: space-evenly;
   align-items: center;
 `;

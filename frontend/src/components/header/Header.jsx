@@ -4,15 +4,19 @@ import {
   HeaderInner,
   HeaderTitle,
   HeaderSubMenu,
+  HeaderLogo, 
+  HeaderText
 } from '../../styledComponents';
 import HeaderBtnComp from './HeaderBtnComp';
 import { getAllCookie, getCookie } from '../../config/cookie';
 import LogoutBtn from './LogoutBtn';
 import GoMypage from './GoMypage';
 import { Cookies } from 'react-cookie';
+import { useLocation } from "react-router-dom";
 
 const Header = () => {
   const [isLogin, setIsLogin] = useState(false);
+  const path = useLocation().pathname;
 
   useEffect(() => {
     if (getCookie("user_id") || getCookie("tattooist_id")) {
@@ -31,7 +35,14 @@ const Header = () => {
     <>
       <HeaderDiv>
         <HeaderInner>
-          <HeaderTitle onClick={goHome}>Code Tattoo</HeaderTitle>
+
+          <HeaderTitle onClick={goHome}>
+            {/* Code Tattoo */}
+            <HeaderLogo src="../../img/logo-en.png" />
+            <HeaderText>
+              Code Tattoo
+            </HeaderText>
+          </HeaderTitle>
 
           {isLogin ? (
             <HeaderSubMenu>
@@ -39,7 +50,7 @@ const Header = () => {
               <GoMypage />
               <LogoutBtn />
             </HeaderSubMenu>
-          ) : (
+          ) : path !== '/' && (
             <HeaderSubMenu>
               <HeaderBtnComp path="login" text="로그인" />
               <HeaderBtnComp path="register" text="회원가입" />

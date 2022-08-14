@@ -3,9 +3,18 @@ import { Outlet, useLocation, useParams } from "react-router-dom";
 import { ContentsDiv, ListDiv } from "../styledComponents";
 import SmallNav from "../components/organisms/common/SmallNav";
 import Pagination from "../components/organisms/common/Pagination";
+import useScrapTattooist from "../hooks/useScrapTattooist";
+import { useEffect } from "react";
 const ShowScrap = () => {
   const [page, setPage] = useState(1);
   const [pages, setPages] = useState([]);
+
+  const [tattooists] = useScrapTattooist({page});
+
+  const location = useLocation();
+  useEffect(() => {
+    setPage(1);
+  }, [location.pathname]);
 
   return (
     <>
@@ -20,7 +29,7 @@ const ShowScrap = () => {
       />
 
       <ContentsDiv>
-        <Outlet context={{ page }} />
+        <Outlet context={{ page, tattooists }} />
 
         <Pagination
           page={page} setPage={setPage}

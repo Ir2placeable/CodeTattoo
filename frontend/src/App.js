@@ -93,6 +93,9 @@ const App = () => {
               />
             </Route>
 
+            {/* 타투이스트 도안 수정 페이지 */}
+            <Route path="tattooist/:tattooist_id/draft/:draft_id" element={<ShowDraftUpload />} />
+
             {/* 마이 페이지 */}
             <Route path="my-page" element={<ShowMyPage />}>
               <Route path="user/:user_id" element={<ShowMyTattoo />} />
@@ -108,8 +111,9 @@ const App = () => {
             {/* 스크랩 */}
             <Route path="scraps" element={<ShowScrap />} >
               <Route path="draft" element={<DraftList filter="scraps/draft" />} />
+              <Route path="tattooist" element={<TattooistList />} />
             </Route>
-            <Route path="scraps/tattooist" element={<ShowTattooistList/>}/>
+            {/* <Route path="scraps/tattooist" element={<ShowTattooistList/>}/> */}
 
           </Route>
 
