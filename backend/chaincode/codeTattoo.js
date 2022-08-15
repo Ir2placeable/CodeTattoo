@@ -6,6 +6,7 @@
 
 'use strict';
 
+// Chain Code
 const { Contract } = require('fabric-contract-api');
 const { TattooState, Activator, SideEffect, TattooInfo } = require('./WorldStateSchema')
 
@@ -14,7 +15,7 @@ class CodeTattoo extends Contract {
         console.info('============= START : Initialize Ledger ===========');
         console.info('============= END : Initialize Ledger ===========');
     }
-    
+
     // owner_info example : { id : "0x123abc", nickname : "ato" }
     async newTattoo(ctx, key, owner_info) {
         let new_tattoo = new TattooInfo();
