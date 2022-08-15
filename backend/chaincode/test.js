@@ -13,6 +13,7 @@ class Delivery extends Contract {
         console.info('============= START : Initialize Ledger ===========');
         console.info('============= END : Initialize Ledger ===========');
     }
+
     async ShowDeliverers(ctx, sn) {
         const deliveryAsBytes = await ctx.stub.getState(sn);
         if (!deliveryAsBytes || deliveryAsBytes.length === 0) {

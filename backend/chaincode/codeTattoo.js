@@ -21,8 +21,8 @@ class CodeTattoo extends Contract {
         let new_tattoo = new TattooInfo();
 
         const owner = new Activator(owner_info);
-        new_tattoo['activator'] = owner;
         new_tattoo['state'] = TattooState[0];
+        new_tattoo['activator'] = owner;
         new_tattoo['timestamp'] = Date.now();
 
         await ctx.stub.putState(key, Buffer.from(JSON.stringify(new_tattoo)));

@@ -36,7 +36,7 @@ const tattooInfoSchema  = new mongoose.Schema({
         type : String
     },
     activator : {
-        type : Activator
+        type : activatorSchema
     },
     timestamp : {
         type : Number
@@ -63,13 +63,13 @@ const tattooInfoSchema  = new mongoose.Schema({
         type : String
     },
     side_effects : {
-        type : [SideEffect]
+        type : [sideEffectSchema]
     }
 })
 
 const TattooState = mongoose.model('TattooState', stateSchema)
-const Activator = mongoose.model('TattooState', activatorSchema)
-const SideEffect = mongoose.model('TattooState', sideEffectSchema)
-const TattooInfo = mongoose.model('TattooState', tattooInfoSchema)
+const Activator = mongoose.model('Activator', activatorSchema)
+const SideEffect = mongoose.model('SideEffect', sideEffectSchema)
+const TattooInfo = mongoose.model('TattooInfo', tattooInfoSchema)
 
 module.exports = { TattooState, Activator, SideEffect, TattooInfo }
