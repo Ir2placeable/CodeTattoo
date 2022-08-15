@@ -6,6 +6,7 @@ const {Draft} = require("../DBModel/Draft");
 const {Tattooist} = require("../DBModel/Tattooist");
 
 exports.userLogin = async function(body) {
+    console.log('test')
     // 입력한 email 데이터 존재 여부 확인
     const user = await User.findOne({ email : body.email })
     if(!user) {
@@ -225,6 +226,18 @@ exports.createDraft = async function(params, body) {
 exports.removeDraft = async function(params, body) {
     await Tattooist.updateOne({ _id : params.id }, {$pull : { drafts : body.draft_id }})
     await Draft.deleteOne({ _id : body.draft_id })
+}
+exports.editDraft = async function(params, body) {
+    await Draft.updateOne({ _id : params.id }, {$set : { title : body.title, genre : body.genre, keywords : body.keywords }}, (err, draft) => {
+        if(!draft) {
+            console.log(ErrorTable["10"])
+            throw 10
+        }
+        if(err) {
+            console.log(ErrorTable["9"])
+            throw 9
+        }
+    })
 }
 
 exports.scrapDraft = async function(params, body) {
