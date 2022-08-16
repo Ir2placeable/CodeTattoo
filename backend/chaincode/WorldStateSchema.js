@@ -1,14 +1,13 @@
 const mongoose = require('mongoose')
 
-const stateSchema = new mongoose.Schema({
-    0 : "Created",
-    1 : "Reserved",
-    2 : "Tattooing",
-    3 : "Tattooed",
-    4 : "Retouched",
-    5 : "Covered-up",
-    6 : "Suspended"
-})
+// TattooState
+// 0 : "Created",
+// 1 : "Reserved",
+// 2 : "Tattooing",
+// 3 : "Tattooed",
+// 4 : "Retouched",
+// 5 : "Covered-up",
+// 6 : "Suspended"
 
 const activatorSchema = new mongoose.Schema({
     id : {
@@ -18,22 +17,17 @@ const activatorSchema = new mongoose.Schema({
         type : String
     }
 })
-
 const sideEffectSchema = new mongoose.Schema({
     image : {
         type : String
     },
     symptom : {
         type : String
-    },
-    date : {
-        type : Number
     }
 })
-
 const tattooInfoSchema  = new mongoose.Schema({
     state : {
-        type : String
+        type : Number
     },
     activator : {
         type : activatorSchema
@@ -67,9 +61,8 @@ const tattooInfoSchema  = new mongoose.Schema({
     }
 })
 
-const TattooState = mongoose.model('TattooState', stateSchema)
 const Activator = mongoose.model('Activator', activatorSchema)
 const SideEffect = mongoose.model('SideEffect', sideEffectSchema)
 const TattooInfo = mongoose.model('TattooInfo', tattooInfoSchema)
 
-module.exports = { TattooState, Activator, SideEffect, TattooInfo }
+module.exports = { Activator, SideEffect, TattooInfo }

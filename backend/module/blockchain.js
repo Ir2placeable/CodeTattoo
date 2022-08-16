@@ -9,13 +9,12 @@
 const { Gateway, Wallets } = require('fabric-network');
 const fs = require('fs');
 const path = require('path');
-const ccpPath = path.resolve(__dirname, '..', '..', 'codeTattoo', 'connection-org1.json');
+const ccpPath = path.resolve(__dirname, '..', '..', 'codeTattooBlockchain', 'connection-org1.json');
+const walletPath = path.resolve(__dirname, '..', '..', 'codeTattooBlockchain', 'codeTattooApp', 'wallet')
 
 exports.invoke = async function(function_name, key, params) {
-    const ccpPath = path.resolve(__dirname, '..', 'codeTattoo', 'connection-org1.json');
     let ccp = JSON.parse(fs.readFileSync(ccpPath, 'utf8'));
 
-    const walletPath = path.resolve(__dirname, '..', 'codeTattoo', 'keys', 'wallet')
     const wallet = await Wallets.newFileSystemWallet(walletPath);
 
     // Check to see if we've already enrolled the user.
@@ -39,11 +38,9 @@ exports.invoke = async function(function_name, key, params) {
 
 exports.query = async function(key) {
     // load the network configuration
-    const ccpPath = path.resolve(__dirname, '..', 'codeTattoo', 'connection-org1.json');
     const ccp = JSON.parse(fs.readFileSync(ccpPath, 'utf8'));
 
     // Create a new file system based wallet for managing identities.
-    const walletPath = path.resolve(__dirname, '..', 'codeTattoo', 'keys', 'wallet')
     const wallet = await Wallets.newFileSystemWallet(walletPath);
 
     // Check to see if we've already enrolled the user.
@@ -74,11 +71,9 @@ exports.query = async function(key) {
 
 exports.history = async function(key) {
     // load the network configuration
-    const ccpPath = path.resolve(__dirname, '..', 'codeTattoo', 'connection-org1.json');
     const ccp = JSON.parse(fs.readFileSync(ccpPath, 'utf8'));
 
     // Create a new file system based wallet for managing identities.
-    const walletPath = path.resolve(__dirname, '..', 'codeTattoo', 'keys', 'wallet')
     const wallet = await Wallets.newFileSystemWallet(walletPath);
 
     // Check to see if we've already enrolled the user.

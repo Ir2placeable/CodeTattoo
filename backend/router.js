@@ -21,7 +21,6 @@ server.use(cors());
 server.use('/', (req, res, next) => {
     console.log('\n')
     console.log('url : ', req.url)
-    console.log('params : ', req.params)
     console.log('query : ', req.query)
     console.log('body : ', req.body)
     next()
@@ -471,6 +470,7 @@ server.patch('/draft/:id', (req, res) => {
         })
         .catch((err) => {
             res.send({ success : false, code : err })
+            console.log(err)
         })
 })
 // 명령 : 예약 생성

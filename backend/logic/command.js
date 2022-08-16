@@ -228,7 +228,7 @@ exports.removeDraft = async function(params, body) {
     await Draft.deleteOne({ _id : body.draft_id })
 }
 exports.editDraft = async function(params, body) {
-    await Draft.updateOne({ _id : params.id }, {$set : { title : body.title, genre : body.genre, keywords : body.keywords }}, (err, draft) => {
+    await Draft.updateOne({ _id : params.id }, { title : body.title, genre : body.genre, keywords : body.keywords }, (err, draft) => {
         if(!draft) {
             console.log(ErrorTable["10"])
             throw 10
