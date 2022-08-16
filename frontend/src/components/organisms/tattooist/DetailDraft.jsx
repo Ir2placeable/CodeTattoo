@@ -12,7 +12,7 @@ const DetailDraft = ({ draft }) => {
 
   const navigate = useNavigate();
   const goDetail = () => {
-    navigate(`${draft.draft_id}`)
+    navigate(`/draft/${draft.draft_id}/detail`)
     console.log(draft)
   };
 

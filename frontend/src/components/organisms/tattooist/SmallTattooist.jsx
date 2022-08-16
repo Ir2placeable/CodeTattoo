@@ -35,11 +35,11 @@ const SmallTattooist = ({ tattooist }) => {
   };
 
   useEffect(() => {
-    console.log('small tattooist: ', tattooist)
+    // console.log('small tattooist: ', tattooist)
     if(tattooist.isFollowed){
       setFollowing(true);
     }
-  }, []);
+  }, [tattooist]);
 
   const UnFollowing = async () => {
     const res = await axios.delete(

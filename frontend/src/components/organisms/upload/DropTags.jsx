@@ -10,6 +10,7 @@ import TagList from './TagList';
 import TagSelfInput from './TagSelfInput';
 import TagChoosed from './TagChoosed';
 import TagText from '../../atomic/draft_upload/TagText';
+import { useEffect } from 'react';
 
 const DropTags = memo(({ tags, setTags }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -54,6 +55,14 @@ const DropTags = memo(({ tags, setTags }) => {
       setIsChoice(false);
     }
   }
+
+  useEffect(() => {
+    // console.log(tags)
+    if(tags){
+      setIsChoice(true);
+      setTags(tags)
+    }
+  }, [])
 
   return (
     <>

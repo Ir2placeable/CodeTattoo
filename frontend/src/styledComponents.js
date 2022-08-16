@@ -501,7 +501,23 @@ export const SmallDraftBox = styled.div`
   justify-content: center;
   align-items: center;
   // box-shadow: 5px 5px 15px 0px rgba(72, 72, 72, 0.5);
+
+  position: relative;
 `;
+
+export const DraftEditBtn = styled.div`
+font-size: 25px;
+position: absolute;
+cursor: pointer;
+top: 60px;
+right: 95px;
+color: #bbb;
+transition: .3s;
+
+&:hover{
+  color: #333;
+}
+`
 
 export const SmallDraftImg = styled.img`
   width: 400px;
@@ -1175,6 +1191,82 @@ export const EnrollImgBtn = styled.div`
   margin-left: -225px;
 `;
 
+export const DraftEditDiv = styled.div`
+// background-color: orange;
+height: 40px;
+position: absolute;
+left: 50%;
+bottom: 80px;
+margin-left: -270px;
+display: flex;
+`
+export const DraftEditBox = styled.div`
+background-color: black;
+color: white;
+width: 250px;
+line-height: 40px;
+font-size: 18px;
+font-weight: bold;
+text-align: center;
+border-radius: 8px;
+margin: 0 10px;
+cursor: pointer;
+
+${(props) => 
+  props.color === "red" &&
+  css`
+    background-color: #DA3333;
+  `
+}
+`
+
+export const DraftEditPopupDiv = styled.div`
+width: 100%;
+height: 100%;
+position: fixed;
+top: 0;
+left: 0;
+z-index: 100;
+display: flex;
+justify-content: center;
+align-items: center;
+background-color: rgba(0, 0, 0, .2);
+`
+
+export const DraftEditPopup = styled.div`
+background-color: black;
+border-radius: 8px;
+color: white;
+width: 500px;
+display: flex;
+flex-wrap: wrap;
+justify-content: center;
+align-items: center;
+`
+export const DraftPopupText = styled.div`
+width: 100%;
+font-size: 20px;
+line-height: 100px;
+text-align: center;
+`
+export const DraftPopupBtn = styled.div`
+width: 100px;
+line-height: 30px;
+border: 2px solid white;
+border-radius: 8px;
+text-align: center;
+cursor: pointer;
+margin: 0 10px 30px;
+
+${(props) => 
+  props.color === 'red' && 
+  css`
+    color: #DA3333;
+    border-color: #DA3333;
+  `
+}
+`
+
 // *** Pagination ***
 export const PagenationDiv = styled.div`
   width: 100%;
@@ -1531,6 +1623,7 @@ export const CalendarDiv = styled.div`
 // background-color: orange;
 margin: 60px auto;
 display: flex;
+align-items: center;
 `
 export const ReservationDiv = styled.div`
 // background-color: whitesmoke;
@@ -1554,18 +1647,44 @@ line-height: 40px;
 text-align: center;
 border-bottom: 1px solid rgba(72, 72, 72, .5);
 `
+export const TimeBox = styled.div`
+// background-color: orange;
+margin: 20px auto 40px;
+width: calc(74px * 3);
+display: flex;
+flex-wrap: wrap;
+`
 
 export const Time = styled.div`
-width: 80%;
+width: 70px;
 background-color: rgba(72, 72, 72);
 line-height: 35px;
 text-align: center;
 color: white;
+font-weight: bold;
+border-radius: 2px;
+margin: 4px 2px 0;
+// cursor: pointer;
+`
+
+export const ReservRequestBtn = styled.div`
+background-color: black;
+border: 3px solid black;
 font-size: 18px;
 font-weight: bold;
-border-radius: 5px;
-margin: 20px auto 0;
+text-align: center;
+color: white;
+width: 200px;
+line-height: 35px;
 cursor: pointer;
+margin: 0 auto;
+border-radius: 5px;
+transition: .45s;
+
+&:hover{
+  color: black;
+  background-color: white;
+}
 `
 
 
@@ -1652,5 +1771,121 @@ transition: .45s;
 &:hover{
   color: black;
   background-color: white;
+}
+`
+
+
+// Procedure state page
+export const ProcedureDiv = styled.div`
+width: 100%;
+display: flex;
+flex-wrap: wrap;
+justify-content: space-between;
+align-items: center;
+// background-color: orange;
+
+`
+
+export const ProcedureImg = styled.img`
+display: inline-block;
+background-color: white;
+border-radius: 5px;
+box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.4);
+width: 350px;
+height: 350px;
+object-fit: contain;
+`
+
+export const ProcedureInfo = styled.div`
+display: flex;
+flex-wrap: wrap;
+justify-content: space-between;
+align-items: center;
+background-color: #ececec;
+font-weight: bold;
+padding: 64px 40px 40px;
+border-radius: 8px;
+width: 1000px;
+`
+
+export const ProcedureText = styled.div`
+font-size: 24px;
+position: absolute;
+top: -30px;
+left: 10px;
+`
+
+export const ProcedureBox = styled.div`
+width: calc(50% - 70px);
+background-color: black;
+margin-bottom: 64px;
+padding: 20px 20px 0;
+border-radius: 5px;
+position: relative;
+
+${(props) => 
+  props.size === 'big' &&
+  css`
+    width: 100%;
+    margin-bottom: 0;
+  `
+}
+`
+
+export const ProcedureWrap = styled.div`
+display: flex;
+height: 35px;
+// background-color: orange;
+align-items: center;
+margin-bottom: 20px;
+`
+
+export const ProcedureBigWrap = styled.div`
+display: flex;
+width: 100%;
+justify-content: space-between;
+height: max-content;
+// background-color: aqua;
+`
+
+export const ProcedureLabel = styled.div`
+font-size: 20px;
+color: white;
+width: 100px;
+text-align: center;
+`
+
+export const ProcedureData = styled.div`
+background-color: #f0f0f0;
+width: 310px;
+border-radius: 5px;
+height: 100%;
+display: flex;
+align-items: center;
+padding: 0 10px;
+`
+
+export const ProcedureBtns = styled.div`
+display: flex;
+margin: 100px auto 0;
+`
+
+export const ProcedureBtn = styled.div`
+background-color: black;
+color: white;
+cursor: pointer;
+border-radius: 5px;
+text-align: center;
+line-height: 45px;
+font-size: 20px;
+font-weight: bold;
+width: 300px;
+margin: 0 10px;
+
+${(props) => 
+  props.color === 'gray' &&
+  css`
+  background-color: #797979;
+  `
 }
 `
