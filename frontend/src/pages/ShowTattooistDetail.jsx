@@ -9,7 +9,7 @@ const ShowTattooistDetail = () => {
   const location = useLocation();
   const path = location.pathname; // tattooist/tattooist_id/filter
   const [profile, items] = useTattooistDetail(path);
-  console.log(profile, items)
+  console.log(profile, items);
   return (
     <>
       <ContentsDiv>

@@ -35,6 +35,7 @@ import DraftSearch from "./components/templates/DraftSearch";
 import ShowProfileEdit from "./pages/ShowProfileEdit";
 import ProfileEdit from "./components/templates/ProfileEdit";
 import ShowReservation from "./pages/ShowReservation";
+import TattooistSearch from "./components/templates/TattooistSearch";
 
 
 const App = () => {
@@ -81,10 +82,11 @@ const App = () => {
 
             {/* 타투이스트 목록 */}
             <Route path="tattooists" element={<ShowTattooistList />}>
-              <Route path="best" element={<TattooistList />} />
-              <Route path="all" element={<TattooistList />} />
-              <Route path="search/:nickname" element={<TattooistList />} />
+              <Route path="best" element={<TattooistList filter="tattooists/best" />} />
+              <Route path="all" element={<TattooistList filter="tattooists/all"/>} />
+              <Route path="search/:nickname" element={<TattooistSearch />} />
             </Route>
+
             {/* 타투이스트 상세 */}
             <Route path="tattooist/:tattooist_id" element={<ShowTattooistDetail />}>
               <Route path="draft" element={<TattooistDetailDraft />} />
@@ -97,8 +99,10 @@ const App = () => {
             <Route path="my-page" element={<ShowMyPage />}>
               <Route path="user/:user_id" element={<ShowMyTattoo />} />
             </Route>
+
             {/* 프로필 편집 */}
             <Route path="edit" element={<ShowProfileEdit/>}>
+              <Route path="image" element/>
               <Route path="profile" element={<ProfileEdit/>}/>
               <Route path="password" />
             </Route>
@@ -108,9 +112,8 @@ const App = () => {
             {/* 스크랩 */}
             <Route path="scraps" element={<ShowScrap />} >
               <Route path="draft" element={<DraftList filter="scraps/draft" />} />
+              <Route path="tattooist" element={<TattooistList filter="scraps/tattooist"/>}/>
             </Route>
-            <Route path="scraps/tattooist" element={<ShowTattooistList/>}/>
-
           </Route>
 
 

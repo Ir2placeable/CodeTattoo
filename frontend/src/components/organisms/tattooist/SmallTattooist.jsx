@@ -7,60 +7,56 @@ import {
   ProfileImgIcon,
 } from "../../../styledComponents";
 import TattooistBtn from "../../atomic/tattooist/TattooistBtn";
-import { APIURL } from "../../../config/key";
-import axios from "axios";
+import React, { useState, useEffect, useCallback } from "react";
 import { getCookie } from "../../../config/cookie";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
+import useFollowClick from "../../../hooks/useFollowClick";
 
 const SmallTattooist = ({ tattooist }) => {
-  console.log("Small Tattooist");
+  const tattooist_id = tattooist.tattooist_id;
+  const [follow, unfollow] = useFollowClick({ tattooist_id });
+  const [following, setFollowing] = useState(false);
 
-  const Following = async () => {
-    const res = await axios.post(`${APIURL}/follow`, {
-      user_id: getCookie("user_id"),
-      tattooist_id: tattooist.drawer_id,
-    });
+  useEffect(() => {
+    if (tattooist.isFollowed) setFollowing(true);
+  }, []);
 
-    if (res.data.success) {
-      console.log("following success");
+  const onClick = useCallback(() => {
+    if (!getCookie("user_id")) {
+      alert("팔로우 기능은 유저 로그인 상태에서 가능합니다.");
+    } else {
+      if (following) {
+        setFollowing(false);
+        unfollow();
+      } else {
+        setFollowing(true);
+        follow();
+      }
     }
-  };
-
-  const UnFollowing = async () => {
-    const res = await axios.delete(
-      `${APIURL}/follow/?user_id=${getCookie("user_id")}&tattooist_id=${
-        tattooist.drawer_id
-      }`
-    );
-
-    if (res.data.success) {
-      console.log("unfollowing success");
-    }
-  };
+  }, [following]);
 
   return (
     <>
       <SmallTattooistProfileBox>
         {tattooist.drawer_image ? (
-          <ProfileImg 
+          <ProfileImg
             size="tattooist"
             src={tattooist.drawer_image}
             alt={tattooist.drawer_id}
           />
         ) : (
           <ProfileImgIcon size="tattooist">
-            <FontAwesomeIcon 
-              style={{fontSize: '80px'}} icon={faUser} />
+            <FontAwesomeIcon style={{ fontSize: "80px" }} icon={faUser} />
           </ProfileImgIcon>
         )}
-        
+
         <SmallTattooistInfoBox>
           <SmallTattooistNickname>
             {tattooist.drawer_nickname}
             <TattooistBtn
-              content={tattooist.isFollowed ? "UnFollowed" : "Followed"}
-              event={tattooist.isFollowed ? UnFollowing : Following}
+              content={following ? "UnFollow" : "Follow"}
+              event={onClick}
               size={"small"}
             />
           </SmallTattooistNickname>

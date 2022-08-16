@@ -42,7 +42,7 @@ const EditTattooistProfile = () => {
         description: description,
       }
     );
-
+    console.log(res);
     if (res.data.success) {
       console.log("프로필 수정 성공");
       window.location.replace("/edit/profile");

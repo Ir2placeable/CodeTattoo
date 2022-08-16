@@ -1,29 +1,15 @@
-import React, { useEffect } from "react";
-import { ContentsDiv, EmptyBox, ListDiv } from "../styledComponents";
-import { Outlet, useParams } from "react-router-dom";
-import useTattooistList from "../hooks/useTattooistList";
-import { useLocation } from "react-router-dom";
+import React from "react";
+import { ContentsDiv } from "../styledComponents";
+import { Outlet } from "react-router-dom";
 import { useState } from "react";
-
+import Pagination from "../components/organisms/common/Pagination";
 import SmallNav from "../components/organisms/common/SmallNav";
 import { getCookie } from "../config/cookie";
 
 const ShowTattooistList = () => {
   const [page, setPage] = useState(1);
   const [pages, setPages] = useState([]);
-  const param = useParams();
-  const location = useLocation();
 
-  let path = "";
-  if (param.length !== undefined) {
-    path = `/tattooists/search`;
-  } else {
-    path = `${location.pathname}`;
-  }
-
-  const tattooists = useTattooistList(path, page);
-
-  console.log(`Show Tattooist List`);
   return (
     <>
       <SmallNav
@@ -37,23 +23,15 @@ const ShowTattooistList = () => {
       />
 
       <ContentsDiv>
-        <ListDiv>
-          {tattooists.length === 0 ? (
-            <EmptyBox>No Tattooist</EmptyBox>
-          ) : (
-            <Outlet context={{ tattooists }} />
-          )}
-        </ListDiv>
-      </ContentsDiv>
+        <Outlet context={{ page }} />
 
-      {/*<Pagination
-        filter={filter}
-        cookies={cookies}
-        page={page}
-        setPage={setPage}
-        pages={pages}
-        setPages={setPages}
-      />*/}
+        <Pagination
+          page={page}
+          setPage={setPage}
+          pages={pages}
+          setPages={setPages}
+        />
+      </ContentsDiv>
     </>
   );
 };
