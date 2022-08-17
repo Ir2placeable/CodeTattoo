@@ -6,8 +6,10 @@ import moment from "moment";
 
 import { 
   CalendarDiv, ReservationDiv, 
-  DateDiv, TimeDiv, TimeText, Time
+  DateDiv, TimeDiv, TimeText, Time, 
+  TimeBox, ReservRequestBtn
 } from "../../styledComponents";
+import { getCookie } from "../../config/cookie";
 
 const mark = [
   "2022-08-10",
@@ -22,11 +24,9 @@ const mark = [
   "2022-08-23",
 ]
 const time = [
-  "09",
-  "11",
-  "12",
-  "14",
-  "16"
+  "10", "11", "12", "13",
+  "14", "15", "16", "17",
+  "18", "19", "20", "21"
 ]
 
 const dotStyle = {
@@ -40,6 +40,11 @@ const dotStyle = {
   bottom: '7px',
   left: '50%',
   marginLeft: '-4px'
+}
+
+const disabledStyle = {
+  backgroundColor: '#ccc',
+  cursor: 'default'
 }
 
 // reservations : []
@@ -83,12 +88,21 @@ const TattooistDetailReservation = () => {
             예약 가능 시간
           </TimeText>
 
+          <TimeBox>
           {time.map((t, idx) => (
             <Time key={idx}>
               {t}:00
             </Time>
           ))}
+          </TimeBox>
         </TimeDiv>
+
+        {getCookie('user_id') && (
+          <ReservRequestBtn>
+            작업 요청
+          </ReservRequestBtn>
+        )}
+        
       </ReservationDiv>
 
     </CalendarDiv>

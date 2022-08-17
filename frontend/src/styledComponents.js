@@ -501,7 +501,23 @@ export const SmallDraftBox = styled.div`
   justify-content: center;
   align-items: center;
   // box-shadow: 5px 5px 15px 0px rgba(72, 72, 72, 0.5);
+
+  position: relative;
 `;
+
+export const DraftEditBtn = styled.div`
+font-size: 25px;
+position: absolute;
+cursor: pointer;
+top: 60px;
+right: 95px;
+color: #bbb;
+transition: .3s;
+
+&:hover{
+  color: #333;
+}
+`
 
 export const SmallDraftImg = styled.img`
   width: 400px;
@@ -1175,6 +1191,82 @@ export const EnrollImgBtn = styled.div`
   margin-left: -225px;
 `;
 
+export const DraftEditDiv = styled.div`
+// background-color: orange;
+height: 40px;
+position: absolute;
+left: 50%;
+bottom: 80px;
+margin-left: -270px;
+display: flex;
+`
+export const DraftEditBox = styled.div`
+background-color: black;
+color: white;
+width: 250px;
+line-height: 40px;
+font-size: 18px;
+font-weight: bold;
+text-align: center;
+border-radius: 8px;
+margin: 0 10px;
+cursor: pointer;
+
+${(props) => 
+  props.color === "red" &&
+  css`
+    background-color: #DA3333;
+  `
+}
+`
+
+export const DraftEditPopupDiv = styled.div`
+width: 100%;
+height: 100%;
+position: fixed;
+top: 0;
+left: 0;
+z-index: 100;
+display: flex;
+justify-content: center;
+align-items: center;
+background-color: rgba(0, 0, 0, .2);
+`
+
+export const DraftEditPopup = styled.div`
+background-color: black;
+border-radius: 8px;
+color: white;
+width: 500px;
+display: flex;
+flex-wrap: wrap;
+justify-content: center;
+align-items: center;
+`
+export const DraftPopupText = styled.div`
+width: 100%;
+font-size: 20px;
+line-height: 100px;
+text-align: center;
+`
+export const DraftPopupBtn = styled.div`
+width: 100px;
+line-height: 30px;
+border: 2px solid white;
+border-radius: 8px;
+text-align: center;
+cursor: pointer;
+margin: 0 10px 30px;
+
+${(props) => 
+  props.color === 'red' && 
+  css`
+    color: #DA3333;
+    border-color: #DA3333;
+  `
+}
+`
+
 // *** Pagination ***
 export const PagenationDiv = styled.div`
   width: 100%;
@@ -1531,6 +1623,7 @@ export const CalendarDiv = styled.div`
 // background-color: orange;
 margin: 60px auto;
 display: flex;
+align-items: center;
 `
 export const ReservationDiv = styled.div`
 // background-color: whitesmoke;
@@ -1554,18 +1647,44 @@ line-height: 40px;
 text-align: center;
 border-bottom: 1px solid rgba(72, 72, 72, .5);
 `
+export const TimeBox = styled.div`
+// background-color: orange;
+margin: 20px auto 40px;
+width: calc(74px * 3);
+display: flex;
+flex-wrap: wrap;
+`
 
 export const Time = styled.div`
-width: 80%;
+width: 70px;
 background-color: rgba(72, 72, 72);
 line-height: 35px;
 text-align: center;
 color: white;
+font-weight: bold;
+border-radius: 2px;
+margin: 4px 2px 0;
+// cursor: pointer;
+`
+
+export const ReservRequestBtn = styled.div`
+background-color: black;
+border: 3px solid black;
 font-size: 18px;
 font-weight: bold;
-border-radius: 5px;
-margin: 20px auto 0;
+text-align: center;
+color: white;
+width: 200px;
+line-height: 35px;
 cursor: pointer;
+margin: 0 auto;
+border-radius: 5px;
+transition: .45s;
+
+&:hover{
+  color: black;
+  background-color: white;
+}
 `
 
 
@@ -1653,4 +1772,376 @@ transition: .45s;
   color: black;
   background-color: white;
 }
+`
+
+
+// Procedure state page
+export const ProcedureDiv = styled.div`
+width: 100%;
+display: flex;
+flex-wrap: wrap;
+justify-content: space-between;
+align-items: center;
+// background-color: orange;
+
+`
+
+export const ProcedureImg = styled.img`
+display: inline-block;
+background-color: white;
+border-radius: 5px;
+box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.4);
+width: 350px;
+height: 350px;
+object-fit: contain;
+`
+
+export const ProcedureInfo = styled.div`
+display: flex;
+flex-wrap: wrap;
+justify-content: space-between;
+align-items: center;
+background-color: #ececec;
+font-weight: bold;
+padding: 64px 40px 40px;
+border-radius: 8px;
+width: 1000px;
+`
+
+export const ProcedureText = styled.div`
+font-size: 24px;
+position: absolute;
+top: -30px;
+left: 10px;
+`
+
+export const ProcedureBox = styled.div`
+width: calc(50% - 70px);
+background-color: black;
+margin-bottom: 64px;
+padding: 20px 20px 0;
+border-radius: 5px;
+position: relative;
+
+${(props) => 
+  props.size === 'big' &&
+  css`
+    width: 100%;
+    margin-bottom: 0;
+  `
+}
+`
+
+export const ProcedureWrap = styled.div`
+display: flex;
+height: 35px;
+// background-color: orange;
+align-items: center;
+margin-bottom: 20px;
+`
+
+export const ProcedureBigWrap = styled.div`
+display: flex;
+width: 100%;
+justify-content: space-between;
+height: max-content;
+// background-color: aqua;
+`
+
+export const ProcedureLabel = styled.div`
+font-size: 20px;
+color: white;
+width: 100px;
+text-align: center;
+`
+
+export const ProcedureData = styled.div`
+background-color: #f0f0f0;
+width: 310px;
+border-radius: 5px;
+height: 100%;
+display: flex;
+align-items: center;
+padding: 0 10px;
+`
+
+export const ProcedureBtns = styled.div`
+display: flex;
+margin: 100px auto 0;
+`
+
+export const ProcedureBtn = styled.div`
+background-color: black;
+color: white;
+cursor: pointer;
+border-radius: 5px;
+text-align: center;
+line-height: 45px;
+font-size: 20px;
+font-weight: bold;
+width: 300px;
+margin: 0 10px;
+
+${(props) => 
+  props.color === 'gray' &&
+  css`
+  background-color: #797979;
+  `
+}
+`
+
+
+// Chatting Page
+export const ChattingDiv = styled.div`
+// background-color: whitesmoke;
+margin: 0 auto;
+padding: 20px 50px;
+width: 1250px;
+display: flex;
+flex-wrap: wrap;
+justify-content: space-between;
+`
+
+export const ChattingHeader = styled.div`
+font-weight: bold;
+font-size: 32px;
+width: 100%;
+max-height: 64px;
+line-height: 64px;
+margin-bottom: 20px;
+// background-color: aqua;
+border-bottom: 1px solid rgba(72, 72, 72, .5);
+`
+
+export const ChattingListDiv = styled.div`
+background-color: #646464;
+padding: 5px;
+height: 600px;
+display: flex;
+flex-direction: column;
+align-items: center;
+overflow-y: scroll;
+`
+
+export const ChattingBox = styled.div`
+background-color: #F3F3F3;
+width: 350px;
+border-radius: 10px;
+padding: 10px;
+display: flex;
+align-items: center;
+position: relative;
+transition: .4s;
+margin: 5px;
+cursor: pointer;
+
+&:hover{
+  background-color: #BDBDBD;
+}
+`
+export const ChattingImg = styled.img`
+width: 50px;
+height: 50px;
+object-fit: contain;
+border-radius: 50%;
+background-color: white;
+`
+export const ChattingInfoDiv = styled.div`
+// background-color: aqua;
+width: calc(100% - 180px);
+margin-left: 30px;
+display: flex;
+justify-content: space-between;
+align-items: center;
+`
+export const ChattingTextDiv = styled.div`
+// background-color: aqua;
+display: flex;
+flex-direction: column;
+margin-left: 15px;
+
+${(props) => 
+  props.sort === 'right' &&
+  css`
+    align-items: flex-end;
+    margin-top: 20px;
+  `
+}
+`
+
+export const ChattingText = styled.p`
+font-weight: bold;
+margin: 5px 0;
+
+${(props) => {
+  if(props.size === 'big'){
+    return css`
+      font-size: 16px;
+    `
+  } else if(props.size === 'medium'){
+    return css`
+      font-size: 12px;
+      color: #5e5e5e;
+    `
+  } else if(props.size === 'main'){
+    return css`
+      font-size: 20px;
+      color: black;
+      margin-left: 20px;
+    `
+  }
+}}
+`
+
+export const ChattingTime = styled.div`
+font-size: 14px;
+color: #ababab;
+position: absolute;
+top: 10px;
+right: 10px;
+`
+
+export const ChattingReserv = styled.div`
+width: 15px;
+height: 15px;
+border-radius: 50%;
+position: absolute;
+top: 10px;
+right: 10px;
+
+${(props) => {
+  if(props.state === 'complete'){
+    return css`
+      background-color: #4EC059;
+    `
+  } else if(props.state === 'standby'){
+    return css`
+      background-color: #E84545;
+    `
+  }
+}}
+`
+
+export const ChattingRoomDiv = styled.div`
+background-color: #646464;
+padding: 71px 0 90px;
+width: 800px;
+height: calc(610px - 161px);
+// height: 600px;
+// overflow-y: scroll;
+position: relative;
+`
+
+export const ChattingRoomHeader = styled.div`
+font-weight: bold;
+font-size: 20px;
+width: calc(100% - 50px);
+height: 70px;
+border-bottom: 1px solid #8b8b8b;
+
+display: flex;
+align-items: center;
+padding-left: 50px;
+
+position: absolute;
+z-index: 10;
+top: 0;
+left: 0;
+
+// background-color: orange;
+`
+
+export const ChatBigDiv = styled.div`
+// background-color: aqua;
+height: calc(610px - 161px);
+overflow-y: scroll;
+`
+
+export const ChatDiv = styled.div`
+// background-color: orange;
+width: calc(100% - 40px);
+display: flex;
+padding: 0 20px;
+margin: 10px 0;
+align-items: flex-end;
+
+${(props) => {
+  if(props.who === 'me'){
+    return css`
+      flex-direction: row-reverse;
+    `
+  } else if(props.who === 'you'){
+    return css`
+      flex-direction: row;
+    `
+  }
+}}
+`
+
+export const ChatContents = styled.div`
+max-width: 580px;
+min-width: 100px;
+line-height: 35px;
+border-radius: 20px;
+padding: 0 20px;
+${(props) => {
+  if(props.who === 'me'){
+    return css`
+      background-color: #E8E9B2;
+    `
+  } else if(props.who === 'you'){
+    return css`
+      background-color: white;
+    `
+  }
+}}
+`
+export const ChatDate = styled.div`
+color: #B1B1B1;
+font-size: 10px;
+margin: 0 5px;
+`
+
+export const ChatInputDiv = styled.div`
+// background-color: orange;
+width: 100%;
+height: 90px;
+position: absolute;
+bottom: 0;
+left: 0;
+z-index: 10;
+
+display: flex;
+align-items: center;
+justify-content: space-evenly;
+`
+
+export const ChatInput = styled.input`
+background-color: white;
+border: none;
+border-radius: 5px;
+line-height: 40px;
+width: 550px;
+`
+
+export const ChatBtn = styled.div`
+color: white;
+border-radius: 8px;
+cursor: pointer;
+line-height: 40px;
+font-weight: bold;
+font-size: 18px;
+text-align: center;
+width: 80px;
+${(props) => {
+  if(props.type === 'submit'){
+    return css`
+      background-color: black;
+    `
+  } else if(props.type === 'image'){
+    return css`
+      background-color: #7AA500;
+    `
+  }
+}}
 `

@@ -1,11 +1,12 @@
 import React from "react";
+import { Outlet } from "react-router-dom";
 import DraftDetail from "../components/templates/DraftDetail";
 import useDraftDetail from "../hooks/useDraftDetail";
 import { ContentsDiv, EmptyBox } from "../styledComponents";
 
 const ShowDraftDetail = () => {
   const detail = useDraftDetail();
-  console.log('detail: ', detail)
+  // console.log('detail: ', detail)
 
   // const detail = {
   //   draft_id: 1,
@@ -33,7 +34,8 @@ const ShowDraftDetail = () => {
         ) : (
           <DraftDetail detail={detail} />
         )} */}
-        <DraftDetail detail={detail} />
+        {/* <DraftDetail detail={detail} /> */}
+        <Outlet context={{ detail }} />
       </ContentsDiv>
     </>
   );

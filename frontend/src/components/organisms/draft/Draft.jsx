@@ -26,13 +26,11 @@ const Draft = ({ draft_id, image, title, like, drawer_id,
   } 
 
   const goDetail = () => {
-    console.log('click ', draft_id);
-    navigate(`/draft/${draft_id}`)
+    navigate(`/draft/${draft_id}/detail`)
   }
 
   const goTattooist = () => {
-    console.log('go tattooist')
-    navigate(`/tattooist/${drawer_id}`)
+    navigate(`/tattooist/${drawer_id}/draft`)
   }
 
   return (
