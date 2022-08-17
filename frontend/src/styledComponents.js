@@ -1889,3 +1889,259 @@ ${(props) =>
   `
 }
 `
+
+
+// Chatting Page
+export const ChattingDiv = styled.div`
+// background-color: whitesmoke;
+margin: 0 auto;
+padding: 20px 50px;
+width: 1250px;
+display: flex;
+flex-wrap: wrap;
+justify-content: space-between;
+`
+
+export const ChattingHeader = styled.div`
+font-weight: bold;
+font-size: 32px;
+width: 100%;
+max-height: 64px;
+line-height: 64px;
+margin-bottom: 20px;
+// background-color: aqua;
+border-bottom: 1px solid rgba(72, 72, 72, .5);
+`
+
+export const ChattingListDiv = styled.div`
+background-color: #646464;
+padding: 5px;
+height: 600px;
+display: flex;
+flex-direction: column;
+align-items: center;
+overflow-y: scroll;
+`
+
+export const ChattingBox = styled.div`
+background-color: #F3F3F3;
+width: 350px;
+border-radius: 10px;
+padding: 10px;
+display: flex;
+align-items: center;
+position: relative;
+transition: .4s;
+margin: 5px;
+cursor: pointer;
+
+&:hover{
+  background-color: #BDBDBD;
+}
+`
+export const ChattingImg = styled.img`
+width: 50px;
+height: 50px;
+object-fit: contain;
+border-radius: 50%;
+background-color: white;
+`
+export const ChattingInfoDiv = styled.div`
+// background-color: aqua;
+width: calc(100% - 180px);
+margin-left: 30px;
+display: flex;
+justify-content: space-between;
+align-items: center;
+`
+export const ChattingTextDiv = styled.div`
+// background-color: aqua;
+display: flex;
+flex-direction: column;
+margin-left: 15px;
+
+${(props) => 
+  props.sort === 'right' &&
+  css`
+    align-items: flex-end;
+    margin-top: 20px;
+  `
+}
+`
+
+export const ChattingText = styled.p`
+font-weight: bold;
+margin: 5px 0;
+
+${(props) => {
+  if(props.size === 'big'){
+    return css`
+      font-size: 16px;
+    `
+  } else if(props.size === 'medium'){
+    return css`
+      font-size: 12px;
+      color: #5e5e5e;
+    `
+  } else if(props.size === 'main'){
+    return css`
+      font-size: 20px;
+      color: black;
+      margin-left: 20px;
+    `
+  }
+}}
+`
+
+export const ChattingTime = styled.div`
+font-size: 14px;
+color: #ababab;
+position: absolute;
+top: 10px;
+right: 10px;
+`
+
+export const ChattingReserv = styled.div`
+width: 15px;
+height: 15px;
+border-radius: 50%;
+position: absolute;
+top: 10px;
+right: 10px;
+
+${(props) => {
+  if(props.state === 'complete'){
+    return css`
+      background-color: #4EC059;
+    `
+  } else if(props.state === 'standby'){
+    return css`
+      background-color: #E84545;
+    `
+  }
+}}
+`
+
+export const ChattingRoomDiv = styled.div`
+background-color: #646464;
+padding: 71px 0 90px;
+width: 800px;
+height: calc(610px - 161px);
+// height: 600px;
+// overflow-y: scroll;
+position: relative;
+`
+
+export const ChattingRoomHeader = styled.div`
+font-weight: bold;
+font-size: 20px;
+width: calc(100% - 50px);
+height: 70px;
+border-bottom: 1px solid #8b8b8b;
+
+display: flex;
+align-items: center;
+padding-left: 50px;
+
+position: absolute;
+z-index: 10;
+top: 0;
+left: 0;
+
+// background-color: orange;
+`
+
+export const ChatBigDiv = styled.div`
+// background-color: aqua;
+height: calc(610px - 161px);
+overflow-y: scroll;
+`
+
+export const ChatDiv = styled.div`
+// background-color: orange;
+width: calc(100% - 40px);
+display: flex;
+padding: 0 20px;
+margin: 10px 0;
+align-items: flex-end;
+
+${(props) => {
+  if(props.who === 'me'){
+    return css`
+      flex-direction: row-reverse;
+    `
+  } else if(props.who === 'you'){
+    return css`
+      flex-direction: row;
+    `
+  }
+}}
+`
+
+export const ChatContents = styled.div`
+max-width: 580px;
+min-width: 100px;
+line-height: 35px;
+border-radius: 20px;
+padding: 0 20px;
+${(props) => {
+  if(props.who === 'me'){
+    return css`
+      background-color: #E8E9B2;
+    `
+  } else if(props.who === 'you'){
+    return css`
+      background-color: white;
+    `
+  }
+}}
+`
+export const ChatDate = styled.div`
+color: #B1B1B1;
+font-size: 10px;
+margin: 0 5px;
+`
+
+export const ChatInputDiv = styled.div`
+// background-color: orange;
+width: 100%;
+height: 90px;
+position: absolute;
+bottom: 0;
+left: 0;
+z-index: 10;
+
+display: flex;
+align-items: center;
+justify-content: space-evenly;
+`
+
+export const ChatInput = styled.input`
+background-color: white;
+border: none;
+border-radius: 5px;
+line-height: 40px;
+width: 550px;
+`
+
+export const ChatBtn = styled.div`
+color: white;
+border-radius: 8px;
+cursor: pointer;
+line-height: 40px;
+font-weight: bold;
+font-size: 18px;
+text-align: center;
+width: 80px;
+${(props) => {
+  if(props.type === 'submit'){
+    return css`
+      background-color: black;
+    `
+  } else if(props.type === 'image'){
+    return css`
+      background-color: #7AA500;
+    `
+  }
+}}
+`

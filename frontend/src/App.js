@@ -40,6 +40,7 @@ import DraftEdit from "./components/templates/DraftEdit";
 import { getCookie } from "./config/cookie";
 import ReservationList from "./components/templates/ReservationList";
 import Procedure from "./components/organisms/reservation/Procedure";
+import ChattingList from "./components/organisms/chatting/ChattingList";
 
 
 const App = () => {
@@ -137,6 +138,10 @@ const App = () => {
 
           {/* 엔트리 페이지 */}
           <Route path="/" element={<ShowEntry />} />
+
+          {/* 채팅 */}
+          <Route path="chat" element={<ChattingList />} />
+          
         </Routes>
       </MainPageDiv>
 
