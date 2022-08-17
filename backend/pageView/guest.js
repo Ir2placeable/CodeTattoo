@@ -1,7 +1,5 @@
-const {User} = require("../DBModel/User")
 const {Tattooist} = require("../DBModel/Tattooist")
 const {Draft} = require('../DBModel/Draft')
-const {Tattoo} = require('../DBModel/Tattoo')
 
 const Global = require('../GlobalVariable')
 const ErrorTable = require('../ErrorTable')
