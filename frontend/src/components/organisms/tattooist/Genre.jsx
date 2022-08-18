@@ -7,9 +7,7 @@ import {
 } from "../../../styledComponents";
 
 const Genre = ({ genre }) => {
-  console.log("Genre");
   const keywords = genre.keywords;
-  console.log(keywords)
   return (
     <>
       <TattooistGenreBox>

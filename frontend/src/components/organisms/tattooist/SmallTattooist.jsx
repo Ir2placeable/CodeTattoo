@@ -11,10 +11,13 @@ import React, { useState, useEffect, useCallback } from "react";
 import { getCookie } from "../../../config/cookie";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
-import useFollowClick from "../../../hooks/useFollowClick";
+import { useCallback } from "react";
+import useFollowClick from '../../../hooks/useFollowClick'
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const SmallTattooist = ({ tattooist }) => {
-  const tattooist_id = tattooist.tattooist_id;
+  const tattooist_id = tattooist.drawer_id;
   const [follow, unfollow] = useFollowClick({ tattooist_id });
   const [following, setFollowing] = useState(false);
 
@@ -36,9 +39,15 @@ const SmallTattooist = ({ tattooist }) => {
     }
   }, [following]);
 
+  const navigate = useNavigate();
+  const goTattooist = () => {
+    navigate(`/tattooist/${tattooist.drawer_id}/draft`)
+  }
+
   return (
     <>
       <SmallTattooistProfileBox>
+        <div onClick={goTattooist}>
         {tattooist.drawer_image ? (
           <ProfileImg
             size="tattooist"
@@ -50,7 +59,7 @@ const SmallTattooist = ({ tattooist }) => {
             <FontAwesomeIcon style={{ fontSize: "80px" }} icon={faUser} />
           </ProfileImgIcon>
         )}
-
+        </div>
         <SmallTattooistInfoBox>
           <SmallTattooistNickname>
             {tattooist.drawer_nickname}

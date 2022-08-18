@@ -6,10 +6,16 @@ import SmallNav from '../components/organisms/common/SmallNav';
 import { Outlet, useLocation } from 'react-router-dom';
 import GoUploadBtn from '../components/atomic/draft/GoUploadBtn';
 import { getCookie } from '../config/cookie';
+import { useEffect } from 'react';
 
 const ShowDraftList = () => {
   const [page, setPage] = useState(1);
   const [pages, setPages] = useState([]);
+
+  const location = useLocation();
+  useEffect(() => {
+    setPage(1);
+  }, [location.pathname])
 
   return (
     <>

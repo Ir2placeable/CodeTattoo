@@ -9,6 +9,7 @@ import DropDownItem from '../../atomic/draft_upload/DropDownItem';
 import { useCallback } from 'react';
 import { genre } from '../../../data';
 import { useRef } from 'react';
+import { useEffect } from 'react';
 
 const DropDown = memo(({ input, setInput }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -36,6 +37,12 @@ const DropDown = memo(({ input, setInput }) => {
       selfRef.current.blur()
     }
   }
+
+  useEffect(() => {
+    if(input){
+      setIsChoice(true);
+    }
+  }, [])
 
   return (
     <DropDownMenu>

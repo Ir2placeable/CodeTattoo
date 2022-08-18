@@ -19,8 +19,7 @@ const Pagination = ({ page, setPage, pages, setPages }) => {
   });
 
   useEffect(() => {
-    //console.log(filter)
-    //sendRequest();
+    // console.log(location.pathname)
     const lastPage = Math.ceil(count / 12);
     const temp = [];
 

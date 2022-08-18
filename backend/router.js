@@ -12,17 +12,18 @@ const server = express()
 const PORT = 3001
 
 const bodyParser = require('body-parser');
-server.use(bodyParser.json({ limit : "10mb"}));
+server.use(bodyParser.json({ limit : "10mb" }));
 server.use(bodyParser.urlencoded({ limit : "10mb", extended : true }))
 
 const cors = require('cors');
 server.use(cors());
 
-server.use('/', (req, res) => {
+server.use('/', (req, res, next) => {
     console.log('\n')
-    console.log('params : ', req.params)
+    console.log('url : ', req.url)
     console.log('query : ', req.query)
     console.log('body : ', req.body)
+    next()
 })
 
 // 페이지 : 엔트리
@@ -337,6 +338,7 @@ server.get('/user/my-page/:id', (req, res) => {
             res.send({ success : false, code : err })
         })
 })
+
 // 명령 : 유저 정보수정
 server.patch('/user/my-page/:id', (req, res) => {
     console.log('command : User Info Edit')
@@ -458,6 +460,19 @@ server.post('/remove/draft/:id', (req, res) => {
             res.send({ success : false, code : err })
         })
 })
+// 명령 : 도안 수정
+server.patch('/draft/:id', (req, res) => {
+    console.log('command : edit draft detail')
+
+    command.editDraft(req.params, req.body)
+        .then((returned) => {
+            res.send({ success : true })
+        })
+        .catch((err) => {
+            res.send({ success : false, code : err })
+            console.log(err)
+        })
+})
 // 명령 : 예약 생성
 server.post('/create/reservation/:id', (req, res) => {
     console.log('command : Create reservation')
@@ -470,6 +485,22 @@ server.post('/create/reservation/:id', (req, res) => {
             res.send({ success : false, code : err })
         })
 })
+// 명령 : 유저 비밀번호 변경
+// 명령 : 타투이스트 비밀번호 변경
+
+// 명령 : 블록체인에 데이터 기록
+server.post('/blockchain/invoke', (req, res) => {
+    command.invokeBlockchain(req.body)
+})
+// 명령 : 블록체인에 데이터 반환
+server.post('/blockchain/query', (req, res) => {
+    command.queryBlockchain(req.body)
+})
+// 명령 : 블록체인에 히스토리 반환
+server.post('/blockchain/history', (req, res) => {
+    command.historyBlockchain(req.body)
+})
+
 
 
 // admin

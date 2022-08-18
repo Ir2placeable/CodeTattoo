@@ -4,8 +4,10 @@ const {Reservation} = require("../DBModel/Reservation")
 const imageStorage = require("../module/imageStorage");
 const {Draft} = require("../DBModel/Draft");
 const {Tattooist} = require("../DBModel/Tattooist");
+const blockchain = require("../module/blockchain")
 
 exports.userLogin = async function(body) {
+    console.log('test')
     // 입력한 email 데이터 존재 여부 확인
     const user = await User.findOne({ email : body.email })
     if(!user) {
@@ -226,6 +228,18 @@ exports.removeDraft = async function(params, body) {
     await Tattooist.updateOne({ _id : params.id }, {$pull : { drafts : body.draft_id }})
     await Draft.deleteOne({ _id : body.draft_id })
 }
+exports.editDraft = async function(params, body) {
+    await Draft.updateOne({ _id : params.id }, { title : body.title, genre : body.genre, keywords : body.keywords }, (err, draft) => {
+        if(!draft) {
+            console.log(ErrorTable["10"])
+            throw 10
+        }
+        if(err) {
+            console.log(ErrorTable["9"])
+            throw 9
+        }
+    })
+}
 
 exports.scrapDraft = async function(params, body) {
     await Draft.updateOne({ _id : body.draft_id }, {$inc : { like : 1 }})
@@ -265,4 +279,19 @@ exports.createReservation = async function(params, body) {
     // 추후 date field 입력 필요함
 
     await new_reservation.save()
+}
+
+exports.invokeBlockchain = async function(body) {
+    console.log(body)
+    await blockchain.test(body.key)
+}
+
+exports.queryBlockchain = async function(body) {
+    const result = await blockchain.query(body.key)
+    console.log(result)
+}
+
+exports.historyBlockchain = async function(body) {
+    const result = await blockchain.history(body.key)
+    console.log(result)
 }

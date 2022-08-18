@@ -13,7 +13,8 @@ const DetailDraft = ({ draft }) => {
 
   const navigate = useNavigate();
   const goDetail = () => {
-    navigate(`/draft/${draft.draft_id}`);
+
+    navigate(`/draft/${draft.draft_id}/detail`)
   };
 
   const onMouseEnter = useCallback(() => {
@@ -23,12 +24,16 @@ const DetailDraft = ({ draft }) => {
   const onMouseLeave = useCallback(() => {
     setHover(false);
   }, []);
+  
+  };
+
 
   return (
     <>
       <DetailDraftImgBox
         onMouseEnter={onMouseEnter}
         onMouseLeave={onMouseLeave}
+        onClick={goDetail}
       >
         <DetailDraftImg src={draft.image} onClick={goDetail} />
         {hover && (

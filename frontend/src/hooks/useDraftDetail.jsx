@@ -51,7 +51,7 @@ const useDraftDetail = () => {
     const res = await axios.get(`${APIURL}/draft/${draft_id}${query}`);
     if (res.data.success) {
       setDraft(res.data.draft);
-      console.log(res.data.draft);
+      // console.log(res.data.draft);
     } else {
       console.log("Draft Detail Get Request Fail");
     }
