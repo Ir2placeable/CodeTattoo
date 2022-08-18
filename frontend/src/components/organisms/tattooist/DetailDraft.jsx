@@ -1,4 +1,5 @@
 import React from "react";
+import { useCallback } from "react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
@@ -12,19 +13,34 @@ const DetailDraft = ({ draft }) => {
 
   const navigate = useNavigate();
   const goDetail = () => {
+
     navigate(`/draft/${draft.draft_id}/detail`)
-    console.log(draft)
   };
+
+  const onMouseEnter = useCallback(() => {
+    setHover(true);
+  }, []);
+
+  const onMouseLeave = useCallback(() => {
+    setHover(false);
+  }, []);
+  
+  };
+
 
   return (
     <>
       <DetailDraftImgBox
-        onMouseEnter={() => setHover(true)}
-        onMouseLeave={() => setHover(false)}
+        onMouseEnter={onMouseEnter}
+        onMouseLeave={onMouseLeave}
         onClick={goDetail}
       >
-        <DetailDraftImg src={draft.image} />
-        {hover && <DetailDraftImgHover>{draft.like} likes</DetailDraftImgHover>}
+        <DetailDraftImg src={draft.image} onClick={goDetail} />
+        {hover && (
+          <DetailDraftImgHover>
+            <div>{draft.like} likes</div>
+          </DetailDraftImgHover>
+        )}
       </DetailDraftImgBox>
     </>
   );

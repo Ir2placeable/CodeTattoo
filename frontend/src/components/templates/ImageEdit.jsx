@@ -1,16 +1,19 @@
 import axios from "axios";
 import React, { useState } from "react";
-import { getCookie } from "../../../config/cookie";
-import { APIURL } from "../../../config/key";
+import { getCookie } from "../../config/cookie";
+import { APIURL } from "../../config/key";
 import {
   EditImgBox,
-  ProfileImg,
   ProfileImgBox,
+  ProfileImg,
   ProfileNickname,
-} from "../../../styledComponents";
-import ProfileImgChoice from "../../atomic/edit/ProfileImgChoice";
+  ProfileFormBox,
+} from "../../styledComponents";
 
-const EditImg = () => {
+import ProfileImgChoice from "../atomic/edit/ProfileImgChoice";
+import ProfileUploadBtn from "../atomic/edit/ProfileUploadBtn";
+
+const ImageEdit = () => {
   const [src, setSrc] = useState(null);
   const [image, setImage] = useState({
     data: "",
@@ -64,17 +67,24 @@ const EditImg = () => {
     }
   };
 
+  const onSubmit = () => {
+    sendRequest();
+  };
+
   return (
     <>
-      <EditImgBox>
-        <ProfileImgBox size="edit">
-          <ProfileImg size="edit" src={src} onLoad={onLoad} />
-        </ProfileImgBox>
-        <ProfileNickname>Mingxoo</ProfileNickname>
-        <ProfileImgChoice onSelectFile={onSelectFile} />
-      </EditImgBox>
+      <ProfileFormBox>
+        <EditImgBox>
+          <ProfileImgChoice onSelectFile={onSelectFile} />
+          <ProfileImgBox size="edit">
+            <ProfileImg size="edit" src={src} onLoad={onLoad} />
+          </ProfileImgBox>
+          <ProfileNickname>Mingxoo</ProfileNickname>
+          <ProfileUploadBtn onSubmit={onSubmit} type="image" />
+        </EditImgBox>
+      </ProfileFormBox>
     </>
   );
 };
 
-export default EditImg;
+export default ImageEdit;

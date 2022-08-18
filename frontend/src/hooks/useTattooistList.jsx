@@ -38,27 +38,25 @@ import { getCookie } from "../config/cookie";
 //     - err 10 : user_id 전달 오류
 //     - err 12 : filter 입력 오류
 
-const useTattooistList = (path, page) => {
-  console.log("Use Tattooist List");
-
+const useTattooistList = ({ filter, page }) => {
+  const [tattooists, setTattooists] = useState([]);
   const param = useParams();
   const nickname = param.nickname;
-  const [tattooists, setTattooists] = useState([]);
 
   const sendRequest = async () => {
-    // Guest / User / Tattooist
-    let url = `${APIURL}${path}/${page}`;
-    if (getCookie("user_id")) url += `/?user_id=${getCookie("user_id")}`;
-    else if (getCookie("tattooist_id"))
-      url += `/?tattooist_id=${getCookie("tattooist_id")}`;
-
-    // filter
-    let res = {};
-    if (path === "/tattooists/search") {
-      res = await axios.get(`${url}&nickname=${nickname}`);
+    let query = "";
+    if (getCookie("user_id")) {
+      query = `?user_id=${getCookie("user_id")}`;
+      if (nickname) {
+        query += `&nickname=${nickname}`;
+      }
     } else {
-      res = await axios.get(`${url}`);
+      if (nickname) {
+        query += `?nickname=${nickname}`;
+      }
     }
+    console.log(`${APIURL}/${filter}/${page}${query}`);
+    const res = await axios.get(`${APIURL}/${filter}/${page}${query}`);
 
     if (res.data.success) {
       setTattooists(res.data.tattooists);
@@ -70,7 +68,7 @@ const useTattooistList = (path, page) => {
 
   useEffect(() => {
     sendRequest();
-  }, [page]);
+  }, [filter, page, nickname]);
 
   return tattooists;
 };

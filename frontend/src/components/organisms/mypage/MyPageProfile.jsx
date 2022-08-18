@@ -9,7 +9,8 @@ import {
   MyPageProfileInfoList,
   MyPageProfileInfo,
   MyPageProfileDescription,
-  ProfileEdit, ProfileImgIcon
+  ProfileEdit,
+  ProfileImgIcon,
 } from "../../../styledComponents";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPenToSquare } from "@fortawesome/free-regular-svg-icons";
@@ -21,7 +22,7 @@ const MyPageProfile = ({ profile }) => {
   // ProfileEdit Event 추가
   const navigate = useNavigate();
   const goEdit = () => {
-    navigate("/edit");
+    navigate("/edit/profile");
   };
 
   return (
@@ -32,11 +33,9 @@ const MyPageProfile = ({ profile }) => {
             <ProfileImg size="profile" src={profile.image} />
           ) : (
             <ProfileImgIcon size="profile">
-              <FontAwesomeIcon 
-                style={{fontSize: '100px'}} icon={faUser} />
+              <FontAwesomeIcon style={{ fontSize: "100px" }} icon={faUser} />
             </ProfileImgIcon>
           )}
-          
         </ProfileImgBox>
         <MyPageProfileInfoBox>
           <MyPageProfileNickname>{profile.nickname}</MyPageProfileNickname>
@@ -58,9 +57,12 @@ const MyPageProfile = ({ profile }) => {
             </MyPageProfileDescription>
           ) : null}
         </MyPageProfileInfoBox>
-        <ProfileEdit onClick={goEdit}>
-          <FontAwesomeIcon icon={faPenToSquare} size="2x" />
-        </ProfileEdit>
+        {getCookie("tattooist_id") === profile.tattooist_id ||
+        getCookie("user_id") === profile.user_id ? (
+          <ProfileEdit onClick={goEdit}>
+            <FontAwesomeIcon icon={faPenToSquare} size="2x" />
+          </ProfileEdit>
+        ) : null}
       </MyPageProfileBox>
     </>
   );

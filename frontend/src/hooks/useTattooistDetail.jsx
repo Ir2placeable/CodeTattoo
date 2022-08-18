@@ -5,7 +5,6 @@ import { useLocation } from "react-router-dom";
 import { getCookie } from "../config/cookie";
 import { APIURL } from "../config/key";
 
-
 // ### 게스트 페이지 : 타투이스트 세부
 
 // - GET : /tattooist/:filter/:id
@@ -34,6 +33,7 @@ import { APIURL } from "../config/key";
 //     - err 8 : 해당 타투이스트 없음
 //     - err 10 : user_id 전달 오류
 // - [기능정리링크](https://www.notion.so/a78a53207d0740eba3637a8316c1b0a0)
+
 const useTattooistDetail = (path) => {
   const [tattooist, setTattooist] = useState({});
   const [data, setData] = useState();

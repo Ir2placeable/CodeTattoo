@@ -2,19 +2,22 @@ import React from "react";
 import {
   ProfileImgInput,
   ProfileImgInputLabel,
+  ProfileImgInputBox,
 } from "../../../styledComponents";
 
 const ProfileImgChoice = ({ onSelectFile }) => {
   return (
     <>
-      <ProfileImgInputLabel htmlFor="input-profile-img">
-        이미지 업로드
-      </ProfileImgInputLabel>
-      <ProfileImgInput
-        type="file"
-        id="input-profile-img"
-        onChange={onSelectFile}
-      />
+      <ProfileImgInputBox>
+        <ProfileImgInputLabel htmlFor="input-profile-img">
+          이미지 업로드
+        </ProfileImgInputLabel>
+        <ProfileImgInput
+          type="file"
+          id="input-profile-img"
+          onChange={onSelectFile}
+        />
+      </ProfileImgInputBox>
     </>
   );
 };

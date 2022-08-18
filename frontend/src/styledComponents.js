@@ -38,8 +38,8 @@ export const ContentsDiv = styled.div`
 `;
 
 export const MyPageDiv = styled.div`
-padding: 50px 0;
-`
+  padding: 50px 0;
+`;
 // position: relative;
 
 export const ListDiv = styled.div`
@@ -386,10 +386,33 @@ export const TattooistContainer = styled.div`
   min-width: 1000px;
   min-height: 260px;
   border-radius: 8px;
+  background-color: #e4e8f0;
   justify-content: space-between;
   align-items: center;
   padding: 0 20px;
   margin: 20px 0;
+`;
+
+export const TattooistImgBox = styled.div`
+  z-index: 1;
+  box-sizing: border-box;
+  width: 210px;
+  height: 210px;
+`;
+
+export const TattooistImgHover = styled.div`
+  background-color: rgba(0, 0, 0, 0.4);
+  color: white;
+  text-align: center;
+  border-radius: 70%;
+  z-index: 10;
+  width: 210px;
+  height: 210px;
+  line-height: 210px;
+  overflow: hidden;
+  position: relative;
+  top: -213px;
+  cursor: pointer;
 `;
 
 export const TattooistInfoBox = styled.div`
@@ -397,6 +420,7 @@ export const TattooistInfoBox = styled.div`
   height: 210px;
   box-shadow: 5px 5px 10px 0 rgba(72, 72, 72, 0.3);
   border-radius: 8px;
+  background-color: white;
   position: relative;
   left: -110px;
   display: flex;
@@ -406,7 +430,8 @@ export const TattooistInfoBox = styled.div`
 `;
 
 export const TattooistInfo = styled.div`
-  font-size: 18px;
+  font-size: 24px;
+  font-weight: 700;
   padding: 10px 0;
 `;
 
@@ -414,6 +439,13 @@ export const TattooistControl = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
+  position: relative;
+  left: -40px;
+`;
+
+export const TattooistControlDisabled = styled.div`
+  width: 150px;
+  height: 180px;
 `;
 
 export const TattooistButton = styled.div`
@@ -422,12 +454,14 @@ export const TattooistButton = styled.div`
   align-items: center;
   font-size: 20px;
   position: relative;
-  background-color: rgba(72, 72, 72, 0.3);
+  background-color: #484848;
+  color: white;
   border-radius: 24px;
-  color: rgba(72, 72, 72);
+  border: 3px solid #484848;
   font-weight: bold;
   cursor: pointer;
   margin: 15px 0;
+  transition: 0.5s;
 
   ${(props) =>
     props.size === "medium" &&
@@ -444,6 +478,11 @@ export const TattooistButton = styled.div`
       height: 45px;
       font-size: 14px;
     `}
+    
+    &:hover {
+    color: black;
+    background-color: white;
+  }
 `;
 
 // *** Show Tattooist Detail ***
@@ -474,6 +513,7 @@ export const DetailDraftImgHover = styled.div`
   color: white;
   font-weight: bold;
   font-size: 18px;
+  box-sizing: border-box;
   width: 300px;
   height: 300px;
   cursor: pointer;
@@ -482,7 +522,39 @@ export const DetailDraftImgHover = styled.div`
   justify-content: center;
   align-items: center;
   position: relative;
-  top: -300px;
+  top: -303px;
+`;
+
+export const DetailArtworkImgBox = styled.div`
+  box-sizing: border-box;
+  width: 300px;
+  height: 300px;
+  margin: 15px;
+`;
+
+export const DetailArtworkImg = styled.img`
+  width: 300px;
+  height: 300px;
+  cursor: pointer;
+  object-fit: contain;
+`;
+
+export const DetailArtworkImgHover = styled.div`
+  background-color: rgba(0, 0, 0, 0.4);
+  color: white;
+  font-weight: bold;
+  font-size: 18px;
+  box-sizing: border-box;
+  width: 300px;
+  height: 300px;
+  cursor: pointer;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  top: -303px;
 `;
 
 // *** Show Draft Detail ***
@@ -532,7 +604,7 @@ export const SmallDraftImg = styled.img`
 `;
 
 export const SmallDraftInfoBox = styled.div`
-// background-color: orange;
+  // background-color: orange;
   //display: flex;
   width: 400px;
   line-height: 35px;
@@ -567,7 +639,7 @@ export const SmallTattooistProfileBox = styled.div`
   width: 80%;
   // background-color: orange;
   padding: 20px 10px;
-  border-bottom: 1px solid rgba(72, 72, 72, .5);
+  border-bottom: 1px solid rgba(72, 72, 72, 0.5);
 `;
 
 export const SmallTattooistInfoBox = styled.div`
@@ -594,7 +666,7 @@ export const SmallTattooistLocation = styled.div`
 `;
 
 export const TattooistGenreBox = styled.div`
-// background-color: orange;
+  // background-color: orange;
   // display: flex;
   // align-items: center;
   // width: 500px;
@@ -626,15 +698,15 @@ export const TattooistKeyword = styled.div`
 `;
 
 export const TattooistGenreLabel = styled.span`
-display: inline-block;
-background-color: gray;
-color: white;
-border-radius: 5px;
-line-height: 40px;
-width: 100px;
-text-align: center;
-margin-right: 20px;
-`
+  display: inline-block;
+  background-color: gray;
+  color: white;
+  border-radius: 5px;
+  line-height: 40px;
+  width: 100px;
+  text-align: center;
+  margin-right: 20px;
+`;
 
 // *** My Page ***
 export const MyPageProfileBox = styled.div`
@@ -665,21 +737,20 @@ export const ProfileImgBox = styled.div`
     ${(props) =>
     props.size === "edit" &&
     css`
-      width: 100px;
-      height: 100px;
-      line-height: 100px;
+      width: 300px;
+      height: 300px;
+      line-height: 300px;
     `}
 `;
 
 export const ProfileImgIcon = styled.div`
-background-color: black;
+  background-color: black;
   display: flex;
   justify-content: center;
   align-items: center;
   color: #fff;
   border-radius: 70%;
   z-index: 1;
-  cursor: pointer;
   ${(props) =>
     props.size === "profile" &&
     css`
@@ -687,6 +758,7 @@ background-color: black;
       height: 210px;
       line-height: 210px;
       overflow: hidden;
+      cursor: pointer;
     `}
 
   ${(props) =>
@@ -696,61 +768,64 @@ background-color: black;
       height: 150px;
       line-height: 150px;
       box-shadow: 5px 5px 10px 0 rgba(72, 72, 72, 0.3);
+      cursor: pointer;
     `}
 
     ${(props) =>
     props.size === "edit" &&
     css`
-      width: 100px;
-      height: 100px;
-      line-height: 100px;
-      overflow: hidden;
-      background-color: #777;
-    `}
-`
-
-export const ProfileImg = styled.img`
-background-color: black;
-
-  color: #000;
-  text-align: center;
-  border-radius: 70%;
-  object-fit: contain;
-  z-index: 1;
-  cursor: pointer;
-  ${(props) =>
-    props.size === "profile" &&
-    css`
-      width: 210px;
-      height: 210px;
-      line-height: 210px;
-      overflow: hidden;
-    `}
-
-  ${(props) =>
-    props.size === "tattooist" &&
-    css`
-      width: 150px;
-      height: 150px;
-      line-height: 150px;
-      box-shadow: 5px 5px 10px 0 rgba(72, 72, 72, 0.3);
-    `}
-
-    ${(props) =>
-    props.size === "edit" &&
-    css`
-      width: 100px;
-      height: 100px;
-      line-height: 100px;
+      width: 300px;
+      height: 300px;
+      line-height: 300px;
       overflow: hidden;
       background-color: #777;
     `}
 `;
 
+export const ProfileImg = styled.img`
+  background-color: black;
+  color: #000;
+  text-align: center;
+  border-radius: 70%;
+  object-fit: contain;
+  z-index: 1;
+  background-color: #aaa;
+
+  ${(props) =>
+    props.size === "profile" &&
+    css`
+      width: 210px;
+      height: 210px;
+      line-height: 210px;
+      overflow: hidden;
+      cursor: pointer;
+    `}
+
+  ${(props) =>
+    props.size === "tattooist" &&
+    css`
+      width: 150px;
+      height: 150px;
+      line-height: 150px;
+      box-shadow: 5px 5px 10px 0 rgba(72, 72, 72, 0.3);
+      cursor: pointer;
+    `}
+
+    ${(props) =>
+    props.size === "edit" &&
+    css`
+      width: 300px;
+      height: 300px;
+      line-height: 300px;
+      overflow: hidden;
+      box-shadow: 5px 5px 10px 0 rgba(72, 72, 72, 0.3);
+    `}
+`;
+
 export const ProfileNickname = styled.div`
   font-size: 36px;
-  font-weight: 700px;
-  margin: 0 30px;
+  font-weight: 700;
+  margin: 30px 0;
 `;
 
 export const ProfileImgEdit = styled.div`
@@ -869,23 +944,42 @@ export const SideNavigationBtn = styled.div`
 export const ProfileEditorBox = styled.div`
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  align-items: center;
   width: 1000px;
   margin: 50px 0;
 `;
 
 export const EditImgBox = styled.div`
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin-bottom: 50px;
+  margin-bottom: 100px;
+`;
+
+export const ProfileImgInputBox = styled.div`
+  position: relative;
+  left: 350px;
+  top: 25px;
 `;
 
 export const ProfileImgInputLabel = styled.label`
   border-radius: 6px;
   background-color: #2374e1;
   color: white;
-  padding: 12px 10px;
+  padding: 10px 10px;
   margin-right: 20px;
+  cursor: pointer;
+`;
+
+export const ProfileFormBox = styled.div`
+  min-width: 900px;
+  background-color: #d8d8d8;
+  padding: 75px 0;
+  margin: 0 50px;
+  border-radius: 16px;
+  box-shadow: 5px 5px 10px 0 rgba(72, 72, 72, 0.3);
 `;
 
 export const ProfileImgInput = styled.input`
@@ -901,16 +995,55 @@ export const ProfileInfoInputBox = styled.div`
 
 export const ProfileInfoInputLabel = styled.label`
   flex-basis: 100px;
-  margin-left: 100px;
+  margin-left: 125px;
   font-size: 32px;
   font-weight: 900;
 `;
 
 export const ProfileInfoInput = styled.input`
-  flex-basis: 500px;
+  flex-basis: 425px;
   line-height: 40px;
   font-size: 18px;
-  margin-right: 150px;
+  margin-right: 125px;
+  border: 0;
+  border-bottom: 2px solid #888;
+  background-color: #d8d8d8;
+  &:focus {
+    outline: none;
+    border-bottom-color: #333;
+  }
+`;
+
+export const ProfileUploadButton = styled.div`
+  color: white;
+  background-color: black;
+  font-weight: bold;
+  font-size: 20px;
+  width: 200px;
+  line-height: 40px;
+  text-align: center;
+  border-radius: 7px;
+  border: solid 3px black;
+  cursor: pointer;
+  position: relative;
+  transition: 0.5s;
+  ${(props) =>
+    props.type === "profile" &&
+    css`
+      left: 350px;
+    `}
+
+  ${(props) =>
+    props.type === "image" &&
+    css`
+      top: 75px;
+      width: 500px;
+    `}
+
+  &:hover {
+    color: black;
+    background-color: white;
+  }
 `;
 
 // *** Show Draft List ***
@@ -1617,7 +1750,6 @@ export const userIconStyle = {
   marginTop: "15px",
 };
 
-
 // Calenar
 export const CalendarDiv = styled.div`
 // background-color: orange;
@@ -1625,20 +1757,21 @@ margin: 60px auto;
 display: flex;
 align-items: center;
 `
+
 export const ReservationDiv = styled.div`
-// background-color: whitesmoke;
-margin-left: 80px;
-`
+  // background-color: whitesmoke;
+  margin-left: 80px;
+`;
 
 export const DateDiv = styled.div`
-// line-height: 32px;
-text-align: center;
-`
+  // line-height: 32px;
+  text-align: center;
+`;
 
 export const TimeDiv = styled.div`
-// background-color: aqua;
-width: 300px;
-`
+  // background-color: aqua;
+  width: 300px;
+`;
 export const TimeText = styled.div`
 font-size: 18px;
 font-weight: bold;
@@ -1687,72 +1820,72 @@ transition: .45s;
 }
 `
 
-
 // reservation
 export const ReservDiv = styled.div`
-// background-color: white;
-width: 70%;
-margin: 0 auto 50px;
-display: flex;
-justify-content: space-between;
-`
+  // background-color: white;
+  width: 70%;
+  margin: 0 auto 50px;
+  display: flex;
+  justify-content: space-between;
+`;
 export const ReservInfoDiv = styled.div`
-// background-color: #A6C3D3;
-background-color: #D8D8D8;
-border-radius: 20px;
-padding: 30px 50px;
-display: flex;
-// width: 70%;
-width: 100%;
-`
+  // background-color: #A6C3D3;
+  background-color: #d8d8d8;
+  border-radius: 20px;
+  padding: 30px 50px;
+  display: flex;
+  // width: 70%;
+  width: 100%;
+`;
 
 export const ReservDraftImg = styled.img`
-display: inline-block;
-width: 200px;
-height: 200px;
-background-color: white;
-object-fit: contain;
-border-radius: 5px;
-`
+  display: inline-block;
+  width: 200px;
+  height: 200px;
+  background-color: white;
+  object-fit: contain;
+  border-radius: 5px;
+`;
 
 export const ReservTextDiv = styled.div`
-// background-color: orange;
-width: calc(100% - 400px);
-padding: 0 20px;
-display: flex;
-flex-direction: column;
-justify-content: center;
-`
+  // background-color: orange;
+  width: calc(100% - 400px);
+  padding: 0 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+`;
 
 export const ReservText = styled.p`
-font-size: 18px;
-font-weight: bold;
-// background-color: aqua;
-line-height: 40px;
-margin: 5px 0;
-`
+  font-size: 18px;
+  font-weight: bold;
+  // background-color: aqua;
+  line-height: 40px;
+  margin: 5px 0;
+`;
 
 export const ReservLabel = styled.span`
-display: inline-block;
-width: 110px;
-`
+  display: inline-block;
+  width: 110px;
+`;
 export const ReservTextBox = styled.span`
-width: 300px;
-padding: 0 10px;
-display: inline-block;
-background-color: #eee;
-border-radius: 5px;
-`
+  width: 300px;
+  padding: 0 10px;
+  display: inline-block;
+  background-color: #eee;
+  border-radius: 5px;
+`;
 
 export const ReservBtnDiv = styled.div`
-// width: 20%;
-// background-color: aqua;
-display: flex;
-flex-direction: column;
-justify-content: space-evenly;
-`
+  // width: 20%;
+  // background-color: aqua;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+`;
 
 export const ReservBtn = styled.div`
+
 // background-color: #A6C3D3;
 background-color: black;
 width: 200px;
@@ -2145,3 +2278,4 @@ ${(props) => {
   }
 }}
 `
+

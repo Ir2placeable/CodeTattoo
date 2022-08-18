@@ -4,14 +4,8 @@ import { getCookie } from "../config/cookie";
 import { APIURL } from "../config/key";
 
 const useUserMyPage = () => {
-  console.log("Use MyUserMyPage");
   const [tattoos, setTattoos] = useState([]);
   const [infos, setInfos] = useState([]);
-
-  const data = {
-    tattoos: tattoos,
-    infos: infos,
-  };
 
   const sendRequest = async () => {
     const res = await axios.get(
@@ -30,7 +24,7 @@ const useUserMyPage = () => {
     sendRequest();
   }, []);
 
-  return data;
+  return [tattoos, infos];
 };
 
 export default useUserMyPage;

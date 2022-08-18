@@ -1,15 +1,15 @@
 import React from "react";
-import { ProfileEditorBox } from "../../styledComponents";
-import EditImg from "../organisms/edit/EditImg";
+import { EditImgBox, ProfileFormBox } from "../../styledComponents";
 import EditUserProfile from "../organisms/edit/EditUserProfile";
+import EditTattooistProfile from "../organisms/edit/EditTattooistProfile";
+import { getCookie } from "../../config/cookie";
 
 const ProfileEdit = () => {
   return (
     <>
-      <ProfileEditorBox>
-        <EditImg />
-        <EditUserProfile />
-      </ProfileEditorBox>
+      <ProfileFormBox>
+        {getCookie("user_id") ? <EditUserProfile /> : <EditTattooistProfile />}
+      </ProfileFormBox>
     </>
   );
 };

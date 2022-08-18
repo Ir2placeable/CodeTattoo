@@ -7,8 +7,7 @@ import {
   ProfileImgIcon,
 } from "../../../styledComponents";
 import TattooistBtn from "../../atomic/tattooist/TattooistBtn";
-import { APIURL } from "../../../config/key";
-import axios from "axios";
+import React, { useState, useEffect, useCallback } from "react";
 import { getCookie } from "../../../config/cookie";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
@@ -21,47 +20,24 @@ const SmallTattooist = ({ tattooist }) => {
   const tattooist_id = tattooist.drawer_id;
   const [follow, unfollow] = useFollowClick({ tattooist_id });
   const [following, setFollowing] = useState(false);
-  // console.log("Small Tattooist", tattooist);
-
-  const Following = async () => {
-    const res = await axios.post(`${APIURL}/follow`, {
-      user_id: getCookie("user_id"),
-      tattooist_id: tattooist.drawer_id,
-    });
-
-    if (res.data.success) {
-      console.log("following success");
-    }
-  };
 
   useEffect(() => {
-    // console.log('small tattooist: ', tattooist)
-    if(tattooist.isFollowed){
-      setFollowing(true);
-    }
-  }, [tattooist]);
-
-  const UnFollowing = async () => {
-    const res = await axios.delete(
-      `${APIURL}/follow/?user_id=${getCookie("user_id")}&tattooist_id=${
-        tattooist.drawer_id
-      }`
-    );
-
-    if (res.data.success) {
-      console.log("unfollowing success");
-    }
-  };
+    if (tattooist.isFollowed) setFollowing(true);
+  }, []);
 
   const onClick = useCallback(() => {
-    if(following){
-      setFollowing(false);
-      unfollow();
+    if (!getCookie("user_id")) {
+      alert("팔로우 기능은 유저 로그인 상태에서 가능합니다.");
     } else {
-      setFollowing(true);
-      follow();
+      if (following) {
+        setFollowing(false);
+        unfollow();
+      } else {
+        setFollowing(true);
+        follow();
+      }
     }
-  }, [])
+  }, [following]);
 
   const navigate = useNavigate();
   const goTattooist = () => {
@@ -73,26 +49,23 @@ const SmallTattooist = ({ tattooist }) => {
       <SmallTattooistProfileBox>
         <div onClick={goTattooist}>
         {tattooist.drawer_image ? (
-          <ProfileImg 
+          <ProfileImg
             size="tattooist"
             src={tattooist.drawer_image}
             alt={tattooist.drawer_id}
           />
         ) : (
           <ProfileImgIcon size="tattooist">
-            <FontAwesomeIcon 
-              style={{fontSize: '80px'}} icon={faUser} />
+            <FontAwesomeIcon style={{ fontSize: "80px" }} icon={faUser} />
           </ProfileImgIcon>
         )}
         </div>
-        
         <SmallTattooistInfoBox>
           <SmallTattooistNickname>
             {tattooist.drawer_nickname}
             <TattooistBtn
-              content={tattooist.isFollowed ? "UnFollow" : "Follow"}
+              content={following ? "UnFollow" : "Follow"}
               event={onClick}
-              // event={tattooist.isFollowed ? UnFollowing : Following}
               size={"small"}
             />
           </SmallTattooistNickname>
