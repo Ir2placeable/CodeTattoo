@@ -36,7 +36,7 @@ import ShowProfileEdit from "./pages/ShowProfileEdit";
 import ProfileEdit from "./components/templates/ProfileEdit";
 import ShowReservation from "./pages/ShowReservation";
 import TattooistSearch from "./components/templates/TattooistSearch";
-
+import ImageEdit from "./components/templates/ImageEdit";
 
 const App = () => {
   const sendRequest = async () => {
@@ -102,7 +102,7 @@ const App = () => {
 
             {/* 프로필 편집 */}
             <Route path="edit" element={<ShowProfileEdit/>}>
-              <Route path="image" element/>
+              <Route path="image" element={<ImageEdit/>}/>
               <Route path="profile" element={<ProfileEdit/>}/>
               <Route path="password" />
             </Route>

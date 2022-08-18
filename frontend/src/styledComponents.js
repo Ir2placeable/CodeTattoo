@@ -703,9 +703,9 @@ export const ProfileImgBox = styled.div`
     ${(props) =>
     props.size === "edit" &&
     css`
-      width: 100px;
-      height: 100px;
-      line-height: 100px;
+      width: 300px;
+      height: 300px;
+      line-height: 300px;
     `}
 `;
 
@@ -717,7 +717,6 @@ export const ProfileImgIcon = styled.div`
   color: #fff;
   border-radius: 70%;
   z-index: 1;
-  cursor: pointer;
   ${(props) =>
     props.size === "profile" &&
     css`
@@ -725,6 +724,7 @@ export const ProfileImgIcon = styled.div`
       height: 210px;
       line-height: 210px;
       overflow: hidden;
+      cursor: pointer;
     `}
 
   ${(props) =>
@@ -734,14 +734,15 @@ export const ProfileImgIcon = styled.div`
       height: 150px;
       line-height: 150px;
       box-shadow: 5px 5px 10px 0 rgba(72, 72, 72, 0.3);
+      cursor: pointer;
     `}
 
     ${(props) =>
     props.size === "edit" &&
     css`
-      width: 100px;
-      height: 100px;
-      line-height: 100px;
+      width: 300px;
+      height: 300px;
+      line-height: 300px;
       overflow: hidden;
       background-color: #777;
     `}
@@ -749,13 +750,11 @@ export const ProfileImgIcon = styled.div`
 
 export const ProfileImg = styled.img`
   background-color: black;
-
   color: #000;
   text-align: center;
   border-radius: 70%;
   object-fit: contain;
   z-index: 1;
-  cursor: pointer;
   background-color: #aaa;
 
   ${(props) =>
@@ -765,6 +764,7 @@ export const ProfileImg = styled.img`
       height: 210px;
       line-height: 210px;
       overflow: hidden;
+      cursor: pointer;
     `}
 
   ${(props) =>
@@ -774,22 +774,24 @@ export const ProfileImg = styled.img`
       height: 150px;
       line-height: 150px;
       box-shadow: 5px 5px 10px 0 rgba(72, 72, 72, 0.3);
+      cursor: pointer;
     `}
 
     ${(props) =>
     props.size === "edit" &&
     css`
-      width: 100px;
-      height: 100px;
-      line-height: 100px;
+      width: 300px;
+      height: 300px;
+      line-height: 300px;
       overflow: hidden;
+      box-shadow: 5px 5px 10px 0 rgba(72, 72, 72, 0.3);
     `}
 `;
 
 export const ProfileNickname = styled.div`
   font-size: 36px;
-  font-weight: 700px;
-  margin: 0 30px;
+  font-weight: 700;
+  margin: 30px 0;
 `;
 
 export const ProfileImgEdit = styled.div`
@@ -916,9 +918,16 @@ export const ProfileEditorBox = styled.div`
 
 export const EditImgBox = styled.div`
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   margin-bottom: 100px;
+`;
+
+export const ProfileImgInputBox = styled.div`
+  position: relative;
+  left: 350px;
+  top: 25px;
 `;
 
 export const ProfileImgInputLabel = styled.label`
@@ -936,6 +945,7 @@ export const ProfileFormBox = styled.div`
   padding: 75px 0;
   margin: 0 50px;
   border-radius: 16px;
+  box-shadow: 5px 5px 10px 0 rgba(72, 72, 72, 0.3);
 `;
 
 export const ProfileImgInput = styled.input`
@@ -982,8 +992,19 @@ export const ProfileUploadButton = styled.div`
   border: solid 3px black;
   cursor: pointer;
   position: relative;
-  left: 350px;
   transition: 0.5s;
+  ${(props) =>
+    props.type === "profile" &&
+    css`
+      left: 350px;
+    `}
+
+  ${(props) =>
+    props.type === "image" &&
+    css`
+      top: 75px;
+      width: 500px;
+    `}
 
   &:hover {
     color: black;

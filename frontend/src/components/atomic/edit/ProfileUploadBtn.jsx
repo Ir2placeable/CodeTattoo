@@ -1,10 +1,12 @@
 import React from "react";
 import { ProfileUploadButton } from "../../../styledComponents";
 
-const ProfileUploadBtn = ({ onSubmit }) => {
+const ProfileUploadBtn = ({ onSubmit, type }) => {
   return (
     <>
-      <ProfileUploadButton onClick={onSubmit}>등록</ProfileUploadButton>
+      <ProfileUploadButton onClick={onSubmit} type={type}>
+        등록
+      </ProfileUploadButton>
     </>
   );
 };

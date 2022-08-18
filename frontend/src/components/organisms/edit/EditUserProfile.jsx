@@ -80,7 +80,7 @@ const EditUserProfile = () => {
         />
       </ProfileInfoInputBox>
 
-      <ProfileUploadBtn onSubmit={onSubmit} />
+      <ProfileUploadBtn onSubmit={onSubmit} type="profile" />
     </>
   );
 };
