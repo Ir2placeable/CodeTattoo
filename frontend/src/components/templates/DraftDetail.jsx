@@ -4,12 +4,23 @@ import {
   ListDiv,
   SmallDraftBox,
   SmallTattooistBox,
+  DraftEditBtn,
 } from "../../styledComponents";
 import SmallTattooist from "../organisms/tattooist/SmallTattooist";
 import SmallDraft from "../organisms/draft/SmallDraft";
 import Genre from "../organisms/tattooist/Genre";
+import { useOutletContext, useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { useEffect } from "react";
+import { getCookie } from "../../config/cookie";
 
-const DraftDetail = ({ detail }) => {
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faGear } from "@fortawesome/free-solid-svg-icons";
+
+// { detail }
+const DraftDetail = () => {
+  const [isAdmin, setIsAdmin] = useState(false);
+  const { detail } = useOutletContext();
   const draft = {
     draft_id: detail.draft_id, 
     image: detail.image,
@@ -29,17 +40,37 @@ const DraftDetail = ({ detail }) => {
     keywords: detail.keywords,
   };
 
+  useEffect(() => {
+    const id = getCookie('tattooist_id');
+    if(id && id === tattooist.drawer_id){
+      setIsAdmin(true);
+    }
+  }, [detail]);
+
+  const navigate = useNavigate();
+  const goEdit = () => {
+    navigate('../edit')
+  }
+
   return (
     <ListDiv>
       <DraftDetailMainBox>
+
         <SmallDraftBox>
+          {isAdmin && (
+            <DraftEditBtn onClick={goEdit}>
+              <FontAwesomeIcon icon={faGear} />
+            </DraftEditBtn>
+          )}
           <SmallDraft draft={draft} />
         </SmallDraftBox>
+
         <SmallTattooistBox>
           <SmallTattooist tattooist={tattooist} />
           {/* <HorizontalLine /> */}
           <Genre genre={genre} />
         </SmallTattooistBox>
+
       </DraftDetailMainBox>
     </ListDiv>
   );

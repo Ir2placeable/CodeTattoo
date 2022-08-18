@@ -35,6 +35,12 @@ import DraftSearch from "./components/templates/DraftSearch";
 import ShowProfileEdit from "./pages/ShowProfileEdit";
 import ProfileEdit from "./components/templates/ProfileEdit";
 import ShowReservation from "./pages/ShowReservation";
+import DraftDetail from "./components/templates/DraftDetail";
+import DraftEdit from "./components/templates/DraftEdit";
+import { getCookie } from "./config/cookie";
+import ReservationList from "./components/templates/ReservationList";
+import Procedure from "./components/organisms/reservation/Procedure";
+import ChattingList from "./components/organisms/chatting/ChattingList";
 
 
 const App = () => {
@@ -77,7 +83,7 @@ const App = () => {
             <Route path="upload" element={<ShowDraftUpload />}/>
 
             {/* 도안 상세 */}
-            <Route path="draft/:draft_id" element={<ShowDraftDetail />} />
+            {/* <Route path="draft/:draft_id" element={<ShowDraftDetail />} /> */}
 
             {/* 타투이스트 목록 */}
             <Route path="tattooists" element={<ShowTattooistList />}>
@@ -93,6 +99,13 @@ const App = () => {
               />
             </Route>
 
+            {/* 도안 상세 & 수정 페이지 */}
+            <Route path="draft/:draft_id" element={<ShowDraftDetail />}>
+              <Route path="detail" element={<DraftDetail />} />
+              <Route path="edit" element={<DraftEdit />} />
+            </Route>
+            {/* <Route path="draft/:draft_id/edit" element={<ShowDraftUpload />} /> */}
+
             {/* 마이 페이지 */}
             <Route path="my-page" element={<ShowMyPage />}>
               <Route path="user/:user_id" element={<ShowMyTattoo />} />
@@ -102,14 +115,19 @@ const App = () => {
               <Route path="profile" element={<ProfileEdit/>}/>
               <Route path="password" />
             </Route>
+
             {/* 예약 */}
-            <Route path="reservation" element={<ShowReservation />} />
+            <Route path="reservation" element={<ShowReservation />}>
+              <Route path="" element={<ReservationList />} />
+              <Route path=":reservation_id" element={<Procedure />} />
+            </Route>
 
             {/* 스크랩 */}
             <Route path="scraps" element={<ShowScrap />} >
               <Route path="draft" element={<DraftList filter="scraps/draft" />} />
+              <Route path="tattooist" element={<TattooistList />} />
             </Route>
-            <Route path="scraps/tattooist" element={<ShowTattooistList/>}/>
+            {/* <Route path="scraps/tattooist" element={<ShowTattooistList/>}/> */}
 
           </Route>
 
@@ -120,6 +138,10 @@ const App = () => {
 
           {/* 엔트리 페이지 */}
           <Route path="/" element={<ShowEntry />} />
+
+          {/* 채팅 */}
+          <Route path="chat" element={<ChattingList />} />
+          
         </Routes>
       </MainPageDiv>
 

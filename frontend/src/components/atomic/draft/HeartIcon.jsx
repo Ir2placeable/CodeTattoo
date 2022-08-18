@@ -17,12 +17,13 @@ const HeartIcon = ({ isScraped, draft_id }) => {
   const [scrap, unscrap] = useHeartClick({ draft_id });
 
   useEffect(() => {
+    // console.log('hearticon isScraped: ', isScraped)
     if(isScraped){
       setHeartClick(true);
     }
-  }, [])
+  }, [isScraped])
 
-  const onHeartClick = useCallback(() => {
+  const onHeartClick = () => {
     if(!getCookie('user_id')){
       // 로그인 안 한 유저이거나 타투이스트일 때 스크랩 기능 지원 x
       alert('스크랩 기능은 유저 로그인 상태에서 가능합니다.')
@@ -39,7 +40,7 @@ const HeartIcon = ({ isScraped, draft_id }) => {
       setHeartClick(true);
       scrap();
     }
-  }, [heartClick]);
+  }
 
   return (
     <>
