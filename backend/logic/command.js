@@ -4,6 +4,7 @@ const {Reservation} = require("../DBModel/Reservation")
 const imageStorage = require("../module/imageStorage");
 const {Draft} = require("../DBModel/Draft");
 const {Tattooist} = require("../DBModel/Tattooist");
+const blockchain = require("../module/blockchain")
 
 exports.userLogin = async function(body) {
     console.log('test')
@@ -278,4 +279,19 @@ exports.createReservation = async function(params, body) {
     // 추후 date field 입력 필요함
 
     await new_reservation.save()
+}
+
+exports.invokeBlockchain = async function(body) {
+    console.log(body)
+    await blockchain.test(body.key)
+}
+
+exports.queryBlockchain = async function(body) {
+    const result = await blockchain.query(body.key)
+    console.log(result)
+}
+
+exports.historyBlockchain = async function(body) {
+    const result = await blockchain.history(body.key)
+    console.log(result)
 }

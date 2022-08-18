@@ -29,7 +29,6 @@ class CodeTattoo extends Contract {
             side_effects : []
         }
 
-
         await ctx.stub.putState(key, Buffer.from(JSON.stringify(new_tattoo)))
     }
 

@@ -488,6 +488,19 @@ server.post('/create/reservation/:id', (req, res) => {
 // 명령 : 유저 비밀번호 변경
 // 명령 : 타투이스트 비밀번호 변경
 
+// 명령 : 블록체인에 데이터 기록
+server.post('/blockchain/invoke', (req, res) => {
+    command.invokeBlockchain(req.body)
+})
+// 명령 : 블록체인에 데이터 반환
+server.post('/blockchain/query', (req, res) => {
+    command.queryBlockchain(req.body)
+})
+// 명령 : 블록체인에 히스토리 반환
+server.post('/blockchain/history', (req, res) => {
+    command.historyBlockchain(req.body)
+})
+
 
 
 // admin
