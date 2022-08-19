@@ -13,8 +13,7 @@ const DetailDraft = ({ draft }) => {
 
   const navigate = useNavigate();
   const goDetail = () => {
-
-    navigate(`/draft/${draft.draft_id}/detail`)
+    navigate(`/draft/${draft.draft_id}/detail`);
   };
 
   const onMouseEnter = useCallback(() => {
@@ -24,9 +23,6 @@ const DetailDraft = ({ draft }) => {
   const onMouseLeave = useCallback(() => {
     setHover(false);
   }, []);
-  
-  };
-
 
   return (
     <>
