@@ -281,17 +281,18 @@ exports.createReservation = async function(params, body) {
     await new_reservation.save()
 }
 
-exports.invokeBlockchain = async function(body) {
-    console.log(body)
-    await blockchain.test(body.key)
+exports.invokeBlockchain = async function(params, body) {
+    await blockchain.invoke(params.function_name, params.key, body)
 }
 
-exports.queryBlockchain = async function(body) {
-    const result = await blockchain.query(body.key)
-    console.log(result)
+exports.queryBlockchain = async function(params) {
+    return await blockchain.getTattooInfo(params.key)
 }
 
-exports.historyBlockchain = async function(body) {
-    const result = await blockchain.history(body.key)
-    console.log(result)
+exports.historyBlockchain = async function(params) {
+    return await blockchain.getTattooHistory(params.key)
+}
+
+exports.querySideEffectsBlockchain = async function(params) {
+    return await blockchain.getTattooSideEffects(params.key)
 }

@@ -488,17 +488,45 @@ server.post('/create/reservation/:id', (req, res) => {
 // 명령 : 유저 비밀번호 변경
 // 명령 : 타투이스트 비밀번호 변경
 
-// 명령 : 블록체인에 데이터 기록
-server.post('/blockchain/invoke', (req, res) => {
+// 명령 : 블록체인에 데이터 기록 요청
+server.post('/blockchain/invoke/:function_name/:key', (req, res) => {
     command.invokeBlockchain(req.body)
+        .then((returned) => {
+            res.send({ success : true })
+        })
+        .catch((err) => {
+            res.send({ success : false, code : err })
+        })
 })
-// 명령 : 블록체인에 데이터 반환
-server.post('/blockchain/query', (req, res) => {
-    command.queryBlockchain(req.body)
+// 명령 : 블록체인에서 데이터 반환 요청
+server.post('/blockchain/query/:key', (req, res) => {
+    command.queryBlockchain(req.params, req.body)
+        .then((returned) => {
+            res.send({ success : true, tattoo_info : returned })
+        })
+        .catch((err) => {
+            res.send({ success : false, code : err })
+        })
 })
-// 명령 : 블록체인에 히스토리 반환
-server.post('/blockchain/history', (req, res) => {
-    command.historyBlockchain(req.body)
+// 명령 : 블록체인에서 히스토리 반환 요청
+server.post('/blockchain/history/:key', (req, res) => {
+    command.historyBlockchain(req.params)
+        .then((returned) => {
+            res.send({ success : true, tattoo_history : returned })
+        })
+        .catch((err) => {
+            res.send({ success : false, code : err })
+        })
+})
+// 명령 : 블록체인에서 부작용 데이터 반환 요청
+server.post('/blockchain/side-effects/:key', (req, res) => {
+    command.querySideEffectsBlockchain(req.params)
+        .then((returned) => {
+            res.send({ success : true, tattoo_side_effects : returned })
+        })
+        .catch((err) => {
+            res.send({ success : false, code : err })
+        })
 })
 
 
