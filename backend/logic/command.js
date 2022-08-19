@@ -144,7 +144,7 @@ exports.tattooistSignOut = async function(body) {
 }
 
 exports.userInfoEdit = async function(params, body) {
-    await User.updateOne({ _id : params.id }, {$set : { nickname : body.nickname, location : body.location }}, (err, user) => {
+    User.updateOne({ _id : params.id }, {$set : { nickname : body.nickname, location : body.location }}, (err, user) => {
         if(!user) {
             console.log(ErrorTable["10"])
             throw 10
@@ -159,7 +159,7 @@ exports.userImageEdit = async function(params, body) {
     const imageStorage_params = { title : params.id, image : body.image, mime : body.mime }
     const image_url = await imageStorage.upload(imageStorage_params)
 
-    await User.updateOne({ _id : params.id }, {$set : { image : image_url }}, (err, user) => {
+    User.updateOne({ _id : params.id }, {$set : { image : image_url }}, (err, user) => {
         if(!user) {
             console.log(ErrorTable["10"])
             throw 10
@@ -172,7 +172,7 @@ exports.userImageEdit = async function(params, body) {
 }
 
 exports.tattooistInfoEdit = async function(params, body) {
-    await Tattooist.updateOne({ _id : params.id }, {$set : { nickname : body.nickname, location : body.location, specialize : body.specialize, description : body.description }}, (err, tattooist) => {
+    Tattooist.updateOne({ _id : params.id }, {$set : { nickname : body.nickname, location : body.location, specialize : body.specialize, description : body.description }}, (err, tattooist) => {
         if(!tattooist) {
             console.log(ErrorTable["10"])
             throw 10
@@ -187,7 +187,7 @@ exports.tattooistImageEdit = async function(params, body) {
     const imageStorage_params = { title : params.id, image : body.image, mime : body.mime }
     const image_url = await imageStorage.upload(imageStorage_params)
 
-    await Tattooist.updateOne({ _id : params.id }, {$set : { image : image_url }}, (err, tattooist) => {
+    Tattooist.updateOne({ _id : params.id }, {$set : { image : image_url }}, (err, tattooist) => {
         if(!tattooist) {
             console.log(ErrorTable["10"])
             throw 10
