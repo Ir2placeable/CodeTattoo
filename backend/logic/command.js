@@ -282,6 +282,7 @@ exports.createReservation = async function(params, body) {
 }
 
 exports.invokeBlockchain = async function(params, body) {
+    console.log(params)
     await blockchain.invoke(params.function_name, params.key, body)
 }
 

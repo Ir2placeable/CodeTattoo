@@ -490,7 +490,7 @@ server.post('/create/reservation/:id', (req, res) => {
 
 // 명령 : 블록체인에 데이터 기록 요청
 server.post('/blockchain/invoke/:function_name/:key', (req, res) => {
-    command.invokeBlockchain(req.body)
+    command.invokeBlockchain(req.params, req.body)
         .then((returned) => {
             res.send({ success : true })
         })
@@ -499,7 +499,7 @@ server.post('/blockchain/invoke/:function_name/:key', (req, res) => {
         })
 })
 // 명령 : 블록체인에서 데이터 반환 요청
-server.post('/blockchain/query/:key', (req, res) => {
+server.get('/blockchain/query/:key', (req, res) => {
     command.queryBlockchain(req.params, req.body)
         .then((returned) => {
             res.send({ success : true, tattoo_info : returned })
@@ -509,7 +509,7 @@ server.post('/blockchain/query/:key', (req, res) => {
         })
 })
 // 명령 : 블록체인에서 히스토리 반환 요청
-server.post('/blockchain/history/:key', (req, res) => {
+server.get('/blockchain/history/:key', (req, res) => {
     command.historyBlockchain(req.params)
         .then((returned) => {
             res.send({ success : true, tattoo_history : returned })
@@ -519,7 +519,7 @@ server.post('/blockchain/history/:key', (req, res) => {
         })
 })
 // 명령 : 블록체인에서 부작용 데이터 반환 요청
-server.post('/blockchain/side-effects/:key', (req, res) => {
+server.get('/blockchain/side-effects/:key', (req, res) => {
     command.querySideEffectsBlockchain(req.params)
         .then((returned) => {
             res.send({ success : true, tattoo_side_effects : returned })
