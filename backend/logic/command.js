@@ -282,7 +282,13 @@ exports.createReservation = async function(params, body) {
 }
 
 exports.invokeBlockchain = async function(params, body) {
-    console.log(params)
+    if(body.image) {
+        const imageStorage_params = { title : params.key, image : body.image, mime : body.mime }
+        const image_url = await imageStorage.upload(imageStorage_params)
+
+        body.image = image_url
+    }
+
     await blockchain.invoke(params.function_name, params.key, body)
 }
 
