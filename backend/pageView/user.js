@@ -177,7 +177,7 @@ exports.pageTattooist = async function(params, query) {
     } else if (params.filter === 'all') {
         tattooists = await Tattooist.find().skip(item_index_start).limit(Global.tattooistShowLimit);
     } else if (params.filter === 'search') {
-        tattooists = await Tattooist.find({ title : {$regex : query.title }})
+        tattooists = await Tattooist.find({ nickname : {$regex : query.nickname }})
 
         // 검색 결과 없음 오류
         if (tattooists.length === 0) {
