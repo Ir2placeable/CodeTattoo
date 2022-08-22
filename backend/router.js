@@ -103,7 +103,6 @@ server.get('/user/direct/inbox', (req, res) => {
 
     res.send({ success : false, code : 'not developed' })
 })
-
 // 페이지 : 유저 마이페이지
 server.get('/user/my-page/:id', (req, res) => {
     console.log('page : User My page')
@@ -230,6 +229,30 @@ server.post('/user/my-page/:id', (req, res) => {
             res.send({ success : false, code : err })
         })
 })
+// 명령 : 타투이스트 정보수정
+server.patch('/tattooist/my-page/:id', (req, res) => {
+    console.log('command : Tattooist Info Edit')
+
+    command.tattooistInfoEdit(req.params, req.body)
+        .then((returned) => {
+            res.send({ success : true })
+        })
+        .catch((err) => {
+            res.send({ success : false, code : err })
+        })
+})
+// 명령 : 타투이스트 이미지수정
+server.post('/tattooist/my-page/:id', (req, res) => {
+    console.log('command : Tattooist Image Edit')
+
+    command.tattooistImageEdit(req.params, req.body)
+        .then((returned) => {
+            res.send({ success : true })
+        })
+        .catch((err) => {
+            res.send({ success : false, code : err })
+        })
+})
 // 명령 : 도안 스크랩
 server.post('/scrap/:id', (req, res) => {
     console.log('command : User Scrap Draft')
@@ -271,30 +294,6 @@ server.post('/unfollow/:id', (req, res) => {
     console.log('command : User UnFollow Tattooist')
 
     command.unFollowTattooist(req.params, req.body)
-        .then((returned) => {
-            res.send({ success : true })
-        })
-        .catch((err) => {
-            res.send({ success : false, code : err })
-        })
-})
-// 명령 : 타투이스트 정보수정
-server.patch('/tattooist/my-page/:id', (req, res) => {
-    console.log('command : Tattooist Info Edit')
-
-    command.tattooistInfoEdit(req.params, req.body)
-        .then((returned) => {
-            res.send({ success : true })
-        })
-        .catch((err) => {
-            res.send({ success : false, code : err })
-        })
-})
-// 명령 : 타투이스트 이미지수정
-server.post('/tattooist/my-page/:id', (req, res) => {
-    console.log('command : Tattooist Image Edit')
-
-    command.tattooistImageEdit(req.params, req.body)
         .then((returned) => {
             res.send({ success : true })
         })
@@ -377,7 +376,26 @@ server.patch('/edit/pwd/:type/:id', (req, res) => {
         res.send({ success : false, code : "wrong filter" })
     }
 })
-
+// 명령 : 타투이스트 일정 비활성화
+server.post('/create/unavailable/:id', (req, res) => {
+    command.createUnavailable(req.params, req.body)
+        .then((returned) => {
+            res.send({ success : true })
+        })
+        .catch((err) => {
+            res.send({ success : false, code : err })
+        })
+})
+// 명령 : 타투이스트 일정 비활성화 취소
+server.post('/create/available/:id', (req, res) => {
+    command.createAvailable(req.params, req.body)
+        .then((returned) => {
+            res.send({ success : true })
+        })
+        .catch((err) => {
+            res.send({ success : false, code : err })
+        })
+})
 
 // 관리자 명령 모음
 // User 초기화

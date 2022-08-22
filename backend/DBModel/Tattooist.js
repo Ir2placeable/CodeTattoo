@@ -2,6 +2,15 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
 
+const unavailableSchema = mongoose.Schema({
+    date : {
+        type : Number
+    },
+    time_slot : {
+        type : Number
+    }
+})
+
 const tattooistSchema = mongoose.Schema({
     email: {
         type: String
@@ -44,7 +53,7 @@ const tattooistSchema = mongoose.Schema({
         type : [String]
     },
     unavailable : {
-        type : [Number]
+        type : [unavailableSchema]
     }
 })
 

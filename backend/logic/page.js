@@ -258,7 +258,7 @@ exports.tattooistDetail = async function(params, query) {
     }
     // filter : reservation
     else if (params.filter === 'reservation') {
-        return_value = tattooist['schedules']
+        return_value = tattooist['unavailable']
     }
     // wrong filter
     else {

@@ -307,3 +307,27 @@ exports.createReservation = async function(params, body) {
 
     await new_reservation.save()
 }
+exports.createUnavailable = async function(params, body) {
+    const tattooist = await Tattooist.findOne({ _id : params.id })
+    if(!tattooist) {
+        // 해당 tattooist 없음 오류
+        console.log(ErrorTable["4"])
+        throw 4
+    }
+
+    for await (let unavailable of body['unavailable']) {
+        await Tattooist.updateOne({ _id : params.id }, {$push : { unavailable : unavailable }})
+    }
+}
+exports.createAvailable = async function(params, body) {
+    const tattooist = await Tattooist.findOne({ _id : params.id })
+    if(!tattooist) {
+        // 해당 tattooist 없음 오류
+        console.log(ErrorTable["4"])
+        throw 4
+    }
+
+    for await (let available of body['available']) {
+        await Tattooist.updateOne({ _id : params.id }, {$pull : { unavailable : available }})
+    }
+}
