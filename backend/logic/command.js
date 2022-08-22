@@ -29,7 +29,8 @@ exports.userLogin = async function(body) {
             user_id: String(user['_id']),
             nickname: user['nickname'],
             image: user['image'],
-            description: user['description']
+            description: user['description'],
+            location : user['location']
         }
     });
 }
@@ -76,6 +77,18 @@ exports.userSignOut = async function(body) {
     // 유저 데이터 삭제
     await User.deleteOne({ email : body.email })
 }
+exports.userPasswordEdit = async function(params, body) {
+    User.updateOne({ _id : params.id }, {$set : { pwd : body.pwd }}, (err, user) => {
+        if(!user) {
+            console.log(ErrorTable["10"])
+            throw 10
+        }
+        if(err) {
+            console.log(ErrorTable["9"])
+            throw 9
+        }
+    })
+}
 
 exports.tattooistLogin = async function(body) {
     // 입력한 email 데이터 존재 여부 확인
@@ -99,7 +112,9 @@ exports.tattooistLogin = async function(body) {
             tattooist_id : String(tattooist['_id']),
             nickname : tattooist['nickname'],
             image : tattooist['image'],
-            description : tattooist['description']
+            description : tattooist['description'],
+            specialize : tattooist['specialize'],
+            location : tattooist['location']
         }
     });
 }
@@ -141,6 +156,18 @@ exports.tattooistSignOut = async function(body) {
 
     // 타투이스트 데이터 삭제
     await Tattooist.deleteOne({ email : body.email })
+}
+exports.tattooistPasswordEdit = async function(params, body) {
+    Tattooist.updateOne({ _id : params.id }, {$set : { pwd : body.pwd }}, (err, tattooist) => {
+        if(!tattooist) {
+            console.log(ErrorTable["4"])
+            throw 10
+        }
+        if(err) {
+            console.log(ErrorTable["9"])
+            throw 9
+        }
+    })
 }
 
 exports.userInfoEdit = async function(params, body) {

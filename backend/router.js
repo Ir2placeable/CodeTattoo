@@ -485,8 +485,33 @@ server.post('/create/reservation/:id', (req, res) => {
             res.send({ success : false, code : err })
         })
 })
-// 명령 : 유저 비밀번호 변경
-// 명령 : 타투이스트 비밀번호 변경
+// 명령 : 비밀번호 변경
+server.patch('/edit/pwd/:type/:id', (req, res) => {
+    if (req.params.type === 'user') {
+        console.log('command : user edit password')
+
+        command.userPasswordEdit(req.params, req.body)
+            .then((returned) => {
+                res.send({ success : true })
+            })
+            .catch((err) => {
+                res.send({ success : false, code : err })
+            })
+    } else if (req.params.type === 'tattooist') {
+        console.log('command : tattooist edit password')
+
+        command.tattooistPasswordEdit(req.params, req.body)
+            .then((returned) => {
+                res.send({ success : true })
+            })
+            .catch((err) => {
+                res.send({ success : false, code : err })
+            })
+    } else {
+        res.send({ success : false, code : "wrong filter" })
+    }
+})
+
 
 // 명령 : 블록체인에 데이터 기록 요청
 server.post('/blockchain/invoke/:function_name/:key', (req, res) => {
