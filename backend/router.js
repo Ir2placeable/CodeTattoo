@@ -555,12 +555,6 @@ server.get('/blockchain/side-effects/:key', (req, res) => {
 })
 
 
-
-// admin
-// server.get('/connections', (req, res) => {
-//     const connections = guest.getConnections()
-//     res.send({ connections : connections })
-// })
 // User 초기화
 server.get('/reset/user', (req, res) => {
     admin.resetUser()
