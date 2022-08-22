@@ -157,7 +157,7 @@ exports.pageTattooistDetail = async function(params) {
         specialize : tattooist['specialize'],
         followers : tattooist['followers'],
         isFollowed : false,
-        schedules : 'mocked-up'
+        unavailable : tattooist['unavailable']
     }
 
     let return_value = []
@@ -196,7 +196,7 @@ exports.pageTattooistDetail = async function(params) {
         //     return_value.push(item)
         // }
     } else if (params.filter === 'reservation') {
-        return_value = tattooist['schedules']
+        return_value = tattooist['unavailable']
     } else {
         console.log(ErrorTable['12'])
         throw 12

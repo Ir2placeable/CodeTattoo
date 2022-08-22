@@ -26,6 +26,7 @@ server.use('/', (req, res, next) => {
     next()
 })
 
+// 페이지 모음
 // 페이지 : 엔트리
 server.get('/entry', (req, res) => {
     console.log('page : entry')
@@ -33,96 +34,6 @@ server.get('/entry', (req, res) => {
     guest.pageEntry()
     res.send({ success : true })
 })
-
-// 명령 : 회원가입
-server.post('/register/:type', (req, res) => {
-    console.log('command : register for', req.params.type)
-
-    // user view
-    if (req.params.type === 'user') {
-        command.userRegister(req.body)
-            .then(() => {
-                res.send({ success : true })
-            })
-            .catch((err) => {
-                console.log(err)
-                res.send({ success : false, code : err })
-            })
-    }
-    // tattooist view
-    else if (req.params.type === 'tattooist') {
-        command.tattooistRegister(req.body)
-            .then(() => {
-                res.send({ success : true })
-            })
-            .catch((err) => {
-                res.send({ success : false, code : err })
-            })
-    }
-    // wrong type error
-    else {
-        res.send({ success : false, code : 12 })
-    }
-})
-// 명령 : 로그인
-server.post('/login/:type', (req, res) => {
-    console.log('command : login for ', req.params.type)
-
-    // user view
-    if (req.params.type === 'user') {
-        command.userLogin(req.body)
-            .then((returned) => {
-                res.send({success : true, user_info : returned })
-            })
-            .catch((err) => {
-                res.send({ success : false, code : err })
-            })
-    }
-    // tattooist view
-    else if (req.params.type === 'tattooist') {
-        command.tattooistLogin(req.body)
-            .then((returned) => {
-                res.send({ success : true, tattooist_info : returned })
-            })
-            .catch((err) => {
-                res.send({ success : false, code : err })
-            })
-    }
-    // wrong type error
-    else {
-        res.send({ success : false, code : 12 })
-    }
-})
-// 명령 : 회원탈퇴
-server.post('/sign-out/:type', (req, res) => {
-    console.log('command : sign-out for ', req.params.type)
-
-    // user view
-    if (req.params.type === 'user') {
-        command.userSignOut(req.body)
-            .then((returned) => {
-                res.send({ success : true })
-            })
-            .catch((err) => {
-                res.send({ success : false, code : err })
-            })
-    }
-    // tattooist view
-    else if (req.params.type === 'tattooist') {
-        command.tattooistSignOut(req.body)
-            .then((returned) => {
-                res.send({ success : true })
-            })
-            .catch((err) => {
-                res.send({ success : false, code : err })
-            })
-    }
-    // wrong type error
-    else {
-        res.send({ success : false, code : 12 })
-    }
-})
-
 // 페이지 : 도안
 server.get('/drafts/:filter/:page', (req, res) => {
     console.log('Page : Draft')
@@ -319,7 +230,6 @@ server.get('/reservations', (req, res) => {
             res.send({ success : false, code : err })
         })
 })
-
 // 페이지 : 유저 채팅 박스
 server.get('/user/direct/inbox', (req, res) => {
     console.log('Page : User Chatting Page')
@@ -339,6 +249,95 @@ server.get('/user/my-page/:id', (req, res) => {
         })
 })
 
+// 명령 모음
+// 명령 : 회원가입
+server.post('/register/:type', (req, res) => {
+    console.log('command : register for', req.params.type)
+
+    // user view
+    if (req.params.type === 'user') {
+        command.userRegister(req.body)
+            .then(() => {
+                res.send({ success : true })
+            })
+            .catch((err) => {
+                console.log(err)
+                res.send({ success : false, code : err })
+            })
+    }
+    // tattooist view
+    else if (req.params.type === 'tattooist') {
+        command.tattooistRegister(req.body)
+            .then(() => {
+                res.send({ success : true })
+            })
+            .catch((err) => {
+                res.send({ success : false, code : err })
+            })
+    }
+    // wrong type error
+    else {
+        res.send({ success : false, code : 12 })
+    }
+})
+// 명령 : 로그인
+server.post('/login/:type', (req, res) => {
+    console.log('command : login for ', req.params.type)
+
+    // user view
+    if (req.params.type === 'user') {
+        command.userLogin(req.body)
+            .then((returned) => {
+                res.send({success : true, user_info : returned })
+            })
+            .catch((err) => {
+                res.send({ success : false, code : err })
+            })
+    }
+    // tattooist view
+    else if (req.params.type === 'tattooist') {
+        command.tattooistLogin(req.body)
+            .then((returned) => {
+                res.send({ success : true, tattooist_info : returned })
+            })
+            .catch((err) => {
+                res.send({ success : false, code : err })
+            })
+    }
+    // wrong type error
+    else {
+        res.send({ success : false, code : 12 })
+    }
+})
+// 명령 : 회원탈퇴
+server.post('/sign-out/:type', (req, res) => {
+    console.log('command : sign-out for ', req.params.type)
+
+    // user view
+    if (req.params.type === 'user') {
+        command.userSignOut(req.body)
+            .then((returned) => {
+                res.send({ success : true })
+            })
+            .catch((err) => {
+                res.send({ success : false, code : err })
+            })
+    }
+    // tattooist view
+    else if (req.params.type === 'tattooist') {
+        command.tattooistSignOut(req.body)
+            .then((returned) => {
+                res.send({ success : true })
+            })
+            .catch((err) => {
+                res.send({ success : false, code : err })
+            })
+    }
+    // wrong type error
+    else {
+        res.send({ success : false, code : 12 })
+    }
+})
 // 명령 : 유저 정보수정
 server.patch('/user/my-page/:id', (req, res) => {
     console.log('command : User Info Edit')
@@ -411,7 +410,6 @@ server.post('/unfollow/:id', (req, res) => {
             res.send({ success : false, code : err })
         })
 })
-
 // 명령 : 타투이스트 정보수정
 server.patch('/tattooist/my-page/:id', (req, res) => {
     console.log('command : Tattooist Info Edit')
@@ -511,8 +509,6 @@ server.patch('/edit/pwd/:type/:id', (req, res) => {
         res.send({ success : false, code : "wrong filter" })
     }
 })
-
-
 // 명령 : 블록체인에 데이터 기록 요청
 server.post('/blockchain/invoke/:function_name/:key', (req, res) => {
     command.invokeBlockchain(req.params, req.body)
@@ -555,6 +551,7 @@ server.get('/blockchain/side-effects/:key', (req, res) => {
 })
 
 
+// 관리자 명령 모음
 // User 초기화
 server.get('/reset/user', (req, res) => {
     admin.resetUser()

@@ -42,6 +42,9 @@ const tattooistSchema = mongoose.Schema({
     },
     reservations : {
         type : [String]
+    },
+    unavailable : {
+        type : [Number]
     }
 })
 
