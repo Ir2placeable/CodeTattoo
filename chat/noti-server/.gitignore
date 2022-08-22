@@ -4,7 +4,7 @@ build/
 !gradle/wrapper/gradle-wrapper.jar
 !**/src/main/**/build/
 !**/src/test/**/build/
-
+./src/main/resources/codetattoo-39f94-firebase-adminsdk-skxnn-a2c8946497.json
 ### STS ###
 .apt_generated
 .classpath
