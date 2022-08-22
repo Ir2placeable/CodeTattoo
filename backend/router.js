@@ -377,46 +377,6 @@ server.patch('/edit/pwd/:type/:id', (req, res) => {
         res.send({ success : false, code : "wrong filter" })
     }
 })
-// 명령 : 블록체인에 데이터 기록 요청
-server.post('/blockchain/invoke/:function_name/:key', (req, res) => {
-    command.invokeBlockchain(req.params, req.body)
-        .then((returned) => {
-            res.send({ success : true })
-        })
-        .catch((err) => {
-            res.send({ success : false, code : err })
-        })
-})
-// 명령 : 블록체인에서 데이터 반환 요청
-server.get('/blockchain/query/:key', (req, res) => {
-    command.queryBlockchain(req.params, req.body)
-        .then((returned) => {
-            res.send({ success : true, tattoo_info : returned })
-        })
-        .catch((err) => {
-            res.send({ success : false, code : err })
-        })
-})
-// 명령 : 블록체인에서 히스토리 반환 요청
-server.get('/blockchain/history/:key', (req, res) => {
-    command.historyBlockchain(req.params)
-        .then((returned) => {
-            res.send({ success : true, tattoo_history : returned })
-        })
-        .catch((err) => {
-            res.send({ success : false, code : err })
-        })
-})
-// 명령 : 블록체인에서 부작용 데이터 반환 요청
-server.get('/blockchain/side-effects/:key', (req, res) => {
-    command.querySideEffectsBlockchain(req.params)
-        .then((returned) => {
-            res.send({ success : true, tattoo_side_effects : returned })
-        })
-        .catch((err) => {
-            res.send({ success : false, code : err })
-        })
-})
 
 
 // 관리자 명령 모음
@@ -451,6 +411,46 @@ server.get('/get/tattooist', (req, res) => {
 // User 찾기
 server.get('/get/user', (req, res) => {
     admin.getUser().then((result) => { res.send({ users : result}) })
+})
+// 블록체인에 데이터 기록 요청
+server.post('/blockchain/invoke/:function_name/:key', (req, res) => {
+    admin.invokeBlockchain(req.params, req.body)
+        .then((returned) => {
+            res.send({ success : true })
+        })
+        .catch((err) => {
+            res.send({ success : false, code : err })
+        })
+})
+// 블록체인에서 데이터 반환 요청
+server.get('/blockchain/query/:key', (req, res) => {
+    admin.queryBlockchain(req.params, req.body)
+        .then((returned) => {
+            res.send({ success : true, tattoo_info : returned })
+        })
+        .catch((err) => {
+            res.send({ success : false, code : err })
+        })
+})
+// 블록체인에서 히스토리 반환 요청
+server.get('/blockchain/history/:key', (req, res) => {
+    admin.historyBlockchain(req.params)
+        .then((returned) => {
+            res.send({ success : true, tattoo_history : returned })
+        })
+        .catch((err) => {
+            res.send({ success : false, code : err })
+        })
+})
+// 블록체인에서 부작용 데이터 반환 요청
+server.get('/blockchain/side-effects/:key', (req, res) => {
+    admin.querySideEffectsBlockchain(req.params)
+        .then((returned) => {
+            res.send({ success : true, tattoo_side_effects : returned })
+        })
+        .catch((err) => {
+            res.send({ success : false, code : err })
+        })
 })
 
 

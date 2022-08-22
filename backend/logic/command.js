@@ -307,26 +307,3 @@ exports.createReservation = async function(params, body) {
 
     await new_reservation.save()
 }
-
-exports.invokeBlockchain = async function(params, body) {
-    if(body.image) {
-        const imageStorage_params = { title : params.key, image : body.image, mime : body.mime }
-        const image_url = await imageStorage.upload(imageStorage_params)
-
-        body.image = image_url
-    }
-
-    await blockchain.invoke(params.function_name, params.key, body)
-}
-
-exports.queryBlockchain = async function(params) {
-    return await blockchain.getTattooInfo(params.key)
-}
-
-exports.historyBlockchain = async function(params) {
-    return await blockchain.getTattooHistory(params.key)
-}
-
-exports.querySideEffectsBlockchain = async function(params) {
-    return await blockchain.getTattooSideEffects(params.key)
-}

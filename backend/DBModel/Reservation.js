@@ -1,13 +1,7 @@
 const mongoose = require('mongoose');
 
 const reservationSchema = mongoose.Schema({
-    year : {
-        type : Number
-    },
-    month : {
-        type : Number
-    },
-    day : {
+    date : {
         type : Number
     },
     time_slot : {
