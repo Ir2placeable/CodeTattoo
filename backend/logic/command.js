@@ -6,6 +6,9 @@ const {Draft} = require("../DBModel/Draft");
 const {Tattooist} = require("../DBModel/Tattooist");
 const blockchain = require("../module/blockchain")
 
+exports.countConnection = function() {
+
+}
 exports.userLogin = async function(body) {
     console.log('test')
     // 입력한 email 데이터 존재 여부 확인
