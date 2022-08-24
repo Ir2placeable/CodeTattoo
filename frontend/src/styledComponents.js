@@ -32,6 +32,7 @@ export const HorizontalLine = styled.div`
 `;
 
 export const ContentsDiv = styled.div`
+  max-width: 100vw;
   min-height: 733px;
   padding-top: 130px;
   padding-bottom: 130px;
@@ -43,7 +44,7 @@ export const MyPageDiv = styled.div`
 // position: relative;
 
 export const ListDiv = styled.div`
-  width: 100%;
+  max-width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: stretch;
@@ -69,6 +70,8 @@ export const EmptyBox = styled.div`
 export const HeaderDiv = styled.header`
   background-color: #f6f6f6;
   height: 90px;
+  // width: 100%;
+  width: 100vw;
 `;
 
 export const HeaderInner = styled.div`
@@ -1069,17 +1072,17 @@ export const EmptyDraftBox = styled.div`
 `;
 
 export const DraftMainBox = styled.div`
-  //width: 1550px;
-  width: calc(380px * 4);
+  max-width: 100%;
+  // width: calc(380px * 4);
   display: flex;
   justify-content: stretch;
   align-items: stretch;
   flex-wrap: wrap;
-  //background-color: orange;
+  // background-color: orange;
 `;
 
 export const DraftImgBox = styled.div`
-  margin: 20px 15px;
+  margin: 20px 10px;
   background-color: #e4e8f0;
   display: flex;
   flex-direction: column;
@@ -1737,7 +1740,7 @@ export const GoUpload = styled.div`
 // =================== FOOTER ==========================
 export const FooterDiv = styled.footer`
   background-color: #484848;
-  width: 100%;
+  width: 100vw;
   height: 130px;
   position: absolute;
   bottom: 0;

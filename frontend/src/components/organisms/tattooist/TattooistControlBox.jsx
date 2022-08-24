@@ -21,7 +21,7 @@ const TattooistControlBox = ({ tattooist }) => {
       if (following) {
         setFollowing(false);
         unfollow();
-      } else {
+      } else { 
         setFollowing(true);
         follow();
       }

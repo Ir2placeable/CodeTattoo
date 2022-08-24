@@ -44,17 +44,20 @@ import ReservationList from "./components/templates/ReservationList";
 import Procedure from "./components/organisms/reservation/Procedure";
 import ChattingList from "./components/organisms/chatting/ChattingList";
 
+
+// - GET : /scraps/:filter/:page
+//     - filter : draft, tattooist
+//     - page : integer type
+// - Query : { user_id }
 const App = () => {
   const sendRequest = async () => {
-    const res = await axios.get(`${APIURL}/entry`);
+    const res = await axios.get(`${APIURL}/scraps/tattooist/1?user_id=${getCookie('user_id')}`, );
 
-    if (res.data.success) {
-      console.log("Server is connected");
-    }
+    console.log('tattooist scrap: ',res);
   };
 
   useEffect(() => {
-    sendRequest();
+    //sendRequest();
   }, []);
 
   return (
@@ -67,7 +70,7 @@ const App = () => {
       <Header />
       {/* <Navigation /> */}
       {/* Main Container */}
-      <MainPageDiv>
+      <MainPageDiv id="scroll">
         <Routes>
 
           {/* Main page */}
