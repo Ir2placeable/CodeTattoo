@@ -14,30 +14,33 @@ const SmallDraft = ({ draft }) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if(draft){
-      // console.log("Small Draft", draft); 
+    if (draft) {
+      // console.log("Small Draft", draft);
       // console.log('draft.isScraped: ',draft.isScraped)
-      setLoading(false)
+      setLoading(false);
     }
   }, [draft]);
 
   return (
     <>
-    {loading ? (
-      <div>loading...</div>
-    ) : (
-    <>
-      <SmallDraftImg src={draft.image} alt={draft.draft_id} />
-      <SmallDraftInfoBox>
-        <SmallDraftTitle>{draft.title}</SmallDraftTitle>
-        <DraftHeartBox>
-          <HeartIcon isScraped={draft.isScraped} draft_id={draft.draft_id} />
-        </DraftHeartBox>
-      </SmallDraftInfoBox>
-    </>
-    )}
+      {loading ? (
+        <div>loading...</div>
+      ) : (
+        <>
+          <SmallDraftImg src={draft.image} alt={draft.draft_id} />
+          <SmallDraftInfoBox>
+            <SmallDraftTitle>{draft.title}</SmallDraftTitle>
+            <DraftHeartBox>
+              <HeartIcon
+                isScraped={draft.isScraped}
+                draft_id={draft.draft_id}
+              />
+            </DraftHeartBox>
+          </SmallDraftInfoBox>
+        </>
+      )}
     </>
   );
 };
 
-export default SmallDraft;
+export default React.memo(SmallDraft);

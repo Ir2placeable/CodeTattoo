@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { useState, useRef } from "react";
 import { APIURL } from "../../../config/key";
-import { getCookie } from "../../../config/cookie";
+import { getCookie, removeCookie, setCookie } from "../../../config/cookie";
 import {
   ProfileInfoInput,
   ProfileInfoInputBox,
@@ -11,8 +11,8 @@ import ProfileUploadBtn from "../../atomic/edit/ProfileUploadBtn";
 
 const EditUserProfile = () => {
   const [info, setInfo] = useState({
-    nickname: "",
-    location: "",
+    nickname: getCookie("nickname"),
+    location: getCookie("location"),
   });
 
   const nicknameInput = useRef();
@@ -37,11 +37,20 @@ const EditUserProfile = () => {
     );
 
     if (res.data.success) {
-      console.log("프로필 수정 성공");
+      pushCookie();
+      alert("프로필 수정 성공");
       window.location.replace("/edit/profile");
     } else {
-      console.log("프로필 수정 실패");
+      alert("프로필 수정 실패");
     }
+  };
+
+  const pushCookie = () => {
+    removeCookie("nickname");
+    removeCookie("location");
+
+    setCookie("nickname", info.nickname, { maxAge: 3000, path: "/" });
+    setCookie("location", info.location, { maxAge: 3000, path: "/" });
   };
 
   const onSubmit = () => {
@@ -80,7 +89,7 @@ const EditUserProfile = () => {
         />
       </ProfileInfoInputBox>
 
-      <ProfileUploadBtn onSubmit={onSubmit} type="profile" />
+      <ProfileUploadBtn onSubmit={onSubmit} type="profile" text="등록" />
     </>
   );
 };

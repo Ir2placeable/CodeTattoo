@@ -91,4 +91,4 @@ const SmallTattooist = ({ tattooist }) => {
   );
 };
 
-export default SmallTattooist;
+export default React.memo(SmallTattooist);

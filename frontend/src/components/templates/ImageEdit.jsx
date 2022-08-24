@@ -1,6 +1,11 @@
 import axios from "axios";
-import React, { useState } from "react";
-import { getCookie } from "../../config/cookie";
+import React, { useState, useEffect } from "react";
+import {
+  getCookie,
+  removeCookie,
+  resetCookie,
+  setCookie,
+} from "../../config/cookie";
 import { APIURL } from "../../config/key";
 import {
   EditImgBox,
@@ -14,14 +19,13 @@ import ProfileImgChoice from "../atomic/edit/ProfileImgChoice";
 import ProfileUploadBtn from "../atomic/edit/ProfileUploadBtn";
 
 const ImageEdit = () => {
-  const [src, setSrc] = useState(null);
+  const [src, setSrc] = useState(getCookie("profile_img_src"));
   const [image, setImage] = useState({
     data: "",
     mime: "",
   });
 
   const onSelectFile = (e) => {
-    console.log(`onSelectFile start`);
     if (e.target.files && e.target.files.length > 0) {
       const reader = new FileReader();
 
@@ -30,6 +34,7 @@ const ImageEdit = () => {
 
       reader.addEventListener("load", () => {
         setSrc(reader.result);
+        pushCookie(reader.result);
       });
     }
     // console.log(src);
@@ -60,11 +65,16 @@ const ImageEdit = () => {
     });
 
     if (res.data.success) {
-      console.log("프로필 이미지 등록 성공");
-      window.location.replace("/edit/profile");
+      alert("이미지 등록에 성공했습니다.");
+      window.location.reload();
     } else {
-      console.log("프로필 이미지 등록 실패");
+      alert("이미지 등록에 실패했습니다.");
     }
+  };
+
+  const pushCookie = (imgSrc) => {
+    removeCookie("profile_img_src");
+    setCookie("profile_img_src", imgSrc, { maxAge: 3000, path: "/" });
   };
 
   const onSubmit = () => {
@@ -79,8 +89,8 @@ const ImageEdit = () => {
           <ProfileImgBox size="edit">
             <ProfileImg size="edit" src={src} onLoad={onLoad} />
           </ProfileImgBox>
-          <ProfileNickname>Mingxoo</ProfileNickname>
-          <ProfileUploadBtn onSubmit={onSubmit} type="image" />
+          <ProfileNickname>{getCookie("nickname")}</ProfileNickname>
+          <ProfileUploadBtn onSubmit={onSubmit} type="image" text="등록" />
         </EditImgBox>
       </ProfileFormBox>
     </>

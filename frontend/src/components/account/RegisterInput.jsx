@@ -245,11 +245,11 @@ const RegisterInput = ({ isTattooist }) => {
         </AccountInputBox>
 
         <AccountInputBox>
-          <AccountLabel>사는곳 <span style={{color: 'red'}}>*</span></AccountLabel>
+          <AccountLabel>주소지 <span style={{color: 'red'}}>*</span></AccountLabel>
           <AccountInput 
             type="text"
             name="location"
-            placeholder='닉네임을 입력해주세요'
+            placeholder='주소지를 입력해주세요'
             autoComplete='nope'
             value={location}
             ref={locInput}

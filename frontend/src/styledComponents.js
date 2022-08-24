@@ -66,6 +66,18 @@ export const EmptyBox = styled.div`
   box-shadow: 5px 5px 15px 0px rgba(72, 72, 72, 0.5);
 `;
 
+export const EyeIconBox = styled.div`
+  position: absolute;
+  z-index: 10;
+  cursor: pointer;
+  left: 1150px;
+  width: 45px;
+  height: 45px;
+  display: flex;
+  justify-content: center;
+  align-itmes: center;
+`;
+
 // =========================  HEADER  ======================
 export const HeaderDiv = styled.header`
   background-color: #f6f6f6;
@@ -94,20 +106,20 @@ export const HeaderTitle = styled.div`
 `;
 
 export const HeaderLogo = styled.img`
-display: inline-block;
-height: 80%;
-object-fit: contain;
-`
+  display: inline-block;
+  height: 80%;
+  object-fit: contain;
+`;
 
 export const HeaderText = styled.div`
-font-size: 32px;
-font-weight: bold;
-line-height: 90px;
-// margin-left: 10px;
-text-align: center;
-text-shadow: 5px 7px 10px #b7b7b7;
-// background-color: aqua;
-`
+  font-size: 32px;
+  font-weight: bold;
+  line-height: 90px;
+  // margin-left: 10px;
+  text-align: center;
+  text-shadow: 5px 7px 10px #b7b7b7;
+  // background-color: aqua;
+`;
 
 export const HeaderSubMenu = styled.div`
   display: flex;
@@ -414,8 +426,9 @@ export const TattooistImgHover = styled.div`
   line-height: 210px;
   overflow: hidden;
   position: relative;
-  top: -213px;
+  top: -211px;
   cursor: pointer;
+  box-sizing: border-box;
 `;
 
 export const TattooistInfoBox = styled.div`
@@ -432,10 +445,30 @@ export const TattooistInfoBox = styled.div`
   align-items: center;
 `;
 
-export const TattooistInfo = styled.div`
+export const TattooistInfoUnitBox = styled.div`
+  display: flex;
+  width: 600px;
+  height: 30px;
+  padding: 10px 0;
+  align-items: center;
+  justify-content: center;C
+`;
+
+export const TattooistInfoTitle = styled.div`
+  flex-basis: 150px;
   font-size: 24px;
   font-weight: 700;
-  padding: 10px 0;
+
+  display: flex;
+  justify-content: flex-end;
+  margin-left: 80px;
+  margin-right: 15px;
+`;
+
+export const TattooistInfoText = styled.div`
+  flex-basis: 200px;
+  font-size: 18px;
+  font-weight: 700;
 `;
 
 export const TattooistControl = styled.div`
@@ -525,7 +558,7 @@ export const DetailDraftImgHover = styled.div`
   justify-content: center;
   align-items: center;
   position: relative;
-  top: -303px;
+  top: -302px;
 `;
 
 export const DetailArtworkImgBox = styled.div`
@@ -581,18 +614,18 @@ export const SmallDraftBox = styled.div`
 `;
 
 export const DraftEditBtn = styled.div`
-font-size: 25px;
-position: absolute;
-cursor: pointer;
-top: 60px;
-right: 95px;
-color: #bbb;
-transition: .3s;
+  font-size: 25px;
+  position: absolute;
+  cursor: pointer;
+  top: 60px;
+  right: 95px;
+  color: #bbb;
+  transition: 0.3s;
 
-&:hover{
-  color: #333;
-}
-`
+  &:hover {
+    color: #333;
+  }
+`;
 
 export const SmallDraftImg = styled.img`
   width: 400px;
@@ -748,6 +781,7 @@ export const ProfileImgBox = styled.div`
 
 export const ProfileImgIcon = styled.div`
   background-color: black;
+  box-sizing: border-box;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -912,12 +946,13 @@ export const MyPageNavigationBtnStyle = {
   borderBottom: "3px solid black",
 };
 // *** Profile Edit ***
+
 export const ProfileEditBox = styled.div`
   display: flex;
   width: 1250px;
   margin: 0 auto;
   border-radius: 3px;
-  border: 1px solid #777;
+  border: 2px solid #777;
   box-sizing: border-box;
 `;
 
@@ -927,7 +962,7 @@ export const SideNavBox = styled.div`
   flex-direction: column;
   align-items: center;
   margin: 50px 0;
-  border-right: 1px solid rgba(72, 72, 72, 0.5);
+  border-right: 2px solid rgba(72, 72, 72, 0.5);
 `;
 
 export const SideNavigationBtn = styled.div`
@@ -1019,34 +1054,56 @@ export const ProfileInfoInput = styled.input`
 
 export const ProfileUploadButton = styled.div`
   color: white;
-  background-color: black;
   font-weight: bold;
   font-size: 20px;
-  width: 200px;
   line-height: 40px;
   text-align: center;
   border-radius: 7px;
-  border: solid 3px black;
   cursor: pointer;
   position: relative;
   transition: 0.5s;
   ${(props) =>
     props.type === "profile" &&
     css`
+      background-color: black;
+      border: solid 3px black;
       left: 350px;
+      width: 200px;
+
+      &:hover {
+        color: black;
+        background-color: white;
+      }
     `}
 
   ${(props) =>
     props.type === "image" &&
     css`
+      background-color: black;
+      border: solid 3px black;
       top: 75px;
       width: 500px;
+
+      &:hover {
+        color: black;
+        background-color: white;
+      }
     `}
 
-  &:hover {
-    color: black;
-    background-color: white;
-  }
+    ${(props) =>
+    props.type === "delete" &&
+    css`
+      background-color: #e60023;
+      border: solid 3px #e60023;
+      left: 350px;
+      width: 200px;
+
+      &:hover {
+        color: white;
+        background-color: #ad081b;
+        border: solid 3px #ad081b;
+      }
+    `}
 `;
 
 // *** Show Draft List ***
@@ -1328,80 +1385,78 @@ export const EnrollImgBtn = styled.div`
 `;
 
 export const DraftEditDiv = styled.div`
-// background-color: orange;
-height: 40px;
-position: absolute;
-left: 50%;
-bottom: 80px;
-margin-left: -270px;
-display: flex;
-`
+  // background-color: orange;
+  height: 40px;
+  position: absolute;
+  left: 50%;
+  bottom: 80px;
+  margin-left: -270px;
+  display: flex;
+`;
 export const DraftEditBox = styled.div`
-background-color: black;
-color: white;
-width: 250px;
-line-height: 40px;
-font-size: 18px;
-font-weight: bold;
-text-align: center;
-border-radius: 8px;
-margin: 0 10px;
-cursor: pointer;
+  background-color: black;
+  color: white;
+  width: 250px;
+  line-height: 40px;
+  font-size: 18px;
+  font-weight: bold;
+  text-align: center;
+  border-radius: 8px;
+  margin: 0 10px;
+  cursor: pointer;
 
-${(props) => 
-  props.color === "red" &&
-  css`
-    background-color: #DA3333;
-  `
-}
-`
+  ${(props) =>
+    props.color === "red" &&
+    css`
+      background-color: #da3333;
+    `}
+`;
 
 export const DraftEditPopupDiv = styled.div`
-width: 100%;
-height: 100%;
-position: fixed;
-top: 0;
-left: 0;
-z-index: 100;
-display: flex;
-justify-content: center;
-align-items: center;
-background-color: rgba(0, 0, 0, .2);
-`
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 100;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.2);
+`;
 
 export const DraftEditPopup = styled.div`
-background-color: black;
-border-radius: 8px;
-color: white;
-width: 500px;
-display: flex;
-flex-wrap: wrap;
-justify-content: center;
-align-items: center;
-`
+  background-color: black;
+  border-radius: 8px;
+  color: white;
+  width: 500px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+`;
 export const DraftPopupText = styled.div`
-width: 100%;
-font-size: 20px;
-line-height: 100px;
-text-align: center;
-`
+  width: 100%;
+  font-size: 20px;
+  line-height: 100px;
+  text-align: center;
+`;
 export const DraftPopupBtn = styled.div`
-width: 100px;
-line-height: 30px;
-border: 2px solid white;
-border-radius: 8px;
-text-align: center;
-cursor: pointer;
-margin: 0 10px 30px;
+  width: 100px;
+  line-height: 30px;
+  border: 2px solid white;
+  border-radius: 8px;
+  text-align: center;
+  cursor: pointer;
+  margin: 0 10px 30px;
 
-${(props) => 
-  props.color === 'red' && 
-  css`
-    color: #DA3333;
-    border-color: #DA3333;
-  `
-}
-`
+  ${(props) =>
+    props.color === "red" &&
+    css`
+      color: #da3333;
+      border-color: #da3333;
+    `}
+`;
 
 // *** Pagination ***
 export const PagenationDiv = styled.div`
@@ -1755,11 +1810,11 @@ export const userIconStyle = {
 
 // Calenar
 export const CalendarDiv = styled.div`
-// background-color: orange;
-margin: 60px auto;
-display: flex;
-align-items: center;
-`
+  // background-color: orange;
+  margin: 60px auto;
+  display: flex;
+  align-items: center;
+`;
 
 export const ReservationDiv = styled.div`
   // background-color: whitesmoke;
@@ -1776,52 +1831,52 @@ export const TimeDiv = styled.div`
   width: 300px;
 `;
 export const TimeText = styled.div`
-font-size: 18px;
-font-weight: bold;
-width: 100%;
-line-height: 40px;
-text-align: center;
-border-bottom: 1px solid rgba(72, 72, 72, .5);
-`
+  font-size: 18px;
+  font-weight: bold;
+  width: 100%;
+  line-height: 40px;
+  text-align: center;
+  border-bottom: 1px solid rgba(72, 72, 72, 0.5);
+`;
 export const TimeBox = styled.div`
-// background-color: orange;
-margin: 20px auto 40px;
-width: calc(74px * 3);
-display: flex;
-flex-wrap: wrap;
-`
+  // background-color: orange;
+  margin: 20px auto 40px;
+  width: calc(74px * 3);
+  display: flex;
+  flex-wrap: wrap;
+`;
 
 export const Time = styled.div`
-width: 70px;
-background-color: rgba(72, 72, 72);
-line-height: 35px;
-text-align: center;
-color: white;
-font-weight: bold;
-border-radius: 2px;
-margin: 4px 2px 0;
-// cursor: pointer;
-`
+  width: 70px;
+  background-color: rgba(72, 72, 72);
+  line-height: 35px;
+  text-align: center;
+  color: white;
+  font-weight: bold;
+  border-radius: 2px;
+  margin: 4px 2px 0;
+  // cursor: pointer;
+`;
 
 export const ReservRequestBtn = styled.div`
-background-color: black;
-border: 3px solid black;
-font-size: 18px;
-font-weight: bold;
-text-align: center;
-color: white;
-width: 200px;
-line-height: 35px;
-cursor: pointer;
-margin: 0 auto;
-border-radius: 5px;
-transition: .45s;
+  background-color: black;
+  border: 3px solid black;
+  font-size: 18px;
+  font-weight: bold;
+  text-align: center;
+  color: white;
+  width: 200px;
+  line-height: 35px;
+  cursor: pointer;
+  margin: 0 auto;
+  border-radius: 5px;
+  transition: 0.45s;
 
-&:hover{
-  color: black;
-  background-color: white;
-}
-`
+  &:hover {
+    color: black;
+    background-color: white;
+  }
+`;
 
 // reservation
 export const ReservDiv = styled.div`
@@ -1888,397 +1943,389 @@ export const ReservBtnDiv = styled.div`
 `;
 
 export const ReservBtn = styled.div`
+  // background-color: #A6C3D3;
+  background-color: black;
+  width: 200px;
+  height: 20%;
+  color: white;
+  font-size: 20px;
+  font-weight: bold;
+  border: 3px solid black;
+  border-radius: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: 0.45s;
 
-// background-color: #A6C3D3;
-background-color: black;
-width: 200px;
-height: 20%;
-color: white;
-font-size: 20px;
-font-weight: bold;
-border: 3px solid black;
-border-radius: 30px;
-display: flex;
-justify-content: center;
-align-items: center;
-cursor: pointer;
-transition: .45s;
-
-&:hover{
-  color: black;
-  background-color: white;
-}
-`
-
+  &:hover {
+    color: black;
+    background-color: white;
+  }
+`;
 
 // Procedure state page
 export const ProcedureDiv = styled.div`
-width: 100%;
-display: flex;
-flex-wrap: wrap;
-justify-content: space-between;
-align-items: center;
-// background-color: orange;
-
-`
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  // background-color: orange;
+`;
 
 export const ProcedureImg = styled.img`
-display: inline-block;
-background-color: white;
-border-radius: 5px;
-box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.4);
-width: 350px;
-height: 350px;
-object-fit: contain;
-`
+  display: inline-block;
+  background-color: white;
+  border-radius: 5px;
+  box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.4);
+  width: 350px;
+  height: 350px;
+  object-fit: contain;
+`;
 
 export const ProcedureInfo = styled.div`
-display: flex;
-flex-wrap: wrap;
-justify-content: space-between;
-align-items: center;
-background-color: #ececec;
-font-weight: bold;
-padding: 64px 40px 40px;
-border-radius: 8px;
-width: 1000px;
-`
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #ececec;
+  font-weight: bold;
+  padding: 64px 40px 40px;
+  border-radius: 8px;
+  width: 1000px;
+`;
 
 export const ProcedureText = styled.div`
-font-size: 24px;
-position: absolute;
-top: -30px;
-left: 10px;
-`
+  font-size: 24px;
+  position: absolute;
+  top: -30px;
+  left: 10px;
+`;
 
 export const ProcedureBox = styled.div`
-width: calc(50% - 70px);
-background-color: black;
-margin-bottom: 64px;
-padding: 20px 20px 0;
-border-radius: 5px;
-position: relative;
+  width: calc(50% - 70px);
+  background-color: black;
+  margin-bottom: 64px;
+  padding: 20px 20px 0;
+  border-radius: 5px;
+  position: relative;
 
-${(props) => 
-  props.size === 'big' &&
-  css`
-    width: 100%;
-    margin-bottom: 0;
-  `
-}
-`
+  ${(props) =>
+    props.size === "big" &&
+    css`
+      width: 100%;
+      margin-bottom: 0;
+    `}
+`;
 
 export const ProcedureWrap = styled.div`
-display: flex;
-height: 35px;
-// background-color: orange;
-align-items: center;
-margin-bottom: 20px;
-`
+  display: flex;
+  height: 35px;
+  // background-color: orange;
+  align-items: center;
+  margin-bottom: 20px;
+`;
 
 export const ProcedureBigWrap = styled.div`
-display: flex;
-width: 100%;
-justify-content: space-between;
-height: max-content;
-// background-color: aqua;
-`
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  height: max-content;
+  // background-color: aqua;
+`;
 
 export const ProcedureLabel = styled.div`
-font-size: 20px;
-color: white;
-width: 100px;
-text-align: center;
-`
+  font-size: 20px;
+  color: white;
+  width: 100px;
+  text-align: center;
+`;
 
 export const ProcedureData = styled.div`
-background-color: #f0f0f0;
-width: 310px;
-border-radius: 5px;
-height: 100%;
-display: flex;
-align-items: center;
-padding: 0 10px;
-`
+  background-color: #f0f0f0;
+  width: 310px;
+  border-radius: 5px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  padding: 0 10px;
+`;
 
 export const ProcedureBtns = styled.div`
-display: flex;
-margin: 100px auto 0;
-`
+  display: flex;
+  margin: 100px auto 0;
+`;
 
 export const ProcedureBtn = styled.div`
-background-color: black;
-color: white;
-cursor: pointer;
-border-radius: 5px;
-text-align: center;
-line-height: 45px;
-font-size: 20px;
-font-weight: bold;
-width: 300px;
-margin: 0 10px;
+  background-color: black;
+  color: white;
+  cursor: pointer;
+  border-radius: 5px;
+  text-align: center;
+  line-height: 45px;
+  font-size: 20px;
+  font-weight: bold;
+  width: 300px;
+  margin: 0 10px;
 
-${(props) => 
-  props.color === 'gray' &&
-  css`
-  background-color: #797979;
-  `
-}
-`
-
+  ${(props) =>
+    props.color === "gray" &&
+    css`
+      background-color: #797979;
+    `}
+`;
 
 // Chatting Page
 export const ChattingDiv = styled.div`
-// background-color: whitesmoke;
-margin: 0 auto;
-padding: 20px 50px;
-width: 1250px;
-display: flex;
-flex-wrap: wrap;
-justify-content: space-between;
-`
+  // background-color: whitesmoke;
+  margin: 0 auto;
+  padding: 20px 50px;
+  width: 1250px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+`;
 
 export const ChattingHeader = styled.div`
-font-weight: bold;
-font-size: 32px;
-width: 100%;
-max-height: 64px;
-line-height: 64px;
-margin-bottom: 20px;
-// background-color: aqua;
-border-bottom: 1px solid rgba(72, 72, 72, .5);
-`
+  font-weight: bold;
+  font-size: 32px;
+  width: 100%;
+  max-height: 64px;
+  line-height: 64px;
+  margin-bottom: 20px;
+  // background-color: aqua;
+  border-bottom: 1px solid rgba(72, 72, 72, 0.5);
+`;
 
 export const ChattingListDiv = styled.div`
-background-color: #646464;
-padding: 5px;
-height: 600px;
-display: flex;
-flex-direction: column;
-align-items: center;
-overflow-y: scroll;
-`
+  background-color: #646464;
+  padding: 5px;
+  height: 600px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow-y: scroll;
+`;
 
 export const ChattingBox = styled.div`
-background-color: #F3F3F3;
-width: 350px;
-border-radius: 10px;
-padding: 10px;
-display: flex;
-align-items: center;
-position: relative;
-transition: .4s;
-margin: 5px;
-cursor: pointer;
+  background-color: #f3f3f3;
+  width: 350px;
+  border-radius: 10px;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  position: relative;
+  transition: 0.4s;
+  margin: 5px;
+  cursor: pointer;
 
-&:hover{
-  background-color: #BDBDBD;
-}
-`
+  &:hover {
+    background-color: #bdbdbd;
+  }
+`;
 export const ChattingImg = styled.img`
-width: 50px;
-height: 50px;
-object-fit: contain;
-border-radius: 50%;
-background-color: white;
-`
+  width: 50px;
+  height: 50px;
+  object-fit: contain;
+  border-radius: 50%;
+  background-color: white;
+`;
 export const ChattingInfoDiv = styled.div`
-// background-color: aqua;
-width: calc(100% - 180px);
-margin-left: 30px;
-display: flex;
-justify-content: space-between;
-align-items: center;
-`
+  // background-color: aqua;
+  width: calc(100% - 180px);
+  margin-left: 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`;
 export const ChattingTextDiv = styled.div`
-// background-color: aqua;
-display: flex;
-flex-direction: column;
-margin-left: 15px;
+  // background-color: aqua;
+  display: flex;
+  flex-direction: column;
+  margin-left: 15px;
 
-${(props) => 
-  props.sort === 'right' &&
-  css`
-    align-items: flex-end;
-    margin-top: 20px;
-  `
-}
-`
+  ${(props) =>
+    props.sort === "right" &&
+    css`
+      align-items: flex-end;
+      margin-top: 20px;
+    `}
+`;
 
 export const ChattingText = styled.p`
-font-weight: bold;
-margin: 5px 0;
+  font-weight: bold;
+  margin: 5px 0;
 
-${(props) => {
-  if(props.size === 'big'){
-    return css`
-      font-size: 16px;
-    `
-  } else if(props.size === 'medium'){
-    return css`
-      font-size: 12px;
-      color: #5e5e5e;
-    `
-  } else if(props.size === 'main'){
-    return css`
-      font-size: 20px;
-      color: black;
-      margin-left: 20px;
-    `
-  }
-}}
-`
+  ${(props) => {
+    if (props.size === "big") {
+      return css`
+        font-size: 16px;
+      `;
+    } else if (props.size === "medium") {
+      return css`
+        font-size: 12px;
+        color: #5e5e5e;
+      `;
+    } else if (props.size === "main") {
+      return css`
+        font-size: 20px;
+        color: black;
+        margin-left: 20px;
+      `;
+    }
+  }}
+`;
 
 export const ChattingTime = styled.div`
-font-size: 14px;
-color: #ababab;
-position: absolute;
-top: 10px;
-right: 10px;
-`
+  font-size: 14px;
+  color: #ababab;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+`;
 
 export const ChattingReserv = styled.div`
-width: 15px;
-height: 15px;
-border-radius: 50%;
-position: absolute;
-top: 10px;
-right: 10px;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  position: absolute;
+  top: 10px;
+  right: 10px;
 
-${(props) => {
-  if(props.state === 'complete'){
-    return css`
-      background-color: #4EC059;
-    `
-  } else if(props.state === 'standby'){
-    return css`
-      background-color: #E84545;
-    `
-  }
-}}
-`
+  ${(props) => {
+    if (props.state === "complete") {
+      return css`
+        background-color: #4ec059;
+      `;
+    } else if (props.state === "standby") {
+      return css`
+        background-color: #e84545;
+      `;
+    }
+  }}
+`;
 
 export const ChattingRoomDiv = styled.div`
-background-color: #646464;
-padding: 71px 0 90px;
-width: 800px;
-height: calc(610px - 161px);
-// height: 600px;
-// overflow-y: scroll;
-position: relative;
-`
+  background-color: #646464;
+  padding: 71px 0 90px;
+  width: 800px;
+  height: calc(610px - 161px);
+  // height: 600px;
+  // overflow-y: scroll;
+  position: relative;
+`;
 
 export const ChattingRoomHeader = styled.div`
-font-weight: bold;
-font-size: 20px;
-width: calc(100% - 50px);
-height: 70px;
-border-bottom: 1px solid #8b8b8b;
+  font-weight: bold;
+  font-size: 20px;
+  width: calc(100% - 50px);
+  height: 70px;
+  border-bottom: 1px solid #8b8b8b;
 
-display: flex;
-align-items: center;
-padding-left: 50px;
+  display: flex;
+  align-items: center;
+  padding-left: 50px;
 
-position: absolute;
-z-index: 10;
-top: 0;
-left: 0;
+  position: absolute;
+  z-index: 10;
+  top: 0;
+  left: 0;
 
-// background-color: orange;
-`
+  // background-color: orange;
+`;
 
 export const ChatBigDiv = styled.div`
-// background-color: aqua;
-height: calc(610px - 161px);
-overflow-y: scroll;
-`
+  // background-color: aqua;
+  height: calc(610px - 161px);
+  overflow-y: scroll;
+`;
 
 export const ChatDiv = styled.div`
-// background-color: orange;
-width: calc(100% - 40px);
-display: flex;
-padding: 0 20px;
-margin: 10px 0;
-align-items: flex-end;
+  // background-color: orange;
+  width: calc(100% - 40px);
+  display: flex;
+  padding: 0 20px;
+  margin: 10px 0;
+  align-items: flex-end;
 
-${(props) => {
-  if(props.who === 'me'){
-    return css`
-      flex-direction: row-reverse;
-    `
-  } else if(props.who === 'you'){
-    return css`
-      flex-direction: row;
-    `
-  }
-}}
-`
+  ${(props) => {
+    if (props.who === "me") {
+      return css`
+        flex-direction: row-reverse;
+      `;
+    } else if (props.who === "you") {
+      return css`
+        flex-direction: row;
+      `;
+    }
+  }}
+`;
 
 export const ChatContents = styled.div`
-max-width: 580px;
-min-width: 100px;
-line-height: 35px;
-border-radius: 20px;
-padding: 0 20px;
-${(props) => {
-  if(props.who === 'me'){
-    return css`
-      background-color: #E8E9B2;
-    `
-  } else if(props.who === 'you'){
-    return css`
-      background-color: white;
-    `
-  }
-}}
-`
+  max-width: 580px;
+  min-width: 100px;
+  line-height: 35px;
+  border-radius: 20px;
+  padding: 0 20px;
+  ${(props) => {
+    if (props.who === "me") {
+      return css`
+        background-color: #e8e9b2;
+      `;
+    } else if (props.who === "you") {
+      return css`
+        background-color: white;
+      `;
+    }
+  }}
+`;
 export const ChatDate = styled.div`
-color: #B1B1B1;
-font-size: 10px;
-margin: 0 5px;
-`
+  color: #b1b1b1;
+  font-size: 10px;
+  margin: 0 5px;
+`;
 
 export const ChatInputDiv = styled.div`
-// background-color: orange;
-width: 100%;
-height: 90px;
-position: absolute;
-bottom: 0;
-left: 0;
-z-index: 10;
+  // background-color: orange;
+  width: 100%;
+  height: 90px;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  z-index: 10;
 
-display: flex;
-align-items: center;
-justify-content: space-evenly;
-`
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+`;
 
 export const ChatInput = styled.input`
-background-color: white;
-border: none;
-border-radius: 5px;
-line-height: 40px;
-width: 550px;
-`
+  background-color: white;
+  border: none;
+  border-radius: 5px;
+  line-height: 40px;
+  width: 550px;
+`;
 
 export const ChatBtn = styled.div`
-color: white;
-border-radius: 8px;
-cursor: pointer;
-line-height: 40px;
-font-weight: bold;
-font-size: 18px;
-text-align: center;
-width: 80px;
-${(props) => {
-  if(props.type === 'submit'){
-    return css`
-      background-color: black;
-    `
-  } else if(props.type === 'image'){
-    return css`
-      background-color: #7AA500;
-    `
-  }
-}}
-`
-
+  color: white;
+  border-radius: 8px;
+  cursor: pointer;
+  line-height: 40px;
+  font-weight: bold;
+  font-size: 18px;
+  text-align: center;
+  width: 80px;
+  ${(props) => {
+    if (props.type === "submit") {
+      return css`
+        background-color: black;
+      `;
+    } else if (props.type === "image") {
+      return css`
+        background-color: #7aa500;
+      `;
+    }
+  }}
+`;

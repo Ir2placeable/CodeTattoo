@@ -43,6 +43,8 @@ import { getCookie } from "./config/cookie";
 import ReservationList from "./components/templates/ReservationList";
 import Procedure from "./components/organisms/reservation/Procedure";
 import ChattingList from "./components/organisms/chatting/ChattingList";
+import PasswordEdit from "./components/templates/PasswordEdit";
+import DeleteAccount from "./components/templates/DeleteAccount";
 
 
 // - GET : /scraps/:filter/:page
@@ -120,7 +122,8 @@ const App = () => {
             <Route path="edit" element={<ShowProfileEdit/>}>
               <Route path="image" element={<ImageEdit/>}/>
               <Route path="profile" element={<ProfileEdit/>}/>
-              <Route path="password" />
+              <Route path="password" element={<PasswordEdit/>}/>
+              <Route path="delete" element={<DeleteAccount/>}/>
             </Route>
 
             {/* 예약 */}
