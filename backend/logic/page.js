@@ -272,11 +272,11 @@ exports.tattooistDetail = async function(params, query) {
 exports.scrap = async function(params, query) {
     // filter : draft
     if (params.filter === 'draft') {
-        return scrapDraft(params, query)
+        return await scrapDraft(params, query)
     }
     // filter : tattooist
     else if (params.filter === 'tattooist') {
-        return scrapTattooist(params, query)
+        return await scrapTattooist(params, query)
     }
     // wrong filter
     else {
@@ -335,7 +335,9 @@ const scrapDraft = async function(params, query) {
         return_value.push(item)
     }
 
-    return {count, return_value}
+    drafts = return_value
+
+    return {count, drafts}
 }
 const scrapTattooist = async function(params, query) {
     const user = await User.findOne({ _id : query.user_id })
@@ -388,7 +390,9 @@ const scrapTattooist = async function(params, query) {
         return_value.push(item)
     }
 
-    return {count, return_value}
+    tattooists = return_value
+
+    return {count, tattooists}
 }
 
 exports.reservation = async function(params) {
