@@ -16,6 +16,7 @@ const SideNav = () => {
         <SideNavBtn onClick={onClick} text="이미지 변경" path="image" />
         <SideNavBtn onClick={onClick} text="프로필 변경" path="profile" />
         <SideNavBtn onClick={onClick} text="비밀번호 변경" path="password" />
+        <SideNavBtn onClick={onClick} text="회원 탈퇴" path="delete" />
       </SideNavBox>
     </>
   );

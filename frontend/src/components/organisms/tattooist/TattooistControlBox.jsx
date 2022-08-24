@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useCallback } from "react";
+import { useNavigate } from "react-router-dom";
 import { getCookie } from "../../../config/cookie";
 import useFollowClick from "../../../hooks/useFollowClick";
 import { TattooistControl } from "../../../styledComponents";
@@ -28,7 +29,10 @@ const TattooistControlBox = ({ tattooist }) => {
     }
   }, [following]);
 
-  // reserve 이동 추가해야 함
+  const navigate = useNavigate();
+  const goReservation = () => {
+    navigate("/reservation");
+  };
 
   return (
     <>
@@ -38,7 +42,11 @@ const TattooistControlBox = ({ tattooist }) => {
           event={onClick}
           size={"medium"}
         />
-        <TattooistBtn content={"Reservation"} size={"medium"} />
+        <TattooistBtn
+          content={"Reservation"}
+          event={goReservation}
+          size={"medium"}
+        />
       </TattooistControl>
     </>
   );

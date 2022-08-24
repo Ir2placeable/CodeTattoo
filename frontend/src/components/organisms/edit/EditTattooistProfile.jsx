@@ -1,7 +1,12 @@
 import axios from "axios";
 import React, { useState, useRef } from "react";
 import { APIURL } from "../../../config/key";
-import { getCookie } from "../../../config/cookie";
+import {
+  getAllCookie,
+  getCookie,
+  removeCookie,
+  setCookie,
+} from "../../../config/cookie";
 import {
   ProfileInfoInput,
   ProfileInfoInputBox,
@@ -11,10 +16,10 @@ import ProfileUploadBtn from "../../atomic/edit/ProfileUploadBtn";
 
 const EditTattooistProfile = () => {
   const [info, setInfo] = useState({
-    nickname: "",
-    location: "",
-    specialize: "",
-    description: "",
+    nickname: getCookie("nickname"),
+    location: getCookie("profile_location"),
+    specialize: getCookie("profile_specialize"),
+    description: getCookie("profile_desc"),
   });
 
   const nicknameInput = useRef();
@@ -42,13 +47,26 @@ const EditTattooistProfile = () => {
         description: description,
       }
     );
-    console.log(res);
+    
     if (res.data.success) {
       console.log("프로필 수정 성공");
-      window.location.replace("/edit/profile");
+      pushCookie();
+      window.location.reload();
     } else {
       console.log("프로필 수정 실패");
     }
+  };
+
+  const pushCookie = () => {
+    removeCookie("nickname");
+    removeCookie("profile_location");
+    removeCookie("profile_specialize");
+    removeCookie("profile_des");
+
+    setCookie("nickname", info.nickname, { maxAge: 3000, path: "/" });
+    setCookie("profile_location", info.location, { maxAge: 3000, path: "/" });
+    setCookie("profile_specialize", info.specialize, { maxAge: 3000, path: "/", });
+    setCookie("profile_desc", info.description, { maxAge: 3000, path: "/" });
   };
 
   const onSubmit = () => {
@@ -115,7 +133,7 @@ const EditTattooistProfile = () => {
         />
       </ProfileInfoInputBox>
 
-      <ProfileUploadBtn onSubmit={onSubmit} type="profile" />
+      <ProfileUploadBtn onSubmit={onSubmit} type="profile" text="등록" />
     </>
   );
 };

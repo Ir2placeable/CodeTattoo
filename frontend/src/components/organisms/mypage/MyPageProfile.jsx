@@ -22,7 +22,7 @@ const MyPageProfile = ({ profile }) => {
   // ProfileEdit Event 추가
   const navigate = useNavigate();
   const goEdit = () => {
-    navigate("/edit/profile");
+    navigate("/edit/image");
   };
 
   return (

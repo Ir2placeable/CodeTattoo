@@ -3,10 +3,12 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import {
   ProfileImg,
   TattooistInfoBox,
-  TattooistInfo,
+  TattooistInfoTitle,
+  TattooistInfoText,
   ProfileImgIcon,
   TattooistImgHover,
   TattooistImgBox,
+  TattooistInfoUnitBox,
 } from "../../../styledComponents";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
@@ -35,7 +37,7 @@ const Tattooist = ({ tattooist }) => {
         onClick={goDetail}
       >
         {tattooist.image ? (
-          <ProfileImg size="profile" src={tattooist.image} alt={tattooist_id} />
+          <ProfileImg size="profile" src={tattooist.image} />
         ) : (
           <ProfileImgIcon size="profile">
             <FontAwesomeIcon style={{ fontSize: "100px" }} icon={faUser} />
@@ -46,9 +48,18 @@ const Tattooist = ({ tattooist }) => {
         )}
       </TattooistImgBox>
       <TattooistInfoBox>
-        <TattooistInfo>Nickname : {tattooist.nickname}</TattooistInfo>
-        <TattooistInfo>Office : {tattooist.location}</TattooistInfo>
-        <TattooistInfo>Specialize : {tattooist.specialize}</TattooistInfo>
+        <TattooistInfoUnitBox>
+          <TattooistInfoTitle>Nickname :</TattooistInfoTitle>
+          <TattooistInfoText>{tattooist.nickname}</TattooistInfoText>
+        </TattooistInfoUnitBox>
+        <TattooistInfoUnitBox>
+          <TattooistInfoTitle>Office :</TattooistInfoTitle>
+          <TattooistInfoText>{tattooist.location}</TattooistInfoText>
+        </TattooistInfoUnitBox>
+        <TattooistInfoUnitBox>
+          <TattooistInfoTitle>Specialize :</TattooistInfoTitle>
+          <TattooistInfoText>{tattooist.specialize}</TattooistInfoText>
+        </TattooistInfoUnitBox>
       </TattooistInfoBox>
     </>
   );
