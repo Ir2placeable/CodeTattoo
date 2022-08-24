@@ -29,7 +29,8 @@ exports.userLogin = async function(body) {
             user_id: String(user['_id']),
             nickname: user['nickname'],
             image: user['image'],
-            description: user['description']
+            description: user['description'],
+            location : user['location']
         }
     });
 }
@@ -76,6 +77,18 @@ exports.userSignOut = async function(body) {
     // 유저 데이터 삭제
     await User.deleteOne({ email : body.email })
 }
+exports.userPasswordEdit = async function(params, body) {
+    User.updateOne({ _id : params.id }, {$set : { pwd : body.pwd }}, (err, user) => {
+        if(!user) {
+            console.log(ErrorTable["10"])
+            throw 10
+        }
+        if(err) {
+            console.log(ErrorTable["9"])
+            throw 9
+        }
+    })
+}
 
 exports.tattooistLogin = async function(body) {
     // 입력한 email 데이터 존재 여부 확인
@@ -99,7 +112,9 @@ exports.tattooistLogin = async function(body) {
             tattooist_id : String(tattooist['_id']),
             nickname : tattooist['nickname'],
             image : tattooist['image'],
-            description : tattooist['description']
+            description : tattooist['description'],
+            specialize : tattooist['specialize'],
+            location : tattooist['location']
         }
     });
 }
@@ -142,9 +157,21 @@ exports.tattooistSignOut = async function(body) {
     // 타투이스트 데이터 삭제
     await Tattooist.deleteOne({ email : body.email })
 }
+exports.tattooistPasswordEdit = async function(params, body) {
+    Tattooist.updateOne({ _id : params.id }, {$set : { pwd : body.pwd }}, (err, tattooist) => {
+        if(!tattooist) {
+            console.log(ErrorTable["4"])
+            throw 10
+        }
+        if(err) {
+            console.log(ErrorTable["9"])
+            throw 9
+        }
+    })
+}
 
 exports.userInfoEdit = async function(params, body) {
-    await User.updateOne({ _id : params.id }, {$set : { nickname : body.nickname, location : body.location }}, (err, user) => {
+    User.updateOne({ _id : params.id }, {$set : { nickname : body.nickname, location : body.location }}, (err, user) => {
         if(!user) {
             console.log(ErrorTable["10"])
             throw 10
@@ -159,7 +186,7 @@ exports.userImageEdit = async function(params, body) {
     const imageStorage_params = { title : params.id, image : body.image, mime : body.mime }
     const image_url = await imageStorage.upload(imageStorage_params)
 
-    await User.updateOne({ _id : params.id }, {$set : { image : image_url }}, (err, user) => {
+    User.updateOne({ _id : params.id }, {$set : { image : image_url }}, (err, user) => {
         if(!user) {
             console.log(ErrorTable["10"])
             throw 10
@@ -172,7 +199,7 @@ exports.userImageEdit = async function(params, body) {
 }
 
 exports.tattooistInfoEdit = async function(params, body) {
-    await Tattooist.updateOne({ _id : params.id }, {$set : { nickname : body.nickname, location : body.location, specialize : body.specialize, description : body.description }}, (err, tattooist) => {
+    Tattooist.updateOne({ _id : params.id }, {$set : { nickname : body.nickname, location : body.location, specialize : body.specialize, description : body.description }}, (err, tattooist) => {
         if(!tattooist) {
             console.log(ErrorTable["10"])
             throw 10
@@ -187,7 +214,7 @@ exports.tattooistImageEdit = async function(params, body) {
     const imageStorage_params = { title : params.id, image : body.image, mime : body.mime }
     const image_url = await imageStorage.upload(imageStorage_params)
 
-    await Tattooist.updateOne({ _id : params.id }, {$set : { image : image_url }}, (err, tattooist) => {
+    Tattooist.updateOne({ _id : params.id }, {$set : { image : image_url }}, (err, tattooist) => {
         if(!tattooist) {
             console.log(ErrorTable["10"])
             throw 10
@@ -229,7 +256,7 @@ exports.removeDraft = async function(params, body) {
     await Draft.deleteOne({ _id : body.draft_id })
 }
 exports.editDraft = async function(params, body) {
-    await Draft.updateOne({ _id : params.id }, { title : body.title, genre : body.genre, keywords : body.keywords }, (err, draft) => {
+    Draft.updateOne({ _id : params.id }, { title : body.title, genre : body.genre, keywords : body.keywords }, (err, draft) => {
         if(!draft) {
             console.log(ErrorTable["10"])
             throw 10
@@ -280,18 +307,27 @@ exports.createReservation = async function(params, body) {
 
     await new_reservation.save()
 }
+exports.createUnavailable = async function(params, body) {
+    const tattooist = await Tattooist.findOne({ _id : params.id })
+    if(!tattooist) {
+        // 해당 tattooist 없음 오류
+        console.log(ErrorTable["4"])
+        throw 4
+    }
 
-exports.invokeBlockchain = async function(body) {
-    console.log(body)
-    await blockchain.test(body.key)
+    for await (let unavailable of body['unavailable']) {
+        await Tattooist.updateOne({ _id : params.id }, {$push : { unavailable : unavailable }})
+    }
 }
+exports.createAvailable = async function(params, body) {
+    const tattooist = await Tattooist.findOne({ _id : params.id })
+    if(!tattooist) {
+        // 해당 tattooist 없음 오류
+        console.log(ErrorTable["4"])
+        throw 4
+    }
 
-exports.queryBlockchain = async function(body) {
-    const result = await blockchain.query(body.key)
-    console.log(result)
-}
-
-exports.historyBlockchain = async function(body) {
-    const result = await blockchain.history(body.key)
-    console.log(result)
+    for await (let available of body['available']) {
+        await Tattooist.updateOne({ _id : params.id }, {$pull : { unavailable : available }})
+    }
 }

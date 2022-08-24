@@ -3,7 +3,7 @@ import {
   TattooistGenreBox,
   TattooistKeyword,
   TattooistKeywordBox,
-  TattooistGenreLabel
+  TattooistGenreLabel,
 } from "../../../styledComponents";
 
 const Genre = ({ genre }) => {
@@ -11,15 +11,13 @@ const Genre = ({ genre }) => {
   return (
     <>
       <TattooistGenreBox>
-        <TattooistGenreLabel>장르</TattooistGenreLabel> 
+        <TattooistGenreLabel>장르</TattooistGenreLabel>
         {genre.genre}
         <TattooistKeywordBox>
           <TattooistGenreLabel>주제</TattooistGenreLabel>
           {keywords &&
             keywords.map((keyword, idx) => (
-              <TattooistKeyword key={idx}>
-                {keyword}
-              </TattooistKeyword>
+              <TattooistKeyword key={idx}>{keyword}</TattooistKeyword>
             ))}
         </TattooistKeywordBox>
       </TattooistGenreBox>
@@ -27,4 +25,4 @@ const Genre = ({ genre }) => {
   );
 };
 
-export default Genre;
+export default React.memo(Genre);
