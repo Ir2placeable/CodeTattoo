@@ -1129,7 +1129,7 @@ export const EmptyDraftBox = styled.div`
 `;
 
 export const DraftMainBox = styled.div`
-  max-width: 100%;
+  max-width: calc(340px * 4);
   // width: calc(380px * 4);
   display: flex;
   justify-content: stretch;
@@ -1145,8 +1145,7 @@ export const DraftImgBox = styled.div`
   flex-direction: column;
   justify-content: center;
   //align-items: center;
-  height: 440px;
-  //width: 340px;
+  height: 400px;
   padding: 0 25px;
   border-radius: 8px;
 `;
@@ -1193,8 +1192,8 @@ export const DraftDrawerImg = styled.img`
   object-fit: contain;
 `;
 export const DraftImgDiv = styled.div`
-  width: 300px;
-  height: 300px;
+  width: 270px;
+  height: 270px;
   border-radius: 8px;
   box-sizing: border-box;
   overflow: hidden;
@@ -1203,8 +1202,8 @@ export const DraftImgDiv = styled.div`
   z-index: 15;
 `;
 export const DraftImg = styled.img`
-  width: 300px;
-  height: 300px;
+  width: 100%;
+  height: 100%;
   object-fit: contain;
   // box-sizing: border-box;
   // border-radius: 8px;
