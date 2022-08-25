@@ -452,21 +452,14 @@ exports.userMyPage = async function(params) {
         image : user['image']
     }
 
+    // blockchain query
     let return_value = []
-    // mock-up
-    let tattoo1 = []
-    const state1 = { tattoo_id : "test_tattoo", state : "created", ink : "black, red", niddle : "niddle123", tattooist_id : "test_id_1", customer_id : "test_id_1" }
-    const state2 = { tattoo_id : "test_tattoo", state : "imprinting", ink : "black, red", niddle : "niddle123", tattooist_id : "test_id_1", customer_id : "test_id_1" }
-    const state3 = { tattoo_id : "test_tattoo", state : "imprinted", ink : "black, red", niddle : "niddle123", tattooist_id : "test_id_1", customer_id : "test_id_1" }
-    let tattoo2 = []
-    const state4 = { tattoo_id : "test_tattoo2", state : "created", ink : "black, red", niddle : "niddle123", tattooist_id : "test_id_1", customer_id : "test_id_1" }
-    const state5 = { tattoo_id : "test_tattoo2", state : "imprinting", ink : "black, red", niddle : "niddle123", tattooist_id : "test_id_1", customer_id : "test_id_1" }
-    const state6 = { tattoo_id : "test_tattoo2", state : "imprinted", ink : "black, red", niddle : "niddle123", tattooist_id : "test_id_1", customer_id : "test_id_1" }
-    const state7 = { tattoo_id : "test_tattoo2", state : "side-effected", ink : "black, red", niddle : "niddle123", tattooist_id : "test_id_1", customer_id : "test_id_1" }
 
-    tattoo1.push(state1, state2, state3)
-    tattoo2.push(state4, state5, state6, state7)
-    return_value.push(tattoo1, tattoo2)
+    const tattoo_history = await blockchain.getTattooHistory(user['_id'])
+
+    for (let tattoo of tattoo_history) {
+        return_value.push(tattoo)
+    }
 
     return {user_info, return_value}
 }

@@ -372,6 +372,7 @@ server.post('/reject/reservation/:id', (req, res) => {
             res.send({ success : false, code : err })
         })
 })
+// 명령 : 예약 수정 (미구현)
 // 명령 : 비밀번호 변경
 server.patch('/edit/pwd/:type/:id', (req, res) => {
     if (req.params.type === 'user') {
@@ -453,7 +454,7 @@ server.get('/get/user', (req, res) => {
     admin.getUser().then((result) => { res.send({ users : result}) })
 })
 // 블록체인에 데이터 기록 요청
-server.post('/blockchain/invoke/:function_name/:key', (req, res) => {
+server.post('/blockchain/invoke/:function/:key', (req, res) => {
     admin.invokeBlockchain(req.params, req.body)
         .then((returned) => {
             res.send({ success : true })
