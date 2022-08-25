@@ -387,7 +387,7 @@ server.post('/create/unavailable/:id', (req, res) => {
         })
 })
 // 명령 : 타투이스트 일정 비활성화 취소
-server.post('/create/available/:id', (req, res) => {
+server.post('/remove/available/:id', (req, res) => {
     command.createAvailable(req.params, req.body)
         .then((returned) => {
             res.send({ success : true })

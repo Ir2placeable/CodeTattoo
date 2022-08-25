@@ -327,7 +327,7 @@ exports.createAvailable = async function(params, body) {
         throw 4
     }
 
-    for await (let available of body['available']) {
-        await Tattooist.updateOne({ _id : params.id }, {$pull : { unavailable : available }})
+    for await (let unavailable of body['unavailable']) {
+        await Tattooist.updateOne({ _id : params.id }, {$pull : { unavailable : unavailable }})
     }
 }

@@ -204,7 +204,6 @@ exports.tattooistDetail = async function(params, query) {
         specialize : tattooist['specialize'],
         followers : tattooist['followers'],
         isFollowed : false,
-        unavailable : tattooist['unavailable']
     }
 
     if (query.user_id) {
@@ -246,15 +245,15 @@ exports.tattooistDetail = async function(params, query) {
             time : "test_time"
         })
 
-        for await (let artwork_id of tattooist['artworks']) {
-            const artwork = await blockchain.getTattooInfo(artwork_id)
-            const item = {
-                artwork_id : artwork_id,
-                image : artwork['image']
-            }
-
-            return_value.push(item)
-        }
+        // for await (let artwork_id of tattooist['artworks']) {
+        //     const artwork = await blockchain.getTattooInfo(artwork_id)
+        //     const item = {
+        //         artwork_id : artwork_id,
+        //         image : artwork['image']
+        //     }
+        //
+        //     return_value.push(item)
+        // }
     }
     // filter : reservation
     else if (params.filter === 'reservation') {
