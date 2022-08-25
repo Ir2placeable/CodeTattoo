@@ -303,6 +303,7 @@ exports.createReservation = async function(body) {
     new_reservation['time_slot'] = body.time_slot
 
     await new_reservation.save()
+    await Tattooist.updateOne({ _id : body.tattooist_id }, {$push : { requests : new_reservation['_id'] }})
 }
 exports.confirmReservation = async function(params, body) {
     await Reservation.updateOne({ _id : params.id }, {$set : { confirmed : true }}, (err, reservation) => {
@@ -310,13 +311,14 @@ exports.confirmReservation = async function(params, body) {
         if (!reservation) { throw 'wrong reservation' }
     })
 
-    await Tattooist.updateOne({ _id : body.tattooist_id }, {$push : { reservations : params_id }}, (err, tattooist) => {
+    await Tattooist.updateOne({ _id : body.tattooist_id }, {$push : { reservations : params.id }, $pull : { requests : params.id }}, (err, tattooist) => {
         if (err) { throw 21 }
         if (!tattooist) { throw 'wrong tattooist' }
     })
 }
-exports.rejectReservation = async function(params) {
+exports.rejectReservation = async function(params, body) {
     await Reservation.deleteOne({ _id : params.id })
+    await Tattooist.updateOne({ _id : body.tattooist_id }, {$pull : { requests : params.id }})
 
     // send to notification server body.reason
 }

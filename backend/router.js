@@ -86,12 +86,12 @@ server.get('/scraps/:filter/:page', (req, res) => {
         })
 })
 // 페이지 : 예약
-server.get('/reservations/:id', (req, res) => {
+server.get('/reservations/:filter', (req, res) => {
     console.log('Page : Tattooist Reservation')
 
-    page.reservation(req.params)
+    page.reservation(req.params, req.query)
         .then((returned) => {
-            res.send({ success : true, reservations : returned})
+            res.send({ success : true, reservations : returned })
         })
         .catch((err) => {
             res.send({ success : false, code : err })
