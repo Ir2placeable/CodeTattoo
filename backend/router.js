@@ -338,11 +338,33 @@ server.patch('/draft/:id', (req, res) => {
             console.log(err)
         })
 })
-// 명령 : 예약 생성
-server.post('/create/reservation/:id', (req, res) => {
+// 명령 : 예약 요청
+server.post('/create/reservation', (req, res) => {
     console.log('command : Create reservation')
 
-    command.createReservation(req.params, req.body)
+    command.createReservation(req.body)
+        .then((returned) => {
+            res.send({ success : true })
+        })
+        .catch((err) => {
+            res.send({ success : false, code : err })
+        })
+})
+// 명령 : 예약 수락
+server.post('/confirm/reservation/:id', (req, res) => {
+    console.log('command : Confirm reservation')
+
+    command.confirmReservation(req.params, req.body)
+        .then((returned) => {
+            res.send({ success : true })
+        })
+        .catch((err) => {
+            res.send({ success : false, code : err })
+        })
+})
+// 명령 : 예약 거절
+server.post('/reject/reservation/:id', (req, res) => {
+    command.rejectReservation(req.params, req.body)
         .then((returned) => {
             res.send({ success : true })
         })

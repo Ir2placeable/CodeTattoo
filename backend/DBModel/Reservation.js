@@ -22,6 +22,10 @@ const reservationSchema = mongoose.Schema({
     procedure_status : {
         type : Boolean,
         default : false
+    },
+    confirmed : {
+        type : Boolean,
+        default : false
     }
 })
 
