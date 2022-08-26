@@ -244,6 +244,7 @@ exports.createDraft = async function(params, body) {
         image : image_url,
         genre : body['genre'],
         keywords : body['keywords'],
+        cost : body['cost'],
         timestamp : Math.floor(Date.now() / 1000)
     }
 
@@ -257,7 +258,7 @@ exports.removeDraft = async function(params, body) {
     await Draft.deleteOne({ _id : body.draft_id })
 }
 exports.editDraft = async function(params, body) {
-    Draft.updateOne({ _id : params.id }, { title : body.title, genre : body.genre, keywords : body.keywords }, (err, draft) => {
+    Draft.updateOne({ _id : params.id }, { title : body.title, genre : body.genre, keywords : body.keywords, cost : body.cost }, (err, draft) => {
         if(!draft) {
             console.log(ErrorTable["10"])
             throw 10
@@ -339,7 +340,6 @@ exports.editReservation = async function(params, body) {
     // date, time_slot, cost 수정 Only
     await Reservation.updateOne({ _id : params.id }, {$set : { date : body.date, time_slot : body.time_slot, cost : body.cost, body_part : body.body_part }})
 }
-
 exports.editReservationImage = async function(params, body) {
     // image 수정 Only
     const imageStorage_params = { title : params.id, image : body.image, mime : body.mime }
@@ -347,7 +347,6 @@ exports.editReservationImage = async function(params, body) {
 
     await Reservation.updateOne({ _id : params.id }, {$set : { image : image_url }})
 }
-
 exports.confirmReservation = async function(params, body) {
     await Reservation.updateOne({ _id : params.id }, {$set : { confirmed : true }}, (err, reservation) => {
         if (err) { throw 20 }
@@ -357,7 +356,6 @@ exports.confirmReservation = async function(params, body) {
     // body.tattooist_id 이용 -> 해당 타투이스트에게 알림 전송
     // body.user_id 이용 -> 해당 유저에게 알림 전송
 }
-
 exports.rejectReservation = async function(params, body) {
     await Reservation.deleteOne({ _id : params.id })
     await Tattooist.updateOne({ _id : body.tattooist_id }, {$pull : { requests : params.id }})
@@ -373,6 +371,8 @@ exports.beginProcedure = async function(params, body) {
     new_tattoo['owner'] = body.user_id
 
     await User.updateOne({ _id : body.user_id }, {$push : { tattoos : new_tattoo['_id'] }})
+    await Tattooist.updateOne({ _id : body.tattooist_id }, {$push : { artworks : new_tattoo['_id'] }})
+
     const user = await User.findOne({ _id : body.user_id })
     const tattooist = await Tattooist.findOne({ _id : body.tattooist_id })
     const reservation = await Reservation.findOne({ _id : params.id })

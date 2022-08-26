@@ -14,6 +14,9 @@ const draftSchema = mongoose.Schema({
         type : Number,
         default : 0
     },
+    cost : {
+        type : Number
+    },
     genre : {
         type : String
     },
