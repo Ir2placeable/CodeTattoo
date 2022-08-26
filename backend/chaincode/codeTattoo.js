@@ -16,7 +16,7 @@ class CodeTattoo extends Contract {
 
     async newTattoo(ctx, key, owner_info, timestamp) {
         const new_tattoo = {
-            state : 0,
+            state : 1,
             activator_id : owner_info,
             timestamp : timestamp,
             cost : "",
@@ -30,28 +30,6 @@ class CodeTattoo extends Contract {
         }
 
         await ctx.stub.putState(key, Buffer.from(JSON.stringify(new_tattoo)))
-    }
-
-    async makeReservation(ctx, key, tattooist_info, timestamp, cost, image, body_part) {
-        let tattoo = await ctx.stub.getState(key)
-
-        if (!tattoo || tattoo.length === 0) {
-            throw new Error(`${key} does not exist`);
-        }
-        tattoo = JSON.parse(tattoo.toString())
-
-        if (tattoo.state !== 0) {
-            throw new Error('wrong state, now state : ' + tattoo.state);
-        }
-
-        tattoo.activator_id = tattooist_info
-        tattoo.state = 1
-        tattoo.timestamp = timestamp
-        tattoo.cost = cost
-        tattoo.image = image
-        tattoo.body_part = body_part
-
-        await ctx.stub.putState(key, Buffer.from(JSON.stringify(tattoo)));
     }
 
     async startTattoo(ctx, key, tattooist_info, timestamp, cost, image, body_part, inks, niddle, depth, machine) {
@@ -118,10 +96,12 @@ class CodeTattoo extends Contract {
         }
         tattoo = JSON.parse(tattoo.toString())
 
-        if(tattoo.state !== 3) {
+        // tattoo is not ended or tattoo is suspended
+        if(tattoo.state < 4) {
             throw new Error('wrong state, now state : ' + tattoo.state);
         }
 
+        // wrong procedure
         if(state_index !== 4 || state_index !== 5) {
             throw new Error('wrong state, state should be 4(retouched) or 5(covered_up)');
         }
@@ -149,7 +129,7 @@ class CodeTattoo extends Contract {
         tattoo = JSON.parse(tattoo.toString())
 
         tattoo.activator_id = owner_info
-        tattoo.state = 6
+        tattoo.state = 0
         tattoo.timestamp = timestamp
 
         await ctx.stub.putState(key, Buffer.from(JSON.stringify(tattoo)));

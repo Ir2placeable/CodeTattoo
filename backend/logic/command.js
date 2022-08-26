@@ -4,6 +4,7 @@ const {Reservation} = require("../DBModel/Reservation")
 const imageStorage = require("../module/imageStorage");
 const {Draft} = require("../DBModel/Draft");
 const {Tattooist} = require("../DBModel/Tattooist");
+const {Tattoo} = require("../DBModel/Tattoo")
 const blockchain = require("../module/blockchain")
 
 exports.userLogin = async function(body) {
@@ -289,6 +290,7 @@ exports.unFollowTattooist = async function(params, body) {
 exports.createReservation = async function(body) {
     let new_reservation = new Reservation()
 
+    // 도안이 있는 경우 실행
     if (body['image']) {
         const imageStorage_params = { title : new_reservation['_id'], image : body.image, mime : body.mime }
         const image_url = await imageStorage.upload(imageStorage_params)
@@ -303,25 +305,11 @@ exports.createReservation = async function(body) {
     new_reservation['time_slot'] = body.time_slot
 
     await new_reservation.save()
-    await Tattooist.updateOne({ _id : body.tattooist_id }, {$push : { requests : new_reservation['_id'] }})
-}
-exports.confirmReservation = async function(params, body) {
-    await Reservation.updateOne({ _id : params.id }, {$set : { confirmed : true }}, (err, reservation) => {
-        if (err) { throw 20 }
-        if (!reservation) { throw 'wrong reservation' }
-    })
+    await Tattooist.updateOne({ _id : body.tattooist_id }, {$push : { reservations : new_reservation['_id'] }})
 
-    await Tattooist.updateOne({ _id : body.tattooist_id }, {$push : { reservations : params.id }, $pull : { requests : params.id }}, (err, tattooist) => {
-        if (err) { throw 21 }
-        if (!tattooist) { throw 'wrong tattooist' }
-    })
+    // 유저와 타투이스트 채팅 생성하기
 }
-exports.rejectReservation = async function(params, body) {
-    await Reservation.deleteOne({ _id : params.id })
-    await Tattooist.updateOne({ _id : body.tattooist_id }, {$pull : { requests : params.id }})
 
-    // send to notification server body.reason
-}
 exports.createUnavailable = async function(params, body) {
     const tattooist = await Tattooist.findOne({ _id : params.id })
     if(!tattooist) {
@@ -334,7 +322,7 @@ exports.createUnavailable = async function(params, body) {
         await Tattooist.updateOne({ _id : params.id }, {$push : { unavailable : unavailable }})
     }
 }
-exports.createAvailable = async function(params, body) {
+exports.deleteUnavailable = async function(params, body) {
     const tattooist = await Tattooist.findOne({ _id : params.id })
     if(!tattooist) {
         // 해당 tattooist 없음 오류
@@ -345,4 +333,91 @@ exports.createAvailable = async function(params, body) {
     for await (let unavailable of body['unavailable']) {
         await Tattooist.updateOne({ _id : params.id }, {$pull : { unavailable : unavailable }})
     }
+}
+
+exports.editReservation = async function(params, body) {
+    // date, time_slot, cost 수정 Only
+    await Reservation.updateOne({ _id : params.id }, {$set : { date : body.date, time_slot : body.time_slot, cost : body.cost, body_part : body.body_part }})
+}
+
+exports.editReservationImage = async function(params, body) {
+    // image 수정 Only
+    const imageStorage_params = { title : params.id, image : body.image, mime : body.mime }
+    const image_url = await imageStorage.upload(imageStorage_params)
+
+    await Reservation.updateOne({ _id : params.id }, {$set : { image : image_url }})
+}
+
+exports.confirmReservation = async function(params, body) {
+    await Reservation.updateOne({ _id : params.id }, {$set : { confirmed : true }}, (err, reservation) => {
+        if (err) { throw 20 }
+        if (!reservation) { throw 'wrong reservation' }
+    })
+
+    // body.tattooist_id 이용 -> 해당 타투이스트에게 알림 전송
+    // body.user_id 이용 -> 해당 유저에게 알림 전송
+}
+
+exports.rejectReservation = async function(params, body) {
+    await Reservation.deleteOne({ _id : params.id })
+    await Tattooist.updateOne({ _id : body.tattooist_id }, {$pull : { requests : params.id }})
+
+    // body.tattooist_id 이용 -> 해당 타투이스트에게 알림 전송
+    // body.user_id 이용 -> 해당 유저에게 알림 전송
+}
+
+exports.beginProcedure = async function(params, body) {
+    await Reservation.updateOne({ _id : params.id }, {$set : { procedure_status : true }})
+
+    let new_tattoo = new Tattoo()
+    new_tattoo['owner'] = body.user_id
+
+    await User.updateOne({ _id : body.user_id }, {$push : { tattoos : new_tattoo['_id'] }})
+    const user = await User.findOne({ _id : body.user_id })
+    const tattooist = await Tattooist.findOne({ _id : body.tattooist_id })
+    const reservation = await Reservation.findOne({ _id : params.id })
+
+    let blockchain_params = {
+        owner_info : {
+            id : user['_id'],
+            nickname : user['nickname']
+        }
+    }
+    await blockchain.invoke("newTattoo", new_tattoo['_id'], blockchain_params)
+
+    blockchain_params['tattooist_info'] = { id : tattooist['_id'], nickname : tattooist['nickname']}
+    blockchain_params['cost'] = reservation['cost']
+    blockchain_params['image'] = reservation['image']
+    blockchain_params['body_part'] = reservation['body_part']
+    blockchain_params['inks'] = body['inks']
+    blockchain_params['niddle'] = body['niddle']
+    blockchain_params['depth'] = body['depth']
+    blockchain_params['machine'] = body['machine']
+
+    await blockchain.invoke("startTattoo", new_tattoo['_id'], blockchain_params)
+
+    return new_tattoo['_id']
+}
+
+exports.finishProcedure = async function(params, body) {
+    const tattooist = await Tattooist.findOne({ _id : body.tattooist_id })
+    const reservation = await Reservation.findOne({ _id : params.id })
+
+    const blockchain_params = {
+        tattooist_info : {
+            id : tattooist['_id'],
+            nickname : tattooist['nickname'],
+        },
+        cost : reservation['cost'],
+        image : reservation['image'],
+        body_part : reservation['body_part'],
+        inks : body['inks'],
+        niddle : body['niddle'],
+        depth : body['depth'],
+        machine : body['machine']
+    }
+
+    await blockchain.invoke("endTattoo", body.tattoo_id, blockchain_params)
+
+    await Reservation.deleteOne({ _id : params.id })
 }
