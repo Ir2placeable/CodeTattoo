@@ -20,7 +20,7 @@ class CodeTattoo extends Contract {
             activator : owner_info,
             timestamp : timestamp,
             cost : "",
-            image : [],
+            image : "",
             body_part : "",
             inks : [],
             niddle : [],

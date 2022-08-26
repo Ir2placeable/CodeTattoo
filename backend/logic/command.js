@@ -286,26 +286,41 @@ exports.unFollowTattooist = async function(params, body) {
     await User.updateOne({ _id : params.id }, {$pull : { follows : body.tattooist_id }})
 }
 
-exports.createReservation = async function(params, body) {
-    const user = await User.findOne({ _id : params.id })
-    if (!user) {
-        console.log(ErrorTable["10"])
-        throw 10
-    }
-
+exports.createReservation = async function(body) {
     let new_reservation = new Reservation()
 
-    const imageStorage_params = { title : new_reservation['_id'], image : body.image, mime : body.mime }
-    const image_url = await imageStorage.upload(imageStorage_params)
+    if (body['image']) {
+        const imageStorage_params = { title : new_reservation['_id'], image : body.image, mime : body.mime }
+        const image_url = await imageStorage.upload(imageStorage_params)
 
-    new_reservation['image'] = image_url
-    new_reservation['customer_id'] = params.id
+        new_reservation['image'] = image_url
+    }
+
+    new_reservation['customer_id'] = body.user_id
     new_reservation['tattooist_id'] = body.tattooist_id
     new_reservation['cost'] = body.cost
-
-    // 추후 date field 입력 필요함
+    new_reservation['date'] = body.date
+    new_reservation['time_slot'] = body.time_slot
 
     await new_reservation.save()
+    await Tattooist.updateOne({ _id : body.tattooist_id }, {$push : { requests : new_reservation['_id'] }})
+}
+exports.confirmReservation = async function(params, body) {
+    await Reservation.updateOne({ _id : params.id }, {$set : { confirmed : true }}, (err, reservation) => {
+        if (err) { throw 20 }
+        if (!reservation) { throw 'wrong reservation' }
+    })
+
+    await Tattooist.updateOne({ _id : body.tattooist_id }, {$push : { reservations : params.id }, $pull : { requests : params.id }}, (err, tattooist) => {
+        if (err) { throw 21 }
+        if (!tattooist) { throw 'wrong tattooist' }
+    })
+}
+exports.rejectReservation = async function(params, body) {
+    await Reservation.deleteOne({ _id : params.id })
+    await Tattooist.updateOne({ _id : body.tattooist_id }, {$pull : { requests : params.id }})
+
+    // send to notification server body.reason
 }
 exports.createUnavailable = async function(params, body) {
     const tattooist = await Tattooist.findOne({ _id : params.id })
@@ -327,7 +342,7 @@ exports.createAvailable = async function(params, body) {
         throw 4
     }
 
-    for await (let available of body['available']) {
-        await Tattooist.updateOne({ _id : params.id }, {$pull : { unavailable : available }})
+    for await (let unavailable of body['unavailable']) {
+        await Tattooist.updateOne({ _id : params.id }, {$pull : { unavailable : unavailable }})
     }
 }
