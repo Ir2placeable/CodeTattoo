@@ -15,6 +15,8 @@
 
 블록체인의 데이터는 커버업, 리터치, 부작용 원인파악 등에 이용됩니다.
 
+[피그마 구경하기](https://www.figma.com/file/rw67f0oKN87M4m02yHViGE/CodeTattoo-Figma?node-id=0%3A1)
+
 <br/>
 
 ## 영상자료
