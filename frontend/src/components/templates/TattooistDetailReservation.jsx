@@ -7,26 +7,20 @@ import moment from "moment";
 import { 
   CalendarDiv, ReservationDiv, 
   DateDiv, TimeDiv, TimeText, Time, 
-  TimeBox, ReservRequestBtn
+  TimeBox, ReservRequestBtn, TimeActiveDiv, TimeActiveBtn
 } from "../../styledComponents";
-import { getCookie } from "../../config/cookie";
+import { getCookie, setCookie } from "../../config/cookie";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { useEffect } from "react";
+import axios from "axios";
+import { APIURL } from "../../config/key";
+import AvailableTime from "../organisms/reservation/AvailableTime";
 
 const mark = [
-  "2022-08-10",
-  "2022-08-11",
-  "2022-08-27",
-  "2022-09-28",
-  "2022-08-15",
-  "2022-08-17",
-  "2022-08-20",
-  "2022-08-21",
-  "2022-08-22",
-  "2022-08-23",
-]
-const time = [
-  "10", "11", "12", "13",
-  "14", "15", "16", "17",
-  "18", "19", "20", "21"
+  "220810",
+  "220811",
+  "220827",
+  "220820",
 ]
 
 const dotStyle = {
@@ -50,7 +44,24 @@ const disabledStyle = {
 // reservations : []
 // YY-MM-DD-TT : 22-07-18-11
 const TattooistDetailReservation = () => {
+  const param = useParams();
   const [value, onChange] = useState(new Date());
+  const [id, setId] = useState('');
+  const [isAdmin, setIsAdmin] = useState(false);
+
+  useEffect(() => {
+    let _id = getCookie('tattooist_id');
+
+    if(_id === param.tattooist_id){
+      setIsAdmin(true);
+    } else {
+      if(!_id){
+        _id = getCookie('user_id')
+      }
+    }
+
+    setId(_id);
+  }, [])
 
   return (
     <>
@@ -72,38 +83,18 @@ const TattooistDetailReservation = () => {
         //   }
         // }}
         tileClassName={({ date, view }) => {
-          if (mark.find((x) => x === moment(date).format("YYYY-MM-DD"))) {
+          // "YYYY-MM-DD"
+          if (mark.find((x) => x === moment(date).format("YYMMDD"))) {
             return "highlight";
           }
         }}
       />
 
-      {/* 클릭한 날짜 */}
-      <ReservationDiv>
-        <DateDiv>
-          {moment(value).format("YYYY년 MM월 DD일")}
-        </DateDiv>
-        <TimeDiv>
-          <TimeText>
-            예약 가능 시간
-          </TimeText>
-
-          <TimeBox>
-          {time.map((t, idx) => (
-            <Time key={idx}>
-              {t}:00
-            </Time>
-          ))}
-          </TimeBox>
-        </TimeDiv>
-
-        {getCookie('user_id') && (
-          <ReservRequestBtn>
-            작업 요청
-          </ReservRequestBtn>
-        )}
-        
-      </ReservationDiv>
+      <AvailableTime  
+        value={value}
+        isAdmin={isAdmin}
+        id={id}
+      />
 
     </CalendarDiv>
     </>

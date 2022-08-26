@@ -29,14 +29,22 @@ const DraftEdit = () => {
   const [title, setTitle] = useState(detail.title);
   const [genre, setGenre] = useState(detail.genre);
   const [keywords, setKewords] = useState(detail.keywords);
+  const [cost, setCost] =  useState(detail.cost);
 
   const onDelete = () => {
     deleteDraft();
     window.location.replace('/drafts/best')
   }
   const onEdit = () => {
+    const _cost = Number(cost);
+
+    if(!_cost){
+      alert('가격 정보는 숫자만 입력해주세요!')
+      return;
+    }
+
     editDraft({
-      title, genre, keywords
+      title, genre, keywords, cost: _cost
     })
     window.location.replace('/drafts/best')
   }
@@ -70,8 +78,18 @@ const DraftEdit = () => {
           <ImgText text="도안 이름" />
           <LoadedImgTitle 
             type="text"
+            placeholder='title'
+            name="title"
             value={title}
             onChange={(e) => {setTitle(e.target.value)}}
+          />
+          <ImgText text="도안 이름" />
+          <LoadedImgTitle 
+            type="text"
+            placeholder="숫자만 입력해주세요. (단위: 원)"
+            name="cost"
+            value={cost}
+            onChange={(e) => {setCost(e.target.value)}}
           />
 
           <div style={{ display: "flex" }}>

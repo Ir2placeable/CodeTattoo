@@ -38,6 +38,7 @@ const DraftDetail = () => {
   const genre = {
     genre: detail.genre,
     keywords: detail.keywords,
+    cost: detail.cost
   };
 
   useEffect(() => {

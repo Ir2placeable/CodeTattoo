@@ -709,7 +709,7 @@ export const TattooistGenreBox = styled.div`
   width: 600px;
   padding: 30px;
   font-weight: bold;
-  font-size: 24px;
+  font-size: 18px;
 `;
 
 export const TattooistKeywordBox = styled.div`
@@ -719,14 +719,14 @@ export const TattooistKeywordBox = styled.div`
   align-items: center;
   // width: 300px;
   // background-color: aqua;
-  margin-top: 20px;
+  margin: 20px 0;
 `;
 
 export const TattooistKeyword = styled.div`
-  // font-size: 16px;
+  font-size: 16px;
   margin: 0 5px;
   background-color: #eee;
-  font-size: 18px;
+  // font-size: 18px;
   line-height: 30px;
   width: 90px;
   text-align: center;
@@ -738,7 +738,7 @@ export const TattooistGenreLabel = styled.span`
   background-color: gray;
   color: white;
   border-radius: 5px;
-  line-height: 40px;
+  line-height: 35px;
   width: 100px;
   text-align: center;
   margin-right: 20px;
@@ -1840,7 +1840,7 @@ export const TimeText = styled.div`
 export const TimeBox = styled.div`
   // background-color: orange;
   margin: 20px auto 40px;
-  width: calc(74px * 3);
+  width: calc(74px * 4);
   display: flex;
   flex-wrap: wrap;
 `;
@@ -1854,7 +1854,7 @@ export const Time = styled.div`
   font-weight: bold;
   border-radius: 2px;
   margin: 4px 2px 0;
-  // cursor: pointer;
+  cursor: pointer;
 `;
 
 export const ReservRequestBtn = styled.div`
@@ -1871,11 +1871,52 @@ export const ReservRequestBtn = styled.div`
   border-radius: 5px;
   transition: 0.45s;
 
-  &:hover {
-    color: black;
-    background-color: white;
-  }
+  // &:hover {
+  //   color: black;
+  //   background-color: white;
+  // }
 `;
+
+export const TimeActiveDiv = styled.div`
+width: calc(140px*2);
+margin: 0 auto;
+display: flex;
+flex-wrap: wrap;
+justify-content: center;
+align-items: center;
+// background-color: orange;
+`
+export const TimeActiveBtn = styled.div`
+line-height: 35px;
+width: 120px;
+text-align: center;
+border-radius: 5px;
+font-size: 18px;
+// font-weight: bold;
+cursor: pointer;
+margin: 0 10px;
+color: #f8f8f8;
+
+${(props) => {
+  if(props.type === 'active'){
+    return css`
+      background-color: #6EC067;
+    `
+  } else if(props.type === 'deactive'){
+    return css`
+      background-color: #DF2F2F;
+    `
+  } else if(props.type === 'description'){
+    return css`
+      font-size: 12px;
+      width: 100%;
+      height: max-content;
+      color: #999;
+      cursor: auto;
+    `
+  }
+}}
+`
 
 // reservation
 export const ReservDiv = styled.div`
