@@ -12,13 +12,13 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
 import java.io.IOException;
+import java.util.List;
 
 @Slf4j
 @Service
 public class FCMinitializer {
     private static final Logger logger = LoggerFactory.getLogger(FCMinitializer.class);
     private static final String FIREBASE_CONFIG_PATH = "codetattoo-39f94-firebase-adminsdk-skxnn-a2c8946497.json";
-
     @PostConstruct
     public void initialize() {
         try {
@@ -31,5 +31,12 @@ public class FCMinitializer {
         } catch (IOException e) {
             logger.error(e.getMessage());
         }
+    }
+
+    private String getAccessToken() throws IOException {
+        GoogleCredentials googleCredentials = GoogleCredentials.fromStream(new ClassPathResource(FIREBASE_CONFIG_PATH).getInputStream())
+                .createScoped(List.of("https://www.googleapis.com/auth/cloud-platform"));
+        googleCredentials.refreshIfExpired();
+        return googleCredentials.getAccessToken().getTokenValue();
     }
 }
