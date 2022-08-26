@@ -89,6 +89,7 @@ exports.draftDetail = async function(params, query) {
         draft_id : draft['_id'],
         image : draft['image'],
         title : draft['title'],
+        cost : draft['cost'],
         like : draft['like'],
         drawer_id : tattooist['_id'],
         drawer_nickname : tattooist['nickname'],
@@ -237,23 +238,19 @@ exports.tattooistDetail = async function(params, query) {
     }
     // filter : artwork
     else if (params.filter === 'artwork') {
-        // mock-up
-        return_value.push({
-            artwork_id : "test_id",
-            image : "test_image",
-            cost : "test_cost",
-            time : "test_time"
-        })
+        // 블록체인에서 히스토리를 받아서 endTattoo / addProcedure 만 가져와야 함
+        // 현재는 일차 구현 명목으로 최근 쿼리만 가져오고 있음
 
-        // for await (let artwork_id of tattooist['artworks']) {
-        //     const artwork = await blockchain.getTattooInfo(artwork_id)
-        //     const item = {
-        //         artwork_id : artwork_id,
-        //         image : artwork['image']
-        //     }
-        //
-        //     return_value.push(item)
-        // }
+        for await (let tattoo_id of tattooist['artworks']) {
+            const tattoo_info = await blockchain.getTattooInfo(tattoo_id)
+
+            return_value.push({
+                artwork_id : tattoo_id,
+                image : tattoo_info['image'],
+                cost : tattoo_info['cost'],
+                timestamp : tattoo_info['timestamp']
+            })
+        }
     }
     // filter : reservation
     else if (params.filter === 'reservation') {
@@ -452,13 +449,16 @@ exports.userMyPage = async function(params) {
         image : user['image']
     }
 
-    // blockchain query
-    let return_value = []
+    let return_value = [] // 유저가 새긴 여러 개의 타투
 
-    const tattoo_history = await blockchain.getTattooHistory(user['_id'])
+    for await (let tattoo_id of user['tattoos']) {
+        const tattoo_info = [] // 단일 타투의 히스토리
+        const tattoo_history = await blockchain.getTattooHistory(tattoo_id)
 
-    for (let tattoo of tattoo_history) {
-        return_value.push(tattoo)
+        for (let tattoo_state of tattoo_history) {
+            tattoo_info.push(tattoo_state)
+        }
+        return_value.push(tattoo_info)
     }
 
     return {user_info, return_value}

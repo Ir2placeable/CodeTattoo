@@ -52,9 +52,6 @@ const tattooistSchema = mongoose.Schema({
     reservations : {
         type : [String]
     },
-    requests : {
-        type : [String]
-    },
     unavailable : {
         type : [unavailableSchema]
     }

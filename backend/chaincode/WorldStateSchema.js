@@ -1,13 +1,12 @@
 const mongoose = require('mongoose')
 
 // TattooState
-// 0 : "Created",
-// 1 : "Reserved",
-// 2 : "Tattooing",
-// 3 : "Tattooed",
-// 4 : "Retouched",
-// 5 : "Covered-up",
-// 6 : "Suspended"
+// 0 : "Suspend",
+// 1 : "Created",
+// 2 : "StartFirstTattoo",
+// 3 : "EndFirstTattoo",
+// 4 : "AddProcedure-Retouching",
+// 5 : "AddProcedure-CoverUp",
 
 const activatorSchema = new mongoose.Schema({
     id : {
@@ -39,7 +38,7 @@ const tattooInfoSchema  = new mongoose.Schema({
         type : Number
     },
     image : {
-        type : [String]
+        type : String
     },
     body_part : {
         type : String

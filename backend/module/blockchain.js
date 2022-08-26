@@ -35,16 +35,19 @@ exports.invoke = async function(function_name, key, data) {
 
     // 분기할 것
     if (function_name === 'newTattoo') {
+        // state : 1
         await contract.submitTransaction('newTattoo', key, data['owner_info'], Math.floor(Date.now() / 1000));
-    } else if (function_name === 'makeReservation') {
-        await contract.submitTransaction('makeReservation', key, data['tattooist_info'], Math.floor(Date.now() / 1000), data['cost'], data['image'], data['body_part']);
     } else if (function_name === 'startTattoo') {
+        // state : 2
         await contract.submitTransaction('startTattoo', key, data['tattooist_info'], Math.floor(Date.now() / 1000), data['cost'], data['image'], data['body_part'], data['inks'], data['niddle'], data['depth'], data['machine']);
     } else if (function_name === 'endTattoo') {
+        // state : 3
         await contract.submitTransaction('endTattoo', key, data['tattooist_info'], Math.floor(Date.now() / 1000), data['cost'], data['image'], data['body_part'], data['inks'], data['niddle'], data['depth'], data['machine']);
     } else if (function_name === 'addProcedure') {
-        await contract.submitTransaction('addProcedure', key, data['tattooist_info'], Math.floor(Date.now() / 1000), data['cost'], data['image'], data['body_part'], data['inks'], data['niddle'], data['depth'], data['machine']);
+        // state : 4(Retouched), 5(CoveredUp)
+        await contract.submitTransaction('addProcedure', key, data['tattooist_info'], Math.floor(Date.now() / 1000), data['state_index'], data['cost'], data['image'], data['body_part'], data['inks'], data['niddle'], data['depth'], data['machine']);
     } else if (function_name === 'suspend') {
+        // state : 0
         await contract.submitTransaction('suspend', key, data['owner_info'], Math.floor(Date.now() / 1000));
     } else if (function_name === 'addSideEffect') {
         await contract.submitTransaction('addSideEffect', key, data['founder_info'],  Math.floor(Date.now() / 1000), data['image'], data['symptom']);
