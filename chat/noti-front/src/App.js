@@ -1,5 +1,6 @@
 import logo from './logo.svg';
 import './App.css';
+import "./util/fcm";
 
 function App() {
   return (
