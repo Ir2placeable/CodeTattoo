@@ -33,7 +33,7 @@ public class FCMinitializer {
         }
     }
 
-    private String getAccessToken() throws IOException {
+    public String getAccessToken() throws IOException {
         GoogleCredentials googleCredentials = GoogleCredentials.fromStream(new ClassPathResource(FIREBASE_CONFIG_PATH).getInputStream())
                 .createScoped(List.of("https://www.googleapis.com/auth/cloud-platform"));
         googleCredentials.refreshIfExpired();
