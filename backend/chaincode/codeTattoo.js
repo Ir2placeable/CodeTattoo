@@ -15,18 +15,18 @@ class CodeTattoo extends Contract {
     }
 
     async newTattoo(ctx, key, owner_info, timestamp) {
-        let new_tattoo = {
+        const new_tattoo = {
             state : 0,
-            activator : owner_info,
+            activator_id : owner_info,
             timestamp : timestamp,
             cost : "",
             image : "",
             body_part : "",
-            inks : [],
-            niddle : [],
+            inks : "",
+            niddle : "",
             depth : "",
             machine : "",
-            side_effects : []
+            side_effects : { image : "", symptom : "" }
         }
 
         await ctx.stub.putState(key, Buffer.from(JSON.stringify(new_tattoo)))
@@ -34,115 +34,123 @@ class CodeTattoo extends Contract {
 
     async makeReservation(ctx, key, tattooist_info, timestamp, cost, image, body_part) {
         let tattoo = await ctx.stub.getState(key)
+
         if (!tattoo || tattoo.length === 0) {
             throw new Error(`${key} does not exist`);
         }
+        tattoo = JSON.parse(tattoo.toString())
 
-        if(tattoo['state'] !== 0) {
-            throw new Error('wrong state, now state : ' + tattoo['state']);
+        if (tattoo.state !== 0) {
+            throw new Error('wrong state, now state : ' + tattoo.state);
         }
 
-        tattoo['activator'] = tattooist_info
-        tattoo['state'] = 1
-        tattoo['timestamp'] = timestamp
-        tattoo['cost'] = cost
-        tattoo['image'] = image
-        tattoo['body_part'] = body_part
+        tattoo.activator_id = tattooist_info
+        tattoo.state = 1
+        tattoo.timestamp = timestamp
+        tattoo.cost = cost
+        tattoo.image = image
+        tattoo.body_part = body_part
 
         await ctx.stub.putState(key, Buffer.from(JSON.stringify(tattoo)));
     }
 
     async startTattoo(ctx, key, tattooist_info, timestamp, cost, image, body_part, inks, niddle, depth, machine) {
         let tattoo = await ctx.stub.getState(key);
+
         if (!tattoo || tattoo.length === 0) {
             throw new Error(`${key} does not exist`);
         }
+        tattoo = JSON.parse(tattoo.toString())
 
-        if(tattoo['state'] !== 1) {
-            throw new Error('wrong state, now state : ' + tattoo['state']);
+        if(tattoo.state !== 1) {
+            throw new Error('wrong state, now state : ' + tattoo.state);
         }
 
-        tattoo['activator'] = tattooist_info
-        tattoo['state'] = 2
-        tattoo['timestamp'] = timestamp
-        tattoo['cost'] = cost
-        tattoo['image'] = image
-        tattoo['body_part'] = body_part
-        tattoo['inks'] = inks
-        tattoo['niddle'] = niddle
-        tattoo['depth'] = depth
-        tattoo['machine'] = machine
+        tattoo.activator_id = tattooist_info
+        tattoo.state = 2
+        tattoo.timestamp = timestamp
+        tattoo.cost = cost
+        tattoo.image = image
+        tattoo.body_part = body_part
+        tattoo.inks = inks
+        tattoo.niddle = niddle
+        tattoo.depth = depth
+        tattoo.machine = machine
 
         await ctx.stub.putState(key, Buffer.from(JSON.stringify(tattoo)));
     }
 
-    // tattooist_info example : { id : "0x456def", nickname : "john" }
+    // id example : { id : "0x456def", nickname : "john" }
     // params example : { cost : 50000, image : ["url1", "url2"], body_part : "back", inks : ["indigo_black", "real_red"], niddle : ["round_shader", "magnum"], depth : 3, machine : "coil" }
     async endTattoo(ctx, key, tattooist_info, timestamp, cost, image, body_part, inks, niddle, depth, machine) {
         let tattoo = await ctx.stub.getState(key);
+
         if (!tattoo || tattoo.length === 0) {
             throw new Error(`${key} does not exist`);
         }
+        tattoo = JSON.parse(tattoo.toString())
 
-        if(tattoo['state'] !== 2) {
-            throw new Error('wrong state, now state : ' + tattoo['state']);
+        if(tattoo.state !== 2) {
+            throw new Error('wrong state, now state : ' + tattoo.state);
         }
 
-        tattoo['activator'] = tattooist_info
-        tattoo['state'] = 3
-        tattoo['timestamp'] = timestamp
-        tattoo['cost'] = cost
-        tattoo['image'] = image
-        tattoo['body_part'] = body_part
-        tattoo['inks'] = inks
-        tattoo['niddle'] = niddle
-        tattoo['depth'] = depth
-        tattoo['machine'] = machine
+        tattoo.activator_id = tattooist_info
+        tattoo.state = 3
+        tattoo.timestamp = timestamp
+        tattoo.cost = cost
+        tattoo.image = image
+        tattoo.body_part = body_part
+        tattoo.inks = inks
+        tattoo.niddle = niddle
+        tattoo.depth = depth
+        tattoo.machine = machine
 
         await ctx.stub.putState(key, Buffer.from(JSON.stringify(tattoo)));
     }
 
     // state_index should be 4(Retouched), 5(Covered-up)
-    // tattooist_info example : { id : "0x456def", nickname : "john" }
+    // id example : { id : "0x456def", nickname : "john" }
     // params example : { cost : 50000, image : ["url1", "url2"], body_part : "back", inks : ["indigo_black", "real_red"], niddle : ["round_shader", "magnum"], depth : 3, machine : "coil" }
     async addProcedure(ctx, key, tattooist_info, timestamp, state_index, cost, image, body_part, inks, niddle, depth, machine) {
         let tattoo = await ctx.stub.getState(key);
         if (!tattoo || tattoo.length === 0) {
             throw new Error(`${key} does not exist`);
         }
+        tattoo = JSON.parse(tattoo.toString())
 
-        if(tattoo['state'] !== 3) {
-            throw new Error('wrong state, now state : ' + tattoo['state']);
+        if(tattoo.state !== 3) {
+            throw new Error('wrong state, now state : ' + tattoo.state);
         }
 
         if(state_index !== 4 || state_index !== 5) {
             throw new Error('wrong state, state should be 4(retouched) or 5(covered_up)');
         }
 
-        tattoo['activator'] = tattooist_info
-        tattoo['state'] = state_index
-        tattoo['timestamp'] = timestamp
-        tattoo['cost'] = cost
-        tattoo['image'] = image
-        tattoo['body_part'] = body_part
-        tattoo['inks'] = inks
-        tattoo['niddle'] = niddle
-        tattoo['depth'] = depth
-        tattoo['machine'] = machine
+        tattoo.activator_id = tattooist_info
+        tattoo.state = state_index
+        tattoo.timestamp = timestamp
+        tattoo.cost = cost
+        tattoo.image = image
+        tattoo.body_part = body_part
+        tattoo.inks = inks
+        tattoo.niddle = niddle
+        tattoo.depth = depth
+        tattoo.machine = machine
 
         await ctx.stub.putState(key, Buffer.from(JSON.stringify(tattoo)));
     }
 
-    // owner_info example : { id "0x123abc", nickname : "ato" }
+    // id example : { id "0x123abc", nickname : "ato" }
     async suspend(ctx, key, owner_info, timestamp) {
         let tattoo = await ctx.stub.getState(key);
         if (!tattoo || tattoo.length === 0) {
             throw new Error(`${key} does not exist`);
         }
+        tattoo = JSON.parse(tattoo.toString())
 
-        tattoo['activator'] = owner_info
-        tattoo['state'] = 6
-        tattoo['timestamp'] = timestamp
+        tattoo.activator_id = owner_info
+        tattoo.state = 6
+        tattoo.timestamp = timestamp
 
         await ctx.stub.putState(key, Buffer.from(JSON.stringify(tattoo)));
     }
@@ -193,13 +201,11 @@ class CodeTattoo extends Contract {
         if (!tattoo || tattoo.length === 0) {
             throw new Error(`${key} does not exist`);
         }
+        tattoo = JSON.parse(tattoo.toString())
 
-        tattoo['activator'] = founder_info
-        tattoo['side_effects'].push({
-            image : image,
-            symptom : symptom
-        })
-        tattoo['timestamp'] = timestamp
+        tattoo.activator_id = founder_info
+        tattoo.side_effects = { image: image, symptom: symptom }
+        tattoo.timestamp = timestamp
 
         await ctx.stub.putState(key, Buffer.from(JSON.stringify(tattoo)));
     }
@@ -210,7 +216,7 @@ class CodeTattoo extends Contract {
             throw new Error(`${key} does not exist`);
         }
 
-        return tattoo['side_effects'].toString();
+        return tattoo.side_effects.toString();
     }
 }
 

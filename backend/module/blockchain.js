@@ -39,11 +39,11 @@ exports.invoke = async function(function_name, key, data) {
     } else if (function_name === 'makeReservation') {
         await contract.submitTransaction('makeReservation', key, data['tattooist_info'], Math.floor(Date.now() / 1000), data['cost'], data['image'], data['body_part']);
     } else if (function_name === 'startTattoo') {
-        await contract.submitTransaction('startTattoo', key, data['tattooist_info'] , Math.floor(Date.now() / 1000), data['cost'], data['image'], data['body_part'], data['inks'], data['niddle'], data['depth'], data['machine']);
+        await contract.submitTransaction('startTattoo', key, data['tattooist_info'], Math.floor(Date.now() / 1000), data['cost'], data['image'], data['body_part'], data['inks'], data['niddle'], data['depth'], data['machine']);
     } else if (function_name === 'endTattoo') {
-        await contract.submitTransaction('endTattoo', key, data['tattooist_info'] , Math.floor(Date.now() / 1000), data['cost'], data['image'], data['body_part'], data['inks'], data['niddle'], data['depth'], data['machine']);
+        await contract.submitTransaction('endTattoo', key, data['tattooist_info'], Math.floor(Date.now() / 1000), data['cost'], data['image'], data['body_part'], data['inks'], data['niddle'], data['depth'], data['machine']);
     } else if (function_name === 'addProcedure') {
-        await contract.submitTransaction('addProcedure', key, data['tattooist_info'] , Math.floor(Date.now() / 1000), data['cost'], data['image'], data['body_part'], data['inks'], data['niddle'], data['depth'], data['machine']);
+        await contract.submitTransaction('addProcedure', key, data['tattooist_info'], Math.floor(Date.now() / 1000), data['cost'], data['image'], data['body_part'], data['inks'], data['niddle'], data['depth'], data['machine']);
     } else if (function_name === 'suspend') {
         await contract.submitTransaction('suspend', key, data['owner_info'], Math.floor(Date.now() / 1000));
     } else if (function_name === 'addSideEffect') {

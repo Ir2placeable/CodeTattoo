@@ -460,6 +460,7 @@ server.post('/blockchain/invoke/:function/:key', (req, res) => {
             res.send({ success : true })
         })
         .catch((err) => {
+            console.log(err)
             res.send({ success : false, code : err })
         })
 })
