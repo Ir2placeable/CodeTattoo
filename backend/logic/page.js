@@ -92,6 +92,7 @@ exports.draftDetail = async function(params, query) {
         cost : draft['cost'],
         like : draft['like'],
         drawer_id : tattooist['_id'],
+        drawer_image : tattooist['image'],
         drawer_nickname : tattooist['nickname'],
         drawer_location : tattooist['location'],
         genre : draft['genre'],
@@ -207,6 +208,7 @@ exports.tattooistDetail = async function(params, query) {
         isFollowed : false,
     }
 
+    // Only User : follow 여부 확인
     if (query.user_id) {
         const user = await User.findOne({ _id : query.user_id })
         if (!user) {

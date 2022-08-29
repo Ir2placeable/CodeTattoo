@@ -288,29 +288,6 @@ exports.unFollowTattooist = async function(params, body) {
     await User.updateOne({ _id : params.id }, {$pull : { follows : body.tattooist_id }})
 }
 
-exports.createReservation = async function(body) {
-    let new_reservation = new Reservation()
-
-    // 도안이 있는 경우 실행
-    if (body['image']) {
-        const imageStorage_params = { title : new_reservation['_id'], image : body.image, mime : body.mime }
-        const image_url = await imageStorage.upload(imageStorage_params)
-
-        new_reservation['image'] = image_url
-    }
-
-    new_reservation['customer_id'] = body.user_id
-    new_reservation['tattooist_id'] = body.tattooist_id
-    new_reservation['cost'] = body.cost
-    new_reservation['date'] = body.date
-    new_reservation['time_slot'] = body.time_slot
-
-    await new_reservation.save()
-    await Tattooist.updateOne({ _id : body.tattooist_id }, {$push : { reservations : new_reservation['_id'] }})
-
-    // 유저와 타투이스트 채팅 생성하기
-}
-
 exports.createUnavailable = async function(params, body) {
     const tattooist = await Tattooist.findOne({ _id : params.id })
     if(!tattooist) {
@@ -336,6 +313,14 @@ exports.deleteUnavailable = async function(params, body) {
     }
 }
 
+exports.createReservation = async function(body) {
+    let new_reservation = new Reservation(body)
+
+    await new_reservation.save()
+    await Tattooist.updateOne({ _id : body.tattooist_id }, {$push : { reservations : new_reservation['_id'] }})
+
+    // 유저와 타투이스트 채팅 생성하기
+}
 exports.editReservation = async function(params, body) {
     // date, time_slot, cost 수정 Only
     await Reservation.updateOne({ _id : params.id }, {$set : { date : body.date, time_slot : body.time_slot, cost : body.cost, body_part : body.body_part }})
@@ -398,7 +383,6 @@ exports.beginProcedure = async function(params, body) {
 
     return new_tattoo['_id']
 }
-
 exports.finishProcedure = async function(params, body) {
     const tattooist = await Tattooist.findOne({ _id : body.tattooist_id })
     const reservation = await Reservation.findOne({ _id : params.id })
