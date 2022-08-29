@@ -10,6 +10,7 @@ import {
 import { useState } from 'react';
 import moment from 'moment';
 import { useEffect } from 'react';
+import useCreateReservation from '../../../hooks/useCreateReservation';
 
 const AvailableTime = ({ value, isAdmin, id }) => {
   const time = [
@@ -39,19 +40,29 @@ const AvailableTime = ({ value, isAdmin, id }) => {
     const [t, m] = e.target.innerText.split(':');
     const time_slot = t + m;
 
-    const temp = unavailable;
-    temp.push({date, time_slot});
-    setUnavailable(temp);
-    const temp2 = prev;
-    temp2.push(e.target);
-    setPrev(temp2);
+    if(isAdmin){
+      const temp = unavailable;
+      temp.push({date, time_slot});
+      setUnavailable(temp);
+      const temp2 = prev;
+      temp2.push(e.target);
+      setPrev(temp2);
 
-    e.target.style.backgroundColor = '#2370DF';
+      e.target.style.backgroundColor = '#2370DF';
+    } else {
+      if(prev[0]){
+        prev[0].style.backgroundColor = '#484848';
+      }
+
+      setPrev([e.target]);
+      setUnavailable({ date, time_slot })
+      e.target.style.backgroundColor = '#2370DF';
+    }
   }
 
   const timeActive = async() => {
     //console.log(unavailable)
-    const res = await axios.post(`${APIURL}/create/unavailable/${id}`, {
+    const res = await axios.post(`${APIURL}/remove/unavailable/${id}`, {
       unavailable
     })
 
@@ -65,7 +76,7 @@ const AvailableTime = ({ value, isAdmin, id }) => {
 
   const timeDeActive = async() => {
     //console.log(unavailable)
-    const res = await axios.post(`${APIURL}/remove/unavailable/${id}`, {
+    const res = await axios.post(`${APIURL}/create/unavailable/${id}`, {
       unavailable
     })
 
@@ -74,6 +85,26 @@ const AvailableTime = ({ value, isAdmin, id }) => {
       window.location.replace('')
     } else {
       console.log('time deactive fail')
+    }
+  }
+
+  const createReservation = useCreateReservation();
+
+  const onCreateReservation = () => {
+    const user = getCookie('user_id');
+
+    if(!user){
+      alert('로그인이 필요합니다!')
+      return;
+    } else {
+      const data = {
+        user_id: user,
+        tattooist_id: id,
+        date: unavailable.date,
+        time_slot: unavailable.time_slot
+      }
+      console.log(data)
+      createReservation({ data });
     }
   }
 
@@ -99,7 +130,7 @@ const AvailableTime = ({ value, isAdmin, id }) => {
           </TimeBox>
 
           {!isAdmin ? (
-            <ReservRequestBtn>
+            <ReservRequestBtn onClick={onCreateReservation}>
               상담 문의
             </ReservRequestBtn>
           ) : (

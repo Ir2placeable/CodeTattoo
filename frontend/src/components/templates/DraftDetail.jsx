@@ -5,6 +5,7 @@ import {
   SmallDraftBox,
   SmallTattooistBox,
   DraftEditBtn,
+  DraftInQuiryBtn
 } from "../../styledComponents";
 import SmallTattooist from "../organisms/tattooist/SmallTattooist";
 import SmallDraft from "../organisms/draft/SmallDraft";
@@ -16,6 +17,7 @@ import { getCookie } from "../../config/cookie";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGear } from "@fortawesome/free-solid-svg-icons";
+import useCreateReservation from "../../hooks/useCreateReservation";
 
 // { detail }
 const DraftDetail = () => {
@@ -46,11 +48,34 @@ const DraftDetail = () => {
     if(id && id === tattooist.drawer_id){
       setIsAdmin(true);
     }
+
+    // console.log(detail)
   }, [detail]);
 
   const navigate = useNavigate();
   const goEdit = () => {
     navigate('../edit')
+  }
+
+  const createReservation = useCreateReservation();
+
+  const onCreateReservation = () => {
+    const user = getCookie('user_id');
+
+    if(!user){
+      alert('로그인이 필요합니다!')
+      return;
+    } else {
+
+      const data = {
+        user_id: user,
+        tattooist_id: tattooist.drawer_id,
+        image: draft.image,
+        cost: genre.cost
+      };
+    
+      createReservation({ data });
+    }
   }
 
   return (
@@ -73,6 +98,10 @@ const DraftDetail = () => {
         </SmallTattooistBox>
 
       </DraftDetailMainBox>
+
+      <DraftInQuiryBtn onClick={onCreateReservation}>
+        상담문의
+      </DraftInQuiryBtn>
     </ListDiv>
   );
 };

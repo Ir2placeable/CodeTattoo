@@ -24,7 +24,7 @@ const useTimeDeactive = () => {
   const id = getCookie('tattooist_id');
 
   const timeActive = async(unavailable) => {
-    const res = await axios.post(`${APIURL}/create/unavailable/${id}`, {
+    const res = await axios.post(`${APIURL}/remove/unavailable/${id}`, {
       unavailable
     })
 
@@ -36,7 +36,7 @@ const useTimeDeactive = () => {
   }
 
   const timeDeActive = async(unavailable) => {
-    const res = await axios.post(`${APIURL}/remove/unavailable/${id}`, {
+    const res = await axios.post(`${APIURL}/create/unavailable/${id}`, {
       unavailable
     })
 
