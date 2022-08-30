@@ -4,9 +4,11 @@
 
 [2022 공개SW 개발자대회](https://www.oss.kr/dev_competition)에 출품하는 프로젝트임을 밝힙니다.
 
+This project has been officially submitted in [2022 Open SW Development Contest](https://www.oss.kr/dev_competition).
+
 <br/>
 
-## 프로젝트 소개
+## 프로젝트 소개 : Abstract
 올바르고 안전한 타투문화를 전파하기 위해 시작된 프로젝트 입니다.
 
 웹사이트를 통해 타투 도안과 타투이스트 정보를 제공합니다.
@@ -17,20 +19,32 @@
 
 [피그마 구경하기](https://www.figma.com/file/rw67f0oKN87M4m02yHViGE/CodeTattoo-Figma?node-id=0%3A1)
 
+#
+
+The CodeTattoo Project is started to inspire an open culture of tattoo in Korea.
+
+We offer information of tattoo draft/tattooist through a website.
+
+Data which is used on tattoo procedure is stored in Blockchain, HyperLedger Fabric. 
+
+Blockchain Data will be able to employ to find out a side effect or do cover-up/retouch procedure.
+
+[Watch my Figma!](https://www.figma.com/file/rw67f0oKN87M4m02yHViGE/CodeTattoo-Figma?node-id=0%3A1)
+
 <br/>
 
-## 영상자료
+## 영상자료 : Video Clips
 
 <br/>
 
 
-## 시스템 구성도
+## 시스템 구성도 : System structure
 
 <img width="700" alt="코드타투 시스템 구성도" src="https://user-images.githubusercontent.com/24891555/181719277-65bfb1b5-99a2-4ab7-8439-8b26d5477945.png">
 
 <br/>
 
-## 팀원 소개
+## 팀원 소개 : Team members
 
 <img src="https://user-images.githubusercontent.com/24891555/181700539-16ba45ee-9165-44ad-a3d1-f86070300ec8.jpg" width="170" height="170" align="left"/>
 
