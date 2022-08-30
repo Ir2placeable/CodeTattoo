@@ -163,7 +163,7 @@ exports.tattooist = async function(params, query) {
             nickname: tattooist['nickname'],
             location: tattooist['location'],
             specialize: tattooist['specialize'],
-            followers: tattooist['followers'],
+            followers: tattooist['follower'],
             description: tattooist['description'],
             isFollowed : false
         }
@@ -204,7 +204,7 @@ exports.tattooistDetail = async function(params, query) {
         contact : tattooist['contact'],
         description : tattooist['description'],
         specialize : tattooist['specialize'],
-        followers : tattooist['followers'],
+        followers : tattooist['follower'],
         isFollowed : false,
     }
 
@@ -257,7 +257,7 @@ exports.tattooistDetail = async function(params, query) {
     // filter : reservation
     else if (params.filter === 'reservation') {
         const unavailable_list = tattooist['unavailable'].findOne({ date : query.date })
-        
+
         for (let unavailable of unavailable_list ) {
             return_value.push(unavailable['time_slot'])
         }
@@ -384,7 +384,7 @@ const scrapTattooist = async function(params, query) {
             nickname: tattooist['nickname'],
             location: tattooist['location'],
             specialize: tattooist['specialize'],
-            followers: tattooist['followers'],
+            followers: tattooist['follower'],
             description: tattooist['description'],
             isFollowed : true
         }
