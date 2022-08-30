@@ -15,6 +15,8 @@ import { useEffect } from "react";
 import axios from "axios";
 import { APIURL } from "../../config/key";
 import AvailableTime from "../organisms/reservation/AvailableTime";
+import { useTransition } from "react";
+import useTattooistDetail from "../../hooks/useTattooistDetail";
 
 const mark = [
   "220810",
@@ -48,20 +50,26 @@ const TattooistDetailReservation = () => {
   const [value, onChange] = useState(new Date());
   const [id, setId] = useState('');
   const [isAdmin, setIsAdmin] = useState(false);
+  const [tattooist, data] = useTattooistDetail(`/tattooist/reservation/${param.tattooist_id}`);
 
   useEffect(() => {
     let _id = getCookie('tattooist_id');
 
     if(_id === param.tattooist_id){
       setIsAdmin(true);
-    } else {
+    } 
+    else {
       if(!_id){
-        _id = getCookie('user_id')
+        _id = param.tattooist_id
       }
     }
 
     setId(_id);
+
+    
   }, [])
+
+  console.log(tattooist, data);
 
   return (
     <>

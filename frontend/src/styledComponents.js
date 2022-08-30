@@ -599,6 +599,7 @@ export const DraftDetailMainBox = styled.div`
   min-height: 550px;
   display: flex;
   justify-content: space-between;
+  // background-color: orange;
 `;
 
 export const SmallDraftBox = styled.div`
@@ -743,6 +744,26 @@ export const TattooistGenreLabel = styled.span`
   text-align: center;
   margin-right: 20px;
 `;
+
+export const DraftInQuiryBtn = styled.div`
+background-color: black;
+border-radius: 5px;
+width: 300px;
+line-height: 45px;
+text-align: center;
+font-size: 20px;
+font-weight: bold;
+cursor: pointer;
+margin-top: 70px;
+border: 3px solid black;
+color: white;
+transition: .4s;
+
+&:hover{
+  color: black;
+  background-color: #eee;
+}
+`
 
 // *** My Page ***
 export const MyPageProfileBox = styled.div`
