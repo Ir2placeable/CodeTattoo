@@ -20,7 +20,7 @@ server.use(cors());
 
 server.use('/', (req, res, next) => {
     connections += 1
-    console.log('\n')
+    console.log('-----------------------------------------------')
     console.log('url : ', req.url)
     console.log('query : ', req.query)
     console.log('body : ', req.body)
