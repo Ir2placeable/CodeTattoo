@@ -398,7 +398,7 @@ const scrapTattooist = async function(params, query) {
     return {count, tattooists}
 }
 
-exports.reservation = async function(params, query) {
+exports.reservation = async function(query) {
     const tattooist = await Tattooist.findOne({ _id : query.tattooist_id })
     if (!tattooist) {
         // 해당 타투이스트 없음 오류
@@ -406,39 +406,29 @@ exports.reservation = async function(params, query) {
         throw 8
     }
 
-    let target_reservation;
-    // filter : confirm
-    if (params.filter === 'confirm') {
-        target_reservation = tattooist['reservations']
-    }
-    // filter : request
-    else if (params.filter === 'request') {
-        target_reservation = tattooist['requests']
-    }
-    // wrong filter
-    else {
-        throw 15
-    }
-
     let return_value = []
 
-    for await (let object_id of target_reservation) {
-        const reservation = await Reservation.findOne({ _id : object_id })
+    for (let reservation_id of tattooist['reservations']) {
+        const reservation = await Reservation.findOne({ _id : reservation_id })
         if (!reservation) { continue }
-        const user = await User.findOne({ _id : reservation['customer_id'] })
+        const user = await User.findOne({ _id : reservation.customer_id })
 
         const item = {
             reservation_id : reservation['_id'],
             image : reservation['image'],
-            user_id : user['_id'],
-            user_nickname : user['nickname'],
+            customer_id : user['_id'],
+            customer_nickname : user['nickname'],
             date : reservation['date'],
             time_slot : reservation['time_slot'],
             cost : reservation['cost'],
-            procedure_status : reservation['procedure_status']
+            body_part : reservation['body_part'],
+            procedure_status : reservation['procedure_status'],
+            confirmed : reservation['confirmed']
         }
+
         return_value.push(item)
     }
+
     return return_value
 }
 
