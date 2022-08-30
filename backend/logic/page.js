@@ -202,6 +202,7 @@ exports.tattooistDetail = async function(params, query) {
         nickname : tattooist['nickname'],
         office : tattooist['office'],
         contact : tattooist['contact'],
+        location : tattooist['location'],
         description : tattooist['description'],
         specialize : tattooist['specialize'],
         followers : tattooist['follower'],
