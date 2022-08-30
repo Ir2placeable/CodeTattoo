@@ -50,7 +50,7 @@ const TattooistDetailReservation = () => {
   const [value, onChange] = useState(new Date());
   const [id, setId] = useState('');
   const [isAdmin, setIsAdmin] = useState(false);
-  const [tattooist, data] = useTattooistDetail(`/tattooist/reservation/${param.tattooist_id}`);
+  const [today, setToday] = useState();
 
   useEffect(() => {
     let _id = getCookie('tattooist_id');
@@ -65,11 +65,10 @@ const TattooistDetailReservation = () => {
     }
 
     setId(_id);
-
+    //console.log('value: ', value, moment(value).format('YYMMDD'));
+    setToday(Number(moment(value).format('YYMMDD')))
     
   }, [])
-
-  console.log(tattooist, data);
 
   return (
     <>
@@ -92,8 +91,14 @@ const TattooistDetailReservation = () => {
         // }}
         tileClassName={({ date, view }) => {
           // "YYYY-MM-DD"
-          if (mark.find((x) => x === moment(date).format("YYMMDD"))) {
-            return "highlight";
+          // if (mark.find((x) => x === moment(date).format("YYMMDD"))) {
+          //   console.log("x: ", mark)
+          //   return "highlight";
+          // }
+
+          const _date = Number(moment(date).format("YYMMDD"))
+          if(today > _date){
+            return 'highlight'
           }
         }}
       />

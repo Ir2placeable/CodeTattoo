@@ -10,7 +10,9 @@ import {
 import { useNavigate } from 'react-router-dom';
 
 const ReservationList = memo(() => {
-  // const reservations = useReservation();
+  const reservations = useReservation();
+
+  console.log(reservations)
 
   const navigate = useNavigate();
   const onClick = () => {

@@ -58,21 +58,15 @@ const App = () => {
     console.log('tattooist scrap: ',res);
   };
 
-  useEffect(() => {
-    //sendRequest();
-  }, []);
-
   return (
-    <div className="font-style" style={{
-      minHeight: '100vh', position: 'relative',
-      paddingBottom: '130px'}}>
+    <div className="font-style">
       <Reset />
 
       {/* HEADER */}
       <Header />
       {/* <Navigation /> */}
       {/* Main Container */}
-      <MainPageDiv id="scroll">
+      <MainPageDiv id="scroll" >
         <Routes>
 
           {/* Main page */}
@@ -127,7 +121,7 @@ const App = () => {
             </Route>
 
             {/* 예약 */}
-            <Route path="reservation" element={<ShowReservation />}>
+            <Route path="reservations" element={<ShowReservation />}>
               <Route path="" element={<ReservationList />} />
               <Route path=":reservation_id" element={<Procedure />} />
             </Route>

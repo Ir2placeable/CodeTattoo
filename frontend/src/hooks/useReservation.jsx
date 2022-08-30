@@ -5,19 +5,19 @@ import { useState } from 'react';
 import { getCookie } from '../config/cookie';
 import { APIURL } from '../config/key';
 
-// ### 타투이스트 예약 페이지
-
-// - GET : /reservations/:id
-//     - id : tattooist_id
-// - Query : None
+// - GET : /reservations
+// - Query : { tattooist_id }
 // - Return : { success, [reservations] }
-//     - reservations : { reservation_id, image, 
-//       user_id, user_nickname, date, cost, procedure_status }
-const useReservation = memo(() => {
+//     - reservations = { 
+//       reservation_id, image, customer_id, 
+//       customer_nickname, date, time_slot, cost, 
+//       body_part, procedure_status, confirmed 
+//     }
+const useReservation = () => {
   const [reservations, setReservations] = useState([]);
 
   const sendRequest = async() => {
-    const res = await axios.get(`${APIURL}/reservations/${getCookie('tattooist_id')}`)
+    const res = await axios.get(`${APIURL}/reservations/?tattooist_id=${getCookie('tattooist_id')}`)
 
     if(res.data.success){
       setReservations(res.data.reservations);
@@ -32,6 +32,6 @@ const useReservation = memo(() => {
   }, []);
 
   return reservations;
-});
+};
 
 export default useReservation;

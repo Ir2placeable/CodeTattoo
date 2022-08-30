@@ -33,7 +33,7 @@ const Header = () => {
 
   return (
     <>
-      <HeaderDiv>
+      <HeaderDiv >
         <HeaderInner>
 
           <HeaderTitle onClick={goHome}>

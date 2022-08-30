@@ -37,6 +37,7 @@ import { APIURL } from "../config/key";
 const useTattooistDetail = (path) => {
   const [tattooist, setTattooist] = useState({});
   const [data, setData] = useState();
+  const location = useLocation();
 
   const sendRequest = async () => {
     let query = "";
