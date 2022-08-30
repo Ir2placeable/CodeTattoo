@@ -257,9 +257,11 @@ exports.tattooistDetail = async function(params, query) {
     }
     // filter : reservation
     else if (params.filter === 'reservation') {
-        const unavailable_list = tattooist['unavailable'].findOne({ date : query.date })
+        const unavailable_list = tattooist['unavailable']
 
-        for (let unavailable of unavailable_list ) {
+        for (let unavailable of unavailable_list) {
+            if (unavailable.date !== parseInt(query.date)) { continue }
+
             return_value.push(unavailable['time_slot'])
         }
     }
