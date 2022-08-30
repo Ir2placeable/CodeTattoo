@@ -25,7 +25,7 @@ The CodeTattoo Project is started to inspire an open culture of tattoo in Korea.
 
 We offer information of tattoo draft/tattooist through a website.
 
-Data which is used on tattoo procedure is stored in Blockchain, HyperLedger Fabric. 
+Data which is used on tattoo procedure is stored safely in Blockchain, HyperLedger Fabric. 
 
 Blockchain Data will be able to employ to find out a side effect or do cover-up/retouch procedure.
 
