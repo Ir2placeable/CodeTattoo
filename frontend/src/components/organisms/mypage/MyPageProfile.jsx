@@ -11,6 +11,7 @@ import {
   MyPageProfileDescription,
   ProfileEdit,
   ProfileImgIcon,
+  TattooistInfoUnitBox, TattooistInfoTitle, TattooistInfoText
 } from "../../../styledComponents";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPenToSquare } from "@fortawesome/free-regular-svg-icons";
@@ -25,9 +26,12 @@ const MyPageProfile = ({ profile }) => {
     navigate("/edit/image");
   };
 
+  console.log('profile info: ', profile)
+
   return (
     <>
       <MyPageProfileBox>
+
         <ProfileImgBox size="profile">
           {profile.image ? (
             <ProfileImg size="profile" src={profile.image} />
@@ -37,9 +41,10 @@ const MyPageProfile = ({ profile }) => {
             </ProfileImgIcon>
           )}
         </ProfileImgBox>
+
         <MyPageProfileInfoBox>
           <MyPageProfileNickname>{profile.nickname}</MyPageProfileNickname>
-          <MyPageProfileInfoList>
+          {/* <MyPageProfileInfoList>
             {profile.location ? (
               <MyPageProfileInfo>
                 Location : {profile.location}
@@ -50,13 +55,41 @@ const MyPageProfile = ({ profile }) => {
                 Specialize : {profile.specialize}
               </MyPageProfileInfo>
             ) : null}
-          </MyPageProfileInfoList>
+          </MyPageProfileInfoList> */}
+
+          <TattooistInfoUnitBox style={{
+            padding: '0'
+          }}>
+            {profile.location && (
+            <>
+            <TattooistInfoTitle type="location">
+              위치
+            </TattooistInfoTitle>
+            <TattooistInfoText type="small">
+              {profile.location}
+            </TattooistInfoText>
+            </>
+            )}
+            {profile.specialize && (
+            <>
+            <TattooistInfoTitle type="specialize">
+              특화분야
+            </TattooistInfoTitle>
+            <TattooistInfoText type="small">
+              {profile.specialize}
+            </TattooistInfoText>
+            </>
+            )}
+          </TattooistInfoUnitBox>
+
+
           {profile.description ? (
             <MyPageProfileDescription>
               {profile.description}
             </MyPageProfileDescription>
           ) : null}
         </MyPageProfileInfoBox>
+
         {getCookie("tattooist_id") === profile.tattooist_id ||
         getCookie("user_id") === profile.user_id ? (
           <ProfileEdit onClick={goEdit}>

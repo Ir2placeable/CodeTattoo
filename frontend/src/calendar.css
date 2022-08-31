@@ -92,7 +92,8 @@
 
   position: relative;
 
-  background-color: #e9e9e9;
+  /* background-color: #e9e9e9; */
+  background-color: white;
 }
 .react-calendar__tile:disabled {
   background-color: #f0f0f0;
@@ -129,5 +130,8 @@
 }
 
 .highlight {
-  background-color: white;
+  /* background-color: white; */
+  background-color: #F4F4F4;
+  color: #B2B2B2;
+  cursor: auto;
 }

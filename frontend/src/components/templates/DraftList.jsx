@@ -21,7 +21,7 @@ const DraftList = ({ filter }) => {
 
   return (
     <>
-      <ListDiv>
+      <ListDiv >
 
         {drafts.length === 0 ? (
           <EmptyBox>

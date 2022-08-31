@@ -70,7 +70,7 @@ const DraftDetail = () => {
       const data = {
         user_id: user,
         tattooist_id: tattooist.drawer_id,
-        image: draft.image,
+        image_url: draft.image,
         cost: genre.cost
       };
     

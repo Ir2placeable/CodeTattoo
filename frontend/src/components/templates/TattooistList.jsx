@@ -20,6 +20,8 @@ const TattooistList = ({ filter }) => {
     page: page,
   });
 
+  console.log(tattooists)
+
   return (
     <>
       <ListDiv>
@@ -36,7 +38,8 @@ const TattooistList = ({ filter }) => {
                 <TattooistContainer key={tattooist.tattooist_id}>
                   <Tattooist tattooist={tattooist} />
                   {getCookie("tattooist_id") ? (
-                    <TattooistControlDisabled />
+                    // <TattooistControlDisabled />
+                    <></>
                   ) : (
                     <TattooistControlBox tattooist={tattooist} />
                   )}
