@@ -206,7 +206,7 @@ server.post('/sign-out/:type', (req, res) => {
     }
 })
 // 명령 : 비밀번호 변경
-server.patch('/edit/pwd/:type/:id', (req, res) => {
+server.patch('/:type/pwd/:id', (req, res) => {
     if (req.params.type === 'user') {
         console.log('command : user edit password')
 

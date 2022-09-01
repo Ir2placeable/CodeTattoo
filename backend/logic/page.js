@@ -413,7 +413,7 @@ exports.reservation = async function(query) {
     for (let reservation_id of tattooist['reservations']) {
         const reservation = await Reservation.findOne({ _id : reservation_id })
         if (!reservation) { continue }
-        const user = await User.findOne({ _id : reservation.customer_id })
+        const user = await User.findOne({ _id : reservation['customer_id'] })
 
         const item = {
             reservation_id : reservation['_id'],
