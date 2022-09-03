@@ -2,6 +2,15 @@ import styled, { css } from "styled-components";
 
 // ======================  COMMON  =====================
 
+export const LoadingBox = styled.div`
+  position: absolute;
+  top: 35%;
+  left: 58%;
+  transform: translate(-50%, -50%);
+  width: 150px;
+  height: 150px;
+`
+
 export const Btn = styled.div`
   display: flex;
   justify-content: center;
@@ -1107,14 +1116,27 @@ export const ProfileImgInput = styled.input`
 export const ProfileInfoInputBox = styled.div`
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-end;
   margin-bottom: 75px;
+
+  ${(props) =>
+    props.type === "password" &&
+    css`
+      margin-bottom: 50px;
+    `}
 `;
 
 export const ProfileInfoInputLabel = styled.label`
   flex-basis: 100px;
   margin-left: 125px;
   font-size: 32px;
+  font-weight: 900;
+`;
+
+export const PasswordInputLabel = styled.label`
+  flex-basis: 190px;
+  margin-left: 75px;
+  font-size: 24px;
   font-weight: 900;
 `;
 

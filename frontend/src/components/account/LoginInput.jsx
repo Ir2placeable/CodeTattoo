@@ -64,6 +64,7 @@ const LoginInput = ({ isTattooist }) => {
   const pushCookie = (data) => {
 
     if(isTattooist){
+      setCookie("email", data.tattooist_info.email , {maxAge: 3000, path: '/'})
       setCookie("nickname", data.tattooist_info.nickname, {maxAge: 3000, path: '/'})
       setCookie("tattooist_id", data.tattooist_info.tattooist_id, {maxAge: 3000, path: '/'})
       setCookie("profile_img_src", data.tattooist_info.image , {maxAge: 3000, path: '/'})
@@ -71,6 +72,7 @@ const LoginInput = ({ isTattooist }) => {
       setCookie("profile_location", data.tattooist_info.location , {maxAge: 3000, path: '/'})
       setCookie("profile_specialize", data.tattooist_info.specialize , {maxAge: 3000, path: '/'})
     } else {
+      setCookie("email", data.user_info.email , {maxAge: 3000, path: '/'})
       setCookie("nickname", data.user_info.nickname, {maxAge: 3000, path: '/'})
       setCookie("user_id", data.user_info.user_id, {maxAge: 3000, path: '/'})
       setCookie("profile_img_src", data.user_info.image , {maxAge: 3000, path: '/'})

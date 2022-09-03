@@ -2,6 +2,9 @@ import axios from "axios";
 import React, { memo, useEffect, useState } from "react";
 import { APIURL } from "../config/key";
 import { getCookie } from "../config/cookie";
+
+// 사용하지 않음 
+
 // ### 회원탈퇴 페이지 : 유저
 
 // - POST : /sign-out/user
