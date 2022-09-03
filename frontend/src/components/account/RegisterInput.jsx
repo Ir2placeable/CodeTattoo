@@ -87,7 +87,7 @@ const RegisterInput = ({ isTattooist }) => {
   // 비밀번호 재입력 유효성 검사
   useEffect(() => {
     if(pwd2 === ''){
-      setIsPwdDiff(false)
+      setIsPwdDiff(true)
       return
     }
 

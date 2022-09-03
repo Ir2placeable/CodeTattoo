@@ -8,12 +8,15 @@ import {
   ProfileInfoInputLabel,
   EyeIconBox,
 } from "../../styledComponents";
-import { getAllCookie, resetCookie } from "../../config/cookie";
+import { getAllCookie, getCookie, resetCookie } from "../../config/cookie";
 import ProfileUploadBtn from "../atomic/edit/ProfileUploadBtn";
 import EyeIcon from "../atomic/edit/EyeIcon";
-import useSignOut from "../../hooks/useSignOut";
+import axios from "axios";
+import { APIURL } from "../../config/key";
+import Loader from "../atomic/common/Loader";
 
 const DeleteAccount = () => {
+  const [loading, setLoading] = useState(false);
   const [eyeClick, setEyeClick] = useState(false);
   const [info, setInfo] = useState({
     email: "",
@@ -33,27 +36,55 @@ const DeleteAccount = () => {
     });
   };
 
-  const useSubmit = () => {
-    const success = useSignOut(email, password);
-    if (success) {
-      // 로그아웃 → 메인 페이지 이동
-      const keys = Object.keys(getAllCookie());
-      console.log(keys);
-      for (let i = 0; i < keys.length; i++) {
-        resetCookie(keys[i]);
-      }
-
-      setTimeout(() => {
-        window.location.replace("/");
-      }, 1000);
-    } else {
-      alert("회원 탈퇴 실패");
+  const sendDeleteRequest = async (email, pwd) => {
+    setLoading(true);
+    let type = "";
+    if (getCookie("user_id")) {
+      type = "user";
+    } else if (getCookie("tattooist_id")) {
+      type = "tattoosit";
     }
+    const res = await axios.post(`${APIURL}/sign-out/${type}`, {
+      email,
+      pwd,
+    });
+
+    if (res.data.success) {
+      return true;
+    } else {
+      return false;
+    }
+  };
+
+  const onSubmit = () => {
+    const deleteSuccess = sendDeleteRequest(email, password);
+
+    setTimeout(() => {
+      if (deleteSuccess) {
+        // 로그아웃 → 메인 페이지 이동
+        const keys = Object.keys(getAllCookie());
+        for (let i = 0; i < keys.length; i++) {
+          resetCookie(keys[i]);
+        }
+
+        setTimeout(() => {
+          window.location.replace("/");
+        }, 1000);
+      } else {
+        alert("회원 탈퇴 실패");
+        setLoading(false);
+      }
+    }, 2000);
   };
 
   const onEyeClick = () => {
     setEyeClick(eyeClick ? false : true);
   };
+
+  if (loading) {
+    return <Loader type="spin" color="#000000" />;
+  }
+
   return (
     <>
       <ProfileFormBox>
@@ -88,7 +119,7 @@ const DeleteAccount = () => {
           </EyeIconBox>
         </ProfileInfoInputBox>
 
-        <ProfileUploadBtn onSubmit={useSubmit} type="delete" text="계정 삭제" />
+        <ProfileUploadBtn onSubmit={onSubmit} type="delete" text="계정 삭제" />
       </ProfileFormBox>
     </>
   );

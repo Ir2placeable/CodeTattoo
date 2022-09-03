@@ -23,7 +23,7 @@ const SmallTattooist = ({ tattooist }) => {
     if (tattooist.isFollowed) setFollowing(true);
   }, []);
 
-  const onClick = useCallback(() => {
+  const onClick = () => {
     if (!getCookie("user_id")) {
       alert("팔로우 기능은 유저 로그인 상태에서 가능합니다.");
     } else {
@@ -35,7 +35,7 @@ const SmallTattooist = ({ tattooist }) => {
         follow();
       }
     }
-  }, [following]);
+  };
 
   const navigate = useNavigate();
   const goTattooist = () => {

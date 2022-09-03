@@ -14,11 +14,13 @@ import {
   ProfileNickname,
   ProfileFormBox,
 } from "../../styledComponents";
-
 import ProfileImgChoice from "../atomic/edit/ProfileImgChoice";
 import ProfileUploadBtn from "../atomic/edit/ProfileUploadBtn";
+import Loader from "../atomic/common/Loader";
 
 const ImageEdit = () => {
+  const [cookie, setCookie] = useState(getCookie("profile_img_src"));
+  const [loading, setLoading] = useState(false);
   const [src, setSrc] = useState(getCookie("profile_img_src"));
   const [image, setImage] = useState({
     data: "",
@@ -34,7 +36,6 @@ const ImageEdit = () => {
 
       reader.addEventListener("load", () => {
         setSrc(reader.result);
-        pushCookie(reader.result);
       });
     }
     // console.log(src);
@@ -70,16 +71,31 @@ const ImageEdit = () => {
     } else {
       alert("이미지 등록에 실패했습니다.");
     }
+    setLoading(false);
   };
 
   const pushCookie = (imgSrc) => {
-    removeCookie("profile_img_src");
+    setLoading(true);
+    resetCookie("profile_img_src");
     setCookie("profile_img_src", imgSrc, { maxAge: 3000, path: "/" });
   };
 
   const onSubmit = () => {
-    sendRequest();
+    pushCookie(image.data);
+    setTimeout(() => {
+      sendRequest();
+    }, 3000)
   };
+
+  useEffect(() => {
+    console.log(`src: ${src}`);
+    console.log(`image: ${image.data}`);
+    console.log(`cookie: ${cookie}`)
+  }, [image.data, src, cookie])
+
+  if (loading) {
+    return <Loader type="spin" color="#000000" />;
+  }
 
   return (
     <>
