@@ -29,6 +29,9 @@ const Tattooist = ({ tattooist }) => {
   const onMouseLeave = useCallback(() => {
     setHover(false);
   }, []);
+
+  console.log(tattooist)
+
   return (
     <>
       <TattooistImgBox
@@ -47,19 +50,39 @@ const Tattooist = ({ tattooist }) => {
           <TattooistImgHover>{tattooist.followers} followers</TattooistImgHover>
         )}
       </TattooistImgBox>
+
       <TattooistInfoBox>
+
         <TattooistInfoUnitBox>
-          <TattooistInfoTitle>Nickname :</TattooistInfoTitle>
+          {/* <TattooistInfoTitle>닉네임</TattooistInfoTitle> */}
           <TattooistInfoText>{tattooist.nickname}</TattooistInfoText>
         </TattooistInfoUnitBox>
+
         <TattooistInfoUnitBox>
-          <TattooistInfoTitle>Office :</TattooistInfoTitle>
-          <TattooistInfoText>{tattooist.location}</TattooistInfoText>
+          <TattooistInfoTitle type="location">
+            위치
+          </TattooistInfoTitle>
+          <TattooistInfoText type="small">
+            {tattooist.location}
+          </TattooistInfoText>
+          <TattooistInfoTitle type="specialize">
+            특화분야
+          </TattooistInfoTitle>
+          <TattooistInfoText type="small">
+            {tattooist.specialize}
+          </TattooistInfoText>
+          {/* <TattooistInfoTitle>위치</TattooistInfoTitle> */}
+          {/* <TattooistInfoText>{tattooist.location}</TattooistInfoText> */}
         </TattooistInfoUnitBox>
+
         <TattooistInfoUnitBox>
-          <TattooistInfoTitle>Specialize :</TattooistInfoTitle>
-          <TattooistInfoText>{tattooist.specialize}</TattooistInfoText>
+          <TattooistInfoText type="description">
+            {tattooist.description}
+          </TattooistInfoText>
+          {/* <TattooistInfoTitle>주장르</TattooistInfoTitle> */}
+          {/* <TattooistInfoText>{tattooist.specialize}</TattooistInfoText> */}
         </TattooistInfoUnitBox>
+
       </TattooistInfoBox>
     </>
   );

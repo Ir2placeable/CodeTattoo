@@ -23,7 +23,11 @@ const DraftUpload = () => {
   //   title: '',
   //   description: ''
   // })
-  const [title, setTitle] = useState("");
+  //const [title, setTitle] = useState("");
+  const [info, setInfo] = useState({
+    title: "",
+    cost: ""
+  })
   const [image, setImage] = useState({
     //width: 300,
     //height: 300,
@@ -32,6 +36,7 @@ const DraftUpload = () => {
   });
   const [genre, setGenre] = useState("");
   const [keywords, setKewords] = useState([]);
+  const { title, cost } = info;
 
   //const {title, description} = info;
 
@@ -63,12 +68,21 @@ const DraftUpload = () => {
   };
 
   const sendRequest = async () => {
+    const _cost = Number(cost);
+    console.log(_cost, typeof _cost)
+    
+    if(!_cost){
+      alert('가격 정보는 숫자만 입력해주세요!')
+      return;
+    }
+
     const res = await axios.post(
       `${APIURL}/create/draft/${getCookie("tattooist_id")}`,
       {
         image: image.data,
         mime: image.mime,
         title: title,
+        cost: _cost,
         genre: genre,
         keywords: keywords,
       }
@@ -83,7 +97,7 @@ const DraftUpload = () => {
   };
 
   const onSubmit = () => {
-    if (!src || !title || !genre) {
+    if (!src || !title || !genre || !cost) {
       alert("모든 정보를 입력해주세요!");
     } else {
       sendRequest();
@@ -91,12 +105,12 @@ const DraftUpload = () => {
   };
 
   const onChange = (e) => {
-    // const { name, value } = e.target;
-    // setInfo({
-    //   ...info,
-    //   [name]: value
-    // })
-    setTitle(e.target.value);
+    const { name, value } = e.target;
+    setInfo({
+      ...info,
+      [name]: value
+    })
+    //setTitle(e.target.value);
   };
 
   return (
@@ -116,6 +130,14 @@ const DraftUpload = () => {
             placeholder="title"
             name="title"
             value={title}
+            onChange={onChange}
+          />
+          <ImgText text="도안 가격" />
+          <LoadedImgTitle
+            type="text"
+            placeholder="숫자만 입력해주세요. (단위: 원)"
+            name="cost"
+            value={cost}
             onChange={onChange}
           />
 

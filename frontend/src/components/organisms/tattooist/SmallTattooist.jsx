@@ -21,8 +21,9 @@ const SmallTattooist = ({ tattooist }) => {
 
   useEffect(() => {
     if (tattooist.isFollowed) setFollowing(true);
-  }, []);
-
+    // console.log(tattooist)
+  }, [tattooist]);
+  
   const onClick = () => {
     if (!getCookie("user_id")) {
       alert("팔로우 기능은 유저 로그인 상태에서 가능합니다.");

@@ -89,8 +89,10 @@ exports.draftDetail = async function(params, query) {
         draft_id : draft['_id'],
         image : draft['image'],
         title : draft['title'],
+        cost : draft['cost'],
         like : draft['like'],
         drawer_id : tattooist['_id'],
+        drawer_image : tattooist['image'],
         drawer_nickname : tattooist['nickname'],
         drawer_location : tattooist['location'],
         genre : draft['genre'],
@@ -161,7 +163,7 @@ exports.tattooist = async function(params, query) {
             nickname: tattooist['nickname'],
             location: tattooist['location'],
             specialize: tattooist['specialize'],
-            followers: tattooist['followers'],
+            followers: tattooist['follower'],
             description: tattooist['description'],
             isFollowed : false
         }
@@ -200,13 +202,14 @@ exports.tattooistDetail = async function(params, query) {
         nickname : tattooist['nickname'],
         office : tattooist['office'],
         contact : tattooist['contact'],
+        location : tattooist['location'],
         description : tattooist['description'],
         specialize : tattooist['specialize'],
-        followers : tattooist['followers'],
+        followers : tattooist['follower'],
         isFollowed : false,
-        unavailable : tattooist['unavailable']
     }
 
+    // Only User : follow 여부 확인
     if (query.user_id) {
         const user = await User.findOne({ _id : query.user_id })
         if (!user) {
@@ -238,27 +241,29 @@ exports.tattooistDetail = async function(params, query) {
     }
     // filter : artwork
     else if (params.filter === 'artwork') {
-        // mock-up
-        return_value.push({
-            artwork_id : "test_id",
-            image : "test_image",
-            cost : "test_cost",
-            time : "test_time"
-        })
+        // 블록체인에서 히스토리를 받아서 endTattoo / addProcedure 만 가져와야 함
+        // 현재는 일차 구현 명목으로 최근 쿼리만 가져오고 있음
 
-        for await (let artwork_id of tattooist['artworks']) {
-            const artwork = await blockchain.getTattooInfo(artwork_id)
-            const item = {
-                artwork_id : artwork_id,
-                image : artwork['image']
-            }
+        for await (let tattoo_id of tattooist['artworks']) {
+            const tattoo_info = await blockchain.getTattooInfo(tattoo_id)
 
-            return_value.push(item)
+            return_value.push({
+                artwork_id : tattoo_id,
+                image : tattoo_info['image'],
+                cost : tattoo_info['cost'],
+                timestamp : tattoo_info['timestamp']
+            })
         }
     }
     // filter : reservation
     else if (params.filter === 'reservation') {
-        return_value = tattooist['unavailable']
+        const unavailable_list = tattooist['unavailable']
+
+        for (let unavailable of unavailable_list) {
+            if (unavailable.date !== parseInt(query.date)) { continue }
+
+            return_value.push(unavailable['time_slot'])
+        }
     }
     // wrong filter
     else {
@@ -382,7 +387,7 @@ const scrapTattooist = async function(params, query) {
             nickname: tattooist['nickname'],
             location: tattooist['location'],
             specialize: tattooist['specialize'],
-            followers: tattooist['followers'],
+            followers: tattooist['follower'],
             description: tattooist['description'],
             isFollowed : true
         }
@@ -395,8 +400,8 @@ const scrapTattooist = async function(params, query) {
     return {count, tattooists}
 }
 
-exports.reservation = async function(params) {
-    const tattooist = await Tattooist.findOne({ _id : params.id })
+exports.reservation = async function(query) {
+    const tattooist = await Tattooist.findOne({ _id : query.tattooist_id })
     if (!tattooist) {
         // 해당 타투이스트 없음 오류
         console.log(ErrorTable["8"])
@@ -404,19 +409,23 @@ exports.reservation = async function(params) {
     }
 
     let return_value = []
-    for await (let reservation_id of tattooist['reservations']) {
+
+    for (let reservation_id of tattooist['reservations']) {
         const reservation = await Reservation.findOne({ _id : reservation_id })
         if (!reservation) { continue }
         const user = await User.findOne({ _id : reservation['customer_id'] })
 
         const item = {
-            reservation_id : reservation_id,
+            reservation_id : reservation['_id'],
             image : reservation['image'],
-            user_id : user['_id'],
-            user_nickname : user['nickname'],
-            date : String(reservation['year']) + '-' + String(reservation['month']) + '-' + String(reservation['day']) + '-' + String(reservation['time_slot']),
+            customer_id : user['_id'],
+            customer_nickname : user['nickname'],
+            date : reservation['date'],
+            time_slot : reservation['time_slot'],
             cost : reservation['cost'],
-            procedure_status : reservation['procedure_status']
+            body_part : reservation['body_part'],
+            procedure_status : reservation['procedure_status'],
+            confirmed : reservation['confirmed']
         }
 
         return_value.push(item)
@@ -439,21 +448,17 @@ exports.userMyPage = async function(params) {
         image : user['image']
     }
 
-    let return_value = []
-    // mock-up
-    let tattoo1 = []
-    const state1 = { tattoo_id : "test_tattoo", state : "created", ink : "black, red", niddle : "niddle123", tattooist_id : "test_id_1", customer_id : "test_id_1" }
-    const state2 = { tattoo_id : "test_tattoo", state : "imprinting", ink : "black, red", niddle : "niddle123", tattooist_id : "test_id_1", customer_id : "test_id_1" }
-    const state3 = { tattoo_id : "test_tattoo", state : "imprinted", ink : "black, red", niddle : "niddle123", tattooist_id : "test_id_1", customer_id : "test_id_1" }
-    let tattoo2 = []
-    const state4 = { tattoo_id : "test_tattoo2", state : "created", ink : "black, red", niddle : "niddle123", tattooist_id : "test_id_1", customer_id : "test_id_1" }
-    const state5 = { tattoo_id : "test_tattoo2", state : "imprinting", ink : "black, red", niddle : "niddle123", tattooist_id : "test_id_1", customer_id : "test_id_1" }
-    const state6 = { tattoo_id : "test_tattoo2", state : "imprinted", ink : "black, red", niddle : "niddle123", tattooist_id : "test_id_1", customer_id : "test_id_1" }
-    const state7 = { tattoo_id : "test_tattoo2", state : "side-effected", ink : "black, red", niddle : "niddle123", tattooist_id : "test_id_1", customer_id : "test_id_1" }
+    let return_value = [] // 유저가 새긴 여러 개의 타투
 
-    tattoo1.push(state1, state2, state3)
-    tattoo2.push(state4, state5, state6, state7)
-    return_value.push(tattoo1, tattoo2)
+    for await (let tattoo_id of user['tattoos']) {
+        const tattoo_info = [] // 단일 타투의 히스토리
+        const tattoo_history = await blockchain.getTattooHistory(tattoo_id)
+
+        for (let tattoo_state of tattoo_history) {
+            tattoo_info.push(tattoo_state)
+        }
+        return_value.push(tattoo_info)
+    }
 
     return {user_info, return_value}
 }

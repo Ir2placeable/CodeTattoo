@@ -20,7 +20,7 @@ server.use(cors());
 
 server.use('/', (req, res, next) => {
     connections += 1
-    console.log('\n')
+    console.log('-----------------------------------------------')
     console.log('url : ', req.url)
     console.log('query : ', req.query)
     console.log('body : ', req.body)
@@ -86,12 +86,12 @@ server.get('/scraps/:filter/:page', (req, res) => {
         })
 })
 // 페이지 : 예약
-server.get('/reservations/:id', (req, res) => {
+server.get('/reservations', (req, res) => {
     console.log('Page : Tattooist Reservation')
 
-    page.reservation(req.params)
+    page.reservation(req.query)
         .then((returned) => {
-            res.send({ success : true, reservations : returned})
+            res.send({ success : true, reservations : returned })
         })
         .catch((err) => {
             res.send({ success : false, code : err })
@@ -203,6 +203,32 @@ server.post('/sign-out/:type', (req, res) => {
     // wrong type error
     else {
         res.send({ success : false, code : 12 })
+    }
+})
+// 명령 : 비밀번호 변경
+server.patch('/:type/pwd/:id', (req, res) => {
+    if (req.params.type === 'user') {
+        console.log('command : user edit password')
+
+        command.userPasswordEdit(req.params, req.body)
+            .then((returned) => {
+                res.send({ success : true })
+            })
+            .catch((err) => {
+                res.send({ success : false, code : err })
+            })
+    } else if (req.params.type === 'tattooist') {
+        console.log('command : tattooist edit password')
+
+        command.tattooistPasswordEdit(req.params, req.body)
+            .then((returned) => {
+                res.send({ success : true })
+            })
+            .catch((err) => {
+                res.send({ success : false, code : err })
+            })
+    } else {
+        res.send({ success : false, code : "wrong filter" })
     }
 })
 // 명령 : 유저 정보수정
@@ -338,44 +364,6 @@ server.patch('/draft/:id', (req, res) => {
             console.log(err)
         })
 })
-// 명령 : 예약 생성
-server.post('/create/reservation/:id', (req, res) => {
-    console.log('command : Create reservation')
-
-    command.createReservation(req.params, req.body)
-        .then((returned) => {
-            res.send({ success : true })
-        })
-        .catch((err) => {
-            res.send({ success : false, code : err })
-        })
-})
-// 명령 : 비밀번호 변경
-server.patch('/edit/pwd/:type/:id', (req, res) => {
-    if (req.params.type === 'user') {
-        console.log('command : user edit password')
-
-        command.userPasswordEdit(req.params, req.body)
-            .then((returned) => {
-                res.send({ success : true })
-            })
-            .catch((err) => {
-                res.send({ success : false, code : err })
-            })
-    } else if (req.params.type === 'tattooist') {
-        console.log('command : tattooist edit password')
-
-        command.tattooistPasswordEdit(req.params, req.body)
-            .then((returned) => {
-                res.send({ success : true })
-            })
-            .catch((err) => {
-                res.send({ success : false, code : err })
-            })
-    } else {
-        res.send({ success : false, code : "wrong filter" })
-    }
-})
 // 명령 : 타투이스트 일정 비활성화
 server.post('/create/unavailable/:id', (req, res) => {
     command.createUnavailable(req.params, req.body)
@@ -387,8 +375,94 @@ server.post('/create/unavailable/:id', (req, res) => {
         })
 })
 // 명령 : 타투이스트 일정 비활성화 취소
-server.post('/create/available/:id', (req, res) => {
-    command.createAvailable(req.params, req.body)
+server.post('/remove/unavailable/:id', (req, res) => {
+    command.deleteUnavailable(req.params, req.body)
+        .then((returned) => {
+            res.send({ success : true })
+        })
+        .catch((err) => {
+            res.send({ success : false, code : err })
+        })
+})
+
+// 타투 작업 시나리오 명령 모음
+// 명령 : 작업 요청 = 예약 생성
+server.post('/create/reservation', (req, res) => {
+    console.log('command : Create reservation')
+
+    command.createReservation(req.body)
+        .then((returned) => {
+            res.send({ success : true })
+        })
+        .catch((err) => {
+            res.send({ success : false, code : err })
+        })
+})
+// 명령 : 예약 정보 수정
+server.patch('/reservation/:id', (req, res) => {
+    console.log('command : Edit reservation Info')
+
+    command.editReservation(req.params, req.body)
+        .then((returned) => {
+            res.send({ success : true })
+        })
+        .catch((err) => {
+            res.send({ success : false, code : err })
+        })
+})
+// 명령 : 예약 도안 수정
+server.post('/reservation/:id', (req, res) => {
+    console.log('command : Edit reservation Image')
+
+    command.editReservationImage(req.params, req.body)
+        .then((returned) => {
+            res.send({ success : true })
+        })
+        .catch((err) => {
+            res.send({ success : false, code : err })
+        })
+})// 명령 : 예약 수락
+// 명령 : 예약 확정
+server.post('/confirm/reservation/:id', (req, res) => {
+    console.log('command : Confirm reservation')
+
+    command.confirmReservation(req.params, req.body)
+        .then((returned) => {
+            res.send({ success : true })
+        })
+        .catch((err) => {
+            res.send({ success : false, code : err })
+        })
+})
+// 명령 : 예약 불발
+server.post('/reject/reservation/:id', (req, res) => {
+    console.log('command : Reject reservation')
+
+    command.rejectReservation(req.params, req.body)
+        .then((returned) => {
+            res.send({ success : true })
+        })
+        .catch((err) => {
+            res.send({ success : false, code : err })
+        })
+})
+// 명령 : 작업 시작
+server.post('/procedure/:id', (req, res) => {
+    console.log('command : Begin Procedure')
+
+    command.beginProcedure(req.params, req.body)
+        .then((returned) => {
+            res.send({ success : true, tattoo_id : returned })
+        })
+        .catch((err) => {
+            res.send({ success : false, code : err })
+        })
+})
+// 명령 : 작업 완료
+server.post('/procedure/:id', (req, res) => {
+    console.log('command : Begin Procedure')
+
+    command.finishProcedure(req.params, req.body)
         .then((returned) => {
             res.send({ success : true })
         })
@@ -431,12 +505,13 @@ server.get('/get/user', (req, res) => {
     admin.getUser().then((result) => { res.send({ users : result}) })
 })
 // 블록체인에 데이터 기록 요청
-server.post('/blockchain/invoke/:function_name/:key', (req, res) => {
+server.post('/blockchain/invoke/:function/:key', (req, res) => {
     admin.invokeBlockchain(req.params, req.body)
         .then((returned) => {
             res.send({ success : true })
         })
         .catch((err) => {
+            console.log(err)
             res.send({ success : false, code : err })
         })
 })

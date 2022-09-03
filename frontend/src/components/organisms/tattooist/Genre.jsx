@@ -20,6 +20,8 @@ const Genre = ({ genre }) => {
               <TattooistKeyword key={idx}>{keyword}</TattooistKeyword>
             ))}
         </TattooistKeywordBox>
+        <TattooistGenreLabel>가격</TattooistGenreLabel>
+        {genre.cost} won
       </TattooistGenreBox>
     </>
   );

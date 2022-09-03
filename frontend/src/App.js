@@ -46,30 +46,27 @@ import ChattingList from "./components/organisms/chatting/ChattingList";
 import PasswordEdit from "./components/templates/PasswordEdit";
 import DeleteAccount from "./components/templates/DeleteAccount";
 
+
+// - GET : /scraps/:filter/:page
+//     - filter : draft, tattooist
+//     - page : integer type
+// - Query : { user_id }
 const App = () => {
   const sendRequest = async () => {
-    const res = await axios.get(`${APIURL}/entry`);
+    const res = await axios.get(`${APIURL}/scraps/tattooist/1?user_id=${getCookie('user_id')}`, );
 
-    if (res.data.success) {
-      console.log("Server is connected");
-    }
+    console.log('tattooist scrap: ',res);
   };
 
-  useEffect(() => {
-    sendRequest();
-  }, []);
-
   return (
-    <div className="font-style" style={{
-      minHeight: '100vh', position: 'relative',
-      paddingBottom: '130px'}}>
+    <div className="font-style">
       <Reset />
 
       {/* HEADER */}
       <Header />
       {/* <Navigation /> */}
       {/* Main Container */}
-      <MainPageDiv>
+      <MainPageDiv id="scroll" >
         <Routes>
 
           {/* Main page */}
@@ -124,7 +121,7 @@ const App = () => {
             </Route>
 
             {/* 예약 */}
-            <Route path="reservation" element={<ShowReservation />}>
+            <Route path="reservations" element={<ShowReservation />}>
               <Route path="" element={<ReservationList />} />
               <Route path=":reservation_id" element={<Procedure />} />
             </Route>

@@ -19,16 +19,9 @@ const DraftList = ({ filter }) => {
     page: page
   })
 
-  // console.log(drafts)
-  // useEffect(() => {
-  //   //sendRequest();
-  //   console.log(page, filter);
-  //   console.log('drafts list: ',drafts);
-  // }, [drafts]);
-
   return (
     <>
-      <ListDiv>
+      <ListDiv >
 
         {drafts.length === 0 ? (
           <EmptyBox>

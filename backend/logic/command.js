@@ -4,6 +4,7 @@ const {Reservation} = require("../DBModel/Reservation")
 const imageStorage = require("../module/imageStorage");
 const {Draft} = require("../DBModel/Draft");
 const {Tattooist} = require("../DBModel/Tattooist");
+const {Tattoo} = require("../DBModel/Tattoo")
 const blockchain = require("../module/blockchain")
 
 exports.userLogin = async function(body) {
@@ -30,7 +31,8 @@ exports.userLogin = async function(body) {
             nickname: user['nickname'],
             image: user['image'],
             description: user['description'],
-            location : user['location']
+            location : user['location'],
+            email : user['email']
         }
     });
 }
@@ -114,7 +116,8 @@ exports.tattooistLogin = async function(body) {
             image : tattooist['image'],
             description : tattooist['description'],
             specialize : tattooist['specialize'],
-            location : tattooist['location']
+            location : tattooist['location'],
+            email : tattooist['email']
         }
     });
 }
@@ -243,6 +246,7 @@ exports.createDraft = async function(params, body) {
         image : image_url,
         genre : body['genre'],
         keywords : body['keywords'],
+        cost : body['cost'],
         timestamp : Math.floor(Date.now() / 1000)
     }
 
@@ -256,7 +260,7 @@ exports.removeDraft = async function(params, body) {
     await Draft.deleteOne({ _id : body.draft_id })
 }
 exports.editDraft = async function(params, body) {
-    Draft.updateOne({ _id : params.id }, { title : body.title, genre : body.genre, keywords : body.keywords }, (err, draft) => {
+    Draft.updateOne({ _id : params.id }, { title : body.title, genre : body.genre, keywords : body.keywords, cost : body.cost }, (err, draft) => {
         if(!draft) {
             console.log(ErrorTable["10"])
             throw 10
@@ -286,27 +290,6 @@ exports.unFollowTattooist = async function(params, body) {
     await User.updateOne({ _id : params.id }, {$pull : { follows : body.tattooist_id }})
 }
 
-exports.createReservation = async function(params, body) {
-    const user = await User.findOne({ _id : params.id })
-    if (!user) {
-        console.log(ErrorTable["10"])
-        throw 10
-    }
-
-    let new_reservation = new Reservation()
-
-    const imageStorage_params = { title : new_reservation['_id'], image : body.image, mime : body.mime }
-    const image_url = await imageStorage.upload(imageStorage_params)
-
-    new_reservation['image'] = image_url
-    new_reservation['customer_id'] = params.id
-    new_reservation['tattooist_id'] = body.tattooist_id
-    new_reservation['cost'] = body.cost
-
-    // 추후 date field 입력 필요함
-
-    await new_reservation.save()
-}
 exports.createUnavailable = async function(params, body) {
     const tattooist = await Tattooist.findOne({ _id : params.id })
     if(!tattooist) {
@@ -319,7 +302,7 @@ exports.createUnavailable = async function(params, body) {
         await Tattooist.updateOne({ _id : params.id }, {$push : { unavailable : unavailable }})
     }
 }
-exports.createAvailable = async function(params, body) {
+exports.deleteUnavailable = async function(params, body) {
     const tattooist = await Tattooist.findOne({ _id : params.id })
     if(!tattooist) {
         // 해당 tattooist 없음 오류
@@ -327,7 +310,100 @@ exports.createAvailable = async function(params, body) {
         throw 4
     }
 
-    for await (let available of body['available']) {
-        await Tattooist.updateOne({ _id : params.id }, {$pull : { unavailable : available }})
+    for await (let unavailable of body['unavailable']) {
+        await Tattooist.updateOne({ _id : params.id }, {$pull : { unavailable : unavailable }})
     }
+}
+
+exports.createReservation = async function(body) {
+    let new_reservation = new Reservation(body)
+
+    await new_reservation.save()
+    await Tattooist.updateOne({ _id : body.tattooist_id }, {$push : { reservations : new_reservation['_id'] }})
+
+    // 유저와 타투이스트 채팅 생성하기
+}
+exports.editReservation = async function(params, body) {
+    // date, time_slot, cost 수정 Only
+    await Reservation.updateOne({ _id : params.id }, {$set : { date : body.date, time_slot : body.time_slot, cost : body.cost, body_part : body.body_part }})
+}
+exports.editReservationImage = async function(params, body) {
+    // image 수정 Only
+    const imageStorage_params = { title : params.id, image : body.image, mime : body.mime }
+    const image_url = await imageStorage.upload(imageStorage_params)
+
+    await Reservation.updateOne({ _id : params.id }, {$set : { image : image_url }})
+}
+exports.confirmReservation = async function(params, body) {
+    await Reservation.updateOne({ _id : params.id }, {$set : { confirmed : true }}, (err, reservation) => {
+        if (err) { throw 20 }
+        if (!reservation) { throw 'wrong reservation' }
+    })
+
+    // body.tattooist_id 이용 -> 해당 타투이스트에게 알림 전송
+    // body.user_id 이용 -> 해당 유저에게 알림 전송
+}
+exports.rejectReservation = async function(params, body) {
+    await Reservation.deleteOne({ _id : params.id })
+    await Tattooist.updateOne({ _id : body.tattooist_id }, {$pull : { requests : params.id }})
+
+    // body.tattooist_id 이용 -> 해당 타투이스트에게 알림 전송
+    // body.user_id 이용 -> 해당 유저에게 알림 전송
+}
+
+exports.beginProcedure = async function(params, body) {
+    let new_tattoo = new Tattoo()
+    new_tattoo['owner'] = body.user_id
+    await new_tattoo.save()
+
+    await Reservation.updateOne({ _id : params.id }, {$set : { procedure_status : true }})
+    await User.updateOne({ _id : body.user_id }, {$push : { tattoos : new_tattoo['_id'] }})
+
+    const user = await User.findOne({ _id : body.user_id })
+    const tattooist = await Tattooist.findOne({ _id : body.tattooist_id })
+    const reservation = await Reservation.findOne({ _id : params.id })
+
+    let blockchain_params = {
+        owner_info : {
+            id : user['_id'],
+            nickname : user['nickname']
+        }
+    }
+    await blockchain.invoke("newTattoo", new_tattoo['_id'], blockchain_params)
+
+    blockchain_params['tattooist_info'] = { id : tattooist['_id'], nickname : tattooist['nickname']}
+    blockchain_params['cost'] = reservation['cost']
+    blockchain_params['image'] = reservation['image']
+    blockchain_params['body_part'] = reservation['body_part']
+    blockchain_params['inks'] = body['inks']
+    blockchain_params['niddle'] = body['niddle']
+    blockchain_params['depth'] = body['depth']
+    blockchain_params['machine'] = body['machine']
+
+    await blockchain.invoke("startTattoo", new_tattoo['_id'], blockchain_params)
+
+    return new_tattoo['_id']
+}
+exports.finishProcedure = async function(params, body) {
+    const tattooist = await Tattooist.findOne({ _id : body.tattooist_id })
+    const reservation = await Reservation.findOne({ _id : params.id })
+
+    const blockchain_params = {
+        tattooist_info : {
+            id : tattooist['_id'],
+            nickname : tattooist['nickname'],
+        },
+        cost : reservation['cost'],
+        image : reservation['image'],
+        body_part : reservation['body_part'],
+        inks : body['inks'],
+        niddle : body['niddle'],
+        depth : body['depth'],
+        machine : body['machine']
+    }
+
+    await blockchain.invoke("endTattoo", body.tattoo_id, blockchain_params)
+    await Tattooist.updateOne({ _id : body.tattooist_id }, {$push : { artworks : new_tattoo['_id'] }})
+
+    await Reservation.deleteOne({ _id : params.id })
 }

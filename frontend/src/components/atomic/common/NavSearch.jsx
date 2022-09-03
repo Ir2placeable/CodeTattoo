@@ -22,11 +22,11 @@ const NavSearch = ({ path, search, setSearch }) => {
   const onChange = (e) => {
     setSearch(e.target.value);
   }
-  const onKeyUp = useCallback((e) => {
+  const onKeyUp = (e) => {
     if(e.key === 'Enter'){
       goSearch();
     }
-  }, []);
+  }
 
   return (
     <>

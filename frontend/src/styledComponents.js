@@ -41,18 +41,23 @@ export const HorizontalLine = styled.div`
 `;
 
 export const ContentsDiv = styled.div`
+  // max-width: 100vw;
   min-height: 733px;
-  padding-top: 130px;
+  padding-top: 90px;
   padding-bottom: 130px;
+
+  // background-color: orange;
 `;
 
 export const MyPageDiv = styled.div`
-  padding: 50px 0;
+  padding: 20px 0;
+  // background-color: orange;
 `;
 // position: relative;
 
 export const ListDiv = styled.div`
-  width: 100%;
+  // max-width: 100%;
+  // width: max-content;
   display: flex;
   flex-direction: column;
   justify-content: stretch;
@@ -90,13 +95,20 @@ export const EyeIconBox = styled.div`
 export const HeaderDiv = styled.header`
   background-color: #f6f6f6;
   height: 90px;
+  width: 100%;
+  // width: 100vw;
 `;
 
 export const HeaderInner = styled.div`
+background-color: #f6f6f6;
   height: 100%;
   width: 1200px;
   margin: 0 auto;
   position: relative;
+
+  display: flex;
+  // background-color: aqua;
+  justify-content: space-between;
 `;
 
 export const HeaderTitle = styled.div`
@@ -129,9 +141,13 @@ export const HeaderText = styled.div`
 
 export const HeaderSubMenu = styled.div`
   display: flex;
-  position: absolute;
-  top: 10px;
-  right: 0;
+  // position: absolute;
+  // top: 10px;
+  // right: 0;
+
+  height: max-content;
+  margin-top: 10px;
+  // background-color: orange;
 `;
 
 export const HeaderBtn = styled.div`
@@ -140,6 +156,7 @@ export const HeaderBtn = styled.div`
   border: 2px solid #484848;
   color: #f6f6f6;
   font-size: 14px;
+  height: 25px;
   line-height: 25px;
   width: 90px;
   border-radius: 5px;
@@ -395,7 +412,7 @@ export const MyTattooStateBox = styled.div`
 // *** Show Tattooist List ***
 
 export const TattooistMainBox = styled.div`
-  width: 1500px;
+  // width: 1500px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -404,13 +421,14 @@ export const TattooistMainBox = styled.div`
 
 export const TattooistContainer = styled.div`
   display: flex;
-  min-width: 1000px;
-  min-height: 260px;
+  // min-width: 1000px;
+  // min-height: 260px;
   border-radius: 8px;
   background-color: #e4e8f0;
   justify-content: space-between;
   align-items: center;
-  padding: 0 20px;
+  // padding: 0 20px;
+  padding: 20px;
   margin: 20px 0;
 `;
 
@@ -438,7 +456,8 @@ export const TattooistImgHover = styled.div`
 `;
 
 export const TattooistInfoBox = styled.div`
-  width: 700px;
+  // width: 700px;
+  width: 800px;
   height: 210px;
   box-shadow: 5px 5px 10px 0 rgba(72, 72, 72, 0.3);
   border-radius: 8px;
@@ -449,32 +468,73 @@ export const TattooistInfoBox = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  // background-color: orange;
 `;
 
 export const TattooistInfoUnitBox = styled.div`
   display: flex;
   width: 600px;
-  height: 30px;
+  // height: 30px;
   padding: 10px 0;
+  padding-left: 70px;
   align-items: center;
-  justify-content: center;C
+  // justify-content: center;
+  
+  // align-items: end;
+  // background-color: orange;
 `;
 
 export const TattooistInfoTitle = styled.div`
-  flex-basis: 150px;
-  font-size: 24px;
+  // flex-basis: 150px;
+  // font-size: 24px;
+  font-size: 14px;
   font-weight: 700;
 
   display: flex;
-  justify-content: flex-end;
-  margin-left: 80px;
+  // justify-content: flex-end;
+  // margin-left: 80px;
   margin-right: 15px;
+
+  width: max-content;
+  height: 30px;
+  padding: 0 15px;
+  border-radius: 20px;
+  justify-content: center;
+  align-items: center;
+  
+  ${(props) => {
+    if(props.type === 'location'){
+      return css`
+      background-color: #B5CADB;
+      `
+    } else if(props.type === 'specialize'){
+      return css`
+      background-color: #B5B7DB;
+      `
+    }
+  }}
+
 `;
 
 export const TattooistInfoText = styled.div`
-  flex-basis: 200px;
-  font-size: 18px;
+  // flex-basis: 200px;
+  font-size: 28px;
   font-weight: 700;
+
+  ${(props) => {
+
+    if(props.type === 'description'){
+      return css`
+      font-size: 18px;
+      `
+    }
+    else if (props.type === 'small'){
+      return css`
+        font-size: 16px;
+        margin-right: 100px;
+      `
+    }
+  }}
 `;
 
 export const TattooistControl = styled.div`
@@ -605,6 +665,7 @@ export const DraftDetailMainBox = styled.div`
   min-height: 550px;
   display: flex;
   justify-content: space-between;
+  // background-color: orange;
 `;
 
 export const SmallDraftBox = styled.div`
@@ -715,7 +776,7 @@ export const TattooistGenreBox = styled.div`
   width: 600px;
   padding: 30px;
   font-weight: bold;
-  font-size: 24px;
+  font-size: 18px;
 `;
 
 export const TattooistKeywordBox = styled.div`
@@ -725,14 +786,14 @@ export const TattooistKeywordBox = styled.div`
   align-items: center;
   // width: 300px;
   // background-color: aqua;
-  margin-top: 20px;
+  margin: 20px 0;
 `;
 
 export const TattooistKeyword = styled.div`
-  // font-size: 16px;
+  font-size: 16px;
   margin: 0 5px;
   background-color: #eee;
-  font-size: 18px;
+  // font-size: 18px;
   line-height: 30px;
   width: 90px;
   text-align: center;
@@ -744,11 +805,31 @@ export const TattooistGenreLabel = styled.span`
   background-color: gray;
   color: white;
   border-radius: 5px;
-  line-height: 40px;
+  line-height: 35px;
   width: 100px;
   text-align: center;
   margin-right: 20px;
 `;
+
+export const DraftInQuiryBtn = styled.div`
+background-color: black;
+border-radius: 5px;
+width: 300px;
+line-height: 45px;
+text-align: center;
+font-size: 20px;
+font-weight: bold;
+cursor: pointer;
+margin-top: 70px;
+border: 3px solid black;
+color: white;
+transition: .4s;
+
+&:hover{
+  color: black;
+  background-color: #eee;
+}
+`
 
 // *** My Page ***
 export const MyPageProfileBox = styled.div`
@@ -757,6 +838,8 @@ export const MyPageProfileBox = styled.div`
   justify-content: center;
   align-items: center;
   margin: 30px 0;
+
+  // background-color: orange;
 `;
 
 export const ProfileImgBox = styled.div`
@@ -1148,24 +1231,23 @@ export const EmptyDraftBox = styled.div`
 `;
 
 export const DraftMainBox = styled.div`
-  //width: 1550px;
-  width: calc(380px * 4);
+  // max-width: calc(340px * 4);
+  width: calc(340px * 4);
   display: flex;
   justify-content: stretch;
   align-items: stretch;
   flex-wrap: wrap;
-  //background-color: orange;
+  // background-color: orange;
 `;
 
 export const DraftImgBox = styled.div`
-  margin: 20px 15px;
+  margin: 20px 10px;
   background-color: #e4e8f0;
   display: flex;
   flex-direction: column;
   justify-content: center;
   //align-items: center;
-  height: 440px;
-  //width: 340px;
+  height: 400px;
   padding: 0 25px;
   border-radius: 8px;
 `;
@@ -1212,8 +1294,8 @@ export const DraftDrawerImg = styled.img`
   object-fit: contain;
 `;
 export const DraftImgDiv = styled.div`
-  width: 300px;
-  height: 300px;
+  width: 270px;
+  height: 270px;
   border-radius: 8px;
   box-sizing: border-box;
   overflow: hidden;
@@ -1222,8 +1304,8 @@ export const DraftImgDiv = styled.div`
   z-index: 15;
 `;
 export const DraftImg = styled.img`
-  width: 300px;
-  height: 300px;
+  width: 100%;
+  height: 100%;
   object-fit: contain;
   // box-sizing: border-box;
   // border-radius: 8px;
@@ -1239,8 +1321,8 @@ export const DraftImgHoverDiv = styled.div`
   font-weight: bold;
   font-size: 18px;
   // border-radius: 8px;
-  width: 300px;
-  height: 300px;
+  width: 270px;
+  height: 270px;
   cursor: pointer;
   position: absolute;
   z-index: 10;
@@ -1814,7 +1896,8 @@ export const GoUpload = styled.div`
 // =================== FOOTER ==========================
 export const FooterDiv = styled.footer`
   background-color: #484848;
-  width: 100%;
+  // width: 100vw;
+  min-width: 100%;
   height: 130px;
   position: absolute;
   bottom: 0;
@@ -1860,7 +1943,7 @@ export const TimeText = styled.div`
 export const TimeBox = styled.div`
   // background-color: orange;
   margin: 20px auto 40px;
-  width: calc(74px * 3);
+  width: calc(74px * 4);
   display: flex;
   flex-wrap: wrap;
 `;
@@ -1874,7 +1957,7 @@ export const Time = styled.div`
   font-weight: bold;
   border-radius: 2px;
   margin: 4px 2px 0;
-  // cursor: pointer;
+  cursor: pointer;
 `;
 
 export const ReservRequestBtn = styled.div`
@@ -1891,11 +1974,52 @@ export const ReservRequestBtn = styled.div`
   border-radius: 5px;
   transition: 0.45s;
 
-  &:hover {
-    color: black;
-    background-color: white;
-  }
+  // &:hover {
+  //   color: black;
+  //   background-color: white;
+  // }
 `;
+
+export const TimeActiveDiv = styled.div`
+width: calc(140px*2);
+margin: 0 auto;
+display: flex;
+flex-wrap: wrap;
+justify-content: center;
+align-items: center;
+// background-color: orange;
+`
+export const TimeActiveBtn = styled.div`
+line-height: 35px;
+width: 120px;
+text-align: center;
+border-radius: 5px;
+font-size: 18px;
+// font-weight: bold;
+cursor: pointer;
+margin: 0 10px;
+color: #f8f8f8;
+
+${(props) => {
+  if(props.type === 'active'){
+    return css`
+      background-color: #6EC067;
+    `
+  } else if(props.type === 'deactive'){
+    return css`
+      background-color: #DF2F2F;
+    `
+  } else if(props.type === 'description'){
+    return css`
+      font-size: 12px;
+      width: 100%;
+      height: max-content;
+      color: #999;
+      cursor: auto;
+    `
+  }
+}}
+`
 
 // reservation
 export const ReservDiv = styled.div`

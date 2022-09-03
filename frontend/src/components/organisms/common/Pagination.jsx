@@ -29,6 +29,11 @@ const Pagination = ({ page, setPage, pages, setPages }) => {
     setPages(temp);
   }, [count]);
 
+  useEffect(() => {
+    // console.log('change page: ', page)
+    window.scrollTo(0, 0)
+  }, [page])
+
   return (
     <>
     <PagenationDiv>

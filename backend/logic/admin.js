@@ -31,14 +31,14 @@ exports.getUser = async function() {
 }
 
 exports.invokeBlockchain = async function(params, body) {
-    if(body.image) {
+    if(body.image !== "") {
         const imageStorage_params = { title : params.key, image : body.image, mime : body.mime }
         const image_url = await imageStorage.upload(imageStorage_params)
 
         body.image = image_url
     }
 
-    await blockchain.invoke(params.function_name, params.key, body)
+    await blockchain.invoke(params['function'], params.key, body)
 }
 
 exports.queryBlockchain = async function(params) {

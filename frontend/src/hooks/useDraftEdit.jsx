@@ -29,10 +29,10 @@ const useDraftEdit = ({ draft_id, tattooist_id }) => {
     }
   }
 
-  const editDraft = async({title, genre, keywords}) => {
-    console.log(title, genre, keywords)
+  const editDraft = async({title, genre, keywords, cost}) => {
+    //console.log(title, genre, keywords)
     const res = await axios.patch(`${APIURL}/draft/${draft_id}`, {
-      title, genre, keywords
+      title, genre, keywords, cost
     })
 
     if(res.data.success){
