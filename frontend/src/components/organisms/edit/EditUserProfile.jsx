@@ -39,7 +39,11 @@ const EditUserProfile = () => {
     if (res.data.success) {
       pushCookie();
       alert("프로필 수정 성공");
-      window.location.replace("/edit/profile");
+      if(getCookie("user_id")) {
+        window.location.replace(`/my-page/user/${getCookie("user_id")}`)
+      } else {
+        window.location.replace(`/tattooist/${getCookie("tattooist_id")}/draft`)
+      }
     } else {
       alert("프로필 수정 실패");
     }

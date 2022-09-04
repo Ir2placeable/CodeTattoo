@@ -67,7 +67,11 @@ const ImageEdit = () => {
 
     if (res.data.success) {
       alert("이미지 등록에 성공했습니다.");
-      window.location.reload();
+      if(getCookie("user_id")) {
+        window.location.replace(`/my-page/user/${getCookie("user_id")}`)
+      } else {
+        window.location.replace(`/tattooist/${getCookie("tattooist_id")}/draft`)
+      }
     } else {
       alert("이미지 등록에 실패했습니다.");
     }
@@ -86,12 +90,6 @@ const ImageEdit = () => {
       sendRequest();
     }, 3000)
   };
-
-  useEffect(() => {
-    console.log(`src: ${src}`);
-    console.log(`image: ${image.data}`);
-    console.log(`cookie: ${cookie}`)
-  }, [image.data, src, cookie])
 
   if (loading) {
     return <Loader type="spin" color="#000000" />;

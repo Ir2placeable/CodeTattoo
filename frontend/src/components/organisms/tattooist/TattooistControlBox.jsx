@@ -31,7 +31,7 @@ const TattooistControlBox = ({ tattooist }) => {
 
   const navigate = useNavigate();
   const goReservation = () => {
-    navigate("/reservation");
+    navigate(`/tattooist/${tattooist_id}/reservation`);
   };
 
   return (

@@ -3,6 +3,7 @@ import {
   EmptyBox,
   MyTattooMainBox,
   MyTattooContainer,
+  HorizontalLine,
 } from "../styledComponents";
 import MyTattoo from "../components/templates/MyTattoo";
 import { useOutletContext } from "react-router-dom";
