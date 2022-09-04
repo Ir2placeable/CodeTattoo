@@ -51,7 +51,11 @@ const EditTattooistProfile = () => {
     if (res.data.success) {
       console.log("프로필 수정 성공");
       pushCookie();
-      window.location.reload();
+      if(getCookie("user_id")) {
+        window.location.replace(`/my-page/user/${getCookie("user_id")}`)
+      } else {
+        window.location.replace(`/tattooist/${getCookie("tattooist_id")}/draft`)
+      }
     } else {
       console.log("프로필 수정 실패");
     }

@@ -115,7 +115,11 @@ const PasswordEdit = () => {
 
     if (res.data.success) {
       alert("비밀번호 변경 성공!");
-      window.location.reload();
+      if(getCookie("user_id")) {
+        window.location.replace(`/my-page/user/${getCookie("user_id")}`)
+      } else {
+        window.location.replace(`/tattooist/${getCookie("tattooist_id")}/draft`)
+      }
     } else {
       alert("비밀번호 변경 실패!");
     }

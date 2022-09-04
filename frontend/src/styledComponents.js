@@ -382,15 +382,18 @@ export const MyTattooMainBox = styled.div`
   justify-content: center;
   align-items: center;
   flex-wrap: wrap;
+  margin: 20px 0;
 `;
 
 export const MyTattooContainer = styled.div`
   display: flex;
   width: 1350px;
-  min-height: 450px;
+  min-height: 350px;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 20px;
+  background-color: #e4e8f0;
+  border-radius: 16px;
+  margin-bottom: 30px;
 `;
 
 export const MyTattooImg = styled.img`
@@ -400,6 +403,8 @@ export const MyTattooImg = styled.img`
   width: 300px;
   height: 300px;
   background-color: rgba(72, 72, 72);
+  border-radius: 8px;
+  box-shadow: 5px 5px 10px 0 rgba(72, 72, 72, 0.3);
   margin-left: 30px;
 `;
 
