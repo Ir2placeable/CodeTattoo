@@ -139,7 +139,7 @@ const AvailableTime = ({ value, isAdmin, id }) => {
       return;
     } else {
       const data = {
-        user_id: user,
+        customer_id: user,
         tattooist_id: id,
         date: unavailable.date,
         time_slot: unavailable.time_slot

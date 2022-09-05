@@ -12,7 +12,7 @@ import { useNavigate } from 'react-router-dom';
 const ReservationList = memo(() => {
   const reservations = useReservation();
 
-  console.log(reservations)
+  console.log('reservations: ',reservations)
 
   const navigate = useNavigate();
   const onClick = () => {
