@@ -44,15 +44,23 @@ const ReservationList = memo(() => {
             </ReservText>
           </ReservTextDiv>
 
-          <ReservBtnDiv>
+          {/* <ReservBtnDiv>
 
             <ReservBtn>채팅 이동</ReservBtn>
             <ReservBtn onClick={onClick}>
               작업 시작
             </ReservBtn>
 
-          </ReservBtnDiv>
+          </ReservBtnDiv> */}
         </ReservInfoDiv>
+
+        <ReservBtnDiv>
+
+          <ReservBtn type="small">채팅 이동</ReservBtn>
+          <ReservBtn type="big" onClick={onClick}>
+            작업 시작
+          </ReservBtn>
+        </ReservBtnDiv>
 
       </ReservDiv>
 
@@ -76,14 +84,13 @@ const ReservationList = memo(() => {
               <ReservTextBox>200,000원</ReservTextBox>
             </ReservText>
           </ReservTextDiv>
-
-          <ReservBtnDiv>
-
-            <ReservBtn>채팅 이동</ReservBtn>
-            <ReservBtn>작업 시작</ReservBtn>
-
-          </ReservBtnDiv>
         </ReservInfoDiv>
+
+        <ReservBtnDiv>
+
+          <ReservBtn type="small">채팅 이동</ReservBtn>
+          <ReservBtn type="big">작업 시작</ReservBtn>
+        </ReservBtnDiv>
 
       </ReservDiv>
     </>
