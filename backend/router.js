@@ -538,6 +538,20 @@ server.get('/reset/tattoo', (req, res) => {
     admin.resetTattoo()
         .then(() => { res.send({ success : true })})
 })
+// Reservation 초기화
+server.get('/reset/reservation', (req, res) => {
+    admin.resetReservation()
+        .then(() => { res.send({ success : true })})
+})
+// DB 전체 초기화
+server.get('/reset/all', (req, res) => {
+    admin.resetAll()
+        .then(() => { res.send({ success : true })})
+        .catch((err) => {
+            console.log(err)
+            res.send({ success : false })
+        })
+})
 // Draft 찾기
 server.get('/get/draft', (req, res) => {
     admin.getDraft().then((result) => { res.send({ drafts : result}) })
