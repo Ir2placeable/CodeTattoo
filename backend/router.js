@@ -476,7 +476,7 @@ server.post('/reservation/:id', (req, res) => {
             res.send({ success : false, code : err }) 
             console.log(err)
         })
-})// 명령 : 예약 수락
+})
 // 명령 : 예약 확정
 server.post('/confirm/reservation/:id', (req, res) => {
     console.log('command : Confirm reservation')
