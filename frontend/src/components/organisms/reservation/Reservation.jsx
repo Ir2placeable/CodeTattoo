@@ -6,8 +6,11 @@ import {
 } from '../../../styledComponents';
 
 // 이미지 소스, 고객 닉네임, 예약 일정, 작업 가격
-// data: { reservation_id, image, user_id, user_nickname
-//          date, cost, procedure_status }
+// { reservation_id, image, customer_id, customer_nickname, 
+//   date, time_slot, cost, body_part, procedure_status, 
+//   confirmed }
+// 필수: reservation_id, customer_id, customer_nickname,
+// procedure_status, confirmed
 const Reservation = memo(({ data }) => {
   return (
     <>

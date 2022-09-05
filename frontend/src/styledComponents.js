@@ -2028,20 +2028,22 @@ ${(props) => {
 
 // reservation
 export const ReservDiv = styled.div`
-  // background-color: white;
-  width: 70%;
+  // background-color: orange;
+  width: 80%;
   margin: 0 auto 50px;
   display: flex;
   justify-content: space-between;
 `;
 export const ReservInfoDiv = styled.div`
   // background-color: #A6C3D3;
-  background-color: #d8d8d8;
+  // background-color: #d8d8d8;
+  background-color: #e4e8f0;
   border-radius: 20px;
-  padding: 30px 50px;
+  // padding: 30px 50px;
+  padding: 20px 30px;
   display: flex;
-  // width: 70%;
-  width: 100%;
+  width: 75%;
+  // width: 100%;
 `;
 
 export const ReservDraftImg = styled.img`
@@ -2060,6 +2062,8 @@ export const ReservTextDiv = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
+
+  margin-left: 30px;
 `;
 
 export const ReservText = styled.p`
@@ -2067,7 +2071,7 @@ export const ReservText = styled.p`
   font-weight: bold;
   // background-color: aqua;
   line-height: 40px;
-  margin: 5px 0;
+  margin: 10px 0;
 `;
 
 export const ReservLabel = styled.span`
@@ -2078,7 +2082,8 @@ export const ReservTextBox = styled.span`
   width: 300px;
   padding: 0 10px;
   display: inline-block;
-  background-color: #eee;
+  // background-color: #eee;
+  background-color: #C9CFDD;
   border-radius: 5px;
 `;
 
@@ -2088,13 +2093,14 @@ export const ReservBtnDiv = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
+  // justify-content: space-between;
 `;
 
 export const ReservBtn = styled.div`
   // background-color: #A6C3D3;
   background-color: black;
   width: 200px;
-  height: 20%;
+  height: 25%;
   color: white;
   font-size: 20px;
   font-weight: bold;
@@ -2104,12 +2110,24 @@ export const ReservBtn = styled.div`
   justify-content: center;
   align-items: center;
   cursor: pointer;
-  transition: 0.45s;
+  transition: 0.3s;
 
   &:hover {
     color: black;
     background-color: white;
   }
+
+  ${(props) => {
+    if(props.type === 'small'){
+      return css`
+        border-radius: 30px;
+      `
+    } else if(props.type === 'big'){
+      return css`
+        height: 45%;
+      `
+    }
+  }}
 `;
 
 // Procedure state page
