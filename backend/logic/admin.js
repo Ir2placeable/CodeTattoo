@@ -2,6 +2,7 @@ const {User} = require("../DBModel/User")
 const {Tattooist} = require("../DBModel/Tattooist")
 const {Draft} = require('../DBModel/Draft')
 const {Tattoo} = require('../DBModel/Tattoo')
+const {Reservation} = require('../DBModel/Reservation')
 const imageStorage = require("../module/imageStorage");
 const blockchain = require("../module/blockchain");
 
@@ -16,6 +17,16 @@ exports.resetTattooist = async function() {
 }
 exports.resetTattoo = async function() {
     await Tattoo.deleteMany({})
+}
+exports.resetReservation = async function() {
+    await Reservation.deleteMany({})
+}
+exports.resetAll = async function() {
+    await User.deleteMany({})
+    await Draft.deleteMany({})
+    await Tattooist.deleteMany({})
+    await Tattoo.deleteMany({})
+    await Reservation.deleteMany({})
 }
 
 exports.getDraft = async function() {
@@ -52,3 +63,4 @@ exports.historyBlockchain = async function(params) {
 exports.querySideEffectsBlockchain = async function(params) {
     return await blockchain.getTattooSideEffects(params.key)
 }
+

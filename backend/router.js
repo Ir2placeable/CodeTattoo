@@ -58,7 +58,8 @@ server.get('/tattooists/:filter/:page', (req, res) => {
             res.send({ success : true, count : returned.count, tattooists : returned.return_value })
         })
         .catch((err) => {
-            res.send({ success : false, code : err })
+            res.send({ success : false, code : err }) 
+            console.log(err)
         })
 })
 // 페이지 : 타투이스트 세부
@@ -70,7 +71,8 @@ server.get('/tattooist/:id/:filter', (req, res) => {
             res.send({ success : true, tattooist : returned.tattooist_info, data : returned.return_value })
         })
         .catch((err) => {
-            res.send({ success : false, code : err })
+            res.send({ success : false, code : err }) 
+            console.log(err)
         })
 })
 // 페이지 : 스크랩
@@ -82,7 +84,8 @@ server.get('/scraps/:filter/:page', (req, res) => {
             res.send({ success : true, count : returned.count, drafts : returned.drafts, tattooists : returned.tattooists })
         })
         .catch((err) => {
-            res.send({ success : false, code : err })
+            res.send({ success : false, code : err }) 
+            console.log(err)
         })
 })
 // 페이지 : 예약
@@ -94,7 +97,8 @@ server.get('/reservations', (req, res) => {
             res.send({ success : true, reservations : returned })
         })
         .catch((err) => {
-            res.send({ success : false, code : err })
+            res.send({ success : false, code : err }) 
+            console.log(err)
         })
 })
 // (미개발) 페이지 : 유저 채팅 박스
@@ -112,7 +116,8 @@ server.get('/user/my-page/:id', (req, res) => {
             res.send({ success : true, user_info : returned.user_info, tattoos : returned.return_value })
         })
         .catch((err) => {
-            res.send({ success : false, code : err })
+            res.send({ success : false, code : err }) 
+            console.log(err)
         })
 })
 // 페이지 : 작업물 세부
@@ -124,7 +129,8 @@ server.get('/artwork/:id', (req, res) => {
             res.send({ success : true, artwork_info : returned.info, artwork_states : returned.states })
         })
         .catch((err) => {
-            res.send({ success : false, code : err })
+            res.send({ success : false, code : err }) 
+            console.log(err)
         })
 })
 
@@ -141,7 +147,8 @@ server.post('/register/:type', (req, res) => {
             })
             .catch((err) => {
                 console.log(err)
-                res.send({ success : false, code : err })
+                res.send({ success : false, code : err }) 
+            console.log(err)
             })
     }
     // tattooist view
@@ -151,7 +158,8 @@ server.post('/register/:type', (req, res) => {
                 res.send({ success : true })
             })
             .catch((err) => {
-                res.send({ success : false, code : err })
+                res.send({ success : false, code : err }) 
+            console.log(err)
             })
     }
     // wrong type error
@@ -170,7 +178,8 @@ server.post('/login/:type', (req, res) => {
                 res.send({success : true, user_info : returned })
             })
             .catch((err) => {
-                res.send({ success : false, code : err })
+                res.send({ success : false, code : err }) 
+            console.log(err)
             })
     }
     // tattooist view
@@ -180,7 +189,8 @@ server.post('/login/:type', (req, res) => {
                 res.send({ success : true, tattooist_info : returned })
             })
             .catch((err) => {
-                res.send({ success : false, code : err })
+                res.send({ success : false, code : err }) 
+            console.log(err)
             })
     }
     // wrong type error
@@ -199,7 +209,8 @@ server.post('/sign-out/:type', (req, res) => {
                 res.send({ success : true })
             })
             .catch((err) => {
-                res.send({ success : false, code : err })
+                res.send({ success : false, code : err }) 
+            console.log(err)
             })
     }
     // tattooist view
@@ -209,7 +220,8 @@ server.post('/sign-out/:type', (req, res) => {
                 res.send({ success : true })
             })
             .catch((err) => {
-                res.send({ success : false, code : err })
+                res.send({ success : false, code : err }) 
+            console.log(err)
             })
     }
     // wrong type error
@@ -227,7 +239,8 @@ server.patch('/:type/pwd/:id', (req, res) => {
                 res.send({ success : true })
             })
             .catch((err) => {
-                res.send({ success : false, code : err })
+                res.send({ success : false, code : err }) 
+            console.log(err)
             })
     } else if (req.params.type === 'tattooist') {
         console.log('command : tattooist edit password')
@@ -237,7 +250,8 @@ server.patch('/:type/pwd/:id', (req, res) => {
                 res.send({ success : true })
             })
             .catch((err) => {
-                res.send({ success : false, code : err })
+                res.send({ success : false, code : err }) 
+            console.log(err)
             })
     } else {
         res.send({ success : false, code : "wrong filter" })
@@ -252,7 +266,8 @@ server.patch('/user/my-page/:id', (req, res) => {
             res.send({ success : true })
         })
         .catch((err) => {
-            res.send({ success : false, code : err })
+            res.send({ success : false, code : err }) 
+            console.log(err)
         })
 })
 // 명령 : 유저 이미지수정
@@ -264,7 +279,8 @@ server.post('/user/my-page/:id', (req, res) => {
             res.send({ success : true })
         })
         .catch((err) => {
-            res.send({ success : false, code : err })
+            res.send({ success : false, code : err }) 
+            console.log(err)
         })
 })
 // 명령 : 타투이스트 정보수정
@@ -276,7 +292,8 @@ server.patch('/tattooist/my-page/:id', (req, res) => {
             res.send({ success : true })
         })
         .catch((err) => {
-            res.send({ success : false, code : err })
+            res.send({ success : false, code : err }) 
+            console.log(err)
         })
 })
 // 명령 : 타투이스트 이미지수정
@@ -288,7 +305,8 @@ server.post('/tattooist/my-page/:id', (req, res) => {
             res.send({ success : true })
         })
         .catch((err) => {
-            res.send({ success : false, code : err })
+            res.send({ success : false, code : err }) 
+            console.log(err)
         })
 })
 // 명령 : 도안 스크랩
@@ -300,7 +318,8 @@ server.post('/scrap/:id', (req, res) => {
             res.send({ success : true })
         })
         .catch((err) => {
-            res.send({ success : false, code : err })
+            res.send({ success : false, code : err }) 
+            console.log(err)
         })
 })
 // 명령 : 도안 스크랩 취소
@@ -312,7 +331,8 @@ server.post('/unscrap/:id', (req, res) => {
             res.send({ success : true })
         })
         .catch((err) => {
-            res.send({ success : false, code : err })
+            res.send({ success : false, code : err }) 
+            console.log(err)
         })
 })
 // 명령 : 타투이스트 팔로우
@@ -324,7 +344,8 @@ server.post('/follow/:id', (req, res) => {
             res.send({ success : true })
         })
         .catch((err) => {
-            res.send({ success : false, code : err })
+            res.send({ success : false, code : err }) 
+            console.log(err)
         })
 })
 // 명령 : 타투이스트 언팔로우
@@ -336,7 +357,8 @@ server.post('/unfollow/:id', (req, res) => {
             res.send({ success : true })
         })
         .catch((err) => {
-            res.send({ success : false, code : err })
+            res.send({ success : false, code : err }) 
+            console.log(err)
         })
 })
 // 명령 : 도안 생성
@@ -348,7 +370,8 @@ server.post('/create/draft/:id', (req, res) => {
             res.send({ success : true })
         })
         .catch((err) => {
-            res.send({ success : false, code : err })
+            res.send({ success : false, code : err }) 
+            console.log(err)
         })
 })
 // 명령 : 도안 삭제
@@ -360,7 +383,8 @@ server.post('/remove/draft/:id', (req, res) => {
             res.send({ success : true })
         })
         .catch((err) => {
-            res.send({ success : false, code : err })
+            res.send({ success : false, code : err }) 
+            console.log(err)
         })
 })
 // 명령 : 도안 수정
@@ -372,7 +396,8 @@ server.patch('/draft/:id', (req, res) => {
             res.send({ success : true })
         })
         .catch((err) => {
-            res.send({ success : false, code : err })
+            res.send({ success : false, code : err }) 
+            console.log(err)
             console.log(err)
         })
 })
@@ -383,7 +408,8 @@ server.post('/create/unavailable/:id', (req, res) => {
             res.send({ success : true })
         })
         .catch((err) => {
-            res.send({ success : false, code : err })
+            res.send({ success : false, code : err }) 
+            console.log(err)
         })
 })
 // 명령 : 타투이스트 일정 비활성화 취소
@@ -393,7 +419,8 @@ server.post('/remove/unavailable/:id', (req, res) => {
             res.send({ success : true })
         })
         .catch((err) => {
-            res.send({ success : false, code : err })
+            res.send({ success : false, code : err }) 
+            console.log(err)
         })
 })
 
@@ -407,7 +434,8 @@ server.post('/create/reservation', (req, res) => {
             res.send({ success : true })
         })
         .catch((err) => {
-            res.send({ success : false, code : err })
+            res.send({ success : false, code : err }) 
+            console.log(err)
         })
 })
 // 명령 : 예약 정보 수정
@@ -419,7 +447,8 @@ server.patch('/reservation/:id', (req, res) => {
             res.send({ success : true })
         })
         .catch((err) => {
-            res.send({ success : false, code : err })
+            res.send({ success : false, code : err }) 
+            console.log(err)
         })
 })
 // 명령 : 예약 도안 수정
@@ -431,7 +460,8 @@ server.post('/reservation/:id', (req, res) => {
             res.send({ success : true })
         })
         .catch((err) => {
-            res.send({ success : false, code : err })
+            res.send({ success : false, code : err }) 
+            console.log(err)
         })
 })// 명령 : 예약 수락
 // 명령 : 예약 확정
@@ -443,7 +473,8 @@ server.post('/confirm/reservation/:id', (req, res) => {
             res.send({ success : true })
         })
         .catch((err) => {
-            res.send({ success : false, code : err })
+            res.send({ success : false, code : err }) 
+            console.log(err)
         })
 })
 // 명령 : 예약 불발
@@ -455,7 +486,8 @@ server.post('/reject/reservation/:id', (req, res) => {
             res.send({ success : true })
         })
         .catch((err) => {
-            res.send({ success : false, code : err })
+            res.send({ success : false, code : err }) 
+            console.log(err)
         })
 })
 // 명령 : 작업 시작
@@ -467,7 +499,8 @@ server.post('/procedure/:id', (req, res) => {
             res.send({ success : true, tattoo_id : returned })
         })
         .catch((err) => {
-            res.send({ success : false, code : err })
+            res.send({ success : false, code : err }) 
+            console.log(err)
         })
 })
 // 명령 : 작업 완료
@@ -479,7 +512,8 @@ server.post('/procedure/:id', (req, res) => {
             res.send({ success : true })
         })
         .catch((err) => {
-            res.send({ success : false, code : err })
+            res.send({ success : false, code : err }) 
+            console.log(err)
         })
 })
 
@@ -504,6 +538,20 @@ server.get('/reset/tattoo', (req, res) => {
     admin.resetTattoo()
         .then(() => { res.send({ success : true })})
 })
+// Reservation 초기화
+server.get('/reset/reservation', (req, res) => {
+    admin.resetReservation()
+        .then(() => { res.send({ success : true })})
+})
+// DB 전체 초기화
+server.get('/reset/all', (req, res) => {
+    admin.resetAll()
+        .then(() => { res.send({ success : true })})
+        .catch((err) => {
+            console.log(err)
+            res.send({ success : false })
+        })
+})
 // Draft 찾기
 server.get('/get/draft', (req, res) => {
     admin.getDraft().then((result) => { res.send({ drafts : result}) })
@@ -524,7 +572,8 @@ server.post('/blockchain/invoke/:function/:key', (req, res) => {
         })
         .catch((err) => {
             console.log(err)
-            res.send({ success : false, code : err })
+            res.send({ success : false, code : err }) 
+            console.log(err)
         })
 })
 // 블록체인에서 데이터 반환 요청
@@ -534,7 +583,8 @@ server.get('/blockchain/query/:key', (req, res) => {
             res.send({ success : true, tattoo_info : returned })
         })
         .catch((err) => {
-            res.send({ success : false, code : err })
+            res.send({ success : false, code : err }) 
+            console.log(err)
         })
 })
 // 블록체인에서 히스토리 반환 요청
@@ -544,7 +594,8 @@ server.get('/blockchain/history/:key', (req, res) => {
             res.send({ success : true, tattoo_history : returned })
         })
         .catch((err) => {
-            res.send({ success : false, code : err })
+            res.send({ success : false, code : err }) 
+            console.log(err)
         })
 })
 // 블록체인에서 부작용 데이터 반환 요청
@@ -554,7 +605,8 @@ server.get('/blockchain/side-effects/:key', (req, res) => {
             res.send({ success : true, tattoo_side_effects : returned })
         })
         .catch((err) => {
-            res.send({ success : false, code : err })
+            res.send({ success : false, code : err }) 
+            console.log(err)
         })
 })
 

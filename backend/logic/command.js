@@ -251,9 +251,9 @@ exports.createDraft = async function(params, body) {
         timestamp : Math.floor(Date.now() / 1000)
     }
 
-    const new_draft = new Draft(draft_schema)
+    let new_draft = new Draft(draft_schema)
 
-    const imageStorage_params = { title : new_draft['_id'], image : body.image, mime : body.mime }
+    const imageStorage_params = { title : String(new_draft['_id']), image : body.image, mime : body.mime }
     const image_url = await imageStorage.upload(imageStorage_params)
     new_draft['image'] = image_url
 
