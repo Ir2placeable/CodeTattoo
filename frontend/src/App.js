@@ -66,7 +66,7 @@ const App = () => {
       <Header />
       {/* <Navigation /> */}
       {/* Main Container */}
-      <MainPageDiv id="scroll" >
+      <MainPageDiv id="scroll">
         <Routes>
 
           {/* Main page */}
@@ -132,6 +132,9 @@ const App = () => {
               <Route path="tattooist" element={<TattooistList filter="scraps/tattooist"/>}/>
             </Route>
 
+            {/* 채팅 */}
+            <Route path="chat/:id" element={<ChattingList />} />
+
           </Route>
 
 
@@ -142,8 +145,7 @@ const App = () => {
           {/* 엔트리 페이지 */}
           <Route path="/" element={<ShowEntry />} />
 
-          {/* 채팅 */}
-          <Route path="chat" element={<ChattingList />} />
+    
           
         </Routes>
       </MainPageDiv>

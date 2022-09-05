@@ -27,7 +27,7 @@ body {
   /* font-family: 'MapoFlowerIsland', sans-serif; */
   font-family: 'HeirofLightRegular', 'HeirofLightOTFReqular', sans-serif;
   color: #333;
-  min-height: 100vh;
+  /* min-height: 100vh; */
   position: relative;
   padding-bottom: 130px;
   /* width: max-content; */
