@@ -101,6 +101,19 @@ server.get('/reservations', (req, res) => {
             console.log(err)
         })
 })
+// 페이지 : 예약 세부
+server.get('/reservation/:id', (req, res) => {
+    console.log('Page : Reservation Detail')
+
+    page.reservationDetail(req.params)
+        .then((returned) => {
+            res.send({ success : true, reservation : returned })
+        })
+        .catch((err) => {
+            res.send({ success : false, code : err })
+            console.log(err)
+        })
+})
 // (미개발) 페이지 : 유저 채팅 박스
 server.get('/user/direct/inbox', (req, res) => {
     console.log('Page : User Chatting Page')
