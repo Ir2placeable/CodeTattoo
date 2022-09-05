@@ -487,3 +487,23 @@ exports.artworkDetail = async function(params, query) {
 
     return {info, states}
 }
+
+exports.reservationDetail = async function(params) {
+    let return_value;
+
+    const reservation = await Reservation.findOne({ _id : params.id })
+    if (!reservation) {
+        console.log(ErrorTable["30"])
+        throw 30
+    }
+
+    return_value = {
+        date : reservation['date'],
+        time_slot : reservation['time_slot'],
+        cost : reservation['cost'],
+        body_part : reservation['body_part'],
+        confirmed : reservation['confirmed']
+    }
+
+    return return_value
+}
