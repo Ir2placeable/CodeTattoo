@@ -48,6 +48,7 @@
 
     function wsOpen(){
         ws = new WebSocket("ws://" + location.host + "/chating");
+        console.log(ws);
         wsEvt();
     }
 
@@ -70,7 +71,7 @@
         });
     }
 
-    function chatName(){
+    function chatName(){ //로그인시 추가해야
         var userName = $("#userName").val();
         if(userName == null || userName.trim() == ""){
             alert("사용자 이름을 입력해주세요.");
