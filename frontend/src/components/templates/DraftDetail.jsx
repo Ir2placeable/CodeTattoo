@@ -68,7 +68,7 @@ const DraftDetail = () => {
     } else {
 
       const data = {
-        user_id: user,
+        customer_id: user,
         tattooist_id: tattooist.drawer_id,
         image_url: draft.image,
         cost: genre.cost

@@ -1283,7 +1283,7 @@ export const DraftDrawerImgDiv = styled.div`
   overflow: hidden;
   background-color: black;
   border-radius: 50%;
-  border: 2px solid black;
+  // border: 2px solid black;
   display: flex;
   justify-content: center;
   align-items: center;
