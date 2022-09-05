@@ -28,6 +28,13 @@ exports.upload = async function(params) {
     })
 }
 
+exports.delete = async function(id) {
+    await S3.deleteObject({
+        Bucket : bucket_title,
+        Key : id
+    })
+}
+
 // S3.getObject : 오브젝트 하나 리턴
 // S3.getSingedUrl : 주소 리턴
 // S3.listObjects : 오브젝트 리스트 리턴

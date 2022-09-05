@@ -184,6 +184,9 @@ exports.userInfoEdit = async function(params, body) {
     })
 }
 exports.userImageEdit = async function(params, body) {
+    await imageStorage.delete(params.id)
+        .catch((err) => { console.log(err)} )
+
     const imageStorage_params = { title : params.id, image : body.image, mime : body.mime }
     const image_url = await imageStorage.upload(imageStorage_params)
 
@@ -212,6 +215,9 @@ exports.tattooistInfoEdit = async function(params, body) {
     })
 }
 exports.tattooistImageEdit = async function(params, body) {
+    await imageStorage.delete(params.id)
+        .catch((err) => { console.log(err)} )
+
     const imageStorage_params = { title : params.id, image : body.image, mime : body.mime }
     const image_url = await imageStorage.upload(imageStorage_params)
 
@@ -235,13 +241,10 @@ exports.createDraft = async function(params, body) {
         throw 8
     }
 
-    const imageStorage_params = { title : body.title, image : body.image, mime : body.mime }
-    const image_url = await imageStorage.upload(imageStorage_params)
-
     const draft_schema = {
         drawer : tattooist['_id'],
         title : body['title'],
-        image : image_url,
+        image : "",
         genre : body['genre'],
         keywords : body['keywords'],
         cost : body['cost'],
@@ -249,6 +252,11 @@ exports.createDraft = async function(params, body) {
     }
 
     const new_draft = new Draft(draft_schema)
+
+    const imageStorage_params = { title : new_draft['_id'], image : body.image, mime : body.mime }
+    const image_url = await imageStorage.upload(imageStorage_params)
+    new_draft['image'] = image_url
+
     await new_draft.save()
 
     await Tattooist.updateOne({ _id : params.id }, {$push : { drafts : new_draft._id }})
@@ -327,6 +335,8 @@ exports.editReservation = async function(params, body) {
 }
 exports.editReservationImage = async function(params, body) {
     // image 수정 Only
+    await imageStorage.delete(params.id)
+
     const imageStorage_params = { title : params.id, image : body.image, mime : body.mime }
     const image_url = await imageStorage.upload(imageStorage_params)
 
