@@ -42,7 +42,7 @@ const DeleteAccount = () => {
     if (getCookie("user_id")) {
       type = "user";
     } else if (getCookie("tattooist_id")) {
-      type = "tattoosit";
+      type = "tattooist";
     }
     const res = await axios.post(`${APIURL}/sign-out/${type}`, {
       email,

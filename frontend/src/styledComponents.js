@@ -100,7 +100,7 @@ export const HeaderDiv = styled.header`
 `;
 
 export const HeaderInner = styled.div`
-background-color: #f6f6f6;
+  background-color: #f6f6f6;
   height: 100%;
   width: 1200px;
   margin: 0 auto;
