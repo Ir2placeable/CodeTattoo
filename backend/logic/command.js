@@ -80,16 +80,15 @@ exports.userSignOut = async function(body) {
     await User.deleteOne({ email : body.email })
 }
 exports.userPasswordEdit = async function(params, body) {
-    User.updateOne({ _id : params.id }, {$set : { pwd : body.pwd }}, (err, user) => {
-        if(!user) {
-            console.log(ErrorTable["10"])
-            throw 10
-        }
-        if(err) {
-            console.log(ErrorTable["9"])
-            throw 9
-        }
-    })
+    const user = await User.findOne({ _id : params.id })
+    if (!user) {
+        // 해당 user 없음 오류
+        console.log(ErrorTable["3"])
+        throw 3
+    }
+
+    const new_password = await user.editPassword(body.pwd)
+    await User.updateOne({ _id : params.id }, {$set : { pwd : new_password }})
 }
 
 exports.tattooistLogin = async function(body) {
@@ -161,16 +160,15 @@ exports.tattooistSignOut = async function(body) {
     await Tattooist.deleteOne({ email : body.email })
 }
 exports.tattooistPasswordEdit = async function(params, body) {
-    Tattooist.updateOne({ _id : params.id }, {$set : { pwd : body.pwd }}, (err, tattooist) => {
-        if(!tattooist) {
-            console.log(ErrorTable["4"])
-            throw 10
-        }
-        if(err) {
-            console.log(ErrorTable["9"])
-            throw 9
-        }
-    })
+    const tattooist = await Tattooist.findOne({ _id : params.id })
+    if (!tattooist) {
+        // 해당 user 없음 오류
+        console.log(ErrorTable["10"])
+        throw 10
+    }
+
+    const new_password = await tattooist.editPassword(body.pwd)
+    await Tattooist.updateOne({ _id : params.id }, {$set : { pwd : new_password }})
 }
 
 exports.userInfoEdit = async function(params, body) {
