@@ -1,16 +1,14 @@
-package com.example.codetattoochat.dto;
+package com.example.codetattoochat.vo;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Builder;
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
 
 import java.time.LocalDateTime;
 
-@Getter
-@Setter
 @Data
-public class MessageDto {
+@JsonInclude(JsonInclude.Include.NON_NULL)
+public class ResponseMessage {
     private Long id;
     private String sender;
     private String receiver;
@@ -18,7 +16,7 @@ public class MessageDto {
     private LocalDateTime createdAt;
 
     @Builder
-    public MessageDto(
+    public ResponseMessage(
             Long id,
             String sender,
             String receiver,
@@ -31,4 +29,5 @@ public class MessageDto {
         this.content = content;
         this.createdAt = createdAt;
     }
+
 }

@@ -1,24 +1,36 @@
-package com.example.codetattoochat.dto;
+package com.example.codetattoochat.repository;
 
 import lombok.Builder;
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
+import org.hibernate.annotations.GeneratorType;
+import org.springframework.data.annotation.CreatedDate;
 
+import javax.persistence.*;
 import java.time.LocalDateTime;
 
-@Getter
-@Setter
+@Entity
 @Data
-public class MessageDto {
+@Table(name="Chat_Msg")
+public class MessageEntity {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(nullable = false)
     private String sender;
+
+    @Column(nullable = false)
     private String receiver;
+
+    @Column(nullable = false)
     private String content;
+
+    @CreatedDate
+    @Column(nullable = false)
     private LocalDateTime createdAt;
 
     @Builder
-    public MessageDto(
+    public MessageEntity(
             Long id,
             String sender,
             String receiver,
