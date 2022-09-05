@@ -76,7 +76,6 @@ exports.draft = async function(params, query) {
 
     return {count, return_value}
 }
-
 exports.draftDetail = async function(params, query) {
     const draft = await Draft.findOne({ _id : params.id })
     if (!draft) {
@@ -187,7 +186,6 @@ exports.tattooist = async function(params, query) {
 
     return {count, return_value}
 }
-
 exports.tattooistDetail = async function(params, query) {
     const tattooist = await Tattooist.findOne({ _id : params.id })
     if (!tattooist) {
@@ -461,4 +459,31 @@ exports.userMyPage = async function(params) {
     }
 
     return {user_info, return_value}
+}
+
+exports.artworkDetail = async function(params, query) {
+    let info;
+    let states = [];
+
+    const tattooist = await Tattooist.findOne({ _id : query.tattooist_id })
+    const tattoo_history = await blockchain.getTattooHistory(params.id)
+    // no tattoo_history
+    if (!tattoo_history) { throw 20 }
+
+    for (let tattoo_state of tattoo_history) {
+        states.push(tattoo_state)
+    }
+
+    info = {
+        image : states[3].image,
+        date : states[3].date,
+        taken_time : states[3].timestamp - states[2].timestamp,
+        cost : states[3].cost,
+        tattooist_nickname : tattooist['nickname'],
+        body_part : states[3].body_part,
+        inks : states[3].inks,
+        machine : states[3].machine,
+    }
+
+    return {info, states}
 }

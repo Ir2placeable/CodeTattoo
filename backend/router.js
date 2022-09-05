@@ -115,6 +115,18 @@ server.get('/user/my-page/:id', (req, res) => {
             res.send({ success : false, code : err })
         })
 })
+// 페이지 : 작업물 세부
+server.get('/artwork/:id', (req, res) => {
+    console.log('page : Artwork Detail')
+
+    page.artworkDetail(req.params, req.query)
+        .then((returned) => {
+            res.send({ success : true, artwork_info : returned.info, artwork_states : returned.states })
+        })
+        .catch((err) => {
+            res.send({ success : false, code : err })
+        })
+})
 
 // 명령 모음
 // 명령 : 회원가입
