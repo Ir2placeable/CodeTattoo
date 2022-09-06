@@ -166,4 +166,12 @@ public class ChatController {
         return new ResponseEntity<>(gson.toJson(temp), HttpStatus.OK);
     }
 
+    @GetMapping("/chat/messagelist/{user_id}/{opponent_id}")
+    public ResponseEntity getMessageList(@PathVariable String user_id, @PathVariable String opponent_id) {
+        Gson gson = new Gson();
+        JsonObject temp = new JsonObject();
+        Iterable<MessageDto> messageList = messageService.getMessageList;
+        return new ResponseEntity<>(gson.toJson(temp), HttpStatus.OK);
+    }
+
 }
