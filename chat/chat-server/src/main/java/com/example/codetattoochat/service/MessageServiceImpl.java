@@ -1,6 +1,7 @@
 package com.example.codetattoochat.service;
 
 import com.example.codetattoochat.dto.MessageDto;
+import com.example.codetattoochat.entity.MessageEntity;
 import com.example.codetattoochat.repository.MessageRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,9 +31,9 @@ public class MessageServiceImpl implements MessageService {
         Iterable<Object[]> messageList = messageRepository.findUserList(sender);
         List<MessageDto> messages = new ArrayList<>();
 
-        for (Object[] e : messageList) {
-            System.out.println("e = " + Arrays.toString(e));
-        }
+//        for (Object[] e : messageList) {
+//            System.out.println("e = " + Arrays.toString(e));
+//        }
 
         messageList.forEach(message -> {
             messages.add(MessageDto.builder()
@@ -40,6 +41,27 @@ public class MessageServiceImpl implements MessageService {
                     .receiver(String.valueOf(message[1]))
                             .content(String.valueOf(message[2]))
                             .createdAt(String.valueOf(message[3]))
+                    .build());
+        });
+
+        return messages;
+    }
+
+    @Transactional
+    @Override
+    public Iterable<MessageDto> getMessageList(String sender, String receiver) {
+        log.info("Message Service's Service Layer :: Call getMessageList Method!");
+        Iterable<MessageEntity> messageList = messageRepository.findMessageList(sender,
+                receiver);
+        List<MessageDto> messages = new ArrayList<>();
+
+        messageList.forEach(message -> {
+            messages.add(MessageDto.builder()
+                    .id(message.getId())
+                    .sender(message.getSender())
+                    .receiver(message.getReceiver())
+                    .content(message.getContent())
+                    .createdAt(message.getCreatedAt())
                     .build());
         });
 

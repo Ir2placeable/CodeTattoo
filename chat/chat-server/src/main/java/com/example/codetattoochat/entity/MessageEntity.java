@@ -23,7 +23,7 @@ public class MessageEntity {
 
     @CreatedDate
     @Column(nullable = false)
-    private LocalDateTime createdAt;
+    private String createdAt;
 
     @Column(nullable = false)
     private String receiver;
@@ -37,7 +37,7 @@ public class MessageEntity {
             String sender,
             String receiver,
             String content,
-            LocalDateTime createdAt
+            String createdAt
     ) {
         this.id = id;
         this.sender = sender;

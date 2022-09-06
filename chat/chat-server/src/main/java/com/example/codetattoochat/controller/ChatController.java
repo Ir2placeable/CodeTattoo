@@ -28,6 +28,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.http.HttpHeaders;
 
 @Controller
 @RestController
@@ -83,7 +84,9 @@ public class ChatController {
             if (messageList == null) {
                 temp.addProperty("success", "true");
                 temp.addProperty("status", "No Chat Opponent");
-                return new ResponseEntity<>(gson.toJson(temp), HttpStatus.OK);
+                HttpHeaders responseHeaders = new HttpHeaders();
+                responseHeaders.add("Content-Type", "application/json; charset=UTF-8");
+                return new ResponseEntity<>(gson.toJson(temp), responseHeaders,HttpStatus.OK);
             }
 
             if (type.equals("user")) {
@@ -148,7 +151,9 @@ public class ChatController {
         } else {
             temp.addProperty("success", "fail");
             temp.addProperty("status", "Both type and user must be sended");
-            return new ResponseEntity<>(gson.toJson(temp), HttpStatus.OK);
+            HttpHeaders responseHeaders = new HttpHeaders();
+            responseHeaders.add("Content-Type", "application/json; charset=UTF-8");
+            return new ResponseEntity<>(gson.toJson(temp), responseHeaders,HttpStatus.OK);
         }
 
         temp.addProperty("success", "true");
@@ -163,15 +168,32 @@ public class ChatController {
             jArray.add(vtmp);
         }
         temp.add("userlist", jArray);
-        return new ResponseEntity<>(gson.toJson(temp), HttpStatus.OK);
+        HttpHeaders responseHeaders = new HttpHeaders();
+        responseHeaders.add("Content-Type", "application/json; charset=UTF-8");
+        return new ResponseEntity<>(gson.toJson(temp), responseHeaders,HttpStatus.OK);
     }
 
     @GetMapping("/chat/messagelist/{user_id}/{opponent_id}")
     public ResponseEntity getMessageList(@PathVariable String user_id, @PathVariable String opponent_id) {
         Gson gson = new Gson();
         JsonObject temp = new JsonObject();
-        Iterable<MessageDto> messageList = messageService.getMessageList;
-        return new ResponseEntity<>(gson.toJson(temp), HttpStatus.OK);
-    }
+        Iterable<MessageDto> messageList = messageService.getMessageList(user_id, opponent_id);
 
+        temp.addProperty("success", "true");
+        JsonArray jArray = new JsonArray();
+        for (MessageDto e : messageList) {
+            JsonObject vtmp = new JsonObject();
+            vtmp.addProperty("id", e.getId());
+            vtmp.addProperty("content", e.getContent());
+            vtmp.addProperty("createdAt", e.getCreatedAt());
+            vtmp.addProperty("sender", e.getSender());
+            vtmp.addProperty("receiver", e.getReceiver());
+            jArray.add(vtmp);
+        }
+        temp.add("messagelist", jArray);
+
+        HttpHeaders responseHeaders = new HttpHeaders();
+        responseHeaders.add("Content-Type", "application/json; charset=UTF-8");
+        return new ResponseEntity<>(gson.toJson(temp), responseHeaders,HttpStatus.OK);
+    }
 }

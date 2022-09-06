@@ -15,4 +15,10 @@ public interface MessageRepository extends JpaRepository<MessageEntity, Long> {
     Iterable<Object[]> findUserList(String sender);
 
 
+    @Query(value = "SELECT * " +
+            "FROM Chat_Msg m " +
+            "WHERE (m.receiver = :receiver AND m.sender = :sender) OR (m.receiver = :sender AND m.sender = :receiver)" +
+            "ORDER BY m.id ASC",
+            nativeQuery = true)
+    Iterable<MessageEntity> findMessageList(String sender, String receiver);
 }
