@@ -1,8 +1,12 @@
 package com.example.codetattoochat.controller;
 
+import com.example.codetattoochat.dto.MessageDto;
 import com.example.codetattoochat.service.APIInfo;
+import com.example.codetattoochat.service.MessageService;
 import com.example.codetattoochat.vo.ResponseMessage;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -21,6 +25,17 @@ import java.util.List;
 @RestController
 @Slf4j
 public class ChatController {
+    private MessageService messageService;
+    private Environment env;
+
+    @Autowired
+    public ChatController(
+            MessageService messageService,
+            Environment env
+    ) {
+        this.messageService = messageService;
+        this.env = env;
+    }
 
     @RequestMapping("/chat")
     public ModelAndView chat() {
@@ -35,10 +50,21 @@ public class ChatController {
         return info;
     }
 
-    @GetMapping("/chat/userlist/{sender}")
-    public ResponseEntity getUserList(@PathVariable String sender) {
-        log.debug("UserList sender : {}", sender);
+    @GetMapping("/chat/userlist/{user}")
+    public ResponseEntity getUserList(@PathVariable String user) {
+        log.info("UserList is : {}", user);
+        Iterable<MessageDto> messageList = messageService.getUserList(user);
+        log.info("{} 's messageList is : {}", user, messageList);
         List<ResponseMessage> result = new ArrayList<>();
+
+        messageList.forEach(v -> {
+            result.add(ResponseMessage.builder()
+                    .sender(v.getSender())
+                    .receiver(v.getReceiver())
+                    .build()
+            );
+        });
+
         return ResponseEntity.status(HttpStatus.OK).body(result);
     }
 }

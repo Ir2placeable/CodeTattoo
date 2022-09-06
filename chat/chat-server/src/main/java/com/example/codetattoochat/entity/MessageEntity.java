@@ -1,7 +1,8 @@
-package com.example.codetattoochat.repository;
+package com.example.codetattoochat.entity;
 
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.GeneratorType;
 import org.springframework.data.annotation.CreatedDate;
 
@@ -11,16 +12,11 @@ import java.time.LocalDateTime;
 @Entity
 @Data
 @Table(name="Chat_Msg")
+@NoArgsConstructor
 public class MessageEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @Column(nullable = false)
-    private String sender;
-
-    @Column(nullable = false)
-    private String receiver;
 
     @Column(nullable = false)
     private String content;
@@ -28,6 +24,12 @@ public class MessageEntity {
     @CreatedDate
     @Column(nullable = false)
     private LocalDateTime createdAt;
+
+    @Column(nullable = false)
+    private String receiver;
+
+    @Column(nullable = false)
+    private String sender;
 
     @Builder
     public MessageEntity(

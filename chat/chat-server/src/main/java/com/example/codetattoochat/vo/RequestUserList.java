@@ -1,9 +1,11 @@
 package com.example.codetattoochat.vo;
 
 import lombok.Getter;
-import 
+
+import javax.validation.constraints.NotNull;
+
 @Getter
 public class RequestUserList {
-    @No
+    @NotNull(message = "Receiver cannot be null")
     private String receiver;
 }
