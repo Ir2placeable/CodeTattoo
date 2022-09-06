@@ -11,8 +11,9 @@ const express = require('express')
 const server = express()
 const PORT = 3001
 
-let connections;
+let connections = 0
 const ErrorLogging = function(errCode) {
+    console.log(errCode)
     let response = { success : false, code : 199 }
 
     const expectedError = ErrorMessage[errCode]
@@ -20,7 +21,7 @@ const ErrorLogging = function(errCode) {
         console.log(expectedError)
         response.code = errCode
     } else {
-        console.log('***UNEXPECTED ERROR***', errCode)
+        console.log('***UNEXPECTED ERROR***\n', errCode)
     }
     
     return response

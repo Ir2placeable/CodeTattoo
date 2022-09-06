@@ -10,7 +10,7 @@ const blockchain = require("../module/blockchain")
 exports.userLogin = async function(body) {
     // 입력한 email 데이터 존재 여부 확인
     const user = await User.findOne({ email : body.email })
-    if(!user) { throw 21 }
+    if (!user) { throw 21 }
 
     // hashed password 일치 여부 확인
     return await user.comparePassword(body.pwd).then((isMatch) => {
@@ -41,11 +41,11 @@ exports.userRegister = async function(body) {
 exports.userSignOut = async function(body) {
     // 입력한 email 데이터 존재 여부 확인
     const user = await User.findOne({ email : body.email })
-    if(!user) { throw 21 }
+    if (!user) { throw 21 }
 
     // hashed password 일치 여부 확인
     await user.comparePassword(body.pwd, (err, isMatch) => {
-        if(!isMatch) { throw 22 }
+        if (!isMatch) { throw 22 }
     })
 
     // 유저가 스크랩한 도안의 좋아요 수 감소
@@ -76,7 +76,7 @@ exports.userPasswordEdit = async function(params, body) {
 exports.tattooistLogin = async function(body) {
     // 입력한 email 데이터 존재 여부 확인
     const tattooist = await Tattooist.findOne({ email : body.email })
-    if(!tattooist) { throw 2 }
+    if (!tattooist) { throw 2 }
 
     // hashed password 일치 여부 확인
     return await tattooist.comparePassword(body.pwd).then((isMatch) => {
@@ -108,11 +108,11 @@ exports.tattooistRegister = async function(body) {
 exports.tattooistSignOut = async function(body) {
     // 입력한 email 데이터 존재 여부 확인
     const tattooist = await Tattooist.findOne({ email : body.email })
-    if(!tattooist) { throw 2 }
+    if (!tattooist) { throw 2 }
 
     // hashed password 일치 여부 확인
     await tattooist.comparePassword(body.pwd, (err, isMatch) => {
-        if(!isMatch) { throw 22 }
+        if (!isMatch) { throw 22 }
     })
 
     // 타투이스트가 생성한 도안 데이터 삭제
@@ -137,9 +137,9 @@ exports.tattooistPasswordEdit = async function(params, body) {
 // 유저 정보 변경
 exports.userInfoEdit= async function(params, body) {
     // 유저 데이터 변경
-    User.updateOne({ _id : params.id }, {$set : { nickname : body.nickname, location : body.location }}, (user, err) => {
-        if(!user) { throw 1 }
-        if(err) { throw 23 }
+    User.updateOne({ _id : params.id }, {$set : { nickname : body.nickname, location : body.location }}, (err, user) => {
+        if (!user) { throw 1 }
+        if (err) { throw 23 }
     })
 }
 // 유저 이미지 변경
@@ -150,9 +150,9 @@ exports.userImageEdit = async function(params, body) {
     const image_url = await imageStorage.upload(imageStorage_params)
 
     // 유저 데이터 변경
-    User.updateOne({ _id : params.id }, {$set : { image : image_url }}, (user, err) => {
-        if(!user) { throw 1 }
-        if(err) { throw 23 }
+    User.updateOne({ _id : params.id }, {$set : { image : image_url }}, (err, user) => {
+        if (!user) { throw 1 }
+        if (err) { throw 23 }
     })
 
     // 기존 유저 이미지 삭제
@@ -162,9 +162,9 @@ exports.userImageEdit = async function(params, body) {
 // 타투이스트 정보 변경
 exports.tattooistInfoEdit= async function(params, body) {
     // 타투이스트 데이터 변경
-    Tattooist.updateOne({ _id : params.id }, {$set : { nickname : body.nickname, location : body.location, specialize : body.specialize, description : body.description }}, (tattooist, err) => {
-        if(!tattooist) { throw 2 }
-        if(err) { throw 23 }
+    Tattooist.updateOne({ _id : params.id }, {$set : { nickname : body.nickname, location : body.location, specialize : body.specialize, description : body.description }}, (err, tattooist) => {
+        if (!tattooist) { throw 2 }
+        if (err) { throw 23 }
     })
 }
 // 타투이스트 이미지 변경
@@ -175,9 +175,9 @@ exports.tattooistImageEdit = async function(params, body) {
     const image_url = await imageStorage.upload(imageStorage_params)
 
     // 타투이스트 데이터 변경
-    Tattooist.updateOne({ _id : params.id }, {$set : { image : image_url }}, (tattooist, err) => {
-        if(!tattooist) { throw 2 }
-        if(err) { throw 23 }
+    Tattooist.updateOne({ _id : params.id }, {$set : { image : image_url }}, (err, tattooist) => {
+        if (!tattooist) { throw 2 }
+        if (err) { throw 23 }
     })
 
     // 기존 이미지 삭제
@@ -219,41 +219,41 @@ exports.createDraft = async function(params, body) {
 }
 // 도안 삭제
 exports.removeDraft= async function(params, body) {
-    Tattooist.updateOne({ _id : params.id }, {$pull : { drafts : body.draft_id }}, (tattooist, err) => {
+    Tattooist.updateOne({ _id : params.id }, {$pull : { drafts : body.draft_id }}, (err, tattooist) => {
         if (!tattooist) { throw 2 }
         if (err) { throw 23 }
     })
-    Draft.deleteOne({ _id : body.draft_id }, (draft, err) => {
+    Draft.deleteOne({ _id : body.draft_id }, (err, draft) => {
         if (!draft) { throw 2 }
         if (err) { throw 23 }
     })
 }
 // 도안 정보 수정
 exports.editDraft= async function(params, body) {
-    Draft.updateOne({ _id : params.id }, { title : body.title, genre : body.genre, keywords : body.keywords, cost : body.cost }, (draft, err) => {
-        if(!draft) { throw 3 }
-        if(err) { throw 23 }
+    Draft.updateOne({ _id : params.id }, { title : body.title, genre : body.genre, keywords : body.keywords, cost : body.cost }, (err, draft) => {
+        if (!draft) { throw 3 }
+        if (err) { throw 23 }
     })
 }
 
 // 도안 스크랩
 exports.scrapDraft= async function(params, body) {
-    Draft.updateOne({ _id : body.draft_id }, {$inc : { like : 1 }}, (draft, err) => {
+    Draft.updateOne({ _id : body.draft_id }, {$inc : { like : 1 }}, (err, draft) => {
         if (!draft) { throw 3 }
         if (err) { throw 23 }
     })
-    User.updateOne({ _id : params.id }, {$push : { scraps : body.draft_id }}, (user, err) => {
+    User.updateOne({ _id : params.id }, {$push : { scraps : body.draft_id }}, (err, user) => {
         if (!user) { throw 1 }
         if (err) { throw 23 }
     })
 }
 // 도안 스크랩 취소
 exports.unScrapDraft= async function(params, body) {
-    Draft.updateOne({ _id : body.draft_id }, {$inc : { like : -1 }}, (draft, err) => {
+    Draft.updateOne({ _id : body.draft_id }, {$inc : { like : -1 }}, (err, draft) => {
         if (!draft) { throw 3 }
         if (err) { throw 23 }
     })
-    User.updateOne({ _id : params.id }, {$pull : { scraps : body.draft_id }}, (user, err) => {
+    User.updateOne({ _id : params.id }, {$pull : { scraps : body.draft_id }}, (err, user) => {
         if (!user) { throw 1 }
         if (err) { throw 23 }
     })
@@ -261,22 +261,22 @@ exports.unScrapDraft= async function(params, body) {
 
 // 타투이스트 팔로우
 exports.followTattooist= async function(params, body) {
-    Tattooist.updateOne({ _id : body.tattooist_id }, {$inc : { follower : 1 }}, (tattooist, err) => {
+    Tattooist.updateOne({ _id : body.tattooist_id }, {$inc : { follower : 1 }}, (err, tattooist) => {
         if (!tattooist) { throw 2 }
         if (err) { throw 23 }
     })
-    User.updateOne({ _id : params.id }, {$push : { follows : body.tattooist_id }}, (user, err) => {
+    User.updateOne({ _id : params.id }, {$push : { follows : body.tattooist_id }}, (err, user) => {
         if (!user) { throw 1 }
         if (err) { throw 23 }
     })
 }
 // 타투이스트 팔로우 취소
 exports.unFollowTattooist= async function(params, body) {
-    Tattooist.updateOne({ _id : body.tattooist_id }, {$inc : { follower : -1 }}, (tattooist, err) => {
+    Tattooist.updateOne({ _id : body.tattooist_id }, {$inc : { follower : -1 }}, (err, tattooist) => {
         if (!tattooist) { throw 2 }
         if (err) { throw 23 }
     })
-    User.updateOne({ _id : params.id }, {$pull : { follows : body.tattooist_id }}, (user, err) => {
+    User.updateOne({ _id : params.id }, {$pull : { follows : body.tattooist_id }}, (err, user) => {
         if (!user) { throw 1 }
         if (err) { throw 23 }
     })
@@ -285,7 +285,7 @@ exports.unFollowTattooist= async function(params, body) {
 // 일정 비활성화
 exports.createUnavailable = async function(params, body) {
     const tattooist = await Tattooist.findOne({ _id : params.id })
-    if(!tattooist) { throw 2 }
+    if (!tattooist) { throw 2 }
 
     for await (let unavailable of body['unavailable']) {
         await Tattooist.updateOne({ _id : params.id }, {$push : { unavailable : unavailable }})
@@ -294,7 +294,7 @@ exports.createUnavailable = async function(params, body) {
 // 일정 비활성화 취소
 exports.deleteUnavailable = async function(params, body) {
     const tattooist = await Tattooist.findOne({ _id : params.id })
-    if(!tattooist) { throw 2 }
+    if (!tattooist) { throw 2 }
 
     for await (let unavailable of body['unavailable']) {
         await Tattooist.updateOne({ _id : params.id }, {$pull : { unavailable : unavailable }})
@@ -312,7 +312,7 @@ exports.createReservation = async function(body) {
 }
 // 예약 정보 수정 : date, time_slot, cost 수정 Only
 exports.editReservation= async function(params, body) {
-    Reservation.updateOne({ _id : params.id }, {$set : { date : body.date, time_slot : body.time_slot, cost : body.cost, body_part : body.body_part }}, (reservation, err) => {
+    Reservation.updateOne({ _id : params.id }, {$set : { date : body.date, time_slot : body.time_slot, cost : body.cost, body_part : body.body_part }}, (err, reservation) => {
         if (!reservation) { throw 4 }
         if (err) { throw 23 }
     })
@@ -330,7 +330,7 @@ exports.editReservationImage = async function(params, body) {
 }
 // 예약 확정
 exports.confirmReservation= async function(params, body) {
-    Reservation.updateOne({ _id : params.id }, {$set : { confirmed : true }}, (reservation, err) => {
+    Reservation.updateOne({ _id : params.id }, {$set : { confirmed : true }}, (err, reservation) => {
         if (!reservation) { throw 4 }
         if (err) { throw 23 }
     })
@@ -340,11 +340,11 @@ exports.confirmReservation= async function(params, body) {
 }
 // 예약 거절
 exports.rejectReservation= async function(params, body) {
-    Reservation.deleteOne({ _id : params.id }, (reservation, err) => {
+    Reservation.deleteOne({ _id : params.id }, (err, reservation) => {
         if (!reservation) { throw 4 }
         if (err) { throw 23 }
     })
-    Tattooist.updateOne({ _id : body.tattooist_id }, {$pull : { requests : params.id }}, (tattooist, err) => {
+    Tattooist.updateOne({ _id : body.tattooist_id }, {$pull : { requests : params.id }}, (err, tattooist) => {
         if (!tattooist) { throw 2 }
         if (err) { throw 23 }
     })
