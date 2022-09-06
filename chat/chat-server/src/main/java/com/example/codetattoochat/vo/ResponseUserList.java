@@ -14,8 +14,10 @@ public class ResponseUserList {
     private String receiver;
     private String content;
     private String createdAt;
+    private String opponent_id;
+    private String opponent_image;
+    private String opponent_nickname;
 
-    private String opponent;
     @Builder
     public ResponseUserList(
             Long id,
@@ -23,14 +25,18 @@ public class ResponseUserList {
             String receiver,
             String content,
             String createdAt,
-            String opponent
+            String opponent_id,
+            String opponent_image,
+            String opponent_nickname
     ) {
         this.id = id;
         this.sender = sender;
         this.receiver = receiver;
         this.content = content;
         this.createdAt = createdAt;
-        this.opponent = opponent;
+        this.opponent_id = opponent_id;
+        this.opponent_image = opponent_image;
+        this.opponent_nickname = opponent_nickname;
     }
 
 }
