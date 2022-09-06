@@ -4,6 +4,7 @@ import com.example.codetattoochat.dto.MessageDto;
 import com.example.codetattoochat.service.APIInfo;
 import com.example.codetattoochat.service.MessageService;
 import com.example.codetattoochat.vo.ResponseMessage;
+import com.example.codetattoochat.vo.ResponseUserList;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
@@ -50,20 +51,26 @@ public class ChatController {
         return info;
     }
 
-    @GetMapping("/chat/userlist/{user}")
-    public ResponseEntity getUserList(@PathVariable String user) {
+    @GetMapping("/chat/userlist/{user}/{type}") // 상대방 유저 리스트 요청 API,
+    public ResponseEntity getUserList(@PathVariable String user, @PathVariable String type) {
         log.info("UserList is : {}", user);
         Iterable<MessageDto> messageList = messageService.getUserList(user);
         log.info("{} 's messageList is : {}", user, messageList);
-        List<ResponseMessage> result = new ArrayList<>();
+        List<ResponseUserList> result = new ArrayList<>();
 
-        messageList.forEach(v -> {
-            result.add(ResponseMessage.builder()
-                    .sender(v.getSender())
-                    .receiver(v.getReceiver())
-                    .build()
-            );
-        });
+        for (MessageDto v : messageList) {
+            if (v.getSender().equals(user) && !v.getReceiver().equals(user)) { //내가 상대방한테 마지막으로 채팅을 보냈을때,
+                result.add(ResponseUserList.builder()
+                        .opponent(v.getReceiver())
+                        .content(v.getContent())
+                        .createdAt(v.getCreatedAt()).build());
+            } else if (!v.getSender().equals(user) && v.getReceiver().equals(user)) { //상대방이 나에게 마지막으로 채팅을 보냈을떄
+                result.add(ResponseUserList.builder()
+                        .opponent(v.getSender())
+                        .content(v.getContent())
+                        .createdAt(v.getCreatedAt()).build());
+            }
+        }
 
         return ResponseEntity.status(HttpStatus.OK).body(result);
     }
