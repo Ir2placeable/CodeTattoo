@@ -30,7 +30,7 @@ const Tattooist = ({ tattooist }) => {
     setHover(false);
   }, []);
 
-  console.log(tattooist)
+  // console.log(tattooist)
 
   return (
     <>

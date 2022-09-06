@@ -42,7 +42,8 @@ export const HorizontalLine = styled.div`
 
 export const ContentsDiv = styled.div`
   // max-width: 100vw;
-  min-height: 733px;
+  // min-height: 733px;
+  min-height: calc(100vh - 490px);
   padding-top: 90px;
   padding-bottom: 130px;
 
@@ -52,6 +53,7 @@ export const ContentsDiv = styled.div`
 export const MyPageDiv = styled.div`
   padding: 20px 0;
   // background-color: orange;
+  min-height: calc(100vh - 290px);
 `;
 // position: relative;
 
@@ -175,10 +177,12 @@ export const HeaderBtnHover = {
 // *** Account ***
 export const AccountDiv = styled.div`
   width: 600px;
-  margin: 150px auto;
+  margin: 150px auto 0;
   box-shadow: 5px 10px 20px #484848;
   border-radius: 8px;
   padding-bottom: 50px;
+
+  // background-color: aqua;
 `;
 export const AccountText = styled.div`
   font-size: 20px;
@@ -269,10 +273,13 @@ export const AccountOtherBtn = styled.div`
 // *** Entry page ***
 export const EntryDiv = styled.div`
   width: 100%;
-  height: 800px;
+  // height: 800px;
+  height: calc(100vh - 220px);
   display: flex;
   justify-content: center;
   align-items: center;
+
+  // background-color: aqua;
 `;
 export const EntryBtnDiv = styled.div`
   width: 300px;
@@ -291,6 +298,7 @@ export const EntryBtnDiv = styled.div`
 export const MainPageDiv = styled.div`
   width: 100%;
   margin: 0 auto;
+  // background-color: orange;
 `;
 
 export const MainNavigation = styled.div`
@@ -331,6 +339,8 @@ export const MainContentsDiv = styled.div`
   width: 1500px;
   margin: 0 auto;
   position: relative;
+
+  // background-color: aqua;
 `;
 
 export const SmallNavigation = styled.div`
@@ -1337,8 +1347,8 @@ export const DraftImgHoverDiv = styled.div`
 `;
 
 export const DraftImgInfo = styled.div`
-  // margin-top: 15px;
-  margin: 15px 15px 0;
+  margin-top: 15px;
+  // margin: 15px 15px 0;
   height: 35px;
   display: flex;
   align-items: center;
@@ -2055,6 +2065,18 @@ export const ReservDraftImg = styled.img`
   border-radius: 5px;
 `;
 
+export const ReservDraftEmptyImg = styled.div`
+width: 200px;
+height: 200px;
+background-color: #B0B0B0;
+border-radius: 5px;
+font-size: 20px;
+font-weight: bold;
+display: flex;
+justify-content: center;
+align-items: center;
+`
+
 export const ReservTextDiv = styled.div`
   // background-color: orange;
   width: calc(100% - 400px);
@@ -2105,12 +2127,12 @@ export const ReservBtn = styled.div`
   font-size: 20px;
   font-weight: bold;
   border: 3px solid black;
-  border-radius: 30px;
+  border-radius: 25px;
   display: flex;
   justify-content: center;
   align-items: center;
   cursor: pointer;
-  transition: 0.3s;
+  transition: 0.2s;
 
   &:hover {
     color: black;
@@ -2120,7 +2142,7 @@ export const ReservBtn = styled.div`
   ${(props) => {
     if(props.type === 'small'){
       return css`
-        border-radius: 30px;
+        border-radius: 20px;
       `
     } else if(props.type === 'big'){
       return css`
@@ -2155,7 +2177,8 @@ export const ProcedureInfo = styled.div`
   flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
-  background-color: #ececec;
+  // background-color: #ececec;
+  background-color: #e4e8f0;
   font-weight: bold;
   padding: 64px 40px 40px;
   border-radius: 8px;
@@ -2169,6 +2192,13 @@ export const ProcedureText = styled.div`
   left: 10px;
 `;
 
+export const ProcedureDesc = styled.span`
+display: inline-block;
+margin-left: 15px;
+font-size: 14px;
+color: #DC4B4B;
+`
+
 export const ProcedureBox = styled.div`
   width: calc(50% - 70px);
   background-color: black;
@@ -2181,7 +2211,6 @@ export const ProcedureBox = styled.div`
     props.size === "big" &&
     css`
       width: 100%;
-      margin-bottom: 0;
     `}
 `;
 
@@ -2209,7 +2238,8 @@ export const ProcedureLabel = styled.div`
 `;
 
 export const ProcedureData = styled.div`
-  background-color: #f0f0f0;
+  // background-color: #f0f0f0;
+  background-color: #CFCFCF;
   width: 310px;
   border-radius: 5px;
   height: 100%;
@@ -2217,6 +2247,15 @@ export const ProcedureData = styled.div`
   align-items: center;
   padding: 0 10px;
 `;
+
+export const ProcedureInput = styled.input`
+background-color: white;
+width: 310px;
+padding: 0 10px;
+border: none;
+border-radius: 5px;
+height: 100%;
+`
 
 export const ProcedureBtns = styled.div`
   display: flex;
@@ -2227,20 +2266,37 @@ export const ProcedureBtn = styled.div`
   background-color: black;
   color: white;
   cursor: pointer;
-  border-radius: 5px;
+  border-radius: 10px;
   text-align: center;
-  line-height: 45px;
+  line-height: 50px;
   font-size: 20px;
   font-weight: bold;
-  width: 300px;
+  width: 250px;
   margin: 0 10px;
 
   ${(props) =>
-    props.color === "gray" &&
+    props.color === "blue" &&
     css`
-      background-color: #797979;
+      background-color: #6F87C0;
     `}
 `;
+
+export const GoListDiv = styled.div`
+width: max-content;
+height: max-content;
+padding: 8px;
+border: 1px solid rgba(72, 72, 72, .5);
+border-radius: 5px;
+display: flex;
+justify-content: center;
+align-items: center;
+position: absolute;
+top: 30px;
+// left: 0;
+right: 0;
+cursor: pointer;
+color: rgba(72, 72, 72, .8);
+`
 
 // Chatting Page
 export const ChattingDiv = styled.div`
