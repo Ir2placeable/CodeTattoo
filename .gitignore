@@ -7,3 +7,6 @@ backend/blockchainFiles/
 backend/test.js
 
 .idea
+
+.DS_Store
+
