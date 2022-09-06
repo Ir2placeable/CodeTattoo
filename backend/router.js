@@ -1,11 +1,12 @@
 const page = require('./logic/page')
 const admin = require('./logic/admin')
 const command = require('./logic/command')
-const ErrorMessage = require('./ErrorControl')
+const chatting = require('./module/chatting')
 
-const mongoose = require("mongoose");
+const ErrorMessage = require('./ErrorControl')
 const config = require('./config/key')
 
+const mongoose = require("mongoose");
 const express = require('express')
 const server = express()
 const PORT = 3001
@@ -592,6 +593,8 @@ server.get('/get/tattooist', (req, res) => {
 server.get('/get/user', (req, res) => {
     admin.getUser().then((result) => { res.send({ users : result}) })
 })
+
+// 블록체인 강제 명령 모음
 // 블록체인에 데이터 기록 요청
 server.post('/blockchain/invoke/:function/:key', (req, res) => {
     admin.invokeBlockchain(req.params, req.body)
@@ -636,6 +639,22 @@ server.get('/blockchain/side-effects/:key', (req, res) => {
         })
 
 })
+
+// 채팅 서버 명령 모음
+// 유저 닉네임 리스트 반환
+server.get('/chatting/profile/:type/:id', (req, res) => {
+    console.log('command : profile for chatting')
+
+    chatting.getProfile(req.params)
+        .then((returned) => {
+            res.send({ success : true, profile : returned })
+        })
+        .catch((err) => {
+            res.send(ErrorLogging(err))
+        })
+})
+
+
 
 server.listen(PORT, () => {
     console.log('server opened')
