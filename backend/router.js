@@ -1,6 +1,7 @@
 const page = require('./logic/page')
 const admin = require('./logic/admin')
 const command = require('./logic/command')
+const ErrorMessage = require('./ErrorControl')
 
 const mongoose = require("mongoose");
 const config = require('./config/key')
@@ -36,8 +37,17 @@ server.get('/drafts/:filter/:page', (req, res) => {
         .then((returned) => {
             res.send({ success : true, count : returned.count, drafts : returned.return_value })
         })
-        .catch((errCode) => {
-            res.send({ success : false, err : errCode })
+        .catch((err) => {
+            let response = { success : false, code : 199 }
+            
+            const expectedError = ErrorMessage[err]
+            if (expectedError) {
+                console.log(expectedError)
+                response.code = err
+            } else { 
+                console.log('***UNEXPECTED ERROR***', err) 
+            }
+            res.send(response)
         })
 })
 // 페이지 : 도안 세부
@@ -47,6 +57,18 @@ server.get('/draft/:id', (req, res) => {
     page.draftDetail(req.params, req.query)
         .then((returned) => {
             res.send({ success : true, draft : returned })
+        })
+        .catch((err) => {
+            let response = { success : false, code : 199 }
+            
+            const expectedError = ErrorMessage[err]
+            if (expectedError) {
+                console.log(expectedError)
+                response.code = err
+            } else { 
+                console.log('***UNEXPECTED ERROR***', err) 
+            }
+            res.send(response)
         })
 })
 // 페이지 : 타투이스트
@@ -58,8 +80,16 @@ server.get('/tattooists/:filter/:page', (req, res) => {
             res.send({ success : true, count : returned.count, tattooists : returned.return_value })
         })
         .catch((err) => {
-            res.send({ success : false, code : err }) 
-            console.log(err)
+            let response = { success : false, code : 199 }
+            
+            const expectedError = ErrorMessage[err]
+            if (expectedError) {
+                console.log(expectedError)
+                response.code = err
+            } else { 
+                console.log('***UNEXPECTED ERROR***', err) 
+            }
+            res.send(response)
         })
 })
 // 페이지 : 타투이스트 세부
@@ -71,8 +101,16 @@ server.get('/tattooist/:id/:filter', (req, res) => {
             res.send({ success : true, tattooist : returned.tattooist_info, data : returned.return_value })
         })
         .catch((err) => {
-            res.send({ success : false, code : err }) 
-            console.log(err)
+            let response = { success : false, code : 199 }
+            
+            const expectedError = ErrorMessage[err]
+            if (expectedError) {
+                console.log(expectedError)
+                response.code = err
+            } else { 
+                console.log('***UNEXPECTED ERROR***', err) 
+            }
+            res.send(response)
         })
 })
 // 페이지 : 스크랩
@@ -84,8 +122,16 @@ server.get('/scraps/:filter/:page', (req, res) => {
             res.send({ success : true, count : returned.count, drafts : returned.drafts, tattooists : returned.tattooists })
         })
         .catch((err) => {
-            res.send({ success : false, code : err }) 
-            console.log(err)
+            let response = { success : false, code : 199 }
+            
+            const expectedError = ErrorMessage[err]
+            if (expectedError) {
+                console.log(expectedError)
+                response.code = err
+            } else { 
+                console.log('***UNEXPECTED ERROR***', err) 
+            }
+            res.send(response)
         })
 })
 // 페이지 : 예약
@@ -97,8 +143,16 @@ server.get('/reservations', (req, res) => {
             res.send({ success : true, reservations : returned })
         })
         .catch((err) => {
-            res.send({ success : false, code : err }) 
-            console.log(err)
+            let response = { success : false, code : 199 }
+            
+            const expectedError = ErrorMessage[err]
+            if (expectedError) {
+                console.log(expectedError)
+                response.code = err
+            } else { 
+                console.log('***UNEXPECTED ERROR***', err) 
+            }
+            res.send(response)
         })
 })
 // 페이지 : 예약 세부
@@ -110,8 +164,16 @@ server.get('/reservation/:id', (req, res) => {
             res.send({ success : true, reservation : returned })
         })
         .catch((err) => {
-            res.send({ success : false, code : err })
-            console.log(err)
+            let response = { success : false, code : 199 }
+            
+            const expectedError = ErrorMessage[err]
+            if (expectedError) {
+                console.log(expectedError)
+                response.code = err
+            } else { 
+                console.log('***UNEXPECTED ERROR***', err) 
+            }
+            res.send(response)
         })
 })
 // (미개발) 페이지 : 유저 채팅 박스
@@ -129,8 +191,16 @@ server.get('/user/my-page/:id', (req, res) => {
             res.send({ success : true, user_info : returned.user_info, tattoos : returned.return_value })
         })
         .catch((err) => {
-            res.send({ success : false, code : err }) 
-            console.log(err)
+            let response = { success : false, code : 199 }
+            
+            const expectedError = ErrorMessage[err]
+            if (expectedError) {
+                console.log(expectedError)
+                response.code = err
+            } else { 
+                console.log('***UNEXPECTED ERROR***', err) 
+            }
+            res.send(response)
         })
 })
 // 페이지 : 작업물 세부
@@ -142,8 +212,16 @@ server.get('/artwork/:id', (req, res) => {
             res.send({ success : true, artwork_info : returned.info, artwork_states : returned.states })
         })
         .catch((err) => {
-            res.send({ success : false, code : err }) 
-            console.log(err)
+            let response = { success : false, code : 199 }
+            
+            const expectedError = ErrorMessage[err]
+            if (expectedError) {
+                console.log(expectedError)
+                response.code = err
+            } else { 
+                console.log('***UNEXPECTED ERROR***', err) 
+            }
+            res.send(response)
         })
 })
 
@@ -159,9 +237,8 @@ server.post('/register/:type', (req, res) => {
                 res.send({ success : true })
             })
             .catch((err) => {
-                console.log(err)
-                res.send({ success : false, code : err }) 
-            console.log(err)
+                console.log(ErrorMessage[err])
+                res.send({ success : false, code : err })
             })
     }
     // tattooist view
@@ -171,8 +248,8 @@ server.post('/register/:type', (req, res) => {
                 res.send({ success : true })
             })
             .catch((err) => {
-                res.send({ success : false, code : err }) 
-            console.log(err)
+                console.log(ErrorMessage[err])
+                res.send({ success : false, code : err })
             })
     }
     // wrong type error
@@ -191,8 +268,8 @@ server.post('/login/:type', (req, res) => {
                 res.send({success : true, user_info : returned })
             })
             .catch((err) => {
-                res.send({ success : false, code : err }) 
-            console.log(err)
+                console.log(ErrorMessage[err])
+                res.send({ success : false, code : err })
             })
     }
     // tattooist view
@@ -202,13 +279,14 @@ server.post('/login/:type', (req, res) => {
                 res.send({ success : true, tattooist_info : returned })
             })
             .catch((err) => {
-                res.send({ success : false, code : err }) 
-            console.log(err)
+                console.log(ErrorMessage[err])
+                res.send({ success : false, code : err })
             })
     }
     // wrong type error
     else {
-        res.send({ success : false, code : 12 })
+        console.log(ErrorMessage["6"])
+        res.send({ success : false, code : 6 })
     }
 })
 // 명령 : 회원탈퇴
@@ -222,8 +300,8 @@ server.post('/sign-out/:type', (req, res) => {
                 res.send({ success : true })
             })
             .catch((err) => {
-                res.send({ success : false, code : err }) 
-            console.log(err)
+                console.log(ErrorMessage[err])
+                res.send({ success : false, code : err })
             })
     }
     // tattooist view
@@ -233,13 +311,14 @@ server.post('/sign-out/:type', (req, res) => {
                 res.send({ success : true })
             })
             .catch((err) => {
-                res.send({ success : false, code : err }) 
-            console.log(err)
+                console.log(ErrorMessage[err])
+                res.send({ success : false, code : err })
             })
     }
     // wrong type error
     else {
-        res.send({ success : false, code : 12 })
+        console.log(ErrorMessage["6"])
+        res.send({ success : false, code : 6 })
     }
 })
 // 명령 : 비밀번호 변경
@@ -252,8 +331,8 @@ server.patch('/:type/pwd/:id', (req, res) => {
                 res.send({ success : true })
             })
             .catch((err) => {
-                res.send({ success : false, code : err }) 
-            console.log(err)
+                console.log(ErrorMessage[err])
+                res.send({ success : false, code : err })
             })
     } else if (req.params.type === 'tattooist') {
         console.log('command : tattooist edit password')
@@ -263,11 +342,12 @@ server.patch('/:type/pwd/:id', (req, res) => {
                 res.send({ success : true })
             })
             .catch((err) => {
-                res.send({ success : false, code : err }) 
-            console.log(err)
+                console.log(ErrorMessage[err])
+                res.send({ success : false, code : err })
             })
     } else {
-        res.send({ success : false, code : "wrong filter" })
+        console.log(ErrorMessage["6"])
+        res.send({ success : false, code : 6 })
     }
 })
 // 명령 : 유저 정보수정
@@ -279,8 +359,16 @@ server.patch('/user/my-page/:id', (req, res) => {
             res.send({ success : true })
         })
         .catch((err) => {
-            res.send({ success : false, code : err }) 
-            console.log(err)
+            let response = { success : false, code : 199 }
+            
+            const expectedError = ErrorMessage[err]
+            if (expectedError) {
+                console.log(expectedError)
+                response.code = err
+            } else { 
+                console.log('***UNEXPECTED ERROR***', err) 
+            }
+            res.send(response)
         })
 })
 // 명령 : 유저 이미지수정
@@ -292,8 +380,16 @@ server.post('/user/my-page/:id', (req, res) => {
             res.send({ success : true })
         })
         .catch((err) => {
-            res.send({ success : false, code : err }) 
-            console.log(err)
+            let response = { success : false, code : 199 }
+            
+            const expectedError = ErrorMessage[err]
+            if (expectedError) {
+                console.log(expectedError)
+                response.code = err
+            } else { 
+                console.log('***UNEXPECTED ERROR***', err) 
+            }
+            res.send(response)
         })
 })
 // 명령 : 타투이스트 정보수정
@@ -305,8 +401,16 @@ server.patch('/tattooist/my-page/:id', (req, res) => {
             res.send({ success : true })
         })
         .catch((err) => {
-            res.send({ success : false, code : err }) 
-            console.log(err)
+            let response = { success : false, code : 199 }
+            
+            const expectedError = ErrorMessage[err]
+            if (expectedError) {
+                console.log(expectedError)
+                response.code = err
+            } else { 
+                console.log('***UNEXPECTED ERROR***', err) 
+            }
+            res.send(response)
         })
 })
 // 명령 : 타투이스트 이미지수정
@@ -318,8 +422,16 @@ server.post('/tattooist/my-page/:id', (req, res) => {
             res.send({ success : true })
         })
         .catch((err) => {
-            res.send({ success : false, code : err }) 
-            console.log(err)
+            let response = { success : false, code : 199 }
+            
+            const expectedError = ErrorMessage[err]
+            if (expectedError) {
+                console.log(expectedError)
+                response.code = err
+            } else { 
+                console.log('***UNEXPECTED ERROR***', err) 
+            }
+            res.send(response)
         })
 })
 // 명령 : 도안 스크랩
@@ -331,8 +443,16 @@ server.post('/scrap/:id', (req, res) => {
             res.send({ success : true })
         })
         .catch((err) => {
-            res.send({ success : false, code : err }) 
-            console.log(err)
+            let response = { success : false, code : 199 }
+            
+            const expectedError = ErrorMessage[err]
+            if (expectedError) {
+                console.log(expectedError)
+                response.code = err
+            } else { 
+                console.log('***UNEXPECTED ERROR***', err) 
+            }
+            res.send(response)
         })
 })
 // 명령 : 도안 스크랩 취소
@@ -344,8 +464,16 @@ server.post('/unscrap/:id', (req, res) => {
             res.send({ success : true })
         })
         .catch((err) => {
-            res.send({ success : false, code : err }) 
-            console.log(err)
+            let response = { success : false, code : 199 }
+            
+            const expectedError = ErrorMessage[err]
+            if (expectedError) {
+                console.log(expectedError)
+                response.code = err
+            } else { 
+                console.log('***UNEXPECTED ERROR***', err) 
+            }
+            res.send(response)
         })
 })
 // 명령 : 타투이스트 팔로우
@@ -357,8 +485,16 @@ server.post('/follow/:id', (req, res) => {
             res.send({ success : true })
         })
         .catch((err) => {
-            res.send({ success : false, code : err }) 
-            console.log(err)
+            let response = { success : false, code : 199 }
+            
+            const expectedError = ErrorMessage[err]
+            if (expectedError) {
+                console.log(expectedError)
+                response.code = err
+            } else { 
+                console.log('***UNEXPECTED ERROR***', err) 
+            }
+            res.send(response)
         })
 })
 // 명령 : 타투이스트 언팔로우
@@ -370,8 +506,16 @@ server.post('/unfollow/:id', (req, res) => {
             res.send({ success : true })
         })
         .catch((err) => {
-            res.send({ success : false, code : err }) 
-            console.log(err)
+            let response = { success : false, code : 199 }
+            
+            const expectedError = ErrorMessage[err]
+            if (expectedError) {
+                console.log(expectedError)
+                response.code = err
+            } else { 
+                console.log('***UNEXPECTED ERROR***', err) 
+            }
+            res.send(response)
         })
 })
 // 명령 : 도안 생성
@@ -383,8 +527,16 @@ server.post('/create/draft/:id', (req, res) => {
             res.send({ success : true })
         })
         .catch((err) => {
-            res.send({ success : false, code : err }) 
-            console.log(err)
+            let response = { success : false, code : 199 }
+            
+            const expectedError = ErrorMessage[err]
+            if (expectedError) {
+                console.log(expectedError)
+                response.code = err
+            } else { 
+                console.log('***UNEXPECTED ERROR***', err) 
+            }
+            res.send(response)
         })
 })
 // 명령 : 도안 삭제
@@ -396,8 +548,16 @@ server.post('/remove/draft/:id', (req, res) => {
             res.send({ success : true })
         })
         .catch((err) => {
-            res.send({ success : false, code : err }) 
-            console.log(err)
+            let response = { success : false, code : 199 }
+            
+            const expectedError = ErrorMessage[err]
+            if (expectedError) {
+                console.log(expectedError)
+                response.code = err
+            } else { 
+                console.log('***UNEXPECTED ERROR***', err) 
+            }
+            res.send(response)
         })
 })
 // 명령 : 도안 수정
@@ -409,9 +569,16 @@ server.patch('/draft/:id', (req, res) => {
             res.send({ success : true })
         })
         .catch((err) => {
-            res.send({ success : false, code : err }) 
-            console.log(err)
-            console.log(err)
+            let response = { success : false, code : 199 }
+            
+            const expectedError = ErrorMessage[err]
+            if (expectedError) {
+                console.log(expectedError)
+                response.code = err
+            } else { 
+                console.log('***UNEXPECTED ERROR***', err) 
+            }
+            res.send(response)
         })
 })
 // 명령 : 타투이스트 일정 비활성화
@@ -421,8 +588,16 @@ server.post('/create/unavailable/:id', (req, res) => {
             res.send({ success : true })
         })
         .catch((err) => {
-            res.send({ success : false, code : err }) 
-            console.log(err)
+            let response = { success : false, code : 199 }
+            
+            const expectedError = ErrorMessage[err]
+            if (expectedError) {
+                console.log(expectedError)
+                response.code = err
+            } else { 
+                console.log('***UNEXPECTED ERROR***', err) 
+            }
+            res.send(response)
         })
 })
 // 명령 : 타투이스트 일정 비활성화 취소
@@ -432,8 +607,16 @@ server.post('/remove/unavailable/:id', (req, res) => {
             res.send({ success : true })
         })
         .catch((err) => {
-            res.send({ success : false, code : err }) 
-            console.log(err)
+            let response = { success : false, code : 199 }
+            
+            const expectedError = ErrorMessage[err]
+            if (expectedError) {
+                console.log(expectedError)
+                response.code = err
+            } else { 
+                console.log('***UNEXPECTED ERROR***', err) 
+            }
+            res.send(response)
         })
 })
 
@@ -447,8 +630,16 @@ server.post('/create/reservation', (req, res) => {
             res.send({ success : true })
         })
         .catch((err) => {
-            res.send({ success : false, code : err }) 
-            console.log(err)
+            let response = { success : false, code : 199 }
+            
+            const expectedError = ErrorMessage[err]
+            if (expectedError) {
+                console.log(expectedError)
+                response.code = err
+            } else { 
+                console.log('***UNEXPECTED ERROR***', err) 
+            }
+            res.send(response)
         })
 })
 // 명령 : 예약 정보 수정
@@ -460,8 +651,16 @@ server.patch('/reservation/:id', (req, res) => {
             res.send({ success : true })
         })
         .catch((err) => {
-            res.send({ success : false, code : err }) 
-            console.log(err)
+            let response = { success : false, code : 199 }
+            
+            const expectedError = ErrorMessage[err]
+            if (expectedError) {
+                console.log(expectedError)
+                response.code = err
+            } else { 
+                console.log('***UNEXPECTED ERROR***', err) 
+            }
+            res.send(response)
         })
 })
 // 명령 : 예약 도안 수정
@@ -473,8 +672,16 @@ server.post('/reservation/:id', (req, res) => {
             res.send({ success : true })
         })
         .catch((err) => {
-            res.send({ success : false, code : err }) 
-            console.log(err)
+            let response = { success : false, code : 199 }
+            
+            const expectedError = ErrorMessage[err]
+            if (expectedError) {
+                console.log(expectedError)
+                response.code = err
+            } else { 
+                console.log('***UNEXPECTED ERROR***', err) 
+            }
+            res.send(response)
         })
 })
 // 명령 : 예약 확정
@@ -486,8 +693,16 @@ server.post('/confirm/reservation/:id', (req, res) => {
             res.send({ success : true })
         })
         .catch((err) => {
-            res.send({ success : false, code : err }) 
-            console.log(err)
+            let response = { success : false, code : 199 }
+            
+            const expectedError = ErrorMessage[err]
+            if (expectedError) {
+                console.log(expectedError)
+                response.code = err
+            } else { 
+                console.log('***UNEXPECTED ERROR***', err) 
+            }
+            res.send(response)
         })
 })
 // 명령 : 예약 불발
@@ -499,8 +714,16 @@ server.post('/reject/reservation/:id', (req, res) => {
             res.send({ success : true })
         })
         .catch((err) => {
-            res.send({ success : false, code : err }) 
-            console.log(err)
+            let response = { success : false, code : 199 }
+            
+            const expectedError = ErrorMessage[err]
+            if (expectedError) {
+                console.log(expectedError)
+                response.code = err
+            } else { 
+                console.log('***UNEXPECTED ERROR***', err) 
+            }
+            res.send(response)
         })
 })
 // 명령 : 작업 시작
@@ -512,8 +735,16 @@ server.post('/procedure/:id', (req, res) => {
             res.send({ success : true, tattoo_id : returned })
         })
         .catch((err) => {
-            res.send({ success : false, code : err }) 
-            console.log(err)
+            let response = { success : false, code : 199 }
+            
+            const expectedError = ErrorMessage[err]
+            if (expectedError) {
+                console.log(expectedError)
+                response.code = err
+            } else { 
+                console.log('***UNEXPECTED ERROR***', err) 
+            }
+            res.send(response)
         })
 })
 // 명령 : 작업 완료
@@ -525,8 +756,16 @@ server.post('/procedure/:id', (req, res) => {
             res.send({ success : true })
         })
         .catch((err) => {
-            res.send({ success : false, code : err }) 
-            console.log(err)
+            let response = { success : false, code : 199 }
+            
+            const expectedError = ErrorMessage[err]
+            if (expectedError) {
+                console.log(expectedError)
+                response.code = err
+            } else { 
+                console.log('***UNEXPECTED ERROR***', err) 
+            }
+            res.send(response)
         })
 })
 
@@ -560,10 +799,6 @@ server.get('/reset/reservation', (req, res) => {
 server.get('/reset/all', (req, res) => {
     admin.resetAll()
         .then(() => { res.send({ success : true })})
-        .catch((err) => {
-            console.log(err)
-            res.send({ success : false })
-        })
 })
 // Draft 찾기
 server.get('/get/draft', (req, res) => {
@@ -584,9 +819,16 @@ server.post('/blockchain/invoke/:function/:key', (req, res) => {
             res.send({ success : true })
         })
         .catch((err) => {
-            console.log(err)
-            res.send({ success : false, code : err }) 
-            console.log(err)
+            let response = { success : false, code : 199 }
+            
+            const expectedError = ErrorMessage[err]
+            if (expectedError) {
+                console.log(expectedError)
+                response.code = err
+            } else { 
+                console.log('***UNEXPECTED ERROR***', err) 
+            }
+            res.send(response)
         })
 })
 // 블록체인에서 데이터 반환 요청
@@ -596,8 +838,16 @@ server.get('/blockchain/query/:key', (req, res) => {
             res.send({ success : true, tattoo_info : returned })
         })
         .catch((err) => {
-            res.send({ success : false, code : err }) 
-            console.log(err)
+            let response = { success : false, code : 199 }
+            
+            const expectedError = ErrorMessage[err]
+            if (expectedError) {
+                console.log(expectedError)
+                response.code = err
+            } else { 
+                console.log('***UNEXPECTED ERROR***', err) 
+            }
+            res.send(response)
         })
 })
 // 블록체인에서 히스토리 반환 요청
@@ -607,8 +857,16 @@ server.get('/blockchain/history/:key', (req, res) => {
             res.send({ success : true, tattoo_history : returned })
         })
         .catch((err) => {
-            res.send({ success : false, code : err }) 
-            console.log(err)
+            let response = { success : false, code : 199 }
+            
+            const expectedError = ErrorMessage[err]
+            if (expectedError) {
+                console.log(expectedError)
+                response.code = err
+            } else { 
+                console.log('***UNEXPECTED ERROR***', err) 
+            }
+            res.send(response)
         })
 })
 // 블록체인에서 부작용 데이터 반환 요청
@@ -618,11 +876,18 @@ server.get('/blockchain/side-effects/:key', (req, res) => {
             res.send({ success : true, tattoo_side_effects : returned })
         })
         .catch((err) => {
-            res.send({ success : false, code : err }) 
-            console.log(err)
+            let response = { success : false, code : 199 }
+            
+            const expectedError = ErrorMessage[err]
+            if (expectedError) {
+                console.log(expectedError)
+                response.code = err
+            } else { 
+                console.log('***UNEXPECTED ERROR***', err) 
+            }
+            res.send(response)
         })
 })
-
 
 server.listen(PORT, () => {
     console.log('server opened')

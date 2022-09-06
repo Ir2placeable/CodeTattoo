@@ -1,11 +1,11 @@
 const {Draft} = require("../DBModel/Draft");
-const ErrorTable = require("../ErrorTable");
 const Global = require("../GlobalVariable");
 const {Tattooist} = require("../DBModel/Tattooist");
 const {User} = require("../DBModel/User");
 const blockchain = require('../module/blockchain')
 const {Reservation} = require("../DBModel/Reservation");
 
+// 도안 페이지
 exports.draft = async function(params, query) {
     let count
     let return_value
@@ -13,10 +13,7 @@ exports.draft = async function(params, query) {
     if (params.page === '0') {
         count = await Draft.count()
         // 탐색 결과 없음 오류
-        if(count === 0) {
-            console.log(ErrorTable['5'])
-            throw 5
-        }
+        if(count === 0) { throw 10 }
 
         return {count, return_value}
     }
@@ -31,20 +28,15 @@ exports.draft = async function(params, query) {
     } else if (params.filter === 'search') {
         drafts = await Draft.find({ title : {$regex : query.title }})
 
-        // 검색 결과 없음 오류
-        if (drafts.length === 0) {
-            console.log(ErrorTable['6'])
-            throw 6
-        }
+        if (drafts.length === 0) { throw 11 }
     } else {
-        // filter 입력 오류
-        console.log(ErrorTable["12"])
-        throw 12
+        throw 6
     }
 
     return_value = []
     for await (let draft of drafts) {
         const drawer = await Tattooist.findOne({ _id : draft.drawer })
+        if (!drawer) { throw 2 }
         const item = {
             draft_id : draft['_id'],
             image : draft['image'],
@@ -62,10 +54,7 @@ exports.draft = async function(params, query) {
     // only for user view
     if (query.user_id) {
         const user = await User.findOne({ _id : query.user_id })
-        if (!user) {
-            console.log(ErrorTable["10"])
-            throw 10
-        }
+        if (!user) { throw 1 }
 
         for (let draft of return_value) {
             if(user['scraps'].includes(String(draft['draft_id']))) {
@@ -76,14 +65,14 @@ exports.draft = async function(params, query) {
 
     return {count, return_value}
 }
+// 도안 세부 페이지
 exports.draftDetail = async function(params, query) {
     const draft = await Draft.findOne({ _id : params.id })
-    if (!draft) {
-        // 해당 도안 없음 오류
-        console.log(ErrorTable["7"])
-        throw 7
-    }
+    if (!draft) { throw 3 }
+
     const tattooist = await Tattooist.findOne({ _id : draft['drawer'] })
+    if(!tattooist) { throw 2 }
+
     const return_value = {
         draft_id : draft['_id'],
         image : draft['image'],
@@ -102,10 +91,7 @@ exports.draftDetail = async function(params, query) {
 
     if (query.user_id) {
         const user = await User.findOne({ _id : query.user_id })
-        if (!user) {
-            console.log(ErrorTable["10"])
-            throw 10
-        }
+        if (!user) { throw 1 }
 
         if (user['follows'].includes(draft['drawer'])) {
             return_value['isFollowed'] = true
@@ -117,18 +103,14 @@ exports.draftDetail = async function(params, query) {
 
     return return_value
 }
-
+// 타투이스트 페이지
 exports.tattooist = async function(params, query) {
     let count
     let return_value
 
     if (params.page === '0') {
         count = await Tattooist.count()
-        // 탐색 결과 없음 오류
-        if(count === 0) {
-            console.log(ErrorTable['5'])
-            throw 5
-        }
+        if(count === 0) { throw 10 }
 
         return {count, return_value}
     }
@@ -143,16 +125,8 @@ exports.tattooist = async function(params, query) {
     } else if (params.filter === 'search') {
         tattooists = await Tattooist.find({ nickname : {$regex : query.nickname }})
 
-        // 검색 결과 없음 오류
-        if (tattooists.length === 0) {
-            console.log(ErrorTable['6'])
-            throw 6
-        }
-    } else {
-        // filter 입력 오류
-        console.log(ErrorTable["12"])
-        throw 12
-    }
+        if (tattooists.length === 0) { throw 11 }
+    } else { throw 6 }
 
     return_value = []
     for (let tattooist of tattooists) {
@@ -172,10 +146,7 @@ exports.tattooist = async function(params, query) {
 
     if (query.user_id) {
         const user = await User.findOne({ _id : query.user_id })
-        if (!user) {
-            console.log(ErrorTable["10"])
-            throw 10
-        }
+        if (!user) { throw 1 }
 
         for (let tattooist of return_value) {
             if (user['follows'].includes(String(tattooist['tattooist_id']))) {
@@ -186,13 +157,10 @@ exports.tattooist = async function(params, query) {
 
     return {count, return_value}
 }
+// 타투이스트 세부 페이지
 exports.tattooistDetail = async function(params, query) {
     const tattooist = await Tattooist.findOne({ _id : params.id })
-    if (!tattooist) {
-        // 해당 타투이스트 없음 오류
-        console.log(ErrorTable["8"])
-        throw 8
-    }
+    if (!tattooist) { throw 2 }
 
     const tattooist_info = {
         tattooist_id : tattooist['_id'],
@@ -210,10 +178,7 @@ exports.tattooistDetail = async function(params, query) {
     // Only User : follow 여부 확인
     if (query.user_id) {
         const user = await User.findOne({ _id : query.user_id })
-        if (!user) {
-            console.log(ErrorTable["10"])
-            throw 10
-        }
+        if (!user) { throw 1 }
 
         if (user['follows'].includes(tattooist['_id'])) {
             tattooist_info['isFollowed'] = true
@@ -225,9 +190,8 @@ exports.tattooistDetail = async function(params, query) {
     if (params.filter === 'draft') {
         for await (let draft_id of tattooist['drafts']) {
             const draft = await Draft.findOne({ _id : draft_id })
-            if (!draft) {
-                continue
-            }
+            if (!draft) { continue }
+
             const item = {
                 draft_id : draft['_id'],
                 image : draft['image'],
@@ -264,14 +228,57 @@ exports.tattooistDetail = async function(params, query) {
         }
     }
     // wrong filter
-    else {
-        console.log(ErrorTable['12'])
-        throw 12
-    }
+    else { throw 6 }
 
     return {tattooist_info, return_value}
 }
+// 작업물 페이지
+exports.artworkDetail = async function(params, query) {
+    let info;
+    let states = [];
 
+    const tattooist = await Tattooist.findOne({ _id : query.tattooist_id })
+    if (!tattooist) { throw 2 }
+
+    const tattoo_history = await blockchain.getTattooHistory(params.id)
+    if (!tattoo_history) { throw 30 }
+
+    for (let tattoo_state of tattoo_history) {
+        states.push(tattoo_state)
+    }
+
+    info = {
+        image : states[3].image,
+        date : states[3].date,
+        taken_time : states[3].timestamp - states[2].timestamp,
+        cost : states[3].cost,
+        tattooist_nickname : tattooist['nickname'],
+        body_part : states[3].body_part,
+        inks : states[3].inks,
+        machine : states[3].machine,
+    }
+
+    return {info, states}
+}
+// 예약 세부 페이지
+exports.reservationDetail = async function(params) {
+    let return_value;
+
+    const reservation = await Reservation.findOne({ _id : params.id })
+    if (!reservation) { throw 4 }
+
+    return_value = {
+        date : reservation['date'],
+        time_slot : reservation['time_slot'],
+        cost : reservation['cost'],
+        body_part : reservation['body_part'],
+        confirmed : reservation['confirmed']
+    }
+
+    return return_value
+}
+
+// 스크랩 페이지 (Only User)
 exports.scrap = async function(params, query) {
     // filter : draft
     if (params.filter === 'draft') {
@@ -282,16 +289,11 @@ exports.scrap = async function(params, query) {
         return await scrapTattooist(params, query)
     }
     // wrong filter
-    else {
-        throw 15
-    }
+    else { throw 6 }
 }
 const scrapDraft = async function(params, query) {
     const user = await User.findOne({ _id : query.user_id })
-    if (!user) {
-        console.log(ErrorTable["10"])
-        throw 10
-    }
+    if (!user) { throw 1 }
 
     let count
     let return_value;
@@ -299,10 +301,7 @@ const scrapDraft = async function(params, query) {
     if (params.page === '0') {
         count = user['scraps'].length
         // 탐색 결과 없음 오류
-        if(count === 0) {
-            console.log(ErrorTable['5'])
-            throw 5
-        }
+        if(count === 0) { throw 10 }
 
         return {count, return_value}
     }
@@ -324,6 +323,8 @@ const scrapDraft = async function(params, query) {
     return_value = []
     for await (let draft of drafts) {
         const drawer = await Tattooist.findOne({ _id : draft.drawer })
+        if (!drawer) { throw 2 }
+
         const item = {
             draft_id : draft['_id'],
             image : draft['image'],
@@ -337,28 +338,20 @@ const scrapDraft = async function(params, query) {
 
         return_value.push(item)
     }
-
     drafts = return_value
 
     return {count, drafts}
 }
 const scrapTattooist = async function(params, query) {
     const user = await User.findOne({ _id : query.user_id })
-    if (!user) {
-        console.log(ErrorTable["10"])
-        throw 10
-    }
+    if (!user) { throw 1 }
 
     let count
     let return_value
 
     if (params.page === '0') {
         count = user['follows'].length
-        // 탐색 결과 없음 오류
-        if(count === 0) {
-            console.log(ErrorTable['5'])
-            throw 5
-        }
+        if(count === 0) { throw 10 }
 
         return {count, return_value}
     }
@@ -397,14 +390,38 @@ const scrapTattooist = async function(params, query) {
 
     return {count, tattooists}
 }
+// 유저 마이페이지 (Only User)
+exports.userMyPage = async function(params) {
+    const user = await User.findOne({ _id : params.id })
+    if (!user) { throw 1 }
 
+    const user_info = {
+        user_id : user['_id'],
+        nickname : user['nickname'],
+        location : user['location'],
+        image : user['image']
+    }
+
+    let return_value = [] // 유저가 새긴 여러 개의 타투
+
+    for await (let tattoo_id of user['tattoos']) {
+        const tattoo_info = [] // 단일 타투의 히스토리
+        const tattoo_history = await blockchain.getTattooHistory(tattoo_id)
+        if (!tattoo_history) { throw 30 }
+
+        for (let tattoo_state of tattoo_history) {
+            tattoo_info.push(tattoo_state)
+        }
+        return_value.push(tattoo_info)
+    }
+
+    return {user_info, return_value}
+}
+
+// 예약 페이지 (Only Tattooist)
 exports.reservation = async function(query) {
     const tattooist = await Tattooist.findOne({ _id : query.tattooist_id })
-    if (!tattooist) {
-        // 해당 타투이스트 없음 오류
-        console.log(ErrorTable["8"])
-        throw 8
-    }
+    if (!tattooist) { throw 2 }
 
     let return_value = []
 
@@ -412,6 +429,7 @@ exports.reservation = async function(query) {
         const reservation = await Reservation.findOne({ _id : reservation_id })
         if (!reservation) { continue }
         const user = await User.findOne({ _id : reservation['customer_id'] })
+        if (!user) { throw 1 }
 
         const item = {
             reservation_id : reservation['_id'],
@@ -427,82 +445,6 @@ exports.reservation = async function(query) {
         }
 
         return_value.push(item)
-    }
-
-    return return_value
-}
-
-exports.userMyPage = async function(params) {
-    const user = await User.findOne({ _id : params.id })
-    if (!user) {
-        console.log(ErrorTable["10"])
-        throw 10
-    }
-
-    const user_info = {
-        user_id : user['_id'],
-        nickname : user['nickname'],
-        location : user['location'],
-        image : user['image']
-    }
-
-    let return_value = [] // 유저가 새긴 여러 개의 타투
-
-    for await (let tattoo_id of user['tattoos']) {
-        const tattoo_info = [] // 단일 타투의 히스토리
-        const tattoo_history = await blockchain.getTattooHistory(tattoo_id)
-
-        for (let tattoo_state of tattoo_history) {
-            tattoo_info.push(tattoo_state)
-        }
-        return_value.push(tattoo_info)
-    }
-
-    return {user_info, return_value}
-}
-
-exports.artworkDetail = async function(params, query) {
-    let info;
-    let states = [];
-
-    const tattooist = await Tattooist.findOne({ _id : query.tattooist_id })
-    const tattoo_history = await blockchain.getTattooHistory(params.id)
-    // no tattoo_history
-    if (!tattoo_history) { throw 20 }
-
-    for (let tattoo_state of tattoo_history) {
-        states.push(tattoo_state)
-    }
-
-    info = {
-        image : states[3].image,
-        date : states[3].date,
-        taken_time : states[3].timestamp - states[2].timestamp,
-        cost : states[3].cost,
-        tattooist_nickname : tattooist['nickname'],
-        body_part : states[3].body_part,
-        inks : states[3].inks,
-        machine : states[3].machine,
-    }
-
-    return {info, states}
-}
-
-exports.reservationDetail = async function(params) {
-    let return_value;
-
-    const reservation = await Reservation.findOne({ _id : params.id })
-    if (!reservation) {
-        console.log(ErrorTable["30"])
-        throw 30
-    }
-
-    return_value = {
-        date : reservation['date'],
-        time_slot : reservation['time_slot'],
-        cost : reservation['cost'],
-        body_part : reservation['body_part'],
-        confirmed : reservation['confirmed']
     }
 
     return return_value
