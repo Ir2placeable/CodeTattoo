@@ -4,15 +4,16 @@ import {
   HeaderInner,
   HeaderTitle,
   HeaderSubMenu,
-  HeaderLogo, 
-  HeaderText
-} from '../../styledComponents';
-import HeaderBtnComp from './HeaderBtnComp';
-import { getAllCookie, getCookie } from '../../config/cookie';
-import LogoutBtn from './LogoutBtn';
-import GoMypage from './GoMypage';
-import { Cookies } from 'react-cookie';
+  HeaderLogo,
+  HeaderText,
+} from "../../styledComponents";
+import HeaderBtnComp from "./HeaderBtnComp";
+import { getAllCookie, getCookie } from "../../config/cookie";
+import LogoutBtn from "./LogoutBtn";
+import GoMypage from "./GoMypage";
+import { Cookies } from "react-cookie";
 import { useLocation } from "react-router-dom";
+import AlarmIcon from "../atomic/common/AlarmIcon";
 
 const Header = () => {
   const [isLogin, setIsLogin] = useState(false);
@@ -24,8 +25,7 @@ const Header = () => {
     } else {
       setIsLogin(false);
     }
-  }, [getCookie('user_id'), getCookie('tattooist_id')]);
-
+  }, [getCookie("user_id"), getCookie("tattooist_id")]);
 
   const goHome = () => {
     window.location.replace("/drafts/best");
@@ -33,28 +33,28 @@ const Header = () => {
 
   return (
     <>
-      <HeaderDiv >
+      <HeaderDiv>
         <HeaderInner>
-
           <HeaderTitle onClick={goHome}>
             {/* Code Tattoo */}
             <HeaderLogo src="../../img/logo-en.png" />
-            <HeaderText>
-              Code Tattoo
-            </HeaderText>
+            <HeaderText>Code Tattoo</HeaderText>
           </HeaderTitle>
 
           {isLogin ? (
             <HeaderSubMenu>
               {/* <HeaderBtnComp text={"예약조회"} /> */}
+              <AlarmIcon />
               <GoMypage />
               <LogoutBtn />
             </HeaderSubMenu>
-          ) : path !== '/' && (
-            <HeaderSubMenu>
-              <HeaderBtnComp path="login" text="로그인" />
-              <HeaderBtnComp path="register" text="회원가입" />
-            </HeaderSubMenu>
+          ) : (
+            path !== "/" && (
+              <HeaderSubMenu>
+                <HeaderBtnComp path="login" text="로그인" />
+                <HeaderBtnComp path="register" text="회원가입" />
+              </HeaderSubMenu>
+            )
           )}
         </HeaderInner>
       </HeaderDiv>

@@ -9,7 +9,7 @@ export const LoadingBox = styled.div`
   transform: translate(-50%, -50%);
   width: 150px;
   height: 150px;
-`
+`;
 
 export const Btn = styled.div`
   display: flex;
@@ -102,7 +102,7 @@ export const HeaderDiv = styled.header`
 `;
 
 export const HeaderInner = styled.div`
-background-color: #f6f6f6;
+  background-color: #f6f6f6;
   height: 100%;
   width: 1200px;
   margin: 0 auto;
@@ -150,6 +150,7 @@ export const HeaderSubMenu = styled.div`
   height: max-content;
   margin-top: 10px;
   // background-color: orange;
+  align-items: center;
 `;
 
 export const HeaderBtn = styled.div`
@@ -171,6 +172,30 @@ export const HeaderBtnHover = {
   backgroundColor: "#f6f6f6",
   color: "#484848",
 };
+
+// *** Alarm ***
+
+export const AlarmBox = styled.div`
+  margin: 0 10px;
+  cursor: pointer;
+`;
+
+export const AlarmCountBox = styled.div`
+  position: absolute;
+  top: 30px;
+  right: 205px;
+  background-color: red;
+  border-radius: 50%;
+  overflow: hidden;
+  width: 9px;
+  height: 9px;
+`;
+
+export const ToastAlarmBox = styled.div`
+  position: absolute;
+  top: 100px;
+  right: 30px;
+`;
 
 // =============== Main Container ===========================
 
@@ -494,7 +519,7 @@ export const TattooistInfoUnitBox = styled.div`
   padding-left: 70px;
   align-items: center;
   // justify-content: center;
-  
+
   // align-items: end;
   // background-color: orange;
 `;
@@ -516,19 +541,18 @@ export const TattooistInfoTitle = styled.div`
   border-radius: 20px;
   justify-content: center;
   align-items: center;
-  
+
   ${(props) => {
-    if(props.type === 'location'){
+    if (props.type === "location") {
       return css`
-      background-color: #B5CADB;
-      `
-    } else if(props.type === 'specialize'){
+        background-color: #b5cadb;
+      `;
+    } else if (props.type === "specialize") {
       return css`
-      background-color: #B5B7DB;
-      `
+        background-color: #b5b7db;
+      `;
     }
   }}
-
 `;
 
 export const TattooistInfoText = styled.div`
@@ -537,17 +561,15 @@ export const TattooistInfoText = styled.div`
   font-weight: 700;
 
   ${(props) => {
-
-    if(props.type === 'description'){
+    if (props.type === "description") {
       return css`
-      font-size: 18px;
-      `
-    }
-    else if (props.type === 'small'){
+        font-size: 18px;
+      `;
+    } else if (props.type === "small") {
       return css`
         font-size: 16px;
         margin-right: 100px;
-      `
+      `;
     }
   }}
 `;
@@ -561,7 +583,7 @@ export const TattooistControl = styled.div`
 `;
 
 export const TattooistControlDisabled = styled.div`
-  width: 150px;
+  width: 90px;
   height: 180px;
 `;
 
@@ -595,7 +617,6 @@ export const TattooistButton = styled.div`
       height: 45px;
       font-size: 14px;
     `}
-    
     &:hover {
     color: black;
     background-color: white;
@@ -827,24 +848,24 @@ export const TattooistGenreLabel = styled.span`
 `;
 
 export const DraftInQuiryBtn = styled.div`
-background-color: black;
-border-radius: 5px;
-width: 300px;
-line-height: 45px;
-text-align: center;
-font-size: 20px;
-font-weight: bold;
-cursor: pointer;
-margin-top: 70px;
-border: 3px solid black;
-color: white;
-transition: .4s;
+  background-color: black;
+  border-radius: 5px;
+  width: 300px;
+  line-height: 45px;
+  text-align: center;
+  font-size: 20px;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 70px;
+  border: 3px solid black;
+  color: white;
+  transition: 0.4s;
 
-&:hover{
-  color: black;
-  background-color: #eee;
-}
-`
+  &:hover {
+    color: black;
+    background-color: #eee;
+  }
+`;
 
 // *** My Page ***
 export const MyPageProfileBox = styled.div`
@@ -1996,45 +2017,45 @@ export const ReservRequestBtn = styled.div`
 `;
 
 export const TimeActiveDiv = styled.div`
-width: calc(140px*2);
-margin: 0 auto;
-display: flex;
-flex-wrap: wrap;
-justify-content: center;
-align-items: center;
-// background-color: orange;
-`
+  width: calc(140px * 2);
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  // background-color: orange;
+`;
 export const TimeActiveBtn = styled.div`
-line-height: 35px;
-width: 120px;
-text-align: center;
-border-radius: 5px;
-font-size: 18px;
-// font-weight: bold;
-cursor: pointer;
-margin: 0 10px;
-color: #f8f8f8;
+  line-height: 35px;
+  width: 120px;
+  text-align: center;
+  border-radius: 5px;
+  font-size: 18px;
+  // font-weight: bold;
+  cursor: pointer;
+  margin: 0 10px;
+  color: #f8f8f8;
 
-${(props) => {
-  if(props.type === 'active'){
-    return css`
-      background-color: #6EC067;
-    `
-  } else if(props.type === 'deactive'){
-    return css`
-      background-color: #DF2F2F;
-    `
-  } else if(props.type === 'description'){
-    return css`
-      font-size: 12px;
-      width: 100%;
-      height: max-content;
-      color: #999;
-      cursor: auto;
-    `
-  }
-}}
-`
+  ${(props) => {
+    if (props.type === "active") {
+      return css`
+        background-color: #6ec067;
+      `;
+    } else if (props.type === "deactive") {
+      return css`
+        background-color: #df2f2f;
+      `;
+    } else if (props.type === "description") {
+      return css`
+        font-size: 12px;
+        width: 100%;
+        height: max-content;
+        color: #999;
+        cursor: auto;
+      `;
+    }
+  }}
+`;
 
 // reservation
 export const ReservDiv = styled.div`
@@ -2451,7 +2472,7 @@ export const ChattingDiv = styled.div`
   // background-color: whitesmoke;
   margin: 0 auto;
   padding: 20px 50px;
-  width: 1250px;
+  width: 1300px;
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
@@ -2579,7 +2600,7 @@ export const ChattingReserv = styled.div`
 export const ChattingRoomDiv = styled.div`
   background-color: #646464;
   padding: 71px 0 90px;
-  width: 800px;
+  width: 850px;
   height: calc(610px - 161px);
   // height: 600px;
   // overflow-y: scroll;
@@ -2634,7 +2655,6 @@ export const ChatDiv = styled.div`
 
 export const ChatContents = styled.div`
   max-width: 580px;
-  min-width: 100px;
   line-height: 35px;
   border-radius: 20px;
   padding: 0 20px;
@@ -2668,6 +2688,14 @@ export const ChatInputDiv = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-evenly;
+  ${(props) => {
+    if (props.type === "back") {
+      return css`
+        justify-content: start;
+        margin-left: 22px;
+      `;
+    }
+  }}
 `;
 
 export const ChatInput = styled.input`
@@ -2676,6 +2704,7 @@ export const ChatInput = styled.input`
   border-radius: 5px;
   line-height: 40px;
   width: 550px;
+  padding: 0 10px;
 `;
 
 export const ChatBtn = styled.div`
@@ -2687,6 +2716,7 @@ export const ChatBtn = styled.div`
   font-size: 18px;
   text-align: center;
   width: 80px;
+  box-shadow: 5px 5px 15px 0px rgba(72, 72, 72, 0.5);
   ${(props) => {
     if (props.type === "submit") {
       return css`
@@ -2695,7 +2725,106 @@ export const ChatBtn = styled.div`
     } else if (props.type === "image") {
       return css`
         background-color: #7aa500;
+        overflow: hidden;
+        border-radius: 70%;
+        height: 45px;
+        width: 45px;
+        line-height: 45px;
       `;
+    } else if (props.type === "cancel") {
+      return css` 
+      padding: 5px 10px;
+      background-color: #e60023;
+      border: solid 3px #e60023;
+      `
+    } else if (props.type === "modify") {
+      return css`
+      padding: 5px 10px;
+      background-color: #484848;
+      border: solid 3px #484848;
+      `
+    } else if (props.type === "confirm") {
+      return css`
+      padding: 5px 10px;
+      background-color: #19ce60;
+      border: solid 3px #19ce60;
+      `
     }
   }}
 `;
+export const ChatImageLabel = styled.label`
+  background-color: #7aa500;
+  color: white;
+  text-align: center;
+  cursor: pointer;
+  overflow: hidden;
+  border-radius: 70%;
+  height: 45px;
+  width: 45px;
+  line-height: 45px;
+  box-shadow: 5px 5px 15px 0px rgba(72, 72, 72, 0.5);
+`;
+
+export const ChatImageInput = styled.input`
+  display: none;
+`;
+
+export const ChatReservationBox = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+export const ChatDraftBox = styled.div`
+  display: flex;
+  justify-content: space-evenly;
+  algin-items: center;
+`;
+
+export const ChatDraftImg = styled.div`
+  background-color: #d8d8d8;
+  width: 300px;
+  height: 300px;
+  border-radius: 8px;
+  box-shadow: 5px 5px 15px 0px rgba(72, 72, 72, 0.5);
+`;
+
+export const ChatDraftInfoBox = styled.div`
+  height: 300px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+`;
+
+export const ChatDraftInputDiv = styled.div`
+  width: 400px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+`;
+
+export const ChatDraftInfoLabel = styled.label`
+  width: 50px;
+  color: white;
+  background-color: #b5cadb;
+  border-radius: 20px;
+  text-align: center;
+  line-height: 36px;
+  font-size: 18px;
+  padding: 0 10px;
+  box-shadow: 5px 5px 15px 0px rgba(72, 72, 72, 0.5);
+`;
+
+export const ChatDraftInfoInput = styled.input`
+  width: 300px;
+  line-height: 36px;
+  font-size: 18px;
+`;
+
+export const ChatBtnBox = styled.div`
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  width: 850px;
+  margin-top: 70px;
+`
