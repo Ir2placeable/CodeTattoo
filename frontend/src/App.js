@@ -69,13 +69,15 @@ const App = () => {
       <Header />
       {/* <Navigation /> */}
       {/* Main Container */}
-      <MainPageDiv id="scroll" >
+      
         {/*<ToastAlarmBox>
           <ToastContainer
             position="top-right"
             autoClose="1500"
             closeOnClick/>
         </ToastAlarmBox>*/}      
+
+      <MainPageDiv id="scroll">
         <Routes>
           {/* Main page */}
           <Route path="/" element={<MainPage />}>
@@ -140,6 +142,9 @@ const App = () => {
               <Route path="tattooist" element={<TattooistList filter="scraps/tattooist"/>}/>
             </Route>
 
+            {/* 채팅 */}
+            <Route path="chat/:id" element={<ChattingList />} />
+
           </Route>
 
 
@@ -150,8 +155,7 @@ const App = () => {
           {/* 엔트리 페이지 */}
           <Route path="/" element={<ShowEntry />} />
 
-          {/* 채팅 */}
-          <Route path="chat" element={<ChattingList />} />
+    
           
         </Routes>
       </MainPageDiv>
