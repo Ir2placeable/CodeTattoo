@@ -135,7 +135,7 @@ exports.tattooistPasswordEdit = async function(params, body) {
 }
 
 // 유저 정보 변경
-exports.userInfoEdit = function(params, body) {
+exports.userInfoEdit= async function(params, body) {
     // 유저 데이터 변경
     User.updateOne({ _id : params.id }, {$set : { nickname : body.nickname, location : body.location }}, (user, err) => {
         if(!user) { throw 1 }
@@ -160,7 +160,7 @@ exports.userImageEdit = async function(params, body) {
 }
 
 // 타투이스트 정보 변경
-exports.tattooistInfoEdit = function(params, body) {
+exports.tattooistInfoEdit= async function(params, body) {
     // 타투이스트 데이터 변경
     Tattooist.updateOne({ _id : params.id }, {$set : { nickname : body.nickname, location : body.location, specialize : body.specialize, description : body.description }}, (tattooist, err) => {
         if(!tattooist) { throw 2 }
@@ -218,7 +218,7 @@ exports.createDraft = async function(params, body) {
     await Tattooist.updateOne({ _id : params.id }, {$push : { drafts : new_draft._id }})
 }
 // 도안 삭제
-exports.removeDraft = function(params, body) {
+exports.removeDraft= async function(params, body) {
     Tattooist.updateOne({ _id : params.id }, {$pull : { drafts : body.draft_id }}, (tattooist, err) => {
         if (!tattooist) { throw 2 }
         if (err) { throw 23 }
@@ -229,7 +229,7 @@ exports.removeDraft = function(params, body) {
     })
 }
 // 도안 정보 수정
-exports.editDraft = function(params, body) {
+exports.editDraft= async function(params, body) {
     Draft.updateOne({ _id : params.id }, { title : body.title, genre : body.genre, keywords : body.keywords, cost : body.cost }, (draft, err) => {
         if(!draft) { throw 3 }
         if(err) { throw 23 }
@@ -237,7 +237,7 @@ exports.editDraft = function(params, body) {
 }
 
 // 도안 스크랩
-exports.scrapDraft = function(params, body) {
+exports.scrapDraft= async function(params, body) {
     Draft.updateOne({ _id : body.draft_id }, {$inc : { like : 1 }}, (draft, err) => {
         if (!draft) { throw 3 }
         if (err) { throw 23 }
@@ -248,7 +248,7 @@ exports.scrapDraft = function(params, body) {
     })
 }
 // 도안 스크랩 취소
-exports.unScrapDraft = function(params, body) {
+exports.unScrapDraft= async function(params, body) {
     Draft.updateOne({ _id : body.draft_id }, {$inc : { like : -1 }}, (draft, err) => {
         if (!draft) { throw 3 }
         if (err) { throw 23 }
@@ -260,7 +260,7 @@ exports.unScrapDraft = function(params, body) {
 }
 
 // 타투이스트 팔로우
-exports.followTattooist = function(params, body) {
+exports.followTattooist= async function(params, body) {
     Tattooist.updateOne({ _id : body.tattooist_id }, {$inc : { follower : 1 }}, (tattooist, err) => {
         if (!tattooist) { throw 2 }
         if (err) { throw 23 }
@@ -271,7 +271,7 @@ exports.followTattooist = function(params, body) {
     })
 }
 // 타투이스트 팔로우 취소
-exports.unFollowTattooist = function(params, body) {
+exports.unFollowTattooist= async function(params, body) {
     Tattooist.updateOne({ _id : body.tattooist_id }, {$inc : { follower : -1 }}, (tattooist, err) => {
         if (!tattooist) { throw 2 }
         if (err) { throw 23 }
@@ -311,7 +311,7 @@ exports.createReservation = async function(body) {
     // ***유저와 타투이스트 채팅 생성하기 코드 구현 필요***
 }
 // 예약 정보 수정 : date, time_slot, cost 수정 Only
-exports.editReservation = function(params, body) {
+exports.editReservation= async function(params, body) {
     Reservation.updateOne({ _id : params.id }, {$set : { date : body.date, time_slot : body.time_slot, cost : body.cost, body_part : body.body_part }}, (reservation, err) => {
         if (!reservation) { throw 4 }
         if (err) { throw 23 }
@@ -329,7 +329,7 @@ exports.editReservationImage = async function(params, body) {
     await imageStorage.delete(params.id)
 }
 // 예약 확정
-exports.confirmReservation = function(params, body) {
+exports.confirmReservation= async function(params, body) {
     Reservation.updateOne({ _id : params.id }, {$set : { confirmed : true }}, (reservation, err) => {
         if (!reservation) { throw 4 }
         if (err) { throw 23 }
@@ -339,7 +339,7 @@ exports.confirmReservation = function(params, body) {
     // ***body.user_id 이용 -> 해당 유저에게 알림 전송 구현 필요***
 }
 // 예약 거절
-exports.rejectReservation = function(params, body) {
+exports.rejectReservation= async function(params, body) {
     Reservation.deleteOne({ _id : params.id }, (reservation, err) => {
         if (!reservation) { throw 4 }
         if (err) { throw 23 }
