@@ -10,13 +10,19 @@ import {
   ProcedureWrap,
   ProcedureBigWrap,
   ProcedureBtns, ProcedureBtn, ProcedureDesc,
-  ProcedureInput, GoListDiv
+  ProcedureInput, GoListDiv, ProcedureImgDiv, 
+  ProcedureEdit
 } from '../../../styledComponents';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBars } from '@fortawesome/free-solid-svg-icons';
+import { faBars, faGear } from '@fortawesome/free-solid-svg-icons';
+import EditProcedureInfo from './EditProcedureInfo';
+import EditProcedureImg from './EditProcedureImg';
 
 const Procedure = () => {
+  const [imgEdit, setImgEdit] = useState(false);
+  const [infoEdit, setInfoEdit] = useState(false);
+
   const { state } = useLocation();
   // const { data, date, cost } = state
   const id = getCookie("tattooist_id")
@@ -30,6 +36,13 @@ const Procedure = () => {
   const [tattooId, setTattooId] = useState('');
   const { inks, niddle, depth, machine } = inputs
   const [startProcedure, endProcedure] = useProcedure();
+  const [inputs2, setInputs2] = useState({
+    date: String(state.date),
+    time_slot: String(state.time_slot),
+    cost: String(state.cost),
+    body_part: state.body_part
+  })
+  const { date, time_slot, cost, body_part } = inputs2;
 
   const navigate = useNavigate();
   const onChange = (e) => {
@@ -41,14 +54,31 @@ const Procedure = () => {
     })
   }
 
-  const onClick = (e) => {
+  const onChange2 = (e) => {
+    const { name, value } = e.target;
 
+    setInputs2({
+      ...inputs2,
+      [name]: value
+    })
   }
 
   // console.log(state);
 
   return (
     <>
+
+    {imgEdit && (
+      <EditProcedureImg setImgEdit={setImgEdit}
+        _src={state.image} />
+    )}
+    {infoEdit && (
+      <EditProcedureInfo setInfoEdit={setInfoEdit}
+        date={date} time_slot={time_slot}
+        cost={cost} body_part={body_part}
+        onChange={onChange2} />
+    )}
+
     <GoListDiv onClick={() => { navigate('/reservations') }}>
       <FontAwesomeIcon icon={faBars} style={{marginRight: '5px'}} />
       목록
@@ -56,8 +86,14 @@ const Procedure = () => {
 
     <ListDiv>
       <ProcedureDiv>
-        
-        <ProcedureImg src={state.image} />
+
+        <ProcedureImgDiv>
+          <ProcedureEdit>
+            <FontAwesomeIcon 
+              onClick={() => setImgEdit(true)} icon={faGear} />
+          </ProcedureEdit>
+          <ProcedureImg src={state.image} />
+        </ProcedureImgDiv>
 
         <ProcedureInfo>
 
@@ -86,15 +122,33 @@ const Procedure = () => {
           </ProcedureBox>
 
           <ProcedureBox size="big">
-            <ProcedureText>예약 정보</ProcedureText>
+
+            <ProcedureText>
+              예약 정보
+              <ProcedureEdit type="normal">
+                <FontAwesomeIcon 
+                  onClick={() => setInfoEdit(true)} icon={faGear} />
+              </ProcedureEdit>
+            </ProcedureText>
+
             <ProcedureBigWrap>
               <ProcedureWrap >
-                <ProcedureLabel>Date</ProcedureLabel>
-                <ProcedureData>{state.date} {state.time_slot}</ProcedureData>
+                <ProcedureLabel>날짜</ProcedureLabel>
+                <ProcedureData>{date}</ProcedureData>
               </ProcedureWrap>
               <ProcedureWrap >
-                <ProcedureLabel>Cost</ProcedureLabel>
-                <ProcedureData>{state.cost} won</ProcedureData>
+                <ProcedureLabel>시간</ProcedureLabel>
+                <ProcedureData>{time_slot}</ProcedureData>
+              </ProcedureWrap>
+            </ProcedureBigWrap>
+            <ProcedureBigWrap>
+              <ProcedureWrap >
+                <ProcedureLabel>비용</ProcedureLabel>
+                <ProcedureData>{cost} won</ProcedureData>
+              </ProcedureWrap>
+              <ProcedureWrap >
+                <ProcedureLabel>시술부위</ProcedureLabel>
+                <ProcedureData>{body_part}</ProcedureData>
               </ProcedureWrap>
             </ProcedureBigWrap>
           </ProcedureBox>
@@ -152,7 +206,7 @@ const Procedure = () => {
         </ProcedureInfo>
 
         <ProcedureBtns>
-          <ProcedureBtn color='blue'>정보 수정</ProcedureBtn>
+          {/* <ProcedureBtn color='blue'>정보 수정</ProcedureBtn> */}
           <ProcedureBtn>작업 시작</ProcedureBtn>
         </ProcedureBtns>
 
