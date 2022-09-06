@@ -267,12 +267,22 @@ exports.reservationDetail = async function(params) {
     const reservation = await Reservation.findOne({ _id : params.id })
     if (!reservation) { throw 4 }
 
+    const user = await User.findOne({ _id : reservation['customer_id']})
+    if (!user) { throw 1 }
+
+    const tattooist = await Tattooist.findOne({ _id : reservation['tattooist_id']})
+    if (!tattooist) { throw 2 }
+
     return_value = {
         date : reservation['date'],
         time_slot : reservation['time_slot'],
         cost : reservation['cost'],
         body_part : reservation['body_part'],
-        confirmed : reservation['confirmed']
+        confirmed : reservation['confirmed'],
+        customer_id : user['_id'],
+        customer_nickname : user['nickname'],
+        tattooist_id : tattooist['_id'],
+        tattooist_nickname : tattooist['nickname']
     }
 
     return return_value
