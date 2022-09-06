@@ -7,7 +7,7 @@ import axios from "axios";
 import { Routes, Route } from "react-router-dom";
 
 import { APIURL } from "./config/key";
-import { MainPageDiv } from "./styledComponents";
+import { MainPageDiv, ToastAlarmBox } from "./styledComponents";
 
 // Components
 import Header from "./components/header/Header";
@@ -45,7 +45,8 @@ import Procedure from "./components/organisms/reservation/Procedure";
 import ChattingList from "./components/organisms/chatting/ChattingList";
 import PasswordEdit from "./components/templates/PasswordEdit";
 import DeleteAccount from "./components/templates/DeleteAccount";
-
+import { toast, ToastContainer } from "react-toastify"
+import 'react-toastify/dist/ReactToastify.css';
 
 // - GET : /scraps/:filter/:page
 //     - filter : draft, tattooist
@@ -58,6 +59,8 @@ const App = () => {
     console.log('tattooist scrap: ',res);
   };
 
+  const notify = () => {toast.success("예약 요청이 도착하였습니다!");} 
+  
   return (
     <div className="font-style">
       <Reset />
@@ -66,12 +69,19 @@ const App = () => {
       <Header />
       {/* <Navigation /> */}
       {/* Main Container */}
+      
+        {/*<ToastAlarmBox>
+          <ToastContainer
+            position="top-right"
+            autoClose="1500"
+            closeOnClick/>
+        </ToastAlarmBox>*/}      
+
       <MainPageDiv id="scroll">
         <Routes>
-
           {/* Main page */}
           <Route path="/" element={<MainPage />}>
-          
+
             {/* 도안 */}
             <Route path="drafts" element={<ShowDraftList />}>
               <Route path="best" element={<DraftList filter="drafts/best" />} />
