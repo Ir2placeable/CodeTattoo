@@ -36,12 +36,16 @@ const TattooistList = ({ filter }) => {
             {tattooists &&
               tattooists.map((tattooist) => (
                 <TattooistContainer key={tattooist.tattooist_id}>
-                  <Tattooist tattooist={tattooist} />
                   {getCookie("tattooist_id") ? (
-                    // <TattooistControlDisabled />
-                    <></>
+                    <>
+                    <TattooistControlDisabled/>
+                    <Tattooist tattooist={tattooist} />
+                    </>
                   ) : (
+                    <>
+                    <Tattooist tattooist={tattooist} />
                     <TattooistControlBox tattooist={tattooist} />
+                    </>
                   )}
                 </TattooistContainer>
               ))}
