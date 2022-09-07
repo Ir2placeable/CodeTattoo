@@ -15,10 +15,7 @@ import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.net.URISyntaxException;
@@ -65,6 +62,17 @@ public class ChatController {
         return info;
     }
 
+    @PostMapping("/chat/send") // 메시지 저장
+    public ResponseEntity send(@RequestBody RequestSend vo) {
+        MessageDto messageDto = MessageDto.builder()
+                .sender(vo.getSender())
+                .receiver(vo.getReceiver())
+                .content(vo.getContent())
+                .build();
+
+        return ResponseEntity.status(HttpStatus.CREATED).body("Successfully send message to " + messageService.send(messageDto).getReceiver());
+    }
+    }
     @GetMapping("/chat/userlist/{type}/{user_id}") // 상대방 유저 리스트 요청 API,
     public ResponseEntity getUserList(@PathVariable String user_id, @PathVariable String type) throws URISyntaxException {
         List<ResponseUserList> result = new ArrayList<>();
@@ -173,7 +181,7 @@ public class ChatController {
         return new ResponseEntity<>(gson.toJson(temp), responseHeaders,HttpStatus.OK);
     }
 
-    @GetMapping("/chat/messagelist/{user_id}/{opponent_id}")
+    @GetMapping("/chat/messagelist/{user_id}/{opponent_id}") // 채팅 리스트 요청 API
     public ResponseEntity getMessageList(@PathVariable String user_id, @PathVariable String opponent_id) {
         Gson gson = new Gson();
         JsonObject temp = new JsonObject();
@@ -196,4 +204,6 @@ public class ChatController {
         responseHeaders.add("Content-Type", "application/json; charset=UTF-8");
         return new ResponseEntity<>(gson.toJson(temp), responseHeaders,HttpStatus.OK);
     }
+
+
 }
