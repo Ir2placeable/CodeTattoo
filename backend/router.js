@@ -121,13 +121,13 @@ server.get('/reservations', (req, res) => {
         })
 
 })
-// 페이지 : 예약 세부
+// 페이지 : 작업 시작 페이지 + 예약 정보 조회
 server.get('/reservation/:id', (req, res) => {
     console.log('Page : Reservation Detail')
 
     page.reservationDetail(req.params)
         .then((returned) => {
-            res.send({ success : true, reservation : returned })
+            res.send({ success : true, data : returned })
         })
         .catch((err) => {
             res.send(ErrorLogging(err))
@@ -165,6 +165,18 @@ server.get('/artwork/:id', (req, res) => {
             res.send(ErrorLogging(err))
         })
 
+})
+// 페이지 : 작업 완료 페이지
+server.get('/procedure/:id', (req, res) => {
+    console.log('page : Procedure End')
+
+    page.procedureEnd(req.params)
+        .then((returned) => {
+            res.send({ success : true, data : returned })
+        })
+        .catch((err) => {
+            res.send(ErrorLogging(err))
+        })
 })
 
 // 명령 모음
@@ -458,6 +470,7 @@ server.post('/remove/unavailable/:id', (req, res) => {
 
 })
 
+
 // 타투 작업 시나리오 명령 모음
 // 명령 : 작업 요청 = 예약 생성
 server.post('/create/reservation', (req, res) => {
@@ -538,7 +551,7 @@ server.post('/procedure/:id', (req, res) => {
 
 })
 // 명령 : 작업 완료
-server.post('/procedure/:id', (req, res) => {
+server.patch('/procedure/:id', (req, res) => {
     console.log('command : Begin Procedure')
 
     command.finishProcedure(req.params, req.body)
@@ -592,7 +605,11 @@ server.get('/get/tattooist', (req, res) => {
 })
 // User 찾기
 server.get('/get/user', (req, res) => {
-    admin.getUser().then((result) => { res.send({ users : result}) })
+    admin.getUser().then((result) => { res.send({ users : result }) })
+})
+// Reservation 찾기
+server.get('/get/reservation', (req, res) => {
+    admin.getReservation().then((result) => { res.send({ reservations : result }) })
 })
 
 // 블록체인 강제 명령 모음
@@ -644,7 +661,7 @@ server.get('/blockchain/side-effects/:key', (req, res) => {
 // 채팅 서버 명령 모음
 // 유저 닉네임 리스트 반환
 server.get('/chatting/profile/:type/:id', (req, res) => {
-    console.log('command : profile for chatting')
+    console.log('command : get profile for chatting')
 
     chatting.getProfile(req.params)
         .then((returned) => {
@@ -654,7 +671,6 @@ server.get('/chatting/profile/:type/:id', (req, res) => {
             res.send(ErrorLogging(err))
         })
 })
-
 
 
 server.listen(PORT, () => {

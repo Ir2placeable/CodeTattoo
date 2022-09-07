@@ -1,7 +1,6 @@
 const {User} = require("../DBModel/User");
 const {Tattooist} = require("../DBModel/Tattooist");
 
-
 exports.getProfile = async function(params) {
     let nickname
     let image
