@@ -1,6 +1,7 @@
 import React from 'react';
 import { useState } from 'react';
 import { useRef } from 'react';
+import useEditProcedureImg from '../../../hooks/useEditProcedureImg';
 import { 
   ProcedureEditDiv, 
   ProcedureEditBox,
@@ -13,12 +14,15 @@ import {
 } from '../../../styledComponents';
 
 const EditProcedureImg = ({ setImgEdit, _src }) => {
+  const sendRequest = useEditProcedureImg();
   const [src, setSrc] = useState(_src);
   const imgInput = useRef();
   const [data, setData] = useState({
     image: '',
     mime: ''
   })
+
+  const { image, mime } = data;
 
   const onClick = () => {
     imgInput.current.click();
@@ -51,6 +55,16 @@ const EditProcedureImg = ({ setImgEdit, _src }) => {
     }
   }
 
+  const onEdit = () => {
+    sendRequest({image, mime});
+    setImgEdit(false);
+
+    setTimeout(() => {
+      window.location.replace('');
+    }, 500)
+    
+  }
+
   return (
     <>
       <ProcedureEditDiv>
@@ -80,7 +94,7 @@ const EditProcedureImg = ({ setImgEdit, _src }) => {
             <ProcedureEditFooterBtn onClick={() => setImgEdit(false)}>
               취소
             </ProcedureEditFooterBtn>
-            <ProcedureEditFooterBtn>
+            <ProcedureEditFooterBtn onClick={onEdit}>
               수정
             </ProcedureEditFooterBtn>
           </ProcedureEditFooter>

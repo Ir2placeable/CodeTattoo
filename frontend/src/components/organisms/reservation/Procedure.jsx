@@ -1,6 +1,6 @@
 import React from 'react';
 import { useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { getCookie } from '../../../config/cookie';
 import useProcedure from '../../../hooks/useProcedure';
 import { 
@@ -18,10 +18,18 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars, faGear } from '@fortawesome/free-solid-svg-icons';
 import EditProcedureInfo from './EditProcedureInfo';
 import EditProcedureImg from './EditProcedureImg';
+import useReservation from '../../../hooks/useReservation';
+import { useEffect } from 'react';
 
 const Procedure = () => {
   const [imgEdit, setImgEdit] = useState(false);
   const [infoEdit, setInfoEdit] = useState(false);
+  const [procedureStatus, setProcedureStatus] = useState(false);
+  const reservation = useReservation();
+  const params = useParams();
+  const reservation_id = params.reservation_id;
+
+  // console.log('reservation: ',reservation)
 
   const { state } = useLocation();
   // const { data, date, cost } = state
@@ -63,7 +71,30 @@ const Procedure = () => {
     })
   }
 
+  const onEnd = () => {
+    endProcedure({
+      reservation_id,
+      user_id: state.customer_id,
+      tattooist_id: id,
+      tattoo_id: tattooId,
+      inks, niddle, depth, machine
+    })
+  }
+
+  const onStart = () => {
+    startProcedure({
+      reservation_id,
+      user_id: state.customer_id,
+      tattooist_id: id,
+      inks, niddle, depth, machine
+    }).then(res => setTattooId(res))
+
+    // setTattooId(tattoo_id);
+    setProcedureStatus(true);
+  }
+
   // console.log(state);
+  // console.log(tattooId)
 
   return (
     <>
@@ -156,58 +187,101 @@ const Procedure = () => {
           <ProcedureBox size="big" style={{marginBottom: '0'}}>
             <ProcedureText>
               시술 정보 
-              <ProcedureDesc>
-                직접 입력 후 작업 시작 버튼을 눌러주세요.
-              </ProcedureDesc>
+              {procedureStatus ? (
+                <ProcedureDesc>
+                  작업 종료 후, 작업 종료 버튼을 눌러주세요.
+                </ProcedureDesc>
+              ) : (
+                <ProcedureDesc>
+                  직접 입력 후 작업 시작 버튼을 눌러주세요.
+                </ProcedureDesc>
+              )}
             </ProcedureText>
-            <ProcedureBigWrap>
-              <ProcedureWrap >
-                <ProcedureLabel>사용기기</ProcedureLabel>
-                <ProcedureInput 
-                  type="text"
-                  name='machine'
-                  value={machine}
-                  onChange={onChange}
-                />
-              </ProcedureWrap>
-              <ProcedureWrap >
-                <ProcedureLabel>사용바늘</ProcedureLabel>
-                <ProcedureInput 
-                  type="text"
-                  name='niddle'
-                  value={niddle}
-                  onChange={onChange}
-                />
-              </ProcedureWrap>
-            </ProcedureBigWrap>
 
-            <ProcedureBigWrap>
-              <ProcedureWrap >
-                <ProcedureLabel>주사깊이</ProcedureLabel>
-                <ProcedureInput 
-                  type="text"
-                  name='depth'
-                  value={depth}
-                  onChange={onChange}
-                />
-              </ProcedureWrap>
-              <ProcedureWrap >
-                <ProcedureLabel>사용잉크</ProcedureLabel>
-                <ProcedureInput 
-                  type="text"
-                  name='inks'
-                  value={inks}
-                  onChange={onChange}
-                />
-              </ProcedureWrap>
-            </ProcedureBigWrap>
+            {procedureStatus ? (
+              <>
+                <ProcedureBigWrap>
+                  <ProcedureWrap >
+                    <ProcedureLabel>사용기기</ProcedureLabel>
+                    <ProcedureData>{machine}</ProcedureData>
+                  </ProcedureWrap>
+                  <ProcedureWrap >
+                    <ProcedureLabel>사용바늘</ProcedureLabel>
+                    <ProcedureData>{niddle}</ProcedureData>
+                  </ProcedureWrap>
+                </ProcedureBigWrap>
+
+                <ProcedureBigWrap>
+                  <ProcedureWrap >
+                    <ProcedureLabel>주사깊이</ProcedureLabel>
+                    <ProcedureData>{depth}</ProcedureData>
+                  </ProcedureWrap>
+                  <ProcedureWrap >
+                    <ProcedureLabel>사용잉크</ProcedureLabel>
+                    <ProcedureData>{inks}</ProcedureData>
+                  </ProcedureWrap>
+                </ProcedureBigWrap>
+              </>
+            ) : (
+              <>
+                <ProcedureBigWrap>
+                  <ProcedureWrap >
+                    <ProcedureLabel>사용기기</ProcedureLabel>
+                    <ProcedureInput 
+                      type="text"
+                      name='machine'
+                      value={machine}
+                      onChange={onChange}
+                    />
+                  </ProcedureWrap>
+                  <ProcedureWrap >
+                    <ProcedureLabel>사용바늘</ProcedureLabel>
+                    <ProcedureInput 
+                      type="text"
+                      name='niddle'
+                      value={niddle}
+                      onChange={onChange}
+                    />
+                  </ProcedureWrap>
+                </ProcedureBigWrap>
+
+                <ProcedureBigWrap>
+                  <ProcedureWrap >
+                    <ProcedureLabel>주사깊이</ProcedureLabel>
+                    <ProcedureInput 
+                      type="text"
+                      name='depth'
+                      value={depth}
+                      onChange={onChange}
+                    />
+                  </ProcedureWrap>
+                  <ProcedureWrap >
+                    <ProcedureLabel>사용잉크</ProcedureLabel>
+                    <ProcedureInput 
+                      type="text"
+                      name='inks'
+                      value={inks}
+                      onChange={onChange}
+                    />
+                  </ProcedureWrap>
+                </ProcedureBigWrap>
+              </>
+            )}
           </ProcedureBox>
 
         </ProcedureInfo>
 
         <ProcedureBtns>
           {/* <ProcedureBtn color='blue'>정보 수정</ProcedureBtn> */}
-          <ProcedureBtn>작업 시작</ProcedureBtn>
+          {procedureStatus ? (
+            <ProcedureBtn color="red" onClick={onEnd}>
+              작업 종료
+            </ProcedureBtn>
+          ) : (
+            <ProcedureBtn onClick={onStart}>
+              작업 시작
+            </ProcedureBtn>
+          )}
         </ProcedureBtns>
 
       </ProcedureDiv>

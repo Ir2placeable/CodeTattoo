@@ -46,6 +46,12 @@ const EditProcedureInfo = ({ setInfoEdit, date,
         cost: c,
         body_part: body_part
       })
+
+      setInfoEdit(false);
+
+      // setTimeout(() => {
+      //   window.location.replace('');
+      // }, 500)
     }
   }
 

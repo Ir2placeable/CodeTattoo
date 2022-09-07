@@ -57,6 +57,49 @@ export const MyPageDiv = styled.div`
 `;
 // position: relative;
 
+export const MyPageAddBtnDiv = styled.div`
+position: fixed;
+bottom: 150px;
+right: 300px;
+z-index: 100;
+// background-color: aqua;
+display: flex;
+flex-direction: column;
+align-items: flex-end;
+`
+
+export const MyPageAddBtn = styled.div`
+font-size: 18px;
+font-weight: bold;
+color: white;
+line-height: 35px;
+min-width: 35px;
+text-align: center;
+// border-radius: 50%;
+border-radius: 17.5px;
+cursor: pointer;
+margin: 5px 0;
+width: max-content;
+transition: .4s;
+
+&:hover {
+  width: 150px;
+  // transform: scale(3.0, 1);
+}
+
+${(props) => {
+  if(props.type === 'draft'){
+    return css`
+      background-color: #5884D2;
+    `
+  } else if(props.type === 'artwork'){
+    return css `
+      background-color: #9D6DC2;
+    `
+  }
+}}
+`
+
 export const ListDiv = styled.div`
   // max-width: 100%;
   // width: max-content;
@@ -2314,26 +2357,36 @@ height: 100%;
 
 export const ProcedureBtns = styled.div`
   display: flex;
-  margin: 100px auto 0;
+  margin: 70px auto 0;
 `;
 
 export const ProcedureBtn = styled.div`
-  background-color: black;
+  background-color: #4E70C1;
   color: white;
   cursor: pointer;
   border-radius: 10px;
+  border: 3px solid #4E70C1;
   text-align: center;
   line-height: 50px;
   font-size: 20px;
   font-weight: bold;
-  width: 250px;
+  // width: 250px;
+  width: 300px;
   margin: 0 10px;
+  transition: .3s;
+
+  &:hover{
+    background-color: #eee;
+    color: #333;
+  }
 
   ${(props) =>
-    props.color === "blue" &&
+    props.color === "red" &&
     css`
-      background-color: #6F87C0;
-    `}
+      background-color: #D83A3A;
+      border-color: #D83A3A;
+    `
+  }
 `;
 
 export const GoListDiv = styled.div`
