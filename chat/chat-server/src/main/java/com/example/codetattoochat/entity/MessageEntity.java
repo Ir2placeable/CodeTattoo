@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 
 @Entity
 @Data
-@Table(name="Chat_Msg")
+@Table(name="chat_msg")
 @NoArgsConstructor
 public class MessageEntity {
     @Id
@@ -21,9 +21,8 @@ public class MessageEntity {
     @Column(nullable = false)
     private String content;
 
-    @CreatedDate
     @Column(nullable = false)
-    private String createdAt;
+    private String created_At;
 
     @Column(nullable = false)
     private String receiver;
@@ -37,12 +36,12 @@ public class MessageEntity {
             String sender,
             String receiver,
             String content,
-            String createdAt
+            String created_At
     ) {
         this.id = id;
         this.sender = sender;
         this.receiver = receiver;
         this.content = content;
-        this.createdAt = createdAt;
+        this.created_At = created_At;
     }
 }

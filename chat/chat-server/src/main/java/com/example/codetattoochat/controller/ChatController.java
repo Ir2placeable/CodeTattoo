@@ -4,6 +4,7 @@ import com.example.codetattoochat.dto.MessageDto;
 import com.example.codetattoochat.service.APIInfo;
 import com.example.codetattoochat.service.MessageService;
 import com.example.codetattoochat.service.GetOpponentInfo;
+import com.example.codetattoochat.vo.RequestSend;
 import com.example.codetattoochat.vo.ResponseUserList;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
@@ -70,9 +71,10 @@ public class ChatController {
                 .content(vo.getContent())
                 .build();
 
+        
         return ResponseEntity.status(HttpStatus.CREATED).body("Successfully send message to " + messageService.send(messageDto).getReceiver());
     }
-    }
+
     @GetMapping("/chat/userlist/{type}/{user_id}") // 상대방 유저 리스트 요청 API,
     public ResponseEntity getUserList(@PathVariable String user_id, @PathVariable String type) throws URISyntaxException {
         List<ResponseUserList> result = new ArrayList<>();
