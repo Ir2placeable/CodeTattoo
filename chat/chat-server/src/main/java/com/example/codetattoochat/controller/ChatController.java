@@ -1,10 +1,12 @@
 package com.example.codetattoochat.controller;
 
 import com.example.codetattoochat.dto.MessageDto;
+import com.example.codetattoochat.handler.SocketHandler;
 import com.example.codetattoochat.service.APIInfo;
 import com.example.codetattoochat.service.MessageService;
 import com.example.codetattoochat.service.GetOpponentInfo;
 import com.example.codetattoochat.vo.RequestSend;
+import com.example.codetattoochat.vo.RequestUserId;
 import com.example.codetattoochat.vo.ResponseUserList;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
@@ -49,6 +51,8 @@ public class ChatController {
     @Autowired
     GetOpponentInfo getOpponentInfo;
 
+    @Autowired
+    SocketHandler socketHandler;
 
     @RequestMapping("/chat")
     public ModelAndView chat() {
@@ -63,19 +67,123 @@ public class ChatController {
         return info;
     }
 
+    @PostMapping("/chat/user")
+    public ResponseEntity saveUserId(@RequestBody RequestUserId vo) {
+        Gson gson = new Gson();
+        JsonObject temp = new JsonObject();
+        HttpHeaders responseHeaders = new HttpHeaders();
+        responseHeaders.add("Content-Type", "application/json; charset=UTF-8");
+
+        if (socketHandler.currentUserid(vo.getUserid())) {
+            log.info("User Session Map is : {}", socketHandler.getUserMap());
+            temp.addProperty("success", "true");
+            return new ResponseEntity<>(gson.toJson(temp), responseHeaders,HttpStatus.OK);
+        } else {
+            log.info("User Session Map is : {}", socketHandler.getUserMap());
+            temp.addProperty("success", "false");
+            return new ResponseEntity<>(gson.toJson(temp), responseHeaders,HttpStatus.OK);
+        }
+    }
+
     @PostMapping("/chat/send") // 메시지 저장
     public ResponseEntity send(@RequestBody RequestSend vo) {
+        Gson gson = new Gson();
+        JsonObject temp = new JsonObject();
+        HttpHeaders responseHeaders = new HttpHeaders();
+        responseHeaders.add("Content-Type", "application/json; charset=UTF-8");
+
         MessageDto messageDto = MessageDto.builder()
                 .sender(vo.getSender())
                 .receiver(vo.getReceiver())
                 .content(vo.getContent())
                 .build();
 
-        
-        return ResponseEntity.status(HttpStatus.CREATED).body("Successfully send message to " + messageService.send(messageDto).getReceiver());
+        if (messageService.send(messageDto).getReceiver() != null) {
+            temp.addProperty("success", "true");
+            return new ResponseEntity<>(gson.toJson(temp), responseHeaders,HttpStatus.OK);
+        } else {
+            temp.addProperty("success", "false");
+            return new ResponseEntity<>(gson.toJson(temp), responseHeaders,HttpStatus.OK);
+        }
     }
 
-    @GetMapping("/chat/userlist/{type}/{user_id}") // 상대방 유저 리스트 요청 API,
+    @GetMapping("/chat/reservation/{user_id}/{target_id}")
+    public ResponseEntity getReserveList(@PathVariable String user_id, @PathVariable String target_id) throws URISyntaxException {
+        HttpHeaders responseHeaders = new HttpHeaders();
+        responseHeaders.add("Content-Type", "application/json; charset=UTF-8");
+        List<ResponseUserList> result = new ArrayList<>();
+        Gson gson = new Gson();
+        JsonObject temp = new JsonObject();
+        String targetURL = url + endpoint;
+        String opponent = null;
+        String OppoImg = null;
+        String OppoNick = null;
+        List<String> check = new ArrayList<>();
+
+        log.info("UserId is : {}", user_id);
+        log.info("OppoId is : {}", target_id);
+
+        // 유저가 상담문의 버튼을 누르면 자동적으로 "안녕하세요, 상담문의 드립니다!" 라는 HandShakeMessage 전송
+        MessageDto messageDto = MessageDto.builder()
+                .sender(user_id)
+                .receiver(target_id)
+                .content("안녕하세요! 상담문의 드립니다!")
+                .build();
+
+        if (messageService.send(messageDto).getReceiver() == null) { // HandShakeMessage가 보내지지 않았을때 오류
+            temp.addProperty("success", "false");
+            temp.addProperty("status", "Sending HandShakeMessage is Failed");
+            return new ResponseEntity<>(gson.toJson(temp), responseHeaders,HttpStatus.OK);
+        }
+
+        Iterable<MessageDto> messageList = messageService.getUserList(user_id);
+        log.info("{} 's messageList is : {}", user_id, messageList);
+
+        for (MessageDto v : messageList) {
+            if (v.getSender().equals(user_id) && !v.getReceiver().equals(user_id)) { //내가 상대방한테 마지막으로 채팅을 보냈을때,
+                opponent = v.getReceiver();
+            } else if (!v.getSender().equals(user_id) && v.getReceiver().equals(user_id)) { //상대방이 나에게 마지막으로 채팅을 보냈을떄
+                opponent = v.getSender();
+            }
+            if (check.contains(opponent))
+                continue;
+            else
+                check.add(opponent);
+            log.info("targetURL : {}", targetURL + "tattooist" + "/" + opponent);
+            String opponentInfo = getOpponentInfo.callAPIGet(targetURL + "tattooist" + "/" + opponent);
+            JsonObject jsonObject = JsonParser.parseString(opponentInfo).getAsJsonObject();
+            OppoNick = jsonObject.get("profile").getAsJsonObject().get("nickname").getAsString();
+            if (jsonObject.get("profile").getAsJsonObject().get("image") == null)
+                OppoImg = "undefined";
+            else
+                OppoImg = jsonObject.get("profile").getAsJsonObject().get("image").getAsString();
+            result.add(ResponseUserList.builder()
+                    .opponent_id(opponent)
+                    .opponent_image(OppoImg)
+                    .opponent_nickname(OppoNick)
+                    .content(v.getContent())
+                    .createdAt(v.getCreatedAt())
+                    .build());
+        }
+        check.clear();
+
+        temp.addProperty("success", "true");
+        JsonArray jArray = new JsonArray();
+        for (ResponseUserList v : result) {
+            JsonObject vtmp = new JsonObject();
+            vtmp.addProperty("content", v.getContent());
+            vtmp.addProperty("createdAt", v.getCreatedAt());
+            vtmp.addProperty("opponent_id", v.getOpponent_id());
+            vtmp.addProperty("opponent_image", v.getOpponent_image());
+            vtmp.addProperty("opponent_nickname", v.getOpponent_nickname());
+            jArray.add(vtmp);
+        }
+        temp.add("userlist", jArray);
+        return new ResponseEntity<>(gson.toJson(temp), responseHeaders,HttpStatus.OK);
+    }
+
+
+    @GetMapping("/chat/userlist/{type}/{user_id}/{opponent_id}") // 상대방 유저 리스트 요청 API (채팅목록)
     public ResponseEntity getUserList(@PathVariable String user_id, @PathVariable String type) throws URISyntaxException {
         List<ResponseUserList> result = new ArrayList<>();
         Gson gson = new Gson();
