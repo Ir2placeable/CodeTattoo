@@ -1,6 +1,7 @@
 package com.example.codetattoochat.handler;
 
 import com.example.codetattoochat.config.WebSocketConfig;
+import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.web.socket.CloseStatus;
@@ -13,6 +14,7 @@ import java.util.HashMap;
 
 @Component
 @Slf4j
+@Data
 public class SocketHandler extends TextWebSocketHandler {
 
     HashMap<String, WebSocketSession> sessionMap = new HashMap<>(); //웹소켓 세션을 담아둘 맵

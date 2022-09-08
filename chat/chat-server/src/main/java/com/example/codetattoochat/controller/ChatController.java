@@ -63,16 +63,28 @@ public class ChatController {
         return info;
     }
 
+    @PostMapping("/chat/user")
+    public ResponseEntity saveUserId(@RequestBody )
     @PostMapping("/chat/send") // 메시지 저장
     public ResponseEntity send(@RequestBody RequestSend vo) {
+        Gson gson = new Gson();
+        JsonObject temp = new JsonObject();
+        HttpHeaders responseHeaders = new HttpHeaders();
+        responseHeaders.add("Content-Type", "application/json; charset=UTF-8");
+
         MessageDto messageDto = MessageDto.builder()
                 .sender(vo.getSender())
                 .receiver(vo.getReceiver())
                 .content(vo.getContent())
                 .build();
 
-        
-        return ResponseEntity.status(HttpStatus.CREATED).body("Successfully send message to " + messageService.send(messageDto).getReceiver());
+        if (messageService.send(messageDto).getReceiver() != null) {
+            temp.addProperty("success", "true");
+            return new ResponseEntity<>(gson.toJson(temp), responseHeaders,HttpStatus.OK);
+        } else {
+            temp.addProperty("success", "false");
+            return new ResponseEntity<>(gson.toJson(temp), responseHeaders,HttpStatus.OK);
+        }
     }
 
     @GetMapping("/chat/userlist/{type}/{user_id}") // 상대방 유저 리스트 요청 API,
