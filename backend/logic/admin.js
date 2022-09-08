@@ -41,6 +41,10 @@ exports.getUser = async function() {
     return User.find()
 }
 
+exports.getReservation = async function() {
+    return Reservation.find()
+}
+
 exports.invokeBlockchain = async function(params, body) {
     if(body.image !== "") {
         const imageStorage_params = { title : params.key, image : body.image, mime : body.mime }

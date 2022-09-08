@@ -267,22 +267,24 @@ exports.reservationDetail = async function(params) {
     const reservation = await Reservation.findOne({ _id : params.id })
     if (!reservation) { throw 4 }
 
+    return_value = {
+        date: reservation['date'],
+        time_slot: reservation['time_slot'],
+        cost: reservation['cost'],
+        body_part: reservation['body_part'],
+        confirmed: reservation['confirmed'],
+        image : reservation['image']
+    }
     const user = await User.findOne({ _id : reservation['customer_id']})
-    if (!user) { throw 1 }
+    if (user) {
+        return_value['customer_id'] = user['_id']
+        return_value['customer_nickname'] = user['nickname']
+    }
 
     const tattooist = await Tattooist.findOne({ _id : reservation['tattooist_id']})
-    if (!tattooist) { throw 2 }
-
-    return_value = {
-        date : reservation['date'],
-        time_slot : reservation['time_slot'],
-        cost : reservation['cost'],
-        body_part : reservation['body_part'],
-        confirmed : reservation['confirmed'],
-        customer_id : user['_id'],
-        customer_nickname : user['nickname'],
-        tattooist_id : tattooist['_id'],
-        tattooist_nickname : tattooist['nickname']
+    if (tattooist) {
+        return_value['tattooist_id'] = tattooist['_id']
+        return_value['tattooist_nickname'] = tattooist['nickname']
     }
 
     return return_value
@@ -458,4 +460,8 @@ exports.reservation = async function(query) {
     }
 
     return return_value
+}
+
+exports.procedureEnd = async function(params) {
+    // 블록체인에서 params.id 의 query를 땀
 }

@@ -4,10 +4,9 @@ import React from 'react';
 
 
 class App extends React.Component {
-  ws: any;
+  ws = new WebSocket("ws://localhost:3002/chating"); // 온프레미스 or 클라우드
 
   componentDidMount() { // <- 추후에 로그인할때 실행되는 함수로 변경
-    this.ws = new WebSocket("ws://localhost:3002/chating"); // 온프레미스 or 클라우드
     this.ws.onopen = () => {
       console.log("connected!!");
     };
@@ -16,7 +15,7 @@ class App extends React.Component {
   sendMessage = () => {  // 화살표함수로 만들것!!
     this.ws.send("hello this is client Message");  // 서버로 메세지 보내는건 send
   };
-
+  sendMessage
   render() {
     return (
       <div className="App">

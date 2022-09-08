@@ -7,6 +7,9 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface MessageRepository extends JpaRepository<MessageEntity, Long> {
+
+
+    public
     @Query(value = "SELECT distinct sender, receiver, content, created_At " +
             "FROM Chat_Msg m " +
             "WHERE m.sender = :sender OR m.receiver = :sender " +

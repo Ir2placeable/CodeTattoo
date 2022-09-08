@@ -4,6 +4,7 @@ import com.example.codetattoochat.dto.MessageDto;
 import com.example.codetattoochat.entity.MessageEntity;
 import com.example.codetattoochat.repository.MessageRepository;
 import lombok.extern.slf4j.Slf4j;
+import org.aspectj.bridge.Message;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +22,29 @@ public class MessageServiceImpl implements MessageService {
     @Autowired
     public MessageServiceImpl(MessageRepository messageRepository) {
         this.messageRepository = messageRepository;
+    }
+
+    @Transactional
+    @Override
+    public MessageDto send(MessageDto dto) {
+        log.info("Message Service's Service Layer :: Call send Method!");
+
+        MessageEntity messageEntity = MessageEntity.builder()
+                .sender(dto.getSender())
+                .receiver(dto.getReceiver())
+                .content(dto.getContent())
+                .created_At(String.valueOf(LocalDateTime.now()))
+                .build();
+
+        log.info("Message is {}", messageEntity);
+        messageRepository.save(messageEntity);
+//        messageRepository.save(messageEntity);
+
+        return MessageDto.builder()
+                .sender(dto.getSender())
+                .receiver(dto.getReceiver())
+                .content(dto.getContent())
+                .build();
     }
 
     @Transactional
@@ -61,11 +85,10 @@ public class MessageServiceImpl implements MessageService {
                     .sender(message.getSender())
                     .receiver(message.getReceiver())
                     .content(message.getContent())
-                    .createdAt(message.getCreatedAt())
+                    .createdAt(message.getCreated_At())
                     .build());
         });
 
         return messages;
     }
-
 }
