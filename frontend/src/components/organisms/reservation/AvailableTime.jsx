@@ -5,13 +5,14 @@ import { APIURL } from '../../../config/key';
 import {
   ReservationDiv, DateDiv, TimeDiv,
   TimeText, TimeBox, Time, ReservRequestBtn,
-  TimeActiveBtn, TimeActiveDiv
+  TimeActiveBtn, TimeActiveDiv, ToastAlarmBox,
 } from '../../../styledComponents';
 import { useState } from 'react';
 import moment from 'moment';
 import { useEffect } from 'react';
 import useCreateReservation from '../../../hooks/useCreateReservation';
 import useTattooistDetailReservation from '../../../hooks/useTattooistDetailReservation';
+import { toast, ToastContainer } from "react-toastify";
 
 const AvailableTime = ({ value, isAdmin, id }) => {
   const time1 = [
@@ -138,6 +139,7 @@ const AvailableTime = ({ value, isAdmin, id }) => {
       alert('로그인이 필요합니다!')
       return;
     } else {
+      toast.success("상담 요청이 되었습니다");
       const data = {
         customer_id: user,
         tattooist_id: id,
@@ -151,6 +153,9 @@ const AvailableTime = ({ value, isAdmin, id }) => {
 
   return (
     <>
+      <ToastAlarmBox>
+        <ToastContainer position="top-right" autoClose="1500" closeOnClick />
+      </ToastAlarmBox>
       <ReservationDiv>
 
         <DateDiv>
