@@ -8,12 +8,12 @@ const ChatDraftInfo = () => {
   return (
     <>
       <ChatDraftInputDiv>
-        <ChatDraftInfoLabel>가격</ChatDraftInfoLabel>
-        <ChatDraftInfoInput />
+        <ChatDraftInfoLabel htmlFor="cost">가격</ChatDraftInfoLabel>
+        <ChatDraftInfoInput id="cost" />
       </ChatDraftInputDiv>
       <ChatDraftInputDiv>
-        <ChatDraftInfoLabel>일정</ChatDraftInfoLabel>
-        <ChatDraftInfoInput />
+        <ChatDraftInfoLabel htmlFor="date">일정</ChatDraftInfoLabel>
+        <ChatDraftInfoInput id="date"/>
       </ChatDraftInputDiv>
       <ChatDraftInputDiv>
         <ChatDraftInfoLabel>부위</ChatDraftInfoLabel>

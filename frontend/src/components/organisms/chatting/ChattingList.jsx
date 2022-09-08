@@ -27,7 +27,6 @@ import {
   ChattingTextDiv,
   ChattingTime,
   ChatBtnBox,
-
 } from "../../../styledComponents";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -38,14 +37,15 @@ import {
   faImage,
 } from "@fortawesome/free-solid-svg-icons";
 import ChatDraftInfo from "./ChatDraftInfo";
-import useChatReservation from "../../../hooks/useChatReservation";
+import useChatUserList from "../../../hooks/useChatUserList";
 
 const ChattingList = () => {
   const [plusClick, setPlusClick] = useState(false);
   const onPlusClick = () => {
     setPlusClick(plusClick ? false : true);
   };
-  const [confirm, cancel] = useChatReservation
+  const chatList = useChatUserList();
+  console.log(chatList);
   return (
     <>
       <ChattingDiv>
@@ -54,28 +54,6 @@ const ChattingList = () => {
         </ChattingHeader>
 
         <ChattingListDiv>
-          {/* <ChattingBox>
-            <ChattingImg src='../../img/react.jpg' />
-
-            <ChattingInfoDiv>
-              <ChattingTextDiv>
-                <ChattingText size='big'>킹아영</ChattingText>
-                <ChattingText size="medium">채팅 마지막 내용 미리보기</ChattingText>
-              </ChattingTextDiv>
-
-              <ChattingTextDiv sort="right">
-                <ChattingText size="small">2022년 8월 17일의 예약 손님</ChattingText>
-                <ChattingText size="small">010-6595-0827</ChattingText>
-                <ChattingText size="small">200,000원</ChattingText>
-              </ChattingTextDiv>
-
-              <ChattingTime>
-                오후 5:37
-              </ChattingTime>
-
-            </ChattingInfoDiv>
-          </ChattingBox> */}
-
           <ChattingBox>
             <ChattingImg src="../../img/react.jpg" />
 
@@ -123,19 +101,19 @@ const ChattingList = () => {
             </>
           ) : (
             <>
-            <ChatReservationBox>
-              <ChatDraftBox>
-                <ChatDraftImg/>
-                <ChatDraftInfoBox>
-                  <ChatDraftInfo/>
-                </ChatDraftInfoBox>
-              </ChatDraftBox>
-              <ChatBtnBox>
-                <ChatBtn type="cancel" onClick={confirm}>예약 취소</ChatBtn>
-                <ChatBtn type="modify">정보 수정</ChatBtn>
-                <ChatBtn type="confirm" onClick={cancel}>예약 확정</ChatBtn>
-              </ChatBtnBox>
-            </ChatReservationBox>
+              <ChatReservationBox>
+                <ChatDraftBox>
+                  <ChatDraftImg />
+                  <ChatDraftInfoBox>
+                    <ChatDraftInfo />
+                  </ChatDraftInfoBox>
+                </ChatDraftBox>
+                <ChatBtnBox>
+                  <ChatBtn type="cancel">예약 취소</ChatBtn>
+                  <ChatBtn type="modify">정보 수정</ChatBtn>
+                  <ChatBtn type="confirm">예약 확정</ChatBtn>
+                </ChatBtnBox>
+              </ChatReservationBox>
               <ChatInputDiv type="back">
                 <ChatBtn type="image" onClick={onPlusClick}>
                   <FontAwesomeIcon icon={faMinus} />
@@ -150,3 +128,27 @@ const ChattingList = () => {
 };
 
 export default ChattingList;
+
+{
+  /* <ChattingBox>
+            <ChattingImg src='../../img/react.jpg' />
+
+            <ChattingInfoDiv>
+              <ChattingTextDiv>
+                <ChattingText size='big'>킹아영</ChattingText>
+                <ChattingText size="medium">채팅 마지막 내용 미리보기</ChattingText>
+              </ChattingTextDiv>
+
+              <ChattingTextDiv sort="right">
+                <ChattingText size="small">2022년 8월 17일의 예약 손님</ChattingText>
+                <ChattingText size="small">010-6595-0827</ChattingText>
+                <ChattingText size="small">200,000원</ChattingText>
+              </ChattingTextDiv>
+
+              <ChattingTime>
+                오후 5:37
+              </ChattingTime>
+
+            </ChattingInfoDiv>
+          </ChattingBox> */
+}

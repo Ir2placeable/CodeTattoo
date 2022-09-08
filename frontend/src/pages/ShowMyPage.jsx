@@ -13,7 +13,7 @@ import useUserMyPage from "../hooks/useUserMyPage";
 const ShowMyPage = () => {
   /* User My Page Data */
   const [data, profile] = useUserMyPage();
-  console.log(data);
+  console.log(profile);
   const tattoos = [
     {
       tattoo_id: 1,

@@ -59,8 +59,6 @@ const App = () => {
     console.log('tattooist scrap: ',res);
   };
 
-  const notify = () => {toast.success("예약 요청이 도착하였습니다!");} 
-  
   return (
     <div className="font-style">
       <Reset />
@@ -69,7 +67,7 @@ const App = () => {
       <Header />
       {/* <Navigation /> */}
       {/* Main Container */}
-      
+
         {/*<ToastAlarmBox>
           <ToastContainer
             position="top-right"
