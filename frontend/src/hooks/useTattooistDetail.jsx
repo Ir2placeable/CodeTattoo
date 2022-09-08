@@ -46,7 +46,7 @@ const useTattooistDetail = (path) => {
     } else if (getCookie("tattooist_id")) {
       query = `?tattooist_id=${getCookie("tattooist_id")}`;
     }
-    console.log(`${APIURL}${path}/${query}`)
+    // console.log(`${APIURL}${path}/${query}`)
 
     const res = await axios.get(`${APIURL}${path}/${query}`);
     if (res.data.success) {
@@ -56,8 +56,13 @@ const useTattooistDetail = (path) => {
   }
 
   useEffect(() => {
-    sendRequest();
-  }, []);
+    const [ , , , tmp] = location.pathname.split("/")
+    // console.log(tmp)
+    if(tmp !== 'reservation'){
+      sendRequest();
+    }
+    // sendRequest();
+  }, [location.pathname]);
 
   return [tattooist, data];
 };

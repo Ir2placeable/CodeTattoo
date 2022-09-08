@@ -6,6 +6,8 @@ import DetailArtwork from "../organisms/tattooist/DetailArtwork";
 const TattooistDetailArtwork = () => {
   const items = useOutletContext();
 
+  // console.log('items: ', items)
+
   return (
     <>
       <GridDiv>

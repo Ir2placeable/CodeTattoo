@@ -8,7 +8,7 @@ import {
   ReservDiv, ReservInfoDiv, ReservDraftImg,
   ReservText, ReservTextDiv, ReservLabel,
   ReservTextBox, ReservBtnDiv, ReservBtn, 
-  ReservDraftEmptyImg
+  ReservDraftEmptyImg, ReservStateBtn
 } from '../../../styledComponents';
 
 // 이미지 소스, 고객 닉네임, 예약 일정, 작업 가격
@@ -83,6 +83,16 @@ const Reservation = memo(({ data }) => {
               <ReservTextBox>{cost}</ReservTextBox>
             </ReservText>
           </ReservTextDiv>
+
+          {data.confirmed ? (
+            <ReservStateBtn color="green">
+              예약확정 완료
+            </ReservStateBtn>
+          ) : (
+            <ReservStateBtn color="red">
+              예약확정 대기중
+            </ReservStateBtn>
+          )}
 
         </ReservInfoDiv>
 

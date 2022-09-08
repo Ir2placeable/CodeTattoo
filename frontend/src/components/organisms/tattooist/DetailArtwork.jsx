@@ -10,6 +10,8 @@ const DetailArtwork = ({ artwork }) => {
 
   const goDetail = () => {};
 
+  console.log('artwork: ',artwork)
+
   return (
     <>
       <DetailArtworkImgBox

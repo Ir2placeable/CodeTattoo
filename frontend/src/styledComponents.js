@@ -2118,6 +2118,8 @@ export const ReservInfoDiv = styled.div`
   display: flex;
   width: 75%;
   // width: 100%;
+
+  position: relative;
 `;
 
 export const ReservDraftImg = styled.img`
@@ -2172,6 +2174,26 @@ export const ReservTextBox = styled.span`
   background-color: #C9CFDD;
   border-radius: 5px;
 `;
+
+export const ReservStateBtn = styled.div`
+position: absolute;
+top: 20px;
+right: 20px;
+padding: 7px;
+font-weight: bold;
+font-size: 12px;
+border-radius: 5px;
+background-color: #D83A3A; 
+text-align: center;
+color: white;
+
+${(props) => 
+  props.color === 'green' &&
+  css`
+    background-color: #4FBD4F;
+  `
+}
+`
 
 export const ReservBtnDiv = styled.div`
   // width: 20%;
