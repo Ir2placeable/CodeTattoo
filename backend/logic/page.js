@@ -277,9 +277,8 @@ exports.reservationDetail = async function(params) {
         procedure_status : reservation['procedure_status'],
         image : reservation['image']
     }
-    
+
     User.findOne({ _id : reservation['customer_id']}, (err, user) => {
-        if (err)
         reservation_info['customer_id'] = user['_id']
         reservation_info['customer_nickname'] = user['nickname']
     })
@@ -472,6 +471,11 @@ exports.reservation = async function(query) {
 
         return_value.push(item)
     }
+
+    // 예약 일정 순으로 정렬할 것
+    return_value.sort(function(a, b) {
+        return a.date - b.date && a.time_slot - b.time_slot
+    })
 
     return return_value
 }
