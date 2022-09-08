@@ -77,6 +77,7 @@ const EditUserProfile = () => {
           onChange={onChange}
           value={nickname}
           ref={nicknameInput}
+          maxLength="12"
         />
       </ProfileInfoInputBox>
       <ProfileInfoInputBox>

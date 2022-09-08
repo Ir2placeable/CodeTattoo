@@ -3,7 +3,6 @@ import { MyTattooImg, MyTattooStateBox } from "../../styledComponents";
 import MyTattooSwiper from "../organisms/MyTattooSwiper";
 
 const MyTattoo = ({ tattoo }) => {
-  console.log("MyTattoo");
   return (
     <>
       {tattoo.image ? (

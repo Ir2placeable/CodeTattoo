@@ -143,6 +143,11 @@ const AvailableTime = ({ value, isAdmin, id }) => {
         time_slot: unavailable.time_slot
       }
       console.log(data)
+
+      if(!data.date || !data.time_slot){
+        alert('예약을 원하는 날짜를 선택해주세요.')
+        return;
+      }
       createReservation({ data });
     }
   }

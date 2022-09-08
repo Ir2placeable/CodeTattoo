@@ -34,7 +34,7 @@ const Navigation = () => {
         { getCookie('user_id') ? (
           <NavigationBtn onClick={onClick} text="스크랩" path="scraps" />
         ) : getCookie('tattooist_id') ? (
-          <NavigationBtn onClick={onClick} text="예약" path="reservations" />
+          <NavigationBtn onClick={onClick} text="예약 / 작업" path="reservations" />
         ) : (
           <></>
         )}

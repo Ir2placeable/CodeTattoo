@@ -5,7 +5,8 @@ import {
   SmallDraftBox,
   SmallTattooistBox,
   DraftEditBtn,
-  DraftInQuiryBtn
+  DraftInQuiryBtn,
+  ToastAlarmBox
 } from "../../styledComponents";
 import SmallTattooist from "../organisms/tattooist/SmallTattooist";
 import SmallDraft from "../organisms/draft/SmallDraft";
@@ -18,13 +19,14 @@ import { getCookie } from "../../config/cookie";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGear } from "@fortawesome/free-solid-svg-icons";
 import useCreateReservation from "../../hooks/useCreateReservation";
+import { toast, ToastContainer } from "react-toastify";
 
 // { detail }
 const DraftDetail = () => {
   const [isAdmin, setIsAdmin] = useState(false);
   const { detail } = useOutletContext();
   const draft = {
-    draft_id: detail.draft_id, 
+    draft_id: detail.draft_id,
     image: detail.image,
     title: detail.title,
     like: detail.like,
@@ -40,12 +42,12 @@ const DraftDetail = () => {
   const genre = {
     genre: detail.genre,
     keywords: detail.keywords,
-    cost: detail.cost
+    cost: detail.cost,
   };
 
   useEffect(() => {
-    const id = getCookie('tattooist_id');
-    if(id && id === tattooist.drawer_id){
+    const id = getCookie("tattooist_id");
+    if (id && id === tattooist.drawer_id) {
       setIsAdmin(true);
     }
 
@@ -54,34 +56,36 @@ const DraftDetail = () => {
 
   const navigate = useNavigate();
   const goEdit = () => {
-    navigate('../edit')
-  }
+    navigate("../edit");
+  };
 
   const createReservation = useCreateReservation();
 
   const onCreateReservation = () => {
-    const user = getCookie('user_id');
+    const user = getCookie("user_id");
 
-    if(!user){
-      alert('로그인이 필요합니다!')
+    if (!user) {
+      alert("로그인이 필요합니다!");
       return;
     } else {
-
+      toast.success("상담 요청이 되었습니다");
       const data = {
         customer_id: user,
         tattooist_id: tattooist.drawer_id,
         image: draft.image,
-        cost: genre.cost
+        cost: genre.cost,
       };
-    
+
       createReservation({ data });
     }
-  }
+  };
 
   return (
     <ListDiv>
+      <ToastAlarmBox>
+        <ToastContainer position="top-right" autoClose="1500" closeOnClick />
+      </ToastAlarmBox>
       <DraftDetailMainBox>
-
         <SmallDraftBox>
           {isAdmin && (
             <DraftEditBtn onClick={goEdit}>
@@ -96,7 +100,6 @@ const DraftDetail = () => {
           {/* <HorizontalLine /> */}
           <Genre genre={genre} />
         </SmallTattooistBox>
-
       </DraftDetailMainBox>
 
       <DraftInQuiryBtn onClick={onCreateReservation}>

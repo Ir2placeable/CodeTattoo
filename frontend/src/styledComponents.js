@@ -209,6 +209,20 @@ export const HeaderBtn = styled.div`
   text-align: center;
   transition: 0.45s;
   cursor: pointer;
+
+  ${(props) => 
+    props.type === 'chat' &&
+    css`
+      width: 60px;
+      border-color: #999;
+      background-color: #999;
+
+      &:hover{
+        background-color: #f6f6f6;
+        color: #484848;
+      }
+    `
+  }
 `;
 
 export const HeaderBtnHover = {
@@ -985,6 +999,15 @@ export const ProfileImgIcon = styled.div`
       overflow: hidden;
       background-color: #777;
     `}
+    ${(props) =>
+      props.size === "chat" &&
+      css`
+        width: 50px;
+        height: 50px;
+        line-height: 50px;
+        overflow: hidden;
+        background-color: #777;
+      `}
 `;
 
 export const ProfileImg = styled.img`

@@ -93,6 +93,7 @@ const EditTattooistProfile = () => {
           onChange={onChange}
           value={nickname}
           ref={nicknameInput}
+          maxLength="11"
         />
       </ProfileInfoInputBox>
       <ProfileInfoInputBox>

@@ -6,13 +6,14 @@ import {
   HeaderSubMenu,
   HeaderLogo,
   HeaderText,
+  HeaderBtn,
 } from "../../styledComponents";
 import HeaderBtnComp from "./HeaderBtnComp";
 import { getAllCookie, getCookie } from "../../config/cookie";
 import LogoutBtn from "./LogoutBtn";
 import GoMypage from "./GoMypage";
 import { Cookies } from "react-cookie";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import AlarmIcon from "../atomic/common/AlarmIcon";
 
 const Header = () => {
@@ -31,6 +32,17 @@ const Header = () => {
     window.location.replace("/drafts/best");
   };
 
+  const navigate = useNavigate();
+  const goChatting = () => {
+    let id = getCookie('user_id');
+
+    if(!id){
+      id = getCookie('tattooist_id')
+    }
+
+    navigate(`/chat/${id}`)
+  }
+
   return (
     <>
       <HeaderDiv>
@@ -44,7 +56,10 @@ const Header = () => {
           {isLogin ? (
             <HeaderSubMenu>
               {/* <HeaderBtnComp text={"예약조회"} /> */}
-              <AlarmIcon />
+              {/* <AlarmIcon /> */}
+              <HeaderBtn type="chat" onClick={goChatting}>
+                채팅
+              </HeaderBtn>
               <GoMypage />
               <LogoutBtn />
             </HeaderSubMenu>

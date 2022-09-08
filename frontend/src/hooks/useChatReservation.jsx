@@ -5,14 +5,22 @@ import { useState } from 'react';
 import { getCookie } from '../config/cookie';
 import { APIURL } from '../config/key';
 
-// *유저와 타투이스트가 채팅에서 date, time_slot, cost, body_part를 수정함*
+// ### 예약 확정
 
-// - PATCH : /reservation/:id
+// *유저와 타투이스트가 채팅에서 date, time_slot_cost, image(도안)을 확정함*
+
+// - POST : /confirm/reservation/:id
 //     - id : reservation_id
-// - Body : { date, time_slot, cost, body_part }
-//     - 기존 정보를 보내주어야 함 (바뀐 정보만 보내면 안됨)
-//     - date: 220823
-//     - time_slot : 1030 (=10:30)
+// - Body : { user_id, tattooist_id }
+// - Return : { success }
+
+// ### 예약 불발(=예약 거절)
+
+// *유저와 타투이스트가 채팅에서 합의점을 찾지 못하고 종료함*
+
+// - POST : /reject/reservation/:id
+//     - id : reservation_id
+// - Body : { user_id, tattooist_id }
 // - Return : { success }
 
 const useChatReservation = ({ reservation_id }) => {
