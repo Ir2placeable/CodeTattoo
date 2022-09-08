@@ -44,7 +44,6 @@ const Header = () => {
           {isLogin ? (
             <HeaderSubMenu>
               {/* <HeaderBtnComp text={"예약조회"} /> */}
-              <AlarmIcon />
               <GoMypage />
               <LogoutBtn />
             </HeaderSubMenu>
