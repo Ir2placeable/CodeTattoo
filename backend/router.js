@@ -108,32 +108,6 @@ server.get('/scraps/:filter/:page', (req, res) => {
         })
 
 })
-// 페이지 : 예약
-server.get('/reservations', (req, res) => {
-    console.log('Page : Tattooist Reservation')
-
-    page.reservation(req.query)
-        .then((returned) => {
-            res.send({ success : true, reservations : returned })
-        })
-        .catch((err) => {
-            res.send(ErrorLogging(err))
-        })
-
-})
-// 페이지 : 작업 시작 페이지 + 예약 정보 조회
-server.get('/reservation/:id', (req, res) => {
-    console.log('Page : Reservation Detail')
-
-    page.reservationDetail(req.params)
-        .then((returned) => {
-            res.send({ success : true, data : returned })
-        })
-        .catch((err) => {
-            res.send(ErrorLogging(err))
-        })
-
-})
 // (미개발) 페이지 : 유저 채팅 박스
 server.get('/user/direct/inbox', (req, res) => {
     console.log('Page : User Chatting Page')
@@ -166,18 +140,32 @@ server.get('/artwork/:id', (req, res) => {
         })
 
 })
-// 페이지 : 작업 완료 페이지
-server.get('/procedure/:id', (req, res) => {
-    console.log('page : Procedure End')
+// 페이지 : 예약
+server.get('/reservations', (req, res) => {
+    console.log('Page : Tattooist Reservation')
 
-    page.procedureEnd(req.params)
+    page.reservation(req.query)
         .then((returned) => {
-            res.send({ success : true, data : returned })
+            res.send({ success : true, reservations : returned })
+        })
+        .catch((err) => {
+            res.send(ErrorLogging(err))
+        })
+
+})
+// 페이지 : 예약 세부 및 작업
+server.get('/reservation/:id', (req, res) => {
+    console.log('Page : Reservation Detail')
+
+    page.reservationDetail(req.params)
+        .then((returned) => {
+            res.send({ success : true, reservation : returned.reservation_info, procedure_info : returned.procedure_info  })
         })
         .catch((err) => {
             res.send(ErrorLogging(err))
         })
 })
+
 
 // 명령 모음
 // 명령 : 회원가입

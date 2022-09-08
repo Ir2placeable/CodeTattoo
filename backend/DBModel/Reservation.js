@@ -29,6 +29,9 @@ const reservationSchema = mongoose.Schema({
     confirmed : {
         type : Boolean,
         default : false
+    },
+    tattoo_id : {
+        type : String
     }
 })
 

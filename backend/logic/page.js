@@ -262,32 +262,46 @@ exports.artworkDetail = async function(params, query) {
 }
 // 예약 세부 페이지
 exports.reservationDetail = async function(params) {
-    let return_value;
+    let reservation_info;
+    let procedure_info;
 
     const reservation = await Reservation.findOne({ _id : params.id })
     if (!reservation) { throw 4 }
 
-    return_value = {
+    reservation_info = {
         date: reservation['date'],
         time_slot: reservation['time_slot'],
         cost: reservation['cost'],
         body_part: reservation['body_part'],
         confirmed: reservation['confirmed'],
+        procedure_status : reservation['procedure_status'],
         image : reservation['image']
     }
-    const user = await User.findOne({ _id : reservation['customer_id']})
-    if (user) {
-        return_value['customer_id'] = user['_id']
-        return_value['customer_nickname'] = user['nickname']
+    
+    User.findOne({ _id : reservation['customer_id']}, (err, user) => {
+        if (err)
+        reservation_info['customer_id'] = user['_id']
+        reservation_info['customer_nickname'] = user['nickname']
+    })
+    Tattooist.findOne({ _id : reservation['tattooist_id']}, (err, tattooist) => {
+        reservation_info['tattooist_id'] = tattooist['_id']
+        reservation_info['tattooist_nickname'] = tattooist['nickname']
+    })
+
+    // procedure_status = true 인 경우 -> 즉, 작업 시작이 된 경우
+    if (reservation['procedure_status']) {
+        const tattoo_id = reservation['tattoo_id']
+        const blockchain_data = await blockchain.getTattooInfo(tattoo_id)
+
+        procedure_info = {
+            inks : blockchain_data['inks'],
+            depth : blockchain_data['depth'],
+            niddle : blockchain_data['niddle'],
+            machine : blockchain_data['machine']
+        }
     }
 
-    const tattooist = await Tattooist.findOne({ _id : reservation['tattooist_id']})
-    if (tattooist) {
-        return_value['tattooist_id'] = tattooist['_id']
-        return_value['tattooist_nickname'] = tattooist['nickname']
-    }
-
-    return return_value
+    return {reservation_info, procedure_info}
 }
 
 // 스크랩 페이지 (Only User)
@@ -460,8 +474,4 @@ exports.reservation = async function(query) {
     }
 
     return return_value
-}
-
-exports.procedureEnd = async function(params) {
-    // 블록체인에서 params.id 의 query를 땀
 }
