@@ -473,8 +473,11 @@ exports.reservation = async function(query) {
     }
 
     // 예약 일정 순으로 정렬할 것
-    return_value = return_value.sort(function(a, b) {
-        return a.date - b.date && a.time_slot - b.time_slot
+    return_value.sort(function(a, b) {
+        const target1 = Number(String(a.date)+String(a.time_slot))
+        const target2 = Number(String(b.date)+String(b.time_slot))
+    
+        return target1 - target2
     })
 
     return return_value
