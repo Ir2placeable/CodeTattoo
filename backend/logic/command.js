@@ -357,10 +357,6 @@ exports.rejectReservation= async function(params, body) {
 exports.beginProcedure = async function(params, body) {
     let new_tattoo = new Tattoo()
     new_tattoo['owner'] = body.user_id
-    await new_tattoo.save()
-
-    await Reservation.updateOne({ _id : params.id }, {$set : { procedure_status : true,  tattoo_id : new_tattoo['_id'] }})
-    await User.updateOne({ _id : body.user_id }, {$push : { tattoos : new_tattoo['_id'] }})
 
     const user = await User.findOne({ _id : body.user_id })
     if (!user) { throw 1 }
@@ -387,6 +383,10 @@ exports.beginProcedure = async function(params, body) {
     blockchain_params['machine'] = body['machine']
 
     await blockchain.invoke("startTattoo", new_tattoo['_id'], blockchain_params)
+
+    await new_tattoo.save()
+    await Reservation.updateOne({ _id : params.id }, {$set : { procedure_status : true,  tattoo_id : new_tattoo['_id'] }})
+    await User.updateOne({ _id : body.user_id }, {$push : { tattoos : new_tattoo['_id'] }})
 }
 // 타투 작업 완료
 exports.finishProcedure = async function(params, body) {
@@ -409,8 +409,7 @@ exports.finishProcedure = async function(params, body) {
         machine : body['machine']
     }
 
-    await blockchain.invoke("endTattoo", body.tattoo_id, blockchain_params)
-    await Tattooist.updateOne({ _id : body.tattooist_id }, {$push : { artworks : new_tattoo['_id'] }})
-
+    await blockchain.invoke("endTattoo", reservation['tattoo_id'], blockchain_params)
+    await Tattooist.updateOne({ _id : body.tattooist_id }, {$push : { artworks : reservation['tattoo_id'] }})
     await Reservation.deleteOne({ _id : params.id })
 }

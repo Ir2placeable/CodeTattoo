@@ -277,9 +277,8 @@ exports.reservationDetail = async function(params) {
         procedure_status : reservation['procedure_status'],
         image : reservation['image']
     }
-    
+
     User.findOne({ _id : reservation['customer_id']}, (err, user) => {
-        if (err)
         reservation_info['customer_id'] = user['_id']
         reservation_info['customer_nickname'] = user['nickname']
     })
