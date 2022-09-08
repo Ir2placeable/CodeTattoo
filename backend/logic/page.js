@@ -277,17 +277,16 @@ exports.reservationDetail = async function(params) {
         procedure_status : reservation['procedure_status'],
         image : reservation['image']
     }
-    const user = await User.findOne({ _id : reservation['customer_id']})
-    if (user) {
+    
+    User.findOne({ _id : reservation['customer_id']}, (err, user) => {
+        if (err)
         reservation_info['customer_id'] = user['_id']
         reservation_info['customer_nickname'] = user['nickname']
-    }
-
-    const tattooist = await Tattooist.findOne({ _id : reservation['tattooist_id']})
-    if (tattooist) {
+    })
+    Tattooist.findOne({ _id : reservation['tattooist_id']}, (err, tattooist) => {
         reservation_info['tattooist_id'] = tattooist['_id']
         reservation_info['tattooist_nickname'] = tattooist['nickname']
-    }
+    })
 
     // procedure_status = true 인 경우 -> 즉, 작업 시작이 된 경우
     if (reservation['procedure_status']) {

@@ -164,7 +164,6 @@ server.get('/reservation/:id', (req, res) => {
         .catch((err) => {
             res.send(ErrorLogging(err))
         })
-
 })
 
 
