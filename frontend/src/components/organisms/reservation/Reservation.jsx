@@ -93,12 +93,10 @@ const Reservation = memo(({ data }) => {
           </ReservBtn>
 
           <ReservBtn type="big" onClick={onClick}>
-            {data.confirmed ? data.procedure_status ? (
-              <>작업 시작</>
+            {data.confirmed ? (
+              <>작업 페이지</>
             ) : (
-              <>작업 종료</>
-            ) : (
-              <>예약 미확정</>
+              <>예약 세부</>
             )}
           </ReservBtn>
 

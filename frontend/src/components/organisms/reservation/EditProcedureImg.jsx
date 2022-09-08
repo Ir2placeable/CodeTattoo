@@ -13,14 +13,14 @@ import {
   ProcedureEditFile
 } from '../../../styledComponents';
 
-const EditProcedureImg = ({ setImgEdit, _src }) => {
+const EditProcedureImg = ({ setImgEdit, _src, data, setData }) => {
   const sendRequest = useEditProcedureImg();
   const [src, setSrc] = useState(_src);
   const imgInput = useRef();
-  const [data, setData] = useState({
-    image: '',
-    mime: ''
-  })
+  // const [data, setData] = useState({
+  //   image: '',
+  //   mime: ''
+  // })
 
   const { image, mime } = data;
 

@@ -10,24 +10,6 @@ import {
 const EditProcedureInfo = ({ setInfoEdit, date, 
   time_slot, cost, body_part, onChange }) => {
   const sendRequest = useEditProcedureInfo();
-  // const [inputs, setInputs] = useState({
-  //   date: String(_date),
-  //   time_slot: String(_time_slot),
-  //   cost: String(_cost),
-  //   body_part: _body_part
-  // })
-  // const { date, time_slot, cost, body_part } = inputs;
-
-  // const onChange = (e) => {
-  //   const { name, value } = e.target;
-
-  //   setInputs({
-  //     ...inputs,
-  //     [name]: value
-  //   })
-
-  //   // console.log(inputs)
-  // }
 
   const onClick = () => {
     const d = Number(date)

@@ -12,7 +12,7 @@ const Popup = memo(({ data, setIsOpen }) => {
         <DraftEditPopup>
 
           <DraftPopupText>
-            정말로 이 도안을 {data.text}하시겠습니까?
+            {data.text}
           </DraftPopupText>
 
           <DraftPopupBtn onClick={() => { setIsOpen(false) }}>

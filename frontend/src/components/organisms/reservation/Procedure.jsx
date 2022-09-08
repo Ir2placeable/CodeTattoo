@@ -21,9 +21,11 @@ import EditProcedureImg from './EditProcedureImg';
 import useReservation from '../../../hooks/useReservation';
 import { useEffect } from 'react';
 import useReservationDetail from '../../../hooks/useReservationDetail';
+import useConfirmReservation from '../../../hooks/useConfirmReservation';
+import Popup from '../draft/Popup';
 
 const Procedure = () => {
-  const reservation = useReservationDetail();
+  const [reservation, procedureInfo] = useReservationDetail();
   const [imgEdit, setImgEdit] = useState(false);
   const [infoEdit, setInfoEdit] = useState(false);
 
@@ -35,6 +37,12 @@ const Procedure = () => {
   // const { data, date, cost } = state
   const id = getCookie("tattooist_id")
   const nickname = getCookie('nickname')
+
+  const [img, setImg] = useState({
+    image: '',
+    mime: ''
+  })
+
   const [inputs, setInputs] = useState({
     inks: '', 
     niddle: '', 
@@ -58,11 +66,33 @@ const Procedure = () => {
   })
   const { date, time_slot, cost, body_part } = inputs2;
 
+  // Popup.jsx props: text, onRequest
+  const [data, setData] = useState({})
+  const [isOpen, setIsOpen] = useState(false)
+
   useEffect(() => {
+    // setInputs(procedureInfo)
+    console.log(procedureInfo)
+  }, [procedureInfo])
+
+  useEffect(() => {
+    let d = String(reservation.date);
+    if(d === 'undefined'){
+      d = ''
+    }
+    let t = String(reservation.time_slot)
+    if(t === 'undefined'){
+      t = ''
+    }
+    let c = String(reservation.cost)
+    if(c === 'undefined'){
+      c = ''
+    }
+
     setInputs2({
-      date: String(reservation.date),
-      time_slot: String(reservation.time_slot),
-      cost: String(reservation.cost),
+      date: d,
+      time_slot: t,
+      cost: c,
       body_part: reservation.body_part
     })
 
@@ -93,7 +123,6 @@ const Procedure = () => {
       reservation_id,
       user_id: reservation.customer_id,
       tattooist_id: id,
-      tattoo_id: tattooId,
       inks, niddle, depth, machine
     })
 
@@ -110,7 +139,7 @@ const Procedure = () => {
       user_id: reservation.customer_id,
       tattooist_id: id,
       inks, niddle, depth, machine
-    }).then(res => setTattooId(res))
+    })
 
     // setTattooId(tattoo_id);
     setProcedureStatus(true);
@@ -119,19 +148,56 @@ const Procedure = () => {
   // console.log(state);
   // console.log(tattooId)
 
+  const [confirmReservation, rejectReservation] = useConfirmReservation({
+    user_id: state.customer_id,
+    tattooist_id: id
+  });
+
+  const onConfirm = () => {
+    if(!date || !time_slot || !cost || !body_part){
+      alert('모든 예약 정보를 입력해주세요!')
+      return;
+    } else if(!state.image && (!img.image || !img.mime)) {
+      alert('예약 도안 이미지를 업로드해주세요!')
+      return;
+    }else {
+      setIsOpen(true);
+      setData({
+        text: '정말로 이 예약을 확정하시겠습니까?',
+        onRequest: function(){
+          confirmReservation();
+          window.location.replace('/reservations')
+        }
+      })
+    }
+  }
+
+  const onReject = () => {
+    // rejectReservation()
+    setIsOpen(true)
+    setData({
+      text: '정말로 이 예약을 거절하시겠습니까?',
+      onRequest: function(){
+        rejectReservation()
+        window.location.replace("/reservations")
+      }
+    })
+  }
+
   return (
     <>
 
-    {imgEdit && (
-      <EditProcedureImg setImgEdit={setImgEdit}
-        _src={reservation.image} />
-    )}
-    {infoEdit && (
-      <EditProcedureInfo setInfoEdit={setInfoEdit}
-        date={date} time_slot={time_slot}
-        cost={cost} body_part={body_part}
-        onChange={onChange2} />
-    )}
+      {imgEdit && (
+        <EditProcedureImg setImgEdit={setImgEdit}
+          _src={reservation.image}
+          data={img} setData={setImg} />
+      )}
+      {infoEdit && (
+        <EditProcedureInfo setInfoEdit={setInfoEdit}
+          date={date} time_slot={time_slot}
+          cost={cost} body_part={body_part}
+          onChange={onChange2} />
+      )}
 
     <GoListDiv onClick={() => { navigate('/reservations') }}>
       <FontAwesomeIcon icon={faBars} style={{marginRight: '5px'}} />
@@ -142,16 +208,18 @@ const Procedure = () => {
       <ProcedureDiv>
 
         <ProcedureImgDiv>
-          <ProcedureEdit>
-            <FontAwesomeIcon 
-              onClick={() => setImgEdit(true)} icon={faGear} />
-          </ProcedureEdit>
+          {!reservation.confirmed && (
+            <ProcedureEdit>
+              <FontAwesomeIcon 
+                onClick={() => setImgEdit(true)} icon={faGear} />
+            </ProcedureEdit>
+          )}
           <ProcedureImg src={reservation.image} />
         </ProcedureImgDiv>
 
         <ProcedureInfo>
 
-          <ProcedureBox>
+          <ProcedureBox size="small">
             <ProcedureText>시술자 정보</ProcedureText>
             <ProcedureWrap>
               <ProcedureLabel>ID</ProcedureLabel>
@@ -163,15 +231,15 @@ const Procedure = () => {
             </ProcedureWrap>
           </ProcedureBox>
 
-          <ProcedureBox>
+          <ProcedureBox size="small">
             <ProcedureText>피시술자 정보</ProcedureText>
             <ProcedureWrap>
               <ProcedureLabel>ID</ProcedureLabel>
-              <ProcedureData>{reservation.customer_id}</ProcedureData>
+              <ProcedureData>{state.customer_id}</ProcedureData>
             </ProcedureWrap>
             <ProcedureWrap>
               <ProcedureLabel>닉네임</ProcedureLabel>
-              <ProcedureData>{reservation.customer_nickname}</ProcedureData>
+              <ProcedureData>{state.customer_nickname}</ProcedureData>
             </ProcedureWrap>
           </ProcedureBox>
 
@@ -179,26 +247,34 @@ const Procedure = () => {
 
             <ProcedureText>
               예약 정보
-              <ProcedureEdit type="normal">
-                <FontAwesomeIcon 
-                  onClick={() => setInfoEdit(true)} icon={faGear} />
-              </ProcedureEdit>
+              {!reservation.confirmed && (
+                <ProcedureEdit type="normal">
+                  <FontAwesomeIcon 
+                    onClick={() => setInfoEdit(true)} icon={faGear} />
+                </ProcedureEdit>
+              )}
             </ProcedureText>
 
             <ProcedureBigWrap>
               <ProcedureWrap >
                 <ProcedureLabel>날짜</ProcedureLabel>
-                <ProcedureData>{date}</ProcedureData>
+                <ProcedureData>
+                  {date}
+                </ProcedureData>
               </ProcedureWrap>
               <ProcedureWrap >
                 <ProcedureLabel>시간</ProcedureLabel>
-                <ProcedureData>{time_slot}</ProcedureData>
+                <ProcedureData>
+                  {time_slot}
+                </ProcedureData>
               </ProcedureWrap>
             </ProcedureBigWrap>
             <ProcedureBigWrap>
               <ProcedureWrap >
                 <ProcedureLabel>비용</ProcedureLabel>
-                <ProcedureData>{cost} won</ProcedureData>
+                <ProcedureData>
+                  {cost}
+                </ProcedureData>
               </ProcedureWrap>
               <ProcedureWrap >
                 <ProcedureLabel>시술부위</ProcedureLabel>
@@ -207,7 +283,8 @@ const Procedure = () => {
             </ProcedureBigWrap>
           </ProcedureBox>
 
-          <ProcedureBox size="big" style={{marginBottom: '0'}}>
+          {reservation.confirmed && (
+          <ProcedureBox size="big">
             <ProcedureText>
               시술 정보 
               {procedureStatus ? (
@@ -332,11 +409,11 @@ const Procedure = () => {
               </>
             )} */}
           </ProcedureBox>
+          )}
 
         </ProcedureInfo>
 
         <ProcedureBtns>
-          {/* <ProcedureBtn color='blue'>정보 수정</ProcedureBtn> */}
           {reservation.confirmed ? procedureStatus ? (
             <ProcedureBtn color="purple" onClick={onEnd}>
               작업 종료
@@ -347,10 +424,10 @@ const Procedure = () => {
             </ProcedureBtn>
           ) : (
             <>
-              <ProcedureBtn color="red">
+              <ProcedureBtn color="red" onClick={onReject}>
                 예약 취소
               </ProcedureBtn>
-              <ProcedureBtn color="green">
+              <ProcedureBtn color="green" onClick={onConfirm}>
                 예약 확정
               </ProcedureBtn>
             </>
@@ -359,6 +436,10 @@ const Procedure = () => {
 
       </ProcedureDiv>
     </ListDiv>
+
+    {isOpen && (
+      <Popup data={data} setIsOpen={setIsOpen} />
+    )}
     </>
   );
 };

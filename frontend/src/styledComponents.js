@@ -2300,7 +2300,8 @@ color: #DC4B4B;
 export const ProcedureBox = styled.div`
   width: calc(50% - 70px);
   background-color: black;
-  margin-bottom: 64px;
+  // margin-bottom: 64px;
+  margin-top: 64px;
   padding: 20px 20px 0;
   border-radius: 5px;
   position: relative;
@@ -2309,7 +2310,15 @@ export const ProcedureBox = styled.div`
     props.size === "big" &&
     css`
       width: 100%;
-    `}
+    `
+  }
+
+  ${(props) => 
+    props.size === 'small' &&
+    css`
+      margin-top: 0;
+    `
+  }
 `;
 
 export const ProcedureWrap = styled.div`
