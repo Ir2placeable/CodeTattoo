@@ -23,7 +23,6 @@ import { faUser } from "@fortawesome/free-solid-svg-icons";
 
 const MyPageProfile = ({ profile }) => {
   const [edit, setEdit] = useState(false);
-  console.log(profile);
 
   useEffect(() => {
     const user = getCookie("user_id");

@@ -985,6 +985,15 @@ export const ProfileImgIcon = styled.div`
       overflow: hidden;
       background-color: #777;
     `}
+    ${(props) =>
+      props.size === "chat" &&
+      css`
+        width: 50px;
+        height: 50px;
+        line-height: 50px;
+        overflow: hidden;
+        background-color: #777;
+      `}
 `;
 
 export const ProfileImg = styled.img`
