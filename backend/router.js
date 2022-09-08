@@ -1,17 +1,19 @@
 const page = require('./logic/page')
 const admin = require('./logic/admin')
 const command = require('./logic/command')
-const ErrorMessage = require('./ErrorControl')
+const chatting = require('./module/chatting')
 
-const mongoose = require("mongoose");
+const ErrorMessage = require('./ErrorControl')
 const config = require('./config/key')
 
+const mongoose = require("mongoose");
 const express = require('express')
 const server = express()
 const PORT = 3001
 
-let connections;
+let connections = 0
 const ErrorLogging = function(errCode) {
+    console.log(errCode)
     let response = { success : false, code : 199 }
 
     const expectedError = ErrorMessage[errCode]
@@ -19,7 +21,7 @@ const ErrorLogging = function(errCode) {
         console.log(expectedError)
         response.code = errCode
     } else {
-        console.log('***UNEXPECTED ERROR***', errCode)
+        console.log('***UNEXPECTED ERROR***\n', errCode)
     }
     
     return response
@@ -106,32 +108,6 @@ server.get('/scraps/:filter/:page', (req, res) => {
         })
 
 })
-// 페이지 : 예약
-server.get('/reservations', (req, res) => {
-    console.log('Page : Tattooist Reservation')
-
-    page.reservation(req.query)
-        .then((returned) => {
-            res.send({ success : true, reservations : returned })
-        })
-        .catch((err) => {
-            res.send(ErrorLogging(err))
-        })
-
-})
-// 페이지 : 예약 세부
-server.get('/reservation/:id', (req, res) => {
-    console.log('Page : Reservation Detail')
-
-    page.reservationDetail(req.params)
-        .then((returned) => {
-            res.send({ success : true, reservation : returned })
-        })
-        .catch((err) => {
-            res.send(ErrorLogging(err))
-        })
-
-})
 // (미개발) 페이지 : 유저 채팅 박스
 server.get('/user/direct/inbox', (req, res) => {
     console.log('Page : User Chatting Page')
@@ -164,6 +140,32 @@ server.get('/artwork/:id', (req, res) => {
         })
 
 })
+// 페이지 : 예약
+server.get('/reservations', (req, res) => {
+    console.log('Page : Tattooist Reservation')
+
+    page.reservation(req.query)
+        .then((returned) => {
+            res.send({ success : true, reservations : returned })
+        })
+        .catch((err) => {
+            res.send(ErrorLogging(err))
+        })
+
+})
+// 페이지 : 예약 세부 및 작업
+server.get('/reservation/:id', (req, res) => {
+    console.log('Page : Reservation Detail')
+
+    page.reservationDetail(req.params)
+        .then((returned) => {
+            res.send({ success : true, reservation : returned.reservation_info, procedure_info : returned.procedure_info  })
+        })
+        .catch((err) => {
+            res.send(ErrorLogging(err))
+        })
+})
+
 
 // 명령 모음
 // 명령 : 회원가입
@@ -456,6 +458,7 @@ server.post('/remove/unavailable/:id', (req, res) => {
 
 })
 
+
 // 타투 작업 시나리오 명령 모음
 // 명령 : 작업 요청 = 예약 생성
 server.post('/create/reservation', (req, res) => {
@@ -536,7 +539,7 @@ server.post('/procedure/:id', (req, res) => {
 
 })
 // 명령 : 작업 완료
-server.post('/procedure/:id', (req, res) => {
+server.patch('/procedure/:id', (req, res) => {
     console.log('command : Begin Procedure')
 
     command.finishProcedure(req.params, req.body)
@@ -590,8 +593,14 @@ server.get('/get/tattooist', (req, res) => {
 })
 // User 찾기
 server.get('/get/user', (req, res) => {
-    admin.getUser().then((result) => { res.send({ users : result}) })
+    admin.getUser().then((result) => { res.send({ users : result }) })
 })
+// Reservation 찾기
+server.get('/get/reservation', (req, res) => {
+    admin.getReservation().then((result) => { res.send({ reservations : result }) })
+})
+
+// 블록체인 강제 명령 모음
 // 블록체인에 데이터 기록 요청
 server.post('/blockchain/invoke/:function/:key', (req, res) => {
     admin.invokeBlockchain(req.params, req.body)
@@ -636,6 +645,21 @@ server.get('/blockchain/side-effects/:key', (req, res) => {
         })
 
 })
+
+// 채팅 서버 명령 모음
+// 유저 닉네임 리스트 반환
+server.get('/chatting/profile/:type/:id', (req, res) => {
+    console.log('command : get profile for chatting')
+
+    chatting.getProfile(req.params)
+        .then((returned) => {
+            res.send({ success : true, profile : returned })
+        })
+        .catch((err) => {
+            res.send(ErrorLogging(err))
+        })
+})
+
 
 server.listen(PORT, () => {
     console.log('server opened')

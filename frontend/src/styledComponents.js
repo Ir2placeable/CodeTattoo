@@ -57,6 +57,49 @@ export const MyPageDiv = styled.div`
 `;
 // position: relative;
 
+export const MyPageAddBtnDiv = styled.div`
+position: fixed;
+bottom: 150px;
+right: 300px;
+z-index: 100;
+// background-color: aqua;
+display: flex;
+flex-direction: column;
+align-items: flex-end;
+`
+
+export const MyPageAddBtn = styled.div`
+font-size: 18px;
+font-weight: bold;
+color: white;
+line-height: 35px;
+min-width: 35px;
+text-align: center;
+// border-radius: 50%;
+border-radius: 17.5px;
+cursor: pointer;
+margin: 5px 0;
+width: max-content;
+transition: .4s;
+
+&:hover {
+  width: 150px;
+  // transform: scale(3.0, 1);
+}
+
+${(props) => {
+  if(props.type === 'draft'){
+    return css`
+      background-color: #5884D2;
+    `
+  } else if(props.type === 'artwork'){
+    return css `
+      background-color: #9D6DC2;
+    `
+  }
+}}
+`
+
 export const ListDiv = styled.div`
   // max-width: 100%;
   // width: max-content;
@@ -1926,7 +1969,7 @@ export const GoUpload = styled.div`
   cursor: pointer;
   position: absolute;
   top: 30px;
-  right: 0;
+  right: 100px;
 `;
 
 // =================== FOOTER ==========================
@@ -2183,15 +2226,49 @@ export const ProcedureDiv = styled.div`
   // background-color: orange;
 `;
 
+export const ProcedureImgDiv = styled.div`
+width: 350px;
+height: 350px;
+position: relative;
+background-color: orange;
+border-radius: 5px;
+box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.4);
+overflow: hidden;
+`
+
 export const ProcedureImg = styled.img`
   display: inline-block;
   background-color: white;
-  border-radius: 5px;
-  box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.4);
   width: 350px;
   height: 350px;
   object-fit: contain;
 `;
+
+export const ProcedureEdit = styled.div`
+display: inline-block;
+position: absolute;
+top: 10px;
+right: 10px;
+transition: .3s;
+color: #bbb;
+font-size: 25px;
+cursor: pointer;
+
+&:hover{
+  color: #333;
+}
+
+${(props) => 
+  props.type === 'normal' &&
+  css`
+  position: relative;
+  top: 0;
+  right: 0;
+  left: 10px;
+  font-size: 24px;
+  `
+}
+`
 
 export const ProcedureInfo = styled.div`
   display: flex;
@@ -2223,7 +2300,8 @@ color: #DC4B4B;
 export const ProcedureBox = styled.div`
   width: calc(50% - 70px);
   background-color: black;
-  margin-bottom: 64px;
+  // margin-bottom: 64px;
+  margin-top: 64px;
   padding: 20px 20px 0;
   border-radius: 5px;
   position: relative;
@@ -2232,7 +2310,15 @@ export const ProcedureBox = styled.div`
     props.size === "big" &&
     css`
       width: 100%;
-    `}
+    `
+  }
+
+  ${(props) => 
+    props.size === 'small' &&
+    css`
+      margin-top: 0;
+    `
+  }
 `;
 
 export const ProcedureWrap = styled.div`
@@ -2280,26 +2366,51 @@ height: 100%;
 
 export const ProcedureBtns = styled.div`
   display: flex;
-  margin: 100px auto 0;
+  margin: 70px auto 0;
+
+  justify-content: center;
+  align-items: center;
 `;
 
 export const ProcedureBtn = styled.div`
-  background-color: black;
+  background-color: #4E70C1;
   color: white;
   cursor: pointer;
   border-radius: 10px;
+  border: 3px solid #4E70C1;
   text-align: center;
   line-height: 50px;
   font-size: 20px;
   font-weight: bold;
-  width: 250px;
+  // width: 250px;
+  width: 300px;
   margin: 0 10px;
+  transition: .3s;
 
-  ${(props) =>
-    props.color === "blue" &&
-    css`
-      background-color: #6F87C0;
-    `}
+  &:hover{
+    background-color: #eee;
+    color: #333;
+  }
+
+  ${(props) =>{
+    if(props.color === "red"){
+    return css`
+    background-color: #D83A3A;
+    border-color: #D83A3A;
+      `
+    } else if(props.color === 'green'){
+      return css `
+        background-color: #4FBD4F;
+        border-color: #4FBD4F;
+      `
+    } else if(props.color === 'purple'){
+      return css`
+      background-color: #8266BC;
+      border-color: #8266BC;
+      `
+    }
+  }
+  }
 `;
 
 export const GoListDiv = styled.div`
@@ -2317,6 +2428,120 @@ top: 30px;
 right: 0;
 cursor: pointer;
 color: rgba(72, 72, 72, .8);
+`
+
+export const ProcedureEditDiv = styled.div`
+position: fixed;
+top: 0;
+left: 0;
+z-index: 100;
+width: 100vw;
+height: 100vh;
+background-color: rgba(72, 72, 72, .3);
+
+display: flex;
+justify-content: center;
+align-items: center;
+`
+
+export const ProcedureEditBox = styled.div`
+width: 600px;
+height: 600px;
+background-color: white;
+border-radius: 5px;
+position: relative;
+overflow: hidden;
+`
+export const ProcedureEditHeader = styled.div`
+width: 100%;
+line-height: 50px;
+font-size: 20px;
+font-weight: bold;
+text-align: center;
+border-bottom: 1px solid rgba(72, 72, 72, .3);
+`
+
+export const ProcedureEditContents = styled.div`
+width: 100%;
+height: calc(100% - 152px);
+// background-color: aqua;
+
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+
+position: relative;
+`
+
+export const ProcedureEditFile = styled.div`
+background-color: #4E70C1;
+cursor: pointer;
+margin-top: 30px;
+color: white;
+font-size: 18px;
+font-weight: bold;
+text-align: center;
+width: 150px;
+line-height: 35px;
+border-radius: 5px;
+`
+
+export const ProcedureEditImg = styled.img`
+width: 300px;
+height: 300px;
+background-color: white;
+box-shadow: 10px 10px 20px 0 rgba(72, 72, 72, .5);
+object-fit: contain;
+border-radius: 5px;
+`
+
+export const ProcedureEditInputDiv = styled.div`
+background-color: #e4e8f0;
+padding: 10px;
+`
+
+export const ProcedureEditWrap = styled.div`
+// background-color: orange;
+margin: 10px 0;
+`
+
+export const ProcedureEditLabel = styled.div`
+margin-bottom: 7px;
+font-size: 18px;
+font-weight: bold;
+`
+
+export const ProcedureEditInput = styled.input`
+padding: 0 10px;
+width: 450px;
+line-height: 40px;
+border: none;
+border-radius: 5px;
+`
+
+export const ProcedureEditFooter = styled.div`
+width: 100%;
+display: flex;
+justify-content: center;
+align-items: center;
+// position: absolute;
+// bottom: 0;
+// left: 0;
+background-color: #9498A2;
+`
+export const ProcedureEditFooterBtn = styled.div`
+margin: 30px 20px;
+border: 3px solid black;
+background-color: black;
+color: white;
+width: 200px;
+line-height: 35px;
+border-radius: 10px;
+text-align: center;
+font-weight: bold;
+font-size: 18px;
+cursor: pointer;
 `
 
 // Chatting Page

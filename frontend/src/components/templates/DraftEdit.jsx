@@ -54,12 +54,12 @@ const DraftEdit = () => {
 
     if(text === '도안 삭제'){
       setData({
-        text: '삭제',
+        text: '정말로 이 도안을 삭제하시겠습니까?',
         onRequest: onDelete,
       })
     } else {
       setData({
-        text: '수정',
+        text: '정말로 이 도안을 수정하시겠습니까?',
         onRequest: onEdit,
       })
     }
