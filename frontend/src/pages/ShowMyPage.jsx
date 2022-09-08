@@ -9,6 +9,7 @@ import {
   MyPageDiv,
 } from "../styledComponents";
 import useUserMyPage from "../hooks/useUserMyPage";
+import ShowMyTattoo from "./ShowMyTattoo";
 
 const ShowMyPage = () => {
   /* User My Page Data */
@@ -53,7 +54,7 @@ const ShowMyPage = () => {
         <ListDiv>
           <MyPageProfile profile={profile} />
           <HorizontalLine></HorizontalLine>
-          {getCookie("user_id") ? <Outlet context={{ tattoos }} /> : <Outlet />}
+          <ShowMyTattoo tattoos={tattoos}/>
         </ListDiv>
       </MyPageDiv>
     </>

@@ -5,10 +5,8 @@ import {
   MyTattooContainer,
 } from "../styledComponents";
 import MyTattoo from "../components/templates/MyTattoo";
-import { useOutletContext } from "react-router-dom";
 
-const ShowMyTattoo = () => {
-  const { tattoos } = useOutletContext();
+const ShowMyTattoo = ({tattoos}) => {
   return (
     <>
       {tattoos.length === 0 ? (

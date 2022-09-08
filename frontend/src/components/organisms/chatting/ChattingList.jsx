@@ -55,7 +55,7 @@ const ChattingList = ({onClick}) => {
               ) : (
                 <ProfileImgIcon size="chat">
                   <FontAwesomeIcon
-                    style={{ fontSize: "50px" }}
+                    style={{ fontSize: "35px" }}
                     icon={faUser}
                   />
                 </ProfileImgIcon>

@@ -115,15 +115,11 @@ const App = () => {
             {/* <Route path="draft/:draft_id/edit" element={<ShowDraftUpload />} /> */}
 
             {/* 작업물 상세 */}
-            <Route path="artwork/:tattoo_id" element={<ShowArtworkDetail/>}>
-              <Route path=":tattooist_id" element={<ArtworkDetail/>}/>
-            </Route>
+            <Route path="artwork/:tattoo_id/:tattooist_id" element={<ShowArtworkDetail/>} />
 
             {/* 마이 페이지 */}
-            <Route path="my-page" element={<ShowMyPage />}>
-              <Route path="user/:user_id" element={<ShowMyTattoo />} />
-            </Route>
-
+            <Route path="my-page/user/:user_id" element={<ShowMyPage />}/>
+            
             {/* 프로필 편집 */}
             <Route path="edit" element={<ShowProfileEdit/>}>
               <Route path="image" element={<ImageEdit/>}/>

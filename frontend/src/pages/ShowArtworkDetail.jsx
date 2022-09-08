@@ -1,16 +1,17 @@
-import { ContentsDiv } from "../styledComponents";
+import { ContentsDiv, ListDiv } from "../styledComponents";
 import useArtworkDetail from "../hooks/useArtworkDetail";
 import { Outlet, useParams } from "react-router-dom";
+import ShowMyTattoo from "./ShowMyTattoo";
 
 const ShowArtworkDetail = () => {
-  const param = useParams();
-  const tattooist_id = param.tattooist_id;
-  const detail = useArtworkDetail(tattooist_id);
-
+  const [info, states] = useArtworkDetail();
+  console.log(info, states);
   return (
     <>
       <ContentsDiv>
-        <Outlet context={{ detail }} />
+        <ListDiv>
+
+        </ListDiv>
       </ContentsDiv>
     </>
   );
