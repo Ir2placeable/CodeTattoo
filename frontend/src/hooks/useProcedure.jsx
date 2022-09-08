@@ -41,6 +41,7 @@ const useProcedure = () => {
     reservation_id, user_id, tattooist_id, tattoo_id,
     inks, niddle, depth, machine
   }) => {
+    console.log('tattoo_id: ', tattoo_id)
     const res = await axios.patch(`${APIURL}/procedure/${reservation_id}`, {
       user_id, tattooist_id, tattoo_id, 
       inks, niddle, depth, machine

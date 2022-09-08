@@ -49,9 +49,9 @@ const EditProcedureInfo = ({ setInfoEdit, date,
 
       setInfoEdit(false);
 
-      // setTimeout(() => {
-      //   window.location.replace('');
-      // }, 500)
+      setTimeout(() => {
+        window.location.replace('');
+      }, 500)
     }
   }
 

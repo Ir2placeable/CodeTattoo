@@ -2358,6 +2358,9 @@ height: 100%;
 export const ProcedureBtns = styled.div`
   display: flex;
   margin: 70px auto 0;
+
+  justify-content: center;
+  align-items: center;
 `;
 
 export const ProcedureBtn = styled.div`
@@ -2380,12 +2383,24 @@ export const ProcedureBtn = styled.div`
     color: #333;
   }
 
-  ${(props) =>
-    props.color === "red" &&
-    css`
-      background-color: #D83A3A;
-      border-color: #D83A3A;
-    `
+  ${(props) =>{
+    if(props.color === "red"){
+    return css`
+    background-color: #D83A3A;
+    border-color: #D83A3A;
+      `
+    } else if(props.color === 'green'){
+      return css `
+        background-color: #4FBD4F;
+        border-color: #4FBD4F;
+      `
+    } else if(props.color === 'purple'){
+      return css`
+      background-color: #8266BC;
+      border-color: #8266BC;
+      `
+    }
+  }
   }
 `;
 

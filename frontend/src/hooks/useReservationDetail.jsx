@@ -5,6 +5,16 @@ import { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { APIURL } from '../config/key';
 
+// ### 예약 정보 조회
+
+// *Figma - tattooist view의 채팅 페이지에서 “+” 버튼과 연결하는 API 입니다.*
+
+// - GET : /reservation/:id
+//     - id : reservation_id
+// - Query : None
+// - Return : { success, data }
+//     - data = { date, time_slot, cost, body_part, confirmed, image }
+
 // ### 예약 세부
 
 // *~~채팅에 사용 되는 API 입니다.~~*
@@ -26,7 +36,7 @@ const useReservationDetail = () => {
     const res = await axios.get(`${APIURL}/reservation/${id}`)
 
     if(res.data.success){
-      setReservation(res.data.reservation)
+      setReservation(res.data.data)
     } else {
       console.log('reservation detail fail')
     }

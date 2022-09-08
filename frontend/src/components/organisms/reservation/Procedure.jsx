@@ -20,16 +20,16 @@ import EditProcedureInfo from './EditProcedureInfo';
 import EditProcedureImg from './EditProcedureImg';
 import useReservation from '../../../hooks/useReservation';
 import { useEffect } from 'react';
+import useReservationDetail from '../../../hooks/useReservationDetail';
 
 const Procedure = () => {
+  const reservation = useReservationDetail();
   const [imgEdit, setImgEdit] = useState(false);
   const [infoEdit, setInfoEdit] = useState(false);
+
   const [procedureStatus, setProcedureStatus] = useState(false);
-  const reservation = useReservation();
   const params = useParams();
   const reservation_id = params.reservation_id;
-
-  // console.log('reservation: ',reservation)
 
   const { state } = useLocation();
   // const { data, date, cost } = state
@@ -44,13 +44,30 @@ const Procedure = () => {
   const [tattooId, setTattooId] = useState('');
   const { inks, niddle, depth, machine } = inputs
   const [startProcedure, endProcedure] = useProcedure();
+  // const [inputs2, setInputs2] = useState({
+  //   date: String(state.date),
+  //   time_slot: String(state.time_slot),
+  //   cost: String(state.cost),
+  //   body_part: state.body_part
+  // })
   const [inputs2, setInputs2] = useState({
-    date: String(state.date),
-    time_slot: String(state.time_slot),
-    cost: String(state.cost),
-    body_part: state.body_part
+    date: '',
+    time_slot: '',
+    cost: '',
+    body_part: ''
   })
   const { date, time_slot, cost, body_part } = inputs2;
+
+  useEffect(() => {
+    setInputs2({
+      date: String(reservation.date),
+      time_slot: String(reservation.time_slot),
+      cost: String(reservation.cost),
+      body_part: reservation.body_part
+    })
+
+    console.log('reservation: ',reservation)
+  }, [reservation])
 
   const navigate = useNavigate();
   const onChange = (e) => {
@@ -74,17 +91,23 @@ const Procedure = () => {
   const onEnd = () => {
     endProcedure({
       reservation_id,
-      user_id: state.customer_id,
+      user_id: reservation.customer_id,
       tattooist_id: id,
       tattoo_id: tattooId,
       inks, niddle, depth, machine
     })
+
+    setProcedureStatus(false)
+
+    // setTimeout(() => {
+    //   window.location.replace('/reservations')
+    // }, 500)
   }
 
   const onStart = () => {
     startProcedure({
       reservation_id,
-      user_id: state.customer_id,
+      user_id: reservation.customer_id,
       tattooist_id: id,
       inks, niddle, depth, machine
     }).then(res => setTattooId(res))
@@ -101,7 +124,7 @@ const Procedure = () => {
 
     {imgEdit && (
       <EditProcedureImg setImgEdit={setImgEdit}
-        _src={state.image} />
+        _src={reservation.image} />
     )}
     {infoEdit && (
       <EditProcedureInfo setInfoEdit={setInfoEdit}
@@ -123,7 +146,7 @@ const Procedure = () => {
             <FontAwesomeIcon 
               onClick={() => setImgEdit(true)} icon={faGear} />
           </ProcedureEdit>
-          <ProcedureImg src={state.image} />
+          <ProcedureImg src={reservation.image} />
         </ProcedureImgDiv>
 
         <ProcedureInfo>
@@ -144,11 +167,11 @@ const Procedure = () => {
             <ProcedureText>피시술자 정보</ProcedureText>
             <ProcedureWrap>
               <ProcedureLabel>ID</ProcedureLabel>
-              <ProcedureData>{state.customer_id}</ProcedureData>
+              <ProcedureData>{reservation.customer_id}</ProcedureData>
             </ProcedureWrap>
             <ProcedureWrap>
               <ProcedureLabel>닉네임</ProcedureLabel>
-              <ProcedureData>{state.customer_nickname}</ProcedureData>
+              <ProcedureData>{reservation.customer_nickname}</ProcedureData>
             </ProcedureWrap>
           </ProcedureBox>
 
@@ -198,7 +221,48 @@ const Procedure = () => {
               )}
             </ProcedureText>
 
-            {procedureStatus ? (
+            <ProcedureBigWrap>
+              <ProcedureWrap >
+                <ProcedureLabel>사용기기</ProcedureLabel>
+                <ProcedureInput 
+                  type="text"
+                  name='machine'
+                  value={machine}
+                  onChange={onChange}
+                />
+              </ProcedureWrap>
+              <ProcedureWrap >
+                <ProcedureLabel>사용바늘</ProcedureLabel>
+                <ProcedureInput 
+                  type="text"
+                  name='niddle'
+                  value={niddle}
+                  onChange={onChange}
+                />
+              </ProcedureWrap>
+            </ProcedureBigWrap>
+            <ProcedureBigWrap>
+              <ProcedureWrap >
+                <ProcedureLabel>주사깊이</ProcedureLabel>
+                <ProcedureInput 
+                  type="text"
+                  name='depth'
+                  value={depth}
+                  onChange={onChange}
+                />
+              </ProcedureWrap>
+              <ProcedureWrap >
+                <ProcedureLabel>사용잉크</ProcedureLabel>
+                <ProcedureInput 
+                  type="text"
+                  name='inks'
+                  value={inks}
+                  onChange={onChange}
+                />
+              </ProcedureWrap>
+            </ProcedureBigWrap>
+
+            {/* {procedureStatus ? (
               <>
                 <ProcedureBigWrap>
                   <ProcedureWrap >
@@ -266,21 +330,30 @@ const Procedure = () => {
                   </ProcedureWrap>
                 </ProcedureBigWrap>
               </>
-            )}
+            )} */}
           </ProcedureBox>
 
         </ProcedureInfo>
 
         <ProcedureBtns>
           {/* <ProcedureBtn color='blue'>정보 수정</ProcedureBtn> */}
-          {procedureStatus ? (
-            <ProcedureBtn color="red" onClick={onEnd}>
+          {reservation.confirmed ? procedureStatus ? (
+            <ProcedureBtn color="purple" onClick={onEnd}>
               작업 종료
             </ProcedureBtn>
           ) : (
             <ProcedureBtn onClick={onStart}>
               작업 시작
             </ProcedureBtn>
+          ) : (
+            <>
+              <ProcedureBtn color="red">
+                예약 취소
+              </ProcedureBtn>
+              <ProcedureBtn color="green">
+                예약 확정
+              </ProcedureBtn>
+            </>
           )}
         </ProcedureBtns>
 
