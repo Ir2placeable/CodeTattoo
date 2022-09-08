@@ -56,8 +56,12 @@ const useTattooistDetail = (path) => {
   }
 
   useEffect(() => {
-    sendRequest();
-  }, []);
+    const [, , , tmp] = location.pathname.split("/")
+    
+    if (tmp !== 'reservation') {
+      sendRequest();
+    }
+  }, [location.pathname]);
 
   return [tattooist, data];
 };

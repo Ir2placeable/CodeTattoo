@@ -42,11 +42,13 @@ import DraftEdit from "./components/templates/DraftEdit";
 import { getCookie } from "./config/cookie";
 import ReservationList from "./components/templates/ReservationList";
 import Procedure from "./components/organisms/reservation/Procedure";
-import ChattingList from "./components/organisms/chatting/ChattingList";
+import Chatting from "./components/templates/Chatting";
 import PasswordEdit from "./components/templates/PasswordEdit";
 import DeleteAccount from "./components/templates/DeleteAccount";
 import { toast, ToastContainer } from "react-toastify"
 import 'react-toastify/dist/ReactToastify.css';
+import ShowArtworkDetail from "./pages/ShowArtworkDetail";
+import ArtworkDetail from "./components/templates/ArtworkDetail";
 
 // - GET : /scraps/:filter/:page
 //     - filter : draft, tattooist
@@ -90,9 +92,6 @@ const App = () => {
             {/* 도안 등록 - 타투이스트만 해당 */}
             <Route path="upload" element={<ShowDraftUpload />}/>
 
-            {/* 도안 상세 */}
-            {/* <Route path="draft/:draft_id" element={<ShowDraftDetail />} /> */}
-
             {/* 타투이스트 목록 */}
             <Route path="tattooists" element={<ShowTattooistList />}>
               <Route path="best" element={<TattooistList filter="tattooists/best" />} />
@@ -114,6 +113,11 @@ const App = () => {
               <Route path="edit" element={<DraftEdit />} />
             </Route>
             {/* <Route path="draft/:draft_id/edit" element={<ShowDraftUpload />} /> */}
+
+            {/* 작업물 상세 */}
+            <Route path="artwork/:tattoo_id" element={<ShowArtworkDetail/>}>
+              <Route path=":tattooist_id" element={<ArtworkDetail/>}/>
+            </Route>
 
             {/* 마이 페이지 */}
             <Route path="my-page" element={<ShowMyPage />}>
@@ -141,7 +145,7 @@ const App = () => {
             </Route>
 
             {/* 채팅 */}
-            <Route path="chat/:id" element={<ChattingList />} />
+            <Route path="chat/:id" element={<Chatting />} />
 
           </Route>
 
