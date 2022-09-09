@@ -5,6 +5,7 @@ const {Draft} = require("../DBModel/Draft");
 const {Tattooist} = require("../DBModel/Tattooist");
 const {Tattoo} = require("../DBModel/Tattoo")
 const blockchain = require("../module/blockchain")
+const chatServer = require("../module/chatting")
 
 // 유저 로그인
 exports.userLogin = async function(body) {
@@ -308,7 +309,13 @@ exports.createReservation = async function(body) {
     await new_reservation.save()
     await Tattooist.updateOne({ _id : body.tattooist_id }, {$push : { reservations : new_reservation['_id'] }})
 
-    // ***유저와 타투이스트 채팅 생성하기 코드 구현 필요***
+    // 채팅 서버로 새로운 채팅 생성요청
+    const chat_params = {
+        user_id : body.customer_id,
+        tattooist_id : body.tattooist_id,
+        reservation_id : new_reservation['_id']
+    }
+    await chatServer.createChat(chat_params)
 }
 // 예약 정보 수정 : date, time_slot, cost 수정 Only
 exports.editReservation= async function(params, body) {

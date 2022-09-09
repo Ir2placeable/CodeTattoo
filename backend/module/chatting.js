@@ -1,6 +1,8 @@
 const {User} = require("../DBModel/User");
 const {Tattooist} = require("../DBModel/Tattooist");
 const {Reservation} = require("../DBModel/Reservation")
+const chatServer = require("../config/serverAddress")
+const request = require('request')
 
 exports.getProfile = async function(params, query) {
     let profile
@@ -31,4 +33,18 @@ exports.getProfile = async function(params, query) {
     confirmed = reservation['confirmed']
 
     return {profile, reservation_id, confirmed}
+}
+
+exports.createChat = async function(params) {
+    const destination = chatServer.chatAPI + "chat/create"
+
+    // 채팅서버로 params 데이터를 POST 요청 보내기
+    request.post({
+        headers : {'content-type' : 'application/json'},
+        url : destination,
+        body : params,
+        json : true
+    }, function(err, res, success) {
+        return success
+    })
 }
