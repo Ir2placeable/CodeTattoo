@@ -16,19 +16,21 @@ public class MessageDto {
     private String receiver;
     private String content;
     private String createdAt;
-
+    private String reservation_id;
     @Builder
     public MessageDto(
             Long id,
             String sender,
             String receiver,
             String content,
-            String createdAt
+            String createdAt,
+            String reservation_id
     ) {
         this.id = id;
         this.sender = sender;
         this.receiver = receiver;
         this.content = content;
         this.createdAt = createdAt;
+        this.reservation_id = reservation_id;
     }
 }
