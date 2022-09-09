@@ -5,7 +5,7 @@ import Reservation from '../organisms/reservation/Reservation';
 import {
   ReservDiv, ReservInfoDiv, ReservDraftImg,
   ReservTextDiv, ReservText, ReservBtnDiv, 
-  ReservBtn, ReservLabel, ReservTextBox
+  ReservBtn, ReservLabel, ReservTextBox, EmptyBox, ListDiv
 } from '../../styledComponents';
 import { useNavigate } from 'react-router-dom';
 
@@ -15,10 +15,20 @@ const ReservationList = memo(() => {
 
   return (
     <>
-      {reservations.map(data => (
-        <Reservation 
-          key={data.reservation_id} data={data} />
-      ))}
+    <ListDiv>
+      {reservations.length === 0 ? (
+        <EmptyBox>
+          아직 예약이 없습니다.
+        </EmptyBox>
+      ) : (
+      <>
+        {reservations.map(data => (
+          <Reservation 
+            key={data.reservation_id} data={data} />
+        ))}
+      </>
+      )}
+    </ListDiv>
     </>
   );
 }); 

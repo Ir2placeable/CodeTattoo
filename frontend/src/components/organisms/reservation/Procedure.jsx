@@ -34,7 +34,7 @@ const Procedure = () => {
   const reservation_id = params.reservation_id;
 
   const { state } = useLocation();
-  // const { data, date, cost } = state
+  // console.log('state: ', state)
   const id = getCookie("tattooist_id")
   const nickname = getCookie('nickname')
 
@@ -49,7 +49,7 @@ const Procedure = () => {
     depth: '', 
     machine: ''
   })
-  const [tattooId, setTattooId] = useState('');
+  
   const { inks, niddle, depth, machine } = inputs
   const [startProcedure, endProcedure] = useProcedure();
   // const [inputs2, setInputs2] = useState({
@@ -121,7 +121,7 @@ const Procedure = () => {
   const onEnd = () => {
     endProcedure({
       reservation_id,
-      user_id: reservation.customer_id,
+      user_id: state.customer_id,
       tattooist_id: id,
       inks, niddle, depth, machine
     })
@@ -136,7 +136,7 @@ const Procedure = () => {
   const onStart = () => {
     startProcedure({
       reservation_id,
-      user_id: reservation.customer_id,
+      user_id: state.customer_id,
       tattooist_id: id,
       inks, niddle, depth, machine
     })
@@ -157,7 +157,7 @@ const Procedure = () => {
     if(!date || !time_slot || !cost || !body_part){
       alert('모든 예약 정보를 입력해주세요!')
       return;
-    } else if(!state.image && (!img.image || !img.mime)) {
+    } else if(!reservation.image && (!img.image || !img.mime)) {
       alert('예약 도안 이미지를 업로드해주세요!')
       return;
     }else {

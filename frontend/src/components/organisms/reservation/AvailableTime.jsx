@@ -13,15 +13,10 @@ import { useEffect } from 'react';
 import useCreateReservation from '../../../hooks/useCreateReservation';
 import useTattooistDetailReservation from '../../../hooks/useTattooistDetailReservation';
 import { toast, ToastContainer } from "react-toastify";
+import { useNavigate } from 'react-router-dom';
+import useChatReservation from '../../../hooks/useChatReservation';
 
 const AvailableTime = ({ value, isAdmin, id }) => {
-  const time1 = [
-    "10:00", "10:30", "11:00", "11:30", 
-    "12:00", "12:30", "13:00", "13:30",
-    "14:00", "14:30", "15:00", "15:30", 
-    "16:00", "16:30", "17:00", "17:30",
-    "18:00", "18:30", "19:00", "19:30", 
-  ]
   const [time, setTime] = useState([
     { slot: "1000", flag: false }, { slot: "1030", flag: false },
     { slot: "1100", flag: false }, { slot: "1130", flag: false },
@@ -92,13 +87,18 @@ const AvailableTime = ({ value, isAdmin, id }) => {
 
       e.target.style.backgroundColor = '#2370DF';
     } else {
-      if(prev[0]){
-        prev[0].style.backgroundColor = '#484848';
-      }
 
-      setPrev([e.target]);
-      setUnavailable({ date, time_slot })
-      e.target.style.backgroundColor = '#2370DF';
+      const found = time.find(x => x.slot == time_slot)
+      //console.log(found)
+      if(!found.flag){
+        if(prev[0]){
+          prev[0].style.backgroundColor = '#484848';
+        }
+
+        setPrev([e.target]);
+        setUnavailable({ date, time_slot })
+        e.target.style.backgroundColor = '#2370DF';
+      }
     }
   }
 
@@ -131,12 +131,14 @@ const AvailableTime = ({ value, isAdmin, id }) => {
   }
 
   const createReservation = useCreateReservation();
+  const createChatReservation = useChatReservation();
+  const navigate = useNavigate();
 
   const onCreateReservation = () => {
     const user = getCookie('user_id');
 
     if(!user){
-      alert('로그인이 필요합니다!')
+      alert('상담 문의는 유저 로그인 상태에서 가능합니다.')
       return;
     } else {
       toast.success("상담 요청이 되었습니다");
@@ -147,7 +149,18 @@ const AvailableTime = ({ value, isAdmin, id }) => {
         time_slot: unavailable.time_slot
       }
       console.log(data)
-      createReservation({ data });
+
+      if(!data.date || !data.time_slot){
+        alert('예약을 원하는 날짜를 선택해주세요.')
+        return;
+      }
+      createReservation({ data })
+        // .then(() => {
+        //   createChatReservation({ tattooist_id: data.tattooist_id })
+        // })
+        .then(() => {
+          navigate(`/chat/${user}`)
+        })
     }
   }
 

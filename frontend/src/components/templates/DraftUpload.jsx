@@ -127,8 +127,9 @@ const DraftUpload = () => {
           <ImgText text="도안 이름" />
           <LoadedImgTitle
             type="text"
-            placeholder="title"
+            placeholder="title (12자 이내)"
             name="title"
+            maxLength={"12"}
             value={title}
             onChange={onChange}
           />

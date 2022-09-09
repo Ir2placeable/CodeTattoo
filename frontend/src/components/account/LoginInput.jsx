@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useRef } from 'react';
-import { APIURL } from '../../config/key';
+import { APIURL, CHATAPIURL } from '../../config/key';
 import axios from 'axios'
 import { 
   AccountInputDiv, AccountInputBox, AccountLabel,
@@ -37,6 +37,7 @@ const LoginInput = ({ isTattooist }) => {
   })
   const emailInput = useRef();
   const pwdInput = useRef();
+  // const [id, setId] = useState('')
 
   const { email, pwd } = info;
 
@@ -71,12 +72,18 @@ const LoginInput = ({ isTattooist }) => {
       setCookie("profile_desc", data.tattooist_info.description , {maxAge: 3000, path: '/'})
       setCookie("profile_location", data.tattooist_info.location , {maxAge: 3000, path: '/'})
       setCookie("profile_specialize", data.tattooist_info.specialize , {maxAge: 3000, path: '/'})
+
+      // setId(data.tattooist_info.tattooist_id)
+      return data.tattooist_info.tattooist_id
     } else {
       setCookie("email", data.user_info.email , {maxAge: 3000, path: '/'})
       setCookie("nickname", data.user_info.nickname, {maxAge: 3000, path: '/'})
       setCookie("user_id", data.user_info.user_id, {maxAge: 3000, path: '/'})
       setCookie("profile_img_src", data.user_info.image , {maxAge: 3000, path: '/'})
       setCookie("profile_location", data.user_info.location , {maxAge: 3000, path: '/'})
+
+      // setId(data.user_info.user_id)
+      return data.user_info.user_id
     }
   }
 
@@ -96,18 +103,32 @@ const LoginInput = ({ isTattooist }) => {
     console.log('login response: ', res.data);
 
     if(res.data.success){
-      // 쿠키에 nickname, id 저장
-      pushCookie(res.data);
-      //console.log(res.data)
+      return [true, res.data];
+    } else {
+      // 로그인 실패 : email or pwd 오류
+      alert('이메일 또는 비밀번호가 불일치합니다.')
+      return [false, {}];
+    }
+  }
+
+//   - POST: /chat/user
+// - Body : { userid }
+//     - userid → 현재 로그인 성공한 유저의 id
+// - return : { success }
+  const sendWebSocket = async(data, id) => {
+    const res = await axios.post(`${CHATAPIURL}/chat/user`, {
+      userid: id
+    })
+
+    if(res.data.success){
+      // pushCookie(data)
 
       setTimeout(() => {
         window.location.replace('/drafts/best');
       }, 500)
-      
+
     } else {
-      // 로그인 실패 : email or pwd 오류
-      alert('이메일 또는 비밀번호가 불일치합니다.')
-      window.location.replace('/login')
+      console.log('send web socket fail')
     }
   }
 
@@ -115,7 +136,15 @@ const LoginInput = ({ isTattooist }) => {
     if(!email || !pwd){
       alert('모든 정보를 입력해주세요.')
     } else {
-      loginRequest();
+      loginRequest()
+        .then((ret) => {
+          if(ret[0]){
+            const id = pushCookie(ret[1])
+            sendWebSocket(ret[1], id)
+          } else {
+            window.location.replace('')
+          }
+        })
     }
   }
 

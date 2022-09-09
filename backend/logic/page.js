@@ -234,6 +234,7 @@ exports.tattooistDetail = async function(params, query) {
 }
 // 작업물 페이지
 exports.artworkDetail = async function(params, query) {
+    let image;
     let info;
     let states = [];
 
@@ -247,18 +248,19 @@ exports.artworkDetail = async function(params, query) {
         states.push(tattoo_state)
     }
 
+    image = states[2].image
+
     info = {
-        image : states[3].image,
-        date : states[3].date,
-        taken_time : states[3].timestamp - states[2].timestamp,
-        cost : states[3].cost,
+        date : states[2].date,
+        taken_time : states[2].timestamp - states[1].timestamp,
+        cost : states[2].cost,
         tattooist_nickname : tattooist['nickname'],
-        body_part : states[3].body_part,
-        inks : states[3].inks,
-        machine : states[3].machine,
+        body_part : states[2].body_part,
+        inks : states[2].inks,
+        machine : states[2].machine,
     }
 
-    return {info, states}
+    return {image, info, states}
 }
 // 예약 세부 페이지
 exports.reservationDetail = async function(params) {
@@ -474,7 +476,10 @@ exports.reservation = async function(query) {
 
     // 예약 일정 순으로 정렬할 것
     return_value.sort(function(a, b) {
-        return a.date - b.date && a.time_slot - b.time_slot
+        const target1 = Number(String(a.date)+String(a.time_slot))
+        const target2 = Number(String(b.date)+String(b.time_slot))
+
+        return target1 - target2
     })
 
     return return_value

@@ -209,6 +209,20 @@ export const HeaderBtn = styled.div`
   text-align: center;
   transition: 0.45s;
   cursor: pointer;
+
+  ${(props) => 
+    props.type === 'chat' &&
+    css`
+      width: 60px;
+      border-color: #999;
+      background-color: #999;
+
+      &:hover{
+        background-color: #f6f6f6;
+        color: #484848;
+      }
+    `
+  }
 `;
 
 export const HeaderBtnHover = {
@@ -245,7 +259,7 @@ export const ToastAlarmBox = styled.div`
 // *** Account ***
 export const AccountDiv = styled.div`
   width: 600px;
-  margin: 150px auto 0;
+  margin: 150px auto 150px;
   box-shadow: 5px 10px 20px #484848;
   border-radius: 8px;
   padding-bottom: 50px;
@@ -904,14 +918,16 @@ export const SmallTattooistNickname = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  font-size: 38px;
-  font-weight: 700;
+  font-size: 28px;
+  font-weight: 900;
   // width: 350px;
   // width: calc(100% - 150px);
 `;
 
 export const SmallTattooistLocation = styled.div`
   font-size: 20px;
+  display: flex;
+  align-items: center;
 `;
 
 export const TattooistGenreBox = styled.div`
@@ -1415,11 +1431,11 @@ export const DraftDrawerDiv = styled.div`
   margin-bottom: 10px;
   width: max-content;
   cursor: pointer;
-  margin-left: 20px;
+  margin-left: 10px;
 `;
 
 export const DraftDrawer = styled.p`
-  margin-left: 20px;
+  margin-left: 10px;
 `;
 
 export const UserIconStyle = {
@@ -2194,6 +2210,8 @@ export const ReservInfoDiv = styled.div`
   display: flex;
   width: 75%;
   // width: 100%;
+
+  position: relative;
 `;
 
 export const ReservDraftImg = styled.img`
@@ -2248,6 +2266,26 @@ export const ReservTextBox = styled.span`
   background-color: #c9cfdd;
   border-radius: 5px;
 `;
+
+export const ReservStateBtn = styled.div`
+position: absolute;
+top: 20px;
+right: 20px;
+padding: 7px;
+font-weight: bold;
+font-size: 12px;
+border-radius: 5px;
+background-color: #D83A3A; 
+text-align: center;
+color: white;
+
+${(props) => 
+  props.color === 'green' &&
+  css`
+    background-color: #4FBD4F;
+  `
+}
+`
 
 export const ReservBtnDiv = styled.div`
   // width: 20%;
@@ -2619,7 +2657,7 @@ export const ProcedureEditFooterBtn = styled.div`
 // Chatting Page
 export const ChattingDiv = styled.div`
   // background-color: whitesmoke;
-  margin: 0 auto;
+  margin: 0 auto 50px;
   padding: 20px 50px;
   width: 1300px;
   display: flex;
@@ -2642,11 +2680,19 @@ export const ChattingListDiv = styled.div`
   background-color: #646464;
   padding: 5px;
   height: 600px;
+  width: 411px;
   display: flex;
   flex-direction: column;
   align-items: center;
   overflow-y: scroll;
 `;
+
+export const ChattingEmptyBox = styled.div`
+// background-color: white;
+color: white;
+// font-weight: bold;
+margin-top: 20px;
+`
 
 export const ChattingBox = styled.div`
   background-color: #f3f3f3;

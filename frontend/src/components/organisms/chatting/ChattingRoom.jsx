@@ -14,8 +14,69 @@ import {
 } from "../../../styledComponents";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faImage, faPlus } from "@fortawesome/free-solid-svg-icons";
+import { useContext } from "react";
+import { WebSocketContext } from "../../templates/Chatting";
+import { useEffect } from "react";
+import { useState } from "react";
+import { getCookie } from "../../../config/cookie";
+import { useRef } from "react";
+
 
 const ChattingRoom = ({ onClick }) => {
+  const ws = useContext(WebSocketContext)
+  const [content, setContent] = useState('')
+  const [records, setRecords] = useState([])
+  const contentInput = useRef()
+
+  useEffect(() => {
+
+    contentInput.current.focus()
+
+    console.log("ws: ", ws)
+    // // 타투아영: 631586d4a26479438d3c1bf2
+    // // 유저아영: 631585ffa26479438d3c1ba2
+    // const src = '631586d4a26479438d3c1bf2'
+    // const dest = '631585ffa26479438d3c1ba2'
+
+    // let body = {
+    //   sender: src,
+    //   receiver: dest,
+    //   reservation_id : "TestReservationId",
+    //   content: "보내는 사람: f2"
+    // }
+
+    // if(getCookie('user_id')){
+    //   body.sender = dest;
+    //   body.receiver = src
+    //   body.content = '보내는 사람: a2'
+    // }
+    
+    // let jsonData = JSON.stringify(body);
+    // ws.current.send(jsonData)
+
+  }, [])
+
+  // ws.current.onmessage = (evt) => {
+  //   const data = JSON.parse(evt.data) 
+  //   console.log(data.chat)
+  // }
+  
+  const onSend = () => {
+    const body = {
+      sender: "TestUserId",
+      receiver: "TestOppoId",
+      reservation_id : "TestReservationId",
+      content: content
+    }
+
+    ws.current.send(JSON.stringify(body))
+  }
+
+  const onKeyUp = (e) => {
+    if(e.key === 'Enter'){
+      onSend()
+    }
+  }
 
   const messageList = [
     {
@@ -50,7 +111,7 @@ const ChattingRoom = ({ onClick }) => {
   return (
     <>
       <ChattingRoomHeader>
-        <ChattingImg />
+        <ChattingImg  />
         <ChattingText size="main"></ChattingText>
       </ChattingRoomHeader>
 
@@ -73,8 +134,17 @@ const ChattingRoom = ({ onClick }) => {
           <FontAwesomeIcon icon={faImage} />
         </ChatImageLabel>
         <ChatImageInput type="file" id="input-chat-img" />
-        <ChatInput />
-        <ChatBtn type="submit">전송</ChatBtn>
+
+        <ChatInput 
+          type="text"
+          name="content"
+          value={content}
+          onChange={(e) => {setContent(e.target.value)}}
+          ref={contentInput}
+          onKeyUp={onKeyUp}
+        />
+
+        <ChatBtn type="submit" onClick={onSend}>전송</ChatBtn>
       </ChatInputDiv>
     </>
   );

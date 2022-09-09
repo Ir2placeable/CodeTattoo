@@ -5,6 +5,8 @@ import {
   SmallTattooistNickname,
   SmallTattooistLocation,
   ProfileImgIcon,
+  TattooistInfoTitle,
+  TattooistInfoText,
 } from "../../../styledComponents";
 import TattooistBtn from "../../atomic/tattooist/TattooistBtn";
 import React, { useState, useEffect, useCallback } from "react";
@@ -68,8 +70,15 @@ const SmallTattooist = ({ tattooist }) => {
               size={"small"}
             />
           </SmallTattooistNickname>
+
           <SmallTattooistLocation>
-            {tattooist.drawer_location}
+            {/* {tattooist.drawer_location} */}
+            <TattooistInfoTitle type="location">
+              위치
+            </TattooistInfoTitle>
+            <TattooistInfoText type="small">
+              {tattooist.drawer_location}
+            </TattooistInfoText>
           </SmallTattooistLocation>
         </SmallTattooistInfoBox>
       </SmallTattooistProfileBox>

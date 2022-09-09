@@ -17,6 +17,8 @@ const DetailArtwork = ( {artwork} ) => {
     navigate(`/artwork/${artwork.artwork_id}/${tattooist_id}`);
   };
 
+  console.log('artwork: ',artwork)
+
   return (
     <>
       <DetailArtworkImgBox

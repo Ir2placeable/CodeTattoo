@@ -48,11 +48,9 @@ import DeleteAccount from "./components/templates/DeleteAccount";
 import { toast, ToastContainer } from "react-toastify"
 import 'react-toastify/dist/ReactToastify.css';
 import ShowArtworkDetail from "./pages/ShowArtworkDetail";
+import ArtworkDetail from "./components/templates/ArtworkDetail";
+import SocketTest from "./SocketTest";
 
-// - GET : /scraps/:filter/:page
-//     - filter : draft, tattooist
-//     - page : integer type
-// - Query : { user_id }
 const App = () => {
 
   return (
@@ -135,6 +133,7 @@ const App = () => {
             </Route>
 
             {/* 채팅 */}
+            {/* id: user_id || tattooist_id */}
             <Route path="chat/:id" element={<Chatting />} />
 
           </Route>
@@ -154,6 +153,8 @@ const App = () => {
 
       {/* FOOTER */}
       <Footer />
+
+      {/* <SocketTest /> */}
     </div>
   );
 };
