@@ -53,12 +53,16 @@ public class SocketHandler extends TextWebSocketHandler {
         } else if (jsonObject.get("content") != null) {
             log.info("msg is {}", jsonObject.get("content"));
             if (userMap.containsKey(jsonObject.get("receiver"))) {
+                log.info("receiver is {}", userMap.get(jsonObject.get("receiver")));
                 WebSocketSession wss = sessionMap.get(userMap.get(jsonObject.get("receiver")));
                 try {
                     wss.sendMessage(new TextMessage(jsonObject.get("content").getAsString()));
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
+            } else {
+                log.info("There is no Client");
+                log.info("userMap is {}", userMap);
             }
         }
 
@@ -97,6 +101,7 @@ public class SocketHandler extends TextWebSocketHandler {
     private void currentUserSession(WebSocketSession session) throws InterruptedException {
         this.currentSession = session;
         log.info("CurrentSession Update Complete : {}", this.currentSession);
+
     }
 
     public Boolean currentUserid(String userId) {

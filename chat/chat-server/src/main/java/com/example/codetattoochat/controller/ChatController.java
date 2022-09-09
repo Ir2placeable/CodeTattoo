@@ -342,9 +342,12 @@ public class ChatController {
     @GetMapping("/chat/message/{reservation_id}") // 채팅 내역 조회 요청 API
     public ResponseEntity getMessageList(@PathVariable String reservation_id, @RequestParam String subject_id) {
         //subject_id : 요청자의 id, reservation_id : 예약 id
+        log.info("reservation_id : {}", reservation_id);
+        log.info("subject_id : {}", subject_id);
         Gson gson = new Gson();
         JsonObject temp = new JsonObject();
         Iterable<MessageDto> messageList = messageService.getMessageList(reservation_id);
+
 
         temp.addProperty("success", "true");
         JsonArray jArray = new JsonArray();

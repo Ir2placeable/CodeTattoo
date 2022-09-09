@@ -1,8 +1,14 @@
 server:
   port: 3002
-
+  error:
+    whitelabel:
+      enabled: false
 
 spring:
+  mvc:
+    view:
+      suffix: .jsp
+      prefix: /WEB-INF/jsp/
   datasource:
     driver-class-name: org.mariadb.jdbc.Driver
     url: jdbc:mariadb://codetattoo.cwtbzbyluijp.ap-northeast-2.rds.amazonaws.com/Chat_Data?serverTimezone=Asia/Seoul
