@@ -476,7 +476,7 @@ exports.reservation = async function(query) {
     return_value.sort(function(a, b) {
         const target1 = Number(String(a.date)+String(a.time_slot))
         const target2 = Number(String(b.date)+String(b.time_slot))
-    
+
         return target1 - target2
     })
 
