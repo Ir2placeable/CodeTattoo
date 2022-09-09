@@ -234,6 +234,7 @@ exports.tattooistDetail = async function(params, query) {
 }
 // 작업물 페이지
 exports.artworkDetail = async function(params, query) {
+    let image;
     let info;
     let states = [];
 
@@ -247,8 +248,9 @@ exports.artworkDetail = async function(params, query) {
         states.push(tattoo_state)
     }
 
+    image = states[2].image
+
     info = {
-        image : states[2].image,
         date : states[2].date,
         taken_time : states[2].timestamp - states[1].timestamp,
         cost : states[2].cost,
@@ -258,7 +260,7 @@ exports.artworkDetail = async function(params, query) {
         machine : states[2].machine,
     }
 
-    return {info, states}
+    return {image, info, states}
 }
 // 예약 세부 페이지
 exports.reservationDetail = async function(params) {
@@ -476,7 +478,7 @@ exports.reservation = async function(query) {
     return_value.sort(function(a, b) {
         const target1 = Number(String(a.date)+String(a.time_slot))
         const target2 = Number(String(b.date)+String(b.time_slot))
-    
+
         return target1 - target2
     })
 

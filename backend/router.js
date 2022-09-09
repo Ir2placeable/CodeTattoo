@@ -1,7 +1,7 @@
 const page = require('./logic/page')
 const admin = require('./logic/admin')
 const command = require('./logic/command')
-const chatting = require('./module/chatting')
+const chatServer = require('./module/chatting')
 
 const ErrorMessage = require('./ErrorControl')
 const config = require('./config/key')
@@ -108,12 +108,6 @@ server.get('/scraps/:filter/:page', (req, res) => {
         })
 
 })
-// (미개발) 페이지 : 유저 채팅 박스
-server.get('/user/direct/inbox', (req, res) => {
-    console.log('Page : User Chatting Page')
-
-    res.send({ success : false, code : 'not developed' })
-})
 // 페이지 : 유저 마이페이지
 server.get('/user/my-page/:id', (req, res) => {
     console.log('page : User My page')
@@ -133,12 +127,11 @@ server.get('/artwork/:id', (req, res) => {
 
     page.artworkDetail(req.params, req.query)
         .then((returned) => {
-            res.send({ success : true, artwork_info : returned.info, artwork_states : returned.states })
+            res.send({ success : true, image : returned.image, artwork_info : returned.info, tattoos : returned.states })
         })
         .catch((err) => {
             res.send(ErrorLogging(err))
         })
-
 })
 // 페이지 : 예약
 server.get('/reservations', (req, res) => {
@@ -648,12 +641,12 @@ server.get('/blockchain/side-effects/:key', (req, res) => {
 
 // 채팅 서버 명령 모음
 // 유저 닉네임 리스트 반환
-server.get('/chatting/profile/:type/:id', (req, res) => {
+server.get('/chat/profile/:type', (req, res) => {
     console.log('command : get profile for chatting')
 
-    chatting.getProfile(req.params)
+    chatServer.getProfile(req.params, req.query)
         .then((returned) => {
-            res.send({ success : true, profile : returned })
+            res.send({ success : true, profile : returned.profile, reservation_id : returned.reservation_id, confirmed : returned.confirmed })
         })
         .catch((err) => {
             res.send(ErrorLogging(err))
