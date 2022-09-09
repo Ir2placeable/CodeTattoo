@@ -14,37 +14,49 @@ import ShowMyTattoo from "./ShowMyTattoo";
 const ShowMyPage = () => {
   /* User My Page Data */
   const [data, profile] = useUserMyPage();
-  console.log(profile);
+
   const tattoos = [
     {
-      tattoo_id: 1,
-      state: [
-        { id: 1, title: "STATE1", content: "Recover" },
-        { id: 2, title: "STATE2", content: "Retouch" },
-        { id: 3, title: "STATE3", content: "Tattoo" },
-        { id: 4, title: "STATE4", content: "Final" },
+      image:
+        "https://codetattoo.kr.object.ncloudstorage.com/6315974c3d47f773cf058163",
+      states: [
+        {
+          activator_id: 1,
+          state: "state1",
+          timestamp: 1203,
+          cost: 100000,
+          image: "https://codetattoo.kr.object.ncloudstorage.com/6315974c3d47f773cf058163",
+          body_part: "body_part",
+          inks: "inks",
+          niddle: "niddle",
+          depth: "depth",
+          machine: "machine",
+        },
+        {
+          activator_id: 2,
+          state: "state2",
+          timestamp: 1203,
+          cost: 100000,
+          image: "https://codetattoo.kr.object.ncloudstorage.com/631589dda5ef1d69772dbbc0",
+          body_part: "body_part",
+          inks: "inks",
+          niddle: "niddle",
+          depth: "depth",
+          machine: "machine",
+        },
+        {
+          activator_id: 3,
+          state: "state3",
+          timestamp: 1203,
+          cost: 100000,
+          image: "https://codetattoo.kr.object.ncloudstorage.com/63175ba731029111648c2261",
+          body_part: "body_part",
+          inks: "inks",
+          niddle: "niddle",
+          depth: "depth",
+          machine: "machine",
+        },
       ],
-      tattooist_id: 101,
-    },
-    {
-      tattoo_id: 2,
-      state: [
-        { id: 1, title: "STATE1", content: "Recover" },
-        { id: 2, title: "STATE2", content: "Retouch" },
-        { id: 3, title: "STATE3", content: "Tattoo" },
-        { id: 4, title: "STATE4", content: "Final" },
-      ],
-      tattooist_id: 102,
-    },
-    {
-      tattoo_id: 3,
-      state: [
-        { id: 1, title: "STATE1", content: "Recover" },
-        { id: 2, title: "STATE2", content: "Retouch" },
-        { id: 3, title: "STATE3", content: "Tattoo" },
-        { id: 4, title: "STATE4", content: "Final" },
-      ],
-      tattooist_id: 103,
     },
   ];
 
@@ -54,7 +66,7 @@ const ShowMyPage = () => {
         <ListDiv>
           <MyPageProfile profile={profile} />
           <HorizontalLine></HorizontalLine>
-          <ShowMyTattoo tattoos={tattoos}/>
+          <ShowMyTattoo tattoos={data} />
         </ListDiv>
       </MyPageDiv>
     </>

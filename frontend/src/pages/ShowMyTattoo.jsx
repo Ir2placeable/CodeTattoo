@@ -15,7 +15,7 @@ const ShowMyTattoo = ({tattoos}) => {
         <MyTattooMainBox>
           {tattoos &&
             tattoos.map((tattoo) => (
-              <MyTattooContainer key={tattoo.tattoo_id}>
+              <MyTattooContainer key={"a"}>
                 <MyTattoo tattoo={tattoo}></MyTattoo>
               </MyTattooContainer>
             ))}

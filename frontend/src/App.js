@@ -48,7 +48,6 @@ import DeleteAccount from "./components/templates/DeleteAccount";
 import { toast, ToastContainer } from "react-toastify"
 import 'react-toastify/dist/ReactToastify.css';
 import ShowArtworkDetail from "./pages/ShowArtworkDetail";
-import ArtworkDetail from "./components/templates/ArtworkDetail";
 import SocketTest from "./SocketTest";
 import ChattingRecord from "./components/organisms/chatting/ChattingRecord";
 import ChattingRoomEntry from "./components/organisms/chatting/ChattingRoomEntry";
@@ -113,7 +112,7 @@ const App = () => {
 
             {/* 마이 페이지 */}
             <Route path="my-page/user/:user_id" element={<ShowMyPage />}/>
-            
+
             {/* 프로필 편집 */}
             <Route path="edit" element={<ShowProfileEdit/>}>
               <Route path="image" element={<ImageEdit/>}/>

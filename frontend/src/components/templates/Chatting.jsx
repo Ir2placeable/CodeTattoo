@@ -20,6 +20,7 @@ import axios from "axios";
 export const WebSocketContext = React.createContext(null)
 
 const Chatting = () => {
+
   let ws = useRef(null)
   const [opponentId, setOpponentId] = useState('')
   const [reservationId, setReservationId] = useState('')

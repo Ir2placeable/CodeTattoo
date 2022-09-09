@@ -12,13 +12,10 @@ import { APIURL } from "../config/key";
 //     - artwork_info = { image, date, taken_time, cost, tattooist_nickname, body_part, inks, machine }
 //         - date : 시술 날짜
 //         - taken_time(소요시간) : Unix time
-//     - artwork_states = [ state1, state2, state3 … ]
+//     - tattoos = [ state1, state2, state3 … ]
 //         - state = { activator_id, state, timestamp, cost, image, body_part, inks, niddle, depth, machine }
 
 const useArtworkDetail = () => {
-  const [info, setInfo] = useState();
-  const [states, setStates] = useState();
-
   const param = useParams();
   const tattoo_id = param.tattoo_id;
   const tattooist_id = param.tattooist_id;
@@ -28,18 +25,14 @@ const useArtworkDetail = () => {
       `${APIURL}/artwork/${tattoo_id}?tattooist_id=${tattooist_id}`
     );
     if (res.data.success) {
-        setInfo(res.data.artwork_info);
-        setStates(res.data.artwork_states)
+      console.log(res.data)
+      return [res.data.artwork_info, res.data.tattoos, res.data.image];
     } else {
-        console.log("Artwork Detail Fail");
+      console.log("Artwork Detail Fail");
     }
   };
 
-  useEffect(() => {
-    sendRequest();
-  }, [])
-
-  return [info, states]
+  return sendRequest;
 };
 
 export default useArtworkDetail;
