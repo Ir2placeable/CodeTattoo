@@ -648,12 +648,12 @@ server.get('/blockchain/side-effects/:key', (req, res) => {
 
 // 채팅 서버 명령 모음
 // 유저 닉네임 리스트 반환
-server.get('/chatting/profile/:type/:id', (req, res) => {
+server.get('/chat/profile/:type', (req, res) => {
     console.log('command : get profile for chatting')
 
-    chatting.getProfile(req.params)
+    chatting.getProfile(req.params, req.query)
         .then((returned) => {
-            res.send({ success : true, profile : returned })
+            res.send({ success : true, profile : returned.profile, reservation_id : returned.id, confirmed : returned.confirmed })
         })
         .catch((err) => {
             res.send(ErrorLogging(err))
