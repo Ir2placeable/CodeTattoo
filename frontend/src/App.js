@@ -48,7 +48,6 @@ import DeleteAccount from "./components/templates/DeleteAccount";
 import { toast, ToastContainer } from "react-toastify"
 import 'react-toastify/dist/ReactToastify.css';
 import ShowArtworkDetail from "./pages/ShowArtworkDetail";
-import ArtworkDetail from "./components/templates/ArtworkDetail";
 import SocketTest from "./SocketTest";
 
 const App = () => {
