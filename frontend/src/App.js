@@ -48,18 +48,12 @@ import DeleteAccount from "./components/templates/DeleteAccount";
 import { toast, ToastContainer } from "react-toastify"
 import 'react-toastify/dist/ReactToastify.css';
 import ShowArtworkDetail from "./pages/ShowArtworkDetail";
-import ArtworkDetail from "./components/templates/ArtworkDetail";
 
 // - GET : /scraps/:filter/:page
 //     - filter : draft, tattooist
 //     - page : integer type
 // - Query : { user_id }
 const App = () => {
-  const sendRequest = async () => {
-    const res = await axios.get(`${APIURL}/scraps/tattooist/1?user_id=${getCookie('user_id')}`, );
-
-    console.log('tattooist scrap: ',res);
-  };
 
   return (
     <div className="font-style">
@@ -119,7 +113,7 @@ const App = () => {
 
             {/* 마이 페이지 */}
             <Route path="my-page/user/:user_id" element={<ShowMyPage />}/>
-            
+
             {/* 프로필 편집 */}
             <Route path="edit" element={<ShowProfileEdit/>}>
               <Route path="image" element={<ImageEdit/>}/>

@@ -39,18 +39,12 @@ import ChattingList from "../organisms/chatting/ChattingList";
 import ChattingRoom from "../organisms/chatting/ChattingRoom";
 
 const Chatting = () => {
-  const [plusClick, setPlusClick] = useState(false);
-  const [opponent, setOpponent] = useState();
+  const [plusClick, setPlusClick] = useState(true);
+  
   const onPlusClick = () => {
     setPlusClick(plusClick ? false : true);
   };
 
-  const onUserClick = (e) => {
-    setOpponent({
-      image: document.getElementById("chat_img").src,
-      nickname: document.getElementById("chat_nickname").innerHTML,
-    });
-  };
 
   return (
     <>
@@ -59,12 +53,12 @@ const Chatting = () => {
           <FontAwesomeIcon icon={faCommentDots} /> Chatting
         </ChattingHeader>
 
-        <ChattingList onClick={onUserClick} />
+        <ChattingList />
 
         <ChattingRoomDiv>
           {plusClick ? (
             <>
-              <ChattingRoom opponent={opponent} onClick={onPlusClick} />
+              <ChattingRoom onClick={onPlusClick} />
             </>
           ) : (
             <>
@@ -85,7 +79,7 @@ const Chatting = () => {
                       <ChatDraftInfoInput id="date" />
                     </ChatDraftInputDiv>
                     <ChatDraftInputDiv>
-                      <ChatDraftInfoLabel>부위</ChatDraftInfoLabel>
+                      <ChatDraftInfoLabel >부위</ChatDraftInfoLabel>
                       <ChatDraftInfoInput />
                     </ChatDraftInputDiv>
                   </ChatDraftInfoBox>

@@ -28,7 +28,6 @@ const DetailArtwork = ( {artwork} ) => {
         {hover && (
           <DetailArtworkImgHover>
             <div>{artwork.cost} 원</div>
-            <div>{artwork.timestamp}</div>
           </DetailArtworkImgHover>
         )}
       </DetailArtworkImgBox>

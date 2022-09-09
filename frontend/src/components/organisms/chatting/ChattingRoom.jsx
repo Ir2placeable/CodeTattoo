@@ -15,7 +15,7 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faImage, faPlus } from "@fortawesome/free-solid-svg-icons";
 
-const ChattingRoom = ({ opponent, onClick }) => {
+const ChattingRoom = ({ onClick }) => {
 
   const messageList = [
     {
@@ -50,8 +50,8 @@ const ChattingRoom = ({ opponent, onClick }) => {
   return (
     <>
       <ChattingRoomHeader>
-        <ChattingImg src={opponent.image} />
-        <ChattingText size="main">{opponent.nickname}</ChattingText>
+        <ChattingImg />
+        <ChattingText size="main"></ChattingText>
       </ChattingRoomHeader>
 
       <ChatBigDiv>
