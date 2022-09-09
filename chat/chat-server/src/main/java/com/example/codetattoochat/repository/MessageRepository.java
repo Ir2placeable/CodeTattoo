@@ -10,7 +10,7 @@ public interface MessageRepository extends JpaRepository<MessageEntity, Long> {
 
 
     public
-    @Query(value = "SELECT distinct sender, receiver, content, created_At " +
+    @Query(value = "SELECT distinct sender, receiver, content, created_At, reservation_id " +
             "FROM chat_msg m " +
             "WHERE m.sender = :sender OR m.receiver = :sender " +
             "ORDER BY m.id DESC",
@@ -20,8 +20,8 @@ public interface MessageRepository extends JpaRepository<MessageEntity, Long> {
 
     @Query(value = "SELECT * " +
             "FROM chat_msg m " +
-            "WHERE (m.receiver = :receiver AND m.sender = :sender) OR (m.receiver = :sender AND m.sender = :receiver)" +
+            "WHERE (m.reservation_id = :reservation_id)" +
             "ORDER BY m.id ASC",
             nativeQuery = true)
-    Iterable<MessageEntity> findMessageList(String sender, String receiver);
+    Iterable<MessageEntity> findMessageList(String reservation_id);
 }

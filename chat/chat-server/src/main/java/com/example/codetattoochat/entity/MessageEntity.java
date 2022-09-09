@@ -30,18 +30,23 @@ public class MessageEntity {
     @Column(nullable = false)
     private String sender;
 
+    @Column(nullable = false)
+    private String reservation_id;
+
     @Builder
     public MessageEntity(
             Long id,
             String sender,
             String receiver,
             String content,
-            String created_At
+            String created_At,
+            String reservation_id
     ) {
         this.id = id;
         this.sender = sender;
         this.receiver = receiver;
         this.content = content;
         this.created_At = created_At;
+        this.reservation_id = reservation_id;
     }
 }

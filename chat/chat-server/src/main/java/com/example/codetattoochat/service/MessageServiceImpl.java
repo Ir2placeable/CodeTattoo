@@ -34,6 +34,7 @@ public class MessageServiceImpl implements MessageService {
                 .receiver(dto.getReceiver())
                 .content(dto.getContent())
                 .created_At(String.valueOf(LocalDateTime.now()))
+                .reservation_id(dto.getReservation_id())
                 .build();
 
         log.info("Message is {}", messageEntity);
@@ -44,6 +45,7 @@ public class MessageServiceImpl implements MessageService {
                 .sender(dto.getSender())
                 .receiver(dto.getReceiver())
                 .content(dto.getContent())
+                .reservation_id(dto.getReservation_id())
                 .build();
     }
 
@@ -63,8 +65,9 @@ public class MessageServiceImpl implements MessageService {
             messages.add(MessageDto.builder()
                     .sender(String.valueOf(message[0]))
                     .receiver(String.valueOf(message[1]))
-                            .content(String.valueOf(message[2]))
-                            .createdAt(String.valueOf(message[3]))
+                    .content(String.valueOf(message[2]))
+                    .createdAt(String.valueOf(message[3]))
+                            .reservation_id(String.valueOf(message[4]))
                     .build());
         });
 
@@ -73,10 +76,9 @@ public class MessageServiceImpl implements MessageService {
 
     @Transactional
     @Override
-    public Iterable<MessageDto> getMessageList(String sender, String receiver) {
+    public Iterable<MessageDto> getMessageList(String reservation_id) {
         log.info("Message Service's Service Layer :: Call getMessageList Method!");
-        Iterable<MessageEntity> messageList = messageRepository.findMessageList(sender,
-                receiver);
+        Iterable<MessageEntity> messageList = messageRepository.findMessageList(reservation_id);
         List<MessageDto> messages = new ArrayList<>();
 
         messageList.forEach(message -> {
@@ -86,6 +88,7 @@ public class MessageServiceImpl implements MessageService {
                     .receiver(message.getReceiver())
                     .content(message.getContent())
                     .createdAt(message.getCreated_At())
+                            .reservation_id(message.getReservation_id())
                     .build());
         });
 
