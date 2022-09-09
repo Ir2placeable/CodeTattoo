@@ -20,12 +20,31 @@ import { useEffect } from "react";
 import { useState } from "react";
 import { getCookie } from "../../../config/cookie";
 import { useRef } from "react";
+import useChatRecord from "../../../hooks/useChatRecord";
+import { useParams } from "react-router-dom";
 
-const ChattingRoom = ({ opponent, onClick }) => {
+const ChattingRoom = ({ opponent, onPlusClick }) => {
   const ws = useContext(WebSocketContext)
   const [content, setContent] = useState('')
   const [records, setRecords] = useState([])
+  const params = useParams();
+  const subject_id = params.id;
+  const reservation_id = params.reservation_id;
   const contentInput = useRef()
+
+  const message = useChatRecord({
+    subject_id: subject_id,
+    reservation_id: reservation_id
+  })
+
+  // content: "안녕하세요! 상담문의 드립니다!"
+  // id: 43
+  // mine: true
+  // receiver: "63159296a5ef1d69772dc02c"
+  // time: "2022-09-09T10:37:35.301400"
+  useEffect(() => {
+    console.log('message: ', message)
+  }, [message])
 
   useEffect(() => {
 
@@ -55,20 +74,22 @@ const ChattingRoom = ({ opponent, onClick }) => {
 
   }, [])
 
-  // ws.current.onmessage = (evt) => {
-  //   const data = JSON.parse(evt.data) 
-  //   console.log(data.chat)
-  // }
+  ws.current.onmessage = (evt) => {
+    const data = JSON.parse(evt.data) 
+    console.log('data.chat: ',data.chat)
+  }
   
   const onSend = () => {
+    const r = "63159296a5ef1d69772dc02c"
     const body = {
-      sender: "TestUserId",
-      receiver: "TestOppoId",
-      reservation_id : "TestReservationId",
+      sender: subject_id,
+      receiver: subject_id,
+      reservation_id : reservation_id,
       content: content
     }
 
     ws.current.send(JSON.stringify(body))
+    console.log('send: ', body)
   }
 
   const onKeyUp = (e) => {
@@ -126,7 +147,7 @@ const ChattingRoom = ({ opponent, onClick }) => {
       </ChatBigDiv>
 
       <ChatInputDiv>
-        <ChatBtn type="image" onClick={onClick}>
+        <ChatBtn type="image" onClick={onPlusClick}>
           <FontAwesomeIcon icon={faPlus} />
         </ChatBtn>
         <ChatImageLabel htmlFor="input-chat-img">

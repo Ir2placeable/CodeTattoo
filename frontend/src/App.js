@@ -50,6 +50,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import ShowArtworkDetail from "./pages/ShowArtworkDetail";
 import ArtworkDetail from "./components/templates/ArtworkDetail";
 import SocketTest from "./SocketTest";
+import ChattingRecord from "./components/organisms/chatting/ChattingRecord";
+import ChattingRoomEntry from "./components/organisms/chatting/ChattingRoomEntry";
 
 const App = () => {
 
@@ -134,7 +136,10 @@ const App = () => {
 
             {/* 채팅 */}
             {/* id: user_id || tattooist_id */}
-            <Route path="chat/:id" element={<Chatting />} />
+            <Route path="chat/:id" element={<Chatting />}>
+              <Route path="" element={<ChattingRoomEntry />} />
+              <Route path=":reservation_id" element={<ChattingRecord />} />
+            </Route>
 
           </Route>
 

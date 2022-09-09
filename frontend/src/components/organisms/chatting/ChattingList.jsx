@@ -20,6 +20,8 @@ const ChattingList = ({onClick}) => {
   const chatList = useChatUserList();
   // const chatList = []
   console.log(chatList)
+  // content, createAt, opponent_id, opponent_image,
+  // opponent_nickname, reservation_id
 
   // const ws = useContext(WebSocketContext)
 
@@ -36,7 +38,9 @@ const ChattingList = ({onClick}) => {
       ) : (
         <ChattingListDiv>
           {chatList.map((item) => (
-            <ChattingBox id={item.createdAt} key={item.createdAt} onClick={onClick}>
+            <ChattingBox
+              id={item.createdAt} key={item.createdAt} 
+              onClick={() => onClick(item.opponent_id, item.reservation_id)}>
               {item.opponent_image !== "undefined" ? (
                 <ChattingImg id="chat_img"src={item.opponent_image} />
               ) : (

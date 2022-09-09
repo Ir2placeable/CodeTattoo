@@ -1,72 +1,73 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
-  ChatBigDiv,
-  ChatBtn,
-  ChatContents,
-  ChatDate,
-  ChatDiv,
-  ChatDraftImg,
-  ChatDraftBox,
-  ChatDraftInfoBox,
-  ChatImageInput,
-  ChatImageLabel,
-  ChatInput,
-  ChatInputDiv,
-  ChatReservationBox,
-  ChatTextarea,
   ChattingDiv,
   ChattingHeader,
-  ChattingImg,
-  ChattingInfoDiv,
-  ChattingRoomDiv,
-  ChattingRoomHeader,
-  ChattingText,
-  ChattingTime,
-  ChatBtnBox,
-  ChatDraftInfoLabel,
-  ChatDraftInfoInput,
-  ChatDraftInputDiv,
 } from "../../styledComponents";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faCommentDots,
-  faMinus,
-  faPlus,
-  faImage,
 } from "@fortawesome/free-solid-svg-icons";
 import ChattingList from "../organisms/chatting/ChattingList";
 import ChattingRoom from "../organisms/chatting/ChattingRoom";
 import { useRef } from "react";
-import { WEBSOCKETURL } from "../../config/key";
+import { CHATAPIURL, WEBSOCKETURL } from "../../config/key";
+import ChattingRecord from "../organisms/chatting/ChattingRecord";
+import { Outlet, useNavigate } from "react-router-dom";
+import { getCookie } from "../../config/cookie";
+import axios from "axios";
 
 export const WebSocketContext = React.createContext(null)
 
 const Chatting = () => {
   let ws = useRef(null)
+  const [opponentId, setOpponentId] = useState('')
+  const [reservationId, setReservationId] = useState('')
 
-  if(!ws.current){
-    ws.current = new WebSocket(WEBSOCKETURL)
+  useEffect(() => {
+    if(!ws.current){
+      ws.current = new WebSocket(WEBSOCKETURL)
+  
+      ws.current.onopen = () => {
+        console.log("websocket is connected")
+      }
+      ws.current.onclose = (err) => {
+        console.log("websocket is disconnected")
+        console.log(err)
+      }
+      ws.current.onerror = (err) => {
+        console.log("websocket connection error")
+        console.log(err)
+      }
+    }
+  }, [])
 
-    ws.current.onopen = () => {
-      console.log("websocket is connected")
-    }
-    ws.current.onclose = (err) => {
-      console.log("websocket is disconnected")
-      console.log(err)
-    }
-    ws.current.onerror = (err) => {
-      console.log("websocket connection error")
-      console.log(err)
-    }
+  const navigate = useNavigate()
+  const onClick = (opponent_id, reservation_id) => {
+    console.log(opponent_id)
+    setOpponentId(opponent_id)
+    setReservationId(reservation_id)
   }
 
-  const [plusClick, setPlusClick] = useState(true);
+  useEffect(() => {
+    // console.log('oid: ', opponentId)
+    navigate(`${reservationId}`)
+  }, [reservationId])
 
-  const onPlusClick = () => {
-    setPlusClick(plusClick ? false : true);
-  };
+  useEffect(() => {
+    let userid = getCookie('user_id')
+    if(!userid){
+      userid = getCookie('tattooist_id');
+    }
 
+    console.log('send socket')
+    axios.post(`${CHATAPIURL}/chat/user`, {
+      userid: userid
+    }).then((res) => {
+      console.log(res)
+    })
+
+  }, [])
 
   return (
     <>
@@ -76,51 +77,11 @@ const Chatting = () => {
           <FontAwesomeIcon icon={faCommentDots} /> Chatting
         </ChattingHeader>
 
-        <ChattingList />
+        <ChattingList onClick={onClick} />
 
-        <ChattingRoomDiv>
-          {plusClick ? (
-            <>
-              <ChattingRoom onClick={onPlusClick} />
-            </>
-          ) : (
-            <>
-              <ChatReservationBox>
-                <ChatDraftBox>
-                  <ChatDraftImg />
-                  <ChatDraftInfoBox>
-                    <ChatDraftInputDiv>
-                      <ChatDraftInfoLabel htmlFor="cost">
-                        가격
-                      </ChatDraftInfoLabel>
-                      <ChatDraftInfoInput id="cost" />
-                    </ChatDraftInputDiv>
-                    <ChatDraftInputDiv>
-                      <ChatDraftInfoLabel htmlFor="date">
-                        일정
-                      </ChatDraftInfoLabel>
-                      <ChatDraftInfoInput id="date" />
-                    </ChatDraftInputDiv>
-                    <ChatDraftInputDiv>
-                      <ChatDraftInfoLabel>부위</ChatDraftInfoLabel>
-                      <ChatDraftInfoInput />
-                    </ChatDraftInputDiv>
-                  </ChatDraftInfoBox>
-                </ChatDraftBox>
-                <ChatBtnBox>
-                  <ChatBtn type="cancel">예약 취소</ChatBtn>
-                  <ChatBtn type="modify">정보 수정</ChatBtn>
-                  <ChatBtn type="confirm">예약 확정</ChatBtn>
-                </ChatBtnBox>
-              </ChatReservationBox>
-              <ChatInputDiv type="back">
-                <ChatBtn type="image" onClick={onPlusClick}>
-                  <FontAwesomeIcon icon={faMinus} />
-                </ChatBtn>
-              </ChatInputDiv>
-            </>
-          )}
-        </ChattingRoomDiv>
+        {/* <ChattingRecord /> */}
+        <Outlet context={{opponentId}} />
+
       </ChattingDiv>
     </WebSocketContext.Provider>
     </>

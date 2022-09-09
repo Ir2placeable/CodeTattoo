@@ -127,6 +127,8 @@ const LoginInput = ({ isTattooist }) => {
         window.location.replace('/drafts/best');
       }, 500)
 
+      // console.log('send web socket id success')
+
     } else {
       console.log('send web socket fail')
     }
@@ -140,7 +142,7 @@ const LoginInput = ({ isTattooist }) => {
         .then((ret) => {
           if(ret[0]){
             const id = pushCookie(ret[1])
-            sendWebSocket(ret[1], id)
+            // sendWebSocket(ret[1], id)
           } else {
             window.location.replace('')
           }
