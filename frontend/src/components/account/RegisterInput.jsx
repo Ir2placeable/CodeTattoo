@@ -235,7 +235,8 @@ const RegisterInput = ({ isTattooist }) => {
           <AccountInput 
             type="text"
             name="nickname"
-            placeholder='닉네임을 입력해주세요'
+            placeholder='닉네임을 입력해주세요. (12자 이내)'
+            maxLength={"12"}
             autoComplete='nope'
             value={nickname}
             ref={nickInput}

@@ -49,17 +49,9 @@ import { toast, ToastContainer } from "react-toastify"
 import 'react-toastify/dist/ReactToastify.css';
 import ShowArtworkDetail from "./pages/ShowArtworkDetail";
 import ArtworkDetail from "./components/templates/ArtworkDetail";
+import SocketTest from "./SocketTest";
 
-// - GET : /scraps/:filter/:page
-//     - filter : draft, tattooist
-//     - page : integer type
-// - Query : { user_id }
 const App = () => {
-  const sendRequest = async () => {
-    const res = await axios.get(`${APIURL}/scraps/tattooist/1?user_id=${getCookie('user_id')}`, );
-
-    console.log('tattooist scrap: ',res);
-  };
 
   return (
     <div className="font-style">
@@ -161,6 +153,8 @@ const App = () => {
 
       {/* FOOTER */}
       <Footer />
+
+      {/* <SocketTest /> */}
     </div>
   );
 };

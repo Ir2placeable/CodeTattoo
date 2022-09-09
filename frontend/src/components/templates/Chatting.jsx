@@ -37,34 +37,51 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import ChattingList from "../organisms/chatting/ChattingList";
 import ChattingRoom from "../organisms/chatting/ChattingRoom";
+import { useRef } from "react";
+import { WEBSOCKETURL } from "../../config/key";
+
+export const WebSocketContext = React.createContext(null)
 
 const Chatting = () => {
-  const [plusClick, setPlusClick] = useState(false);
-  const [opponent, setOpponent] = useState();
+  let ws = useRef(null)
+
+  if(!ws.current){
+    ws.current = new WebSocket(WEBSOCKETURL)
+
+    ws.current.onopen = () => {
+      console.log("websocket is connected")
+    }
+    ws.current.onclose = (err) => {
+      console.log("websocket is disconnected")
+      console.log(err)
+    }
+    ws.current.onerror = (err) => {
+      console.log("websocket connection error")
+      console.log(err)
+    }
+  }
+
+  const [plusClick, setPlusClick] = useState(true);
+
   const onPlusClick = () => {
     setPlusClick(plusClick ? false : true);
   };
 
-  const onUserClick = (e) => {
-    setOpponent({
-      image: document.getElementById("chat_img").src,
-      nickname: document.getElementById("chat_nickname").innerHTML,
-    });
-  };
 
   return (
     <>
+    <WebSocketContext.Provider value={ws}>
       <ChattingDiv>
         <ChattingHeader>
           <FontAwesomeIcon icon={faCommentDots} /> Chatting
         </ChattingHeader>
 
-        <ChattingList onClick={onUserClick} />
+        <ChattingList />
 
         <ChattingRoomDiv>
           {plusClick ? (
             <>
-              <ChattingRoom opponent={opponent} onClick={onPlusClick} />
+              <ChattingRoom onClick={onPlusClick} />
             </>
           ) : (
             <>
@@ -105,6 +122,7 @@ const Chatting = () => {
           )}
         </ChattingRoomDiv>
       </ChattingDiv>
+    </WebSocketContext.Provider>
     </>
   );
 };

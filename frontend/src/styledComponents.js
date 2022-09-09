@@ -259,7 +259,7 @@ export const ToastAlarmBox = styled.div`
 // *** Account ***
 export const AccountDiv = styled.div`
   width: 600px;
-  margin: 150px auto 0;
+  margin: 150px auto 150px;
   box-shadow: 5px 10px 20px #484848;
   border-radius: 8px;
   padding-bottom: 50px;
@@ -851,14 +851,16 @@ export const SmallTattooistNickname = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  font-size: 38px;
-  font-weight: 700;
+  font-size: 28px;
+  font-weight: 900;
   // width: 350px;
   // width: calc(100% - 150px);
 `;
 
 export const SmallTattooistLocation = styled.div`
   font-size: 20px;
+  display: flex;
+  align-items: center;
 `;
 
 export const TattooistGenreBox = styled.div`
@@ -1362,11 +1364,11 @@ export const DraftDrawerDiv = styled.div`
   margin-bottom: 10px;
   width: max-content;
   cursor: pointer;
-  margin-left: 20px;
+  margin-left: 10px;
 `;
 
 export const DraftDrawer = styled.p`
-  margin-left: 20px;
+  margin-left: 10px;
 `;
 
 export const UserIconStyle = {
@@ -2592,7 +2594,7 @@ cursor: pointer;
 // Chatting Page
 export const ChattingDiv = styled.div`
   // background-color: whitesmoke;
-  margin: 0 auto;
+  margin: 0 auto 50px;
   padding: 20px 50px;
   width: 1300px;
   display: flex;
@@ -2615,11 +2617,19 @@ export const ChattingListDiv = styled.div`
   background-color: #646464;
   padding: 5px;
   height: 600px;
+  width: 411px;
   display: flex;
   flex-direction: column;
   align-items: center;
   overflow-y: scroll;
 `;
+
+export const ChattingEmptyBox = styled.div`
+// background-color: white;
+color: white;
+// font-weight: bold;
+margin-top: 20px;
+`
 
 export const ChattingBox = styled.div`
   background-color: #f3f3f3;

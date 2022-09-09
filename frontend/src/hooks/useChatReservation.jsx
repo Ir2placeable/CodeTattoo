@@ -1,51 +1,40 @@
 import axios from 'axios';
-import React, { memo } from 'react';
-import { useEffect } from 'react';
-import { useState } from 'react';
+import React from 'react';
 import { getCookie } from '../config/cookie';
-import { APIURL } from '../config/key';
+import { CHATAPIURL } from '../config/key';
 
-// ### 예약 확정
+// ### 상담 요청
 
-// *유저와 타투이스트가 채팅에서 date, time_slot_cost, image(도안)을 확정함*
+// *유저가 타투이스트에게 상담문의를 요청한 경우에 실행할 API 입니다.*
 
-// - POST : /confirm/reservation/:id
-//     - id : reservation_id
-// - Body : { user_id, tattooist_id }
-// - Return : { success }
+// - GET : /chat/reservation/:user_id/:target_id
+// - user_id : 현재 상담문의할 유저의 id
+// - target_id : 상담문의를 받을 타투이스트의 id
+// - Query : None
+// - Return : { success, userlist }
+//     - userlist = 
+//     [{ content, createdAt, opponent_id, opponent_image, 
+          // opponent_nickname } ]
+//     → Image type은 url, createdAt은 String
 
-// ### 예약 불발(=예약 거절)
+const useChatReservation = () => {
+  const user_id = getCookie('user_id')
 
-// *유저와 타투이스트가 채팅에서 합의점을 찾지 못하고 종료함*
+  const sendRequest = async({ tattoist_id }) => {
+    // const params = `${user_id}/${tattoist_id}`
 
-// - POST : /reject/reservation/:id
-//     - id : reservation_id
-// - Body : { user_id, tattooist_id }
-// - Return : { success }
-
-const useChatReservation = ({ reservation_id }) => {
-
-  const sendConfirm = async() => {
-    const res = await axios.post(`${APIURL}/confirm/reservations/${reservation_id}`, {
-
-    })
-
-    if(res.data.success){
-        console.log('reservation confirm success');
-    }
-  }
-
-  const sendCancel = async() => {
-    const res = await axios.post(`${APIURL}/confirm/reservations/${reservation_id}`, {
-        
-    })
+    // test 용
+    const params = '6315859fa26479438d3c1b95/63158633a26479438d3c1bae'
+    const res = await axios.get(`${CHATAPIURL}/chat/reservation/${params}`)
 
     if(res.data.success){
-        console.log('reservation confirm success');
+      return res.data.userlist
+    } else {
+      console.log('chat reservation fail')
     }
   }
-
-  return [sendConfirm, sendCancel];
+  
+  return sendRequest
 };
 
 export default useChatReservation;

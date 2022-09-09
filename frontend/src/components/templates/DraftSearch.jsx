@@ -9,13 +9,13 @@ const DraftSearch = memo(() => {
 
   return (
     <>
-      <div>
+      
         <SearchResText>
           '{title}'에 대한 검색결과 입니다. 
         </SearchResText>
 
         <DraftList filter="drafts/search" title={title} />
-      </div>
+      
     </>
   );
 });

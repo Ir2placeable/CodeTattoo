@@ -13,6 +13,8 @@ import { useEffect } from 'react';
 import useCreateReservation from '../../../hooks/useCreateReservation';
 import useTattooistDetailReservation from '../../../hooks/useTattooistDetailReservation';
 import { toast, ToastContainer } from "react-toastify";
+import { useNavigate } from 'react-router-dom';
+import useChatReservation from '../../../hooks/useChatReservation';
 
 const AvailableTime = ({ value, isAdmin, id }) => {
   const [time, setTime] = useState([
@@ -129,12 +131,14 @@ const AvailableTime = ({ value, isAdmin, id }) => {
   }
 
   const createReservation = useCreateReservation();
+  const createChatReservation = useChatReservation();
+  const navigate = useNavigate();
 
   const onCreateReservation = () => {
     const user = getCookie('user_id');
 
     if(!user){
-      alert('로그인이 필요합니다!')
+      alert('상담 문의는 유저 로그인 상태에서 가능합니다.')
       return;
     } else {
       toast.success("상담 요청이 되었습니다");
@@ -150,7 +154,13 @@ const AvailableTime = ({ value, isAdmin, id }) => {
         alert('예약을 원하는 날짜를 선택해주세요.')
         return;
       }
-      createReservation({ data });
+      createReservation({ data })
+        // .then(() => {
+        //   createChatReservation({ tattooist_id: data.tattooist_id })
+        // })
+        .then(() => {
+          navigate(`/chat/${user}`)
+        })
     }
   }
 
