@@ -58,13 +58,6 @@ public class ChatController {
     @Autowired
     SocketHandler socketHandler;
 
-//    @RequestMapping("/chat")
-//    public ModelAndView chat() {
-//        ModelAndView mv = new ModelAndView();
-//        mv.setViewName("chat");
-//        return mv;
-//    }
-
     @GetMapping("/ping")
     public APIInfo ping() {
         APIInfo info = APIInfo.builder().app("CodeTattoo-Chat").ver("1.0").timestamp(LocalDateTime.now()).build();
