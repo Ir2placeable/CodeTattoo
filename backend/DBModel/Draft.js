@@ -1,3 +1,5 @@
+// 코드 목적 : Mongo DB Structure
+
 const mongoose = require('mongoose');
 
 const draftSchema = mongoose.Schema({

@@ -4,6 +4,8 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+// 코드 목적 : HyperLedger Network 에 Transaction 을 기록 또는 불러오는 작업을 수행한다.
+
 'use strict';
 
 const { Gateway, Wallets } = require('fabric-network');
@@ -12,6 +14,8 @@ const path = require('path');
 const ccpPath = path.resolve(__dirname, '..', '..', 'codeTattooBlockchain', 'connection-org1.json');
 const walletPath = path.resolve(__dirname, '..', '..', 'codeTattooBlockchain', 'codeTattooApp', 'wallet');
 
+// 블록체인에 Transaction 을 기록한다.
+// WorldState Schema의 state에 따라 다른 정보(data)를 기록한다.
 exports.invoke = async function(function_name, key, data) {
     let ccp = JSON.parse(fs.readFileSync(ccpPath, 'utf8'));
 
@@ -58,6 +62,7 @@ exports.invoke = async function(function_name, key, data) {
     await gateway.disconnect();
 }
 
+// 블록체인에서 가장 최근의 Transaction 1개를 불러온다.
 exports.getTattooInfo = async function(key) {
     let ccp = JSON.parse(fs.readFileSync(ccpPath, 'utf8'));
 
@@ -87,6 +92,7 @@ exports.getTattooInfo = async function(key) {
     return JSON.parse(result.toString())
 }
 
+// 블록체인에서 모든 Transaction 을 불러온다.
 exports.getTattooHistory = async function(key) {
     // load the network configuration
     const ccp = JSON.parse(fs.readFileSync(ccpPath, 'utf8'));
@@ -120,6 +126,7 @@ exports.getTattooHistory = async function(key) {
     return JSON.parse(result.toString())
 }
 
+// 블록체인에서 Side-Effect 만 불러온다.
 exports.getTattooSideEffects = async function(key) {
     let ccp = JSON.parse(fs.readFileSync(ccpPath, 'utf8'));
 

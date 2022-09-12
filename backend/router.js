@@ -1,3 +1,5 @@
+// 코드 목적 : 메인 서버가 처리할 수 있는 API 와 business logic 을 연결한다.
+
 const page = require('./logic/page')
 const admin = require('./logic/admin')
 const command = require('./logic/command')
@@ -593,7 +595,7 @@ server.get('/get/reservation', (req, res) => {
     admin.getReservation().then((result) => { res.send({ reservations : result }) })
 })
 
-// 블록체인 강제 명령 모음
+// 블록체인 직접 요청
 // 블록체인에 데이터 기록 요청
 server.post('/blockchain/invoke/:function/:key', (req, res) => {
     admin.invokeBlockchain(req.params, req.body)

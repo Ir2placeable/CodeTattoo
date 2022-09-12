@@ -1,3 +1,5 @@
+// 코드 목적 : Naver Object Storage(이미지 DB) 에 이미지 기록 및 삭제를 수행한다.
+
 const config = require('../config/key')
 const AWS = require('aws-sdk')
 
@@ -15,6 +17,7 @@ const S3 = new AWS.S3({
     }
 })
 
+// 데이터 기록 : 이미지 저장소에 Encoded Base64 를 저장하고 url를 반환한다.
 // params : { title, image, mime }
 exports.upload = async function(params) {
     return await S3.upload({
@@ -28,13 +31,10 @@ exports.upload = async function(params) {
     })
 }
 
+// 데이터 삭제 : 이미지 저장소에서 이미지를 삭제한다.
 exports.delete = async function(id) {
     await S3.deleteObject({
         Bucket : bucket_title,
         Key : id
     })
 }
-
-// S3.getObject : 오브젝트 하나 리턴
-// S3.getSingedUrl : 주소 리턴
-// S3.listObjects : 오브젝트 리스트 리턴

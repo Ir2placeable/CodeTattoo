@@ -1,3 +1,5 @@
+// 코드 목적 : Main Server 로 요청한 명령을 처리하는 Business logic 을 수행한다.
+
 const {User} = require("../DBModel/User");
 const {Reservation} = require("../DBModel/Reservation")
 const imageStorage = require("../module/imageStorage");

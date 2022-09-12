@@ -1,9 +1,12 @@
+// 코드 목적 : Chat Server 와 통신하여 필요한 데이터를 반환한다.
+
 const {User} = require("../DBModel/User");
 const {Tattooist} = require("../DBModel/Tattooist");
 const {Reservation} = require("../DBModel/Reservation")
 const chatServer = require("../config/serverAddress")
 const request = require('request')
 
+// 채팅 목록에 필요한 상대방의 정보 및 채팅방 정보를 반환한다.
 exports.getProfile = async function(params, query) {
     let profile
     let reservation_id
@@ -35,6 +38,7 @@ exports.getProfile = async function(params, query) {
     return {profile, reservation_id, confirmed}
 }
 
+// 채팅방 생성을 요청한다.
 exports.createChat = async function(params) {
     const destination = chatServer.chatAPI + "chat/create"
 

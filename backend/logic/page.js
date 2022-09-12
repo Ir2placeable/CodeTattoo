@@ -1,3 +1,5 @@
+// 코드 목적 : Web-Front 에서 페이지 로드에 필요한 데이터를 가공하는 역할을 수행한다.
+
 const {Draft} = require("../DBModel/Draft");
 const Global = require("../GlobalVariable");
 const {Tattooist} = require("../DBModel/Tattooist");
@@ -248,16 +250,16 @@ exports.artworkDetail = async function(params, query) {
         states.push(tattoo_state)
     }
 
-    image = states[2].image
+    image = states[0].Record.image
 
     info = {
-        date : states[2].date,
-        taken_time : states[2].timestamp - states[1].timestamp,
-        cost : states[2].cost,
+        date : states[0].Record.date,
+        taken_time : states[0].Record.timestamp - states[1].Record.timestamp,
+        cost : states[0].Record.cost,
         tattooist_nickname : tattooist['nickname'],
-        body_part : states[2].body_part,
-        inks : states[2].inks,
-        machine : states[2].machine,
+        body_part : states[0].Record.body_part,
+        inks : states[0].Record.inks,
+        machine : states[0].Record.machine,
     }
 
     return {image, info, states}
