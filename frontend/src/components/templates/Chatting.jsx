@@ -1,13 +1,8 @@
 import React, { useEffect, useState } from "react";
-import {
-  ChattingDiv,
-  ChattingHeader,
-} from "../../styledComponents";
+import { ChattingDiv, ChattingHeader } from "../../styledComponents";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faCommentDots,
-} from "@fortawesome/free-solid-svg-icons";
+import { faCommentDots } from "@fortawesome/free-solid-svg-icons";
 import ChattingList from "../organisms/chatting/ChattingList";
 import ChattingRoom from "../organisms/chatting/ChattingRoom";
 import { useRef } from "react";
@@ -17,62 +12,72 @@ import { Outlet, useNavigate } from "react-router-dom";
 import { getCookie } from "../../config/cookie";
 import axios from "axios";
 
-export const WebSocketContext = React.createContext(null)
+export const WebSocketContext = React.createContext(null);
 
 const Chatting = () => {
+  let ws = useRef(null);
+  const [opponentId, setOpponentId] = useState("");
+  const [reservationId, setReservationId] = useState("");
 
-  let ws = useRef(null)
-  const [opponentId, setOpponentId] = useState('')
-  const [reservationId, setReservationId] = useState('')
+  let userid = getCookie("user_id");
+  if (!userid) {
+    userid = getCookie("tattooist_id");
+  }
 
   useEffect(() => {
-    if(!ws.current){
-      ws.current = new WebSocket(WEBSOCKETURL)
-  
-      ws.current.onopen = () => {
-        console.log("websocket is connected")
-      }
-      ws.current.onclose = (err) => {
-        console.log("websocket is disconnected")
-        console.log(err)
-      }
-      ws.current.onerror = (err) => {
-        console.log("websocket connection error")
-        console.log(err)
-      }
-    }
-  }, [])
+    if (!ws.current) {
+      ws.current = new WebSocket(WEBSOCKETURL);
 
-  const navigate = useNavigate()
+      ws.current.onopen = () => {
+        console.log("websocket is connected");
+
+        const body = {
+          sender: userid,
+          enter_room: true,
+        };
+
+        ws.current.send(JSON.stringify(body));
+      };
+      ws.current.onclose = (err) => {
+        console.log("websocket is disconnected");
+        console.log(err);
+      };
+      ws.current.onerror = (err) => {
+        console.log("websocket connection error");
+        console.log(err);
+      };
+    }
+  }, []);
+
+  const navigate = useNavigate();
   // const onClick = (opponent_id, reservation_id) => {
   //   console.log(opponent_id)
   //   setOpponentId(opponent_id)
   //   setReservationId(reservation_id)
   // }
 
-  const [data, setData] = useState({})
+  const [data, setData] = useState({});
 
-  const dataSetting = async(item) => {
-    setData(item)
-  }
+  const dataSetting = async (item) => {
+    setData(item);
+  };
 
-  const [prev, setPrev] = useState(null)
-  const onClick = ({e, item}) => {
-    if(e.target === e.currentTarget){
-      if(prev){
+  const [prev, setPrev] = useState(null);
+  const onClick = ({ e, item }) => {
+    if (e.target === e.currentTarget) {
+      if (prev) {
         prev.target.style = {
-          backgroundColor: '#f3f3f3',
-          hover: 'background-color: #bdbdbd;'
-        }
+          backgroundColor: "#f3f3f3",
+          hover: "background-color: #bdbdbd;",
+        };
       }
-      setPrev(e)
-      e.target.style.backgroundColor = '#AFAFAF'
-      dataSetting(item)
-        .then(() => {
-          navigate(`${item.reservation_id}`)
-        })
+      setPrev(e);
+      e.target.style.backgroundColor = "#AFAFAF";
+      dataSetting(item).then(() => {
+        navigate(`${item.reservation_id}`);
+      });
     }
-  }
+  };
 
   // useEffect(() => {
   //   // console.log('oid: ', opponentId)
@@ -80,36 +85,31 @@ const Chatting = () => {
   // }, [reservationId])
 
   useEffect(() => {
-    let userid = getCookie('user_id')
-    if(!userid){
-      userid = getCookie('tattooist_id');
-    }
-
-    console.log('send socket')
-    // web socket id 전송 
-    axios.post(`${CHATAPIURL}/chat/user`, {
-      userid: userid
-    }).then((res) => {
-      console.log(res)
-    })
-
-  }, [])
+    console.log("send socket");
+    // web socket id 전송
+    axios
+      .post(`${CHATAPIURL}/chat/user`, {
+        userid: userid,
+      })
+      .then((res) => {
+        console.log(res);
+      });
+  }, []);
 
   return (
     <>
-    <WebSocketContext.Provider value={ws}>
-      <ChattingDiv>
-        <ChattingHeader>
-          <FontAwesomeIcon icon={faCommentDots} /> Chatting
-        </ChattingHeader>
+      <WebSocketContext.Provider value={ws}>
+        <ChattingDiv>
+          <ChattingHeader>
+            <FontAwesomeIcon icon={faCommentDots} /> Chatting
+          </ChattingHeader>
 
-        <ChattingList onClick={onClick} />
+          <ChattingList onClick={onClick} />
 
-        {/* <ChattingRecord /> */}
-        <Outlet context={{opponentId, data}} />
-
-      </ChattingDiv>
-    </WebSocketContext.Provider>
+          {/* <ChattingRecord /> */}
+          <Outlet context={{ opponentId, data }} />
+        </ChattingDiv>
+      </WebSocketContext.Provider>
     </>
   );
 };

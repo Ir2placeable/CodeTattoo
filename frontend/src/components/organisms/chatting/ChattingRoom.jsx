@@ -9,11 +9,7 @@ import {
   ProfileImgIcon,
 } from "../../../styledComponents";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-<<<<<<< HEAD
 import { faImage, faPlus, faUser } from "@fortawesome/free-solid-svg-icons";
-=======
-import { faPlus } from "@fortawesome/free-solid-svg-icons";
->>>>>>> 3a80aa6cf33f14164b699ad208bf3b371351468d
 import { useContext } from "react";
 import { WebSocketContext } from "../../templates/Chatting";
 import { useEffect } from "react";
@@ -24,6 +20,7 @@ import useChatRecord from "../../../hooks/useChatRecord";
 import { useParams } from "react-router-dom";
 import ChattingMessage from "../../atomic/chatting/ChattingMessage";
 import ChattingImgChoice from "../../atomic/chatting/ChattingImgChoice";
+import { createElement } from "react";
 
 const ChattingRoom = ({ data, onPlusClick }) => {
   const ws = useContext(WebSocketContext);
@@ -41,48 +38,40 @@ const ChattingRoom = ({ data, onPlusClick }) => {
     reservation_id: reservation_id,
   });
 
-  useEffect(() => {
-    console.log("message: ", message);
-  }, [message]);
+  const [messages, setMessages] = useState([])
 
   useEffect(() => {
-    contentInput.current.focus();
-
-    console.log("ws: ", ws);
-    // // 타투아영: 631586d4a26479438d3c1bf2
-    // // 유저아영: 631585ffa26479438d3c1ba2
-    // const src = '631586d4a26479438d3c1bf2'
-    // const dest = '631585ffa26479438d3c1ba2'
-
-    // let body = {
-    //   sender: src,
-    //   receiver: dest,
-    //   reservation_id : "TestReservationId",
-    //   content: "보내는 사람: f2"
-    // }
-
-    // if(getCookie('user_id')){
-    //   body.sender = dest;
-    //   body.receiver = src
-    //   body.content = '보내는 사람: a2'
-    // }
-
-    // let jsonData = JSON.stringify(body);
-    // ws.current.send(jsonData)
-  }, []);
+    setMessages(message)
+    // console.log('message: ', message);
+    console.log('messages: ', messages)
+  }, [message, messages])
 
   ws.current.onmessage = (e) => {
+    console.log("e: ", e);
     const data = JSON.parse(e.data);
-    console.log("data.chat: ", data);
+    console.log('onmessage data: ', data);
+    // const chat = document.getElementById("chat")
+    const temp = {
+      id: 1,
+      mine: true,
+      content: 'hello',
+      time: 'aaa',
+      receiver: '123asdf'
+    }
+  
+    const prev = messages
+    prev.push(temp)
+    console.log('prev: ', prev)
+    setMessages(prev)
   };
 
   const onSend = () => {
-
     const body = {
       sender: subject_id,
       receiver: data.opponent_id,
       reservation_id: reservation_id,
       content: content,
+      created_at: new Date().getTime(),
     };
 
     const datas = {
@@ -90,11 +79,25 @@ const ChattingRoom = ({ data, onPlusClick }) => {
       receiver: subject_id,
       reservation_id: reservation_id,
       content: content,
+      created_at: new Date().getTime(),
+      enter_room : false,
     };
 
     ws.current.send(JSON.stringify(datas));
     setContent("");
     console.log("send: ", datas);
+
+    // const temp = {
+    //   id: 1,
+    //   mine: true,
+    //   content: content,
+    //   time: 'aaa',
+    //   receiver: '123asdf'
+    // }
+  
+    // const prev = messages
+    // prev.push(temp)
+    // console.log('prev: ', prev)
   };
 
   const onKeyUp = (e) => {
@@ -102,7 +105,6 @@ const ChattingRoom = ({ data, onPlusClick }) => {
       onSend();
     }
   };
-  console.log(data)
 
   const onSelectFile = (e) => {
     if (e.target.files && e.target.files.length > 0) {
@@ -121,19 +123,19 @@ const ChattingRoom = ({ data, onPlusClick }) => {
   return (
     <>
       <ChattingRoomHeader>
-        {data.opponent_image !== 'undefined' ? (
+        {data.opponent_image !== "undefined" ? (
           <ChattingImg src={data.opponent_image} />
         ) : (
           <ProfileImgIcon size="chat">
             <FontAwesomeIcon style={{ fontSize: "35px" }} icon={faUser} />
           </ProfileImgIcon>
         )}
-        
+
         <ChattingText size="main">{data.opponent_nickname}</ChattingText>
       </ChattingRoomHeader>
 
-      <ChatBigDiv>
-        {message.map((item) => (
+      <ChatBigDiv id="chat">
+        {messages.length !== 0 && messages.map((item) => (
           <ChattingMessage key={item.id} item={item} />
         ))}
       </ChatBigDiv>
@@ -178,3 +180,33 @@ export default ChattingRoom;
         </ChatDiv>
       </ChatBigDiv> */
 }
+
+// useEffect(() => {
+//   console.log("message: ", message);
+// }, [message]);
+
+// useEffect(() => {
+//   contentInput.current.focus();
+
+//   console.log("ws: ", ws);
+//   // // 타투아영: 631586d4a26479438d3c1bf2
+//   // // 유저아영: 631585ffa26479438d3c1ba2
+//   // const src = '631586d4a26479438d3c1bf2'
+//   // const dest = '631585ffa26479438d3c1ba2'
+
+//   // let body = {
+//   //   sender: src,
+//   //   receiver: dest,
+//   //   reservation_id : "TestReservationId",
+//   //   content: "보내는 사람: f2"
+//   // }
+
+//   // if(getCookie('user_id')){
+//   //   body.sender = dest;
+//   //   body.receiver = src
+//   //   body.content = '보내는 사람: a2'
+//   // }
+
+//   // let jsonData = JSON.stringify(body);
+//   // ws.current.send(jsonData)
+// }, []);
