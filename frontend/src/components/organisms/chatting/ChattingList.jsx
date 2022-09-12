@@ -40,7 +40,9 @@ const ChattingList = ({onClick}) => {
           {chatList.map((item) => (
             <ChattingBox
               id={item.createdAt} key={item.createdAt} 
-              onClick={() => onClick(item.opponent_id, item.reservation_id)}>
+              // onClick={() => onClick(item.opponent_id, item.reservation_id)}
+              onClick={(e) => { onClick({e, item})}}
+            >
               {item.opponent_image !== "undefined" ? (
                 <ChattingImg id="chat_img"src={item.opponent_image} />
               ) : (

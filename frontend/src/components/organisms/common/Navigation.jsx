@@ -20,7 +20,7 @@ const Navigation = () => {
     } else if(path === 'scraps'){
       navigate(`/${path}/draft`);
     } else {
-      navigate(`/${path}`);
+      navigate(`/${path}/pending`);
     }
   }, []);
 

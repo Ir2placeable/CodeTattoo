@@ -44,16 +44,30 @@ const Chatting = () => {
   }, [])
 
   const navigate = useNavigate()
-  const onClick = (opponent_id, reservation_id) => {
-    console.log(opponent_id)
-    setOpponentId(opponent_id)
-    setReservationId(reservation_id)
+  // const onClick = (opponent_id, reservation_id) => {
+  //   console.log(opponent_id)
+  //   setOpponentId(opponent_id)
+  //   setReservationId(reservation_id)
+  // }
+
+  const [data, setData] = useState({})
+
+  const dataSetting = async(item) => {
+    setData(item)
+  }
+  const onClick = ({e, item}) => {
+    // e.target.style.backgroundColor = 'black'
+    // setData(item)
+    dataSetting(item)
+      .then(() => {
+        navigate(`${item.reservation_id}`)
+      })
   }
 
-  useEffect(() => {
-    // console.log('oid: ', opponentId)
-    navigate(`${reservationId}`)
-  }, [reservationId])
+  // useEffect(() => {
+  //   // console.log('oid: ', opponentId)
+  //   navigate(`${reservationId}`)
+  // }, [reservationId])
 
   useEffect(() => {
     let userid = getCookie('user_id')
@@ -62,6 +76,7 @@ const Chatting = () => {
     }
 
     console.log('send socket')
+    // web socket id 전송 
     axios.post(`${CHATAPIURL}/chat/user`, {
       userid: userid
     }).then((res) => {
@@ -81,7 +96,7 @@ const Chatting = () => {
         <ChattingList onClick={onClick} />
 
         {/* <ChattingRecord /> */}
-        <Outlet context={{opponentId}} />
+        <Outlet context={{opponentId, data}} />
 
       </ChattingDiv>
     </WebSocketContext.Provider>

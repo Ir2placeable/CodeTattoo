@@ -11,7 +11,8 @@ import {
   ProcedureBigWrap,
   ProcedureBtns, ProcedureBtn, ProcedureDesc,
   ProcedureInput, GoListDiv, ProcedureImgDiv, 
-  ProcedureEdit
+  ProcedureEdit,
+  ContentsDiv
 } from '../../../styledComponents';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -184,9 +185,17 @@ const Procedure = () => {
     })
   }
 
+  const goList = () => {
+    if(reservation.confirmed){
+      navigate('/reservations/confirmed')
+    } else {
+      navigate('/reservations/pending')
+    }
+  }
+
   return (
     <>
-
+  <ContentsDiv>
       {imgEdit && (
         <EditProcedureImg setImgEdit={setImgEdit}
           _src={reservation.image}
@@ -199,7 +208,7 @@ const Procedure = () => {
           onChange={onChange2} />
       )}
 
-    <GoListDiv onClick={() => { navigate('/reservations') }}>
+    <GoListDiv onClick={goList}>
       <FontAwesomeIcon icon={faBars} style={{marginRight: '5px'}} />
       목록
     </GoListDiv>
@@ -339,75 +348,6 @@ const Procedure = () => {
               </ProcedureWrap>
             </ProcedureBigWrap>
 
-            {/* {procedureStatus ? (
-              <>
-                <ProcedureBigWrap>
-                  <ProcedureWrap >
-                    <ProcedureLabel>사용기기</ProcedureLabel>
-                    <ProcedureData>{machine}</ProcedureData>
-                  </ProcedureWrap>
-                  <ProcedureWrap >
-                    <ProcedureLabel>사용바늘</ProcedureLabel>
-                    <ProcedureData>{niddle}</ProcedureData>
-                  </ProcedureWrap>
-                </ProcedureBigWrap>
-
-                <ProcedureBigWrap>
-                  <ProcedureWrap >
-                    <ProcedureLabel>주사깊이</ProcedureLabel>
-                    <ProcedureData>{depth}</ProcedureData>
-                  </ProcedureWrap>
-                  <ProcedureWrap >
-                    <ProcedureLabel>사용잉크</ProcedureLabel>
-                    <ProcedureData>{inks}</ProcedureData>
-                  </ProcedureWrap>
-                </ProcedureBigWrap>
-              </>
-            ) : (
-              <>
-                <ProcedureBigWrap>
-                  <ProcedureWrap >
-                    <ProcedureLabel>사용기기</ProcedureLabel>
-                    <ProcedureInput 
-                      type="text"
-                      name='machine'
-                      value={machine}
-                      onChange={onChange}
-                    />
-                  </ProcedureWrap>
-                  <ProcedureWrap >
-                    <ProcedureLabel>사용바늘</ProcedureLabel>
-                    <ProcedureInput 
-                      type="text"
-                      name='niddle'
-                      value={niddle}
-                      onChange={onChange}
-                    />
-                  </ProcedureWrap>
-                </ProcedureBigWrap>
-
-                <ProcedureBigWrap>
-                  <ProcedureWrap >
-                    <ProcedureLabel>주사깊이</ProcedureLabel>
-                    <ProcedureInput 
-                      type="text"
-                      name='depth'
-                      value={depth}
-                      onChange={onChange}
-                    />
-                  </ProcedureWrap>
-                  <ProcedureWrap >
-                    <ProcedureLabel>사용잉크</ProcedureLabel>
-                    <ProcedureInput 
-                      type="text"
-                      name='inks'
-                      value={inks}
-                      onChange={onChange}
-                    />
-                  </ProcedureWrap>
-                </ProcedureBigWrap>
-              </>
-            )} */}
           </ProcedureBox>
           )}
 
@@ -440,6 +380,7 @@ const Procedure = () => {
     {isOpen && (
       <Popup data={data} setIsOpen={setIsOpen} />
     )}
+  </ContentsDiv>
     </>
   );
 };

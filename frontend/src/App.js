@@ -123,9 +123,12 @@ const App = () => {
 
             {/* 예약 */}
             <Route path="reservations" element={<ShowReservation />}>
-              <Route path="" element={<ReservationList />} />
-              <Route path=":reservation_id" element={<Procedure />} />
+              <Route path="confirmed" element={<ReservationList />} />
+              <Route path="pending" element={<ReservationList />} />
             </Route>
+
+            {/* 예약/작업 상세 페이지 */}
+            <Route path="reservation/:reservation_id" element={<Procedure />} />
 
             {/* 스크랩 */}
             <Route path="scraps" element={<ShowScrap />} >

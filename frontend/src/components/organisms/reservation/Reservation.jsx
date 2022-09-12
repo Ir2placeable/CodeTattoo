@@ -51,7 +51,7 @@ const Reservation = memo(({ data }) => {
     // if(e.target.innerText === '예약 미확정'){
     //   return
     // }
-    navigate(`${data.reservation_id}`, {
+    navigate(`/reservation/${data.reservation_id}`, {
       state: data
     })
   }

@@ -7,11 +7,24 @@ import {
   ReservTextDiv, ReservText, ReservBtnDiv, 
   ReservBtn, ReservLabel, ReservTextBox, EmptyBox, ListDiv
 } from '../../styledComponents';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate, useOutletContext } from 'react-router-dom';
+import { useState } from 'react';
+import { useEffect } from 'react';
 
 const ReservationList = memo(() => {
-  const reservations = useReservation();
+  const [reservations, setReservations] = useState([])
+  const { confirmed, pending } = useOutletContext();
 
+  const location = useLocation();
+  useEffect(() => {
+    const [ , , a] = location.pathname.split('/')
+    
+    if(a === 'pending'){
+      setReservations(pending)
+    } else if(a === 'confirmed'){
+      setReservations(confirmed)
+    }
+  }, [location.pathname, confirmed, pending])
 
   return (
     <>

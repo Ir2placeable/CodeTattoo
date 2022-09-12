@@ -23,7 +23,7 @@ import { useRef } from "react";
 import useChatRecord from "../../../hooks/useChatRecord";
 import { useParams } from "react-router-dom";
 
-const ChattingRoom = ({ opponent, onPlusClick }) => {
+const ChattingRoom = ({ data, onPlusClick }) => {
   const ws = useContext(WebSocketContext)
   const [content, setContent] = useState('')
   const [records, setRecords] = useState([])
@@ -74,16 +74,16 @@ const ChattingRoom = ({ opponent, onPlusClick }) => {
 
   }, [])
 
-  ws.current.onmessage = (evt) => {
-    const data = JSON.parse(evt.data) 
-    console.log('data.chat: ',data.chat)
-  }
+  // ws.current.onmessage = (evt) => {
+  //   const data = JSON.parse(evt.data) 
+  //   console.log('data.chat: ',data.chat)
+  // }
   
   const onSend = () => {
     const r = "63159296a5ef1d69772dc02c"
     const body = {
       sender: subject_id,
-      receiver: subject_id,
+      receiver: data.opponent_id,
       reservation_id : reservation_id,
       content: content
     }
@@ -97,37 +97,7 @@ const ChattingRoom = ({ opponent, onPlusClick }) => {
       onSend()
     }
   }
-
-  const messageList = [
-    {
-      id: 5,
-      content: "안녕하세요 호갱님",
-      createdAt: "2022-09-06 07:55:10",
-      sender: "63158633a26479438d3c1bae",
-      receiver: "6315859fa26479438d3c1b95",
-    },
-    {
-      id: 6,
-      content: "여기가 눈썹문신 맛집인가요",
-      createdAt: "2022-09-06 07:55:57",
-      sender: "6315859fa26479438d3c1b95",
-      receiver: "63158633a26479438d3c1bae",
-    },
-    {
-      id: 7,
-      content: "슉 슈슉",
-      createdAt: "2022-09-06 07:57:37",
-      sender: "6315859fa26479438d3c1b95",
-      receiver: "63158633a26479438d3c1bae",
-    },
-    {
-      id: 8,
-      content: "언제끝남?",
-      createdAt: "2022-09-06 07:57:57",
-      sender: "63158633a26479438d3c1bae",
-      receiver: "6315859fa26479438d3c1b95",
-    },
-  ];
+  
   return (
     <>
       <ChattingRoomHeader>
@@ -135,7 +105,7 @@ const ChattingRoom = ({ opponent, onPlusClick }) => {
         <ChattingText size="main"></ChattingText>
       </ChattingRoomHeader>
 
-      <ChatBigDiv>
+      {/* <ChatBigDiv>
         <ChatDiv who="me">
           <ChatContents who="me">sibal</ChatContents>
           <ChatDate>2022년 12월 17일 12:17pm</ChatDate>
@@ -144,6 +114,22 @@ const ChattingRoom = ({ opponent, onPlusClick }) => {
           <ChatContents who="you">...</ChatContents>
           <ChatDate>2022년 8월 17일 5:17pm</ChatDate>
         </ChatDiv>
+      </ChatBigDiv> */}
+
+      <ChatBigDiv>
+        {message.map(item => (
+          <ChatDiv key={item.id}
+            who={item.mine ? "me" : "you"}
+          >
+            <ChatContents>
+              {item.content}
+            </ChatContents>
+
+            <ChatDate>
+              {item.time}
+            </ChatDate>
+          </ChatDiv>
+        ))}
       </ChatBigDiv>
 
       <ChatInputDiv>
