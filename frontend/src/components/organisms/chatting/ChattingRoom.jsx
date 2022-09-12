@@ -36,26 +36,26 @@ const ChattingRoom = ({ data, onPlusClick }) => {
     subject_id: subject_id,
     reservation_id: reservation_id,
   });
-  const datas = [
-    {
-      id: 5,
-      content: "안녕하세요 호갱님",
-      time: "2022-09-06 07:55:10",
-      mine: true,
-    },
-    {
-      id: 6,
-      content: "여기가 눈썹문신 맛집인가요",
-      time: "2022-09-06 07:57:37",
-      mine: false,
-    },
-    {
-      id: 7,
-      content: "슈슈슈슈슛",
-      time: "2022-09-06 07:57:57",
-      mine: true,
-    },
-  ];
+  // const datas = [
+  //   {
+  //     id: 5,
+  //     content: "안녕하세요 호갱님",
+  //     time: "2022-09-06 07:55:10",
+  //     mine: true,
+  //   },
+  //   {
+  //     id: 6,
+  //     content: "여기가 눈썹문신 맛집인가요",
+  //     time: "2022-09-06 07:57:37",
+  //     mine: false,
+  //   },
+  //   {
+  //     id: 7,
+  //     content: "슈슈슈슈슛",
+  //     time: "2022-09-06 07:57:57",
+  //     mine: true,
+  //   },
+  // ];
   useEffect(() => {
     console.log("message: ", message);
   }, [message]);
@@ -118,7 +118,7 @@ const ChattingRoom = ({ data, onPlusClick }) => {
       </ChattingRoomHeader>
 
       <ChatBigDiv>
-        {datas.map((item) => (
+        {message.map((item) => (
           <ChattingMessage key={item.id} item={item} />
         ))}
       </ChatBigDiv>

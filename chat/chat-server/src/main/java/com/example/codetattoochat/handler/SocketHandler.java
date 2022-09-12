@@ -1,6 +1,9 @@
 package com.example.codetattoochat.handler;
 
 import com.example.codetattoochat.config.WebSocketConfig;
+import com.example.codetattoochat.dto.ChatMessage;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -28,41 +31,50 @@ public class SocketHandler extends TextWebSocketHandler {
     HashMap<String, WebSocketSession> sessionMap = new HashMap<>(); //웹소켓 세션을 담아둘 맵
     HashMap<String, String> userMap = new HashMap<>(); //세션과 유저를 매핑할 맵
 
+    ObjectMapper objectMapper = new ObjectMapper();
 
     @Override
-    public void handleTextMessage(WebSocketSession session, TextMessage message) {
+    public void handleTextMessage(WebSocketSession session, TextMessage message) throws JsonProcessingException {
 
         // 메시지 발송, 메시지를 수신하면 실행
         // 상속받은 TextWebSocketHandler는 handleTextMessage를 실행시키며,
         // 메시지 타입에따라 handleBinaryMessage또는 handleTextMessage가 실행
 
+        ChatMessage chatMessage = objectMapper.readValue(message.getPayload(), ChatMessage.class);
+        log.info("chatMessage is {}", chatMessage);
         String msg = message.getPayload();
         JsonObject jsonObject = JsonParser.parseString(msg).getAsJsonObject();
         log.info("Session : {}, message : {}", session, message);
         log.info("message : {}", jsonObject);
-        if (jsonObject.get("dummy") != null) {
-            log.info("dummy is {}", jsonObject.get("dummy"));
-            if (userMap.containsKey(jsonObject.get("receiver"))) {
-                WebSocketSession wss = sessionMap.get(userMap.get(jsonObject.get("receiver")));
-                try {
-                    wss.sendMessage(new TextMessage(jsonObject.get("dummy").getAsString()));
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
+        log.info("-------------------------------");
+        if (chatMessage.getEnter_room()) {
+            log.info("this session Id is {}", session.getId());
+            log.info("this user Id is {}", chatMessage.getSender());
+            userMap.put(chatMessage.getSender(), session.getId());
+            log.info("userMap is {}", userMap);
+//            if (userMap.containsKey(jsonObject.get("receiver").getAsString())) {
+//                WebSocketSession wss = sessionMap.get(userMap.get(jsonObject.get("receiver")));
+//                try {
+//                    wss.sendMessage(new TextMessage(jsonObject.get("dummy").getAsString()));
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                }
+//            }
         } else if (jsonObject.get("content") != null) {
             log.info("msg is {}", jsonObject.get("content"));
-            if (userMap.containsKey(jsonObject.get("receiver"))) {
-                log.info("receiver is {}", userMap.get(jsonObject.get("receiver")));
-                WebSocketSession wss = sessionMap.get(userMap.get(jsonObject.get("receiver")));
+            if (userMap.containsKey(jsonObject.get("receiver").getAsString())) {
+                log.info("receiver is {}", userMap.get(jsonObject.get("receiver").getAsString()));
+                log.info("-------------------------------");
+                log.info("wss : {}",sessionMap.get(userMap.get(jsonObject.get("receiver").getAsString())));
+                WebSocketSession wss = sessionMap.get(userMap.get(jsonObject.get("receiver").getAsString()));
                 try {
-                    wss.sendMessage(new TextMessage(jsonObject.get("content").getAsString()));
+//                    wss.sendMessage(new TextMessage(jsonObject.get("content").getAsString()));
+                    wss.sendMessage(new TextMessage(objectMapper.writeValueAsString(chatMessage)));
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
             } else {
                 log.info("There is no Client");
-                log.info("userMap is {}", userMap);
             }
         }
 
@@ -74,17 +86,17 @@ public class SocketHandler extends TextWebSocketHandler {
 //                e.printStackTrace();
 //            }
 //        }
-
-
     }
 
     @Override
     public void afterConnectionEstablished(WebSocketSession session) throws Exception {
         // 소켓 연결, 웹소켓 연결이 되면 동작
         super.afterConnectionEstablished(session);
-        currentUserSession(session);
+//        currentUserSession(session);
         log.info("Session Connected : {}", session);
         sessionMap.put(session.getId(), session);
+
+        log.info("-------------------------------");
     }
 
     @Override
@@ -93,14 +105,15 @@ public class SocketHandler extends TextWebSocketHandler {
         sessionMap.remove(session.getId());
         userMap.values().remove(session.getId());
         log.info("CurrentSession Closed Complete : {}", userMap);
-
         super.afterConnectionClosed(session, status);
         log.info("Session Closed : {}", session);
+        log.info("-------------------------------");
     }
 
     private void currentUserSession(WebSocketSession session) throws InterruptedException {
         this.currentSession = session;
         log.info("CurrentSession Update Complete : {}", this.currentSession);
+        log.info("-------------------------------");
 
     }
 

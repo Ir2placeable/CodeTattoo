@@ -8,16 +8,14 @@ import { CookiesProvider } from 'react-cookie';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <React.StrictMode>
-    <CookiesProvider>
-      {/* <BrowserRouter>
+  <CookiesProvider>
+    {/* <BrowserRouter>
         <App />
       </BrowserRouter> */}
-      <HashRouter>
-        <App />
-      </HashRouter>
-    </CookiesProvider>
-  </React.StrictMode>
+    <HashRouter>
+      <App />
+    </HashRouter>
+  </CookiesProvider>
 );
 
 // If you want to start measuring performance in your app, pass a function

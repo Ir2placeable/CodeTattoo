@@ -79,11 +79,11 @@ public class ChatController {
         responseHeaders.add("Content-Type", "application/json; charset=UTF-8");
 
         if (socketHandler.currentUserid(vo.getUserid())) {
-            log.info("User Session Map is : {}", socketHandler.getUserMap());
+            log.info("Success User Session Map is : {}", socketHandler.getUserMap());
             temp.addProperty("success", "true");
             return new ResponseEntity<>(gson.toJson(temp), responseHeaders,HttpStatus.OK);
         } else {
-            log.info("User Session Map is : {}", socketHandler.getUserMap());
+            log.info("failed User Session Map is : {}", socketHandler.getUserMap());
             temp.addProperty("success", "false");
             return new ResponseEntity<>(gson.toJson(temp), responseHeaders,HttpStatus.OK);
         }
@@ -259,10 +259,12 @@ public class ChatController {
                     } else if (!v.getSender().equals(user_id) && v.getReceiver().equals(user_id)) { //상대방이 나에게 마지막으로 채팅을 보냈을떄
                         opponent = v.getSender();
                     }
-                    if (check.contains(opponent))
+                    log.info("opponent : {}", opponent);
+                    if (check.contains(v.getReservation_id()))
                         continue;
                     else
-                        check.add(opponent);
+                        check.add(v.getReservation_id());
+
                     log.info("targetURL : {}", targetURL + "user" );
                     String opponentInfo = getOpponentInfo.callAPIGet(targetURL  , user_id, opponent, "user");
                     JsonObject jsonObject = JsonParser.parseString(opponentInfo).getAsJsonObject();
@@ -289,10 +291,10 @@ public class ChatController {
                         opponent = v.getSender();
                     }
                     log.info("opponent : {}", opponent);
-                    if (check.contains(opponent))
+                    if (check.contains(v.getReservation_id()))
                         continue;
                     else
-                        check.add(opponent);
+                        check.add(v.getReservation_id());
 
                     log.info("targetURL : {}", targetURL + "tattooist" );
                     String opponentInfo = getOpponentInfo.callAPIGet(targetURL , user_id, opponent,"tattooist");
