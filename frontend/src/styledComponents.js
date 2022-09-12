@@ -175,7 +175,8 @@ export const HeaderTitle = styled.div`
 export const HeaderLogo = styled.img`
   display: inline-block;
   height: 80%;
-  object-fit: contain;
+  // object-fit: contain;
+  object-fit: cover;
 `;
 
 export const HeaderText = styled.div`
@@ -501,7 +502,8 @@ export const MyTattooImg = styled.img`
   border-radius: 8px;
   box-shadow: 5px 5px 10px 0 rgba(72, 72, 72, 0.3);
   margin-left: 30px;
-  object-fit: contain;
+  // object-fit: contain;
+  object-fit: cover;
 `;
 
 export const MyTattooStateBox = styled.div`
@@ -717,7 +719,8 @@ export const DetailDraftImg = styled.img`
   width: 300px;
   height: 300px;
   cursor: pointer;
-  object-fit: contain;
+  // object-fit: contain;
+  object-fit: cover;
 `;
 
 export const DetailDraftImgHover = styled.div`
@@ -748,7 +751,8 @@ export const DetailArtworkImg = styled.img`
   width: 300px;
   height: 300px;
   cursor: pointer;
-  object-fit: contain;
+  // object-fit: contain;
+  object-fit: cover;
 `;
 
 export const DetailArtworkImgHover = styled.div`
@@ -803,7 +807,8 @@ export const ArtworkInfoBox = styled.div`
 export const ArtworkImg = styled.img`
   width: 400px;
   height: 400px;
-  object-fit: contain;
+  // object-fit: contain;
+  object-fit: cover;
   box-sizing: border-box;
   border-radius: 8px;
   background-color: #d8d8d8;
@@ -860,7 +865,8 @@ export const DraftEditBtn = styled.div`
 export const SmallDraftImg = styled.img`
   width: 400px;
   height: 400px;
-  object-fit: contain;
+  // object-fit: contain;
+  object-fit: cover;
   box-sizing: border-box;
   border-radius: 8px;
   background-color: white;
@@ -1087,7 +1093,8 @@ export const ProfileImg = styled.img`
   color: #000;
   text-align: center;
   border-radius: 70%;
-  object-fit: contain;
+  // object-fit: contain;
+  object-fit: cover;
   z-index: 1;
   background-color: #aaa;
 
@@ -1465,7 +1472,8 @@ export const DraftDrawerImg = styled.img`
   // background-color: black;
   // border-radius: 50%;
   // border: 2px solid black;
-  object-fit: contain;
+  // object-fit: contain;
+  object-fit: cover;
 `;
 export const DraftImgDiv = styled.div`
   width: 270px;
@@ -1480,7 +1488,8 @@ export const DraftImgDiv = styled.div`
 export const DraftImg = styled.img`
   width: 100%;
   height: 100%;
-  object-fit: contain;
+  // object-fit: contain;
+  object-fit: cover;
   // box-sizing: border-box;
   // border-radius: 8px;
   // box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.4);
@@ -1599,7 +1608,8 @@ export const LoadedImg = styled.img`
   background-color: #fff;
   width: 300px;
   height: 300px;
-  object-fit: contain;
+  // object-fit: contain;
+  object-fit: cover;
 `;
 
 export const EmptyImgDiv = styled.div`
@@ -1898,7 +1908,8 @@ export const DeleteImgDiv = styled.div`
 export const DeleteImg = styled.img`
   width: 150px;
   height: 150px;
-  object-fit: contain;
+  // object-fit: contain;
+  object-fit: cover;
 `;
 
 export const DeleteDesc = styled.div`
@@ -2077,16 +2088,22 @@ export const FooterDiv = styled.footer`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+
+  position: absolute;
+  bottom: 0;
+  left: 0;
+
+  color: #e6e6e6;
 `;
 export const FooterTitle = styled.div`
-  color: white;
-  font-size: 36px;
+  // color: white;
+  font-size: 18px;
   font-weight: 700;
   margin-bottom: 5px;
 `;
 export const FooterDesc = styled.div`
-  color: white;
-  font-size: 14px;
+  // color: white;
+  font-size: 12px;
   margin-bottom: 5px;
 `;
 
@@ -2229,7 +2246,8 @@ export const ReservDraftImg = styled.img`
   width: 200px;
   height: 200px;
   background-color: white;
-  object-fit: contain;
+  // object-fit: contain;
+  object-fit: cover;
   border-radius: 5px;
 `;
 
@@ -2364,7 +2382,8 @@ export const ProcedureImg = styled.img`
   background-color: white;
   width: 350px;
   height: 350px;
-  object-fit: contain;
+  // object-fit: contain;
+  object-fit: cover;
 `;
 
 export const ProcedureEdit = styled.div`
@@ -2611,7 +2630,8 @@ export const ProcedureEditImg = styled.img`
   height: 300px;
   background-color: white;
   box-shadow: 10px 10px 20px 0 rgba(72, 72, 72, 0.5);
-  object-fit: contain;
+  // object-fit: contain;
+  object-fit: cover;
   border-radius: 5px;
 `;
 
@@ -2740,6 +2760,10 @@ export const ChattingBox = styled.div`
 export const ChattingImg = styled.img`
   width: 50px;
   height: 50px;
+<<<<<<< HEAD
+=======
+  // object-fit: contain;
+>>>>>>> e1b7d42644305d9607f3b5392ae0da5131214339
   object-fit: cover;
   border-radius: 50%;
   background-color: white;
