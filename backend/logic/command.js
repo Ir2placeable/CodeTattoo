@@ -160,6 +160,8 @@ exports.userImageEdit = async function(params, body) {
 
     // 기존 유저 이미지 삭제
     await imageStorage.delete(params.id)
+
+    return image_url
 }
 
 // 타투이스트 정보 변경
@@ -185,6 +187,8 @@ exports.tattooistImageEdit = async function(params, body) {
 
     // 기존 이미지 삭제
     await imageStorage.delete(params.id)
+
+    return image_url
 }
 
 // 도안 생성

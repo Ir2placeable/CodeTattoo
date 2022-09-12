@@ -307,7 +307,7 @@ server.post('/user/my-page/:id', (req, res) => {
 
     command.userImageEdit(req.params, req.body)
         .then((returned) => {
-            res.send({ success : true })
+            res.send({ success : true, image : returned })
         })
         .catch((err) => {
             res.send(ErrorLogging(err))
@@ -333,7 +333,7 @@ server.post('/tattooist/my-page/:id', (req, res) => {
 
     command.tattooistImageEdit(req.params, req.body)
         .then((returned) => {
-            res.send({ success : true })
+            res.send({ success : true, image : returned })
         })
         .catch((err) => {
             res.send(ErrorLogging(err))
