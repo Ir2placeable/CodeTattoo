@@ -21,15 +21,21 @@ import { useParams } from "react-router-dom";
 import ChattingMessage from "../../atomic/chatting/ChattingMessage";
 import ChattingImgChoice from "../../atomic/chatting/ChattingImgChoice";
 
-const ChattingRoom = ({ data, onPlusClick, message }) => {
+const ChattingRoom = ({ data, onPlusClick }) => {
   const ws = useContext(WebSocketContext);
   const [content, setContent] = useState("");
-  const [messages, setMessages] = useState([...message]);
+  const [records, setRecords] = useState([]);
+  const [src, setSrc] = useState(null);
 
   const params = useParams();
   const subject_id = params.id;
   const reservation_id = params.reservation_id;
   const contentInput = useRef();
+
+  const message = useChatRecord({
+    subject_id: subject_id,
+    reservation_id: reservation_id,
+  });
 
   useEffect(() => {
     console.log("message: ", message);
@@ -62,7 +68,8 @@ const ChattingRoom = ({ data, onPlusClick, message }) => {
   }, []);
 
   ws.current.onmessage = (e) => {
-    setMessages
+    const data = JSON.parse(e.data);
+    console.log("data.chat: ", data);
   };
 
   const onSend = () => {
