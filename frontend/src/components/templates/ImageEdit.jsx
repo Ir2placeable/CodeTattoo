@@ -19,7 +19,6 @@ import ProfileUploadBtn from "../atomic/edit/ProfileUploadBtn";
 import Loader from "../atomic/common/Loader";
 
 const ImageEdit = () => {
-  const [cookie, setCookie] = useState(getCookie("profile_img_src"));
   const [loading, setLoading] = useState(false);
   const [src, setSrc] = useState(getCookie("profile_img_src"));
   const [image, setImage] = useState({
@@ -68,9 +67,9 @@ const ImageEdit = () => {
     if (res.data.success) {
       alert("이미지 등록에 성공했습니다.");
       if(getCookie("user_id")) {
-        window.location.replace(`/my-page/user/${getCookie("user_id")}`)
+        window.location.replace(`#/my-page/user/${getCookie("user_id")}`)
       } else {
-        window.location.replace(`/tattooist/${getCookie("tattooist_id")}/draft`)
+        window.location.replace(`#/tattooist/${getCookie("tattooist_id")}/draft`)
       }
     } else {
       alert("이미지 등록에 실패했습니다.");
@@ -80,7 +79,6 @@ const ImageEdit = () => {
 
   const pushCookie = (imgSrc) => {
     setLoading(true);
-    resetCookie("profile_img_src");
     setCookie("profile_img_src", imgSrc, { maxAge: 3000, path: "/" });
   };
 

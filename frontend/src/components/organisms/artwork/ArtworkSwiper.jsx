@@ -2,7 +2,7 @@ import React from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination, Navigation, Scrollbar, A11y } from "swiper";
 import styled from "styled-components";
-import ArtworkStateUnit from "../../atomic/artwork/ArtworkStateUnit";
+import ArtworkStateUnit from "../../atomic/artwork/StateUnit";
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";

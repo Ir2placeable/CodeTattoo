@@ -2,7 +2,7 @@ import React from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination, Navigation, Scrollbar, A11y } from "swiper";
 import styled from "styled-components";
-import ArtworkStateUnit from "../../atomic/artwork/ArtworkStateUnit";
+import ArtworkStateUnit from "../../atomic/artwork/StateUnit";
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
@@ -18,16 +18,16 @@ const MyTattooSwiper = ({ states }) => {
         navigation
         modules={[Pagination, Navigation, Scrollbar, A11y]}
       >
-        {states.map((state) => (
-          <SwiperSlide key={state.activator_id}>
+        {states.slice(0).reverse().map((state) => (
+          <SwiperSlide key={state.Record.timestamp}>
             <StateBox >
-              <StateTitle>{state.state}</StateTitle>
+              <StateTitle>{state.Record.state}</StateTitle>
               <StateContentBox>
-                <ArtworkStateUnit title={"비용"} text={state.cost} />
-                <ArtworkStateUnit title={"부위"} text={state.body_part} />
-                <ArtworkStateUnit title={"잉크"} text={state.inks} />
-                <ArtworkStateUnit title={"바늘"} text={state.niddle} />
-                <ArtworkStateUnit title={"머신"} text={state.machine} />
+                <ArtworkStateUnit title={"비용"} text={state.Record.cost} />
+                <ArtworkStateUnit title={"부위"} text={state.Record.body_part} />
+                <ArtworkStateUnit title={"잉크"} text={state.Record.inks} />
+                <ArtworkStateUnit title={"바늘"} text={state.Record.niddle} />
+                <ArtworkStateUnit title={"머신"} text={state.Record.machine} />
               </StateContentBox>
             </StateBox>
           </SwiperSlide>

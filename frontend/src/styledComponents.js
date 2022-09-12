@@ -4,7 +4,7 @@ import styled, { css } from "styled-components";
 
 export const LoadingBox = styled.div`
   position: absolute;
-  top: 35%;
+  top: 50%;
   left: 58%;
   transform: translate(-50%, -50%);
   width: 150px;
@@ -2760,10 +2760,6 @@ export const ChattingBox = styled.div`
 export const ChattingImg = styled.img`
   width: 50px;
   height: 50px;
-<<<<<<< HEAD
-=======
-  // object-fit: contain;
->>>>>>> e1b7d42644305d9607f3b5392ae0da5131214339
   object-fit: cover;
   border-radius: 50%;
   background-color: white;

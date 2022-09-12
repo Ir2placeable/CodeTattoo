@@ -22,7 +22,7 @@ import { useNavigate } from "react-router-dom";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
 
 /**
- * 상위 컴포넌트 : 
+ * 상위 컴포넌트 : ShowMyPage.jsx / 
  */
 const MyPageProfile = ({ profile }) => {
   const [edit, setEdit] = useState(false);
@@ -62,19 +62,6 @@ const MyPageProfile = ({ profile }) => {
 
         <MyPageProfileInfoBox>
           <MyPageProfileNickname>{profile.nickname}</MyPageProfileNickname>
-          {/* <MyPageProfileInfoList>
-            {profile.location ? (
-              <MyPageProfileInfo>
-                Location : {profile.location}
-              </MyPageProfileInfo>
-            ) : null}
-            {profile.specialize ? (
-              <MyPageProfileInfo>
-                Specialize : {profile.specialize}
-              </MyPageProfileInfo>
-            ) : null}
-          </MyPageProfileInfoList> */}
-
           <TattooistInfoUnitBox
             style={{
               padding: "0",

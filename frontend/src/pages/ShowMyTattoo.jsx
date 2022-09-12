@@ -6,9 +6,8 @@ import {
 } from "../styledComponents";
 import MyTattoo from "../components/templates/MyTattoo";
 
-
 /**
- * @file  
+ * 상위 컴포넌트 === ShowMyPage.jsx
  * @returns 
  */
 
