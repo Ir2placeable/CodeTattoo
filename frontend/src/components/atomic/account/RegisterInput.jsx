@@ -1,24 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { useRef } from 'react';
-import { APIURL } from '../../config/key';
+import { APIURL } from '../../../config/key';
 import axios from 'axios'
 import { 
   AccountInputDiv, AccountInputBox, AccountLabel,
-  AccountInput, AccountBtn, AccountText, InputErrorText
-} from '../../styledComponents';
+  AccountInput, AccountBtn, InputErrorText
+} from '../../../styledComponents';
 import { useNavigate } from 'react-router-dom';
-
-// - POST : /register/user
-// - Body : { email, pwd, nickname, location }
-// - Return : { success }
-// - Error code
-//     - err 1 : email 중복
-
-// - POST : /register/tattooist
-// - Body : { email, pwd, nickname, location, office_detail, contact }
-// - Return : { success }
-// - Error code
-//     - err 1 : email 중복
 
 const RegisterInput = ({ isTattooist }) => {
   // 이메일 유효성 검사
@@ -153,13 +141,10 @@ const RegisterInput = ({ isTattooist }) => {
     console.log(res)
 
     if(res.data.success) {
-      // 회원가입 성공 : 로그인 페이지로
       alert('회원가입 성공! 환영합니다.')
       navigate('/login');
     } else {
-      // 회원가입 실패 : 이메일 중복
       alert('이미 존재하는 이메일입니다.')
-      //window.location.replace('/register')
     }
     
   }

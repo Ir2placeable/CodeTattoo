@@ -7,10 +7,16 @@ import {
 import MyPageNav from "../components/organisms/common/MyPageNav";
 import useTattooistDetail from "../hooks/useTattooistDetail";
 
+/**
+ * @file Tattooist Profile Detail Page 
+ * @Outlet Draft, Artwork, Reservation
+ */
 
 const ShowTattooistDetail = () => {
+
+  // GET Tattooist Detail Data
   const location = useLocation();
-  const path = location.pathname; // tattooist/tattooist_id/filter
+  const path = location.pathname; 
   const [profile, items] = useTattooistDetail(path);
 
   return (

@@ -1,15 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination, Navigation, Scrollbar, A11y } from "swiper";
 import styled from "styled-components";
-import StateUnit from "../atomic/artwork/StateUnit";
+import ArtworkStateUnit from "../../atomic/artwork/ArtworkStateUnit";
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
 import "swiper/css/scrollbar";
 
 const ArtworkSwiper = ({ states }) => {
-    console.log(states);
   return (
     <>
       <StyledSwiper
@@ -24,11 +23,11 @@ const ArtworkSwiper = ({ states }) => {
             <StateBox >
               <StateTitle>{state.Record.state}</StateTitle>
               <StateContentBox>
-                <StateUnit title={"비용"} text={state.Record.cost} />
-                <StateUnit title={"부위"} text={state.Record.body_part} />
-                <StateUnit title={"잉크"} text={state.Record.inks} />
-                <StateUnit title={"바늘"} text={state.Record.niddle} />
-                <StateUnit title={"머신"} text={state.Record.machine} />
+                <ArtworkStateUnit title={"비용"} text={state.Record.cost} />
+                <ArtworkStateUnit title={"부위"} text={state.Record.body_part} />
+                <ArtworkStateUnit title={"잉크"} text={state.Record.inks} />
+                <ArtworkStateUnit title={"바늘"} text={state.Record.niddle} />
+                <ArtworkStateUnit title={"머신"} text={state.Record.machine} />
               </StateContentBox>
             </StateBox>
           </SwiperSlide>

@@ -21,6 +21,9 @@ import { getCookie } from "../../../config/cookie";
 import { useNavigate } from "react-router-dom";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
 
+/**
+ * 상위 컴포넌트 : 
+ */
 const MyPageProfile = ({ profile }) => {
   const [edit, setEdit] = useState(false);
 

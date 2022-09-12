@@ -11,6 +11,11 @@ export const LoadingBox = styled.div`
   height: 150px;
 `;
 
+export const userIconStyle = {
+  fontSize: "70px",
+  marginTop: "15px",
+};
+
 export const Btn = styled.div`
   display: flex;
   justify-content: center;
@@ -55,7 +60,6 @@ export const MyPageDiv = styled.div`
   // background-color: orange;
   min-height: calc(100vh - 290px);
 `;
-// position: relative;
 
 export const MyPageAddBtnDiv = styled.div`
   position: fixed;
@@ -2064,24 +2068,32 @@ export const GoUpload = styled.div`
   right: 100px;
 `;
 
-// =================== FOOTER ==========================
+// *** FOOTER ***
 export const FooterDiv = styled.footer`
   background-color: #484848;
   // width: 100vw;
   min-width: 100%;
-  height: 130px;
-  position: absolute;
-  bottom: 0;
-  left: 0;
+  height: 130px;  
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 `;
+export const FooterTitle = styled.div`
+  color: white;
+  font-size: 36px;
+  font-weight: 700;
+  margin-bottom: 5px;
+`
+export const FooterDesc = styled.div`
+  color: white;
+  font-size: 14px;
+  margin-bottom: 5px;
+`
 
-// temporary
-export const userIconStyle = {
-  fontSize: "70px",
-  marginTop: "15px",
-};
 
-// Calenar
+
+// *** CALANDAR ***
 export const CalendarDiv = styled.div`
   // background-color: orange;
   margin: 60px auto;

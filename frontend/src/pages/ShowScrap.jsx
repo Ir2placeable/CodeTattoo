@@ -1,10 +1,16 @@
 import React, { useState } from "react";
 import { Outlet, useLocation, useParams } from "react-router-dom";
-import { ContentsDiv, ListDiv } from "../styledComponents";
+import { ContentsDiv } from "../styledComponents";
 import SmallNav from "../components/organisms/common/SmallNav";
 import Pagination from "../components/organisms/common/Pagination";
 import useScrapTattooist from "../hooks/useScrapTattooist";
 import { useEffect } from "react";
+
+/**
+ * @file 
+ */
+
+
 const ShowScrap = () => {
   const [page, setPage] = useState(1);
   const [pages, setPages] = useState([]);

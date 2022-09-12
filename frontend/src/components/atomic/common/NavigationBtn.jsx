@@ -3,7 +3,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { MainNavigationBtn } from '../../../styledComponents';
 import { useLocation } from 'react-router-dom';
 
-// 상위 컴포넌트 == Navigation.jsx
+// 상위 컴포넌트 === Navigation.jsx
 const NavigationBtn = ({ onClick, text, path }) => {
 
   const _style = {

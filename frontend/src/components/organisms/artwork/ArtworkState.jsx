@@ -1,5 +1,5 @@
 import { MyTattooContainer, MyTattooImg, MyTattooStateBox } from "../../../styledComponents";
-import ArtworkSwiper from "../ArtworkSwiper";
+import ArtworkSwiper from "./ArtworkSwiper";
 
 const ArtworkState = ({ tattoo, image }) => {
   return (

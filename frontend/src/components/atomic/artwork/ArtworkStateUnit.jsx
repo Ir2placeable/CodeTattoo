@@ -4,7 +4,8 @@ import {
   StateText,
   StateContent,
 } from "../../../styledComponents";
-const StateUnit = ({title, text}) => {
+
+const ArtworkStateUnit = ({title, text}) => {
   return (
     <>
       <StateContent>
@@ -15,4 +16,4 @@ const StateUnit = ({title, text}) => {
   );
 };
 
-export default React.memo(StateUnit);
+export default React.memo(ArtworkStateUnit);

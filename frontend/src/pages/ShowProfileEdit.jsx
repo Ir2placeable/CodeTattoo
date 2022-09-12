@@ -6,6 +6,11 @@ import {
   ProfileEditorBox,
 } from "../styledComponents";
 
+/**
+ * @file Profile Editpr Page
+ * @Outlet Image, Profile, Password, Delete Account
+ */
+
 const ShowProfileEdit = () => {
   return (
     <>

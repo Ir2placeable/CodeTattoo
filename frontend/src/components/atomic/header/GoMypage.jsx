@@ -1,7 +1,7 @@
 import React, { useCallback, useState } from "react";
-import { HeaderBtn, HeaderBtnHover } from "../../styledComponents";
+import { HeaderBtn, HeaderBtnHover } from "../../../styledComponents";
 
-import { getCookie } from "../../config/cookie";
+import { getCookie } from "../../../config/cookie";
 import { useNavigate } from "react-router-dom";
 
 const GoMypage = () => {

@@ -6,7 +6,12 @@ import Pagination from "../components/organisms/common/Pagination";
 import SmallNav from "../components/organisms/common/SmallNav";
 import { getCookie } from "../config/cookie";
 
+/**
+ * @file Tattooist Profile List Page
+ */
+
 const ShowTattooistList = () => {
+  // Pagination State
   const [page, setPage] = useState(1);
   const [pages, setPages] = useState([]);
 

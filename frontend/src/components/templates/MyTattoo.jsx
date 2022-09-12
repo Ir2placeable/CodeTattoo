@@ -1,6 +1,6 @@
-import React, {useState} from "react";
+import React from "react";
 import { MyTattooImg, MyTattooStateBox } from "../../styledComponents";
-import MyTattooSwiper from "../organisms/MyTattooSwiper";
+import MyTattooSwiper from "../organisms/mypage/MyTattooSwiper";
 
 const MyTattoo = ({ tattoo }) => {
 
