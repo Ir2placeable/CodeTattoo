@@ -4,7 +4,7 @@ import styled, { css } from "styled-components";
 
 export const LoadingBox = styled.div`
   position: absolute;
-  top: 35%;
+  top: 50%;
   left: 58%;
   transform: translate(-50%, -50%);
   width: 150px;

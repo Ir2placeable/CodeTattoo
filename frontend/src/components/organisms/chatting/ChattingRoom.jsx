@@ -5,13 +5,15 @@ import {
   ChatBigDiv,
   ChatInputDiv,
   ChatBtn,
-  ChatImageInput,
-  ChatImageLabel,
   ChatInput,
   ProfileImgIcon,
 } from "../../../styledComponents";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+<<<<<<< HEAD
 import { faImage, faPlus, faUser } from "@fortawesome/free-solid-svg-icons";
+=======
+import { faPlus } from "@fortawesome/free-solid-svg-icons";
+>>>>>>> 3a80aa6cf33f14164b699ad208bf3b371351468d
 import { useContext } from "react";
 import { WebSocketContext } from "../../templates/Chatting";
 import { useEffect } from "react";
@@ -21,42 +23,18 @@ import { useRef } from "react";
 import useChatRecord from "../../../hooks/useChatRecord";
 import { useParams } from "react-router-dom";
 import ChattingMessage from "../../atomic/chatting/ChattingMessage";
+import ChattingImgChoice from "../../atomic/chatting/ChattingImgChoice";
 
-const ChattingRoom = ({ data, onPlusClick }) => {
+const ChattingRoom = ({ data, onPlusClick, message }) => {
   const ws = useContext(WebSocketContext);
   const [content, setContent] = useState("");
-  const [records, setRecords] = useState([]);
-  const [image, setImage] = useState(null);
+  const [messages, setMessages] = useState([...message]);
 
   const params = useParams();
   const subject_id = params.id;
   const reservation_id = params.reservation_id;
   const contentInput = useRef();
 
-  const message = useChatRecord({
-    subject_id: subject_id,
-    reservation_id: reservation_id,
-  });
-  const datas = [
-    {
-      id: 5,
-      content: "안녕하세요 호갱님",
-      time: "2022-09-06 07:55:10",
-      mine: true,
-    },
-    {
-      id: 6,
-      content: "여기가 눈썹문신 맛집인가요",
-      time: "2022-09-06 07:57:37",
-      mine: false,
-    },
-    {
-      id: 7,
-      content: "슈슈슈슈슛",
-      time: "2022-09-06 07:57:57",
-      mine: true,
-    },
-  ];
   useEffect(() => {
     console.log("message: ", message);
   }, [message]);
@@ -87,13 +65,12 @@ const ChattingRoom = ({ data, onPlusClick }) => {
     // ws.current.send(jsonData)
   }, []);
 
-  // ws.current.onmessage = (evt) => {
-  //   const data = JSON.parse(evt.data)
-  //   console.log('data.chat: ',data.chat)
-  // }
+  ws.current.onmessage = (e) => {
+    setMessages
+  };
 
   const onSend = () => {
-    const r = "63159296a5ef1d69772dc02c";
+
     const body = {
       sender: subject_id,
       receiver: data.opponent_id,
@@ -101,8 +78,16 @@ const ChattingRoom = ({ data, onPlusClick }) => {
       content: content,
     };
 
-    ws.current.send(JSON.stringify(body));
-    console.log("send: ", body);
+    const datas = {
+      sender: subject_id,
+      receiver: subject_id,
+      reservation_id: reservation_id,
+      content: content,
+    };
+
+    ws.current.send(JSON.stringify(datas));
+    setContent("");
+    console.log("send: ", datas);
   };
 
   const onKeyUp = (e) => {
@@ -111,6 +96,20 @@ const ChattingRoom = ({ data, onPlusClick }) => {
     }
   };
   console.log(data)
+
+  const onSelectFile = (e) => {
+    if (e.target.files && e.target.files.length > 0) {
+      const reader = new FileReader();
+
+      // base64 형식으로 읽어오기
+      reader.readAsDataURL(e.target.files[0]);
+
+      reader.addEventListener("load", () => {
+        setSrc(reader.result);
+      });
+    }
+    // console.log(src);
+  };
 
   return (
     <>
@@ -127,7 +126,7 @@ const ChattingRoom = ({ data, onPlusClick }) => {
       </ChattingRoomHeader>
 
       <ChatBigDiv>
-        {datas.map((item) => (
+        {message.map((item) => (
           <ChattingMessage key={item.id} item={item} />
         ))}
       </ChatBigDiv>
@@ -136,10 +135,8 @@ const ChattingRoom = ({ data, onPlusClick }) => {
         <ChatBtn type="image" onClick={onPlusClick}>
           <FontAwesomeIcon icon={faPlus} />
         </ChatBtn>
-        <ChatImageLabel htmlFor="input-chat-img">
-          <FontAwesomeIcon icon={faImage} />
-        </ChatImageLabel>
-        <ChatImageInput type="file" id="input-chat-img" />
+
+        <ChattingImgChoice onSelectFile={onSelectFile} />
 
         <ChatInput
           type="text"

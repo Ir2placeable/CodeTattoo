@@ -4,34 +4,8 @@ import { ChattingListDiv, ChattingEmptyBox } from "../../../styledComponents";
 import ChattingItem from "../../atomic/chatting/ChattingItem";
 
 const ChattingList = ({ onClick }) => {
-  // const chatList = useChatUserList();
-  const chatList = [
-    {
-      reservation_id : "123",
-      content: "아아 마이크 테스트",
-      opponent_id: "631589dda5ef1d69772dbbc0",
-      opponent_image:
-        "https://codetattoo.kr.object.ncloudstorage.com/631589dda5ef1d69772dbbc0",
-      opponent_nickname: "타투구경하러왔어요",
-      confirmed: false,
-    },
-    {
-      reservation_id : "123",
-      content: "슈슈슈슈슈슈슈슛",
-      opponent_id: "631585ffa26479438d3c1ba2",
-      opponent_image: "undefined",
-      opponent_nickname: "유저아영",
-      confirmed: true,
-    },
-    {
-      reservation_id : "123",
-      content: "언제끝남?",
-      opponent_id: "6315859fa26479438d3c1b95",
-      opponent_image: "undefined",
-      opponent_nickname: "아토왕",
-      confirmed: false,
-    },
-  ];
+  const chatList = useChatUserList();
+
   return (
     <>
       {chatList.length === 0 ? (
