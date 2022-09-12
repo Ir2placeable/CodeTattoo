@@ -1,6 +1,7 @@
 import React from 'react';
 import { useState } from 'react';
 import { useOutletContext } from 'react-router-dom';
+import useChatRecord from '../../../hooks/useChatRecord';
 import { ChattingRoomDiv } from '../../../styledComponents';
 import ChattingReservation from './ChattingReservation';
 import ChattingRoom from './ChattingRoom';
