@@ -129,12 +129,15 @@ const Procedure = () => {
 
     setProcedureStatus(false)
 
-    // setTimeout(() => {
-    //   window.location.replace('/reservations')
-    // }, 500)
+    window.location.replace('/#/reservations/confirmed')
   }
 
   const onStart = () => {
+    if(!inks || !niddle || !depth || !machine){
+      alert('모든 시술 정보를 입력해주세요!')
+      return;
+    }
+
     startProcedure({
       reservation_id,
       user_id: state.customer_id,
@@ -167,7 +170,7 @@ const Procedure = () => {
         text: '정말로 이 예약을 확정하시겠습니까?',
         onRequest: function(){
           confirmReservation();
-          window.location.replace('/reservations')
+          window.location.replace('/#/reservations/confirmed')
         }
       })
     }
@@ -180,16 +183,16 @@ const Procedure = () => {
       text: '정말로 이 예약을 거절하시겠습니까?',
       onRequest: function(){
         rejectReservation()
-        window.location.replace("/reservations")
+        window.location.replace("/#/reservations/pending")
       }
     })
   }
 
   const goList = () => {
     if(reservation.confirmed){
-      navigate('/reservations/confirmed')
+      navigate('/#/reservations/confirmed')
     } else {
-      navigate('/reservations/pending')
+      navigate('/#/reservations/pending')
     }
   }
 

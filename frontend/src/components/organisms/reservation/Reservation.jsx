@@ -5,18 +5,10 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { getCookie } from '../../../config/cookie';
 import { 
-  ReservDiv, ReservInfoDiv, ReservDraftImg,
-  ReservText, ReservTextDiv, ReservLabel,
-  ReservTextBox, ReservBtnDiv, ReservBtn, 
-  ReservDraftEmptyImg, ReservStateBtn
+  ReservDiv, ReservBtnDiv, ReservBtn, 
 } from '../../../styledComponents';
+import ReservationInfo from './ReservationInfo';
 
-// 이미지 소스, 고객 닉네임, 예약 일정, 작업 가격
-// { reservation_id, image, customer_id, customer_nickname, 
-//   date, time_slot, cost, body_part, procedure_status, 
-//   confirmed }
-// 필수: reservation_id, customer_id, customer_nickname,
-// procedure_status, confirmed
 const Reservation = memo(({ data }) => {
   const [date, setDate] = useState('미확정');
   const [cost, setCost] = useState('미확정');
@@ -28,9 +20,8 @@ const Reservation = memo(({ data }) => {
 
       const t = String(data.time_slot).substring(0, 2)
       const m = String(data.time_slot).substring(2)
-      // console.log(data.time_slot, t, m)
+      
       tmp += t + ':' + m
-      // console.log(tmp)
 
       setDate(tmp);
     }
@@ -46,11 +37,7 @@ const Reservation = memo(({ data }) => {
   const goChatting = () => {
     navigate(`/chat/${getCookie('tattooist_id')}`)
   }
-
   const onClick = (e) => {
-    // if(e.target.innerText === '예약 미확정'){
-    //   return
-    // }
     navigate(`/reservation/${data.reservation_id}`, {
       state: data
     })
@@ -60,41 +47,13 @@ const Reservation = memo(({ data }) => {
     <>
       <ReservDiv>
 
-        <ReservInfoDiv>
-          {data.image ? (
-            <ReservDraftImg src={data.image} />
-          ) : (
-            <ReservDraftEmptyImg>
-              미확정
-            </ReservDraftEmptyImg>
-          )}
-          
-          <ReservTextDiv>
-            <ReservText>
-              <ReservLabel>Customer</ReservLabel>
-              <ReservTextBox>{data.customer_nickname}</ReservTextBox>
-            </ReservText>
-            <ReservText>
-              <ReservLabel>예약 일정</ReservLabel>
-              <ReservTextBox>{date}</ReservTextBox>
-            </ReservText>
-            <ReservText>
-              <ReservLabel>작업 가격</ReservLabel>
-              <ReservTextBox>{cost}</ReservTextBox>
-            </ReservText>
-          </ReservTextDiv>
-
-          {data.confirmed ? (
-            <ReservStateBtn color="green">
-              예약확정 완료
-            </ReservStateBtn>
-          ) : (
-            <ReservStateBtn color="red">
-              예약확정 대기중
-            </ReservStateBtn>
-          )}
-
-        </ReservInfoDiv>
+        <ReservationInfo 
+          image={data.image}
+          nickname={data.customer_nickname}
+          date={date}
+          cost={cost}
+          confirmed={data.confirmed}
+        />
 
         <ReservBtnDiv>
 
