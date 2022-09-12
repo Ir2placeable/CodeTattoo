@@ -952,7 +952,7 @@ export const TattooistGenreBox = styled.div`
 
 export const TattooistKeywordBox = styled.div`
   display: flex;
-  flex-wrap: wrap;
+  // flex-wrap: wrap;
   // justify-content: space-around;
   align-items: center;
   // width: 300px;
@@ -960,16 +960,31 @@ export const TattooistKeywordBox = styled.div`
   margin: 20px 0;
 `;
 
+export const TattooistKeywords = styled.div`
+display: flex;
+flex-wrap: wrap;
+align-items: center;
+`
+
 export const TattooistKeyword = styled.div`
   font-size: 16px;
-  margin: 0 5px;
+  margin: 5px 5px;
   background-color: #eee;
   // font-size: 18px;
   line-height: 30px;
-  width: 90px;
+  min-width: 70px;
+  // width: max-content;
+  padding: 0 10px;
   text-align: center;
   border-radius: 20px;
 `;
+
+export const TattooistGenreLabelDiv = styled.div`
+// background-color: orange;
+display: flex;
+justify-content: center;
+align-items: cetner;
+`
 
 export const TattooistGenreLabel = styled.span`
   display: inline-block;

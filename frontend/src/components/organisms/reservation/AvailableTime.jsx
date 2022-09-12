@@ -69,12 +69,17 @@ const AvailableTime = ({ value, isAdmin, id }) => {
     const time_slot = t + m;
 
     if(isAdmin){
-      const temp = unavailable;
+      let temp = unavailable;
 
       const dup = temp.findIndex( tmp => tmp.time_slot === time_slot)
 
       if(dup !== -1){
         console.log('중복!')
+        temp = temp.filter(tmp => tmp.time_slot !== time_slot)
+        e.target.style.backgroundColor = '#484848';
+        console.log(temp)
+        setUnavailable(temp)
+        return;
       } else {
         temp.push({date, time_slot});
       }
@@ -110,7 +115,7 @@ const AvailableTime = ({ value, isAdmin, id }) => {
 
     if(res.data.success){
       console.log('time active success')
-      window.location.replace('')
+      window.location.reload()
     } else {
       console.log('time active fail')
     }
@@ -124,7 +129,7 @@ const AvailableTime = ({ value, isAdmin, id }) => {
 
     if(res.data.success){
       console.log('time deactive success')
-      window.location.replace('')
+      window.location.reload()
     } else {
       console.log('time deactive fail')
     }

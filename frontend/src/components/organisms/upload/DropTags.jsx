@@ -26,6 +26,11 @@ const DropTags = memo(({ tags, setTags }) => {
       return;
     }
 
+    if(tags.length > 3){
+      alert('주제는 최대 4개까지 선택 가능합니다!')
+      return;
+    }
+
     setTags([
       ...tags,
       text

@@ -4,6 +4,8 @@ import {
   TattooistKeyword,
   TattooistKeywordBox,
   TattooistGenreLabel,
+  TattooistGenreLabelDiv,
+  TattooistKeywords,
 } from "../../../styledComponents";
 
 const Genre = ({ genre }) => {
@@ -11,17 +13,42 @@ const Genre = ({ genre }) => {
   return (
     <>
       <TattooistGenreBox>
-        <TattooistGenreLabel>장르</TattooistGenreLabel>
-        {genre.genre}
+
         <TattooistKeywordBox>
-          <TattooistGenreLabel>주제</TattooistGenreLabel>
-          {keywords &&
-            keywords.map((keyword, idx) => (
-              <TattooistKeyword key={idx}>{keyword}</TattooistKeyword>
-            ))}
+          <TattooistGenreLabelDiv>
+            <TattooistGenreLabel>
+                장르
+            </TattooistGenreLabel>
+          </TattooistGenreLabelDiv>
+          <TattooistKeyword>
+              {genre.genre}
+          </TattooistKeyword>
         </TattooistKeywordBox>
-        <TattooistGenreLabel>가격</TattooistGenreLabel>
-        {genre.cost} won
+
+        <TattooistKeywordBox>
+          <TattooistGenreLabelDiv>
+            <TattooistGenreLabel>
+                주제
+            </TattooistGenreLabel>
+          </TattooistGenreLabelDiv>
+          <TattooistKeywords>
+            {keywords &&
+              keywords.map((keyword, idx) => (
+                <TattooistKeyword key={idx}>{keyword}</TattooistKeyword>
+            ))}
+          </TattooistKeywords>
+        </TattooistKeywordBox>
+
+        <TattooistKeywordBox>
+          <TattooistGenreLabelDiv>
+            <TattooistGenreLabel>
+                가격
+            </TattooistGenreLabel>
+          </TattooistGenreLabelDiv>
+          <TattooistKeyword>
+            {genre.cost} won
+          </TattooistKeyword>
+        </TattooistKeywordBox>
       </TattooistGenreBox>
     </>
   );
