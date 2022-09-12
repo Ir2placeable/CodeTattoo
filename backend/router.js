@@ -34,6 +34,7 @@ server.use(bodyParser.json({ limit : "10mb" }));
 server.use(bodyParser.urlencoded({ limit : "10mb", extended : true }))
 
 const cors = require('cors');
+const blockchain = require("./module/blockchain");
 server.use(cors());
 
 server.use('/', (req, res, next) => {
@@ -116,7 +117,7 @@ server.get('/user/my-page/:id', (req, res) => {
 
     page.userMyPage(req.params)
         .then((returned) => {
-            res.send({ success : true, user_info : returned.user_info, tattoos : returned.return_value })
+            res.send({ success : true, user_info : returned.user_info, tattoos : returned.tattoos })
         })
         .catch((err) => {
             res.send(ErrorLogging(err))
@@ -129,7 +130,7 @@ server.get('/artwork/:id', (req, res) => {
 
     page.artworkDetail(req.params, req.query)
         .then((returned) => {
-            res.send({ success : true, image : returned.image, artwork_info : returned.info, tattoos : returned.states })
+            res.send({ success : true, image : returned.image, artwork_info : returned.info, states : returned.states })
         })
         .catch((err) => {
             res.send(ErrorLogging(err))

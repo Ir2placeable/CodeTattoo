@@ -13,7 +13,11 @@ exports.draft = async function(params, query) {
     let return_value
 
     if (params.page === '0') {
-        count = await Draft.count()
+        if (params.filter === 'search') {
+            count = await Draft.find({ title : {$regex : query.title }}).count()
+        } else {
+            count = await Draft.count()
+        }
         // 탐색 결과 없음 오류
         if(count === 0) { throw 10 }
 
@@ -111,7 +115,11 @@ exports.tattooist = async function(params, query) {
     let return_value
 
     if (params.page === '0') {
-        count = await Tattooist.count()
+        if (params.filter === 'search') {
+            count = await Tattooist.find({ nickname : {$regex : query.nickname }}).count()
+        } else {
+            count = await Tattooist.count()
+        }
         if(count === 0) { throw 10 }
 
         return {count, return_value}
@@ -234,7 +242,7 @@ exports.tattooistDetail = async function(params, query) {
 
     return {tattooist_info, return_value}
 }
-// 작업물 페이지
+// 작업물 세부 페이지
 exports.artworkDetail = async function(params, query) {
     let image;
     let info;
@@ -421,30 +429,35 @@ const scrapTattooist = async function(params, query) {
 }
 // 유저 마이페이지 (Only User)
 exports.userMyPage = async function(params) {
+    let user_info
+    let tattoos = []
+
     const user = await User.findOne({ _id : params.id })
     if (!user) { throw 1 }
 
-    const user_info = {
+    user_info = {
         user_id : user['_id'],
         nickname : user['nickname'],
         location : user['location'],
         image : user['image']
     }
 
-    let return_value = [] // 유저가 새긴 여러 개의 타투
-
     for await (let tattoo_id of user['tattoos']) {
-        const tattoo_info = [] // 단일 타투의 히스토리
         const tattoo_history = await blockchain.getTattooHistory(tattoo_id)
         if (!tattoo_history) { throw 30 }
 
+        let states = []
         for (let tattoo_state of tattoo_history) {
-            tattoo_info.push(tattoo_state)
+            states.push(tattoo_state)
         }
-        return_value.push(tattoo_info)
+
+        tattoos.push({
+            image : states[0].Record.image,
+            state : states
+        })
     }
 
-    return {user_info, return_value}
+    return {user_info, tattoos}
 }
 
 // 예약 페이지 (Only Tattooist)

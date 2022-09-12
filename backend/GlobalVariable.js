@@ -2,7 +2,7 @@
 
 const variable = {
     draftShowLimit : 12,
-    tattooistShowLimit : 8,
+    tattooistShowLimit : 6,
 }
 
 module.exports = variable
