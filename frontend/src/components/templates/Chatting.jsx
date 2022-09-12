@@ -84,17 +84,17 @@ const Chatting = () => {
   //   navigate(`${reservationId}`)
   // }, [reservationId])
 
-  useEffect(() => {
-    console.log("send socket");
-    // web socket id 전송
-    axios
-      .post(`${CHATAPIURL}/chat/user`, {
-        userid: userid,
-      })
-      .then((res) => {
-        console.log(res);
-      });
-  }, []);
+  // useEffect(() => {
+  //   console.log("send socket");
+  //   // web socket id 전송
+  //   axios
+  //     .post(`${CHATAPIURL}/chat/user`, {
+  //       userid: userid,
+  //     })
+  //     .then((res) => {
+  //       console.log(res);
+  //     });
+  // }, []);
 
   return (
     <>
