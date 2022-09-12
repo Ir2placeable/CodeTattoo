@@ -3,9 +3,6 @@ import {
   ChattingImg,
   ChattingText,
   ChatBigDiv,
-  ChatDiv,
-  ChatContents,
-  ChatDate,
   ChatInputDiv,
   ChatBtn,
   ChatImageInput,
@@ -22,35 +19,51 @@ import { getCookie } from "../../../config/cookie";
 import { useRef } from "react";
 import useChatRecord from "../../../hooks/useChatRecord";
 import { useParams } from "react-router-dom";
+import ChattingMessage from "../../atomic/chatting/ChattingMessage";
 
 const ChattingRoom = ({ data, onPlusClick }) => {
-  const ws = useContext(WebSocketContext)
-  const [content, setContent] = useState('')
-  const [records, setRecords] = useState([])
+  const ws = useContext(WebSocketContext);
+  const [content, setContent] = useState("");
+  const [records, setRecords] = useState([]);
+  const [image, setImage] = useState(null);
+
   const params = useParams();
   const subject_id = params.id;
   const reservation_id = params.reservation_id;
-  const contentInput = useRef()
+  const contentInput = useRef();
 
   const message = useChatRecord({
     subject_id: subject_id,
-    reservation_id: reservation_id
-  })
-
-  // content: "안녕하세요! 상담문의 드립니다!"
-  // id: 43
-  // mine: true
-  // receiver: "63159296a5ef1d69772dc02c"
-  // time: "2022-09-09T10:37:35.301400"
+    reservation_id: reservation_id,
+  });
+  const datas = [
+    {
+      id: 5,
+      content: "안녕하세요 호갱님",
+      time: "2022-09-06 07:55:10",
+      mine: true,
+    },
+    {
+      id: 6,
+      content: "여기가 눈썹문신 맛집인가요",
+      time: "2022-09-06 07:57:37",
+      mine: false,
+    },
+    {
+      id: 7,
+      content: "슈슈슈슈슛",
+      time: "2022-09-06 07:57:57",
+      mine: true,
+    },
+  ];
   useEffect(() => {
-    console.log('message: ', message)
-  }, [message])
+    console.log("message: ", message);
+  }, [message]);
 
   useEffect(() => {
+    contentInput.current.focus();
 
-    contentInput.current.focus()
-
-    console.log("ws: ", ws)
+    console.log("ws: ", ws);
     // // 타투아영: 631586d4a26479438d3c1bf2
     // // 유저아영: 631585ffa26479438d3c1ba2
     // const src = '631586d4a26479438d3c1bf2'
@@ -68,67 +81,45 @@ const ChattingRoom = ({ data, onPlusClick }) => {
     //   body.receiver = src
     //   body.content = '보내는 사람: a2'
     // }
-    
+
     // let jsonData = JSON.stringify(body);
     // ws.current.send(jsonData)
-
-  }, [])
+  }, []);
 
   // ws.current.onmessage = (evt) => {
-  //   const data = JSON.parse(evt.data) 
+  //   const data = JSON.parse(evt.data)
   //   console.log('data.chat: ',data.chat)
   // }
-  
+
   const onSend = () => {
-    const r = "63159296a5ef1d69772dc02c"
+    const r = "63159296a5ef1d69772dc02c";
     const body = {
       sender: subject_id,
       receiver: data.opponent_id,
-      reservation_id : reservation_id,
-      content: content
-    }
+      reservation_id: reservation_id,
+      content: content,
+    };
 
-    ws.current.send(JSON.stringify(body))
-    console.log('send: ', body)
-  }
+    ws.current.send(JSON.stringify(body));
+    console.log("send: ", body);
+  };
 
   const onKeyUp = (e) => {
-    if(e.key === 'Enter'){
-      onSend()
+    if (e.key === "Enter") {
+      onSend();
     }
-  }
-  
+  };
+
   return (
     <>
       <ChattingRoomHeader>
-        <ChattingImg  />
-        <ChattingText size="main"></ChattingText>
+        <ChattingImg src={data.opponent_image} />
+        <ChattingText size="main">{data.opponent_nickname}</ChattingText>
       </ChattingRoomHeader>
 
-      {/* <ChatBigDiv>
-        <ChatDiv who="me">
-          <ChatContents who="me">sibal</ChatContents>
-          <ChatDate>2022년 12월 17일 12:17pm</ChatDate>
-        </ChatDiv>
-        <ChatDiv who="you">
-          <ChatContents who="you">...</ChatContents>
-          <ChatDate>2022년 8월 17일 5:17pm</ChatDate>
-        </ChatDiv>
-      </ChatBigDiv> */}
-
       <ChatBigDiv>
-        {message.map(item => (
-          <ChatDiv key={item.id}
-            who={item.mine ? "me" : "you"}
-          >
-            <ChatContents>
-              {item.content}
-            </ChatContents>
-
-            <ChatDate>
-              {item.time}
-            </ChatDate>
-          </ChatDiv>
+        {datas.map((item) => (
+          <ChattingMessage key={item.id} item={item} />
         ))}
       </ChatBigDiv>
 
@@ -141,19 +132,36 @@ const ChattingRoom = ({ data, onPlusClick }) => {
         </ChatImageLabel>
         <ChatImageInput type="file" id="input-chat-img" />
 
-        <ChatInput 
+        <ChatInput
           type="text"
           name="content"
           value={content}
-          onChange={(e) => {setContent(e.target.value)}}
+          onChange={(e) => {
+            setContent(e.target.value);
+          }}
           ref={contentInput}
           onKeyUp={onKeyUp}
         />
 
-        <ChatBtn type="submit" onClick={onSend}>전송</ChatBtn>
+        <ChatBtn type="submit" onClick={onSend}>
+          전송
+        </ChatBtn>
       </ChatInputDiv>
     </>
   );
 };
 
 export default ChattingRoom;
+
+{
+  /* <ChatBigDiv>
+        <ChatDiv who="me">
+          <ChatContents who="me">sibal</ChatContents>
+          <ChatDate>2022년 12월 17일 12:17pm</ChatDate>
+        </ChatDiv>
+        <ChatDiv who="you">
+          <ChatContents who="you">...</ChatContents>
+          <ChatDate>2022년 8월 17일 5:17pm</ChatDate>
+        </ChatDiv>
+      </ChatBigDiv> */
+}

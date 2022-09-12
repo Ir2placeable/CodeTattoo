@@ -214,19 +214,18 @@ export const HeaderBtn = styled.div`
   transition: 0.45s;
   cursor: pointer;
 
-  ${(props) => 
-    props.type === 'chat' &&
+  ${(props) =>
+    props.type === "chat" &&
     css`
       width: 60px;
       border-color: #999;
       background-color: #999;
 
-      &:hover{
+      &:hover {
         background-color: #f6f6f6;
         color: #484848;
       }
-    `
-  }
+    `}
 `;
 
 export const HeaderBtnHover = {
@@ -2073,7 +2072,7 @@ export const FooterDiv = styled.footer`
   background-color: #484848;
   // width: 100vw;
   min-width: 100%;
-  height: 130px;  
+  height: 130px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -2084,14 +2083,12 @@ export const FooterTitle = styled.div`
   font-size: 36px;
   font-weight: 700;
   margin-bottom: 5px;
-`
+`;
 export const FooterDesc = styled.div`
   color: white;
   font-size: 14px;
   margin-bottom: 5px;
-`
-
-
+`;
 
 // *** CALANDAR ***
 export const CalendarDiv = styled.div`
@@ -2281,24 +2278,23 @@ export const ReservTextBox = styled.span`
 `;
 
 export const ReservStateBtn = styled.div`
-position: absolute;
-top: 20px;
-right: 20px;
-padding: 7px;
-font-weight: bold;
-font-size: 12px;
-border-radius: 5px;
-background-color: #D83A3A; 
-text-align: center;
-color: white;
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  padding: 7px;
+  font-weight: bold;
+  font-size: 12px;
+  border-radius: 5px;
+  background-color: #d83a3a;
+  text-align: center;
+  color: white;
 
-${(props) => 
-  props.color === 'green' &&
-  css`
-    background-color: #4FBD4F;
-  `
-}
-`
+  ${(props) =>
+    props.color === "green" &&
+    css`
+      background-color: #4fbd4f;
+    `}
+`;
 
 export const ReservBtnDiv = styled.div`
   // width: 20%;
@@ -2701,11 +2697,28 @@ export const ChattingListDiv = styled.div`
 `;
 
 export const ChattingEmptyBox = styled.div`
-// background-color: white;
-color: white;
-// font-weight: bold;
-margin-top: 20px;
-`
+  // background-color: white;
+  color: white;
+  // font-weight: bold;
+  margin-top: 20px;
+`;
+
+export const ChattingItemBox = styled.div`
+  background-color: #f3f3f3;
+  width: 350px;
+  border-radius: 10px;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  position: relative;
+  transition: 0.4s;
+  margin: 5px;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #bdbdbd;
+  }
+`;
 
 export const ChattingBox = styled.div`
   background-color: #f3f3f3;
@@ -2723,10 +2736,11 @@ export const ChattingBox = styled.div`
     background-color: #bdbdbd;
   }
 `;
+
 export const ChattingImg = styled.img`
   width: 50px;
   height: 50px;
-  object-fit: contain;
+  object-fit: cover;
   border-radius: 50%;
   background-color: white;
 `;
@@ -2793,11 +2807,11 @@ export const ChattingReserv = styled.div`
   right: 10px;
 
   ${(props) => {
-    if (props.state === "complete") {
+    if (props.state === "confirmed") {
       return css`
         background-color: #4ec059;
       `;
-    } else if (props.state === "standby") {
+    } else if (props.state === "pending") {
       return css`
         background-color: #e84545;
       `;
@@ -2813,6 +2827,21 @@ export const ChattingRoomDiv = styled.div`
   // height: 600px;
   // overflow-y: scroll;
   position: relative;
+
+  ${(props) => {
+    if (props.state === "entry")
+      return css`
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      `;
+  }}
+`;
+
+export const ChattingRoomLogo = styled.img`
+  height: 200px;
+  object-fit: contain;
+  opacity: 0.15;
 `;
 
 export const ChattingRoomHeader = styled.div`

@@ -55,9 +55,9 @@ const Chatting = () => {
   const dataSetting = async(item) => {
     setData(item)
   }
+
   const onClick = ({e, item}) => {
     // e.target.style.backgroundColor = 'black'
-    // setData(item)
     dataSetting(item)
       .then(() => {
         navigate(`${item.reservation_id}`)

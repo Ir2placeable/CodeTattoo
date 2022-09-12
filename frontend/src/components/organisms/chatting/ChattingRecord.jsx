@@ -1,5 +1,4 @@
 import React from 'react';
-import { useContext } from 'react';
 import { useState } from 'react';
 import { useOutletContext } from 'react-router-dom';
 import { ChattingRoomDiv } from '../../../styledComponents';

@@ -1,70 +1,50 @@
-import React, { useState } from "react";
+import React from "react";
 import useChatUserList from "../../../hooks/useChatUserList";
-import {
-  ChattingListDiv,
-  ChattingBox,
-  ChattingImg,
-  ChattingTextDiv,
-  ChattingText,
-  ChattingReserv,
-  EmptyBox,
-  ProfileImgIcon, ChattingEmptyBox
-} from "../../../styledComponents";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUser } from "@fortawesome/free-solid-svg-icons";
-import { useContext } from "react";
-import { WebSocketContext } from "../../templates/Chatting";
+import { ChattingListDiv, ChattingEmptyBox } from "../../../styledComponents";
+import ChattingItem from "../../atomic/chatting/ChattingItem";
 
-const ChattingList = ({onClick}) => {
-
-  const chatList = useChatUserList();
-  // const chatList = []
-  console.log(chatList)
-  // content, createAt, opponent_id, opponent_image,
-  // opponent_nickname, reservation_id
-
-  // const ws = useContext(WebSocketContext)
-
-  // console.log('ws: ', ws)
-
+const ChattingList = ({ onClick }) => {
+  // const chatList = useChatUserList();
+  const chatList = [
+    {
+      reservation_id : "123",
+      content: "아아 마이크 테스트",
+      opponent_id: "631589dda5ef1d69772dbbc0",
+      opponent_image:
+        "https://codetattoo.kr.object.ncloudstorage.com/631589dda5ef1d69772dbbc0",
+      opponent_nickname: "타투구경하러왔어요",
+      confirmed: false,
+    },
+    {
+      reservation_id : "123",
+      content: "슈슈슈슈슈슈슈슛",
+      opponent_id: "631585ffa26479438d3c1ba2",
+      opponent_image: "undefined",
+      opponent_nickname: "유저아영",
+      confirmed: true,
+    },
+    {
+      reservation_id : "123",
+      content: "언제끝남?",
+      opponent_id: "6315859fa26479438d3c1b95",
+      opponent_image: "undefined",
+      opponent_nickname: "아토왕",
+      confirmed: false,
+    },
+  ];
   return (
     <>
       {chatList.length === 0 ? (
         <ChattingListDiv>
-          <ChattingEmptyBox>
-            요청한 상담이 없습니다.
-          </ChattingEmptyBox>
+          <ChattingEmptyBox>요청한 상담이 없습니다.</ChattingEmptyBox>
         </ChattingListDiv>
       ) : (
         <ChattingListDiv>
           {chatList.map((item) => (
-            <ChattingBox
-              id={item.createdAt} key={item.createdAt} 
-              // onClick={() => onClick(item.opponent_id, item.reservation_id)}
-              onClick={(e) => { onClick({e, item})}}
-            >
-              {item.opponent_image !== "undefined" ? (
-                <ChattingImg id="chat_img"src={item.opponent_image} />
-              ) : (
-                <ProfileImgIcon size="chat">
-                  <FontAwesomeIcon
-                    style={{ fontSize: "35px" }}
-                    icon={faUser}
-                  />
-                </ProfileImgIcon>
-              )}
-
-              <ChattingTextDiv>
-                <ChattingText size="big" id="chat_nickname">{item.opponent_nickname}</ChattingText>
-                <ChattingText size="medium">{item.content}</ChattingText>
-              </ChattingTextDiv>
-
-              <ChattingReserv state="complete" />
-            </ChattingBox>
+            <ChattingItem  key={item.opponent_id} item={item} onClick={onClick} />
           ))}
         </ChattingListDiv>
       )}
-      
     </>
   );
 };
