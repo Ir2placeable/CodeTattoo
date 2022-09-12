@@ -8,6 +8,6 @@ public interface MessageService {
 
     Iterable<MessageDto> getUserList(String sender);
 
-    Iterable<MessageDto> getMessageList(String sender, String receiver);
+    Iterable<MessageDto> getMessageList(String reservation_id);
 
 }

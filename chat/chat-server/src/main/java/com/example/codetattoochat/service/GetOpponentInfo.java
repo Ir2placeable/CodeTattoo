@@ -12,8 +12,10 @@ import org.apache.hc.client5.http.protocol.HttpClientContext;
 import org.apache.hc.core5.http.HttpHeaders;
 import org.apache.hc.core5.http.io.entity.EntityUtils;
 import org.apache.hc.core5.http.io.entity.StringEntity;
+import org.apache.hc.core5.net.URIBuilder;
 import org.springframework.stereotype.Component;
 
+import java.net.URI;
 import java.net.URISyntaxException;
 
 @Component
@@ -22,13 +24,28 @@ import java.net.URISyntaxException;
 public class GetOpponentInfo {
     HttpClientConnectionManager cm = null;
 
-    public String callAPIGet(String url) throws URISyntaxException {
+    public String callAPIGet(String url, String param1, String param2, String type) throws URISyntaxException {
         String responseBody = null;
         CloseableHttpClient httpClient = HttpClients.custom().setConnectionManager(cm).build(); //http 클라이언트 생성
-        final HttpGet httpGet = new HttpGet(url); //url 명시
+        final HttpGet httpGet = new HttpGet(url+type); //url 명시
 
-        //헤더 설정
-        httpGet.setHeader(HttpHeaders.CONTENT_TYPE, "text/plain");
+        if (type.equals("user")) {
+            URI uri = new URIBuilder(httpGet.getUri())
+                    .addParameter("user_id", param1)
+                    .addParameter("tattooist_id", param2)
+                    .build();
+            //헤더 설정
+            httpGet.setHeader(HttpHeaders.CONTENT_TYPE, "text/plain");
+            httpGet.setUri(uri);
+        } else if (type.equals("tattooist")) {
+            URI uri = new URIBuilder(httpGet.getUri())
+                    .addParameter("tattooist_id", param1)
+                    .addParameter("user_id", param2)
+                    .build();
+            //헤더 설정
+            httpGet.setHeader(HttpHeaders.CONTENT_TYPE, "text/plain");
+            httpGet.setUri(uri);
+        }
 
         log.debug("----------------------------------------");
         log.debug("Executing request {} {}" , httpGet.getMethod() , httpGet.getUri());

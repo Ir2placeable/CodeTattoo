@@ -5,6 +5,7 @@ import com.example.codetattoochat.handler.SocketHandler;
 import com.example.codetattoochat.service.APIInfo;
 import com.example.codetattoochat.service.MessageService;
 import com.example.codetattoochat.service.GetOpponentInfo;
+import com.example.codetattoochat.vo.RequestReserveSend;
 import com.example.codetattoochat.vo.RequestSend;
 import com.example.codetattoochat.vo.RequestUserId;
 import com.example.codetattoochat.vo.ResponseUserList;
@@ -12,6 +13,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
@@ -33,11 +35,13 @@ import org.springframework.http.HttpHeaders;
 @Controller
 @RestController
 @Slf4j
+@Data
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class ChatController {
     private MessageService messageService;
     private Environment env;
     final String url = "http://3.39.196.91:3001";
-    final String endpoint = "/chatting/profile/";
+    final String endpoint = "/chat/profile/";
 
     @Autowired
     public ChatController(
@@ -54,12 +58,12 @@ public class ChatController {
     @Autowired
     SocketHandler socketHandler;
 
-    @RequestMapping("/chat")
-    public ModelAndView chat() {
-        ModelAndView mv = new ModelAndView();
-        mv.setViewName("chat");
-        return mv;
-    }
+//    @RequestMapping("/chat")
+//    public ModelAndView chat() {
+//        ModelAndView mv = new ModelAndView();
+//        mv.setViewName("chat");
+//        return mv;
+//    }
 
     @GetMapping("/ping")
     public APIInfo ping() {
@@ -96,6 +100,7 @@ public class ChatController {
                 .sender(vo.getSender())
                 .receiver(vo.getReceiver())
                 .content(vo.getContent())
+                .reservation_id(vo.getReservation_id())
                 .build();
 
         if (messageService.send(messageDto).getReceiver() != null) {
@@ -107,11 +112,35 @@ public class ChatController {
         }
     }
 
+    @PostMapping("/chat/create")
+    public ResponseEntity ReserveSend(@RequestBody RequestReserveSend vo) throws URISyntaxException {
+        Gson gson = new Gson();
+        JsonObject temp = new JsonObject();
+        HttpHeaders responseHeaders = new HttpHeaders();
+        responseHeaders.add("Content-Type", "application/json; charset=UTF-8");
+
+        MessageDto messageDto = MessageDto.builder()
+                .sender(vo.getUser_id())
+                .receiver(vo.getTattooist_id())
+                .content("안녕하세요! 상담문의 드립니다!")
+                .reservation_id(vo.getReservation_id())
+                .build();
+
+        if (messageService.send(messageDto).getReceiver() != null) {
+            temp.addProperty("success", true);
+            return new ResponseEntity<>(gson.toJson(temp), responseHeaders,HttpStatus.OK);
+        } else {
+            temp.addProperty("success", false);
+            return new ResponseEntity<>(gson.toJson(temp), responseHeaders,HttpStatus.OK);
+        }
+    }
+
     @GetMapping("/chat/reservation/{user_id}/{target_id}")
     public ResponseEntity getReserveList(@PathVariable String user_id, @PathVariable String target_id) throws URISyntaxException {
         HttpHeaders responseHeaders = new HttpHeaders();
         responseHeaders.add("Content-Type", "application/json; charset=UTF-8");
         List<ResponseUserList> result = new ArrayList<>();
+        List<String> tattooists = new ArrayList<>();
         Gson gson = new Gson();
         JsonObject temp = new JsonObject();
         String targetURL = url + endpoint;
@@ -123,21 +152,34 @@ public class ChatController {
         log.info("UserId is : {}", user_id);
         log.info("OppoId is : {}", target_id);
 
-        // 유저가 상담문의 버튼을 누르면 자동적으로 "안녕하세요, 상담문의 드립니다!" 라는 HandShakeMessage 전송
-        MessageDto messageDto = MessageDto.builder()
-                .sender(user_id)
-                .receiver(target_id)
-                .content("안녕하세요! 상담문의 드립니다!")
-                .build();
-
-        if (messageService.send(messageDto).getReceiver() == null) { // HandShakeMessage가 보내지지 않았을때 오류
-            temp.addProperty("success", "false");
-            temp.addProperty("status", "Sending HandShakeMessage is Failed");
-            return new ResponseEntity<>(gson.toJson(temp), responseHeaders,HttpStatus.OK);
-        }
-
         Iterable<MessageDto> messageList = messageService.getUserList(user_id);
         log.info("{} 's messageList is : {}", user_id, messageList);
+
+        for (MessageDto v : messageList) {
+            tattooists.add(v.getReceiver());
+
+        }
+
+
+        //만약 HandShakeMessage를 보냈다면, 바로 유저리스트를 가져옴
+        if (!tattooists.contains(target_id)) { //아니라면 HandShakeMessage를 보냄
+            log.info("tattooists : {}",tattooists);
+            // 유저가 상담문의 버튼을 누르면 자동적으로 "안녕하세요, 상담문의 드립니다!" 라는 HandShakeMessage 전송
+            MessageDto messageDto = MessageDto.builder()
+                    .sender(user_id)
+                    .receiver(target_id)
+                    .content("안녕하세요! 상담문의 드립니다!")
+                    .build();
+            if (messageService.send(messageDto).getReceiver() == null) { // HandShakeMessage가 보내지지 않았을때 오류
+                temp.addProperty("success", "false");
+                temp.addProperty("status", "Sending HandShakeMessage is Failed");
+                return new ResponseEntity<>(gson.toJson(temp), responseHeaders,HttpStatus.OK);
+            }
+            messageList = messageService.getUserList(user_id);
+            log.info("{} 's messageList is : {}", user_id, messageList);
+        }
+
+
 
         for (MessageDto v : messageList) {
             if (v.getSender().equals(user_id) && !v.getReceiver().equals(user_id)) { //내가 상대방한테 마지막으로 채팅을 보냈을때,
@@ -149,8 +191,10 @@ public class ChatController {
                 continue;
             else
                 check.add(opponent);
-            log.info("targetURL : {}", targetURL + "tattooist" + "/" + opponent);
-            String opponentInfo = getOpponentInfo.callAPIGet(targetURL + "tattooist" + "/" + opponent);
+
+            log.info("targetURL : {}", targetURL + "user" );
+            String opponentInfo = getOpponentInfo.callAPIGet(targetURL  , user_id, opponent, "user");
+
             JsonObject jsonObject = JsonParser.parseString(opponentInfo).getAsJsonObject();
             OppoNick = jsonObject.get("profile").getAsJsonObject().get("nickname").getAsString();
             if (jsonObject.get("profile").getAsJsonObject().get("image") == null)
@@ -183,7 +227,7 @@ public class ChatController {
     }
 
 
-    @GetMapping("/chat/userlist/{type}/{user_id}/{opponent_id}") // 상대방 유저 리스트 요청 API (채팅목록)
+    @GetMapping("/chat/list/{type}/{user_id}") // 상대방 유저 리스트 요청 API (채팅목록)
     public ResponseEntity getUserList(@PathVariable String user_id, @PathVariable String type) throws URISyntaxException {
         List<ResponseUserList> result = new ArrayList<>();
         Gson gson = new Gson();
@@ -195,6 +239,7 @@ public class ChatController {
         List<String> check = new ArrayList<>();
         log.info("UserType is : {}", type);
         log.info("UserId is : {}", user_id);
+
         if (type != null && user_id != null) {
             Iterable<MessageDto> messageList = messageService.getUserList(user_id);
             log.info("{} 's messageList is : {}", user_id, messageList);
@@ -218,8 +263,8 @@ public class ChatController {
                         continue;
                     else
                         check.add(opponent);
-                    log.info("targetURL : {}", targetURL + "tattooist" + "/" + opponent);
-                    String opponentInfo = getOpponentInfo.callAPIGet(targetURL + "tattooist" + "/" + opponent);
+                    log.info("targetURL : {}", targetURL + "user" );
+                    String opponentInfo = getOpponentInfo.callAPIGet(targetURL  , user_id, opponent, "user");
                     JsonObject jsonObject = JsonParser.parseString(opponentInfo).getAsJsonObject();
                     OppoNick = jsonObject.get("profile").getAsJsonObject().get("nickname").getAsString();
                     if (jsonObject.get("profile").getAsJsonObject().get("image") == null)
@@ -232,6 +277,7 @@ public class ChatController {
                             .opponent_nickname(OppoNick)
                             .content(v.getContent())
                             .createdAt(v.getCreatedAt())
+                            .reservation_id(v.getReservation_id())
                             .build());
                 }
                 check.clear();
@@ -248,8 +294,8 @@ public class ChatController {
                     else
                         check.add(opponent);
 
-                    log.info("targetURL : {}", targetURL + "user" + "/" + opponent);
-                    String opponentInfo = getOpponentInfo.callAPIGet(targetURL + "user" + "/" + opponent);
+                    log.info("targetURL : {}", targetURL + "tattooist" );
+                    String opponentInfo = getOpponentInfo.callAPIGet(targetURL , user_id, opponent,"tattooist");
                     JsonObject jsonObject = JsonParser.parseString(opponentInfo).getAsJsonObject();
                     OppoNick = jsonObject.get("profile").getAsJsonObject().get("nickname").getAsString();
                     if (jsonObject.get("profile").getAsJsonObject().get("image") == null)
@@ -262,6 +308,7 @@ public class ChatController {
                             .opponent_nickname(OppoNick)
                             .content(v.getContent())
                             .createdAt(v.getCreatedAt())
+                            .reservation_id(v.getReservation_id())
                             .build());
                 }
             }
@@ -283,6 +330,7 @@ public class ChatController {
             vtmp.addProperty("opponent_id", v.getOpponent_id());
             vtmp.addProperty("opponent_image", v.getOpponent_image());
             vtmp.addProperty("opponent_nickname", v.getOpponent_nickname());
+            vtmp.addProperty("reservation_id", v.getReservation_id());
             jArray.add(vtmp);
         }
         temp.add("userlist", jArray);
@@ -291,20 +339,28 @@ public class ChatController {
         return new ResponseEntity<>(gson.toJson(temp), responseHeaders,HttpStatus.OK);
     }
 
-    @GetMapping("/chat/messagelist/{user_id}/{opponent_id}") // 채팅 리스트 요청 API
-    public ResponseEntity getMessageList(@PathVariable String user_id, @PathVariable String opponent_id) {
+    @GetMapping("/chat/message/{reservation_id}") // 채팅 내역 조회 요청 API
+    public ResponseEntity getMessageList(@PathVariable String reservation_id, @RequestParam String subject_id) {
+        //subject_id : 요청자의 id, reservation_id : 예약 id
+        log.info("reservation_id : {}", reservation_id);
+        log.info("subject_id : {}", subject_id);
         Gson gson = new Gson();
         JsonObject temp = new JsonObject();
-        Iterable<MessageDto> messageList = messageService.getMessageList(user_id, opponent_id);
+        Iterable<MessageDto> messageList = messageService.getMessageList(reservation_id);
+
 
         temp.addProperty("success", "true");
         JsonArray jArray = new JsonArray();
         for (MessageDto e : messageList) {
             JsonObject vtmp = new JsonObject();
+            boolean mine = false;
+            if (e.getSender().equals(subject_id)) {
+                mine = true;
+            }
             vtmp.addProperty("id", e.getId());
             vtmp.addProperty("content", e.getContent());
-            vtmp.addProperty("createdAt", e.getCreatedAt());
-            vtmp.addProperty("sender", e.getSender());
+            vtmp.addProperty("time", e.getCreatedAt());
+            vtmp.addProperty("mine", mine);
             vtmp.addProperty("receiver", e.getReceiver());
             jArray.add(vtmp);
         }

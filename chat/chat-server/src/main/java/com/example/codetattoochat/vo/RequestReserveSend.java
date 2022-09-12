@@ -1,18 +1,17 @@
 package com.example.codetattoochat.vo;
 
 import lombok.Getter;
+
 import javax.validation.constraints.NotNull;
 
 @Getter
-public class RequestSend {
+public class RequestReserveSend {
+
     @NotNull(message="Sender cannot be null")
-    private String sender;
+    private String user_id;
 
     @NotNull(message="Receiver cannot be null")
-    private String receiver;
-
-    @NotNull(message="Content cannot be null")
-    private String content;
+    private String tattooist_id;
 
     @NotNull(message="Reservation_id cannot be null")
     private String reservation_id;
