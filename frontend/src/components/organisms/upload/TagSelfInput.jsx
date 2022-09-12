@@ -15,6 +15,7 @@ const TagSelfInput = memo(({ selfInput, onChange, onKeyUp }) => {
           value={selfInput}
           onChange={onChange}
           onKeyUp={onKeyUp}
+          maxLength={10}
         />
 
       </DropTagsBox>

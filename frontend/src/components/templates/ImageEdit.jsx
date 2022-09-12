@@ -17,6 +17,7 @@ import {
 import ProfileImgChoice from "../atomic/edit/ProfileImgChoice";
 import ProfileUploadBtn from "../atomic/edit/ProfileUploadBtn";
 import Loader from "../atomic/common/Loader";
+import { useNavigate } from "react-router-dom";
 
 const ImageEdit = () => {
   const [loading, setLoading] = useState(false);
@@ -53,6 +54,7 @@ const ImageEdit = () => {
     });
   };
 
+  const navigate = useNavigate();
   const sendRequest = async () => {
     let url = `${APIURL}`;
     if (getCookie("user_id")) url += `/user/my-page/${getCookie("user_id")}`;
@@ -70,10 +72,11 @@ const ImageEdit = () => {
       setCookie("profile_img_src", res.data.image, { maxAge: 3000, path: "/" });
 
       if(getCookie("user_id")) {
-        window.location.replace(`/#/my-page/user/${getCookie("user_id")}`)
+        navigate(`/my-page/user/${getCookie("user_id")}`)
       } else {
-        window.location.replace(`/#/tattooist/${getCookie("tattooist_id")}/draft`)
+        navigate(`/tattooist/${getCookie("tattooist_id")}/draft`)
       }
+      window.location.reload()
 
     } else {
       alert("이미지 등록에 실패했습니다.");
@@ -85,7 +88,7 @@ const ImageEdit = () => {
     setLoading(true)
     setTimeout(() => {
       sendRequest();
-    }, 3000)
+    }, 1000)
   };
 
   if (loading) {

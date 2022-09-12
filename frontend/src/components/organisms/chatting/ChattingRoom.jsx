@@ -106,6 +106,7 @@ const ChattingRoom = ({ data, onPlusClick }) => {
     }
   };
 
+
   const onSelectFile = (e) => {
     if (e.target.files && e.target.files.length > 0) {
       const reader = new FileReader();
