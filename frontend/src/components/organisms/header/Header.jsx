@@ -27,7 +27,7 @@ const Header = () => {
   }, [getCookie("user_id"), getCookie("tattooist_id")]);
 
   const goHome = () => {
-    window.location.replace("/drafts/best");
+    window.location.replace("/#/drafts/best");
   };
 
   const navigate = useNavigate();

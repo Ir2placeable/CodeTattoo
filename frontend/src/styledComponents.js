@@ -2208,7 +2208,8 @@ export const TimeActiveBtn = styled.div`
 export const ReservDiv = styled.div`
   // background-color: orange;
   width: 80%;
-  margin: 0 auto 50px;
+  // margin: 0 auto 50px;
+  margin: 20px auto;
   display: flex;
   justify-content: space-between;
 `;

@@ -15,7 +15,7 @@ const LogoutBtn = () => {
     }
 
     setTimeout(() => {
-      window.location.replace('/')
+      window.location.replace('/#')
     }, 1000);
   }, []);
 

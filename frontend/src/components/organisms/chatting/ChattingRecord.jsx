@@ -7,8 +7,9 @@ import ChattingReservation from './ChattingReservation';
 import ChattingRoom from './ChattingRoom';
 
 const ChattingRecord = () => {
-  const { opponentId } = useOutletContext();
+  const { opponentId, data } = useOutletContext();
   console.log('opponent: ',opponentId)
+  console.log('data: ', data)
   const [plusClick, setPlusClick] = useState(true);
 
   const onPlusClick = () => {
@@ -19,7 +20,7 @@ const ChattingRecord = () => {
     <>
       <ChattingRoomDiv>
         {plusClick ? (
-          <ChattingRoom onPlusClick={onPlusClick} />
+          <ChattingRoom onPlusClick={onPlusClick} data={data} />
         ) : (
           <ChattingReservation onPlusClick={onPlusClick} />
         )}
