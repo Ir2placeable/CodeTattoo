@@ -32,37 +32,44 @@ const ChattingRoom = ({ data, onPlusClick }) => {
   const subject_id = params.id;
   const reservation_id = params.reservation_id;
   const contentInput = useRef();
+  const scrollRef = useRef();
+
+  useEffect(() => {
+    // 현재 스크롤 위치 === scrollRef.current.scrollTop
+      // 스크롤 길이 === scrollRef.current.scrollHeight
+      scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
+  });
 
   const message = useChatRecord({
     subject_id: subject_id,
     reservation_id: reservation_id,
   });
 
-  const [messages, setMessages] = useState([])
+  const [messages, setMessages] = useState([]);
 
   useEffect(() => {
-    setMessages(message)
+    setMessages(message);
     // console.log('message: ', message);
-    console.log('messages: ', messages)
-  }, [message, messages])
+    console.log("messages: ", messages);
+  }, [message, messages]);
 
   ws.current.onmessage = (e) => {
     console.log("e: ", e);
     const data = JSON.parse(e.data);
-    console.log('onmessage data: ', data);
-    // const chat = document.getElementById("chat")
+    console.log("onmessage data: ", data);
+
     const temp = {
-      id: 1,
-      mine: true,
-      content: 'hello',
-      time: 'aaa',
-      receiver: '123asdf'
-    }
-  
-    const prev = messages
+      id: 14,
+      content: data.content,
+      time: data.create_at,
+      mine: false,
+      receiver: data.sender,
+    };
+
+    const prev = messages;
     prev.push(temp)
-    console.log('prev: ', prev)
-    setMessages(prev)
+    console.log("prev: ", prev);
+    setMessages([...prev]);
   };
 
   const onSend = () => {
@@ -72,32 +79,25 @@ const ChattingRoom = ({ data, onPlusClick }) => {
       reservation_id: reservation_id,
       content: content,
       created_at: new Date().getTime(),
+      enter_room: false,
     };
 
-    const datas = {
-      sender: subject_id,
-      receiver: subject_id,
-      reservation_id: reservation_id,
-      content: content,
-      created_at: new Date().getTime(),
-      enter_room : false,
-    };
-
-    ws.current.send(JSON.stringify(datas));
+    ws.current.send(JSON.stringify(body));
     setContent("");
-    console.log("send: ", datas);
+    console.log("send: ", body);
 
-    // const temp = {
-    //   id: 1,
-    //   mine: true,
-    //   content: content,
-    //   time: 'aaa',
-    //   receiver: '123asdf'
-    // }
-  
-    // const prev = messages
-    // prev.push(temp)
-    // console.log('prev: ', prev)
+    const temp = {
+      id: body.created_at,
+      mine: true,
+      content: content,
+      time: body.created_at,
+      receiver: body.receiver,
+    };
+
+    const prev = messages;
+    prev.push(temp)
+    console.log("prev: ", prev);
+    setMessages([...prev]);
   };
 
   const onKeyUp = (e) => {
@@ -134,10 +134,9 @@ const ChattingRoom = ({ data, onPlusClick }) => {
         <ChattingText size="main">{data.opponent_nickname}</ChattingText>
       </ChattingRoomHeader>
 
-      <ChatBigDiv id="chat">
-        {messages.length !== 0 && messages.map((item) => (
-          <ChattingMessage key={item.id} item={item} />
-        ))}
+      <ChatBigDiv id="chat" ref={scrollRef}>
+        {messages.length !== 0 &&
+          messages.map((item) => <ChattingMessage key={item.id} item={item} />)}
       </ChatBigDiv>
 
       <ChatInputDiv>
