@@ -43,19 +43,33 @@ const usePagination = ({ filter }) => {
     if(getCookie('user_id')){
       query = `/?user_id=${getCookie('user_id')}`
     }
-    // console.log(filter.split('/')[2])
+    
     if(filter.split('/')[2] === 'search'){
-      const [ , a, b] = filter.split('/');
+      const [ , a, b, keyword] = filter.split('/');
       _filter = `/${a}/${b}`
-      //console.log(_filter)
-    }
-    // console.log(_filter)
+      // console.log(keyword)
+      // console.log(_filter)
 
-    //console.log(filter, query)
+      if(!query){
+        query = `/?`
+      } else {
+        query += '&'
+      }
+
+      if(a === 'drafts'){
+        query += 'title='
+      } else if(a === 'tattooists'){
+        query += 'nickname='
+      }
+
+      query += `${keyword}`
+    }
+
+    console.log(_filter, query)
     const res = await axios.get(`${APIURL}${_filter}/0${query}`);
 
     if(res.data.success){
-      //console.log('usePagination success: ', res.data)
+      // console.log(_filter, 'usePagination success: ', res.data)
       setCount(res.data.count);
     } else {
       console.log('usePagination error');

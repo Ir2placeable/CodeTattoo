@@ -18,6 +18,7 @@ const ShowTattooistDetail = () => {
   const location = useLocation();
   const path = location.pathname; 
   const [profile, items] = useTattooistDetail(path);
+  // console.log(profile, items)
 
   return (
     <>

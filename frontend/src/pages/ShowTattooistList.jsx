@@ -35,6 +35,7 @@ const ShowTattooistList = () => {
           setPage={setPage}
           pages={pages}
           setPages={setPages}
+          items={6}
         />
       </ContentsDiv>
     </>

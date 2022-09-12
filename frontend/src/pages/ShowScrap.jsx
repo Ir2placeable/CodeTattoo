@@ -40,6 +40,7 @@ const ShowScrap = () => {
         <Pagination
           page={page} setPage={setPage}
           pages={pages} setPages={setPages}
+          items={location.pathname === '/scraps/draft' ? 12 : 6}
         />
       </ContentsDiv>
     </>

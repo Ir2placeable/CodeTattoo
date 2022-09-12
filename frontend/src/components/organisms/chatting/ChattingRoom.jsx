@@ -6,9 +6,14 @@ import {
   ChatInputDiv,
   ChatBtn,
   ChatInput,
+  ProfileImgIcon,
 } from "../../../styledComponents";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+<<<<<<< HEAD
+import { faImage, faPlus, faUser } from "@fortawesome/free-solid-svg-icons";
+=======
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
+>>>>>>> 3a80aa6cf33f14164b699ad208bf3b371351468d
 import { useContext } from "react";
 import { WebSocketContext } from "../../templates/Chatting";
 import { useEffect } from "react";
@@ -97,6 +102,7 @@ const ChattingRoom = ({ data, onPlusClick }) => {
       onSend();
     }
   };
+  console.log(data)
 
   const onSelectFile = (e) => {
     if (e.target.files && e.target.files.length > 0) {
@@ -115,7 +121,14 @@ const ChattingRoom = ({ data, onPlusClick }) => {
   return (
     <>
       <ChattingRoomHeader>
-        <ChattingImg src={data.opponent_image} />
+        {data.opponent_image !== 'undefined' ? (
+          <ChattingImg src={data.opponent_image} />
+        ) : (
+          <ProfileImgIcon size="chat">
+            <FontAwesomeIcon style={{ fontSize: "35px" }} icon={faUser} />
+          </ProfileImgIcon>
+        )}
+        
         <ChattingText size="main">{data.opponent_nickname}</ChattingText>
       </ChattingRoomHeader>
 

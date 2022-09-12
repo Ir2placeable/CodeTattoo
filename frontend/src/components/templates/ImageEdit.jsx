@@ -64,26 +64,25 @@ const ImageEdit = () => {
       mime: image.mime,
     });
 
+    
     if (res.data.success) {
-      alert("이미지 등록에 성공했습니다.");
+      // alert("이미지 등록에 성공했습니다.");
+      setCookie("profile_img_src", res.data.image, { maxAge: 3000, path: "/" });
+
       if(getCookie("user_id")) {
-        window.location.replace(`#/my-page/user/${getCookie("user_id")}`)
+        window.location.replace(`/#/my-page/user/${getCookie("user_id")}`)
       } else {
-        window.location.replace(`#/tattooist/${getCookie("tattooist_id")}/draft`)
+        window.location.replace(`/#/tattooist/${getCookie("tattooist_id")}/draft`)
       }
+
     } else {
       alert("이미지 등록에 실패했습니다.");
     }
     setLoading(false);
   };
 
-  const pushCookie = (imgSrc) => {
-    setLoading(true);
-    setCookie("profile_img_src", imgSrc, { maxAge: 3000, path: "/" });
-  };
-
   const onSubmit = () => {
-    pushCookie(image.data);
+    setLoading(true)
     setTimeout(() => {
       sendRequest();
     }, 3000)
