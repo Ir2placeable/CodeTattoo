@@ -27,49 +27,49 @@ const ChattingRoom = ({ data, onPlusClick }) => {
   const [content, setContent] = useState("");
   const [records, setRecords] = useState([]);
   const [src, setSrc] = useState(null);
-  const scrollRef = useRef()
 
   const params = useParams();
   const subject_id = params.id;
   const reservation_id = params.reservation_id;
   const contentInput = useRef();
+  const scrollRef = useRef();
+
+  useEffect(() => {
+    // 현재 스크롤 위치 === scrollRef.current.scrollTop
+      // 스크롤 길이 === scrollRef.current.scrollHeight
+      scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
+  });
 
   const message = useChatRecord({
     subject_id: subject_id,
     reservation_id: reservation_id,
   });
 
-  const [messages, setMessages] = useState([])
+  const [messages, setMessages] = useState([]);
 
   useEffect(() => {
-    setMessages(message)
+    setMessages(message);
     // console.log('message: ', message);
-    console.log('messages: ', messages)
-  }, [message, messages])
+    console.log("messages: ", messages);
+  }, [message, messages]);
 
   ws.current.onmessage = (e) => {
     console.log("e: ", e);
     const data = JSON.parse(e.data);
-    console.log('onmessage data: ', data);
-    // const chat = document.getElementById("chat")
-//     content: "코드봐바"
-// created_at: "1662977855054"
-// enter_room: false
-// receiver: "631585ffa26479438d3c1ba2"
-// reservation_id: "631b26dc0b8407e4f5842c45"
-// sender: "63158661a26479438d3c1bb
+    console.log("onmessage data: ", data);
+
     const temp = {
-      id: data.created_at,
-      mine: false,
+      id: 14,
       content: data.content,
-      time: data.created_at,
-      receiver: data.sender
-    }
-  
-    const prev = messages
+      time: data.create_at,
+      mine: false,
+      receiver: data.sender,
+    };
+
+    const prev = messages;
     prev.push(temp)
-    console.log('prev: ', prev)
-    setMessages(prev)
+    console.log("prev: ", prev);
+    setMessages([...prev]);
   };
 
   const onSend = () => {
@@ -79,37 +79,25 @@ const ChattingRoom = ({ data, onPlusClick }) => {
       reservation_id: reservation_id,
       content: content,
       created_at: new Date().getTime(),
+      enter_room: false,
     };
 
-    const datas = {
-      sender: subject_id,
-      receiver: data.opponent_id,
-      reservation_id: reservation_id,
-      content: content,
-      created_at: new Date().getTime(),
-      enter_room : false,
-    };
-
-    ws.current.send(JSON.stringify(datas));
+    ws.current.send(JSON.stringify(body));
     setContent("");
-    console.log("send: ", datas);
+    console.log("send: ", body);
 
     const temp = {
-      id: datas.created_at,
+      id: body.created_at,
       mine: true,
       content: content,
-      time: datas.created_at,
-      receiver: datas.receiver
-    }
-  
-    // const prev = messages
-    let prev = []
-    for(let i=0; i<messages.length; i++){
-      prev.push(messages[i])
-    }
+      time: body.created_at,
+      receiver: body.receiver,
+    };
+
+    const prev = messages;
     prev.push(temp)
-    console.log('prev: ', prev)
-    setMessages(prev)
+    console.log("prev: ", prev);
+    setMessages([...prev]);
   };
 
   const onKeyUp = (e) => {
@@ -133,12 +121,6 @@ const ChattingRoom = ({ data, onPlusClick }) => {
     // console.log(src);
   };
 
-  useEffect(() => {
-    // 현재 스크롤 위치 === scrollRef.current.scrollTop
-      // 스크롤 길이 === scrollRef.current.scrollHeight
-      scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
-  });
-
   return (
     <>
       <ChattingRoomHeader>
@@ -154,9 +136,8 @@ const ChattingRoom = ({ data, onPlusClick }) => {
       </ChattingRoomHeader>
 
       <ChatBigDiv id="chat" ref={scrollRef}>
-        {messages.length !== 0 && messages.map((item) => (
-          <ChattingMessage key={item.id} item={item} />
-        ))}
+        {messages.length !== 0 &&
+          messages.map((item) => <ChattingMessage key={item.id} item={item} />)}
       </ChatBigDiv>
 
       <ChatInputDiv>
