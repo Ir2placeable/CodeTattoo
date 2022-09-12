@@ -40,9 +40,9 @@ const EditUserProfile = () => {
       pushCookie();
       alert("프로필 수정 성공");
       if(getCookie("user_id")) {
-        window.location.replace(`/my-page/user/${getCookie("user_id")}`)
+        window.location.replace(`/#/my-page/user/${getCookie("user_id")}`)
       } else {
-        window.location.replace(`/tattooist/${getCookie("tattooist_id")}/draft`)
+        window.location.replace(`/#/tattooist/${getCookie("tattooist_id")}/draft`)
       }
     } else {
       alert("프로필 수정 실패");

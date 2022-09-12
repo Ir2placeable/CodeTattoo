@@ -58,7 +58,11 @@ const EditImg = () => {
 
     if (res.data.success) {
       console.log("프로필 이미지 등록 성공");
-      window.location.replace("/edit/profile");
+      if(getCookie("user_id")) {
+        window.location.replace(`/#/my-page/user/${getCookie("user_id")}`)
+      } else {
+        window.location.replace(`/#/tattooist/${getCookie("tattooist_id")}/draft`)
+      }
     } else {
       console.log("프로필 이미지 등록 실패");
     }

@@ -8,9 +8,10 @@ import {
   ChatImageInput,
   ChatImageLabel,
   ChatInput,
+  ProfileImgIcon,
 } from "../../../styledComponents";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faImage, faPlus } from "@fortawesome/free-solid-svg-icons";
+import { faImage, faPlus, faUser } from "@fortawesome/free-solid-svg-icons";
 import { useContext } from "react";
 import { WebSocketContext } from "../../templates/Chatting";
 import { useEffect } from "react";
@@ -109,11 +110,19 @@ const ChattingRoom = ({ data, onPlusClick }) => {
       onSend();
     }
   };
+  console.log(data)
 
   return (
     <>
       <ChattingRoomHeader>
-        <ChattingImg src={data.opponent_image} />
+        {data.opponent_image !== 'undefined' ? (
+          <ChattingImg src={data.opponent_image} />
+        ) : (
+          <ProfileImgIcon size="chat">
+            <FontAwesomeIcon style={{ fontSize: "35px" }} icon={faUser} />
+          </ProfileImgIcon>
+        )}
+        
         <ChattingText size="main">{data.opponent_nickname}</ChattingText>
       </ChattingRoomHeader>
 

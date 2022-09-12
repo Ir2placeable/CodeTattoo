@@ -53,6 +53,7 @@ const Reservation = memo(({ data }) => {
           date={date}
           cost={cost}
           confirmed={data.confirmed}
+          procedure_status={data.procedure_status}
         />
 
         <ReservBtnDiv>

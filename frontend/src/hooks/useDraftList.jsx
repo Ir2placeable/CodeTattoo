@@ -75,7 +75,7 @@ const useDraftList = ({ filter, page }) => {
     }
     //console.log(query)
 
-    const res = await axios.get(`${APIURL}/${filter}/${page}${query}`);
+    const res = await axios.get(`${APIURL}/${filter}/${page}/${query}`);
 
     //console.log(res);
     if(res.data.success){

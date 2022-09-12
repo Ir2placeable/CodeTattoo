@@ -56,12 +56,22 @@ const Chatting = () => {
     setData(item)
   }
 
+  const [prev, setPrev] = useState(null)
   const onClick = ({e, item}) => {
-    // e.target.style.backgroundColor = 'black'
-    dataSetting(item)
-      .then(() => {
-        navigate(`${item.reservation_id}`)
-      })
+    if(e.target === e.currentTarget){
+      if(prev){
+        prev.target.style = {
+          backgroundColor: '#f3f3f3',
+          hover: 'background-color: #bdbdbd;'
+        }
+      }
+      setPrev(e)
+      e.target.style.backgroundColor = '#AFAFAF'
+      dataSetting(item)
+        .then(() => {
+          navigate(`${item.reservation_id}`)
+        })
+    }
   }
 
   // useEffect(() => {

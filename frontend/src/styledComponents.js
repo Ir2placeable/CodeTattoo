@@ -1084,7 +1084,7 @@ export const ProfileImgIcon = styled.div`
       height: 50px;
       line-height: 50px;
       overflow: hidden;
-      background-color: #777;
+      // background-color: #777;
     `}
 `;
 
@@ -1554,6 +1554,7 @@ export const DraftImgTitle = styled.p`
 
 export const SearchResText = styled.div`
   font-size: 20px;
+  margin-top: 20px;
   margin-bottom: 50px;
   // background-color: orange;
   text-align: center;
@@ -2093,7 +2094,7 @@ export const FooterDiv = styled.footer`
   bottom: 0;
   left: 0;
 
-  color: #e6e6e6;
+  color: #BCBCBC;
 `;
 export const FooterTitle = styled.div`
   // color: white;
@@ -2312,6 +2313,13 @@ export const ReservStateBtn = styled.div`
     css`
       background-color: #4fbd4f;
     `}
+
+  ${(props) => 
+    props.color === 'blue' &&
+    css`
+      background-color: #3068EC;
+    `
+  }
 `;
 
 export const ReservBtnDiv = styled.div`
@@ -2760,10 +2768,6 @@ export const ChattingBox = styled.div`
 export const ChattingImg = styled.img`
   width: 50px;
   height: 50px;
-<<<<<<< HEAD
-=======
-  // object-fit: contain;
->>>>>>> e1b7d42644305d9607f3b5392ae0da5131214339
   object-fit: cover;
   border-radius: 50%;
   background-color: white;

@@ -6,7 +6,8 @@ import {
 } from '../../../styledComponents';
 
 const ReservationInfo = ({
-  image, nickname, date, cost, confirmed
+  image, nickname, date, cost, confirmed,
+  procedure_status
 }) => {
   return (
     <>
@@ -34,7 +35,11 @@ const ReservationInfo = ({
           </ReservText>
         </ReservTextDiv>
 
-        {confirmed ? (
+        {confirmed ? procedure_status ? (
+          <ReservStateBtn color="blue">
+            작업중
+          </ReservStateBtn>
+        ) : (
           <ReservStateBtn color="green">
             예약확정 완료
           </ReservStateBtn>

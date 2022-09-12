@@ -3,7 +3,6 @@ import { MyTattooImg, MyTattooStateBox } from "../../styledComponents";
 import MyTattooSwiper from "../organisms/mypage/MyTattooSwiper";
 
 const MyTattoo = ({ tattoo }) => {
-
   return (
     <>
       {tattoo.image ? (
@@ -12,7 +11,7 @@ const MyTattoo = ({ tattoo }) => {
         <MyTattooImg />
       )}
       <MyTattooStateBox>
-        <MyTattooSwiper states={tattoo.states} />
+        <MyTattooSwiper states={tattoo} />
       </MyTattooStateBox>
     </>
   );

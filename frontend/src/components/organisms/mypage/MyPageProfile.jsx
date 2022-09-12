@@ -41,7 +41,10 @@ const MyPageProfile = ({ profile }) => {
         }
       }
     }
+
+    // console.log('profile: ',profile)
   }, [profile]);
+
   const navigate = useNavigate();
   const goEdit = () => {
     navigate("/edit/image");
