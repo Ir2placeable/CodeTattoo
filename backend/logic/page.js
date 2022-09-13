@@ -262,16 +262,26 @@ exports.artworkDetail = async function(params, query) {
 
     info = {
         date : states[0].Record.date,
-        taken_time : states[0].Record.timestamp - states[1].Record.timestamp,
+        taken_time : calcTakenTime(states[0].Record.timestamp - states[1].Record.timestamp),
         cost : states[0].Record.cost,
         tattooist_nickname : tattooist['nickname'],
         body_part : states[0].Record.body_part,
         inks : states[0].Record.inks,
         machine : states[0].Record.machine,
+        niddle : states[0].Record.niddle,
+        depth : states[0].Record.depth
     }
 
     return {image, info, states}
 }
+const calcTakenTime = function(seconds) {
+    const hour = parseInt(seconds / 3600) < 10 ? '0' + parseInt(seconds / 3600) : parseInt(seconds / 3600);
+    const min = parseInt((seconds % 3600) / 60) < 10 ? '0' + parseInt((seconds % 3600) / 60) : parseInt((seconds % 3600) / 60);
+    const sec = seconds % 60 < 10 ? '0' + seconds % 60 : seconds % 60;
+
+    return String(hour) + ":" + String(min) + ":" + String(sec)
+}
+
 // 예약 세부 페이지
 exports.reservationDetail = async function(params) {
     let reservation_info;

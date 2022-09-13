@@ -338,7 +338,6 @@ server.post('/tattooist/my-page/:id', (req, res) => {
         .catch((err) => {
             res.send(ErrorLogging(err))
         })
-
 })
 // 명령 : 도안 스크랩
 server.post('/scrap/:id', (req, res) => {

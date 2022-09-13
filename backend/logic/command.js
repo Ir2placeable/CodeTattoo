@@ -379,17 +379,17 @@ exports.beginProcedure = async function(params, body) {
     if (!reservation) { throw 4 }
 
     let blockchain_params = {
-        owner_info : {
-            id : user['_id'],
-            nickname : user['nickname']
-        }
+        owner_info: {
+            id: user['_id'],
+            nickname: user['nickname']
+        },
+        cost: reservation['cost'],
+        image: reservation['image'],
+        body_part: reservation['body_part'],
     }
     await blockchain.invoke("newTattoo", new_tattoo['_id'], blockchain_params)
 
     blockchain_params['tattooist_info'] = { id : tattooist['_id'], nickname : tattooist['nickname']}
-    blockchain_params['cost'] = reservation['cost']
-    blockchain_params['image'] = reservation['image']
-    blockchain_params['body_part'] = reservation['body_part']
     blockchain_params['inks'] = body['inks']
     blockchain_params['niddle'] = body['niddle']
     blockchain_params['depth'] = body['depth']
