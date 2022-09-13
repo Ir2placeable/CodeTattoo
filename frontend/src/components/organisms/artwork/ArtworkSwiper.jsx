@@ -9,6 +9,7 @@ import "swiper/css/navigation";
 import "swiper/css/scrollbar";
 
 const ArtworkSwiper = ({ states }) => {
+  console.log(states);
   return (
     <>
       <StyledSwiper
