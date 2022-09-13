@@ -6,9 +6,8 @@ import {
 } from "../styledComponents";
 import MyTattoo from "../components/templates/MyTattoo";
 
-/**
+/** 마이 타투 페이지
  * 상위 컴포넌트 === ShowMyPage.jsx
- * @returns 
  */
 
 const ShowMyTattoo = ({tattoos}) => {

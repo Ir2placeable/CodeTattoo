@@ -1,12 +1,14 @@
 import React from 'react';
-import { useEffect } from 'react';
 import { useState } from 'react';
 import { useOutletContext } from 'react-router-dom';
-import { getCookie } from '../../../config/cookie';
-import useChatRecord from '../../../hooks/useChatRecord';
 import { ChattingRoomDiv } from '../../../styledComponents';
 import ChattingReservation from './ChattingReservation';
 import ChattingRoom from './ChattingRoom';
+
+/**
+ * 상위 컴포넌트 === Chatting.jsx
+ * 채팅 
+ */
 
 const ChattingRecord = () => {
   const { opponentId, data } = useOutletContext();

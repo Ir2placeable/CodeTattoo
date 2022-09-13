@@ -9,6 +9,8 @@ import useArtworkDetail from "../hooks/useArtworkDetail";
 import ArtworkDetail from "../components/organisms/artwork/ArtworkDetail";
 import ArtworkState from "../components/organisms/artwork/ArtworkState";
 
+
+/* 작업물 상세 페이지 */
 const ShowArtworkDetail = () => {
   const sendRequest = useArtworkDetail();
   const [info, setInfo] = useState({});
@@ -28,8 +30,10 @@ const ShowArtworkDetail = () => {
       <ContentsDiv>
         <ListDiv>
           <ArtworkDetailMainBox>
+            {/* 작업물 상세 정보 */}
           <ArtworkDetail artwork={info} image={image} />
             <HorizontalLine />
+            {/* 작업물 상세 State */}
             <ArtworkState tattoo={tattoo} image={image}/>
           </ArtworkDetailMainBox>
         </ListDiv>

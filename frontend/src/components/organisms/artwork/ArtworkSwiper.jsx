@@ -8,6 +8,12 @@ import "swiper/css/pagination";
 import "swiper/css/navigation";
 import "swiper/css/scrollbar";
 
+/**
+ * 상위 컴포넌트 === ArtworkState.jsx
+ * 작업물 State Swiper
+ * @param {Array} states 작업물 State 
+ */
+
 const ArtworkSwiper = ({ states }) => {
   const title = ["예약 확정", "작업 시작", "작업 완료"];
   return (

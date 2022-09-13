@@ -4,7 +4,7 @@ import { useParams } from "react-router-dom";
 import { getCookie } from "../config/cookie";
 import { APIURL } from "../config/key";
 
-/** 도안 상세 페이지 데이터 호출 함수
+/** 도안 상세 페이지/ 도안 상세 데이터 API
  * @returns 도안 상세 데이터 반환
  */
 

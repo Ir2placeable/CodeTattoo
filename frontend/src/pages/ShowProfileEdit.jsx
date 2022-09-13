@@ -6,18 +6,16 @@ import {
   ProfileEditorBox,
 } from "../styledComponents";
 
-/**
- * @file Profile Editpr Page
- * @Outlet Image, Profile, Password, Delete Account
- */
-
+/* 프로필 편집 페이지*/
 const ShowProfileEdit = () => {
   return (
     <>
       <ContentsDiv>
         <ProfileEditBox>
+          {/* 사이드 네비게이션 */}
           <SideNav />
           <ProfileEditorBox>
+            {/* 프로필 편집 */}
             <Outlet />
           </ProfileEditorBox>
         </ProfileEditBox>

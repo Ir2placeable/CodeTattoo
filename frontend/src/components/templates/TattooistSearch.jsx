@@ -3,6 +3,11 @@ import { useParams } from "react-router-dom";
 import { SearchResText } from "../../styledComponents";
 import TattooistList from "./TattooistList";
 
+
+/**
+ * 상위 컴포넌트 === ShowTattooistList.jsx
+ * 타투이스트 목록 템플릿 (검색)
+ */
 const TattooistSearch = () => {
   const params = useParams();
   const nickname = params.nickname;

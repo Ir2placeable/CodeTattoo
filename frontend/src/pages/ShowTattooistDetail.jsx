@@ -7,25 +7,21 @@ import {
 import MyPageNav from "../components/organisms/common/MyPageNav";
 import useTattooistDetail from "../hooks/useTattooistDetail";
 
-/**
- * @file Tattooist Profile Detail Page 
- * @Outlet Draft, Artwork, Reservation
- */
-
+/* 타투이스트 상세 페이지 */
 const ShowTattooistDetail = () => {
-
-  // GET Tattooist Detail Data
   const location = useLocation();
   const path = location.pathname; 
   const [profile, items] = useTattooistDetail(path);
-  // console.log(profile, items)
 
   return (
     <>
       <MyPageDiv>
         <ListDiv>
+          {/* 타투이스트 프로필 */}
           <MyPageProfile profile={profile} />
+          {/* 도안, 작업물, 예약 네비게이션 */}
           <MyPageNav />
+          {/* 도안, 작업물, 예약 */}
           <Outlet context={items} />
         </ListDiv>
       </MyPageDiv>

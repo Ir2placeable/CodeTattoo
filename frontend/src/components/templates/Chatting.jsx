@@ -1,16 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { ChattingDiv, ChattingHeader } from "../../styledComponents";
-
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCommentDots } from "@fortawesome/free-solid-svg-icons";
 import ChattingList from "../organisms/chatting/ChattingList";
-import ChattingRoom from "../organisms/chatting/ChattingRoom";
 import { useRef } from "react";
-import { CHATAPIURL, WEBSOCKETURL } from "../../config/key";
-import ChattingRecord from "../organisms/chatting/ChattingRecord";
+import { WEBSOCKETURL } from "../../config/key";
 import { Outlet, useNavigate } from "react-router-dom";
 import { getCookie } from "../../config/cookie";
-import axios from "axios";
 
 export const WebSocketContext = React.createContext(null);
 

@@ -2,30 +2,24 @@
 import "./App.css";
 import { Reset } from "styled-reset";
 
-import React, { useEffect } from "react";
-import axios from "axios";
+import React from "react";
 import { Routes, Route } from "react-router-dom";
-
-import { APIURL } from "./config/key";
-import { MainPageDiv, ToastAlarmBox } from "./styledComponents";
+import { MainPageDiv } from "./styledComponents";
 
 // Components
 import Header from "./components/organisms/header/Header";
 import Footer from "./components/organisms/footer/Footer";
-import Login from "./components/organisms/account/Login";
-import Register from "./components/organisms/account/Register";
+import Login from "./components/templates/Login";
+import Register from "./components/templates/Register";
 import MainPage from "./pages/MainPage";
 import ShowDraftDetail from "./pages/ShowDraftDetail";
-import ShowMyTattoo from "./pages/ShowMyTattoo";
 import ShowTattooistList from "./pages/ShowTattooistList";
 import TattooistList from "./components/templates/TattooistList";
 import ShowMyPage from "./pages/ShowMyPage";
-import Navigation from "./components/organisms/common/Navigation";
 import ShowEntry from "./pages/ShowEntry";
 import ShowDraftList from "./pages/ShowDraftList";
 import DraftList from "./components/templates/DraftList";
 import ShowDraftUpload from "./pages/ShowDraftUpload";
-import DraftUpload from "./components/templates/DraftUpload";
 import ShowScrap from "./pages/ShowScrap";
 import ShowTattooistDetail from "./pages/ShowTattooistDetail";
 import TattooistDetailDraft from "./components/templates/TattooistDetailDraft";

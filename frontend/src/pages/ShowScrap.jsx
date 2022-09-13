@@ -1,16 +1,12 @@
 import React, { useState } from "react";
-import { Outlet, useLocation, useParams } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
 import { ContentsDiv } from "../styledComponents";
 import SmallNav from "../components/organisms/common/SmallNav";
 import Pagination from "../components/organisms/common/Pagination";
 import useScrapTattooist from "../hooks/useScrapTattooist";
 import { useEffect } from "react";
 
-/**
- * @file 
- */
-
-
+/* 스크랩 페이지 */
 const ShowScrap = () => {
   const [page, setPage] = useState(1);
   const [pages, setPages] = useState([]);
@@ -24,6 +20,7 @@ const ShowScrap = () => {
 
   return (
     <>
+      {/* 스크랩 네비게이션 */}
       <SmallNav
         data={[
           { text: "root", path: "/scraps" },
@@ -33,10 +30,12 @@ const ShowScrap = () => {
         isSearch={false}
         loc={2.3}
       />
-
+      
+      {/* 도안 / 타투이스트 */}
       <ContentsDiv>
         <Outlet context={{ page, tattooists }} />
-
+      
+      {/* 페이지네이션 */}
         <Pagination
           page={page} setPage={setPage}
           pages={pages} setPages={setPages}

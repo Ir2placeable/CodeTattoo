@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { APIURL } from '../config/key';
 
-/** 타투이스트가 도안을 수정/삭제할 때 호출하는 함수
+/** 도안 수정 페이지/ 타투이스트가 도안을 수정/삭제하는 API
  * @param {String} draft_id
  * @param {String} tattooist_id 
  * @returns 도안 수정과 도안 삭제 요청을 보내는 함수 반환 

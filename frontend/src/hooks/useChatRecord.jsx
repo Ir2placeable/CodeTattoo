@@ -4,17 +4,11 @@ import { useEffect } from 'react';
 import { useState } from 'react';
 import { CHATAPIURL } from '../config/key';
 
-// ### 채팅 내역 조회
-
-// *채팅 페이지 → 오른쪽 채팅 박스 데이터를 반환하는 API 입니다.*
-
-// - GET: /chat/message/:id
-//     - id : reservation_id
-// - Query : { subject_id }
-//     - subject_id : 요청자의 id (user or tattooist)
-// - Return : { success, [message] }
-//     - message = { content, time, mine }
-//         - mine = true / false
+/** 채팅 페이지 / 채팅 내역 데이터 API
+ * @param {String} subject_id 요청자의 ID
+ * @param {String} reservation_id 예약 ID
+ * @returns 채팅 내역 반환
+ */
 const useChatRecord = ({ subject_id, reservation_id }) => {
   const [message, setMessage] = useState([])
 

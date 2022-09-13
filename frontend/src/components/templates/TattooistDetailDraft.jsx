@@ -3,9 +3,13 @@ import { useOutletContext } from "react-router-dom";
 import { GridDiv, MyPageAddBtn, MyPageAddBtnDiv } from "../../styledComponents";
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-
 import DetailDraft from "../organisms/tattooist/DetailDraft";
 import { getCookie } from "../../config/cookie";
+
+/** 
+ * 상위 컴포넌트 === ShowTattooistDetail.jsx
+ * 타투이스트 도안 목록 템플릿 
+ */
 
 const TattooistDetailDraft = () => {
   const items = useOutletContext();
@@ -47,14 +51,6 @@ const TattooistDetailDraft = () => {
           >
             +
           </MyPageAddBtn>
-          {/* <MyPageAddBtn 
-            type="artwork"
-            id="작업물"
-            onMouseEnter={onMouseEnter}
-            onMouseLeave={onMouseLeave}
-          >
-            +
-          </MyPageAddBtn> */}
         </MyPageAddBtnDiv>
         )}
     </>

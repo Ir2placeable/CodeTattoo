@@ -7,12 +7,8 @@ import SmallNav from "../components/organisms/common/SmallNav";
 import { getCookie } from "../config/cookie";
 import { useEffect } from "react";
 
-/**
- * @file Tattooist Profile List Page
- */
-
+/* 타투이스트 목록 페이지 */
 const ShowTattooistList = () => {
-  // Pagination State
   const [page, setPage] = useState(1);
   const [pages, setPages] = useState([]);
 
@@ -23,6 +19,7 @@ const ShowTattooistList = () => {
 
   return (
     <>
+      {/* 정렬 네비게이션 */}
       <SmallNav
         data={[
           { text: "root", path: "/tattooists" },
@@ -34,8 +31,9 @@ const ShowTattooistList = () => {
       />
 
       <ContentsDiv>
+        {/* 타투이스트 목록 */}
         <Outlet context={{ page }} />
-
+        {/* 페이지네이션 */}
         <Pagination
           page={page}
           setPage={setPage}

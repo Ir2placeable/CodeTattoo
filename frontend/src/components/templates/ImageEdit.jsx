@@ -1,9 +1,7 @@
 import axios from "axios";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import {
   getCookie,
-  removeCookie,
-  resetCookie,
   setCookie,
 } from "../../config/cookie";
 import { APIURL } from "../../config/key";
@@ -19,6 +17,10 @@ import ProfileUploadBtn from "../atomic/edit/ProfileUploadBtn";
 import Loader from "../atomic/common/Loader";
 import { useNavigate } from "react-router-dom";
 
+/**
+ * 상위 컴포넌트 === ShowProfileEdit.jsx 
+ * 프로필 이미지 편집 템플릿
+ */
 const ImageEdit = () => {
   const [loading, setLoading] = useState(false);
   const [src, setSrc] = useState(getCookie("profile_img_src"));
@@ -38,7 +40,6 @@ const ImageEdit = () => {
         setSrc(reader.result);
       });
     }
-    // console.log(src);
   };
 
   const onLoad = () => {
@@ -55,7 +56,8 @@ const ImageEdit = () => {
   };
 
   const navigate = useNavigate();
-  
+  /** 프로필 이미지 변경 요쳥 API
+   */
   const sendRequest = async () => {
     let url = `${APIURL}`;
     if (getCookie("user_id")) url += `/user/my-page/${getCookie("user_id")}`;
@@ -69,7 +71,6 @@ const ImageEdit = () => {
 
     
     if (res.data.success) {
-      // alert("이미지 등록에 성공했습니다.");
       setCookie("profile_img_src", res.data.image, { maxAge: 3000, path: "/" });
 
       if(getCookie("user_id")) {

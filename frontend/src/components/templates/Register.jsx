@@ -1,12 +1,16 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { 
   AccountDiv,
   AccountText,
   AccountNavigateDiv,
   AccountNavigate,
   AccountNavigateHover,
-} from '../../../styledComponents';
-import RegisterInput from '../../atomic/account/RegisterInput';
+} from '../../styledComponents';
+import RegisterInput from '../atomic/account/RegisterInput';
+
+/**
+ * 회원가입 템플릿
+ */
 
 const Register = () => {
   const [isTattooist, setIsTattooist] = useState(false);

@@ -4,7 +4,6 @@ import {
   ContentsDiv,
 } from '../styledComponents';
 
-import ReservationList from '../components/templates/ReservationList';
 import { Outlet } from 'react-router-dom';
 import useReservation from '../hooks/useReservation';
 import SmallNav from '../components/organisms/common/SmallNav';

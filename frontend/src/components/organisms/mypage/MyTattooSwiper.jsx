@@ -8,6 +8,13 @@ import "swiper/css/pagination";
 import "swiper/css/navigation";
 import "swiper/css/scrollbar";
 
+/**
+ * 
+ * @param {Array} states 타투 작업물의 state 
+ * @returns 
+ */
+
+
 const MyTattooSwiper = ({ states }) => {
   const title = ["예약 확정", "작업 시작", "작업 완료"]
   return (
@@ -26,11 +33,26 @@ const MyTattooSwiper = ({ states }) => {
               <StateContentBox>
                 <ArtworkStateUnit title={"비용"} text={state.Record.cost} />
                 <ArtworkStateUnit title={"부위"} text={state.Record.body_part} />
-                <ArtworkStateUnit title={"잉크"} text={state.Record.inks} />
-                <ArtworkStateUnit title={"바늘"} text={state.Record.niddle} />
-                <ArtworkStateUnit title={"머신"} text={state.Record.machine} />
-                <ArtworkStateUnit title={"깊이"} text={state.Record.depth} />
-                <ArtworkStateUnit title={"바늘"} text={state.Record.niddle} />
+                {state.Record.state === 1 ? null : (
+                    <>
+                      <ArtworkStateUnit
+                        title={"잉크"}
+                        text={state.Record.inks}
+                      />
+                      <ArtworkStateUnit
+                        title={"머신"}
+                        text={state.Record.machine}
+                      />
+                      <ArtworkStateUnit
+                        title={"깊이"}
+                        text={state.Record.depth}
+                      />
+                      <ArtworkStateUnit
+                        title={"바늘"}
+                        text={state.Record.niddle}
+                      />
+                    </>
+                  )}
               </StateContentBox>
             </StateBox>
           </SwiperSlide>

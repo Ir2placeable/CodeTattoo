@@ -12,6 +12,12 @@ import { useOutletContext } from "react-router-dom";
 import { getCookie } from "../../config/cookie";
 import useTattooistList from "../../hooks/useTattooistList";
 
+/**
+ * 상위 컴포넌트 === ShowTattooist.jsx
+ * 타투이스트 목록 템플릿 
+ * @param {String} filter 추천순/ 최신순 
+ */
+
 const TattooistList = ({ filter }) => {
   const { page } = useOutletContext();
 
@@ -19,9 +25,6 @@ const TattooistList = ({ filter }) => {
     filter: filter,
     page: page,
   });
-
-  console.log(tattooists)
-
   return (
     <>
       <ListDiv>

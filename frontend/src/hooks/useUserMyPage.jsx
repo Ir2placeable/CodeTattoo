@@ -2,7 +2,7 @@ import axios from "axios";
 import { getCookie } from "../config/cookie";
 import { APIURL } from "../config/key";
 
-/** 유저 마이페이지 데이터 호출 함수
+/** 유저 마이페이지/ 유저 데이터 & 마이 타투 API
  * 
  * @returns 유저 프로필 정보와 마이 타투 데이터를 불러오는 함수를 반환
  */

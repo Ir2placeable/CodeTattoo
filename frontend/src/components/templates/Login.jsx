@@ -1,13 +1,16 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { 
   AccountDiv,
   AccountText,
   AccountNavigateDiv,
   AccountNavigate,
   AccountNavigateHover,
-} from '../../../styledComponents';
-import LoginInput from '../../atomic/account/LoginInput';
+} from '../../styledComponents';
+import LoginInput from "../atomic/account/LoginInput";
 
+/**
+ * 로그인 템플릿
+ */
 const Login = () => {
   const [isTattooist, setIsTattooist] = useState(false);
 

@@ -2,20 +2,8 @@ import axios from "axios";
 import { useParams } from "react-router-dom";
 import { APIURL } from "../config/key";
 
-// ### 작업물 세부
-
-// - GET : /artwork/:id
-//     - id : tattoo_id
-// - Query : { tattooist_id }
-// - Return : { success, artwork_info, artwork_states }
-//     - artwork_info = { image, date, taken_time, cost, tattooist_nickname, body_part, inks, machine }
-//         - date : 시술 날짜
-//         - taken_time(소요시간) : Unix time
-//     - tattoos = [ state1, state2, state3 … ]
-//         - state = { activator_id, state, timestamp, cost, image, body_part, inks, niddle, depth, machine }
-
-/** 작업물 상세 페이지 데이터 호출 함수
- * @returns 
+/** 작업물 상세 페이지 / 작업물 상세 데이터 호출 API
+ * @returns 작업물 상세 정보 데이터와 작업물 state 데이터 반환
  */
 const useArtworkDetail = () => {
   const param = useParams();
@@ -38,3 +26,4 @@ const useArtworkDetail = () => {
 };
 
 export default useArtworkDetail;
+

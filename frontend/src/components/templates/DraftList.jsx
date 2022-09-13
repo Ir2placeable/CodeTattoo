@@ -1,41 +1,38 @@
-import React, { useState, useEffect } from 'react';
-import useDraftList from '../../hooks/useDraftList';
-import { 
-  ListDiv, EmptyBox, DraftMainBox,
-  DraftImgBox, DraftImg, DraftImgInfo, 
-  DraftHeartBox, DraftImgTitle, DraftHeartCount
-} from '../../styledComponents';
-import Draft from '../organisms/draft/Draft';
-import { useOutletContext, useLocation } from 'react-router-dom';
+import React from "react";
+import useDraftList from "../../hooks/useDraftList";
+import { ListDiv, EmptyBox, DraftMainBox } from "../../styledComponents";
+import Draft from "../organisms/draft/Draft";
+import { useOutletContext } from "react-router-dom";
 
-//- drafts = { draft_id, image, title, like, drawer_id, 
-//       drawer_image, drawer_nickname, isScraped }
+/**
+ * 상위 컴포넌트 === ShowDraftList.jsx
+ * 도안 목록 템플릿
+ * @param {String} filter 추천순/최신순
+ */
 const DraftList = ({ filter }) => {
-
   const { page } = useOutletContext();
-  
+
   const drafts = useDraftList({
     filter: filter,
-    page: page
-  })
+    page: page,
+  });
 
   return (
     <>
-      <ListDiv >
-
+      <ListDiv>
         {drafts.length === 0 ? (
           <EmptyBox>
-            {filter === 'drafts/search' ? (
+            {filter === "drafts/search" ? (
               <>검색 결과가 없습니다.</>
             ) : (
               <>아직 도안이 없습니다.</>
             )}
           </EmptyBox>
         ) : (
-          <DraftMainBox >
-
-            {drafts.map(draft => (
-              <Draft key={draft.draft_id}
+          <DraftMainBox>
+            {drafts.map((draft) => (
+              <Draft
+                key={draft.draft_id}
                 draft_id={draft.draft_id}
                 image={draft.image}
                 title={draft.title}
@@ -46,10 +43,8 @@ const DraftList = ({ filter }) => {
                 isScraped={draft.isScraped}
               />
             ))}
-
           </DraftMainBox>
         )}
-
       </ListDiv>
     </>
   );

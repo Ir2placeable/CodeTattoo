@@ -1,11 +1,11 @@
 import axios from "axios";
-import React, { memo, useState } from "react";
+import { useState } from "react";
 import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { getCookie } from "../config/cookie";
 import { APIURL } from "../config/key";
 
-/** 타투이스트 상세 페이지 데이터 호출 함수
+/** 타투이스트 상세 페이지/ 타투이스트 상세 데이터 API
  * @param {String} path draft/artwork/reservation 
  * @returns 타투이스트 프로필 정보와 path에 따른 데이터 반환
  */

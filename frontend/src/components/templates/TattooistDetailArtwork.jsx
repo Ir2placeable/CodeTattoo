@@ -1,11 +1,14 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useOutletContext } from "react-router-dom";
 import { GridDiv } from "../../styledComponents";
 import DetailArtwork from "../organisms/tattooist/DetailArtwork";
 
+/** 
+ * 상위 컴포넌트 === ShowTattooistDetail.jsx
+ * 타투이스트 작업물 목록 템플릿 
+ */
 const TattooistDetailArtwork = () => {
   const items = useOutletContext();
-  console.log(items);
   return (
     <>
       <GridDiv>

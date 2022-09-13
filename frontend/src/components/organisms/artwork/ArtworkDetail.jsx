@@ -1,16 +1,21 @@
-import { useEffect } from "react";
 import {
   ArtworkBox,
   ArtworkImg,
   ArtworkInfoBlock,
   ArtworkInfoBox,
   ArtworkInfoUnit,
-  ArtworkTattooistNickname,
   TattooistGenreLabel,
 } from "../../../styledComponents";
 
+/**
+ * 상위 컴포넌트 === ShowArtworkDetail.jsx
+ * 작업물 상세 정보 
+ * @param {Object} artwork 작업물 정보
+ * @param {String} image  작업물 이미지
+ */
+
 const ArtworkDetail = ({ artwork, image}) => {
-  console.log(artwork)
+
   return (
     <>
       <ArtworkBox>

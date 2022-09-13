@@ -3,8 +3,8 @@ import { useEffect, useState } from "react";
 import { getCookie } from "../config/cookie";
 import { CHATAPIURL } from "../config/key";
 
-/** 채팅 페이지에서 채팅 목록 데이터 호출 함수
- * @returns 채팅 목록
+/** 채팅 페이지/ 채팅 목록 데이터 API
+ * @returns 채팅 목록 반환
  */
 const useChatUserList = () => {
     const [chatList, setChatList] = useState([]);

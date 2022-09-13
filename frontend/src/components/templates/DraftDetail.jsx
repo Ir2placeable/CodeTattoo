@@ -22,7 +22,10 @@ import useCreateReservation from "../../hooks/useCreateReservation";
 import { toast, ToastContainer } from "react-toastify";
 import useChatReservation from "../../hooks/useChatReservation";
 
-// { detail }
+/**
+ * 상위 컴포넌트 === ShowDraftDetail.jsx
+ * 도안 상세 템플릿
+ */
 const DraftDetail = () => {
   const [isAdmin, setIsAdmin] = useState(false);
   const { detail } = useOutletContext();
@@ -51,8 +54,6 @@ const DraftDetail = () => {
     if (id && id === tattooist.drawer_id) {
       setIsAdmin(true);
     }
-
-    // console.log(detail)
   }, [detail]);
 
   const navigate = useNavigate();
@@ -111,7 +112,6 @@ const DraftDetail = () => {
 
         <SmallTattooistBox>
           <SmallTattooist tattooist={tattooist} />
-          {/* <HorizontalLine /> */}
           <Genre genre={genre} />
         </SmallTattooistBox>
       </DraftDetailMainBox>

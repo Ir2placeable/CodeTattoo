@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom';
 import { getCookie } from '../config/cookie';
 import { APIURL } from '../config/key';
 
-/** 도안 목록을 반환하는 함수
+/** 도안 목록 페이지/ 도안 목록 데이터 API
  * @param {String} filter 추천순/ 최신순 
  * @param {Number} page Pagination
  * @returns 도안 목록 반환

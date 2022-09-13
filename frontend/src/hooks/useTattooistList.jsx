@@ -5,7 +5,7 @@ import { useParams } from "react-router-dom";
 import { APIURL } from "../config/key";
 import { getCookie } from "../config/cookie";
 
-/** 타투이스트 목록 페이지 데이터 호출 함수
+/** 타투이스트 목록 페이지/ 타투이스트 목록 데이터 API
  * @param {String} filter 추천순/ 최신순
  * @param {Number} page Pagination
  * @returns 타투이스트 목록 반환

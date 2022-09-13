@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import useDraftUpload from "../../hooks/useDraftUpload";
 import {
   ImgInfoDiv,
   LoadedImgDescDiv,
@@ -8,13 +7,18 @@ import {
 import ImgChoice from "../atomic/draft_upload/ImgChoice";
 import ImgLoaded from "../atomic/draft_upload/ImgLoaded";
 import ImgUploadBtn from "../atomic/draft_upload/ImgUploadBtn";
-import UploadDesc from "../organisms/upload/UploadDesc";
 import DropDown from "../organisms/upload/DropDown";
 import ImgText from "../atomic/draft_upload/ImgText";
 import DropTags from "../organisms/upload/DropTags";
 import axios from "axios";
 import { APIURL } from "../../config/key";
 import { getCookie } from "../../config/cookie";
+
+
+/**
+ * 상위 컴포넌트 === ShowDraftUpload.jsx
+ * 도안 업로드 템플릿 
+ */
 
 const DraftUpload = () => {
   //const sendRequest = useDraftUpload();
