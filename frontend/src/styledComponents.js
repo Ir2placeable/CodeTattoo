@@ -518,6 +518,7 @@ export const StateContent = styled.div`
   display: flex;
   align-items: center;  
   width: 100%;
+  margin-bottom: 10px;
 `;
 
 export const StateText = styled.div`

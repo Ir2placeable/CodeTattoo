@@ -9,7 +9,7 @@ import "swiper/css/navigation";
 import "swiper/css/scrollbar";
 
 const ArtworkSwiper = ({ states }) => {
-  const title = ["예약 확정", "작업 시작", "작업 완료"]
+  const title = ["예약 확정", "작업 시작", "작업 완료"];
   return (
     <>
       <StyledSwiper
@@ -19,22 +19,43 @@ const ArtworkSwiper = ({ states }) => {
         navigation
         modules={[Pagination, Navigation, Scrollbar, A11y]}
       >
-        {states.slice(0).reverse().map((state, idx) => (
-          <SwiperSlide key={state.Record.activator_id}>
-            <StateBox >
-              <StateTitle>{`${state.Record.state} : ${title[idx]}`}</StateTitle>
-              <StateContentBox>
-                <ArtworkStateUnit title={"비용"} text={state.Record.cost} />
-                <ArtworkStateUnit title={"부위"} text={state.Record.body_part} />
-                <ArtworkStateUnit title={"잉크"} text={state.Record.inks} />
-                <ArtworkStateUnit title={"바늘"} text={state.Record.niddle} />
-                <ArtworkStateUnit title={"머신"} text={state.Record.machine} />
-                <ArtworkStateUnit title={"깊이"} text={state.Record.depth} />
-                <ArtworkStateUnit title={"바늘"} text={state.Record.niddle} />
-              </StateContentBox>
-            </StateBox>
-          </SwiperSlide>
-        ))}
+        {states
+          .slice(0)
+          .reverse()
+          .map((state, idx) => (
+            <SwiperSlide key={state.Record.activator_id}>
+              <StateBox>
+                <StateTitle>{`${state.Record.state} : ${title[idx]}`}</StateTitle>
+                <StateContentBox>
+                  <ArtworkStateUnit title={"비용"} text={state.Record.cost} />
+                  <ArtworkStateUnit
+                    title={"부위"}
+                    text={state.Record.body_part}
+                  />
+                  {state.Record.state === 1 ? null : (
+                    <>
+                      <ArtworkStateUnit
+                        title={"잉크"}
+                        text={state.Record.inks}
+                      />
+                      <ArtworkStateUnit
+                        title={"머신"}
+                        text={state.Record.machine}
+                      />
+                      <ArtworkStateUnit
+                        title={"깊이"}
+                        text={state.Record.depth}
+                      />
+                      <ArtworkStateUnit
+                        title={"바늘"}
+                        text={state.Record.niddle}
+                      />
+                    </>
+                  )}
+                </StateContentBox>
+              </StateBox>
+            </SwiperSlide>
+          ))}
       </StyledSwiper>
     </>
   );
@@ -71,6 +92,6 @@ export const StateTitle = styled.div`
 export const StateContentBox = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: space-evenly;
+  justify-content: center;
   height: 270px;
 `;
