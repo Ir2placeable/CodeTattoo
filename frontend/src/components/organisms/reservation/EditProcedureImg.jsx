@@ -12,16 +12,12 @@ import {
   ProcedureEditImg,
   ProcedureEditFile
 } from '../../../styledComponents';
+import EditProcedureBtns from './EditProcedureBtns';
 
 const EditProcedureImg = ({ setImgEdit, _src, data, setData }) => {
   const sendRequest = useEditProcedureImg();
   const [src, setSrc] = useState(_src);
   const imgInput = useRef();
-  // const [data, setData] = useState({
-  //   image: '',
-  //   mime: ''
-  // })
-
   const { image, mime } = data;
 
   const onClick = () => {
@@ -60,7 +56,7 @@ const EditProcedureImg = ({ setImgEdit, _src, data, setData }) => {
     setImgEdit(false);
 
     setTimeout(() => {
-      window.location.replace('');
+      window.location.reload();
     }, 500)
     
   }
@@ -89,15 +85,7 @@ const EditProcedureImg = ({ setImgEdit, _src, data, setData }) => {
 
           </ProcedureEditContents>
 
-
-          <ProcedureEditFooter>
-            <ProcedureEditFooterBtn onClick={() => setImgEdit(false)}>
-              취소
-            </ProcedureEditFooterBtn>
-            <ProcedureEditFooterBtn onClick={onEdit}>
-              수정
-            </ProcedureEditFooterBtn>
-          </ProcedureEditFooter>
+          <EditProcedureBtns setEdit={setImgEdit} onEdit={onEdit} />
 
         </ProcedureEditBox>
 

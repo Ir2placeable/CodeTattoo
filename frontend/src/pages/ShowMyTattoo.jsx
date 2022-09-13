@@ -6,6 +6,11 @@ import {
 } from "../styledComponents";
 import MyTattoo from "../components/templates/MyTattoo";
 
+/**
+ * 상위 컴포넌트 === ShowMyPage.jsx
+ * @returns 
+ */
+
 const ShowMyTattoo = ({tattoos}) => {
   return (
     <>
@@ -14,8 +19,8 @@ const ShowMyTattoo = ({tattoos}) => {
       ) : (
         <MyTattooMainBox>
           {tattoos &&
-            tattoos.map((tattoo) => (
-              <MyTattooContainer key={"a"}>
+            tattoos.map((tattoo, idx) => (
+              <MyTattooContainer key={idx}>
                 <MyTattoo tattoo={tattoo}></MyTattoo>
               </MyTattooContainer>
             ))}

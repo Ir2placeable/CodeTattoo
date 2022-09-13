@@ -37,6 +37,7 @@ const ShowDraftList = () => {
       <Pagination
         page={page} setPage={setPage}
         pages={pages} setPages={setPages}
+        items={12}
       />
     </ContentsDiv>
     </>

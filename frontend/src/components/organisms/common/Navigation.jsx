@@ -19,8 +19,8 @@ const Navigation = () => {
       navigate(`/${path}/best`);
     } else if(path === 'scraps'){
       navigate(`/${path}/draft`);
-    } else {
-      navigate(`/${path}`);
+    } else if(path === 'reservations') {
+      navigate(`/${path}/pending`);
     }
   }, []);
 

@@ -5,10 +5,10 @@ import {
   AccountNavigateDiv,
   AccountNavigate,
   AccountNavigateHover,
-} from '../../styledComponents';
-import RegisterInput from './RegisterInput';
+} from '../../../styledComponents';
+import LoginInput from '../../atomic/account/LoginInput';
 
-const Register = () => {
+const Login = () => {
   const [isTattooist, setIsTattooist] = useState(false);
 
   const onClick = (e) => {
@@ -21,26 +21,25 @@ const Register = () => {
 
   return (
     <>
-      <AccountDiv>
+      <AccountDiv style={{marginBottom: '220px'}}>
 
-        <AccountText>회원가입</AccountText>
+        <AccountText>로그인</AccountText>
 
         <AccountNavigateDiv>
           <AccountNavigate onClick={onClick} 
             style={isTattooist ? {} : AccountNavigateHover}>
-              User
+            User
           </AccountNavigate>
           <AccountNavigate onClick={onClick} 
             style={isTattooist ? AccountNavigateHover : {}}>
-              Tattooist
+            Tattooist
           </AccountNavigate>
         </AccountNavigateDiv>
 
-        <RegisterInput isTattooist={isTattooist} />
-        
+        <LoginInput isTattooist={isTattooist} />
       </AccountDiv>
     </>
   )
 };
 
-export default React.memo(Register);
+export default React.memo(Login);

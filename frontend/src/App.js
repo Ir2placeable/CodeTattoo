@@ -10,10 +10,10 @@ import { APIURL } from "./config/key";
 import { MainPageDiv, ToastAlarmBox } from "./styledComponents";
 
 // Components
-import Header from "./components/header/Header";
-import Footer from "./components/footer/Footer";
-import Login from "./components/account/Login";
-import Register from "./components/account/Register";
+import Header from "./components/organisms/header/Header";
+import Footer from "./components/organisms/footer/Footer";
+import Login from "./components/organisms/account/Login";
+import Register from "./components/organisms/account/Register";
 import MainPage from "./pages/MainPage";
 import ShowDraftDetail from "./pages/ShowDraftDetail";
 import ShowMyTattoo from "./pages/ShowMyTattoo";
@@ -39,13 +39,11 @@ import TattooistSearch from "./components/templates/TattooistSearch";
 import ImageEdit from "./components/templates/ImageEdit";
 import DraftDetail from "./components/templates/DraftDetail";
 import DraftEdit from "./components/templates/DraftEdit";
-import { getCookie } from "./config/cookie";
 import ReservationList from "./components/templates/ReservationList";
 import Procedure from "./components/organisms/reservation/Procedure";
 import Chatting from "./components/templates/Chatting";
 import PasswordEdit from "./components/templates/PasswordEdit";
 import DeleteAccount from "./components/templates/DeleteAccount";
-import { toast, ToastContainer } from "react-toastify"
 import 'react-toastify/dist/ReactToastify.css';
 import ShowArtworkDetail from "./pages/ShowArtworkDetail";
 import SocketTest from "./SocketTest";
@@ -61,14 +59,7 @@ const App = () => {
       {/* HEADER */}
       <Header />
       {/* <Navigation /> */}
-      {/* Main Container */}
-
-        {/*<ToastAlarmBox>
-          <ToastContainer
-            position="top-right"
-            autoClose="1500"
-            closeOnClick/>
-        </ToastAlarmBox>*/}      
+      {/* Main Container */}    
 
       <MainPageDiv id="scroll">
         <Routes>
@@ -123,9 +114,12 @@ const App = () => {
 
             {/* 예약 */}
             <Route path="reservations" element={<ShowReservation />}>
-              <Route path="" element={<ReservationList />} />
-              <Route path=":reservation_id" element={<Procedure />} />
+              <Route path="confirmed" element={<ReservationList />} />
+              <Route path="pending" element={<ReservationList />} />
             </Route>
+
+            {/* 예약/작업 상세 페이지 */}
+            <Route path="reservation/:reservation_id" element={<Procedure />} />
 
             {/* 스크랩 */}
             <Route path="scraps" element={<ShowScrap />} >

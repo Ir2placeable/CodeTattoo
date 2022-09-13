@@ -1,11 +1,11 @@
 import React from 'react';
-import { ChattingRoomDiv } from '../../../styledComponents';
+import { ChattingRoomDiv, ChattingRoomLogo } from '../../../styledComponents';
 
 const ChattingRoomEntry = () => {
   return (
     <>
-      <ChattingRoomDiv>
-        
+      <ChattingRoomDiv state="entry">
+        <ChattingRoomLogo src="../../img/logo-en.png"/>
       </ChattingRoomDiv>
     </>
   );

@@ -7,14 +7,12 @@ import {
   HeaderLogo,
   HeaderText,
   HeaderBtn,
-} from "../../styledComponents";
-import HeaderBtnComp from "./HeaderBtnComp";
-import { getAllCookie, getCookie } from "../../config/cookie";
-import LogoutBtn from "./LogoutBtn";
-import GoMypage from "./GoMypage";
-import { Cookies } from "react-cookie";
+} from "../../../styledComponents";
+import HeaderBtnComp from "../../atomic/header/HeaderBtnComp";
+import { getCookie } from "../../../config/cookie";
+import LogoutBtn from "../../atomic/header/LogoutBtn";
+import GoMypage from "../../atomic/header/GoMypage";
 import { useLocation, useNavigate } from "react-router-dom";
-import AlarmIcon from "../atomic/common/AlarmIcon";
 
 const Header = () => {
   const [isLogin, setIsLogin] = useState(false);
@@ -29,7 +27,7 @@ const Header = () => {
   }, [getCookie("user_id"), getCookie("tattooist_id")]);
 
   const goHome = () => {
-    window.location.replace("/drafts/best");
+    window.location.replace("/#/drafts/best");
   };
 
   const navigate = useNavigate();
@@ -55,8 +53,6 @@ const Header = () => {
 
           {isLogin ? (
             <HeaderSubMenu>
-              {/* <HeaderBtnComp text={"예약조회"} /> */}
-              {/* <AlarmIcon /> */}
               <HeaderBtn type="chat" onClick={goChatting}>
                 채팅
               </HeaderBtn>

@@ -5,13 +5,9 @@ import { getCookie } from '../../../config/cookie';
 import useProcedure from '../../../hooks/useProcedure';
 import { 
   ListDiv, ProcedureDiv, ProcedureImg,
-  ProcedureInfo, ProcedureText, ProcedureBox,
-  ProcedureLabel, ProcedureData,
-  ProcedureWrap,
-  ProcedureBigWrap,
-  ProcedureBtns, ProcedureBtn, ProcedureDesc,
-  ProcedureInput, GoListDiv, ProcedureImgDiv, 
-  ProcedureEdit
+  ProcedureInfo, ProcedureBtns, ProcedureBtn, 
+  GoListDiv, ProcedureImgDiv, ProcedureEdit,
+  ContentsDiv
 } from '../../../styledComponents';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -23,6 +19,9 @@ import { useEffect } from 'react';
 import useReservationDetail from '../../../hooks/useReservationDetail';
 import useConfirmReservation from '../../../hooks/useConfirmReservation';
 import Popup from '../draft/Popup';
+import ProcedureInputComp from './ProcedureInputComp';
+import TattooistCustomerInfo from './TattooistCustomerInfo';
+import ProcedureReservationInfo from './ProcedureReservationInfo';
 
 const Procedure = () => {
   const [reservation, procedureInfo] = useReservationDetail();
@@ -34,7 +33,6 @@ const Procedure = () => {
   const reservation_id = params.reservation_id;
 
   const { state } = useLocation();
-  // console.log('state: ', state)
   const id = getCookie("tattooist_id")
   const nickname = getCookie('nickname')
 
@@ -52,12 +50,6 @@ const Procedure = () => {
   
   const { inks, niddle, depth, machine } = inputs
   const [startProcedure, endProcedure] = useProcedure();
-  // const [inputs2, setInputs2] = useState({
-  //   date: String(state.date),
-  //   time_slot: String(state.time_slot),
-  //   cost: String(state.cost),
-  //   body_part: state.body_part
-  // })
   const [inputs2, setInputs2] = useState({
     date: '',
     time_slot: '',
@@ -71,8 +63,15 @@ const Procedure = () => {
   const [isOpen, setIsOpen] = useState(false)
 
   useEffect(() => {
-    // setInputs(procedureInfo)
-    console.log(procedureInfo)
+    if(procedureInfo){
+      console.log(procedureInfo)
+      setInputs({
+        niddle: procedureInfo.niddle,
+        inks: procedureInfo.inks,
+        machine: procedureInfo.machine,
+        depth: procedureInfo.depth
+      })
+    }
   }, [procedureInfo])
 
   useEffect(() => {
@@ -97,6 +96,7 @@ const Procedure = () => {
     })
 
     console.log('reservation: ',reservation)
+    setProcedureStatus(reservation.procedure_status)
   }, [reservation])
 
   const navigate = useNavigate();
@@ -125,15 +125,19 @@ const Procedure = () => {
       tattooist_id: id,
       inks, niddle, depth, machine
     })
+    .then(() => {
+      setProcedureStatus(false)
 
-    setProcedureStatus(false)
-
-    // setTimeout(() => {
-    //   window.location.replace('/reservations')
-    // }, 500)
+      window.location.replace('/#/reservations/confirmed')
+    })
   }
 
   const onStart = () => {
+    if(!inks || !niddle || !depth || !machine){
+      alert('모든 시술 정보를 입력해주세요!')
+      return;
+    }
+
     startProcedure({
       reservation_id,
       user_id: state.customer_id,
@@ -141,12 +145,8 @@ const Procedure = () => {
       inks, niddle, depth, machine
     })
 
-    // setTattooId(tattoo_id);
     setProcedureStatus(true);
   }
-
-  // console.log(state);
-  // console.log(tattooId)
 
   const [confirmReservation, rejectReservation] = useConfirmReservation({
     user_id: state.customer_id,
@@ -166,7 +166,7 @@ const Procedure = () => {
         text: '정말로 이 예약을 확정하시겠습니까?',
         onRequest: function(){
           confirmReservation();
-          window.location.replace('/reservations')
+          window.location.replace('/#/reservations/confirmed')
         }
       })
     }
@@ -179,14 +179,22 @@ const Procedure = () => {
       text: '정말로 이 예약을 거절하시겠습니까?',
       onRequest: function(){
         rejectReservation()
-        window.location.replace("/reservations")
+        window.location.replace("/#/reservations/pending")
       }
     })
   }
 
+  const goList = () => {
+    if(reservation.confirmed){
+      navigate('/reservations/confirmed')
+    } else {
+      navigate('/reservations/pending')
+    }
+  }
+
   return (
     <>
-
+  <ContentsDiv>
       {imgEdit && (
         <EditProcedureImg setImgEdit={setImgEdit}
           _src={reservation.image}
@@ -199,7 +207,7 @@ const Procedure = () => {
           onChange={onChange2} />
       )}
 
-    <GoListDiv onClick={() => { navigate('/reservations') }}>
+    <GoListDiv onClick={goList}>
       <FontAwesomeIcon icon={faBars} style={{marginRight: '5px'}} />
       목록
     </GoListDiv>
@@ -219,196 +227,29 @@ const Procedure = () => {
 
         <ProcedureInfo>
 
-          <ProcedureBox size="small">
-            <ProcedureText>시술자 정보</ProcedureText>
-            <ProcedureWrap>
-              <ProcedureLabel>ID</ProcedureLabel>
-              <ProcedureData>{id}</ProcedureData>
-            </ProcedureWrap>
-            <ProcedureWrap>
-              <ProcedureLabel>닉네임</ProcedureLabel>
-              <ProcedureData>{nickname}</ProcedureData>
-            </ProcedureWrap>
-          </ProcedureBox>
+          <TattooistCustomerInfo 
+            tattooist_id={id}
+            tattooist_nickname={nickname}
+            customer_id={state.customer_id}
+            customer_nickname={state.customer_nickname}
+          />
 
-          <ProcedureBox size="small">
-            <ProcedureText>피시술자 정보</ProcedureText>
-            <ProcedureWrap>
-              <ProcedureLabel>ID</ProcedureLabel>
-              <ProcedureData>{state.customer_id}</ProcedureData>
-            </ProcedureWrap>
-            <ProcedureWrap>
-              <ProcedureLabel>닉네임</ProcedureLabel>
-              <ProcedureData>{state.customer_nickname}</ProcedureData>
-            </ProcedureWrap>
-          </ProcedureBox>
-
-          <ProcedureBox size="big">
-
-            <ProcedureText>
-              예약 정보
-              {!reservation.confirmed && (
-                <ProcedureEdit type="normal">
-                  <FontAwesomeIcon 
-                    onClick={() => setInfoEdit(true)} icon={faGear} />
-                </ProcedureEdit>
-              )}
-            </ProcedureText>
-
-            <ProcedureBigWrap>
-              <ProcedureWrap >
-                <ProcedureLabel>날짜</ProcedureLabel>
-                <ProcedureData>
-                  {date}
-                </ProcedureData>
-              </ProcedureWrap>
-              <ProcedureWrap >
-                <ProcedureLabel>시간</ProcedureLabel>
-                <ProcedureData>
-                  {time_slot}
-                </ProcedureData>
-              </ProcedureWrap>
-            </ProcedureBigWrap>
-            <ProcedureBigWrap>
-              <ProcedureWrap >
-                <ProcedureLabel>비용</ProcedureLabel>
-                <ProcedureData>
-                  {cost}
-                </ProcedureData>
-              </ProcedureWrap>
-              <ProcedureWrap >
-                <ProcedureLabel>시술부위</ProcedureLabel>
-                <ProcedureData>{body_part}</ProcedureData>
-              </ProcedureWrap>
-            </ProcedureBigWrap>
-          </ProcedureBox>
+          <ProcedureReservationInfo 
+            confirmed={reservation.confirmed}
+            setInfoEdit={setInfoEdit}
+            date={date}
+            time_slot={time_slot}
+            cost={cost}
+            body_part={body_part}
+          />
 
           {reservation.confirmed && (
-          <ProcedureBox size="big">
-            <ProcedureText>
-              시술 정보 
-              {procedureStatus ? (
-                <ProcedureDesc>
-                  작업 종료 후, 작업 종료 버튼을 눌러주세요.
-                </ProcedureDesc>
-              ) : (
-                <ProcedureDesc>
-                  직접 입력 후 작업 시작 버튼을 눌러주세요.
-                </ProcedureDesc>
-              )}
-            </ProcedureText>
-
-            <ProcedureBigWrap>
-              <ProcedureWrap >
-                <ProcedureLabel>사용기기</ProcedureLabel>
-                <ProcedureInput 
-                  type="text"
-                  name='machine'
-                  value={machine}
-                  onChange={onChange}
-                />
-              </ProcedureWrap>
-              <ProcedureWrap >
-                <ProcedureLabel>사용바늘</ProcedureLabel>
-                <ProcedureInput 
-                  type="text"
-                  name='niddle'
-                  value={niddle}
-                  onChange={onChange}
-                />
-              </ProcedureWrap>
-            </ProcedureBigWrap>
-            <ProcedureBigWrap>
-              <ProcedureWrap >
-                <ProcedureLabel>주사깊이</ProcedureLabel>
-                <ProcedureInput 
-                  type="text"
-                  name='depth'
-                  value={depth}
-                  onChange={onChange}
-                />
-              </ProcedureWrap>
-              <ProcedureWrap >
-                <ProcedureLabel>사용잉크</ProcedureLabel>
-                <ProcedureInput 
-                  type="text"
-                  name='inks'
-                  value={inks}
-                  onChange={onChange}
-                />
-              </ProcedureWrap>
-            </ProcedureBigWrap>
-
-            {/* {procedureStatus ? (
-              <>
-                <ProcedureBigWrap>
-                  <ProcedureWrap >
-                    <ProcedureLabel>사용기기</ProcedureLabel>
-                    <ProcedureData>{machine}</ProcedureData>
-                  </ProcedureWrap>
-                  <ProcedureWrap >
-                    <ProcedureLabel>사용바늘</ProcedureLabel>
-                    <ProcedureData>{niddle}</ProcedureData>
-                  </ProcedureWrap>
-                </ProcedureBigWrap>
-
-                <ProcedureBigWrap>
-                  <ProcedureWrap >
-                    <ProcedureLabel>주사깊이</ProcedureLabel>
-                    <ProcedureData>{depth}</ProcedureData>
-                  </ProcedureWrap>
-                  <ProcedureWrap >
-                    <ProcedureLabel>사용잉크</ProcedureLabel>
-                    <ProcedureData>{inks}</ProcedureData>
-                  </ProcedureWrap>
-                </ProcedureBigWrap>
-              </>
-            ) : (
-              <>
-                <ProcedureBigWrap>
-                  <ProcedureWrap >
-                    <ProcedureLabel>사용기기</ProcedureLabel>
-                    <ProcedureInput 
-                      type="text"
-                      name='machine'
-                      value={machine}
-                      onChange={onChange}
-                    />
-                  </ProcedureWrap>
-                  <ProcedureWrap >
-                    <ProcedureLabel>사용바늘</ProcedureLabel>
-                    <ProcedureInput 
-                      type="text"
-                      name='niddle'
-                      value={niddle}
-                      onChange={onChange}
-                    />
-                  </ProcedureWrap>
-                </ProcedureBigWrap>
-
-                <ProcedureBigWrap>
-                  <ProcedureWrap >
-                    <ProcedureLabel>주사깊이</ProcedureLabel>
-                    <ProcedureInput 
-                      type="text"
-                      name='depth'
-                      value={depth}
-                      onChange={onChange}
-                    />
-                  </ProcedureWrap>
-                  <ProcedureWrap >
-                    <ProcedureLabel>사용잉크</ProcedureLabel>
-                    <ProcedureInput 
-                      type="text"
-                      name='inks'
-                      value={inks}
-                      onChange={onChange}
-                    />
-                  </ProcedureWrap>
-                </ProcedureBigWrap>
-              </>
-            )} */}
-          </ProcedureBox>
+            <ProcedureInputComp 
+              procedureStatus={procedureStatus}
+              machine={machine} niddle={niddle}
+              depth={depth} inks={inks}
+              onChange={onChange}
+            />
           )}
 
         </ProcedureInfo>
@@ -440,6 +281,7 @@ const Procedure = () => {
     {isOpen && (
       <Popup data={data} setIsOpen={setIsOpen} />
     )}
+  </ContentsDiv>
     </>
   );
 };

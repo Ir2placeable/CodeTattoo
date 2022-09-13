@@ -11,7 +11,7 @@ import {
 import usePagination from '../../../hooks/usePagination';
 import { useLocation } from 'react-router-dom';
 
-const Pagination = ({ page, setPage, pages, setPages }) => {
+const Pagination = ({ page, setPage, pages, setPages, items }) => {
   const location = useLocation();
   
   const count = usePagination({
@@ -20,7 +20,7 @@ const Pagination = ({ page, setPage, pages, setPages }) => {
 
   useEffect(() => {
     // console.log(location.pathname)
-    const lastPage = Math.ceil(count / 12);
+    const lastPage = Math.ceil(count / items);
     const temp = [];
 
     for(let i = 1; i <= lastPage; i++){

@@ -1,9 +1,14 @@
-import React, {useState} from "react";
+import React from "react";
 import { MyTattooImg, MyTattooStateBox } from "../../styledComponents";
-import MyTattooSwiper from "../organisms/MyTattooSwiper";
+import MyTattooSwiper from "../organisms/mypage/MyTattooSwiper";
 
+
+/**
+ * 상위 컴포넌트 === ShowMyTattoo.jsx
+ * @param {*} param0 
+ * @returns 
+ */
 const MyTattoo = ({ tattoo }) => {
-
   return (
     <>
       {tattoo.image ? (
@@ -12,7 +17,7 @@ const MyTattoo = ({ tattoo }) => {
         <MyTattooImg />
       )}
       <MyTattooStateBox>
-        <MyTattooSwiper states={tattoo.states} />
+        <MyTattooSwiper states={tattoo.state} />
       </MyTattooStateBox>
     </>
   );

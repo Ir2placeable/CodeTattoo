@@ -6,20 +6,20 @@ import {
   HorizontalLine,
 } from "../styledComponents";
 import useArtworkDetail from "../hooks/useArtworkDetail";
-import ArtworkDetail from "../components/organisms/tattooist/ArtworkDetail";
-import ArtworkState from "../components/organisms/tattooist/ArtworkState";
+import ArtworkDetail from "../components/organisms/artwork/ArtworkDetail";
+import ArtworkState from "../components/organisms/artwork/ArtworkState";
 
 const ShowArtworkDetail = () => {
   const sendRequest = useArtworkDetail();
   const [info, setInfo] = useState({});
   const [tattoo, setTattoo] = useState([]);
   const [image, setImage] = useState("");
+  
   useEffect(() => {
     sendRequest().then((ret) => {
       setInfo(ret[0]);
       setTattoo(ret[1]);
       setImage(ret[2]);
-      console.log(ret)
     });
   }, []);
 

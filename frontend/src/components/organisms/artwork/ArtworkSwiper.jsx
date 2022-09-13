@@ -1,14 +1,15 @@
-import React, { useRef, useState } from "react";
+import React from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination, Navigation, Scrollbar, A11y } from "swiper";
 import styled from "styled-components";
-import StateUnit from "../atomic/artwork/StateUnit";
+import ArtworkStateUnit from "../../atomic/artwork/StateUnit";
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
 import "swiper/css/scrollbar";
 
-const MyTattooSwiper = ({ states }) => {
+const ArtworkSwiper = ({ states }) => {
+  console.log(states);
   return (
     <>
       <StyledSwiper
@@ -18,16 +19,16 @@ const MyTattooSwiper = ({ states }) => {
         navigation
         modules={[Pagination, Navigation, Scrollbar, A11y]}
       >
-        {states.map((state) => (
-          <SwiperSlide key={state.activator_id}>
+        {states.slice(0).reverse().map((state) => (
+          <SwiperSlide key={state.Record.activator_id}>
             <StateBox >
-              <StateTitle>{state.state}</StateTitle>
+              <StateTitle>{state.Record.state}</StateTitle>
               <StateContentBox>
-                <StateUnit title={"비용"} text={state.cost} />
-                <StateUnit title={"부위"} text={state.body_part} />
-                <StateUnit title={"잉크"} text={state.inks} />
-                <StateUnit title={"바늘"} text={state.niddle} />
-                <StateUnit title={"머신"} text={state.machine} />
+                <ArtworkStateUnit title={"비용"} text={state.Record.cost} />
+                <ArtworkStateUnit title={"부위"} text={state.Record.body_part} />
+                <ArtworkStateUnit title={"잉크"} text={state.Record.inks} />
+                <ArtworkStateUnit title={"바늘"} text={state.Record.niddle} />
+                <ArtworkStateUnit title={"머신"} text={state.Record.machine} />
               </StateContentBox>
             </StateBox>
           </SwiperSlide>
@@ -37,7 +38,7 @@ const MyTattooSwiper = ({ states }) => {
   );
 };
 
-export default MyTattooSwiper;
+export default ArtworkSwiper;
 
 export const StyledSwiper = styled(Swiper)`
   width: 910px;

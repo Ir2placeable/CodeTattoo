@@ -1,6 +1,7 @@
 import React, { useCallback, useState } from 'react';
-import { HeaderBtn, HeaderBtnHover } from '../../styledComponents';
+import { HeaderBtn, HeaderBtnHover } from '../../../styledComponents';
 import { useNavigate } from 'react-router-dom'
+
 
 const HeaderBtnComp = ({ path, text }) => {
   const [isHover, setIsHover] = useState(false);

@@ -5,7 +5,7 @@ import { useLocation } from "react-router-dom";
 
 import { MyPageNavigationBtn } from "../../../styledComponents";
 
-// 상위 컴포넌트 == MyPageNav.jsx
+// 상위 컴포넌트 === MyPageNav.jsx
 const MyPageNavBtn = ({ onClick, text, path }) => {
   const _style = {
     color: 'black',

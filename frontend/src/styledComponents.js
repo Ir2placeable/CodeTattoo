@@ -4,12 +4,17 @@ import styled, { css } from "styled-components";
 
 export const LoadingBox = styled.div`
   position: absolute;
-  top: 35%;
+  top: 50%;
   left: 58%;
   transform: translate(-50%, -50%);
   width: 150px;
   height: 150px;
 `;
+
+export const userIconStyle = {
+  fontSize: "70px",
+  marginTop: "15px",
+};
 
 export const Btn = styled.div`
   display: flex;
@@ -55,7 +60,6 @@ export const MyPageDiv = styled.div`
   // background-color: orange;
   min-height: calc(100vh - 290px);
 `;
-// position: relative;
 
 export const MyPageAddBtnDiv = styled.div`
   position: fixed;
@@ -171,7 +175,8 @@ export const HeaderTitle = styled.div`
 export const HeaderLogo = styled.img`
   display: inline-block;
   height: 80%;
-  object-fit: contain;
+  // object-fit: contain;
+  object-fit: cover;
 `;
 
 export const HeaderText = styled.div`
@@ -210,19 +215,18 @@ export const HeaderBtn = styled.div`
   transition: 0.45s;
   cursor: pointer;
 
-  ${(props) => 
-    props.type === 'chat' &&
+  ${(props) =>
+    props.type === "chat" &&
     css`
       width: 60px;
       border-color: #999;
       background-color: #999;
 
-      &:hover{
+      &:hover {
         background-color: #f6f6f6;
         color: #484848;
       }
-    `
-  }
+    `}
 `;
 
 export const HeaderBtnHover = {
@@ -498,7 +502,8 @@ export const MyTattooImg = styled.img`
   border-radius: 8px;
   box-shadow: 5px 5px 10px 0 rgba(72, 72, 72, 0.3);
   margin-left: 30px;
-  object-fit: contain;
+  // object-fit: contain;
+  object-fit: cover;
 `;
 
 export const MyTattooStateBox = styled.div`
@@ -714,7 +719,8 @@ export const DetailDraftImg = styled.img`
   width: 300px;
   height: 300px;
   cursor: pointer;
-  object-fit: contain;
+  // object-fit: contain;
+  object-fit: cover;
 `;
 
 export const DetailDraftImgHover = styled.div`
@@ -745,7 +751,8 @@ export const DetailArtworkImg = styled.img`
   width: 300px;
   height: 300px;
   cursor: pointer;
-  object-fit: contain;
+  // object-fit: contain;
+  object-fit: cover;
 `;
 
 export const DetailArtworkImgHover = styled.div`
@@ -800,7 +807,8 @@ export const ArtworkInfoBox = styled.div`
 export const ArtworkImg = styled.img`
   width: 400px;
   height: 400px;
-  object-fit: contain;
+  // object-fit: contain;
+  object-fit: cover;
   box-sizing: border-box;
   border-radius: 8px;
   background-color: #d8d8d8;
@@ -857,7 +865,8 @@ export const DraftEditBtn = styled.div`
 export const SmallDraftImg = styled.img`
   width: 400px;
   height: 400px;
-  object-fit: contain;
+  // object-fit: contain;
+  object-fit: cover;
   box-sizing: border-box;
   border-radius: 8px;
   background-color: white;
@@ -943,7 +952,7 @@ export const TattooistGenreBox = styled.div`
 
 export const TattooistKeywordBox = styled.div`
   display: flex;
-  flex-wrap: wrap;
+  // flex-wrap: wrap;
   // justify-content: space-around;
   align-items: center;
   // width: 300px;
@@ -951,16 +960,31 @@ export const TattooistKeywordBox = styled.div`
   margin: 20px 0;
 `;
 
+export const TattooistKeywords = styled.div`
+display: flex;
+flex-wrap: wrap;
+align-items: center;
+`
+
 export const TattooistKeyword = styled.div`
   font-size: 16px;
-  margin: 0 5px;
+  margin: 5px 5px;
   background-color: #eee;
   // font-size: 18px;
   line-height: 30px;
-  width: 90px;
+  min-width: 70px;
+  // width: max-content;
+  padding: 0 10px;
   text-align: center;
   border-radius: 20px;
 `;
+
+export const TattooistGenreLabelDiv = styled.div`
+// background-color: orange;
+display: flex;
+justify-content: center;
+align-items: cetner;
+`
 
 export const TattooistGenreLabel = styled.span`
   display: inline-block;
@@ -1075,7 +1099,7 @@ export const ProfileImgIcon = styled.div`
       height: 50px;
       line-height: 50px;
       overflow: hidden;
-      background-color: #777;
+      // background-color: #777;
     `}
 `;
 
@@ -1084,7 +1108,8 @@ export const ProfileImg = styled.img`
   color: #000;
   text-align: center;
   border-radius: 70%;
-  object-fit: contain;
+  // object-fit: contain;
+  object-fit: cover;
   z-index: 1;
   background-color: #aaa;
 
@@ -1462,7 +1487,8 @@ export const DraftDrawerImg = styled.img`
   // background-color: black;
   // border-radius: 50%;
   // border: 2px solid black;
-  object-fit: contain;
+  // object-fit: contain;
+  object-fit: cover;
 `;
 export const DraftImgDiv = styled.div`
   width: 270px;
@@ -1477,7 +1503,8 @@ export const DraftImgDiv = styled.div`
 export const DraftImg = styled.img`
   width: 100%;
   height: 100%;
-  object-fit: contain;
+  // object-fit: contain;
+  object-fit: cover;
   // box-sizing: border-box;
   // border-radius: 8px;
   // box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.4);
@@ -1542,6 +1569,7 @@ export const DraftImgTitle = styled.p`
 
 export const SearchResText = styled.div`
   font-size: 20px;
+  margin-top: 20px;
   margin-bottom: 50px;
   // background-color: orange;
   text-align: center;
@@ -1596,7 +1624,8 @@ export const LoadedImg = styled.img`
   background-color: #fff;
   width: 300px;
   height: 300px;
-  object-fit: contain;
+  // object-fit: contain;
+  object-fit: cover;
 `;
 
 export const EmptyImgDiv = styled.div`
@@ -1895,7 +1924,8 @@ export const DeleteImgDiv = styled.div`
 export const DeleteImg = styled.img`
   width: 150px;
   height: 150px;
-  object-fit: contain;
+  // object-fit: contain;
+  object-fit: cover;
 `;
 
 export const DeleteDesc = styled.div`
@@ -2064,24 +2094,36 @@ export const GoUpload = styled.div`
   right: 100px;
 `;
 
-// =================== FOOTER ==========================
+// *** FOOTER ***
 export const FooterDiv = styled.footer`
   background-color: #484848;
   // width: 100vw;
   min-width: 100%;
   height: 130px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
   position: absolute;
   bottom: 0;
   left: 0;
+
+  color: #BCBCBC;
+`;
+export const FooterTitle = styled.div`
+  // color: white;
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 5px;
+`;
+export const FooterDesc = styled.div`
+  // color: white;
+  font-size: 12px;
+  margin-bottom: 5px;
 `;
 
-// temporary
-export const userIconStyle = {
-  fontSize: "70px",
-  marginTop: "15px",
-};
-
-// Calenar
+// *** CALANDAR ***
 export const CalendarDiv = styled.div`
   // background-color: orange;
   margin: 60px auto;
@@ -2196,7 +2238,8 @@ export const TimeActiveBtn = styled.div`
 export const ReservDiv = styled.div`
   // background-color: orange;
   width: 80%;
-  margin: 0 auto 50px;
+  // margin: 0 auto 50px;
+  margin: 20px auto;
   display: flex;
   justify-content: space-between;
 `;
@@ -2219,7 +2262,8 @@ export const ReservDraftImg = styled.img`
   width: 200px;
   height: 200px;
   background-color: white;
-  object-fit: contain;
+  // object-fit: contain;
+  object-fit: cover;
   border-radius: 5px;
 `;
 
@@ -2268,24 +2312,30 @@ export const ReservTextBox = styled.span`
 `;
 
 export const ReservStateBtn = styled.div`
-position: absolute;
-top: 20px;
-right: 20px;
-padding: 7px;
-font-weight: bold;
-font-size: 12px;
-border-radius: 5px;
-background-color: #D83A3A; 
-text-align: center;
-color: white;
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  padding: 7px;
+  font-weight: bold;
+  font-size: 12px;
+  border-radius: 5px;
+  background-color: #d83a3a;
+  text-align: center;
+  color: white;
 
-${(props) => 
-  props.color === 'green' &&
-  css`
-    background-color: #4FBD4F;
-  `
-}
-`
+  ${(props) =>
+    props.color === "green" &&
+    css`
+      background-color: #4fbd4f;
+    `}
+
+  ${(props) => 
+    props.color === 'blue' &&
+    css`
+      background-color: #3068EC;
+    `
+  }
+`;
 
 export const ReservBtnDiv = styled.div`
   // width: 20%;
@@ -2355,7 +2405,8 @@ export const ProcedureImg = styled.img`
   background-color: white;
   width: 350px;
   height: 350px;
-  object-fit: contain;
+  // object-fit: contain;
+  object-fit: cover;
 `;
 
 export const ProcedureEdit = styled.div`
@@ -2401,6 +2452,13 @@ export const ProcedureText = styled.div`
   position: absolute;
   top: -30px;
   left: 10px;
+
+  ${(props) => (
+    props.color === 'white' &&
+    css`
+     color: white;
+    `
+  )}
 `;
 
 export const ProcedureDesc = styled.span`
@@ -2430,6 +2488,14 @@ export const ProcedureBox = styled.div`
     css`
       margin-top: 0;
     `}
+
+  ${(props) =>
+    props.size === "chat" &&
+    css`
+      margin-top: 0;
+      width: calc(100% - 20px);
+      padding-left: 0;
+    `}
 `;
 
 export const ProcedureWrap = styled.div`
@@ -2453,6 +2519,13 @@ export const ProcedureLabel = styled.div`
   color: white;
   width: 100px;
   text-align: center;
+
+  ${(props) => (
+    props.size === 'small' &&
+    css`
+      width: 50px;
+    `
+  )}
 `;
 
 export const ProcedureData = styled.div`
@@ -2602,7 +2675,8 @@ export const ProcedureEditImg = styled.img`
   height: 300px;
   background-color: white;
   box-shadow: 10px 10px 20px 0 rgba(72, 72, 72, 0.5);
-  object-fit: contain;
+  // object-fit: contain;
+  object-fit: cover;
   border-radius: 5px;
 `;
 
@@ -2688,11 +2762,28 @@ export const ChattingListDiv = styled.div`
 `;
 
 export const ChattingEmptyBox = styled.div`
-// background-color: white;
-color: white;
-// font-weight: bold;
-margin-top: 20px;
-`
+  // background-color: white;
+  color: white;
+  // font-weight: bold;
+  margin-top: 20px;
+`;
+
+export const ChattingItemBox = styled.div`
+  background-color: #f3f3f3;
+  width: 350px;
+  border-radius: 10px;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  position: relative;
+  transition: 0.4s;
+  margin: 5px;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #bdbdbd;
+  }
+`;
 
 export const ChattingBox = styled.div`
   background-color: #f3f3f3;
@@ -2710,10 +2801,11 @@ export const ChattingBox = styled.div`
     background-color: #bdbdbd;
   }
 `;
+
 export const ChattingImg = styled.img`
   width: 50px;
   height: 50px;
-  object-fit: contain;
+  object-fit: cover;
   border-radius: 50%;
   background-color: white;
 `;
@@ -2780,11 +2872,11 @@ export const ChattingReserv = styled.div`
   right: 10px;
 
   ${(props) => {
-    if (props.state === "complete") {
+    if (props.state === "confirmed") {
       return css`
         background-color: #4ec059;
       `;
-    } else if (props.state === "standby") {
+    } else if (props.state === "pending") {
       return css`
         background-color: #e84545;
       `;
@@ -2800,6 +2892,21 @@ export const ChattingRoomDiv = styled.div`
   // height: 600px;
   // overflow-y: scroll;
   position: relative;
+
+  ${(props) => {
+    if (props.state === "entry")
+      return css`
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      `;
+  }}
+`;
+
+export const ChattingRoomLogo = styled.img`
+  height: 200px;
+  object-fit: contain;
+  opacity: 0.15;
 `;
 
 export const ChattingRoomHeader = styled.div`
@@ -2906,11 +3013,12 @@ export const ChatBtn = styled.div`
   color: white;
   border-radius: 8px;
   cursor: pointer;
-  line-height: 40px;
+  line-height: 35px;
   font-weight: bold;
   font-size: 18px;
   text-align: center;
-  width: 80px;
+  width: 90px;
+  margin: 0 10px;
   box-shadow: 5px 5px 15px 0px rgba(72, 72, 72, 0.5);
   ${(props) => {
     if (props.type === "submit") {
@@ -2975,7 +3083,15 @@ export const ChatDraftBox = styled.div`
   algin-items: center;
 `;
 
-export const ChatDraftImg = styled.div`
+export const ChatDraftImgDiv = styled.div`
+  background-color: #d8d8d8;
+  width: 300px;
+  height: 300px;
+  border-radius: 8px;
+  box-shadow: 5px 5px 15px 0px rgba(72, 72, 72, 0.5);
+`;
+
+export const ChatDraftImg = styled.img`
   background-color: #d8d8d8;
   width: 300px;
   height: 300px;
@@ -2988,6 +3104,7 @@ export const ChatDraftInfoBox = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
+  // background-color: orange;
 `;
 
 export const ChatDraftInputDiv = styled.div`
@@ -3018,8 +3135,25 @@ export const ChatDraftInfoInput = styled.input`
 
 export const ChatBtnBox = styled.div`
   display: flex;
-  justify-content: space-evenly;
+  // justify-content: space-evenly;
+  justify-content: center;
   align-items: center;
   width: 850px;
   margin-top: 70px;
+  // background-color: orange;
 `;
+
+export const ExitChattingRoom = styled.div`
+// background-color: orange;
+height: 100%;
+font-size: 30px;
+color: #bcbcbc;
+position: absolute;
+display: flex;
+justify-content: center;
+align-items: center;
+top: 0;
+right: 20px;
+z-index: 11;
+cursor: pointer;
+`

@@ -16,11 +16,29 @@ import { APIURL } from '../config/key';
 const useReservation = () => {
   const [reservations, setReservations] = useState([]);
 
+  const [confirmed, setConfirmed] = useState([])
+  const [pending, setPending] = useState([])
+
   const sendRequest = async() => {
     const res = await axios.get(`${APIURL}/reservations/?tattooist_id=${getCookie('tattooist_id')}`)
 
     if(res.data.success){
       setReservations(res.data.reservations);
+
+      const tmp = res.data.reservations;
+      const tmp1 = []
+      const tmp2 = []
+
+      tmp.forEach((reservation) => {
+        if(reservation.confirmed){
+          tmp1.push(reservation)
+        } else {
+          tmp2.push(reservation)
+        }
+      })
+
+      setConfirmed(tmp1)
+      setPending(tmp2)
     }else {
       console.log('reservation api fail')
       console.log(res.data);
@@ -31,7 +49,8 @@ const useReservation = () => {
     sendRequest();
   }, []);
 
-  return reservations;
+  // return reservations;
+  return [confirmed, pending]
 };
 
 export default useReservation;

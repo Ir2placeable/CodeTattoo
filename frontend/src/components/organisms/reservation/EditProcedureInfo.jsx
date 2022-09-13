@@ -6,6 +6,7 @@ import {
   ProcedureEditBox, ProcedureEditContents, 
   ProcedureEditDiv, ProcedureEditFooter, ProcedureEditFooterBtn, ProcedureEditHeader, ProcedureEditInput, ProcedureEditInputDiv, ProcedureEditLabel, ProcedureEditWrap 
 } from '../../../styledComponents';
+import EditProcedureBtns from './EditProcedureBtns';
 
 const EditProcedureInfo = ({ setInfoEdit, date, 
   time_slot, cost, body_part, onChange }) => {
@@ -32,7 +33,7 @@ const EditProcedureInfo = ({ setInfoEdit, date,
       setInfoEdit(false);
 
       setTimeout(() => {
-        window.location.replace('');
+        window.location.reload();
       }, 500)
     }
   }
@@ -104,14 +105,7 @@ const EditProcedureInfo = ({ setInfoEdit, date,
 
           </ProcedureEditContents>
 
-          <ProcedureEditFooter>
-            <ProcedureEditFooterBtn onClick={() => setInfoEdit(false)}>
-              취소
-            </ProcedureEditFooterBtn>
-            <ProcedureEditFooterBtn onClick={onClick}>
-              수정
-            </ProcedureEditFooterBtn>
-          </ProcedureEditFooter>
+          <EditProcedureBtns setEdit={setInfoEdit} onEdit={onClick} />
 
         </ProcedureEditBox>
 
