@@ -26,7 +26,7 @@ const useArtworkDetail = () => {
     );
     if (res.data.success) {
       console.log(res.data)
-      return [res.data.artwork_info, res.data.tattoos, res.data.image];
+      return [res.data.artwork_info, res.data.states, res.data.image];
     } else {
       console.log("Artwork Detail Fail");
     }

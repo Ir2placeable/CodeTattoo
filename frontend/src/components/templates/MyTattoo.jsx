@@ -17,7 +17,7 @@ const MyTattoo = ({ tattoo }) => {
         <MyTattooImg />
       )}
       <MyTattooStateBox>
-        <MyTattooSwiper states={tattoo} />
+        <MyTattooSwiper states={tattoo.state} />
       </MyTattooStateBox>
     </>
   );
