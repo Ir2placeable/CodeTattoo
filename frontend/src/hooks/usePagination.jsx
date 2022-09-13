@@ -1,9 +1,8 @@
-import React from 'react';
 import axios from 'axios';
 import { APIURL } from '../config/key';
 import { useEffect, useState } from 'react';
 import { getCookie } from '../config/cookie';
-import { useLocation } from 'react-router-dom';
+
 
 // ### 게스트 페이지 : 도안
 

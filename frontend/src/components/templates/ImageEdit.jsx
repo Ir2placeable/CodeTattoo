@@ -55,6 +55,7 @@ const ImageEdit = () => {
   };
 
   const navigate = useNavigate();
+  
   const sendRequest = async () => {
     let url = `${APIURL}`;
     if (getCookie("user_id")) url += `/user/my-page/${getCookie("user_id")}`;

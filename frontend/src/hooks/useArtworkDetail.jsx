@@ -1,5 +1,4 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { APIURL } from "../config/key";
 
@@ -15,6 +14,9 @@ import { APIURL } from "../config/key";
 //     - tattoos = [ state1, state2, state3 … ]
 //         - state = { activator_id, state, timestamp, cost, image, body_part, inks, niddle, depth, machine }
 
+/** 작업물 상세 페이지 데이터 호출 함수
+ * @returns 
+ */
 const useArtworkDetail = () => {
   const param = useParams();
   const tattoo_id = param.tattoo_id;

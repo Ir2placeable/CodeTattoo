@@ -18,11 +18,11 @@ const DetailDraft = ({ draft }) => {
 
   const onMouseEnter = useCallback(() => {
     setHover(true);
-  }, []);
+  }, [hover]);
 
   const onMouseLeave = useCallback(() => {
     setHover(false);
-  }, []);
+  }, [hover]);
 
   return (
     <>

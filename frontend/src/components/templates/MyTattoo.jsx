@@ -1,21 +1,18 @@
-import React from "react";
+import React, { useCallback } from "react";
+import { useNavigate } from "react-router-dom";
 import { MyTattooImg, MyTattooStateBox } from "../../styledComponents";
 import MyTattooSwiper from "../organisms/mypage/MyTattooSwiper";
 
-
 /**
  * 상위 컴포넌트 === ShowMyTattoo.jsx
- * @param {*} param0 
- * @returns 
+ * @param {*} param0
+ * @returns
  */
 const MyTattoo = ({ tattoo }) => {
+
   return (
     <>
-      {tattoo.image ? (
-        <MyTattooImg src={tattoo.image} />
-      ) : (
-        <MyTattooImg />
-      )}
+      {tattoo.image ? <MyTattooImg src={tattoo.image} /> : <MyTattooImg />}
       <MyTattooStateBox>
         <MyTattooSwiper states={tattoo.state} />
       </MyTattooStateBox>

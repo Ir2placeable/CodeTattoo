@@ -2,14 +2,14 @@ import React from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination, Navigation, Scrollbar, A11y } from "swiper";
 import styled from "styled-components";
-import ArtworkStateUnit from "../../atomic/artwork/StateUnit";
+import ArtworkStateUnit from "../../atomic/artwork/ArtworkStateUnit";
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
 import "swiper/css/scrollbar";
 
 const ArtworkSwiper = ({ states }) => {
-  console.log(states);
+  const title = ["예약 확정", "작업 시작", "작업 완료"]
   return (
     <>
       <StyledSwiper
@@ -19,16 +19,18 @@ const ArtworkSwiper = ({ states }) => {
         navigation
         modules={[Pagination, Navigation, Scrollbar, A11y]}
       >
-        {states.slice(0).reverse().map((state) => (
+        {states.slice(0).reverse().map((state, idx) => (
           <SwiperSlide key={state.Record.activator_id}>
             <StateBox >
-              <StateTitle>{state.Record.state}</StateTitle>
+              <StateTitle>{`${state.Record.state} : ${title[idx]}`}</StateTitle>
               <StateContentBox>
                 <ArtworkStateUnit title={"비용"} text={state.Record.cost} />
                 <ArtworkStateUnit title={"부위"} text={state.Record.body_part} />
                 <ArtworkStateUnit title={"잉크"} text={state.Record.inks} />
                 <ArtworkStateUnit title={"바늘"} text={state.Record.niddle} />
                 <ArtworkStateUnit title={"머신"} text={state.Record.machine} />
+                <ArtworkStateUnit title={"깊이"} text={state.Record.depth} />
+                <ArtworkStateUnit title={"바늘"} text={state.Record.niddle} />
               </StateContentBox>
             </StateBox>
           </SwiperSlide>
@@ -42,18 +44,18 @@ export default ArtworkSwiper;
 
 export const StyledSwiper = styled(Swiper)`
   width: 910px;
-  height: 290px;
+  height: 315px;
 `;
 
 export const StateBox = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
   box-shadow: 5px 5px 10px 0 rgba(72, 72, 72, 0.3);
   border-radius: 8px;
   background-color: white;
-  height: 280px;
+  height: 310px;
+  align-items: center;
 `;
 
 export const StateTitle = styled.div`
@@ -62,6 +64,7 @@ export const StateTitle = styled.div`
   flex-basis: 30px;
   font-weight: 700;
   font-size: 24px;
+  text-align: center;
   margin-bottom: 10px;
 `;
 
@@ -69,5 +72,5 @@ export const StateContentBox = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
-  flex-basis: 250px;
+  height: 270px;
 `;

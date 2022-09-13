@@ -1,8 +1,11 @@
 import axios from "axios";
-import { useState, useEffect } from "react";
-import { useLocation } from "react-router-dom";
 import { getCookie } from "../config/cookie";
 import { APIURL } from "../config/key";
+
+/** 유저 마이페이지 데이터 호출 함수
+ * 
+ * @returns 유저 프로필 정보와 마이 타투 데이터를 불러오는 함수를 반환
+ */
 
 const useUserMyPage = () => {
 

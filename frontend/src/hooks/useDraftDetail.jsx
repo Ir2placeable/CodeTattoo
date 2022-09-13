@@ -4,26 +4,9 @@ import { useParams } from "react-router-dom";
 import { getCookie } from "../config/cookie";
 import { APIURL } from "../config/key";
 
-// ### 게스트 페이지 : 도안 세부
-
-// - GET : /draft/:id
-//     - id : draft_id
-// - Query : none
-// - Return : { success, draft }
-//     - draft = { draft_id, image, title, like, drawer_id, drawer_image, drawer_nickname, drawer_location, genre, [keywords], isFollowed, isScraped }
-// - Error code
-//     - err 7 : 해당 도안 없음
-
-// ### 유저 페이지 : 도안 세부
-
-// - GET : /drafts/:id
-//     - id : draft_id
-// - Query : { user_id }
-// - Return : { success, draft }
-//     - draft = { draft_id, image, title, like, drawer_id, drawer_image, drawer_nickname, drawer_location, genre, [keywords], isFollowed, isScraped }
-// - Error code
-//     - err 7 : 해당 도안 없음
-//     - err 10 : user_id 전달 오류
+/** 도안 상세 페이지 데이터 호출 함수
+ * @returns 도안 상세 데이터 반환
+ */
 
 const useDraftDetail = () => {
   const param = useParams();
@@ -51,7 +34,6 @@ const useDraftDetail = () => {
     const res = await axios.get(`${APIURL}/draft/${draft_id}${query}`);
     if (res.data.success) {
       setDraft(res.data.draft);
-      // console.log(res.data.draft);
     } else {
       console.log("Draft Detail Get Request Fail");
     }

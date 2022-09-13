@@ -516,9 +516,8 @@ export const MyTattooStateBox = styled.div`
 
 export const StateContent = styled.div`
   display: flex;
-  align-items: center;
+  align-items: center;  
   width: 100%;
-  justify-content: start;
 `;
 
 export const StateText = styled.div`

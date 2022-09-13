@@ -1,16 +1,14 @@
 import axios from 'axios';
-import React, { memo } from 'react';
+import { memo } from 'react';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import { getCookie } from '../config/cookie';
 import { APIURL } from '../config/key';
 
-// - POST : /create/draft/:id
-//     - id : tattooist_id
-// - body : { image, mime, title, genre, [keywords] }
-//     - genre : 레터링, 블랙앤그레이…
-//     - keywords : 꽃, 시계, 칼 …
-// - return : { success }
+/**
+ * 사용 안하면 삭제
+ */
+
 const useDraftUpload = memo(({ image, mime, title, genre, keywords }) => {
   const [success, setSuccess] = useState(false);
 
@@ -24,7 +22,6 @@ const useDraftUpload = memo(({ image, mime, title, genre, keywords }) => {
     if(res.data.success){
       console.log('도안 등록 성공')
       setSuccess(true);
-      //window.location.replace('/drafts/best')
     } else {
       console.log('도안 등록 실패')
       setSuccess(false);
@@ -36,8 +33,6 @@ const useDraftUpload = memo(({ image, mime, title, genre, keywords }) => {
     sendRequest()
   }, []);
 
-  //return sendRequest
-  //return [success, sendRequest]
 });
 
 export default useDraftUpload;

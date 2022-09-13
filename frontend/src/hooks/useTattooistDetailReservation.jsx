@@ -8,19 +8,6 @@ import { getCookie } from '../config/cookie';
 import { APIURL } from '../config/key';
 
 
-// ### 타투이스트 세부
-
-// - GET : /tattooist/:id/:filter
-//     - filter : draft, artwork, reservation
-//     - id : tattooist_id
-// - Query
-//     - User → **+ { user_id }**
-//     - filter = reservation → **+ { date }**
-// - Return : { success, tattooist, [data] }
-//     - tattooist = { tattooist_id, image, nickname, office, contact, description, specialize, followers, isFollowed }
-//     - filter = draft → data = { draft_id, image, like }
-//     - filter = artwork → data = { artwork_id, image, cost, timestamp }
-//     - filter = reservation → data = **{ time_slot }**
 const useTattooistDetailReservation = ({ value }) => {
   const [data, setData] = useState([]);
   const param = useParams();

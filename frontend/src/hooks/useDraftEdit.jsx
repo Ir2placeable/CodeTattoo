@@ -1,21 +1,11 @@
 import axios from 'axios';
-import React from 'react';
 import { APIURL } from '../config/key';
 
-// ### 타투이스트 도안 삭제
-
-// - POST : /remove/draft/:id
-//     - id : tattooist_id
-// - body : { draft_id }
-// - return : { success }
-
-// ### 타투이스트 도안 수정
-
-// - PATCH : /draft/:id
-//     - id : draft_id
-// - Body : { title, genre, [keywords] }
-// - Return : { success }
-// - 특이사항 : 이미지 수정 구현하지 않음
+/** 타투이스트가 도안을 수정/삭제할 때 호출하는 함수
+ * @param {String} draft_id
+ * @param {String} tattooist_id 
+ * @returns 도안 수정과 도안 삭제 요청을 보내는 함수 반환 
+ */
 const useDraftEdit = ({ draft_id, tattooist_id }) => {
   const deleteDraft = async() => {
     const res = await axios.post(`${APIURL}/remove/draft/${tattooist_id}`, {
@@ -30,7 +20,6 @@ const useDraftEdit = ({ draft_id, tattooist_id }) => {
   }
 
   const editDraft = async({title, genre, keywords, cost}) => {
-    //console.log(title, genre, keywords)
     const res = await axios.patch(`${APIURL}/draft/${draft_id}`, {
       title, genre, keywords, cost
     })

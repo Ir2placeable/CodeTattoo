@@ -23,6 +23,7 @@ import { APIURL } from '../config/key';
 //           cost, body_part, confirmed, procedure_status, image }
 //     - confirmed = true → { success, reservation, procedure_info }
 //         - procedure_info = { inks, niddle, depth, machine }
+
 const useReservationDetail = () => {
   const params = useParams();
   const id = params.reservation_id;
