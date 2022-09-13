@@ -79,8 +79,9 @@ const LoginInput = ({ isTattooist }) => {
 
     if(res.data.success){
       return [true, res.data];
-      // alert('이메일 또는 비밀번호가 불일치합니다.')
-      // return [false, {}];
+    } else {
+      alert('이메일 또는 비밀번호가 불일치합니다.')
+      return [false, {}];
     }
   }
 
@@ -98,7 +99,7 @@ const LoginInput = ({ isTattooist }) => {
               window.location.replace('/#/drafts/best');
             }, 500)
           } else {
-            window.location.replace('')
+            return;
           }
         })
     }

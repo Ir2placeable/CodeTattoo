@@ -14,11 +14,8 @@ import { CHATAPIURL } from '../config/key';
 //     (String, 예약 고유 id (room 대용으로 사용)
 const useSendChat = () => {
 
-  const sendRequest = async({sender, receiver, content, reservation_id}) => {
-    const created_at = new Date().getTime();
-    const res = await axios.post(`${CHATAPIURL}/chat/send`, {
-      sender, receiver, content, reservation_id
-    })
+  const sendRequest = async(body) => {
+    const res = await axios.post(`${CHATAPIURL}/chat/send`, body)
 
     if(res.data.success){
       console.log('send chat success')

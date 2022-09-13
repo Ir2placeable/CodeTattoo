@@ -35,7 +35,7 @@ const Reservation = memo(({ data }) => {
   const navigate = useNavigate();
 
   const goChatting = () => {
-    navigate(`/chat/${getCookie('tattooist_id')}`)
+    navigate(`/chat/${getCookie('tattooist_id')}/${data.reservation_id}`)
   }
   const onClick = (e) => {
     navigate(`/reservation/${data.reservation_id}`, {

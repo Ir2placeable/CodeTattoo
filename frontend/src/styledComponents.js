@@ -3142,3 +3142,18 @@ export const ChatBtnBox = styled.div`
   margin-top: 70px;
   // background-color: orange;
 `;
+
+export const ExitChattingRoom = styled.div`
+// background-color: orange;
+height: 100%;
+font-size: 30px;
+color: #bcbcbc;
+position: absolute;
+display: flex;
+justify-content: center;
+align-items: center;
+top: 0;
+right: 20px;
+z-index: 11;
+cursor: pointer;
+`
