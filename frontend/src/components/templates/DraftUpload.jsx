@@ -21,28 +21,18 @@ import { getCookie } from "../../config/cookie";
  */
 
 const DraftUpload = () => {
-  //const sendRequest = useDraftUpload();
   const [src, setSrc] = useState(null);
-  // const [info, setInfo] = useState({
-  //   title: '',
-  //   description: ''
-  // })
-  //const [title, setTitle] = useState("");
   const [info, setInfo] = useState({
     title: "",
     cost: ""
   })
   const [image, setImage] = useState({
-    //width: 300,
-    //height: 300,
     data: "",
     mime: "",
   });
   const [genre, setGenre] = useState("");
   const [keywords, setKewords] = useState([]);
   const { title, cost } = info;
-
-  //const {title, description} = info;
 
   const onSelectFile = (e) => {
     if (e.target.files && e.target.files.length > 0) {
@@ -52,7 +42,6 @@ const DraftUpload = () => {
       reader.readAsDataURL(e.target.files[0]);
 
       reader.addEventListener("load", () => {
-        //console.log('reader: ', reader);
         setSrc(reader.result);
       });
     }
@@ -73,7 +62,6 @@ const DraftUpload = () => {
 
   const sendRequest = async () => {
     const _cost = Number(cost);
-    console.log(_cost, typeof _cost)
     
     if(!_cost){
       alert('가격 정보는 숫자만 입력해주세요!')
@@ -93,7 +81,6 @@ const DraftUpload = () => {
     );
 
     if (res.data.success) {
-      console.log("도안 등록 성공");
       window.location.replace("/#/drafts/best");
     } else {
       console.log("도안 등록 실패");
@@ -114,7 +101,6 @@ const DraftUpload = () => {
       ...info,
       [name]: value
     })
-    //setTitle(e.target.value);
   };
 
   return (
@@ -123,9 +109,6 @@ const DraftUpload = () => {
 
       <ImgInfoDiv>
         <ImgLoaded src={src} onLoad={onLoad} />
-
-        {/* <UploadDesc title={title} description={description}
-          onChange={onChange} /> */}
 
         <LoadedImgDescDiv>
           <ImgText text="도안 이름" />

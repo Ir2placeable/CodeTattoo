@@ -18,7 +18,6 @@ const EditImg = () => {
   });
 
   const onSelectFile = (e) => {
-    console.log(`onSelectFile start`);
     if (e.target.files && e.target.files.length > 0) {
       const reader = new FileReader();
 
@@ -29,7 +28,6 @@ const EditImg = () => {
         setSrc(reader.result);
       });
     }
-    // console.log(src);
   };
 
   const onLoad = () => {

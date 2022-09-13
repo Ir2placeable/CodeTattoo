@@ -23,7 +23,6 @@ const SmallTattooist = ({ tattooist }) => {
 
   useEffect(() => {
     if (tattooist.isFollowed) setFollowing(true);
-    // console.log(tattooist)
   }, [tattooist]);
   
   const onClick = () => {
@@ -72,7 +71,6 @@ const SmallTattooist = ({ tattooist }) => {
           </SmallTattooistNickname>
 
           <SmallTattooistLocation>
-            {/* {tattooist.drawer_location} */}
             <TattooistInfoTitle type="location">
               위치
             </TattooistInfoTitle>

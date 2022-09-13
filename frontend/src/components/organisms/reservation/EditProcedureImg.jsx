@@ -45,7 +45,6 @@ const EditProcedureImg = ({ setImgEdit, _src, data, setData }) => {
       reader.readAsDataURL(e.target.files[0]);
 
       reader.addEventListener("load", () => {
-        //console.log('reader: ', reader);
         setSrc(reader.result);
       });
     }

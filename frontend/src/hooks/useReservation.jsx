@@ -14,8 +14,6 @@ import { APIURL } from '../config/key';
 //       body_part, procedure_status, confirmed 
 //     }
 const useReservation = () => {
-  const [reservations, setReservations] = useState([]);
-
   const [confirmed, setConfirmed] = useState([])
   const [pending, setPending] = useState([])
 
@@ -23,8 +21,6 @@ const useReservation = () => {
     const res = await axios.get(`${APIURL}/reservations/?tattooist_id=${getCookie('tattooist_id')}`)
 
     if(res.data.success){
-      setReservations(res.data.reservations);
-
       const tmp = res.data.reservations;
       const tmp1 = []
       const tmp2 = []

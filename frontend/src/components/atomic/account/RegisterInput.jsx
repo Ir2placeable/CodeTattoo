@@ -48,7 +48,6 @@ const RegisterInput = ({ isTattooist }) => {
 
     var regExp = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i
     // 형식에 맞는 경우 true 리턴
-    //console.log('이메일 유효성 검사 :: ', regExp.test(email))
 
     if(regExp.test(email)){
       setIsRightEmail(true)
@@ -62,7 +61,6 @@ const RegisterInput = ({ isTattooist }) => {
   useEffect(() => {
     var regExp = /^(?=.*\d)(?=.*[a-zA-Z])[0-9a-zA-Z]{8,16}$/
     // 형식에 맞는 경우 true 리턴
-    //console.log('비밀번호 유효성 검사 :: ', regExp.test(pwd))
 
     if(regExp.test(pwd)){
       setIsPwdRight(true);
@@ -135,10 +133,7 @@ const RegisterInput = ({ isTattooist }) => {
       body.contact = contact;
     }
 
-    console.log('body', body)
-
     const res = await axios.post(`${APIURL}/register/${body.filter}`, body)
-    console.log(res)
 
     if(res.data.success) {
       alert('회원가입 성공! 환영합니다.')
@@ -154,6 +149,8 @@ const RegisterInput = ({ isTattooist }) => {
       alert('모든 정보를 입력해주세요.')
     } else if( pwd !== pwd2 ){
       alert('비밀번호가 불일치합니다.')
+    } else if(!isRightEmail){
+      alert('올바른 이메일 표현식이 아닙니다.')
     } else {
       registerRequest();
     }

@@ -28,12 +28,11 @@ const useTattooistList = ({ filter, page }) => {
         query += `?nickname=${nickname}`;
       }
     }
-    console.log(`${APIURL}/${filter}/${page}${query}`);
+    
     const res = await axios.get(`${APIURL}/${filter}/${page}${query}`);
 
     if (res.data.success) {
       setTattooists(res.data.tattooists);
-      console.log(res.data.tattooists);
     } else {
       console.log("Tattooist List Get Request Fail");
     }

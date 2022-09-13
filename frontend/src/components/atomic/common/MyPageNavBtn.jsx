@@ -17,7 +17,6 @@ const MyPageNavBtn = ({ onClick, text, path }) => {
   useEffect(() => {
 
     const _path = location.pathname.split('/')[3];
-    // console.log(_path)
     if(_path === path){
       setStyle(_style)
     } else {

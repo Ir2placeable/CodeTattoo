@@ -7,9 +7,6 @@ import {
   ChatInputDiv,
   ChatReservationBox,
   ChatBtnBox,
-  ChatDraftInfoLabel,
-  ChatDraftInfoInput,
-  ChatDraftInputDiv,
   ChatDraftImgDiv,
   ProcedureBox,
   ProcedureText,
@@ -27,7 +24,6 @@ import useConfirmReservation from '../../../hooks/useConfirmReservation';
 import EditProcedureImg from '../reservation/EditProcedureImg';
 import EditProcedureInfo from '../reservation/EditProcedureInfo';
 import Popup from '../draft/Popup';
-import ProcedureReservationInfo from '../reservation/ProcedureReservationInfo';
 
 const ChattingReservation = ({ user_id, onPlusClick }) => {
   const [reservation, ] = useReservationDetail();
@@ -77,8 +73,6 @@ const ChattingReservation = ({ user_id, onPlusClick }) => {
       body_part: reservation.body_part
     })
 
-    console.log('reservation: ',reservation)
-
     if(reservation.confirmed || getCookie('user_id')){
       setShowBtns(false)
     }
@@ -97,7 +91,7 @@ const ChattingReservation = ({ user_id, onPlusClick }) => {
     if(!date || !time_slot || !cost || !body_part){
       alert("모든 예약 정보를 입력해주세요!")
       return;
-    } else if(!reservation.iamge && (!img.image || !img.mime)){
+    } else if(!reservation.image && (!img.image || !img.mime)){
       alert("예약 도안 이미지를 업로드해주세요!")
       return;
     } else {

@@ -19,7 +19,6 @@ const Pagination = ({ page, setPage, pages, setPages, items }) => {
   });
 
   useEffect(() => {
-    // console.log(location.pathname)
     const lastPage = Math.ceil(count / items);
     const temp = [];
 
@@ -30,7 +29,6 @@ const Pagination = ({ page, setPage, pages, setPages, items }) => {
   }, [count]);
 
   useEffect(() => {
-    // console.log('change page: ', page)
     window.scrollTo(0, 0)
   }, [page])
 

@@ -21,8 +21,6 @@ const usePagination = ({ filter }) => {
     if(filter.split('/')[2] === 'search'){
       const [ , a, b, keyword] = filter.split('/');
       _filter = `/${a}/${b}`
-      // console.log(keyword)
-      // console.log(_filter)
 
       if(!query){
         query = `/?`
@@ -39,11 +37,9 @@ const usePagination = ({ filter }) => {
       query += `${keyword}`
     }
 
-    console.log(_filter, query)
     const res = await axios.get(`${APIURL}${_filter}/0${query}`);
 
     if(res.data.success){
-      // console.log(_filter, 'usePagination success: ', res.data)
       setCount(res.data.count);
     } else {
       console.log('usePagination error');

@@ -15,8 +15,6 @@ const SmallDraft = ({ draft }) => {
 
   useEffect(() => {
     if (draft) {
-      // console.log("Small Draft", draft);
-      // console.log('draft.isScraped: ',draft.isScraped)
       setLoading(false);
     }
   }, [draft]);

@@ -28,14 +28,11 @@ const useDraftList = ({ filter, page }) => {
         query = `?title=${title}`
       }
     }
-    //console.log(query)
 
     const res = await axios.get(`${APIURL}/${filter}/${page}/${query}`);
 
-    //console.log(res);
     if(res.data.success){
       setDrafts(res.data.drafts);
-      //console.log(res.data.drafts)
     } else {
       // 오류
       console.log('useDraftList error');
@@ -46,7 +43,6 @@ const useDraftList = ({ filter, page }) => {
 
   useEffect(() => {
     sendRequest();
-    //console.log('drafts: ',drafts)
   }, [filter, page, title])
 
   return drafts;

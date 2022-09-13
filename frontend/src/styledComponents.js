@@ -2783,6 +2783,18 @@ export const ChattingItemBox = styled.div`
   &:hover {
     background-color: #bdbdbd;
   }
+
+  ${(props) => {
+    if(props.type === 'click'){
+      return css`
+      background-color: #afafaf;
+      `
+    } else if(props.type === 'none'){
+      return css`
+      background-color: #f3f3f3;
+      `
+    }
+  }}
 `;
 
 export const ChattingBox = styled.div`
@@ -3097,6 +3109,7 @@ export const ChatDraftImg = styled.img`
   height: 300px;
   border-radius: 8px;
   box-shadow: 5px 5px 15px 0px rgba(72, 72, 72, 0.5);
+  object-fit: cover;
 `;
 
 export const ChatDraftInfoBox = styled.div`

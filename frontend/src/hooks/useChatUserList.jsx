@@ -20,7 +20,6 @@ const useChatUserList = () => {
         const res = await axios.get(`${CHATAPIURL}/chat/list/${url}`);
         
         if(res.data.success){
-            console.log('userlist: ',res.data)
             setChatList(res.data.userlist)
         } else {
             console.log('get chatting user list fail')

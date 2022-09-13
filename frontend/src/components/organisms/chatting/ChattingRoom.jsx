@@ -15,20 +15,17 @@ import { useContext } from "react";
 import { WebSocketContext } from "../../templates/Chatting";
 import { useEffect } from "react";
 import { useState } from "react";
-import { getCookie } from "../../../config/cookie";
 import { useRef } from "react";
 import useChatRecord from "../../../hooks/useChatRecord";
 import { useParams } from "react-router-dom";
 import ChattingMessage from "../../atomic/chatting/ChattingMessage";
 import ChattingImgChoice from "../../atomic/chatting/ChattingImgChoice";
-import { createElement } from "react";
 import useSendChat from "../../../hooks/useSendChat";
 import { faArrowRightFromBracket } from "@fortawesome/free-solid-svg-icons";
 
 const ChattingRoom = ({ data, onPlusClick }) => {
   const ws = useContext(WebSocketContext);
   const [content, setContent] = useState("");
-  const [records, setRecords] = useState([]);
   const [src, setSrc] = useState(null);
 
   const params = useParams();
@@ -39,8 +36,8 @@ const ChattingRoom = ({ data, onPlusClick }) => {
 
   useEffect(() => {
     // 현재 스크롤 위치 === scrollRef.current.scrollTop
-      // 스크롤 길이 === scrollRef.current.scrollHeight
-      scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
+    // 스크롤 길이 === scrollRef.current.scrollHeight
+    scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
   });
 
   const message = useChatRecord({
@@ -53,14 +50,10 @@ const ChattingRoom = ({ data, onPlusClick }) => {
 
   useEffect(() => {
     setMessages(message);
-    // console.log('message: ', message);
-    console.log("messages: ", messages);
   }, [message, messages]);
 
   ws.current.onmessage = (e) => {
-    console.log("e: ", e);
     const data = JSON.parse(e.data);
-    console.log("onmessage data: ", data);
 
     const temp = {
       id: 14,
@@ -72,17 +65,11 @@ const ChattingRoom = ({ data, onPlusClick }) => {
 
     const prev = messages;
     prev.push(temp)
-    console.log("prev: ", prev);
     setMessages([...prev]);
   };
 
-  // parameter
-  // body: { sender, receiver, content, reservation_id, created_at }
   const sendChat = useSendChat()
   const onSend = () => {
-//     찐타투아영 6320158164414f2c23d6d22d
-// 찐유저아영 6320155f64414f2c23d6d229
-
     const body = {
       sender: subject_id,
       receiver: data.opponent_id,
@@ -95,7 +82,6 @@ const ChattingRoom = ({ data, onPlusClick }) => {
     sendChat(body)
     ws.current.send(JSON.stringify(body));
     setContent("");
-    console.log("send: ", body);
 
     const temp = {
       id: body.created_at,
@@ -107,7 +93,6 @@ const ChattingRoom = ({ data, onPlusClick }) => {
 
     const prev = messages;
     prev.push(temp)
-    console.log("prev: ", prev);
     setMessages([...prev]);
   };
 
@@ -129,7 +114,6 @@ const ChattingRoom = ({ data, onPlusClick }) => {
         setSrc(reader.result);
       });
     }
-    // console.log(src);
   };
   
   const goExit = (e) => {
@@ -186,46 +170,3 @@ const ChattingRoom = ({ data, onPlusClick }) => {
 };
 
 export default ChattingRoom;
-
-{
-  /* <ChatBigDiv>
-        <ChatDiv who="me">
-          <ChatContents who="me">sibal</ChatContents>
-          <ChatDate>2022년 12월 17일 12:17pm</ChatDate>
-        </ChatDiv>
-        <ChatDiv who="you">
-          <ChatContents who="you">...</ChatContents>
-          <ChatDate>2022년 8월 17일 5:17pm</ChatDate>
-        </ChatDiv>
-      </ChatBigDiv> */
-}
-
-// useEffect(() => {
-//   console.log("message: ", message);
-// }, [message]);
-
-// useEffect(() => {
-//   contentInput.current.focus();
-
-//   console.log("ws: ", ws);
-//   // // 타투아영: 631586d4a26479438d3c1bf2
-//   // // 유저아영: 631585ffa26479438d3c1ba2
-//   // const src = '631586d4a26479438d3c1bf2'
-//   // const dest = '631585ffa26479438d3c1ba2'
-
-//   // let body = {
-//   //   sender: src,
-//   //   receiver: dest,
-//   //   reservation_id : "TestReservationId",
-//   //   content: "보내는 사람: f2"
-//   // }
-
-//   // if(getCookie('user_id')){
-//   //   body.sender = dest;
-//   //   body.receiver = src
-//   //   body.content = '보내는 사람: a2'
-//   // }
-
-//   // let jsonData = JSON.stringify(body);
-//   // ws.current.send(jsonData)
-// }, []);

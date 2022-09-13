@@ -17,8 +17,6 @@ const EditProcedureInfo = ({ setInfoEdit, date,
     const t = Number(time_slot)
     const c = Number(cost)
 
-    // console.log(d, t, c)
-
     if(!d || !t || !c) {
       alert('형식에 맞게 작성해주세요!')
       return;

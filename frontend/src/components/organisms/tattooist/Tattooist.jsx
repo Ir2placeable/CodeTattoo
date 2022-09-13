@@ -30,8 +30,6 @@ const Tattooist = ({ tattooist }) => {
     setHover(false);
   }, []);
 
-  // console.log(tattooist)
-
   return (
     <>
       <TattooistImgBox

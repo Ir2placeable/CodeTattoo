@@ -17,7 +17,6 @@ const HeartIcon = ({ isScraped, draft_id }) => {
   const [scrap, unscrap] = useHeartClick({ draft_id });
 
   useEffect(() => {
-    // console.log('hearticon isScraped: ', isScraped)
     if(isScraped){
       setHeartClick(true);
     }

@@ -64,7 +64,6 @@ const Procedure = () => {
 
   useEffect(() => {
     if(procedureInfo){
-      console.log(procedureInfo)
       setInputs({
         niddle: procedureInfo.niddle,
         inks: procedureInfo.inks,
@@ -94,8 +93,6 @@ const Procedure = () => {
       cost: c,
       body_part: reservation.body_part
     })
-
-    console.log('reservation: ',reservation)
     setProcedureStatus(reservation.procedure_status)
   }, [reservation])
 
