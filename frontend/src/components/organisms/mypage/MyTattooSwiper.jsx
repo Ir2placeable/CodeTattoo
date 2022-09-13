@@ -9,6 +9,7 @@ import "swiper/css/navigation";
 import "swiper/css/scrollbar";
 
 const MyTattooSwiper = ({ states }) => {
+  console.log('states: ', states)
   return (
     <>
       <StyledSwiper

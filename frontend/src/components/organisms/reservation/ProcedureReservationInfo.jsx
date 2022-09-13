@@ -11,7 +11,7 @@ import { faGear } from '@fortawesome/free-solid-svg-icons';
 
 const ProcedureReservationInfo = ({
   confirmed,
-  setInfoEdit, date, time_slot, cost, body_part
+  setInfoEdit, date, time_slot, cost, body_part,
 }) => {
   return (
     <>

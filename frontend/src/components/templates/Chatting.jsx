@@ -73,6 +73,7 @@ const Chatting = () => {
       }
       setPrev(e);
       e.target.style.backgroundColor = "#AFAFAF";
+      console.log('item: ',item)
       dataSetting(item).then(() => {
         navigate(`${item.reservation_id}`);
       });

@@ -2452,6 +2452,13 @@ export const ProcedureText = styled.div`
   position: absolute;
   top: -30px;
   left: 10px;
+
+  ${(props) => (
+    props.color === 'white' &&
+    css`
+     color: white;
+    `
+  )}
 `;
 
 export const ProcedureDesc = styled.span`
@@ -2481,6 +2488,14 @@ export const ProcedureBox = styled.div`
     css`
       margin-top: 0;
     `}
+
+  ${(props) =>
+    props.size === "chat" &&
+    css`
+      margin-top: 0;
+      width: calc(100% - 20px);
+      padding-left: 0;
+    `}
 `;
 
 export const ProcedureWrap = styled.div`
@@ -2504,6 +2519,13 @@ export const ProcedureLabel = styled.div`
   color: white;
   width: 100px;
   text-align: center;
+
+  ${(props) => (
+    props.size === 'small' &&
+    css`
+      width: 50px;
+    `
+  )}
 `;
 
 export const ProcedureData = styled.div`
@@ -2991,11 +3013,12 @@ export const ChatBtn = styled.div`
   color: white;
   border-radius: 8px;
   cursor: pointer;
-  line-height: 40px;
+  line-height: 35px;
   font-weight: bold;
   font-size: 18px;
   text-align: center;
-  width: 80px;
+  width: 90px;
+  margin: 0 10px;
   box-shadow: 5px 5px 15px 0px rgba(72, 72, 72, 0.5);
   ${(props) => {
     if (props.type === "submit") {
@@ -3060,7 +3083,15 @@ export const ChatDraftBox = styled.div`
   algin-items: center;
 `;
 
-export const ChatDraftImg = styled.div`
+export const ChatDraftImgDiv = styled.div`
+  background-color: #d8d8d8;
+  width: 300px;
+  height: 300px;
+  border-radius: 8px;
+  box-shadow: 5px 5px 15px 0px rgba(72, 72, 72, 0.5);
+`;
+
+export const ChatDraftImg = styled.img`
   background-color: #d8d8d8;
   width: 300px;
   height: 300px;
@@ -3073,6 +3104,7 @@ export const ChatDraftInfoBox = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
+  // background-color: orange;
 `;
 
 export const ChatDraftInputDiv = styled.div`
@@ -3103,8 +3135,10 @@ export const ChatDraftInfoInput = styled.input`
 
 export const ChatBtnBox = styled.div`
   display: flex;
-  justify-content: space-evenly;
+  // justify-content: space-evenly;
+  justify-content: center;
   align-items: center;
   width: 850px;
   margin-top: 70px;
+  // background-color: orange;
 `;
