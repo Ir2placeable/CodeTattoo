@@ -14,6 +14,9 @@ public class RequestSend {
     @NotNull(message="Content cannot be null")
     private String content;
 
+    @NotNull(message="Created_at cannot be null")
+    private String created_at;
+
     @NotNull(message="Reservation_id cannot be null")
     private String reservation_id;
 }

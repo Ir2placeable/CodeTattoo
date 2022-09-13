@@ -25,10 +25,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import java.net.URISyntaxException;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import org.springframework.http.HttpHeaders;
 
@@ -93,6 +90,7 @@ public class ChatController {
                 .sender(vo.getSender())
                 .receiver(vo.getReceiver())
                 .content(vo.getContent())
+                .createdAt(vo.getCreated_at())
                 .reservation_id(vo.getReservation_id())
                 .build();
 
@@ -117,6 +115,7 @@ public class ChatController {
                 .receiver(vo.getTattooist_id())
                 .content("안녕하세요! 상담문의 드립니다!")
                 .reservation_id(vo.getReservation_id())
+                .createdAt(String.valueOf(new Date()))
                 .build();
 
         if (messageService.send(messageDto).getReceiver() != null) {

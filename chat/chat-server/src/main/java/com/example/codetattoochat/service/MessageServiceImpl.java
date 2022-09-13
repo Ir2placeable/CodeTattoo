@@ -33,7 +33,7 @@ public class MessageServiceImpl implements MessageService {
                 .sender(dto.getSender())
                 .receiver(dto.getReceiver())
                 .content(dto.getContent())
-                .created_At(String.valueOf(LocalDateTime.now()))
+                .created_At(dto.getCreatedAt())
                 .reservation_id(dto.getReservation_id())
                 .build();
 
