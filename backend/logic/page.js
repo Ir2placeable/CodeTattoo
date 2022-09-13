@@ -1,3 +1,5 @@
+// 코드 목적 : Web-Front 에서 페이지 로드에 필요한 데이터를 가공하는 역할을 수행한다.
+
 const {Draft} = require("../DBModel/Draft");
 const Global = require("../GlobalVariable");
 const {Tattooist} = require("../DBModel/Tattooist");
@@ -11,7 +13,11 @@ exports.draft = async function(params, query) {
     let return_value
 
     if (params.page === '0') {
-        count = await Draft.count()
+        if (params.filter === 'search') {
+            count = await Draft.find({ title : {$regex : query.title }}).count()
+        } else {
+            count = await Draft.count()
+        }
         // 탐색 결과 없음 오류
         if(count === 0) { throw 10 }
 
@@ -109,7 +115,11 @@ exports.tattooist = async function(params, query) {
     let return_value
 
     if (params.page === '0') {
-        count = await Tattooist.count()
+        if (params.filter === 'search') {
+            count = await Tattooist.find({ nickname : {$regex : query.nickname }}).count()
+        } else {
+            count = await Tattooist.count()
+        }
         if(count === 0) { throw 10 }
 
         return {count, return_value}
@@ -232,7 +242,7 @@ exports.tattooistDetail = async function(params, query) {
 
     return {tattooist_info, return_value}
 }
-// 작업물 페이지
+// 작업물 세부 페이지
 exports.artworkDetail = async function(params, query) {
     let image;
     let info;
@@ -248,20 +258,30 @@ exports.artworkDetail = async function(params, query) {
         states.push(tattoo_state)
     }
 
-    image = states[2].image
+    image = states[0].Record.image
 
     info = {
-        date : states[2].date,
-        taken_time : states[2].timestamp - states[1].timestamp,
-        cost : states[2].cost,
+        date : states[0].Record.date,
+        taken_time : calcTakenTime(states[0].Record.timestamp - states[1].Record.timestamp),
+        cost : states[0].Record.cost,
         tattooist_nickname : tattooist['nickname'],
-        body_part : states[2].body_part,
-        inks : states[2].inks,
-        machine : states[2].machine,
+        body_part : states[0].Record.body_part,
+        inks : states[0].Record.inks,
+        machine : states[0].Record.machine,
+        niddle : states[0].Record.niddle,
+        depth : states[0].Record.depth
     }
 
     return {image, info, states}
 }
+const calcTakenTime = function(seconds) {
+    const hour = parseInt(seconds / 3600) < 10 ? '0' + parseInt(seconds / 3600) : parseInt(seconds / 3600);
+    const min = parseInt((seconds % 3600) / 60) < 10 ? '0' + parseInt((seconds % 3600) / 60) : parseInt((seconds % 3600) / 60);
+    const sec = seconds % 60 < 10 ? '0' + seconds % 60 : seconds % 60;
+
+    return String(hour) + ":" + String(min) + ":" + String(sec)
+}
+
 // 예약 세부 페이지
 exports.reservationDetail = async function(params) {
     let reservation_info;
@@ -419,30 +439,35 @@ const scrapTattooist = async function(params, query) {
 }
 // 유저 마이페이지 (Only User)
 exports.userMyPage = async function(params) {
+    let user_info
+    let tattoos = []
+
     const user = await User.findOne({ _id : params.id })
     if (!user) { throw 1 }
 
-    const user_info = {
+    user_info = {
         user_id : user['_id'],
         nickname : user['nickname'],
         location : user['location'],
         image : user['image']
     }
 
-    let return_value = [] // 유저가 새긴 여러 개의 타투
-
     for await (let tattoo_id of user['tattoos']) {
-        const tattoo_info = [] // 단일 타투의 히스토리
         const tattoo_history = await blockchain.getTattooHistory(tattoo_id)
         if (!tattoo_history) { throw 30 }
 
+        let states = []
         for (let tattoo_state of tattoo_history) {
-            tattoo_info.push(tattoo_state)
+            states.push(tattoo_state)
         }
-        return_value.push(tattoo_info)
+
+        tattoos.push({
+            image : states[0].Record.image,
+            state : states
+        })
     }
 
-    return {user_info, return_value}
+    return {user_info, tattoos}
 }
 
 // 예약 페이지 (Only Tattooist)

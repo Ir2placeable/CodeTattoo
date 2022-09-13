@@ -38,12 +38,14 @@ const useReservationDetail = () => {
       setProcedureInfo(res.data.procedure_info)
     } else {
       console.log('reservation detail fail')
+      console.log(res.data)
+      console.log(id)
     }
   }
 
   useEffect(() => {
     sendRequest();
-  }, [])
+  }, [id])
 
   return [reservation, procedureInfo]
 };

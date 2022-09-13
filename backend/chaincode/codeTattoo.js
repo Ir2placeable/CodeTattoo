@@ -6,9 +6,13 @@
 
 'use strict';
 
+// 코드 목적 : 블록체인에 본 코드를 배포하여, 타투 시술에 사용되는 데이터를 블록체인에 기록하는 역할을 수행한다.
+// 타투 시술 상태(state)에 따라 다른 기능을 수행한다.
+
 const { Contract } = require('fabric-contract-api');
 
 class CodeTattoo extends Contract {
+    // 네트워크 개설 시에만 작동
     async initLedger(ctx) {
         console.info('============= START : Initialize Ledger ===========');
         console.info('============= END : Initialize Ledger ===========');

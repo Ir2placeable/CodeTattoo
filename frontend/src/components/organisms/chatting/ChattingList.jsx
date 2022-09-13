@@ -15,7 +15,7 @@ const ChattingList = ({ onClick }) => {
       ) : (
         <ChattingListDiv>
           {chatList.map((item) => (
-            <ChattingItem  key={item.opponent_id} item={item} onClick={onClick} />
+            <ChattingItem  key={item.createdAt} item={item} onClick={onClick} />
           ))}
         </ChattingListDiv>
       )}

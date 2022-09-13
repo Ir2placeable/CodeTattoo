@@ -1,3 +1,5 @@
+// 코드 목적 : Chaincode 가 저장한 데이터 구조를 이해하기 위함이다.
+
 const mongoose = require('mongoose')
 
 // TattooState

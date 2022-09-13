@@ -1,6 +1,8 @@
 import React from 'react';
+import { useEffect } from 'react';
 import { useState } from 'react';
 import { useOutletContext } from 'react-router-dom';
+import { getCookie } from '../../../config/cookie';
 import useChatRecord from '../../../hooks/useChatRecord';
 import { ChattingRoomDiv } from '../../../styledComponents';
 import ChattingReservation from './ChattingReservation';
@@ -22,7 +24,7 @@ const ChattingRecord = () => {
         {plusClick ? (
           <ChattingRoom onPlusClick={onPlusClick} data={data} />
         ) : (
-          <ChattingReservation onPlusClick={onPlusClick} />
+          <ChattingReservation user_id={data.opponent_id} onPlusClick={onPlusClick} />
         )}
       </ChattingRoomDiv>
     </>

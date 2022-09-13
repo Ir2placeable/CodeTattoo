@@ -9,6 +9,8 @@ import {
 } from "../../../styledComponents";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
+import { useLocation } from "react-router-dom";
+import { useEffect } from "react";
 
 /**
  * 상위 컴포넌트 === ChattingList.jsx
@@ -17,7 +19,17 @@ import { faUser } from "@fortawesome/free-solid-svg-icons";
  */
 
 const ChattingItem = ({ item, onClick }) => {
+  const location = useLocation();
 
+  useEffect(() => {
+    const [, , , ,rid] = location.pathname.split('/')
+
+    if(rid === item.reservation_id){
+      
+    }
+
+  }, [location.pathname])
+  
   return (
     <>
       <ChattingItemBox

@@ -73,6 +73,7 @@ const Chatting = () => {
       }
       setPrev(e);
       e.target.style.backgroundColor = "#AFAFAF";
+      console.log('item: ',item)
       dataSetting(item).then(() => {
         navigate(`${item.reservation_id}`);
       });
@@ -84,17 +85,17 @@ const Chatting = () => {
   //   navigate(`${reservationId}`)
   // }, [reservationId])
 
-  useEffect(() => {
-    console.log("send socket");
-    // web socket id 전송
-    axios
-      .post(`${CHATAPIURL}/chat/user`, {
-        userid: userid,
-      })
-      .then((res) => {
-        console.log(res);
-      });
-  }, []);
+  // useEffect(() => {
+  //   console.log("send socket");
+  //   // web socket id 전송
+  //   axios
+  //     .post(`${CHATAPIURL}/chat/user`, {
+  //       userid: userid,
+  //     })
+  //     .then((res) => {
+  //       console.log(res);
+  //     });
+  // }, []);
 
   return (
     <>

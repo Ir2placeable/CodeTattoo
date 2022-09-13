@@ -7,6 +7,7 @@ import {
   ChatBtn,
   ChatInput,
   ProfileImgIcon,
+  ExitChattingRoom
 } from "../../../styledComponents";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faImage, faPlus, faUser } from "@fortawesome/free-solid-svg-icons";
@@ -21,6 +22,8 @@ import { useParams } from "react-router-dom";
 import ChattingMessage from "../../atomic/chatting/ChattingMessage";
 import ChattingImgChoice from "../../atomic/chatting/ChattingImgChoice";
 import { createElement } from "react";
+import useSendChat from "../../../hooks/useSendChat";
+import { faArrowRightFromBracket } from "@fortawesome/free-solid-svg-icons";
 
 const ChattingRoom = ({ data, onPlusClick }) => {
   const ws = useContext(WebSocketContext);
@@ -44,6 +47,7 @@ const ChattingRoom = ({ data, onPlusClick }) => {
     subject_id: subject_id,
     reservation_id: reservation_id,
   });
+  
 
   const [messages, setMessages] = useState([]);
 
@@ -72,16 +76,23 @@ const ChattingRoom = ({ data, onPlusClick }) => {
     setMessages([...prev]);
   };
 
+  // parameter
+  // body: { sender, receiver, content, reservation_id, created_at }
+  const sendChat = useSendChat()
   const onSend = () => {
+//     찐타투아영 6320158164414f2c23d6d22d
+// 찐유저아영 6320155f64414f2c23d6d229
+
     const body = {
       sender: subject_id,
       receiver: data.opponent_id,
       reservation_id: reservation_id,
       content: content,
-      created_at: new Date().getTime(),
+      created_at: Math.floor(Date.now() / 1000),
       enter_room: false,
     };
 
+    sendChat(body)
     ws.current.send(JSON.stringify(body));
     setContent("");
     console.log("send: ", body);
@@ -120,6 +131,10 @@ const ChattingRoom = ({ data, onPlusClick }) => {
     }
     // console.log(src);
   };
+  
+  const goExit = (e) => {
+    window.location.replace(`/#/chat/${subject_id}`)
+  }
 
   return (
     <>
@@ -133,6 +148,10 @@ const ChattingRoom = ({ data, onPlusClick }) => {
         )}
 
         <ChattingText size="main">{data.opponent_nickname}</ChattingText>
+
+        <ExitChattingRoom onClick={goExit}>
+          <FontAwesomeIcon icon={faArrowRightFromBracket} />
+        </ExitChattingRoom>
       </ChattingRoomHeader>
 
       <ChatBigDiv id="chat" ref={scrollRef}>

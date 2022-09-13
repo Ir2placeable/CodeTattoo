@@ -84,7 +84,10 @@ const DraftDetail = () => {
       // })
       .then(ret => {
         console.log(ret)
-        navigate(`/chat/${user}`)
+        setTimeout(() => {
+          navigate(`/chat/${user}`)
+        }, 3000)
+        // navigate(`/chat/${user}`)
       })
     }
   };

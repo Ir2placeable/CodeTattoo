@@ -164,7 +164,9 @@ const AvailableTime = ({ value, isAdmin, id }) => {
         //   createChatReservation({ tattooist_id: data.tattooist_id })
         // })
         .then(() => {
-          navigate(`/chat/${user}`)
+          setTimeout(() => {
+            navigate(`/chat/${user}`)
+          }, 3000)
         })
     }
   }

@@ -1,3 +1,5 @@
+// 코드 목적 : 메인 서버가 처리할 수 있는 API 와 business logic 을 연결한다.
+
 const page = require('./logic/page')
 const admin = require('./logic/admin')
 const command = require('./logic/command')
@@ -32,6 +34,7 @@ server.use(bodyParser.json({ limit : "10mb" }));
 server.use(bodyParser.urlencoded({ limit : "10mb", extended : true }))
 
 const cors = require('cors');
+const blockchain = require("./module/blockchain");
 server.use(cors());
 
 server.use('/', (req, res, next) => {
@@ -114,7 +117,7 @@ server.get('/user/my-page/:id', (req, res) => {
 
     page.userMyPage(req.params)
         .then((returned) => {
-            res.send({ success : true, user_info : returned.user_info, tattoos : returned.return_value })
+            res.send({ success : true, user_info : returned.user_info, tattoos : returned.tattoos })
         })
         .catch((err) => {
             res.send(ErrorLogging(err))
@@ -127,7 +130,7 @@ server.get('/artwork/:id', (req, res) => {
 
     page.artworkDetail(req.params, req.query)
         .then((returned) => {
-            res.send({ success : true, image : returned.image, artwork_info : returned.info, tattoos : returned.states })
+            res.send({ success : true, image : returned.image, artwork_info : returned.info, states : returned.states })
         })
         .catch((err) => {
             res.send(ErrorLogging(err))
@@ -304,7 +307,7 @@ server.post('/user/my-page/:id', (req, res) => {
 
     command.userImageEdit(req.params, req.body)
         .then((returned) => {
-            res.send({ success : true })
+            res.send({ success : true, image : returned })
         })
         .catch((err) => {
             res.send(ErrorLogging(err))
@@ -330,12 +333,11 @@ server.post('/tattooist/my-page/:id', (req, res) => {
 
     command.tattooistImageEdit(req.params, req.body)
         .then((returned) => {
-            res.send({ success : true })
+            res.send({ success : true, image : returned })
         })
         .catch((err) => {
             res.send(ErrorLogging(err))
         })
-
 })
 // 명령 : 도안 스크랩
 server.post('/scrap/:id', (req, res) => {
@@ -593,7 +595,7 @@ server.get('/get/reservation', (req, res) => {
     admin.getReservation().then((result) => { res.send({ reservations : result }) })
 })
 
-// 블록체인 강제 명령 모음
+// 블록체인 직접 요청
 // 블록체인에 데이터 기록 요청
 server.post('/blockchain/invoke/:function/:key', (req, res) => {
     admin.invokeBlockchain(req.params, req.body)

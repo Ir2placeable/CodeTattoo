@@ -1,3 +1,5 @@
+// 코드 목적 : Main Server 로 요청한 명령을 처리하는 Business logic 을 수행한다.
+
 const {User} = require("../DBModel/User");
 const {Reservation} = require("../DBModel/Reservation")
 const imageStorage = require("../module/imageStorage");
@@ -158,6 +160,8 @@ exports.userImageEdit = async function(params, body) {
 
     // 기존 유저 이미지 삭제
     await imageStorage.delete(params.id)
+
+    return image_url
 }
 
 // 타투이스트 정보 변경
@@ -183,6 +187,8 @@ exports.tattooistImageEdit = async function(params, body) {
 
     // 기존 이미지 삭제
     await imageStorage.delete(params.id)
+
+    return image_url
 }
 
 // 도안 생성
@@ -373,17 +379,17 @@ exports.beginProcedure = async function(params, body) {
     if (!reservation) { throw 4 }
 
     let blockchain_params = {
-        owner_info : {
-            id : user['_id'],
-            nickname : user['nickname']
-        }
+        owner_info: {
+            id: user['_id'],
+            nickname: user['nickname']
+        },
+        cost: reservation['cost'],
+        image: reservation['image'],
+        body_part: reservation['body_part'],
     }
     await blockchain.invoke("newTattoo", new_tattoo['_id'], blockchain_params)
 
     blockchain_params['tattooist_info'] = { id : tattooist['_id'], nickname : tattooist['nickname']}
-    blockchain_params['cost'] = reservation['cost']
-    blockchain_params['image'] = reservation['image']
-    blockchain_params['body_part'] = reservation['body_part']
     blockchain_params['inks'] = body['inks']
     blockchain_params['niddle'] = body['niddle']
     blockchain_params['depth'] = body['depth']
