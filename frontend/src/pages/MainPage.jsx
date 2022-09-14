@@ -5,6 +5,7 @@ import { Outlet, useLocation } from "react-router-dom";
 import Navigation from "../components/organisms/common/Navigation";
 import ShowEntry from "./ShowEntry";
 
+/* 메인 페이지 */
 const MainPage = () => {
   const location = useLocation();
 

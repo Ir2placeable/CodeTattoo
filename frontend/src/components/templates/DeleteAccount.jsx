@@ -39,7 +39,7 @@ const DeleteAccount = () => {
       [name]: value,
     });
   };
-  
+
   /** 회원 탈퇴 요청 API
    * @param {String} email 
    * @param {String} pwd 
@@ -85,6 +85,7 @@ const DeleteAccount = () => {
     }, 2000);
   };
 
+  // 패스워드 가리기/보기
   const onEyeClick = () => {
     setEyeClick(eyeClick ? false : true);
   };

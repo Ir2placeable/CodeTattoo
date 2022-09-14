@@ -21,7 +21,9 @@ import { getCookie } from "../../config/cookie";
  */
 
 const DraftUpload = () => {
+  // 이미지 (base64 형식)
   const [src, setSrc] = useState(null);
+  // 도안 정보
   const [info, setInfo] = useState({
     title: "",
     cost: ""
@@ -30,10 +32,14 @@ const DraftUpload = () => {
     data: "",
     mime: "",
   });
+  // 장르 데이터
   const [genre, setGenre] = useState("");
+  // 키워드 데이터
   const [keywords, setKewords] = useState([]);
   const { title, cost } = info;
 
+
+  // 이미지 파일 선택
   const onSelectFile = (e) => {
     if (e.target.files && e.target.files.length > 0) {
       const reader = new FileReader();
@@ -47,6 +53,7 @@ const DraftUpload = () => {
     }
   };
 
+  // 이미지 파싱
   const onLoad = () => {
     const parsing = src.split(",");
     let _mime = parsing[0].split(";")[0];
@@ -60,6 +67,7 @@ const DraftUpload = () => {
     });
   };
 
+  // 도안 등록 요청 API
   const sendRequest = async () => {
     const _cost = Number(cost);
     

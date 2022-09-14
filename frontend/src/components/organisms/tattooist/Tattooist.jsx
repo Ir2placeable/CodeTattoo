@@ -21,10 +21,12 @@ import { faUser } from "@fortawesome/free-solid-svg-icons";
 const Tattooist = ({ tattooist }) => {
   const tattooist_id = tattooist.tattooist_id;
   const navigate = useNavigate();
+  // 타투이스트 세부 페이지 이동
   const goDetail = useCallback(() => {
     navigate(`/tattooist/${tattooist_id}/draft`);
   }, [tattooist_id]);
 
+  // Hover Style
   const [hover, setHover] = useState(false);
 
   const onMouseEnter = useCallback(() => {

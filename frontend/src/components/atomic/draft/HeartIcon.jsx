@@ -18,7 +18,9 @@ const heartIconStyle = {
  */
 
 const HeartIcon = ({ isScraped, draft_id }) => {
+  // Heart 클릭 여부
   const [heartClick, setHeartClick] = useState(false);
+  // 스크랩 요청, 스크랩 취소 요청 API
   const [scrap, unscrap] = useHeartClick({ draft_id });
 
   useEffect(() => {

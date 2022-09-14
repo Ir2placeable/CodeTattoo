@@ -39,6 +39,7 @@ const Draft = ({
   drawer_nickname,
   isScraped,
 }) => {
+  // Hover Style
   const [hover, setHover] = useState(false);
 
   const navigate = useNavigate();

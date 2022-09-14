@@ -17,6 +17,7 @@ import { useNavigate } from 'react-router-dom';
 const NavSearch = ({ path, search, setSearch }) => {
 
   const navigate = useNavigate();
+  
   const goSearch = () => {
     if(!search){
       alert('검색어를 입력해주세요!');

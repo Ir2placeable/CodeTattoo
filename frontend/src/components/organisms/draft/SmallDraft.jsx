@@ -14,6 +14,7 @@ import HeartIcon from "../../atomic/draft/HeartIcon";
  */
 
 const SmallDraft = ({ draft }) => {
+  // 로딩 여부
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {

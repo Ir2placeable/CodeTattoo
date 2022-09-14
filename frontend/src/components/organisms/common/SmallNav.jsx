@@ -5,15 +5,20 @@ import { SmallNavigation } from "../../../styledComponents";
 import SmallNavBtn from "../../atomic/common/SmallNavBtn";
 import NavSearch from "../../atomic/common/NavSearch";
 
-/** 도안 목록, 타투이스트 목록 페이지/ 네비게이션바 */
-
+/** 도안 목록, 타투이스트 목록 페이지/ 네비게이션바 
+ * @param {Array} data 버튼 텍스트
+ * @param {Boolean} isSearch 검색 여부
+ * @param {Number} loc 네비게이션 위치 
+ * @returns 
+ */
 const SmallNav = ({ data, isSearch, loc }) => {
   const boxLoation = {
     left: `calc((1300/3) * ${loc}px)`,
   };
-
+  // 네비게이션 버튼 선택 여부
   const [firstBtn, setFirstBtn] = useState(false);
   const [secondBtn, setSecondBtn] = useState(false);
+  // 검색 키워드
   const [search, setSearch] = useState("");
 
   const location = useLocation();
@@ -31,6 +36,7 @@ const SmallNav = ({ data, isSearch, loc }) => {
   }, [location.pathname]);
 
   const navigate = useNavigate();
+  // URL 이동
   const onClick = (e) => {
     setSearch("");
     const path = e.target.id;

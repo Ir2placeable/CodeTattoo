@@ -11,10 +11,10 @@ import usePagination from '../../../hooks/usePagination';
 import { useLocation } from 'react-router-dom';
 
 /** 페이지네이션
- * @param {} page 
- * @param {} setPage
- * @param {} pages
- * @param {} setPages
+ * @param {Number} page 
+ * @param {State} setPage
+ * @param {Number} pages
+ * @param {State} setPages
  * @param {Number} items 페이지 당 보여줄 아이템 개수
  * @returns 
  */

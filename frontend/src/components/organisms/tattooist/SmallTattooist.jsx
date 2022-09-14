@@ -9,7 +9,7 @@ import {
   TattooistInfoText,
 } from "../../../styledComponents";
 import TattooistBtn from "../../atomic/tattooist/TattooistBtn";
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect } from "react";
 import { getCookie } from "../../../config/cookie";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
@@ -23,7 +23,9 @@ import { useNavigate } from "react-router-dom";
 
 const SmallTattooist = ({ tattooist }) => {
   const tattooist_id = tattooist.drawer_id;
+  // 팔로우 요청, 팔로우 취소 요청 API
   const [follow, unfollow] = useFollowClick({ tattooist_id });
+  // 팔로잉 여부
   const [following, setFollowing] = useState(false);
 
   useEffect(() => {
@@ -45,6 +47,7 @@ const SmallTattooist = ({ tattooist }) => {
   };
 
   const navigate = useNavigate();
+  // 타투이스트 세부 도안 페이지 이동
   const goTattooist = () => {
     navigate(`/tattooist/${tattooist.drawer_id}/draft`);
   };

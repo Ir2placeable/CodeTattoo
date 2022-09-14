@@ -19,8 +19,10 @@ import useTattooistList from "../../hooks/useTattooistList";
  */
 
 const TattooistList = ({ filter }) => {
+  // 페이지네이션
   const { page } = useOutletContext();
 
+  // 타투이스트 목록 데이터
   const tattooists = useTattooistList({
     filter: filter,
     page: page,

@@ -14,9 +14,11 @@ import {
 */
 
 const DetailDraft = ({ draft }) => {
+  // Hover Style
   const [hover, setHover] = useState(false);
 
   const navigate = useNavigate();
+  // 도안 상세 페이지 이동
   const goDetail = () => {
     navigate(`/draft/${draft.draft_id}/detail`);
   };
