@@ -1,9 +1,15 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { MainNavigationBtn } from '../../../styledComponents';
 import { useLocation } from 'react-router-dom';
 
-// 상위 컴포넌트 === Navigation.jsx
+/**
+ * 상위 컴포넌트 === Navigation.jsx
+ * 메인 네비게이션 버튼 컴포넌트 
+ * @param {Function} onClick
+ * @param {string} text
+ * @param {string} path
+ */
 const NavigationBtn = ({ onClick, text, path }) => {
 
   const _style = {

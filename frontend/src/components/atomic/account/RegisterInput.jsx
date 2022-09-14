@@ -8,6 +8,11 @@ import {
 } from '../../../styledComponents';
 import { useNavigate } from 'react-router-dom';
 
+/**
+ * 상위 컴포넌트 === Register.jsx
+ * 회원가입 입력 감지 컴포넌트 / 회원가입 API
+ * @param {boolean} isTattooist
+ */
 const RegisterInput = ({ isTattooist }) => {
   // 이메일 유효성 검사
   const [isRightEmail, setIsRightEmail] = useState(true);

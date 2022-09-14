@@ -3,13 +3,17 @@ import { useRef } from 'react';
 import { APIURL } from '../../../config/key';
 import axios from 'axios'
 import { 
-  AccountInputDiv, AccountInputBox, AccountLabel,
+  AccountInputDiv, AccountInputBox, 
   AccountInput, AccountBtn, AccountOtherDiv, AccountOtherBtn
 } from '../../../styledComponents';
 import { useNavigate } from 'react-router-dom';
 import { setCookie } from '../../../config/cookie';
 
-
+/**
+ * 상위 컴포넌트 === Login.jsx
+ * 로그인 입력 감지 컴포넌트 / 로그인 API
+ * @param {boolean} isTattooist
+ */
 const LoginInput = ({ isTattooist }) => {
   const [info, setInfo] = useState({
     email: '',
