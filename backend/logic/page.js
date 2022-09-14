@@ -1,11 +1,12 @@
 // 코드 목적 : Web-Front 에서 페이지 로드에 필요한 데이터를 가공하는 역할을 수행한다.
+const Global = require("../GlobalVariable");
 
 const {Draft} = require("../DBModel/Draft");
-const Global = require("../GlobalVariable");
 const {Tattooist} = require("../DBModel/Tattooist");
 const {User} = require("../DBModel/User");
-const blockchain = require('../module/blockchain')
 const {Reservation} = require("../DBModel/Reservation");
+
+const blockchain = require('../module/blockchain')
 
 // 도안 페이지
 exports.draft = async function(params, query) {
