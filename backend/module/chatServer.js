@@ -52,3 +52,18 @@ exports.createChat = async function(params) {
         return success
     })
 }
+
+// 채팅방 삭제를 요청한다.
+exports.deleteChat = async function(params) {
+    const destination = chatServer.chatAPI + "chat/delete"
+
+    // 채팅서버로 params 데이터를 POST 요청 보내기
+    request.post({
+        headers : {'content-type' : 'application/json'},
+        url : destination,
+        body : params,
+        json : true
+    }, function(err, res, success) {
+        return success
+    })
+}
