@@ -4,7 +4,6 @@ const page = require('./logic/page')
 const admin = require('./logic/admin')
 const command = require('./logic/command')
 const chatServer = require('./module/chatServer')
-const {connectDB} = require("./module/dataBase");
 
 const express = require('express')
 const server = express()
