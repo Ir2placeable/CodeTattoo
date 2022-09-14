@@ -22,6 +22,7 @@ import ChattingMessage from "../../atomic/chatting/ChattingMessage";
 import ChattingImgChoice from "../../atomic/chatting/ChattingImgChoice";
 import useSendChat from "../../../hooks/useSendChat";
 import { faArrowRightFromBracket } from "@fortawesome/free-solid-svg-icons";
+import { WEBSOCKETURL } from "../../../config/key";
 
 const ChattingRoom = ({ data, onPlusClick }) => {
   const ws = useContext(WebSocketContext);
@@ -40,6 +41,31 @@ const ChattingRoom = ({ data, onPlusClick }) => {
     scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
   });
 
+  useEffect(() => {
+    if (!ws.current) {
+      ws.current = new WebSocket(WEBSOCKETURL);
+
+      ws.current.onopen = () => {
+        console.log("websocket is connected");
+
+        const body = {
+          sender: subject_id,
+          enter_room: true,
+        };
+
+        ws.current.send(JSON.stringify(body));
+      };
+      ws.current.onclose = (err) => {
+        console.log("websocket is disconnected");
+        console.log(err);
+      };
+      ws.current.onerror = (err) => {
+        console.log("websocket connection error");
+        console.log(err);
+      };
+    }
+  }, []);
+
   const message = useChatRecord({
     subject_id: subject_id,
     reservation_id: reservation_id,
@@ -52,21 +78,23 @@ const ChattingRoom = ({ data, onPlusClick }) => {
     setMessages(message);
   }, [message, messages]);
 
-  ws.current.onmessage = (e) => {
-    const data = JSON.parse(e.data);
+  if(ws.current){
+    ws.current.onmessage = (e) => {
+      const data = JSON.parse(e.data);
 
-    const temp = {
-      id: 14,
-      content: data.content,
-      time: data.create_at,
-      mine: false,
-      receiver: data.sender,
+      const temp = {
+        id: 14,
+        content: data.content,
+        time: data.create_at,
+        mine: false,
+        receiver: data.sender,
+      };
+
+      const prev = messages;
+      prev.push(temp)
+      setMessages([...prev]);
     };
-
-    const prev = messages;
-    prev.push(temp)
-    setMessages([...prev]);
-  };
+  }
 
   const sendChat = useSendChat()
   const onSend = () => {

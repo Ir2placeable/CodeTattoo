@@ -75,8 +75,9 @@ const ChattingReservation = ({ user_id, onPlusClick }) => {
 
     if(reservation.confirmed || getCookie('user_id')){
       setShowBtns(false)
+    } else if(!reservation.confirmed && getCookie('tattooist_id')){
+      setShowBtns(true)
     }
-
   }, [reservation])
 
   const onChange = (e) => {
@@ -99,8 +100,10 @@ const ChattingReservation = ({ user_id, onPlusClick }) => {
       setData({
         text: '정말로 이 예약을 확정하시겠습니까?',
         onRequest: function(){
-          confirmReservation();
-          window.location.replace('/#/reservations/confirmed')
+          confirmReservation()
+          .then(() => [
+            window.location.replace('/#/reservations/confirmed')
+          ])
         }
       })
     }
@@ -111,7 +114,9 @@ const ChattingReservation = ({ user_id, onPlusClick }) => {
       text: '정말로 이 예약을 거절하시겠습니까?',
       onRequest: function(){
         rejectReservation()
-        window.location.replace("/#/reservations/pending")
+        .then(() => {
+          window.location.replace("/#/reservations/pending")
+        })
       }
     })
   }

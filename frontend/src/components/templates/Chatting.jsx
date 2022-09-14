@@ -51,12 +51,10 @@ const Chatting = () => {
     setData(item);
   };
 
-  const onClick = ({ e, item }) => {
-    if (e.target === e.currentTarget) {
-      dataSetting(item).then(() => {
-        navigate(`${item.reservation_id}`);
-      });
-    }
+  const onClick = ({ item }) => {
+    dataSetting(item).then(() => {
+      navigate(`${item.reservation_id}`);
+    });
   };
 
   return (

@@ -27,6 +27,7 @@ const ChattingItem = ({ item, onClick }) => {
     const [, , , rid] = location.pathname.split('/')
     if(rid === item.reservation_id){
       setStyle('click')
+      onClick({ item })
     } else {
       setStyle('none')
     }
@@ -36,8 +37,8 @@ const ChattingItem = ({ item, onClick }) => {
   return (
     <>
       <ChattingItemBox
-        onClick={(e) => {
-          onClick({ e, item });
+        onClick={() => {
+          onClick({ item });
         }}
         type={style}
       >

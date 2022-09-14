@@ -14,7 +14,9 @@ import {
 } from '../../../styledComponents';
 import EditProcedureBtns from './EditProcedureBtns';
 
-const EditProcedureImg = ({ setImgEdit, _src, data, setData }) => {
+const EditProcedureImg = ({ 
+  setImgEdit, _src, data, setData, 
+}) => {
   const sendRequest = useEditProcedureImg();
   const [src, setSrc] = useState(_src);
   const imgInput = useRef();
@@ -53,10 +55,10 @@ const EditProcedureImg = ({ setImgEdit, _src, data, setData }) => {
   const onEdit = () => {
     sendRequest({image, mime});
     setImgEdit(false);
-
-    setTimeout(() => {
-      window.location.reload();
-    }, 500)
+    sendRequest({image, mime})
+      .then(() => {
+        window.location.reload()
+      })
     
   }
 
