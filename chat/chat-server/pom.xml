@@ -82,6 +82,14 @@
 			<version>2.9.0</version>
 		</dependency>
 		<!-- Gson -->
+
+		<!-- Naver Cloud Object Storage -->
+		<dependency>
+			<groupId>com.amazonaws</groupId>
+			<artifactId>aws-java-sdk-s3</artifactId>
+			<version>1.11.238</version>
+		</dependency>
+		<!-- Naver Cloud Object Storage -->
 	</dependencies>
 
 	<build>

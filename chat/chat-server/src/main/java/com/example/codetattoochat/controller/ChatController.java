@@ -1,10 +1,12 @@
 package com.example.codetattoochat.controller;
 
+import com.amazonaws.services.s3.model.S3Object;
 import com.example.codetattoochat.dto.MessageDto;
 import com.example.codetattoochat.handler.SocketHandler;
 import com.example.codetattoochat.service.APIInfo;
 import com.example.codetattoochat.service.MessageService;
 import com.example.codetattoochat.service.GetOpponentInfo;
+import com.example.codetattoochat.service.ObjectStorageService;
 import com.example.codetattoochat.vo.RequestReserveSend;
 import com.example.codetattoochat.vo.RequestSend;
 import com.example.codetattoochat.vo.RequestUserId;
@@ -23,6 +25,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
 import java.net.URISyntaxException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
@@ -367,6 +371,17 @@ public class ChatController {
         HttpHeaders responseHeaders = new HttpHeaders();
         responseHeaders.add("Content-Type", "application/json; charset=UTF-8");
         return new ResponseEntity<>(gson.toJson(temp), responseHeaders,HttpStatus.OK);
+    }
+
+    @Autowired
+    ObjectStorageService objectStorageService;
+    @GetMapping("/chat/upload")
+    public String upload() {
+//        objectStorageService.DirUploadS3();
+        byte[] in = Base64.getDecoder().decode("iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAABuwAAAbsBOuzj4gAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAAT0SURBVHic7ZtPaFxFHMe/v5l58/afQbFUJcUeKlQMhta/VVD806Y2tkWUQlsFc7RetAfB0kij2IunFqwIepJqC0UoWDwI2qAYkmropRaKlMY0xaamKTHpJrvvvfl5qBvfbnazm3R3Bpv93HZmdvJ9n52dvJk3S8wM2wwM5Nsj4tej0LxyZTxc7mtxUgrq3rQ+ddp2FrIloHdwcpk2eicYXQCvBYAwYvw5Gsy28TWNeR4dVcbs27ixZdxGroYK6O2F8hK5Tgh0EfhFADpeXyqggBBgX4tzSouDnc+lPm1YQDRIQGGIA/wagOWV2lUSEEcqCnxFP/lCvtfRkeyrd9a6CSg3xKtRi4A4vqZrUtLXrDLdW5/H6GKzxrkpAdWGeDUWKqAAEeBrcd7z6FDn+vRBAGbBnRT6WoyAgYF8uyHuYvCrmGeIV2OxAuIoSaHnUb+W1PPChvT3C31/zQJ6ByeX6UjvAKELzA8tOGkZ6iEgjqdoUvviuPbF3o6nkxdrec+8Am52iFej3gIKEAG+J4Y9hc+uT2Q+2rYN+YptywmodRa/WRolII6UFGktfhVE+zd3pL4prZ8V0IghXg0bAuJ4Hl3XnvwWFO7dvKHldwCg/v7sikiIA2DegjoP8WrYFlCAAGhfjCS0eVlFRMfAvM56CocwgFzOrDARfhAAHncdyBVBiIzAjRGxZBGuA7imKQBAv+sQrvAUphQo2kUs9zB4NRFllKJVtgIQAZ5nfQoKwBRKiTGt8U7RneDQSPiMIJy0lSSMGJcvR7b+HAAglabda9r8A4XXRXOAlLCbxgFSiKI7ryIBeaHO2Y1jn9DjohFeJGDVXbgCcE3LyP8jQiBae58+W1RW2ogJPdYSWSaZEF+UlpVdDv9xKThCoO2NDmRzEvQ1hh9ek1hZWl72Rmhlq7cD4DeYMd34aI1FCOJ0SnxZ7uKBKjtCfadmepSifUpVXzAQ4bc7l6nuSvVXx8IPmdEWL4sM8PfU3BGQ0DR8W1p+VamvaxPRztDwvfMGYiA7bTCVNe9vf6mlp1IzNW8nAMKQEYbVWgEAxtbcI49Xqrx4MXh7Tt8R46+xuZ2nEuLCk48l91Tq6+jxiScINL+AGmmuBVwHcE1TgOsArmkKcB3ANU0BrgO4pinAdQDXNAW4DuCapgDXAVzTFOA6gGuWvICKW2Kjo0iPT+SPEdEm5dWwJSZoypM4X6k+iLCKDWfiZdMzjKtX526JeR4ZT1GuUl8M9plr/PCIziZV8Gx7e+ZK2epyAoYuBesExGGAG/qcMJtljF9r/K6wkhQkEvxme1vi89K6OQJGRtBqKDwD4PZGB7MlALhxADudkY8+eL83WFRe2tBQ+AksXDwAq2dTjAHlcuZEaXmpAAWgw04kQFs9kwYEeb57aAiJeFmRgAuXgjaguMGtBDMwmc1viZcVCSCmO+xGsk/E3Bp/PefBiDFAPmDY+CVNEDCmZxZ90n1B/HcapXjimf0v8POpmacE4TAz6vLEpRZcnBRVElEyod7q3JA6BPz7Fej7JbeLgF6bF++KMIKcvB5+fOK7qSMAQD/25x6QZAbhYPJzdVYYuPGVSCXVViHJvItbeOavBDMQRtEBAeAR12FcYSJqFQBWuw7iiiA0vsASXxIv6YsHmgIgAJxxHcIVSokZJQTtNhHvBzmYDBlCCGSqN6w/QiCb8umDfwALgQWOBYyhbwAAAABJRU5ErkJggg==");
+        InputStream targetStream = new ByteArrayInputStream(in);
+        log.info("result : {}",objectStorageService.UploadS3("test6", targetStream, "image/jpeg"));
+        return "success";
     }
 
 
