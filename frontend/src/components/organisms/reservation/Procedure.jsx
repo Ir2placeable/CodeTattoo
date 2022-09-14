@@ -64,7 +64,6 @@ const Procedure = () => {
 
   useEffect(() => {
     if(procedureInfo){
-      console.log(procedureInfo)
       setInputs({
         niddle: procedureInfo.niddle,
         inks: procedureInfo.inks,
@@ -94,8 +93,6 @@ const Procedure = () => {
       cost: c,
       body_part: reservation.body_part
     })
-
-    console.log('reservation: ',reservation)
     setProcedureStatus(reservation.procedure_status)
   }, [reservation])
 
@@ -165,8 +162,10 @@ const Procedure = () => {
       setData({
         text: '정말로 이 예약을 확정하시겠습니까?',
         onRequest: function(){
-          confirmReservation();
-          window.location.replace('/#/reservations/confirmed')
+          confirmReservation()
+          .then(() => [
+            window.location.replace('/#/reservations/confirmed')
+          ])
         }
       })
     }
@@ -179,7 +178,9 @@ const Procedure = () => {
       text: '정말로 이 예약을 거절하시겠습니까?',
       onRequest: function(){
         rejectReservation()
-        window.location.replace("/#/reservations/pending")
+        .then(() => {
+          window.location.replace("/#/reservations/pending")
+        })
       }
     })
   }

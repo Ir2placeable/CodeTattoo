@@ -18,7 +18,6 @@ const useChatRecord = ({ subject_id, reservation_id }) => {
       .get(`${CHATAPIURL}/chat/message/${reservation_id}/${query}`)
 
     if(res.data.success){
-      console.log('chat record res.data: ',res.data)
       setMessage(res.data.messagelist)
     } else {
       console.log('get chat record fail')

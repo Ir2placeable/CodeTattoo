@@ -3,17 +3,23 @@
 const page = require('./logic/page')
 const admin = require('./logic/admin')
 const command = require('./logic/command')
-const chatServer = require('./module/chatting')
+const chatServer = require('./module/chatServer')
 
-const ErrorMessage = require('./ErrorControl')
-const config = require('./config/key')
-
-const mongoose = require("mongoose");
 const express = require('express')
 const server = express()
 const PORT = 3001
 
-let connections = 0
+const mongoose = require("mongoose");
+const config = require('./config/key')
+
+const bodyParser = require('body-parser');
+server.use(bodyParser.json({ limit : "10mb" }));
+server.use(bodyParser.urlencoded({ limit : "10mb", extended : true }))
+
+const cors = require('cors');
+server.use(cors());
+
+const ErrorMessage = require('./ErrorControl')
 const ErrorLogging = function(errCode) {
     console.log(errCode)
     let response = { success : false, code : 199 }
@@ -25,18 +31,12 @@ const ErrorLogging = function(errCode) {
     } else {
         console.log('***UNEXPECTED ERROR***\n', errCode)
     }
-    
+
     return response
 }
 
-const bodyParser = require('body-parser');
-server.use(bodyParser.json({ limit : "10mb" }));
-server.use(bodyParser.urlencoded({ limit : "10mb", extended : true }))
-
-const cors = require('cors');
-const blockchain = require("./module/blockchain");
-server.use(cors());
-
+// 처리 횟수 카운팅
+let connections = 0
 server.use('/', (req, res, next) => {
     connections += 1
     console.log('------------------ ', connections ,' -----------------------------')
@@ -658,7 +658,8 @@ server.get('/chat/profile/:type', (req, res) => {
 
 server.listen(PORT, () => {
     console.log('server opened')
+
     mongoose.connect(config.mongoURI)
-        .then(() => { console.log('db connected')} )
-        .catch(() => { console.log('db connect failed')} )
+        .then(() => { console.log("MongoDB connected") })
+        .catch(() => { console.log("MongoDB connect failed") })
 })

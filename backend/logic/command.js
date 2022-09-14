@@ -2,12 +2,13 @@
 
 const {User} = require("../DBModel/User");
 const {Reservation} = require("../DBModel/Reservation")
-const imageStorage = require("../module/imageStorage");
 const {Draft} = require("../DBModel/Draft");
 const {Tattooist} = require("../DBModel/Tattooist");
 const {Tattoo} = require("../DBModel/Tattoo")
+
 const blockchain = require("../module/blockchain")
-const chatServer = require("../module/chatting")
+const chatServer = require("../module/chatServer")
+const imageStorage = require("../module/imageStorage");
 
 // 유저 로그인
 exports.userLogin = async function(body) {
@@ -362,8 +363,13 @@ exports.rejectReservation= async function(params, body) {
         if (err) { throw 23 }
     })
 
-    // ***body.tattooist_id 이용 -> 해당 타투이스트에게 알림 전송 구현 필요***
-    // ***body.user_id 이용 -> 해당 유저에게 알림 전송 구현 필요***
+    // 채팅 서버로 새로운 채팅 생성요청
+    const chat_params = {
+        user_id : body.customer_id,
+        tattooist_id : body.tattooist_id,
+        reservation_id : params.id
+    }
+    await chatServer.deleteChat(chat_params)
 }
 
 // 타투 작업 시작

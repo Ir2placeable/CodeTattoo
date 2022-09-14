@@ -11,9 +11,7 @@ import ChattingRoom from './ChattingRoom';
  */
 
 const ChattingRecord = () => {
-  const { opponentId, data } = useOutletContext();
-  console.log('opponent: ',opponentId)
-  console.log('data: ', data)
+  const { data } = useOutletContext();
   const [plusClick, setPlusClick] = useState(true);
 
   const onPlusClick = () => {

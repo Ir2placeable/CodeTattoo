@@ -15,7 +15,6 @@ const useArtworkDetail = () => {
       `${APIURL}/artwork/${tattoo_id}?tattooist_id=${tattooist_id}`
     );
     if (res.data.success) {
-      console.log(res.data)
       return [res.data.artwork_info, res.data.states, res.data.image];
     } else {
       console.log("Artwork Detail Fail");

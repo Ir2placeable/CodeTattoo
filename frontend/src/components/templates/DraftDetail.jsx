@@ -1,6 +1,5 @@
 import {
   DraftDetailMainBox,
-  HorizontalLine,
   ListDiv,
   SmallDraftBox,
   SmallTattooistBox,
@@ -20,7 +19,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGear } from "@fortawesome/free-solid-svg-icons";
 import useCreateReservation from "../../hooks/useCreateReservation";
 import { toast, ToastContainer } from "react-toastify";
-import useChatReservation from "../../hooks/useChatReservation";
 
 /**
  * 상위 컴포넌트 === ShowDraftDetail.jsx
@@ -62,7 +60,6 @@ const DraftDetail = () => {
   };
 
   const createReservation = useCreateReservation();
-  const createChatReservation = useChatReservation();
 
   const onCreateReservation = () => {
     const user = getCookie("user_id");
@@ -80,15 +77,10 @@ const DraftDetail = () => {
       };
 
       createReservation({ data })
-      // .then(() => {
-      //   createChatReservation({ tattooist_id: tattooist.drawer_id })
-      // })
-      .then(ret => {
-        console.log(ret)
+      .then(() => {
         setTimeout(() => {
           navigate(`/chat/${user}`)
         }, 3000)
-        // navigate(`/chat/${user}`)
       })
     }
   };

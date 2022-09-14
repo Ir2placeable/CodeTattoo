@@ -2784,6 +2784,18 @@ export const ChattingItemBox = styled.div`
   &:hover {
     background-color: #bdbdbd;
   }
+
+  ${(props) => {
+    if(props.type === 'click'){
+      return css`
+      background-color: #afafaf;
+      `
+    } else if(props.type === 'none'){
+      return css`
+      background-color: #f3f3f3;
+      `
+    }
+  }}
 `;
 
 export const ChattingBox = styled.div`
@@ -2958,9 +2970,11 @@ export const ChatDiv = styled.div`
 
 export const ChatContents = styled.div`
   max-width: 580px;
-  line-height: 35px;
   border-radius: 20px;
-  padding: 0 20px;
+  diplay: flex;
+  justify-content: center;
+  align-items: center;
+
   ${(props) => {
     if (props.who === "me") {
       return css`
@@ -2972,7 +2986,28 @@ export const ChatContents = styled.div`
       `;
     }
   }}
+
+  ${(props) => {
+    if (props.type === "text") {
+      return css`
+        line-height: 26px;
+        padding: 5px 20px;
+      `;
+    } else if (props.type === "image") {
+      return css`
+        line-height: 0;
+        padding: 15px;
+      `;
+    }
+  }}
 `;
+
+export const ChatImg = styled.img`
+width: 150px;
+height: 150px;
+object-fit: cover;
+`
+
 export const ChatDate = styled.div`
   color: #b1b1b1;
   font-size: 10px;
@@ -3000,6 +3035,36 @@ export const ChatInputDiv = styled.div`
     }
   }}
 `;
+
+export const ChatChoosedImgDiv = styled.div`
+position: absolute;
+z-index: 10;
+top: -200px;
+left: 0;
+background-color: rgba(255, 255, 255, .5);
+width: 100%;
+height: 200px;
+
+display: flex;
+justify-content: center;
+align-items: center;
+`
+export const ChatChoosedImg = styled.img`
+width: 150px;
+height: 150px;
+object-fit: cover;
+border-radius: 5px;
+background-color: white;
+`
+
+export const ChatDeleteImgIcon = styled.div`
+position: absolute;
+top: 10px;
+right: 10px;
+cursor: pointer;
+font-weight: bold;
+color: red;
+`
 
 export const ChatInput = styled.input`
   background-color: white;
@@ -3098,6 +3163,7 @@ export const ChatDraftImg = styled.img`
   height: 300px;
   border-radius: 8px;
   box-shadow: 5px 5px 15px 0px rgba(72, 72, 72, 0.5);
+  object-fit: cover;
 `;
 
 export const ChatDraftInfoBox = styled.div`

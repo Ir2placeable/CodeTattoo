@@ -8,11 +8,11 @@ import {
 } from '../../../styledComponents';
 import { useNavigate } from 'react-router-dom';
 
-/** 상위 컴포넌트 === Register.jsx
- * 회원가입 페이지 / 회원가입 정보 입력란
- * @param {Boolean} isTattooist 유저/ 타투이스트 회원가입 구분 
+/**
+ * 상위 컴포넌트 === Register.jsx
+ * 회원가입 입력 감지 컴포넌트 / 회원가입 API
+ * @param {boolean} isTattooist 유저/ 타투이스트 회원가입 구분 
  */
-
 const RegisterInput = ({ isTattooist }) => {
   // 이메일 유효성 검사
   const [isRightEmail, setIsRightEmail] = useState(true);
@@ -138,10 +138,7 @@ const RegisterInput = ({ isTattooist }) => {
       body.contact = contact;
     }
 
-    console.log('body', body)
-
     const res = await axios.post(`${APIURL}/register/${body.filter}`, body)
-    console.log(res)
 
     if(res.data.success) {
       alert('회원가입 성공! 환영합니다.')
@@ -157,6 +154,8 @@ const RegisterInput = ({ isTattooist }) => {
       alert('모든 정보를 입력해주세요.')
     } else if( pwd !== pwd2 ){
       alert('비밀번호가 불일치합니다.')
+    } else if(!isRightEmail){
+      alert('올바른 이메일 표현식이 아닙니다.')
     } else {
       registerRequest();
     }

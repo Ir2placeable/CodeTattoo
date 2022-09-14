@@ -9,7 +9,6 @@ const LogoutBtn = () => {
     alert('로그아웃 하시겠습니까?')
 
     const keys = Object.keys(getAllCookie());
-    console.log(keys)
     for(let i = 0; i < keys.length; i++){
       resetCookie(keys[i])
     }

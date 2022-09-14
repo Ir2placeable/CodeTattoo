@@ -7,9 +7,6 @@ import {
   ChatInputDiv,
   ChatReservationBox,
   ChatBtnBox,
-  ChatDraftInfoLabel,
-  ChatDraftInfoInput,
-  ChatDraftInputDiv,
   ChatDraftImgDiv,
   ProcedureBox,
   ProcedureText,
@@ -27,7 +24,6 @@ import useConfirmReservation from '../../../hooks/useConfirmReservation';
 import EditProcedureImg from '../reservation/EditProcedureImg';
 import EditProcedureInfo from '../reservation/EditProcedureInfo';
 import Popup from '../draft/Popup';
-import ProcedureReservationInfo from '../reservation/ProcedureReservationInfo';
 
 /**
  * 상위 컴포넌트 === ChattingRecord.jsx
@@ -84,12 +80,11 @@ const ChattingReservation = ({ user_id, onPlusClick }) => {
       body_part: reservation.body_part
     })
 
-    console.log('reservation: ',reservation)
-
     if(reservation.confirmed || getCookie('user_id')){
       setShowBtns(false)
+    } else if(!reservation.confirmed && getCookie('tattooist_id')){
+      setShowBtns(true)
     }
-
   }, [reservation])
 
   const onChange = (e) => {
@@ -104,7 +99,7 @@ const ChattingReservation = ({ user_id, onPlusClick }) => {
     if(!date || !time_slot || !cost || !body_part){
       alert("모든 예약 정보를 입력해주세요!")
       return;
-    } else if(!reservation.iamge && (!img.image || !img.mime)){
+    } else if(!reservation.image && (!img.image || !img.mime)){
       alert("예약 도안 이미지를 업로드해주세요!")
       return;
     } else {
@@ -112,8 +107,10 @@ const ChattingReservation = ({ user_id, onPlusClick }) => {
       setData({
         text: '정말로 이 예약을 확정하시겠습니까?',
         onRequest: function(){
-          confirmReservation();
-          window.location.replace('/#/reservations/confirmed')
+          confirmReservation()
+          .then(() => [
+            window.location.replace('/#/reservations/confirmed')
+          ])
         }
       })
     }
@@ -124,7 +121,9 @@ const ChattingReservation = ({ user_id, onPlusClick }) => {
       text: '정말로 이 예약을 거절하시겠습니까?',
       onRequest: function(){
         rejectReservation()
-        window.location.replace("/#/reservations/pending")
+        .then(() => {
+          window.location.replace("/#/reservations/pending")
+        })
       }
     })
   }

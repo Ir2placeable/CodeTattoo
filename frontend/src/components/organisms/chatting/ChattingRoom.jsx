@@ -7,10 +7,13 @@ import {
   ChatBtn,
   ChatInput,
   ProfileImgIcon,
-  ExitChattingRoom
+  ExitChattingRoom,
+  ChatChoosedImgDiv,
+  ChatChoosedImg,
+  ChatDeleteImgIcon
 } from "../../../styledComponents";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlus, faUser } from "@fortawesome/free-solid-svg-icons";
+import { faImage, faPlus, faUser, faXmark } from "@fortawesome/free-solid-svg-icons";
 import { useContext } from "react";
 import { WebSocketContext } from "../../templates/Chatting";
 import { useEffect } from "react";
@@ -22,6 +25,8 @@ import ChattingMessage from "../../atomic/chatting/ChattingMessage";
 import ChattingImgChoice from "../../atomic/chatting/ChattingImgChoice";
 import useSendChat from "../../../hooks/useSendChat";
 import { faArrowRightFromBracket } from "@fortawesome/free-solid-svg-icons";
+import { WEBSOCKETURL } from "../../../config/key";
+import moment from "moment";
 
 /**
  * 상위 컴포넌트 === ChattingRecord.jsx
@@ -33,8 +38,11 @@ import { faArrowRightFromBracket } from "@fortawesome/free-solid-svg-icons";
 const ChattingRoom = ({ data, onPlusClick }) => {
   const ws = useContext(WebSocketContext);
   const [content, setContent] = useState("");
-  const [records, setRecords] = useState([]);
   const [src, setSrc] = useState(null);
+  const [img, setImg] = useState({
+    image: '',
+    mime: ''
+  })
 
   const params = useParams();
   const subject_id = params.id;
@@ -44,9 +52,34 @@ const ChattingRoom = ({ data, onPlusClick }) => {
 
   useEffect(() => {
     // 현재 스크롤 위치 === scrollRef.current.scrollTop
-      // 스크롤 길이 === scrollRef.current.scrollHeight
-      scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
+    // 스크롤 길이 === scrollRef.current.scrollHeight
+    scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
   });
+
+  useEffect(() => {
+    if (!ws.current) {
+      ws.current = new WebSocket(WEBSOCKETURL);
+
+      ws.current.onopen = () => {
+        console.log("websocket is connected");
+
+        const body = {
+          sender: subject_id,
+          enter_room: true,
+        };
+
+        ws.current.send(JSON.stringify(body));
+      };
+      ws.current.onclose = (err) => {
+        console.log("websocket is disconnected");
+        console.log(err);
+      };
+      ws.current.onerror = (err) => {
+        console.log("websocket connection error");
+        console.log(err);
+      };
+    }
+  }, []);
 
   const message = useChatRecord({
     subject_id: subject_id,
@@ -58,61 +91,79 @@ const ChattingRoom = ({ data, onPlusClick }) => {
 
   useEffect(() => {
     setMessages(message);
-    // console.log('message: ', message);
-    console.log("messages: ", messages);
   }, [message, messages]);
 
-  ws.current.onmessage = (e) => {
-    console.log("e: ", e);
-    const data = JSON.parse(e.data);
-    console.log("onmessage data: ", data);
+  if(ws.current){
+    ws.current.onmessage = (e) => {
+      const data = JSON.parse(e.data);
 
-    const temp = {
-      id: 14,
-      content: data.content,
-      time: data.create_at,
-      mine: false,
-      receiver: data.sender,
+      const temp = {
+        id: data.create_at,
+        content: data.content,
+        time: data.create_at,
+        mine: false,
+        receiver: data.sender,
+        is_image: data.is_image
+      };
+
+      const prev = messages;
+      prev.push(temp)
+      setMessages([...prev]);
     };
+  }
 
-    const prev = messages;
-    prev.push(temp)
-    console.log("prev: ", prev);
-    setMessages([...prev]);
-  };
-
-  // parameter
-  // body: { sender, receiver, content, reservation_id, created_at }
   const sendChat = useSendChat()
   const onSend = () => {
-//     찐타투아영 6320158164414f2c23d6d22d
-// 찐유저아영 6320155f64414f2c23d6d229
 
+    if(!content && (!src || !img.image || !img.mime)){
+      console.log('no content')
+      return;
+    }
+
+    const now = moment().format('YYYY년 MM월 DD일 HH:mm:ss')
     const body = {
       sender: subject_id,
       receiver: data.opponent_id,
       reservation_id: reservation_id,
       content: content,
-      created_at: Math.floor(Date.now() / 1000),
+      created_at: now,
       enter_room: false,
+      is_image: false
     };
+
+    if(!body.content) {
+      body.content = {
+        image: img.image,
+        mime: img.mime,
+        src: src
+      }
+      body.is_image = true
+    }
 
     sendChat(body)
     ws.current.send(JSON.stringify(body));
     setContent("");
-    console.log("send: ", body);
+    setSrc("");
+    setImg({
+      image: '',
+      mime: ""
+    })
 
     const temp = {
       id: body.created_at,
       mine: true,
-      content: content,
+      content: body.content,
       time: body.created_at,
       receiver: body.receiver,
+      is_image: body.is_image
     };
+
+    if(body.content.image){
+      temp.content = body.content.src
+    }
 
     const prev = messages;
     prev.push(temp)
-    console.log("prev: ", prev);
     setMessages([...prev]);
   };
 
@@ -134,8 +185,18 @@ const ChattingRoom = ({ data, onPlusClick }) => {
         setSrc(reader.result);
       });
     }
-    // console.log(src);
   };
+  const onLoad = () => {
+    const parsing = src.split(",");
+    let _mime = parsing[0].split(";")[0];
+    _mime = _mime.substr(5);
+    let _data = parsing[1];
+
+    setImg({
+      data: _data,
+      mime: _mime,
+    });
+  }
   
   const goExit = (e) => {
     window.location.replace(`/#/chat/${subject_id}`)
@@ -164,7 +225,17 @@ const ChattingRoom = ({ data, onPlusClick }) => {
           messages.map((item) => <ChattingMessage key={item.id} item={item} />)}
       </ChatBigDiv>
 
+
       <ChatInputDiv>
+        {src && (
+          <ChatChoosedImgDiv>
+            <ChatChoosedImg src={src} onLoad={onLoad} />
+
+            <ChatDeleteImgIcon onClick={() => setSrc('')}>
+              <FontAwesomeIcon icon={faXmark} />
+            </ChatDeleteImgIcon>
+          </ChatChoosedImgDiv>
+        )}
         <ChatBtn type="image" onClick={onPlusClick}>
           <FontAwesomeIcon icon={faPlus} />
         </ChatBtn>
@@ -180,6 +251,7 @@ const ChattingRoom = ({ data, onPlusClick }) => {
           }}
           ref={contentInput}
           onKeyUp={onKeyUp}
+          disabled={src ? true : false}
         />
 
         <ChatBtn type="submit" onClick={onSend}>

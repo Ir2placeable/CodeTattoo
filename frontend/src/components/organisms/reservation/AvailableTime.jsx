@@ -37,7 +37,6 @@ const AvailableTime = ({ value, isAdmin, id }) => {
   })
 
   useEffect(() => {
-    // console.log(data)
     const temp = [];
     time.forEach(x => {
       const _time = Number(x.slot);
@@ -74,17 +73,14 @@ const AvailableTime = ({ value, isAdmin, id }) => {
       const dup = temp.findIndex( tmp => tmp.time_slot === time_slot)
 
       if(dup !== -1){
-        console.log('중복!')
         temp = temp.filter(tmp => tmp.time_slot !== time_slot)
         e.target.style.backgroundColor = '#484848';
-        console.log(temp)
         setUnavailable(temp)
         return;
       } else {
         temp.push({date, time_slot});
       }
       setUnavailable(temp);
-      console.log(unavailable)
 
       const temp2 = prev;
       temp2.push(e.target);
@@ -94,7 +90,6 @@ const AvailableTime = ({ value, isAdmin, id }) => {
     } else {
 
       const found = time.find(x => x.slot == time_slot)
-      //console.log(found)
       if(!found.flag){
         if(prev[0]){
           prev[0].style.backgroundColor = '#484848';
@@ -108,7 +103,6 @@ const AvailableTime = ({ value, isAdmin, id }) => {
   }
 
   const timeActive = async() => {
-    //console.log(unavailable)
     const res = await axios.post(`${APIURL}/remove/unavailable/${id}`, {
       unavailable
     })
@@ -122,7 +116,6 @@ const AvailableTime = ({ value, isAdmin, id }) => {
   }
 
   const timeDeActive = async() => {
-    //console.log(unavailable)
     const res = await axios.post(`${APIURL}/create/unavailable/${id}`, {
       unavailable
     })
@@ -136,7 +129,6 @@ const AvailableTime = ({ value, isAdmin, id }) => {
   }
 
   const createReservation = useCreateReservation();
-  const createChatReservation = useChatReservation();
   const navigate = useNavigate();
 
   const onCreateReservation = () => {
@@ -153,16 +145,12 @@ const AvailableTime = ({ value, isAdmin, id }) => {
         date: unavailable.date,
         time_slot: unavailable.time_slot
       }
-      console.log(data)
 
       if(!data.date || !data.time_slot){
         alert('예약을 원하는 날짜를 선택해주세요.')
         return;
       }
       createReservation({ data })
-        // .then(() => {
-        //   createChatReservation({ tattooist_id: data.tattooist_id })
-        // })
         .then(() => {
           setTimeout(() => {
             navigate(`/chat/${user}`)

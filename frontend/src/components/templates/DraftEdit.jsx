@@ -50,7 +50,6 @@ const DraftEdit = () => {
   }
   const onClick = (e) => {
     const text = e.target.innerText;
-    console.log(text)
 
     if(text === '도안 삭제'){
       setData({

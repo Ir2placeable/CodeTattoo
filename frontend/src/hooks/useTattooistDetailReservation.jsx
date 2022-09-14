@@ -21,10 +21,7 @@ const useTattooistDetailReservation = ({ value }) => {
     if(getCookie('user_id')){
       query += `&user_id=${getCookie('user_id')}`
     }
-    console.log('query: ', query);
     url += query;
-
-    console.log(url);
 
     const res = await axios.get(url)
 

@@ -15,7 +15,6 @@ const useUserMyPage = () => {
     );
 
     if (res.data.success) {
-      console.log('user my page; ',res.data);
       return [res.data.user_info, res.data.tattoos];
     } else {
       console.log("Tattoo List Get Request Fail");

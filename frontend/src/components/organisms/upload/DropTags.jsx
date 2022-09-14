@@ -62,7 +62,6 @@ const DropTags = memo(({ tags, setTags }) => {
   }
 
   useEffect(() => {
-    // console.log(tags)
     if(tags){
       setIsChoice(true);
       setTags(tags)

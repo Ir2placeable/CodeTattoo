@@ -21,8 +21,6 @@ const useEditProcedureInfo = () => {
     date, time_slot, cost, body_part }) => {
     const id = params.reservation_id;
 
-    console.log(id);
-
     const res = await axios.patch(`${APIURL}/reservation/${id}`, {
       date, time_slot, cost, body_part
     })
