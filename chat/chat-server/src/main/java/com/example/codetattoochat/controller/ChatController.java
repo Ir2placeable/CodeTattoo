@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.net.URISyntaxException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.util.*;
 
@@ -105,6 +106,9 @@ public class ChatController {
 
     @PostMapping("/chat/create")
     public ResponseEntity ReserveSend(@RequestBody RequestReserveSend vo) throws URISyntaxException {
+        Date now = Calendar.getInstance().getTime();
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy년 MM월 dd일 HH:mm:ss");
+        String formatedNow = formatter.format(now);
         Gson gson = new Gson();
         JsonObject temp = new JsonObject();
         HttpHeaders responseHeaders = new HttpHeaders();
@@ -115,7 +119,7 @@ public class ChatController {
                 .receiver(vo.getTattooist_id())
                 .content("안녕하세요! 상담문의 드립니다!")
                 .reservation_id(vo.getReservation_id())
-                .createdAt(String.valueOf(new Date()))
+                .createdAt(formatedNow)
                 .build();
 
         if (messageService.send(messageDto).getReceiver() != null) {
