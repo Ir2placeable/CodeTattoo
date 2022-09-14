@@ -38,9 +38,9 @@ Blockchain Data will be able to employ to find out a side effect or do cover-up/
 <br/>
 
 
-## 시스템 구성도 : System structure
+## 전체 시스템 구조도 : System structure
 
-<img width="700" alt="코드타투 시스템 구성도" src="https://user-images.githubusercontent.com/24891555/188537892-0c5e8bb7-07f5-453d-bfa5-220f1e3684c9.png">
+<img width="700" alt="시스템 구조도 9 14" src="https://user-images.githubusercontent.com/24891555/190077738-7ac337ff-301e-44c2-b1db-8091a45da9c7.png">
 
 <br/>
 
