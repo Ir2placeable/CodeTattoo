@@ -7,7 +7,7 @@ const endpoint = 'kr.object.ncloudstorage.com'
 const region = 'kr-standard'
 const bucket_title = 'codetattoo'
 
-
+// Naver Object Storage 와 연결된 객체 생성
 const S3 = new AWS.S3({
     endpoint : endpoint,
     region : region,
@@ -32,6 +32,7 @@ exports.upload = async function(params) {
 }
 
 // 데이터 삭제 : 이미지 저장소에서 이미지를 삭제한다.
+// params : { title }
 exports.delete = async function(id) {
     await S3.deleteObject({
         Bucket : bucket_title,
