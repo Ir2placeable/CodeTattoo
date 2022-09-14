@@ -12,6 +12,8 @@ import ChattingItem from "../../atomic/chatting/ChattingItem";
 const ChattingList = ({ onClick }) => {
   const chatList = useChatUserList();
 
+  console.log('chatlist: ', chatList)
+
   return (
     <>
       {chatList.length === 0 ? (

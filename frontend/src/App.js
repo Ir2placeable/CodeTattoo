@@ -43,6 +43,9 @@ import ShowArtworkDetail from "./pages/ShowArtworkDetail";
 import SocketTest from "./SocketTest";
 import ChattingRecord from "./components/organisms/chatting/ChattingRecord";
 import ChattingRoomEntry from "./components/organisms/chatting/ChattingRoomEntry";
+import ChattingRoom from "./components/organisms/chatting/ChattingRoom";
+import ChattingList from "./components/organisms/chatting/ChattingList";
+import ChattingReservation from "./components/organisms/chatting/ChattingReservation";
 
 const App = () => {
 
@@ -125,7 +128,9 @@ const App = () => {
             {/* id: user_id || tattooist_id */}
             <Route path="chat/:id" element={<Chatting />}>
               <Route path="" element={<ChattingRoomEntry />} />
-              <Route path=":reservation_id" element={<ChattingRecord />} />
+              {/* <Route path=":reservation_id" element={<ChattingRecord />} /> */}
+              <Route path=":reservation_id/room" element={<ChattingRoom />} />
+              <Route path=":reservation_id/reservation" element={<ChattingReservation />} />
             </Route>
 
           </Route>

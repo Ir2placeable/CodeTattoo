@@ -19,8 +19,10 @@ const useSendChat = () => {
 
     if(res.data.success){
       console.log('send chat success')
+      return res.data.url;
     } else {
       console.log('send chat fail')
+      return false;
     }
   }
   

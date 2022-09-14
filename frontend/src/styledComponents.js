@@ -1064,6 +1064,7 @@ export const ProfileImgIcon = styled.div`
   color: #fff;
   border-radius: 70%;
   z-index: 1;
+  cursor: pointer;
   ${(props) =>
     props.size === "profile" &&
     css`
@@ -2821,6 +2822,7 @@ export const ChattingImg = styled.img`
   object-fit: cover;
   border-radius: 50%;
   background-color: white;
+  cursor: pointer;
 `;
 export const ChattingInfoDiv = styled.div`
   // background-color: aqua;
