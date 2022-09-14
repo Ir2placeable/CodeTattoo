@@ -7,6 +7,7 @@ import com.amazonaws.client.builder.AwsClientBuilder;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import com.amazonaws.services.s3.model.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.ByteArrayInputStream;
@@ -15,6 +16,9 @@ import java.io.InputStream;
 
 @Service
 public class ObjectStorageService {
+    @Autowired
+    private MessageService messageService;
+
     final String endPoint = "https://kr.object.ncloudstorage.com";
     final String regionName = "kr-standard";
     final String accessKey = "FDKsmR5tOoKNGPie5IK1";
@@ -60,12 +64,29 @@ public class ObjectStorageService {
             objectMetadata.setContentType(mime);
             s3.putObject(bucketName, key, file, objectMetadata);
             s3.setObjectAcl(bucketName, key, CannedAccessControlList.PublicRead);
-            System.out.format("Object %s has been created.\n", objectName);
+            System.out.format("Object %s has been created.\n", key);
+
         } catch (AmazonS3Exception e) {
             e.printStackTrace();
         } catch (SdkClientException e) {
             e.printStackTrace();
         }
         return String.valueOf(s3.getUrl(bucketName, key));
+    }
+
+    public void DeleteS3(String reservation_id) {
+        System.out.println("reservation_id = " + reservation_id);
+        Iterable<String> urls = messageService.getUrlList(reservation_id);
+        
+        for (String u : urls) {
+            try {
+                s3.deleteObject(bucketName, u.substring(47));
+                System.out.format("Object %s has been deleted.\n", u.substring(47));
+            } catch (AmazonS3Exception e) {
+                e.printStackTrace();
+            } catch(SdkClientException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }

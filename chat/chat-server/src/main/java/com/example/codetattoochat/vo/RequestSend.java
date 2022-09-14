@@ -19,4 +19,10 @@ public class RequestSend {
 
     @NotNull(message="Reservation_id cannot be null")
     private String reservation_id;
+
+    @NotNull(message="Is_image cannot be null")
+    private Boolean is_image;
+
+    private String image;
+    private String mime;
 }

@@ -17,6 +17,7 @@ public class MessageDto {
     private String content;
     private String createdAt;
     private String reservation_id;
+    private Boolean is_image;
     @Builder
     public MessageDto(
             Long id,
@@ -24,7 +25,8 @@ public class MessageDto {
             String receiver,
             String content,
             String createdAt,
-            String reservation_id
+            String reservation_id,
+            Boolean is_image
     ) {
         this.id = id;
         this.sender = sender;
@@ -32,5 +34,6 @@ public class MessageDto {
         this.content = content;
         this.createdAt = createdAt;
         this.reservation_id = reservation_id;
+        this.is_image = is_image;
     }
 }

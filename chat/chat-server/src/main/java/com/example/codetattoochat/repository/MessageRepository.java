@@ -8,8 +8,16 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface MessageRepository extends JpaRepository<MessageEntity, Long> {
 
+    @Query(
+            value = "DELETE " +
+                    "FROM chat_msg " +
+                    "WHERE reservation_id = :reservation_id",
+            nativeQuery = true)
+    void delete(
+            String reservation_id
+    );
 
-    public
+
     @Query(value = "SELECT distinct sender, receiver, content, created_At, reservation_id " +
             "FROM chat_msg m " +
             "WHERE m.sender = :sender OR m.receiver = :sender " +
@@ -17,6 +25,12 @@ public interface MessageRepository extends JpaRepository<MessageEntity, Long> {
             nativeQuery = true)
     Iterable<Object[]> findUserList(String sender);
 
+    @Query(
+            value = "SELECT content " +
+                    "FROM chat_msg " +
+                    "WHERE reservation_id = :reservation_id AND is_image = true",
+            nativeQuery = true)
+    Iterable<String> findUrlList(String reservation_id);
 
     @Query(value = "SELECT * " +
             "FROM chat_msg m " +

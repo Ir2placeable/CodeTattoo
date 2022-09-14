@@ -18,6 +18,7 @@ public class ResponseUserList {
     private String opponent_image;
     private String opponent_nickname;
     private String reservation_id;
+    private Boolean confirmed;
     @Builder
     public ResponseUserList(
             Long id,
@@ -28,7 +29,8 @@ public class ResponseUserList {
             String opponent_id,
             String opponent_image,
             String opponent_nickname,
-            String reservation_id
+            String reservation_id,
+            Boolean confirmed
     ) {
         this.id = id;
         this.sender = sender;
@@ -39,6 +41,7 @@ public class ResponseUserList {
         this.opponent_image = opponent_image;
         this.opponent_nickname = opponent_nickname;
         this.reservation_id = reservation_id;
+        this.confirmed = confirmed;
     }
 
 }

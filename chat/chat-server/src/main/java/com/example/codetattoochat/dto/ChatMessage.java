@@ -4,6 +4,7 @@ import lombok.Data;
 
 @Data
 public class ChatMessage {
+    private Boolean is_image;
     private String sender;
     private String receiver;
     private String content;

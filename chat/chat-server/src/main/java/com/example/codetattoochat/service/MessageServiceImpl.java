@@ -35,6 +35,7 @@ public class MessageServiceImpl implements MessageService {
                 .content(dto.getContent())
                 .created_At(dto.getCreatedAt())
                 .reservation_id(dto.getReservation_id())
+                .is_image(dto.getIs_image())
                 .build();
 
         log.info("Message is {}", messageEntity);
@@ -46,7 +47,28 @@ public class MessageServiceImpl implements MessageService {
                 .receiver(dto.getReceiver())
                 .content(dto.getContent())
                 .reservation_id(dto.getReservation_id())
+                .is_image(dto.getIs_image())
                 .build();
+    }
+
+    @Transactional
+    @Override
+    public Boolean delete(String reservation_id) {
+        log.info("Message Service's Service Layer :: Call delete Method!");
+
+        messageRepository.delete(reservation_id);
+
+        return true;
+    }
+
+    @Transactional
+    @Override
+    public Iterable<String> getUrlList(String reservation_id) {
+        log.info("Message Service's Service Layer :: Call getUrlList Method!");
+
+        Iterable<String> urlList = messageRepository.findUrlList(reservation_id);
+
+        return urlList;
     }
 
     @Transactional
@@ -56,10 +78,6 @@ public class MessageServiceImpl implements MessageService {
 
         Iterable<Object[]> messageList = messageRepository.findUserList(sender);
         List<MessageDto> messages = new ArrayList<>();
-
-//        for (Object[] e : messageList) {
-//            System.out.println("e = " + Arrays.toString(e));
-//        }
 
         messageList.forEach(message -> {
             messages.add(MessageDto.builder()
@@ -88,7 +106,8 @@ public class MessageServiceImpl implements MessageService {
                     .receiver(message.getReceiver())
                     .content(message.getContent())
                     .createdAt(message.getCreated_At())
-                            .reservation_id(message.getReservation_id())
+                    .reservation_id(message.getReservation_id())
+                            .is_image(message.getIs_image())
                     .build());
         });
 

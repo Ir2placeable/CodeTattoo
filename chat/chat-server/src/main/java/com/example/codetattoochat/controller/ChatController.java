@@ -7,10 +7,7 @@ import com.example.codetattoochat.service.APIInfo;
 import com.example.codetattoochat.service.MessageService;
 import com.example.codetattoochat.service.GetOpponentInfo;
 import com.example.codetattoochat.service.ObjectStorageService;
-import com.example.codetattoochat.vo.RequestReserveSend;
-import com.example.codetattoochat.vo.RequestSend;
-import com.example.codetattoochat.vo.RequestUserId;
-import com.example.codetattoochat.vo.ResponseUserList;
+import com.example.codetattoochat.vo.*;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
@@ -60,6 +57,8 @@ public class ChatController {
     @Autowired
     SocketHandler socketHandler;
 
+    @Autowired
+    ObjectStorageService objectStorageService;
     @GetMapping("/ping")
     public APIInfo ping() {
         APIInfo info = APIInfo.builder().app("CodeTattoo-Chat").ver("1.0").timestamp(LocalDateTime.now()).build();
@@ -86,25 +85,57 @@ public class ChatController {
 
     @PostMapping("/chat/send") // 메시지 저장
     public ResponseEntity send(@RequestBody RequestSend vo) {
+        Date now = Calendar.getInstance().getTime();
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmss");
+        String formatedNow = formatter.format(now);
         Gson gson = new Gson();
         JsonObject temp = new JsonObject();
         HttpHeaders responseHeaders = new HttpHeaders();
         responseHeaders.add("Content-Type", "application/json; charset=UTF-8");
 
-        MessageDto messageDto = MessageDto.builder()
-                .sender(vo.getSender())
-                .receiver(vo.getReceiver())
-                .content(vo.getContent())
-                .createdAt(vo.getCreated_at())
-                .reservation_id(vo.getReservation_id())
-                .build();
+        if (vo.getIs_image()) {
+            String image = vo.getImage();
+            String mime = vo.getMime();
+            log.info("image is : {}, mime is : {}", image,mime);
+            byte[] in = Base64.getDecoder().decode(image);
+            InputStream targetStream = new ByteArrayInputStream(in);
+            String url = objectStorageService.UploadS3(vo.getReservation_id() + "#" + formatedNow, targetStream, mime);
+            log.info("result : {}",url);
 
-        if (messageService.send(messageDto).getReceiver() != null) {
-            temp.addProperty("success", "true");
-            return new ResponseEntity<>(gson.toJson(temp), responseHeaders,HttpStatus.OK);
+            MessageDto messageDto = MessageDto.builder()
+                    .sender(vo.getSender())
+                    .receiver(vo.getReceiver())
+                    .content(url)
+                    .createdAt(vo.getCreated_at())
+                    .reservation_id(vo.getReservation_id())
+                    .is_image(vo.getIs_image())
+                    .build();
+            String result = messageService.send(messageDto).getContent();
+            if (result != null) {
+                temp.addProperty("success", true);
+                temp.addProperty("url", result);
+                return new ResponseEntity<>(gson.toJson(temp), responseHeaders,HttpStatus.OK);
+            } else {
+                temp.addProperty("success", false);
+                return new ResponseEntity<>(gson.toJson(temp), responseHeaders,HttpStatus.OK);
+            }
         } else {
-            temp.addProperty("success", "false");
-            return new ResponseEntity<>(gson.toJson(temp), responseHeaders,HttpStatus.OK);
+            MessageDto messageDto = MessageDto.builder()
+                    .sender(vo.getSender())
+                    .receiver(vo.getReceiver())
+                    .content(vo.getContent())
+                    .createdAt(vo.getCreated_at())
+                    .reservation_id(vo.getReservation_id())
+                    .is_image(vo.getIs_image())
+                    .build();
+            if (messageService.send(messageDto).getReceiver() != null) {
+                temp.addProperty("success", true);
+                temp.addProperty("url", "");
+                return new ResponseEntity<>(gson.toJson(temp), responseHeaders,HttpStatus.OK);
+            } else {
+                temp.addProperty("success", false);
+                return new ResponseEntity<>(gson.toJson(temp), responseHeaders,HttpStatus.OK);
+            }
         }
     }
 
@@ -124,6 +155,7 @@ public class ChatController {
                 .content("안녕하세요! 상담문의 드립니다!")
                 .reservation_id(vo.getReservation_id())
                 .createdAt(formatedNow)
+                .is_image(false)
                 .build();
 
         if (messageService.send(messageDto).getReceiver() != null) {
@@ -133,6 +165,20 @@ public class ChatController {
             temp.addProperty("success", false);
             return new ResponseEntity<>(gson.toJson(temp), responseHeaders,HttpStatus.OK);
         }
+    }
+
+    @PostMapping("/chat/delete")
+    public ResponseEntity ReserveDelete(@RequestBody RequestReserveDelete vo) {
+        log.info("request data : {}", vo);
+        Gson gson = new Gson();
+        JsonObject temp = new JsonObject();
+        HttpHeaders responseHeaders = new HttpHeaders();
+        responseHeaders.add("Content-Type", "application/json; charset=UTF-8");
+
+        objectStorageService.DeleteS3(vo.getReservation_id());
+
+        temp.addProperty("success", true);
+        return new ResponseEntity<>(gson.toJson(temp), responseHeaders,HttpStatus.OK);
     }
 
     @GetMapping("/chat/reservation/{user_id}/{target_id}")
@@ -236,6 +282,7 @@ public class ChatController {
         String opponent = null;
         String OppoImg = null;
         String OppoNick = null;
+        boolean confirmed;
         List<String> check = new ArrayList<>();
         log.info("UserType is : {}", type);
         log.info("UserId is : {}", user_id);
@@ -269,6 +316,7 @@ public class ChatController {
                     String opponentInfo = getOpponentInfo.callAPIGet(targetURL  , user_id, opponent, "user");
                     JsonObject jsonObject = JsonParser.parseString(opponentInfo).getAsJsonObject();
                     OppoNick = jsonObject.get("profile").getAsJsonObject().get("nickname").getAsString();
+                    confirmed = jsonObject.get("confirmed").getAsBoolean();
                     if (jsonObject.get("profile").getAsJsonObject().get("image") == null)
                         OppoImg = "undefined";
                     else
@@ -280,6 +328,7 @@ public class ChatController {
                             .content(v.getContent())
                             .createdAt(v.getCreatedAt())
                             .reservation_id(v.getReservation_id())
+                                    .confirmed(confirmed)
                             .build());
                 }
                 check.clear();
@@ -299,6 +348,7 @@ public class ChatController {
                     log.info("targetURL : {}", targetURL + "tattooist" );
                     String opponentInfo = getOpponentInfo.callAPIGet(targetURL , user_id, opponent,"tattooist");
                     JsonObject jsonObject = JsonParser.parseString(opponentInfo).getAsJsonObject();
+                    confirmed = jsonObject.get("confirmed").getAsBoolean();
                     OppoNick = jsonObject.get("profile").getAsJsonObject().get("nickname").getAsString();
                     if (jsonObject.get("profile").getAsJsonObject().get("image") == null)
                         OppoImg = "undefined";
@@ -311,6 +361,7 @@ public class ChatController {
                             .content(v.getContent())
                             .createdAt(v.getCreatedAt())
                             .reservation_id(v.getReservation_id())
+                            .confirmed(confirmed)
                             .build());
                 }
             }
@@ -333,6 +384,7 @@ public class ChatController {
             vtmp.addProperty("opponent_image", v.getOpponent_image());
             vtmp.addProperty("opponent_nickname", v.getOpponent_nickname());
             vtmp.addProperty("reservation_id", v.getReservation_id());
+            vtmp.addProperty("confirmed", v.getConfirmed());
             jArray.add(vtmp);
         }
         temp.add("userlist", jArray);
@@ -350,8 +402,6 @@ public class ChatController {
         JsonObject temp = new JsonObject();
         Iterable<MessageDto> messageList = messageService.getMessageList(reservation_id);
 
-
-        temp.addProperty("success", "true");
         JsonArray jArray = new JsonArray();
         for (MessageDto e : messageList) {
             JsonObject vtmp = new JsonObject();
@@ -364,25 +414,15 @@ public class ChatController {
             vtmp.addProperty("time", e.getCreatedAt());
             vtmp.addProperty("mine", mine);
             vtmp.addProperty("receiver", e.getReceiver());
+            vtmp.addProperty("is_image", e.getIs_image());
             jArray.add(vtmp);
         }
+        temp.addProperty("success", "true");
         temp.add("messagelist", jArray);
 
         HttpHeaders responseHeaders = new HttpHeaders();
         responseHeaders.add("Content-Type", "application/json; charset=UTF-8");
         return new ResponseEntity<>(gson.toJson(temp), responseHeaders,HttpStatus.OK);
     }
-
-    @Autowired
-    ObjectStorageService objectStorageService;
-    @GetMapping("/chat/upload")
-    public String upload() {
-//        objectStorageService.DirUploadS3();
-        byte[] in = Base64.getDecoder().decode("iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAABuwAAAbsBOuzj4gAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAAT0SURBVHic7ZtPaFxFHMe/v5l58/afQbFUJcUeKlQMhta/VVD806Y2tkWUQlsFc7RetAfB0kij2IunFqwIepJqC0UoWDwI2qAYkmropRaKlMY0xaamKTHpJrvvvfl5qBvfbnazm3R3Bpv93HZmdvJ9n52dvJk3S8wM2wwM5Nsj4tej0LxyZTxc7mtxUgrq3rQ+ddp2FrIloHdwcpk2eicYXQCvBYAwYvw5Gsy28TWNeR4dVcbs27ixZdxGroYK6O2F8hK5Tgh0EfhFADpeXyqggBBgX4tzSouDnc+lPm1YQDRIQGGIA/wagOWV2lUSEEcqCnxFP/lCvtfRkeyrd9a6CSg3xKtRi4A4vqZrUtLXrDLdW5/H6GKzxrkpAdWGeDUWKqAAEeBrcd7z6FDn+vRBAGbBnRT6WoyAgYF8uyHuYvCrmGeIV2OxAuIoSaHnUb+W1PPChvT3C31/zQJ6ByeX6UjvAKELzA8tOGkZ6iEgjqdoUvviuPbF3o6nkxdrec+8Am52iFej3gIKEAG+J4Y9hc+uT2Q+2rYN+YptywmodRa/WRolII6UFGktfhVE+zd3pL4prZ8V0IghXg0bAuJ4Hl3XnvwWFO7dvKHldwCg/v7sikiIA2DegjoP8WrYFlCAAGhfjCS0eVlFRMfAvM56CocwgFzOrDARfhAAHncdyBVBiIzAjRGxZBGuA7imKQBAv+sQrvAUphQo2kUs9zB4NRFllKJVtgIQAZ5nfQoKwBRKiTGt8U7RneDQSPiMIJy0lSSMGJcvR7b+HAAglabda9r8A4XXRXOAlLCbxgFSiKI7ryIBeaHO2Y1jn9DjohFeJGDVXbgCcE3LyP8jQiBae58+W1RW2ogJPdYSWSaZEF+UlpVdDv9xKThCoO2NDmRzEvQ1hh9ek1hZWl72Rmhlq7cD4DeYMd34aI1FCOJ0SnxZ7uKBKjtCfadmepSifUpVXzAQ4bc7l6nuSvVXx8IPmdEWL4sM8PfU3BGQ0DR8W1p+VamvaxPRztDwvfMGYiA7bTCVNe9vf6mlp1IzNW8nAMKQEYbVWgEAxtbcI49Xqrx4MXh7Tt8R46+xuZ2nEuLCk48l91Tq6+jxiScINL+AGmmuBVwHcE1TgOsArmkKcB3ANU0BrgO4pinAdQDXNAW4DuCapgDXAVzTFOA6gGuWvICKW2Kjo0iPT+SPEdEm5dWwJSZoypM4X6k+iLCKDWfiZdMzjKtX526JeR4ZT1GuUl8M9plr/PCIziZV8Gx7e+ZK2epyAoYuBesExGGAG/qcMJtljF9r/K6wkhQkEvxme1vi89K6OQJGRtBqKDwD4PZGB7MlALhxADudkY8+eL83WFRe2tBQ+AksXDwAq2dTjAHlcuZEaXmpAAWgw04kQFs9kwYEeb57aAiJeFmRgAuXgjaguMGtBDMwmc1viZcVCSCmO+xGsk/E3Bp/PefBiDFAPmDY+CVNEDCmZxZ90n1B/HcapXjimf0v8POpmacE4TAz6vLEpRZcnBRVElEyod7q3JA6BPz7Fej7JbeLgF6bF++KMIKcvB5+fOK7qSMAQD/25x6QZAbhYPJzdVYYuPGVSCXVViHJvItbeOavBDMQRtEBAeAR12FcYSJqFQBWuw7iiiA0vsASXxIv6YsHmgIgAJxxHcIVSokZJQTtNhHvBzmYDBlCCGSqN6w/QiCb8umDfwALgQWOBYyhbwAAAABJRU5ErkJggg==");
-        InputStream targetStream = new ByteArrayInputStream(in);
-        log.info("result : {}",objectStorageService.UploadS3("test6", targetStream, "image/jpeg"));
-        return "success";
-    }
-
 
 }
