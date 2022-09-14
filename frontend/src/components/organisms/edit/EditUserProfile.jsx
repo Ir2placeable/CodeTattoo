@@ -9,6 +9,10 @@ import {
 } from "../../../styledComponents";
 import ProfileUploadBtn from "../../atomic/edit/ProfileUploadBtn";
 
+/** 상위 컴포넌트 === ProfileEdit.jsx
+ * 프로필 편집 페이지 / 타투이스트 프로필 편집
+ */
+
 const EditUserProfile = () => {
   const [info, setInfo] = useState({
     nickname: getCookie("nickname"),
@@ -66,6 +70,7 @@ const EditUserProfile = () => {
   };
   return (
     <>
+      {/* 유저 프로필 정보 입력란 */}
       <ProfileInfoInputBox>
         <ProfileInfoInputLabel htmlFor="input-nickname">
           Nickname
@@ -93,7 +98,7 @@ const EditUserProfile = () => {
           ref={locationInput}
         />
       </ProfileInfoInputBox>
-
+      {/* 등록 버튼 */}
       <ProfileUploadBtn onSubmit={onSubmit} type="profile" text="등록" />
     </>
   );

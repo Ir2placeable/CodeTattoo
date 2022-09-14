@@ -8,6 +8,11 @@ import {
 } from '../../../styledComponents';
 import { useNavigate } from 'react-router-dom';
 
+/** 상위 컴포넌트 === Register.jsx
+ * 회원가입 페이지 / 회원가입 정보 입력란
+ * @param {Boolean} isTattooist 유저/ 타투이스트 회원가입 구분 
+ */
+
 const RegisterInput = ({ isTattooist }) => {
   // 이메일 유효성 검사
   const [isRightEmail, setIsRightEmail] = useState(true);
@@ -48,7 +53,6 @@ const RegisterInput = ({ isTattooist }) => {
 
     var regExp = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i
     // 형식에 맞는 경우 true 리턴
-    //console.log('이메일 유효성 검사 :: ', regExp.test(email))
 
     if(regExp.test(email)){
       setIsRightEmail(true)
@@ -62,7 +66,6 @@ const RegisterInput = ({ isTattooist }) => {
   useEffect(() => {
     var regExp = /^(?=.*\d)(?=.*[a-zA-Z])[0-9a-zA-Z]{8,16}$/
     // 형식에 맞는 경우 true 리턴
-    //console.log('비밀번호 유효성 검사 :: ', regExp.test(pwd))
 
     if(regExp.test(pwd)){
       setIsPwdRight(true);

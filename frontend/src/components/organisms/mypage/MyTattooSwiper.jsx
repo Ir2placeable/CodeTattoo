@@ -8,11 +8,10 @@ import "swiper/css/pagination";
 import "swiper/css/navigation";
 import "swiper/css/scrollbar";
 
-/**
- * 
+/** 상위 컴포넌트 === MyTattoo.jsx
+ * 유저 마이페이지 / State 스와이퍼
  * @param {Array} states 타투 작업물의 state 
- * @returns 
- */
+*/
 
 
 const MyTattooSwiper = ({ states }) => {

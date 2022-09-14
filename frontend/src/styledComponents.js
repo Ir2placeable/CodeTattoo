@@ -823,7 +823,8 @@ export const ArtworkInfoBlock = styled.div`
 export const ArtworkInfoUnit = styled.div`
   font-weight: 700;
   font-size: 24px;
-  margin-right: 100px;
+  width: 120px;
+  margin-right: 30px;
 `;
 
 export const ArtworkTattooistNickname = styled.div``;

@@ -2,7 +2,6 @@ import axios from "axios";
 import React, { useState, useRef } from "react";
 import { APIURL } from "../../../config/key";
 import {
-  getAllCookie,
   getCookie,
   removeCookie,
   setCookie,
@@ -13,6 +12,10 @@ import {
   ProfileInfoInputLabel,
 } from "../../../styledComponents";
 import ProfileUploadBtn from "../../atomic/edit/ProfileUploadBtn";
+
+/** 상위 컴포넌트 === ProfileEdit.jsx
+ * 프로필 편집 페이지 / 타투이스트 프로필 편집
+ */
 
 const EditTattooistProfile = () => {
   const [info, setInfo] = useState({
@@ -82,6 +85,7 @@ const EditTattooistProfile = () => {
   };
   return (
     <>
+     {/* 타투이스트 프로필 정보 입력란 */}
       <ProfileInfoInputBox>
         <ProfileInfoInputLabel htmlFor="input-nickname">
           Nickname
@@ -137,7 +141,7 @@ const EditTattooistProfile = () => {
           ref={descriptionInput}
         />
       </ProfileInfoInputBox>
-
+      {/* 등록 버튼 */}
       <ProfileUploadBtn onSubmit={onSubmit} type="profile" text="등록" />
     </>
   );

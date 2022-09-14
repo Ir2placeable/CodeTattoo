@@ -7,7 +7,7 @@ import ChattingRoom from './ChattingRoom';
 
 /**
  * 상위 컴포넌트 === Chatting.jsx
- * 채팅 
+ * 채팅 페이지/ 채팅방 템플릿 
  */
 
 const ChattingRecord = () => {

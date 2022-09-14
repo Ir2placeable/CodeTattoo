@@ -1,13 +1,13 @@
-import React, { useState, useCallback } from "react";
+import React, { useCallback } from "react";
 import {
   MainNavigation,
   MainNavigationInner,
-  MainNavigationBtnStyle,
 } from "../../../styledComponents";
 import NavigationBtn from "../../atomic/common/NavigationBtn";
 import { getCookie } from "../../../config/cookie";
-import { useNavigate, useLocation } from "react-router-dom";
-import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+
+/** 메인 페이지 / 네비게이션바 */
 
 const Navigation = () => {
   const navigate = useNavigate();

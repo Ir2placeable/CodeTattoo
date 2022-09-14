@@ -10,6 +10,11 @@ import { useNavigate } from 'react-router-dom';
 import { setCookie } from '../../../config/cookie';
 
 
+/** 상위 컴포넌트 === Login.jsx
+ * 로그인 페이지 / 로그인 정보 입력란
+ * @param {Boolean} isTattooist 유저/ 타투이스트 로그인 구분 
+ */
+
 const LoginInput = ({ isTattooist }) => {
   const [info, setInfo] = useState({
     email: '',
@@ -93,7 +98,6 @@ const LoginInput = ({ isTattooist }) => {
         .then((ret) => {
           if(ret[0]){
             const id = pushCookie(ret[1])
-            // sendWebSocket(ret[1], id)
 
             setTimeout(() => {
               window.location.replace('/#/drafts/best');

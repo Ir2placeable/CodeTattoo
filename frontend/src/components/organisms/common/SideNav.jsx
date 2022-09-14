@@ -2,6 +2,9 @@ import React, { useCallback } from "react";
 import { SideNavBox } from "../../../styledComponents";
 import SideNavBtn from "../../atomic/common/SideNavBtn";
 import { useNavigate } from "react-router-dom";
+
+/** 프로필 편집 페이지 / 네비게이션바 */
+
 const SideNav = () => {
   const navigate = useNavigate();
 

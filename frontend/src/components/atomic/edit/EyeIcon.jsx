@@ -1,6 +1,10 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useState } from "react";
 
+/** 패스워드 체크 
+ * @param {String} icon 아이콘 
+ */
+
 const EyeIcon = ({ icon }) => {
   return (
     <>

@@ -10,7 +10,7 @@ import "swiper/css/scrollbar";
 
 /**
  * 상위 컴포넌트 === ArtworkState.jsx
- * 작업물 State Swiper
+ * 작업물 상세 페이지/ 작업물 State Swiper
  * @param {Array} states 작업물 State 
  */
 

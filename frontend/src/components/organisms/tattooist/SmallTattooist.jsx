@@ -16,6 +16,11 @@ import { faUser } from "@fortawesome/free-solid-svg-icons";
 import useFollowClick from "../../../hooks/useFollowClick";
 import { useNavigate } from "react-router-dom";
 
+/** 상위 컴포넌트 === DraftDetail.jsx
+ * 도안 상세 페이지 / 타투이스트
+ * @param {Object} tattooist 타투이스트 데이터 
+ */
+
 const SmallTattooist = ({ tattooist }) => {
   const tattooist_id = tattooist.drawer_id;
   const [follow, unfollow] = useFollowClick({ tattooist_id });
@@ -23,7 +28,6 @@ const SmallTattooist = ({ tattooist }) => {
 
   useEffect(() => {
     if (tattooist.isFollowed) setFollowing(true);
-    // console.log(tattooist)
   }, [tattooist]);
   
   const onClick = () => {
@@ -72,7 +76,6 @@ const SmallTattooist = ({ tattooist }) => {
           </SmallTattooistNickname>
 
           <SmallTattooistLocation>
-            {/* {tattooist.drawer_location} */}
             <TattooistInfoTitle type="location">
               위치
             </TattooistInfoTitle>

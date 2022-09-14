@@ -29,6 +29,13 @@ import EditProcedureInfo from '../reservation/EditProcedureInfo';
 import Popup from '../draft/Popup';
 import ProcedureReservationInfo from '../reservation/ProcedureReservationInfo';
 
+/**
+ * 상위 컴포넌트 === ChattingRecord.jsx
+ * 채팅 페이지/ 채팅 예약 화면
+ * @param {String} user_id 유저 아이디
+ * @param {Function} onPlusClick 토글 함수
+ */
+
 const ChattingReservation = ({ user_id, onPlusClick }) => {
   const [reservation, ] = useReservationDetail();
   const [showBtns, setShowBtns] = useState(true)

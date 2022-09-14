@@ -3,6 +3,7 @@ import { UserIconStyle } from '../../../styledComponents';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser } from '@fortawesome/free-solid-svg-icons';
 
+/* 유저 아이콘 */
 const UserIcon = memo(() => {
   return (
     <>

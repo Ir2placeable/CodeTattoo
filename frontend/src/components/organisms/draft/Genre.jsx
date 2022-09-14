@@ -8,6 +8,11 @@ import {
   TattooistKeywords,
 } from "../../../styledComponents";
 
+/** 상위 컴포넌트 === DraftDetail.jsx
+ * 도안 상세 페이지 / 장르
+ * @param {Object} genre 장르 데이터 
+ */
+
 const Genre = ({ genre }) => {
   const keywords = genre.keywords;
   return (

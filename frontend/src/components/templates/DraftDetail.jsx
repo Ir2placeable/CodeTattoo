@@ -10,7 +10,7 @@ import {
 } from "../../styledComponents";
 import SmallTattooist from "../organisms/tattooist/SmallTattooist";
 import SmallDraft from "../organisms/draft/SmallDraft";
-import Genre from "../organisms/tattooist/Genre";
+import Genre from "../organisms/draft/Genre";
 import { useOutletContext, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useEffect } from "react";

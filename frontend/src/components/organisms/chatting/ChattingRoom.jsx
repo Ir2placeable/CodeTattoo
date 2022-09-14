@@ -10,20 +10,25 @@ import {
   ExitChattingRoom
 } from "../../../styledComponents";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faImage, faPlus, faUser } from "@fortawesome/free-solid-svg-icons";
+import { faPlus, faUser } from "@fortawesome/free-solid-svg-icons";
 import { useContext } from "react";
 import { WebSocketContext } from "../../templates/Chatting";
 import { useEffect } from "react";
 import { useState } from "react";
-import { getCookie } from "../../../config/cookie";
 import { useRef } from "react";
 import useChatRecord from "../../../hooks/useChatRecord";
 import { useParams } from "react-router-dom";
 import ChattingMessage from "../../atomic/chatting/ChattingMessage";
 import ChattingImgChoice from "../../atomic/chatting/ChattingImgChoice";
-import { createElement } from "react";
 import useSendChat from "../../../hooks/useSendChat";
 import { faArrowRightFromBracket } from "@fortawesome/free-solid-svg-icons";
+
+/**
+ * 상위 컴포넌트 === ChattingRecord.jsx
+ * 채팅페이지 / 채팅방
+ * @param {Array} data 채팅 기록 데이터
+ * @param {Function} onPlusClick 토글 함수 
+ */
 
 const ChattingRoom = ({ data, onPlusClick }) => {
   const ws = useContext(WebSocketContext);
@@ -186,46 +191,3 @@ const ChattingRoom = ({ data, onPlusClick }) => {
 };
 
 export default ChattingRoom;
-
-{
-  /* <ChatBigDiv>
-        <ChatDiv who="me">
-          <ChatContents who="me">sibal</ChatContents>
-          <ChatDate>2022년 12월 17일 12:17pm</ChatDate>
-        </ChatDiv>
-        <ChatDiv who="you">
-          <ChatContents who="you">...</ChatContents>
-          <ChatDate>2022년 8월 17일 5:17pm</ChatDate>
-        </ChatDiv>
-      </ChatBigDiv> */
-}
-
-// useEffect(() => {
-//   console.log("message: ", message);
-// }, [message]);
-
-// useEffect(() => {
-//   contentInput.current.focus();
-
-//   console.log("ws: ", ws);
-//   // // 타투아영: 631586d4a26479438d3c1bf2
-//   // // 유저아영: 631585ffa26479438d3c1ba2
-//   // const src = '631586d4a26479438d3c1bf2'
-//   // const dest = '631585ffa26479438d3c1ba2'
-
-//   // let body = {
-//   //   sender: src,
-//   //   receiver: dest,
-//   //   reservation_id : "TestReservationId",
-//   //   content: "보내는 사람: f2"
-//   // }
-
-//   // if(getCookie('user_id')){
-//   //   body.sender = dest;
-//   //   body.receiver = src
-//   //   body.content = '보내는 사람: a2'
-//   // }
-
-//   // let jsonData = JSON.stringify(body);
-//   // ws.current.send(jsonData)
-// }, []);

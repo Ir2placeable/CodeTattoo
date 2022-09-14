@@ -12,10 +12,10 @@ import { faUser } from "@fortawesome/free-solid-svg-icons";
 import { useLocation } from "react-router-dom";
 import { useEffect } from "react";
 
-/**
- * 상위 컴포넌트 === ChattingList.jsx
- * @param {*} param0
- * @returns
+/** 상위 컴포넌트 === ChattingList.jsx
+ * 채팅 페이지 / 채팅 아이템 
+ * @param {Object} item 채팅 아이템 데이터
+ * @param {Function} onClick Chatting Room에 데이터 전달 & Style 적용
  */
 
 const ChattingItem = ({ item, onClick }) => {

@@ -8,6 +8,11 @@ import {
   DetailDraftImgHover,
 } from "../../../styledComponents";
 
+/** 상위 컴포넌트 === TattooistDetailDraft.jsx 
+ * 타투이스트 상세 페이지 / 도안
+ * @param {Object} draft 도안 데이터
+*/
+
 const DetailDraft = ({ draft }) => {
   const [hover, setHover] = useState(false);
 

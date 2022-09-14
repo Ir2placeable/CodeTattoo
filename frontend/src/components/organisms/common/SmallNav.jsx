@@ -4,7 +4,8 @@ import { useLocation } from "react-router-dom";
 import { SmallNavigation } from "../../../styledComponents";
 import SmallNavBtn from "../../atomic/common/SmallNavBtn";
 import NavSearch from "../../atomic/common/NavSearch";
-import { useCallback } from "react";
+
+/** 도안 목록, 타투이스트 목록 페이지/ 네비게이션바 */
 
 const SmallNav = ({ data, isSearch, loc }) => {
   const boxLoation = {
@@ -37,12 +38,10 @@ const SmallNav = ({ data, isSearch, loc }) => {
     if (path === data[1].path) {
       setFirstBtn(true);
       setSecondBtn(false);
-      //window.location.replace(data[1].path);
       navigate(data[1].path);
     } else if (path === data[2].path) {
       setFirstBtn(false);
       setSecondBtn(true);
-      //window.location.replace(data[2].path);
       navigate(data[2].path);
     }
   };
