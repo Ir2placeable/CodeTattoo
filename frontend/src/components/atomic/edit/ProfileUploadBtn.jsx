@@ -7,7 +7,6 @@ import { ProfileUploadButton } from "../../../styledComponents";
  * @param {Function} onSubmit 등록
  * @param {String} type 버튼 타입
  * @param {String} text 버튼 텍스트 
- * @returns 
  */
 
 const ProfileUploadBtn = ({ onSubmit, type, text }) => {

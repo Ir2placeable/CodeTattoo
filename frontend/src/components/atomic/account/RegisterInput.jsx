@@ -123,6 +123,7 @@ const RegisterInput = ({ isTattooist }) => {
   }
 
   const navigate = useNavigate();
+  // 회원가입 요청 API
   const registerRequest = async() => {
     const body = {
       filter: 'user',

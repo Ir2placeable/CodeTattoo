@@ -18,6 +18,8 @@ import ProfileUploadBtn from "../../atomic/edit/ProfileUploadBtn";
  */
 
 const EditTattooistProfile = () => {
+
+  // 프로필 데이터
   const [info, setInfo] = useState({
     nickname: getCookie("nickname"),
     location: getCookie("profile_location"),
@@ -40,6 +42,7 @@ const EditTattooistProfile = () => {
     });
   };
 
+  // 타투이스트 프로필 편집 요청 API
   const sendRequest = async () => {
     const res = await axios.patch(
       `${APIURL}/tattooist/my-page/${getCookie("tattooist_id")}`,

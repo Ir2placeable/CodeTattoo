@@ -14,7 +14,10 @@ import LogoutBtn from "../../atomic/header/LogoutBtn";
 import GoMypage from "../../atomic/header/GoMypage";
 import { useLocation, useNavigate } from "react-router-dom";
 
+/** 헤더 */
+
 const Header = () => {
+  // 로그인 여부
   const [isLogin, setIsLogin] = useState(false);
   const path = useLocation().pathname;
 
@@ -26,11 +29,13 @@ const Header = () => {
     }
   }, [getCookie("user_id"), getCookie("tattooist_id")]);
 
+  // 메인 페이지 이동
   const goHome = () => {
     window.location.replace("/#/drafts/best");
   };
 
   const navigate = useNavigate();
+  // 채팅 페이지 이동
   const goChatting = () => {
     let id = getCookie('user_id');
 

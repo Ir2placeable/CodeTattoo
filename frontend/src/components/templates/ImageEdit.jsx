@@ -22,13 +22,17 @@ import { useNavigate } from "react-router-dom";
  * 프로필 이미지 편집 템플릿
  */
 const ImageEdit = () => {
+  // 로딩 여부
   const [loading, setLoading] = useState(false);
+  
+  // 이미지 (base64 형식)
   const [src, setSrc] = useState(getCookie("profile_img_src"));
   const [image, setImage] = useState({
     data: "",
     mime: "",
   });
 
+  // 이미지 파일 선택
   const onSelectFile = (e) => {
     if (e.target.files && e.target.files.length > 0) {
       const reader = new FileReader();
@@ -41,7 +45,8 @@ const ImageEdit = () => {
       });
     }
   };
-
+  
+  // 이미지 파싱
   const onLoad = () => {
     const parsing = src.split(",");
     let _mime = parsing[0].split(";")[0];
@@ -56,8 +61,7 @@ const ImageEdit = () => {
   };
 
   const navigate = useNavigate();
-  /** 프로필 이미지 변경 요쳥 API
-   */
+  // 프로필 이미지 변경 요청 API
   const sendRequest = async () => {
     let url = `${APIURL}`;
     if (getCookie("user_id")) url += `/user/my-page/${getCookie("user_id")}`;

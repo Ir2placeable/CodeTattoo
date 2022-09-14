@@ -21,6 +21,7 @@ import { useState } from "react";
 
 const ChattingItem = ({ item, onClick }) => {
   const location = useLocation();
+  // CSS style 적용
   const [style, setStyle] = useState('')
 
   useEffect(() => {

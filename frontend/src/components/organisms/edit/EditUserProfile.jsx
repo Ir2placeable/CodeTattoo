@@ -14,6 +14,7 @@ import ProfileUploadBtn from "../../atomic/edit/ProfileUploadBtn";
  */
 
 const EditUserProfile = () => {
+  // 프로필 데이터
   const [info, setInfo] = useState({
     nickname: getCookie("nickname"),
     location: getCookie("location"),
@@ -31,6 +32,7 @@ const EditUserProfile = () => {
     });
   };
 
+  // 유저 프로필 편집 요청 API
   const sendRequest = async () => {
     const res = await axios.patch(
       `${APIURL}/user/my-page/${getCookie("user_id")}`,

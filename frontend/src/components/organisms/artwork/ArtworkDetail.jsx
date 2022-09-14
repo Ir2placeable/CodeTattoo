@@ -15,7 +15,6 @@ import {
  */
 
 const ArtworkDetail = ({ artwork, image }) => {
-  console.log(artwork);
   return (
     <>
       <ArtworkBox>

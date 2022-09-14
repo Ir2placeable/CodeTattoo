@@ -1,7 +1,7 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React, { useState } from "react";
+import React from "react";
 
-/** 패스워드 체크 
+/** 패스워드 가리기/ 보기
  * @param {String} icon 아이콘 
  */
 

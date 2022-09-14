@@ -10,8 +10,10 @@ import { useOutletContext } from "react-router-dom";
  * @param {String} filter 추천순/최신순
  */
 const DraftList = ({ filter }) => {
+  // 페이지네이션
   const { page } = useOutletContext();
 
+  // 도안 목록 데이터
   const drafts = useDraftList({
     filter: filter,
     page: page,

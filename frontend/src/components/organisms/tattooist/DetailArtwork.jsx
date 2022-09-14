@@ -15,10 +15,12 @@ import { useCallback } from "react";
  */
 
 const DetailArtwork = ({ artwork }) => {
+  // Hover Style
   const [hover, setHover] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
 
+  // 작업물 세부 페이지 이동
   const goDetail = () => {
     const [, , tattooist_id] = location.pathname.split("/");
     navigate(`/artwork/${artwork.artwork_id}/${tattooist_id}`);

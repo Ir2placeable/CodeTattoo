@@ -25,6 +25,7 @@ import { toast, ToastContainer } from "react-toastify";
  * 도안 상세 템플릿
  */
 const DraftDetail = () => {
+  // 소유자 여부 확인
   const [isAdmin, setIsAdmin] = useState(false);
   const { detail } = useOutletContext();
   const draft = {
@@ -55,12 +56,13 @@ const DraftDetail = () => {
   }, [detail]);
 
   const navigate = useNavigate();
+  // 도안 수정 페이지 이동
   const goEdit = () => {
     navigate("../edit");
   };
 
   const createReservation = useCreateReservation();
-
+  // 상담 요청 API
   const onCreateReservation = () => {
     const user = getCookie("user_id");
 

@@ -9,6 +9,7 @@ import { GoUpload } from '../../../styledComponents';
 
 const GoUploadBtn = memo(() => {
   const navigate = useNavigate();
+  // URL 이동
   const onClick = useCallback(() => {
     navigate('/upload');
   }, []);

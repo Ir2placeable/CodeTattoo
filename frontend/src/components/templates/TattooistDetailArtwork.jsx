@@ -8,6 +8,7 @@ import DetailArtwork from "../organisms/tattooist/DetailArtwork";
  * 타투이스트 작업물 목록 템플릿 
  */
 const TattooistDetailArtwork = () => {
+  // 작업물 데이터
   const items = useOutletContext();
   return (
     <>

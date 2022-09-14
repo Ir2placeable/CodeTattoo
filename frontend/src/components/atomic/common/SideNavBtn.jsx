@@ -14,7 +14,7 @@ const SideNavBtn = ({ onClick, text, path }) => {
     color: "black",
     borderLeft: "3px solid black",
   };
-
+  // CSS style 적용
   const [style, setStyle] = useState({});
   const location = useLocation();
   useEffect(() => {

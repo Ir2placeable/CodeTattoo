@@ -23,6 +23,7 @@ import { faUser } from "@fortawesome/free-solid-svg-icons";
  * @param {Object} profile 프로필 데이터
  */
 const MyPageProfile = ({ profile }) => {
+  // 편집 가능 여부
   const [edit, setEdit] = useState(false);
 
   useEffect(() => {
@@ -42,6 +43,7 @@ const MyPageProfile = ({ profile }) => {
   }, [profile]);
 
   const navigate = useNavigate();
+  // 편집 페이지 이동
   const goEdit = () => {
     navigate("/edit/image");
   };

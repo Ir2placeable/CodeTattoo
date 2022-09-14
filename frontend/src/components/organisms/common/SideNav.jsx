@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 
 const SideNav = () => {
   const navigate = useNavigate();
-
+  // URL 이동
   const onClick = useCallback((e) => {
     const path = e.target.id;
     navigate(`/edit/${path}`);

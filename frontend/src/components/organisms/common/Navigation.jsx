@@ -11,10 +11,9 @@ import { useNavigate } from "react-router-dom";
 
 const Navigation = () => {
   const navigate = useNavigate();
+  // URL 이동
   const onClick = useCallback((e) => {
     const path = e.target.id;
-
-
     if(path === 'drafts' || path === 'tattooists'){
       navigate(`/${path}/best`);
     } else if(path === 'scraps'){

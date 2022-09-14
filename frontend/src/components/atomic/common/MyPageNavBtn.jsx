@@ -16,6 +16,7 @@ const MyPageNavBtn = ({ onClick, text, path }) => {
     color: 'black',
     borderBottom: '3px solid black'
   }
+  // CSS style 적용
   const [style, setStyle] = useState({});
 
   const location = useLocation();

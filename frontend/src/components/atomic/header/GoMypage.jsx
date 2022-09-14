@@ -1,25 +1,18 @@
 import React, { useCallback, useState } from "react";
 import { HeaderBtn, HeaderBtnHover } from "../../../styledComponents";
-
 import { getCookie } from "../../../config/cookie";
 import { useNavigate } from "react-router-dom";
 
+/** 상위 컴포넌트 === Header.jsx
+ * 헤더 / 마이 페이지 이동 버튼 
+ */
+
 const GoMypage = () => {
+  // Hover Style
   const [isHover, setIsHover] = useState(false);
-
   const navigate = useNavigate();
-
+  // URL 이동
   const onClick = useCallback(() => {
-
-    // let _id = getCookie('user_id');
-    // let filter = 'user';
-
-    // if(_id === undefined){
-    //   _id = getCookie('tattooist_id');
-    //   filter = 'tattooist';
-    // }
-    // navigate(`/my-page/${filter}/${_id}`);
-
     if(getCookie('user_id')){
       navigate(`/my-page/user/${getCookie('user_id')}`);
     } else {
