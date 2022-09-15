@@ -10,6 +10,7 @@ import org.springframework.data.annotation.CreatedDate;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
+//RDS MariaDB 내의 chat_msg 테이블
 @Entity
 @Data
 @Table(name="chat_msg")

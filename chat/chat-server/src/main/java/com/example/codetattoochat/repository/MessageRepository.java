@@ -5,6 +5,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+//JPA REPOSITORY로써, 직접 RDS MariaDB와 연동된다.
+//Query 노테이션에 기재된 SQL문의 결괏값을 반환한다.
 @Repository
 public interface MessageRepository extends JpaRepository<MessageEntity, Long> {
 

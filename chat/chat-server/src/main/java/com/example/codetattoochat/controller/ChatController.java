@@ -59,31 +59,16 @@ public class ChatController {
 
     @Autowired
     ObjectStorageService objectStorageService;
+
+    // 서버 상태 확인
     @GetMapping("/ping")
     public APIInfo ping() {
         APIInfo info = APIInfo.builder().app("CodeTattoo-Chat").ver("1.0").timestamp(LocalDateTime.now()).build();
         return info;
     }
 
-    @PostMapping("/chat/user")
-    public ResponseEntity saveUserId(@RequestBody RequestUserId vo) {
-        Gson gson = new Gson();
-        JsonObject temp = new JsonObject();
-        HttpHeaders responseHeaders = new HttpHeaders();
-        responseHeaders.add("Content-Type", "application/json; charset=UTF-8");
-
-        if (socketHandler.currentUserid(vo.getUserid())) {
-            log.info("Success User Session Map is : {}", socketHandler.getUserMap());
-            temp.addProperty("success", "true");
-            return new ResponseEntity<>(gson.toJson(temp), responseHeaders,HttpStatus.OK);
-        } else {
-            log.info("failed User Session Map is : {}", socketHandler.getUserMap());
-            temp.addProperty("success", "false");
-            return new ResponseEntity<>(gson.toJson(temp), responseHeaders,HttpStatus.OK);
-        }
-    }
-
-    @PostMapping("/chat/send") // 메시지 저장
+    // 메시지 저장
+    @PostMapping("/chat/send")
     public ResponseEntity send(@RequestBody RequestSend vo) {
         Date now = Calendar.getInstance().getTime();
         SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmss");
@@ -139,6 +124,7 @@ public class ChatController {
         }
     }
 
+    // 채팅방 생성 ( 채팅방 생성은 별도의 룸을 만드는 것이 아닌 예약id가 발급되면 자동적으로 생성된다.)
     @PostMapping("/chat/create")
     public ResponseEntity ReserveSend(@RequestBody RequestReserveSend vo) throws URISyntaxException {
         Date now = Calendar.getInstance().getTime();
@@ -167,6 +153,7 @@ public class ChatController {
         }
     }
 
+    // 채팅방 삭제
     @PostMapping("/chat/delete")
     public ResponseEntity ReserveDelete(@RequestBody RequestReserveDelete vo) {
         log.info("request data : {}", vo);
@@ -272,8 +259,8 @@ public class ChatController {
         return new ResponseEntity<>(gson.toJson(temp), responseHeaders,HttpStatus.OK);
     }
 
-
-    @GetMapping("/chat/list/{type}/{user_id}") // 상대방 유저 리스트 요청 API (채팅목록)
+    // 상대방 유저 리스트 요청 API (채팅목록)
+    @GetMapping("/chat/list/{type}/{user_id}")
     public ResponseEntity getUserList(@PathVariable String user_id, @PathVariable String type) throws URISyntaxException {
         List<ResponseUserList> result = new ArrayList<>();
         Gson gson = new Gson();
@@ -393,7 +380,8 @@ public class ChatController {
         return new ResponseEntity<>(gson.toJson(temp), responseHeaders,HttpStatus.OK);
     }
 
-    @GetMapping("/chat/message/{reservation_id}") // 채팅 내역 조회 요청 API
+    // 채팅 내역 조회 요청 API
+    @GetMapping("/chat/message/{reservation_id}")
     public ResponseEntity getMessageList(@PathVariable String reservation_id, @RequestParam String subject_id) {
         //subject_id : 요청자의 id, reservation_id : 예약 id
         log.info("reservation_id : {}", reservation_id);

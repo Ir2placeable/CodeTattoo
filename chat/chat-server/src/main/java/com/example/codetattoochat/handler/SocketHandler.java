@@ -1,11 +1,9 @@
 package com.example.codetattoochat.handler;
 
-import com.example.codetattoochat.config.WebSocketConfig;
 import com.example.codetattoochat.dto.ChatMessage;
 import com.example.codetattoochat.service.ObjectStorageService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import lombok.Data;
@@ -18,12 +16,8 @@ import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.util.Base64;
 import java.util.HashMap;
-import java.util.Map;
 
 @Component
 @Slf4j
@@ -36,6 +30,7 @@ public class SocketHandler extends TextWebSocketHandler {
     HashMap<String, WebSocketSession> sessionMap = new HashMap<>(); //웹소켓 세션을 담아둘 맵
     HashMap<String, String> userMap = new HashMap<>(); //세션과 유저를 매핑할 맵
     ObjectMapper objectMapper = new ObjectMapper();
+
     @Autowired
     ObjectStorageService objectStorageService;
 
@@ -92,7 +87,6 @@ public class SocketHandler extends TextWebSocketHandler {
     public void afterConnectionEstablished(WebSocketSession session) throws Exception {
         // 소켓 연결, 웹소켓 연결이 되면 동작
         super.afterConnectionEstablished(session);
-//        currentUserSession(session);
         log.info("Session Connected : {}", session);
         sessionMap.put(session.getId(), session);
 
@@ -110,18 +104,4 @@ public class SocketHandler extends TextWebSocketHandler {
         log.info("-------------------------------");
     }
 
-    private void currentUserSession(WebSocketSession session) throws InterruptedException {
-        this.currentSession = session;
-        log.info("CurrentSession Update Complete : {}", this.currentSession);
-        log.info("-------------------------------");
-
-    }
-
-    public Boolean currentUserid(String userId) {
-        if (this.currentSession != null)
-            userMap.put(userId, this.currentSession.getId());
-        else
-            return false;
-        return true;
-    }
 }

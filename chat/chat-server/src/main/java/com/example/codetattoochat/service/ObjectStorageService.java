@@ -20,45 +20,24 @@ public class ObjectStorageService {
     @Autowired
     private MessageService messageService;
 
-    final String endPoint = "https://kr.object.ncloudstorage.com";
-    final String regionName = "kr-standard";
+    final String endPoint = "https://kr.object.ncloudstorage.com"; //Naver Cloud ObjectStorage End Point;
+    final String regionName = "kr-standard"; //Naver Cloud ObjectStorage region Name;
     @Value("${cloud.objectStorage.credentials.accessKey}")
     private String accessKey; //Naver Cloud ObjectStorage access Key;
     @Value("${cloud.objectStorage.credentials.secretKey}")
     private String secretKey; //Naver Cloud ObjectStorage secret Key;
 
-//    final String accessKey = "FDKsmR5tOoKNGPie5IK1";
-//    final String secretKey = "rIsdHa0cITlo4QMfJcUP1dLQ7REwFG9u2lN3pzem";
-
     // S3 client
-    final AmazonS3 s3 = AmazonS3ClientBuilder.standard()
+    final AmazonS3 s3 = AmazonS3ClientBuilder.standard() // S3에 접근하기 위한 객체 builc
             .withEndpointConfiguration(new AwsClientBuilder.EndpointConfiguration(endPoint, regionName))
             .withCredentials(new AWSStaticCredentialsProvider(new BasicAWSCredentials(accessKey, secretKey)))
             .build();
 
-    String bucketName = "codetattoo";
+    String bucketName = "codetattoo"; // codetattoo라는 버킷네임
 
-    // create folder
-    public void DirUploadS3() {
-        System.out.println("Called Dir Upload S3");
-        // create folder
-        String folderName = "chat/";
-
-        ObjectMetadata objectMetadata = new ObjectMetadata();
-        objectMetadata.setContentLength(0L);
-        objectMetadata.setContentType("application/x-directory");
-        PutObjectRequest putObjectRequest = new PutObjectRequest(bucketName, folderName, new ByteArrayInputStream(new byte[0]), objectMetadata);
-
-        try {
-            s3.putObject(putObjectRequest);
-            System.out.format("Folder %s has been created.\n", folderName);
-        } catch (AmazonS3Exception e) {
-            e.printStackTrace();
-        } catch(SdkClientException e) {
-            e.printStackTrace();
-        }
-    }
-
+    // codetattoo 버킷에 이미지 파일을 올리기 위한 함수
+    // ACL설정을 PublicRead로 해야한다.
+    // key는 이미지 이름으로, reservation_id + "%" + TIMESTAMP로 지정
     public String UploadS3(String key, InputStream file, String mime) {
         try {
             ObjectMetadata objectMetadata = new ObjectMetadata();
@@ -75,6 +54,9 @@ public class ObjectStorageService {
         return String.valueOf(s3.getUrl(bucketName, key));
     }
 
+
+    // codetattoo 버킷의 이미지 파일을 삭제하기 위한 함수
+    // key를 기준으로 삭제
     public void DeleteS3(String reservation_id) {
         System.out.println("reservation_id = " + reservation_id);
         Iterable<String> urls = messageService.getUrlList(reservation_id);
