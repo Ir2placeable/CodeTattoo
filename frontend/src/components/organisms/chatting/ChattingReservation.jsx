@@ -13,7 +13,8 @@ import {
   ProcedureLabel,
   ProcedureData,
   ProcedureWrap,
-  ChattingRoomDiv
+  ChattingRoomDiv,
+  DeletedReservationChatting
 } from "../../../styledComponents";
 
 import { faMinus } from '@fortawesome/free-solid-svg-icons';
@@ -143,7 +144,7 @@ const ChattingReservation = () => {
   const goRoom = () => {
     navigate(`/chat/${params.id}/${params.reservation_id}/room`)
   }
-
+  
   return (
     <>
     {imgEdit && (
@@ -162,6 +163,11 @@ const ChattingReservation = () => {
     )}
 
     <ChattingRoomDiv>
+      {Object.keys(reservation).length === 0 ? (
+        <DeletedReservationChatting>
+          삭제된 예약입니다.
+        </DeletedReservationChatting>
+      ) : (
       <ChatReservationBox>
         <ChatDraftBox>
           {reservation.image ? (
@@ -215,6 +221,7 @@ const ChattingReservation = () => {
           </ChatBtnBox>
         )}
       </ChatReservationBox>
+      )}
 
 
       <ChatInputDiv type="back">
@@ -228,8 +235,9 @@ const ChattingReservation = () => {
         <Popup data={item} setIsOpen={setIsOpen} />
       )}
     </ChattingRoomDiv>
+    
     </>
-  );
+  )
 };
 
 export default ChattingReservation;

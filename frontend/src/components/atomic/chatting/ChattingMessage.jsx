@@ -14,16 +14,16 @@ const ChattingMessage = ({ item }) => {
           type={item.is_image ? "image" : "text"}
         >
           {item.is_image ? (
-            <ChatImg src={item.content} />
+            <ChatImg src={item.content}  />
           ) : (
             <>{item.content}</>
           )}
         </ChatContents>
 
-        <ChatDate>{item.time}</ChatDate>
+        <ChatDate>{item.created_at}</ChatDate>
       </ChatDiv>
     </>
   );
 };
 
-export default React.memo(ChattingMessage);
+export default ChattingMessage;

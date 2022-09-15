@@ -2924,6 +2924,14 @@ export const ChattingRoomLogo = styled.img`
   opacity: 0.15;
 `;
 
+export const DeletedReservationChatting = styled.div`
+// background-color: orange;
+width: max-content;
+color: white;
+font-size: 20px;
+margin: 0 auto;
+`
+
 export const ChattingRoomHeader = styled.div`
   font-weight: bold;
   font-size: 20px;
