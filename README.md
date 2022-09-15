@@ -6,7 +6,7 @@
 
 This project has been officially submitted in [2022 Open SW Development Contest](https://www.oss.kr/dev_competition).
 
-[🌐 웹사이트/Website](www.codetattoo.shop)
+[🌐 웹사이트/Website](http://www.codetattoo.shop)
 
 <br/>
 
