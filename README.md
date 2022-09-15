@@ -37,6 +37,8 @@ Blockchain Data will be able to employ to find out a side effect or do cover-up/
 
 ## 영상자료 : Video Clips
 
+[CodeTattoo 프로토타입 시연영상](https://youtu.be/-PfPyhEekXo)
+
 <br/>
 
 
