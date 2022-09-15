@@ -73,7 +73,6 @@ const PasswordEdit = () => {
 
   const onChange = (e) => {
     const { value, name } = e.target;
-    console.log(value, name);
     setInfo({
       ...info,
       [name]: value,
