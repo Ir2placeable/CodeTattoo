@@ -3,17 +3,10 @@ import React from 'react';
 import { useParams } from 'react-router-dom';
 import { APIURL } from '../config/key';
 
-// ### 예약 정보 수정
-
-// *유저와 타투이스트가 채팅에서 date, time_slot, cost, body_part를 수정함*
-
-// - PATCH : /reservation/:id
-//     - id : reservation_id
-// - Body : { date, time_slot, cost, body_part }
-//     - 기존 정보를 보내주어야 함 (바뀐 정보만 보내면 안됨)
-//     - date: 220823
-//     - time_slot : 1030 (=10:30)
-// - Return : { success }
+/** 예약 정보 수정 API
+ * 채팅 방 예약 페이지 || 예약 세부 페이지
+ * @returns 예약 정보 수정 API 함수
+ */
 const useEditProcedureInfo = () => {
   const params = useParams();
 

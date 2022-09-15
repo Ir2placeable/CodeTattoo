@@ -15,6 +15,10 @@ import Popup from '../organisms/draft/Popup';
 import DropDown from '../organisms/upload/DropDown';
 import DropTags from '../organisms/upload/DropTags';
 
+/**
+ * 상위 컴포넌트 === ShowDraftDetail.jsx
+ * 도안 상세 정보 수정 페이지
+ */
 const DraftEdit = () => {
   const { detail } = useOutletContext();
 

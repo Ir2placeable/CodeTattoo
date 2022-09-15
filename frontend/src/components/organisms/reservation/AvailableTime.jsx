@@ -14,9 +14,15 @@ import useCreateReservation from '../../../hooks/useCreateReservation';
 import useTattooistDetailReservation from '../../../hooks/useTattooistDetailReservation';
 import { toast, ToastContainer } from "react-toastify";
 import { useNavigate } from 'react-router-dom';
-import useChatReservation from '../../../hooks/useChatReservation';
 
+/** 상위 컴포넌트 === TattooistDetailReservation.jsx
+ *  타투이스트 마이 페이지 / 예약 일정 탭 / 예약 가능 시간 컴포넌트
+ * @param {Object} value 달력에서 선택한 날짜
+ * @param {Boolean} isAdmin 현재 로그인한 유저가 해당 타투이스트와 같은지 확인하는 상태값
+ * @param {String} id 현재 로그인한 유저 id
+ */
 const AvailableTime = ({ value, isAdmin, id }) => {
+  // 해당 날짜의 예약 가능 시간을 나타내는 상태
   const [time, setTime] = useState([
     { slot: "1000", flag: false }, { slot: "1030", flag: false },
     { slot: "1100", flag: false }, { slot: "1130", flag: false },
@@ -30,11 +36,16 @@ const AvailableTime = ({ value, isAdmin, id }) => {
     { slot: "1900", flag: false }, { slot: "1930", flag: false },
   ])
 
+  // 선택된 시간
   const [unavailable, setUnavailable] = useState([]);
+  // 이전에 선택된 시간
   const [prev, setPrev] = useState([]);
+  // 해당 날짜의 예약 불가능한 시간 가져오는 api
   const data = useTattooistDetailReservation({
     value: value
   })
+
+  console.log('data: ', data)
 
   useEffect(() => {
     const temp = [];
@@ -62,6 +73,7 @@ const AvailableTime = ({ value, isAdmin, id }) => {
 
   }, [value])
 
+  // 시간 선택 함수
   const onClick = (e) => {
     const date = moment(value).format('YYMMDD');
     const [t, m] = e.target.innerText.split(':');
@@ -102,6 +114,7 @@ const AvailableTime = ({ value, isAdmin, id }) => {
     }
   }
 
+  // 에약 가능 시간 활성화
   const timeActive = async() => {
     const res = await axios.post(`${APIURL}/remove/unavailable/${id}`, {
       unavailable
@@ -115,6 +128,7 @@ const AvailableTime = ({ value, isAdmin, id }) => {
     }
   }
 
+  // 예약 가능 시간 비활성화
   const timeDeActive = async() => {
     const res = await axios.post(`${APIURL}/create/unavailable/${id}`, {
       unavailable
@@ -128,9 +142,11 @@ const AvailableTime = ({ value, isAdmin, id }) => {
     }
   }
 
+  // 예약 생성 api 함수
   const createReservation = useCreateReservation();
   const navigate = useNavigate();
 
+  // 예약 생성
   const onCreateReservation = () => {
     const user = getCookie('user_id');
 

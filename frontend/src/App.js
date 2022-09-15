@@ -5,6 +5,7 @@ import { Reset } from "styled-reset";
 import React from "react";
 import { Routes, Route } from "react-router-dom";
 import { MainPageDiv } from "./styledComponents";
+import 'react-toastify/dist/ReactToastify.css';
 
 // Components
 import Header from "./components/organisms/header/Header";
@@ -38,13 +39,9 @@ import Procedure from "./components/organisms/reservation/Procedure";
 import Chatting from "./components/templates/Chatting";
 import PasswordEdit from "./components/templates/PasswordEdit";
 import DeleteAccount from "./components/templates/DeleteAccount";
-import 'react-toastify/dist/ReactToastify.css';
 import ShowArtworkDetail from "./pages/ShowArtworkDetail";
-import SocketTest from "./SocketTest";
-import ChattingRecord from "./components/organisms/chatting/ChattingRecord";
 import ChattingRoomEntry from "./components/organisms/chatting/ChattingRoomEntry";
 import ChattingRoom from "./components/organisms/chatting/ChattingRoom";
-import ChattingList from "./components/organisms/chatting/ChattingList";
 import ChattingReservation from "./components/organisms/chatting/ChattingReservation";
 
 const App = () => {
@@ -55,9 +52,8 @@ const App = () => {
 
       {/* HEADER */}
       <Header />
-      {/* <Navigation /> */}
+      
       {/* Main Container */}    
-
       <MainPageDiv id="scroll">
         <Routes>
           {/* Main page */}
@@ -93,7 +89,6 @@ const App = () => {
               <Route path="detail" element={<DraftDetail />} />
               <Route path="edit" element={<DraftEdit />} />
             </Route>
-            {/* <Route path="draft/:draft_id/edit" element={<ShowDraftUpload />} /> */}
 
             {/* 작업물 상세 */}
             <Route path="artwork/:tattoo_id/:tattooist_id" element={<ShowArtworkDetail/>} />
@@ -128,7 +123,6 @@ const App = () => {
             {/* id: user_id || tattooist_id */}
             <Route path="chat/:id" element={<Chatting />}>
               <Route path="" element={<ChattingRoomEntry />} />
-              {/* <Route path=":reservation_id" element={<ChattingRecord />} /> */}
               <Route path=":reservation_id/room" element={<ChattingRoom />} />
               <Route path=":reservation_id/reservation" element={<ChattingReservation />} />
             </Route>
@@ -150,8 +144,6 @@ const App = () => {
 
       {/* FOOTER */}
       <Footer />
-
-      {/* <SocketTest /> */}
     </div>
   );
 };

@@ -11,9 +11,17 @@ import { genre } from '../../../data';
 import { useRef } from 'react';
 import { useEffect } from 'react';
 
+/** 상위 컴포넌트 === DraftUpload.jsx
+ * 도안 등록 페이지 / 장르 드롭다운 메뉴
+ * @param {String} input 장르 상태
+ * @param {Function} setInput input 상태 함수
+ */
 const DropDown = memo(({ input, setInput }) => {
+  // 드롭 다운 메뉴 열림 여부
   const [isOpen, setIsOpen] = useState(false);
+  // 장르 선택 여부
   const [isChoice, setIsChoice] = useState(false);
+  // 직접 입력 여부
   const [isSelf, setIsSelf] = useState(false);
   const selfRef = useRef();
 

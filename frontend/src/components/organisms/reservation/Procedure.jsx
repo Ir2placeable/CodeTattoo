@@ -14,7 +14,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars, faGear } from '@fortawesome/free-solid-svg-icons';
 import EditProcedureInfo from './EditProcedureInfo';
 import EditProcedureImg from './EditProcedureImg';
-import useReservation from '../../../hooks/useReservation';
 import { useEffect } from 'react';
 import useReservationDetail from '../../../hooks/useReservationDetail';
 import useConfirmReservation from '../../../hooks/useConfirmReservation';
@@ -23,11 +22,16 @@ import ProcedureInputComp from './ProcedureInputComp';
 import TattooistCustomerInfo from './TattooistCustomerInfo';
 import ProcedureReservationInfo from './ProcedureReservationInfo';
 
+/** 예약/작업 상세 페이지
+ */
 const Procedure = () => {
+  // 예약정보, 작업정보
   const [reservation, procedureInfo] = useReservationDetail();
+  // 도안 수정 클릭 여부 상태
   const [imgEdit, setImgEdit] = useState(false);
+  // 예약 정보 수정 클릭 여부 상태
   const [infoEdit, setInfoEdit] = useState(false);
-
+  // 작업 상태 
   const [procedureStatus, setProcedureStatus] = useState(false);
   const params = useParams();
   const reservation_id = params.reservation_id;
@@ -36,20 +40,22 @@ const Procedure = () => {
   const id = getCookie("tattooist_id")
   const nickname = getCookie('nickname')
 
+  // 도안 수정시, 선택된 이미지 base64 형식 데이터 상태
   const [img, setImg] = useState({
     image: '',
     mime: ''
   })
 
+  // 잉크, 바늘, 주사깊이, 사용기기 상태
   const [inputs, setInputs] = useState({
     inks: '', 
     niddle: '', 
     depth: '', 
     machine: ''
   })
-  
   const { inks, niddle, depth, machine } = inputs
-  const [startProcedure, endProcedure] = useProcedure();
+
+  // 예약 날짜, 시간, 가격, 시술 부위 상태
   const [inputs2, setInputs2] = useState({
     date: '',
     time_slot: '',
@@ -59,8 +65,12 @@ const Procedure = () => {
   const { date, time_slot, cost, body_part } = inputs2;
 
   // Popup.jsx props: text, onRequest
+  // 팝업 데이터, 열림 상태
   const [data, setData] = useState({})
   const [isOpen, setIsOpen] = useState(false)
+
+  // 작업 시작, 작업 종료 api 함수
+  const [startProcedure, endProcedure] = useProcedure();
 
   useEffect(() => {
     if(procedureInfo){
@@ -145,6 +155,7 @@ const Procedure = () => {
     setProcedureStatus(true);
   }
 
+  // 예약 확정, 예약 취소 api 함수
   const [confirmReservation, rejectReservation] = useConfirmReservation({
     user_id: state.customer_id,
     tattooist_id: id

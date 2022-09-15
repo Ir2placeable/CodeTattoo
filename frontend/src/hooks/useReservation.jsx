@@ -5,14 +5,9 @@ import { useState } from 'react';
 import { getCookie } from '../config/cookie';
 import { APIURL } from '../config/key';
 
-// - GET : /reservations
-// - Query : { tattooist_id }
-// - Return : { success, [reservations] }
-//     - reservations = { 
-//       reservation_id, image, customer_id, 
-//       customer_nickname, date, time_slot, cost, 
-//       body_part, procedure_status, confirmed 
-//     }
+/** 예약 목록 페이지 / 예약 목록 데이터 API
+ * @returns 예약 확정 / 예약 확정 대기 목록 데이터
+ */
 const useReservation = () => {
   const [confirmed, setConfirmed] = useState([])
   const [pending, setPending] = useState([])
@@ -45,7 +40,6 @@ const useReservation = () => {
     sendRequest();
   }, []);
 
-  // return reservations;
   return [confirmed, pending]
 };
 

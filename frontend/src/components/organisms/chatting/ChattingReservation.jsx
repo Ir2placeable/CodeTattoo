@@ -27,25 +27,28 @@ import EditProcedureInfo from '../reservation/EditProcedureInfo';
 import Popup from '../draft/Popup';
 import { useNavigate, useOutletContext, useParams } from 'react-router-dom';
 
+
 /**
- * 상위 컴포넌트 === ChattingRecord.jsx
+ * 상위 컴포넌트 === Chatting.jsx
  * 채팅 페이지/ 채팅 예약 화면
- * @param {String} user_id 유저 아이디
- * @param {Function} onPlusClick 토글 함수
  */
-
-
-//  { user_id, onPlusClick }
 const ChattingReservation = () => {
+  // 채팅 정보 
   const { data } = useOutletContext();
+  // get 예약 정보 api
   const [reservation, ] = useReservationDetail();
+  // '예약 취소/도안 수정/정보 수정/예약 확정' 버튼 보여짐 여부 상태
   const [showBtns, setShowBtns] = useState(true)
+  // '도안 수정' 버튼 클릭 여부 상태
   const [imgEdit, setImgEdit] = useState(false)
+  // '정보 수정' 버튼 클릭 여부 상태
   const [infoEdit, setInfoEdit] = useState(false)
+  // 업로드할 이미지의 base64 형식 데이터 상태
   const [img, setImg] = useState({
     image: '',
     mime: ''
   })
+  // 날짜, 시간, 가격, 부위 입력 상태
   const [inputs, setInputs] = useState({
     date: '',
     time_slot: '',
@@ -55,10 +58,12 @@ const ChattingReservation = () => {
   const { date, time_slot, cost, body_part } = inputs
 
   // Popup
+  // 팝업에 사용될 텍스트 & 함수
   const [item, setItem] = useState({})
+  // 팝업 열림을 나타내는 상태
   const [isOpen, setIsOpen] = useState(false)
 
-  
+  // 예약 확정, 예약 취소 api
   const [confirmReservation, rejectReservation] = useConfirmReservation({
     user_id: data.opponet_id,
     tattooist_id: getCookie('tattooist_id')

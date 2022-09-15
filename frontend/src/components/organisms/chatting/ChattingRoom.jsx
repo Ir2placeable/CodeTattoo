@@ -31,25 +31,28 @@ import moment from "moment";
 import { getCookie } from "../../../config/cookie";
 
 /**
- * 상위 컴포넌트 === ChattingRecord.jsx
- * 채팅페이지 / 채팅방
- * @param {Array} data 채팅 기록 데이터
- * @param {Function} onPlusClick 토글 함수 
+ * 상위 컴포넌트 === Chatting.jsx
+ * 채팅 페이지 / 채팅 방
  */
-
-//  { data, onPlusClick }
 const ChattingRoom = () => {
+  // 채팅 정보 
   const { data } = useOutletContext();
+  // 전역 웹소켓 변수
   const ws = useContext(WebSocketContext);
+  // 전송할 채팅 텍스트 상태
   const [content, setContent] = useState("");
+  // 선택된 사진 소스 상태
   const [src, setSrc] = useState(null);
+  // 선택된 사진 base64 상태
   const [img, setImg] = useState({
     image: '',
     mime: ''
   })
 
   const params = useParams();
+  // 현재 로그인된 유저의 id
   const subject_id = params.id;
+  // 예약 id
   const reservation_id = params.reservation_id;
   const contentInput = useRef();
   const scrollRef = useRef();
@@ -85,12 +88,13 @@ const ChattingRoom = () => {
     }
   }, []);
 
+  // 채팅 내역 받아오는 api
   const message = useChatRecord({
     subject_id: subject_id,
     reservation_id: reservation_id,
   });
   
-
+  // 채팅 내역 & 실시간 채팅 내용을 저장할 상태 배열
   const [messages, setMessages] = useState([]);
 
   useEffect(() => {
@@ -116,6 +120,7 @@ const ChattingRoom = () => {
     };
   }
 
+  // 채팅 전송 API
   const sendChat = useSendChat()
   const onSend = () => {
 

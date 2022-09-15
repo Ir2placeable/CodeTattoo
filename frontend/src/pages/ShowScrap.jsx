@@ -8,9 +8,11 @@ import { useEffect } from "react";
 
 /* 스크랩 페이지 */
 const ShowScrap = () => {
+  // 현재 페이지 
   const [page, setPage] = useState(1);
+  // 전체 페이지 배열
   const [pages, setPages] = useState([]);
-
+  // 스크랩한 타투이스트 목록
   const [tattooists] = useScrapTattooist({page});
 
   const location = useLocation();

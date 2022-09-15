@@ -7,7 +7,10 @@ import { useParams } from 'react-router-dom';
 import { getCookie } from '../config/cookie';
 import { APIURL } from '../config/key';
 
-
+/** 타투이스트 상세 페이지/ 해당 날짜의 예약 불가능한 시간 get API
+ * @param {Object} value 해당 날짜
+ * @returns 해당 날짜의 예약 불가능한 시간 배열
+ */
 const useTattooistDetailReservation = ({ value }) => {
   const [data, setData] = useState([]);
   const param = useParams();

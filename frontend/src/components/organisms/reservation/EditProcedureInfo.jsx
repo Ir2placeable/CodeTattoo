@@ -8,6 +8,15 @@ import {
 } from '../../../styledComponents';
 import EditProcedureBtns from './EditProcedureBtns';
 
+/** 상위 컴포넌트 === Procedure.jsx
+ * 예약 도안 이미지 수정 컴포넌트 
+ * @param {Function} setInfoEdit 정보 수정 팝어 보여짐 여부 상태 함수
+ * @param {String} date 날짜
+ * @param {String} time_sot 시간
+ * @param {String} cost 가격
+ * @param {String} body_part 시술 부위
+ * @param {Function} onChange date, time_slot, cost, body_part 상태 변화 감지 함수
+ */
 const EditProcedureInfo = ({ setInfoEdit, date, 
   time_slot, cost, body_part, onChange }) => {
   const sendRequest = useEditProcedureInfo();

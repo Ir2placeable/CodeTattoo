@@ -12,9 +12,17 @@ import TagChoosed from './TagChoosed';
 import TagText from '../../atomic/draft_upload/TagText';
 import { useEffect } from 'react';
 
+/** 상위 컴포넌트 === DraftUpload.jsx
+ * 도안 등록 페이지 / 주제 드롭다운 메뉴
+ * @param {Array} tags 주제 상태 배열
+ * @param {Function} setTags tags 상태 함수
+ */
 const DropTags = memo(({ tags, setTags }) => {
+  // 드롭 다운 메뉴 열림 여부
   const [isOpen, setIsOpen] = useState(false);
+  // 주제 선택 여부
   const [isChoice, setIsChoice] = useState(false);
+   // 직접 입력 상태
   const [selfInput, setSelfInput] = useState('');
 
   const onChoose = (e) => {

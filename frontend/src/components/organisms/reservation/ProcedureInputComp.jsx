@@ -8,6 +8,15 @@ import {
   ProcedureInput, 
 } from '../../../styledComponents';
 
+/** 상위 컴포넌트 === Procedure.jsx
+ * 작업 정보(사용기기, 바늘, 주사 깊이, 잉크) input 컴포넌트
+ * @param {Boolean} procedureStatus 작업 상태 
+ * @param {String} machine 사용기기
+ * @param {String} niddle 바늘
+ * @param {String} depth 주사 깊이
+ * @param {String} inks 잉크
+ * @param {Function} onChange 입력값 감지 함수
+ */
 const ProcedureInputComp = ({
   procedureStatus, machine, niddle, depth, inks,
   onChange

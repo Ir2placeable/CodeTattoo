@@ -3,24 +3,12 @@ import React from 'react';
 import { useParams } from 'react-router-dom';
 import { APIURL } from '../config/key';
 
-
-// ### 예약 확정
-
-// *유저와 타투이스트가 채팅에서 date, time_slot_cost, image(도안)을 확정함*
-
-// - POST : /confirm/reservation/:id
-//     - id : reservation_id
-// - Body : { user_id, tattooist_id }
-// - Return : { success }
-
-// ### 예약 불발(=예약 거절)
-
-// *유저와 타투이스트가 채팅에서 합의점을 찾지 못하고 종료함*
-
-// - POST : /reject/reservation/:id
-//     - id : reservation_id
-// - Body : { user_id, tattooist_id }
-// - Return : { success }
+/** 예약 확정 / 취소 API 호출
+ * 채팅 방 예약 페이지 || 예약 세부 페이지
+ * @param {String} user_id 유저 아이디
+ * @param {String} tattooist_id 타투이스트 아이디
+ * @returns 예약 확정 / 취소 API 호출 함수
+ */
 const useConfirmReservation = ({ user_id, tattooist_id }) => {
   const params = useParams();
   const id = params.reservation_id;

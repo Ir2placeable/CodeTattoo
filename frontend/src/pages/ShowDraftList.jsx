@@ -10,7 +10,9 @@ import { useEffect } from 'react';
 
 /* 도안 목록 페이지 */
 const ShowDraftList = () => {
+  // 현재 페이지 상태 
   const [page, setPage] = useState(1);
+  // 전체 페이지 배열 상태
   const [pages, setPages] = useState([]);
 
   const location = useLocation();

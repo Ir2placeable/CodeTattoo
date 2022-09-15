@@ -5,6 +5,15 @@ import {
   ReservTextBox, ReservDraftEmptyImg, ReservStateBtn
 } from '../../../styledComponents';
 
+/** 상위 컴포넌트 === Reservation.jsx
+ * 예약/작업 페이지 / 예약 카드 / 예약 정보 컴포넌트
+ * @param {String} image 예약 도안 이미지 소스
+ * @param {String} nickname 예약자 닉네임
+ * @param {String} date 예약 날짜 및 시간
+ * @param {String} cost 예약 가격
+ * @param {Boolean} confirmed 예약 확정 여부
+ * @param {Boolean} procedure_status 작업 시작 여부
+ */
 const ReservationInfo = ({
   image, nickname, date, cost, confirmed,
   procedure_status

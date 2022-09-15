@@ -1,3 +1,5 @@
+// 웹소켓 테스트 파일
+
 import React from 'react';
 import { useRef } from 'react';
 import { WEBSOCKETURL } from './key';

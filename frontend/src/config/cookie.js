@@ -1,3 +1,5 @@
+// 웹 쿠키 관리 파일
+
 import { Cookies } from "react-cookie";
 
 const cookies = new Cookies();

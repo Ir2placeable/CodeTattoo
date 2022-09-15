@@ -8,7 +8,11 @@ import { Outlet } from 'react-router-dom';
 import useReservation from '../hooks/useReservation';
 import SmallNav from '../components/organisms/common/SmallNav';
 
+/**
+ * 예약 목록 페이지
+ */
 const ShowReservation = memo(() => {
+  // 예약 확정 목록 / 예약 확정 대기 목록
   const [confirmed, pending] = useReservation();
 
   return (

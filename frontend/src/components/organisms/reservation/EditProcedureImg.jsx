@@ -6,18 +6,25 @@ import {
   ProcedureEditDiv, 
   ProcedureEditBox,
   ProcedureEditHeader,
-  ProcedureEditFooter,
-  ProcedureEditFooterBtn,
   ProcedureEditContents,
   ProcedureEditImg,
   ProcedureEditFile
 } from '../../../styledComponents';
 import EditProcedureBtns from './EditProcedureBtns';
 
+/** 상위 컴포넌트 === Procedure.jsx
+ * 예약 도안 이미지 수정 컴포넌트 
+ * @param {Function} setImgEdit 도안 수정 팝업 보여짐 여부 상태 함수
+ * @param {String} _src 기존 이미지 소스
+ * @param {Object} data 선택된 도안 base64 형식 데이터 상태
+ * @param {Function} setData data 상태 함수
+ */
 const EditProcedureImg = ({ 
   setImgEdit, _src, data, setData, 
 }) => {
+  // 예약 도안 이미지 수정 api
   const sendRequest = useEditProcedureImg();
+  // 선택된 이미지 소스 상태
   const [src, setSrc] = useState(_src);
   const imgInput = useRef();
   const { image, mime } = data;

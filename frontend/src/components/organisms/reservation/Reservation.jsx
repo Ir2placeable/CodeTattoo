@@ -9,8 +9,14 @@ import {
 } from '../../../styledComponents';
 import ReservationInfo from './ReservationInfo';
 
+/** 상위 컴포넌트 === ReservationList.jsx
+ * 예약/작업 페이지 / 예약 카드 컴포넌트
+ * @param {Object} 예약 정보 데이터
+ */
 const Reservation = memo(({ data }) => {
+  // 날짜
   const [date, setDate] = useState('미확정');
+  // 가격
   const [cost, setCost] = useState('미확정');
 
   useEffect(() => {
@@ -35,7 +41,7 @@ const Reservation = memo(({ data }) => {
   const navigate = useNavigate();
 
   const goChatting = () => {
-    navigate(`/chat/${getCookie('tattooist_id')}/${data.reservation_id}`)
+    navigate(`/chat/${getCookie('tattooist_id')}/${data.reservation_id}/room`)
   }
   const onClick = (e) => {
     navigate(`/reservation/${data.reservation_id}`, {

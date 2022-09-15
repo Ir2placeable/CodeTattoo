@@ -8,9 +8,12 @@ import { WEBSOCKETURL } from "../../config/key";
 import { Outlet, useNavigate } from "react-router-dom";
 import { getCookie } from "../../config/cookie";
 
+/**
+ * 채팅 페이지
+ */
 export const WebSocketContext = React.createContext(null);
-
 const Chatting = () => {
+  // 웹소켓
   let ws = useRef(null);
 
   let userid = getCookie("user_id");
@@ -20,6 +23,7 @@ const Chatting = () => {
 
   useEffect(() => {
     if (!ws.current) {
+      // 웹 소켓 생성
       ws.current = new WebSocket(WEBSOCKETURL);
 
       ws.current.onopen = () => {
@@ -45,12 +49,13 @@ const Chatting = () => {
 
   const navigate = useNavigate();
 
+  // 채팅 데이터
   const [data, setData] = useState({});
-
   const dataSetting = async (item) => {
     setData(item);
   };
 
+  // 채팅 목록 클릭시 해당 채탕방 이동 
   const onClick = ({ item, flag, path }) => {
     dataSetting(item).then(() => {
       if(flag){

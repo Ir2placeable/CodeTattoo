@@ -3,23 +3,10 @@ import React from 'react';
 import { useState } from 'react';
 import { APIURL } from '../config/key';
 
-// ### 작업 시작
-
-// *타투이스트가 작업을 시작함*
-
-// - POST : /procedure/:id
-//     - id : reservation_id
-// - Body : { user_id, tattooist_id, inks, niddle, depth, machine }
-// - Return : { success }
-
-// ### 작업 완료
-
-// *타투이스트가 작업을 종료함*
-
-// - PATCH : /procedure/:id
-//     - id : reservation_id
-// - Body : { user_id, tattooist_id, inks, niddle, depth, machine }
-// - Return : { success }
+/** 작업 시작 / 종료 API
+ * 작업(예약) 세부 페이지
+ * @returns 작업 시작 / 종료 API 함수
+ */
 const useProcedure = () => {
   const startProcedure = async({
     reservation_id, user_id, tattooist_id, inks, niddle, depth, machine
