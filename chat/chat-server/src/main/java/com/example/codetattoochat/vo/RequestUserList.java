@@ -7,5 +7,5 @@ import javax.validation.constraints.NotNull;
 @Getter
 public class RequestUserList {
     @NotNull(message = "Receiver cannot be null")
-    private String receiver;
+    private String receiver; // 대화 상대방
 }

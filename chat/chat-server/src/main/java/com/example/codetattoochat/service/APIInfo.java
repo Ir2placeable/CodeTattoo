@@ -10,7 +10,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Builder
-public class APIInfo {
+public class APIInfo { // 현재 API서버가 작동 중인지 확인하기 위한 함수
     private String app;
     private String ver;
 

@@ -11,12 +11,13 @@ import java.time.LocalDateTime;
 @Setter
 @Data
 public class MessageDto {
-    private Long id;
-    private String sender;
-    private String receiver;
-    private String content;
-    private String createdAt;
-    private String reservation_id;
+    private Long id; // 메시지 id
+    private String sender; // 메시지 발신자
+    private String receiver; // 메시지 수신자
+    private String content; // 메시지 내용
+    private String createdAt; // 메시지 일자
+    private String reservation_id; // 예약 id
+    private Boolean is_image; // 이미지/텍스트 여부
     @Builder
     public MessageDto(
             Long id,
@@ -24,7 +25,8 @@ public class MessageDto {
             String receiver,
             String content,
             String createdAt,
-            String reservation_id
+            String reservation_id,
+            Boolean is_image
     ) {
         this.id = id;
         this.sender = sender;
@@ -32,5 +34,6 @@ public class MessageDto {
         this.content = content;
         this.createdAt = createdAt;
         this.reservation_id = reservation_id;
+        this.is_image = is_image;
     }
 }

@@ -24,6 +24,9 @@ import java.net.URISyntaxException;
 public class GetOpponentInfo {
     HttpClientConnectionManager cm = null;
 
+    // 채팅방 리스트를 웹에 보내주기 위해서는, reservation_id와 confirmed 및 상대방 프로필 이미지와 닉네임이 필요하다.
+    // 따라서, 메인 서버에 직접 REST API를 호출하여 요청해야 한다.
+    // Apache Client5를 이용하여 GET API 구성
     public String callAPIGet(String url, String param1, String param2, String type) throws URISyntaxException {
         String responseBody = null;
         CloseableHttpClient httpClient = HttpClients.custom().setConnectionManager(cm).build(); //http 클라이언트 생성
