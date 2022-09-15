@@ -10,23 +10,23 @@ import lombok.Getter;
 @AllArgsConstructor
 @Getter
 public class FCMMessage {
-    private boolean validate_Only;
+    private boolean validate_Only; 
     private Message message;
 
     @Builder
     @AllArgsConstructor
     @Getter
     public static class Message {
-        private Notification notification;
-        private String token;
+        private Notification notification; // 노티 내부 정보
+        private String token; // FCM으로 부터 발급 받은 토큰
     }
 
     @Builder
     @AllArgsConstructor
     @Getter
     public static class Notification {
-        private String title;
-        private String body;
-        private String image;
+        private String title; // 푸쉬 메시지 이름
+        private String body; // 푸쉬 메시지 내용
+        private String image; // 푸쉬 메시지 이미지
     }
 }

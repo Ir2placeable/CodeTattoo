@@ -11,6 +11,7 @@ import java.time.LocalDateTime;
 @RestController
 public class NotiServerController {
 
+    // 서버 상태 정보 확인
     @GetMapping("/ping")
     public APIInfo ping() {
         APIInfo info = APIInfo.builder().app("CodeTattoo-NotiServer").ver("1.0").timestamp(LocalDateTime.now()).build();

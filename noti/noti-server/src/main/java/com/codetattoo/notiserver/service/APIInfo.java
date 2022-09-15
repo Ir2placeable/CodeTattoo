@@ -7,6 +7,7 @@ import lombok.Setter;
 
 import java.time.LocalDateTime;
 
+// 서버 상태 정보 확인 클래스
 @Getter
 @Setter
 @Builder

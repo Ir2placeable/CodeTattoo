@@ -27,6 +27,9 @@ public class FCMService {
     @Autowired
     FCMinitializer fcMinitializer;
 
+    // 푸쉬 메시지 전송
+    // FCM을 향해 POST 요청을 해야한다.
+    // OkHttpClient를 이용하여 요청 생성
     public void sendMessageTo(String targetToken, String title, String body) throws IOException {
         String message = makeMessage(targetToken, title, body);
         OkHttpClient client = new OkHttpClient();
@@ -46,6 +49,7 @@ public class FCMService {
         }
     }
 
+    // DownStream Message 생성
     private String makeMessage(String targetToken, String title, String body) throws JsonProcessingException, JsonProcessingException {
         FCMMessage fcmMessage = FCMMessage.builder()
                 .message(FCMMessage.Message.builder()

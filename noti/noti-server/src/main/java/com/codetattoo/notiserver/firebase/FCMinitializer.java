@@ -18,7 +18,9 @@ import java.util.List;
 @Service
 public class FCMinitializer {
     private static final Logger logger = LoggerFactory.getLogger(FCMinitializer.class);
-    private static final String FIREBASE_CONFIG_PATH = "codetattoo-39f94-firebase-adminsdk-skxnn-a2c8946497.json";
+    private static final String FIREBASE_CONFIG_PATH = "codetattoo-39f94-firebase-adminsdk-skxnn-a2c8946497.json"; // FCM Access Key
+
+    // FCM Access
     @PostConstruct
     public void initialize() {
         try {
@@ -33,6 +35,7 @@ public class FCMinitializer {
         }
     }
 
+    // FCM으로 부터 계정에 push를 줄 수 있도록 해주는 토큰을 발급
     public String getAccessToken() throws IOException {
         GoogleCredentials googleCredentials = GoogleCredentials.fromStream(new ClassPathResource(FIREBASE_CONFIG_PATH).getInputStream())
                 .createScoped(List.of("https://www.googleapis.com/auth/cloud-platform"));
