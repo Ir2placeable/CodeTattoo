@@ -51,9 +51,13 @@ const Chatting = () => {
     setData(item);
   };
 
-  const onClick = ({ item }) => {
+  const onClick = ({ item, flag, path }) => {
     dataSetting(item).then(() => {
-      navigate(`${item.reservation_id}`);
+      if(flag){
+        navigate(`${path}`)
+      } else {
+        navigate(`${item.reservation_id}/room`);
+      }
     });
   };
 

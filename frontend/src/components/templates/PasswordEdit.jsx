@@ -30,7 +30,7 @@ const PasswordEdit = () => {
   const { email, currentPwd, newPwd1, newPwd2 } = info;
 
   const [eyeClick, setEyeClick] = useState(false);
-  // 비동기 로딩
+  // 로딩 여부
   const [loading, setLoading] = useState(false);
 
   // 비밀번호 8자 미만일 시 true -> 비밀번호 재입력칸 비활성화

@@ -3,7 +3,7 @@ import ArtworkSwiper from "./ArtworkSwiper";
 
 /**
  * 상위 컴포넌트 === ShowArtworkDetail.jsx
- * 작업물 State
+ * 작업물 상세 페이지/ 작업물 State
  * @param {Array} tattoo 작업물 State
  * @param {String} image  작업물 대표 이미지
  */

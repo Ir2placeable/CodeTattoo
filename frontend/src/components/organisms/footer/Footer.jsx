@@ -1,6 +1,7 @@
 import React from 'react';
 import { FooterDiv, FooterTitle, FooterDesc } from '../../../styledComponents';
 
+/** 푸터 */
 const Footer = () => {
   return (
     <>

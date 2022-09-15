@@ -3,11 +3,8 @@ import {
   MyPageProfileBox,
   ProfileImg,
   ProfileImgBox,
-  ProfileImgEdit,
   MyPageProfileInfoBox,
   MyPageProfileNickname,
-  MyPageProfileInfoList,
-  MyPageProfileInfo,
   MyPageProfileDescription,
   ProfileEdit,
   ProfileImgIcon,
@@ -21,10 +18,12 @@ import { getCookie } from "../../../config/cookie";
 import { useNavigate } from "react-router-dom";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
 
-/**
- * 상위 컴포넌트 : ShowMyPage.jsx / 
+/** 상위 컴포넌트 === ShowMyPage.jsx 
+ * 유저 마이페이지, 타투이스트 상세 페이지 / 프로필
+ * @param {Object} profile 프로필 데이터
  */
 const MyPageProfile = ({ profile }) => {
+  // 편집 가능 여부
   const [edit, setEdit] = useState(false);
 
   useEffect(() => {
@@ -44,6 +43,7 @@ const MyPageProfile = ({ profile }) => {
   }, [profile]);
 
   const navigate = useNavigate();
+  // 편집 페이지 이동
   const goEdit = () => {
     navigate("/edit/image");
   };
@@ -94,7 +94,7 @@ const MyPageProfile = ({ profile }) => {
             </MyPageProfileDescription>
           ) : null}
         </MyPageProfileInfoBox>
-
+        {/* 프로필 편집 버튼 */}
         {edit ? (
           <ProfileEdit onClick={goEdit}>
             <FontAwesomeIcon icon={faPenToSquare} size="2x" />

@@ -11,6 +11,10 @@ import { useParams } from "react-router-dom";
 import { useEffect } from "react";
 import AvailableTime from "../organisms/reservation/AvailableTime";
 
+/** 상위 컴포넌트 === ShowTattooistDetail.jsx
+ * 타투이스트 예약 템플릿
+ */
+
 const TattooistDetailReservation = () => {
   const param = useParams();
   const [value, onChange] = useState(new Date());

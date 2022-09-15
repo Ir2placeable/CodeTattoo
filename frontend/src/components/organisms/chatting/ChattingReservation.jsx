@@ -12,7 +12,8 @@ import {
   ProcedureText,
   ProcedureLabel,
   ProcedureData,
-  ProcedureWrap
+  ProcedureWrap,
+  ChattingRoomDiv
 } from "../../../styledComponents";
 
 import { faMinus } from '@fortawesome/free-solid-svg-icons';
@@ -24,8 +25,19 @@ import useConfirmReservation from '../../../hooks/useConfirmReservation';
 import EditProcedureImg from '../reservation/EditProcedureImg';
 import EditProcedureInfo from '../reservation/EditProcedureInfo';
 import Popup from '../draft/Popup';
+import { useNavigate, useOutletContext, useParams } from 'react-router-dom';
 
-const ChattingReservation = ({ user_id, onPlusClick }) => {
+/**
+ * 상위 컴포넌트 === ChattingRecord.jsx
+ * 채팅 페이지/ 채팅 예약 화면
+ * @param {String} user_id 유저 아이디
+ * @param {Function} onPlusClick 토글 함수
+ */
+
+
+//  { user_id, onPlusClick }
+const ChattingReservation = () => {
+  const { data } = useOutletContext();
   const [reservation, ] = useReservationDetail();
   const [showBtns, setShowBtns] = useState(true)
   const [imgEdit, setImgEdit] = useState(false)
@@ -43,12 +55,12 @@ const ChattingReservation = ({ user_id, onPlusClick }) => {
   const { date, time_slot, cost, body_part } = inputs
 
   // Popup
-  const [data, setData] = useState({})
+  const [item, setItem] = useState({})
   const [isOpen, setIsOpen] = useState(false)
 
   
   const [confirmReservation, rejectReservation] = useConfirmReservation({
-    user_id: user_id,
+    user_id: data.opponet_id,
     tattooist_id: getCookie('tattooist_id')
   })
 
@@ -97,7 +109,7 @@ const ChattingReservation = ({ user_id, onPlusClick }) => {
       return;
     } else {
       setIsOpen(true)
-      setData({
+      setItem({
         text: '정말로 이 예약을 확정하시겠습니까?',
         onRequest: function(){
           confirmReservation()
@@ -110,7 +122,7 @@ const ChattingReservation = ({ user_id, onPlusClick }) => {
   }
   const onReject = () => {
     setIsOpen(true)
-    setData({
+    setItem({
       text: '정말로 이 예약을 거절하시겠습니까?',
       onRequest: function(){
         rejectReservation()
@@ -119,6 +131,12 @@ const ChattingReservation = ({ user_id, onPlusClick }) => {
         })
       }
     })
+  }
+
+  const navigate = useNavigate();
+  const params = useParams();
+  const goRoom = () => {
+    navigate(`/chat/${params.id}/${params.reservation_id}/room`)
   }
 
   return (
@@ -137,6 +155,8 @@ const ChattingReservation = ({ user_id, onPlusClick }) => {
       onChange={onChange}
       />
     )}
+
+    <ChattingRoomDiv>
       <ChatReservationBox>
         <ChatDraftBox>
           {reservation.image ? (
@@ -193,14 +213,16 @@ const ChattingReservation = ({ user_id, onPlusClick }) => {
 
 
       <ChatInputDiv type="back">
-        <ChatBtn type="image" onClick={onPlusClick}>
+      {/* onClick={onPlusClick} */}
+        <ChatBtn type="image" onClick={goRoom} >
           <FontAwesomeIcon icon={faMinus} />
         </ChatBtn>
       </ChatInputDiv>
 
       {isOpen && (
-        <Popup data={data} setIsOpen={setIsOpen} />
+        <Popup data={item} setIsOpen={setIsOpen} />
       )}
+    </ChattingRoomDiv>
     </>
   );
 };

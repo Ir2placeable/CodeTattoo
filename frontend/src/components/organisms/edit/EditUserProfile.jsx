@@ -9,7 +9,12 @@ import {
 } from "../../../styledComponents";
 import ProfileUploadBtn from "../../atomic/edit/ProfileUploadBtn";
 
+/** 상위 컴포넌트 === ProfileEdit.jsx
+ * 프로필 편집 페이지 / 타투이스트 프로필 편집
+ */
+
 const EditUserProfile = () => {
+  // 프로필 데이터
   const [info, setInfo] = useState({
     nickname: getCookie("nickname"),
     location: getCookie("location"),
@@ -27,6 +32,7 @@ const EditUserProfile = () => {
     });
   };
 
+  // 유저 프로필 편집 요청 API
   const sendRequest = async () => {
     const res = await axios.patch(
       `${APIURL}/user/my-page/${getCookie("user_id")}`,
@@ -66,6 +72,7 @@ const EditUserProfile = () => {
   };
   return (
     <>
+      {/* 유저 프로필 정보 입력란 */}
       <ProfileInfoInputBox>
         <ProfileInfoInputLabel htmlFor="input-nickname">
           Nickname
@@ -93,7 +100,7 @@ const EditUserProfile = () => {
           ref={locationInput}
         />
       </ProfileInfoInputBox>
-
+      {/* 등록 버튼 */}
       <ProfileUploadBtn onSubmit={onSubmit} type="profile" text="등록" />
     </>
   );

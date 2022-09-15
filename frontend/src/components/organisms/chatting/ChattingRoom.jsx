@@ -10,7 +10,8 @@ import {
   ExitChattingRoom,
   ChatChoosedImgDiv,
   ChatChoosedImg,
-  ChatDeleteImgIcon
+  ChatDeleteImgIcon,
+  ChattingRoomDiv
 } from "../../../styledComponents";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faImage, faPlus, faUser, faXmark } from "@fortawesome/free-solid-svg-icons";
@@ -20,15 +21,25 @@ import { useEffect } from "react";
 import { useState } from "react";
 import { useRef } from "react";
 import useChatRecord from "../../../hooks/useChatRecord";
-import { useParams } from "react-router-dom";
+import { useNavigate, useOutletContext, useParams } from "react-router-dom";
 import ChattingMessage from "../../atomic/chatting/ChattingMessage";
 import ChattingImgChoice from "../../atomic/chatting/ChattingImgChoice";
 import useSendChat from "../../../hooks/useSendChat";
 import { faArrowRightFromBracket } from "@fortawesome/free-solid-svg-icons";
 import { WEBSOCKETURL } from "../../../config/key";
 import moment from "moment";
+import { getCookie } from "../../../config/cookie";
 
-const ChattingRoom = ({ data, onPlusClick }) => {
+/**
+ * 상위 컴포넌트 === ChattingRecord.jsx
+ * 채팅페이지 / 채팅방
+ * @param {Array} data 채팅 기록 데이터
+ * @param {Function} onPlusClick 토글 함수 
+ */
+
+//  { data, onPlusClick }
+const ChattingRoom = () => {
+  const { data } = useOutletContext();
   const ws = useContext(WebSocketContext);
   const [content, setContent] = useState("");
   const [src, setSrc] = useState(null);
@@ -125,22 +136,20 @@ const ChattingRoom = ({ data, onPlusClick }) => {
     };
 
     if(!body.content) {
-      body.content = {
-        image: img.image,
-        mime: img.mime,
-        src: src
-      }
+      body.image = img.image;
+      body.mime = img.mime;
       body.is_image = true
     }
 
-    sendChat(body)
-    ws.current.send(JSON.stringify(body));
-    setContent("");
-    setSrc("");
-    setImg({
-      image: '',
-      mime: ""
-    })
+    const wsBody = {
+      sender: body.sender,
+      receiver: body.receiver,
+      reservation_id: body.reservation_id,
+      content: body.content,
+      created_at: body.created_at,
+      is_image: body.is_image,
+      enter_room: false
+    }
 
     const temp = {
       id: body.created_at,
@@ -151,13 +160,26 @@ const ChattingRoom = ({ data, onPlusClick }) => {
       is_image: body.is_image
     };
 
-    if(body.content.image){
-      temp.content = body.content.src
-    }
+    sendChat(body)
+      .then((res) => {
+        if(body.is_image){
+          wsBody.content = res;
+          wsBody.is_image = false;
+          temp.content = res;
+        }
+        ws.current.send(JSON.stringify(wsBody));
 
-    const prev = messages;
-    prev.push(temp)
-    setMessages([...prev]);
+        setContent("");
+        setSrc("");
+        setImg({
+          image: '',
+          mime: ""
+        })
+    
+        const prev = messages;
+        prev.push(temp)
+        setMessages([...prev]);
+      })
   };
 
   const onKeyUp = (e) => {
@@ -179,6 +201,7 @@ const ChattingRoom = ({ data, onPlusClick }) => {
       });
     }
   };
+
   const onLoad = () => {
     const parsing = src.split(",");
     let _mime = parsing[0].split(";")[0];
@@ -186,7 +209,7 @@ const ChattingRoom = ({ data, onPlusClick }) => {
     let _data = parsing[1];
 
     setImg({
-      data: _data,
+      image: _data,
       mime: _mime,
     });
   }
@@ -195,13 +218,25 @@ const ChattingRoom = ({ data, onPlusClick }) => {
     window.location.replace(`/#/chat/${subject_id}`)
   }
 
+  const goTattooisMyPage = () => {
+    if(getCookie('user_id')){
+      window.location.replace(`/#/tattooist/${data.opponent_id}/draft`)
+    }
+  }
+
+  const navigate = useNavigate();
+  const goReservation = () => {
+    navigate(`/chat/${params.id}/${params.reservation_id}/reservation`)
+  }
+
   return (
     <>
+    <ChattingRoomDiv>
       <ChattingRoomHeader>
         {data.opponent_image !== "undefined" ? (
-          <ChattingImg src={data.opponent_image} />
+          <ChattingImg src={data.opponent_image} onClick={goTattooisMyPage} />
         ) : (
-          <ProfileImgIcon size="chat">
+          <ProfileImgIcon size="chat" onClick={goTattooisMyPage} >
             <FontAwesomeIcon style={{ fontSize: "35px" }} icon={faUser} />
           </ProfileImgIcon>
         )}
@@ -229,7 +264,8 @@ const ChattingRoom = ({ data, onPlusClick }) => {
             </ChatDeleteImgIcon>
           </ChatChoosedImgDiv>
         )}
-        <ChatBtn type="image" onClick={onPlusClick}>
+        {/* onClick={onPlusClick} */}
+        <ChatBtn type="image" onClick={goReservation}>
           <FontAwesomeIcon icon={faPlus} />
         </ChatBtn>
 
@@ -251,6 +287,7 @@ const ChattingRoom = ({ data, onPlusClick }) => {
           전송
         </ChatBtn>
       </ChatInputDiv>
+    </ChattingRoomDiv>
     </>
   );
 };

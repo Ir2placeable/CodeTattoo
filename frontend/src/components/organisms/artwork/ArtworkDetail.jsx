@@ -9,13 +9,12 @@ import {
 
 /**
  * 상위 컴포넌트 === ShowArtworkDetail.jsx
- * 작업물 상세 정보 
+ * 작업물 상세 페이지/ 작업물 상세 
  * @param {Object} artwork 작업물 정보
  * @param {String} image  작업물 이미지
  */
 
-const ArtworkDetail = ({ artwork, image}) => {
-
+const ArtworkDetail = ({ artwork, image }) => {
   return (
     <>
       <ArtworkBox>
@@ -23,9 +22,9 @@ const ArtworkDetail = ({ artwork, image}) => {
         <ArtworkInfoBox>
           <ArtworkInfoBlock>
             <TattooistGenreLabel>소요 시간</TattooistGenreLabel>
-            <ArtworkInfoUnit>30분</ArtworkInfoUnit>
+            <ArtworkInfoUnit>{artwork.taken_time}</ArtworkInfoUnit>
             <TattooistGenreLabel>작업 가격</TattooistGenreLabel>
-            <ArtworkInfoUnit>30000원</ArtworkInfoUnit>
+            <ArtworkInfoUnit>{artwork.cost}</ArtworkInfoUnit>
           </ArtworkInfoBlock>
           <ArtworkInfoBlock>
             <TattooistGenreLabel>작업자</TattooistGenreLabel>
@@ -33,17 +32,16 @@ const ArtworkDetail = ({ artwork, image}) => {
           </ArtworkInfoBlock>
           <ArtworkInfoBlock>
             <TattooistGenreLabel>부위</TattooistGenreLabel>
-            <ArtworkInfoUnit>다리</ArtworkInfoUnit>
+            <ArtworkInfoUnit>{artwork.body_part}</ArtworkInfoUnit>
+            <TattooistGenreLabel>깊이</TattooistGenreLabel>
+            <ArtworkInfoUnit>{artwork.depth}</ArtworkInfoUnit>
           </ArtworkInfoBlock>
           <ArtworkInfoBlock>
-            <TattooistGenreLabel>사용 잉크</TattooistGenreLabel>
-            <ArtworkInfoUnit>사용잉크</ArtworkInfoUnit>
-          </ArtworkInfoBlock>
-          <ArtworkInfoBlock>
+            <TattooistGenreLabel>잉크</TattooistGenreLabel>
+            <ArtworkInfoUnit>{artwork.inks}</ArtworkInfoUnit>
             <TattooistGenreLabel>머신</TattooistGenreLabel>
-            <ArtworkInfoUnit>머신</ArtworkInfoUnit>
+            <ArtworkInfoUnit>{artwork.machine}</ArtworkInfoUnit>
           </ArtworkInfoBlock>
-          
         </ArtworkInfoBox>
       </ArtworkBox>
     </>

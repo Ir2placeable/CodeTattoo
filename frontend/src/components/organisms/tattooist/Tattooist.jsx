@@ -13,13 +13,20 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
 
+/** 상위 컴포넌트 === TattooistList.jsx
+ * 타투이스트 목록 페이지/ 타투이스트
+ * @param {Object} tattooist 타투이스트 데이터 
+ */
+
 const Tattooist = ({ tattooist }) => {
   const tattooist_id = tattooist.tattooist_id;
   const navigate = useNavigate();
+  // 타투이스트 세부 페이지 이동
   const goDetail = useCallback(() => {
     navigate(`/tattooist/${tattooist_id}/draft`);
   }, [tattooist_id]);
 
+  // Hover Style
   const [hover, setHover] = useState(false);
 
   const onMouseEnter = useCallback(() => {
@@ -52,7 +59,6 @@ const Tattooist = ({ tattooist }) => {
       <TattooistInfoBox>
 
         <TattooistInfoUnitBox>
-          {/* <TattooistInfoTitle>닉네임</TattooistInfoTitle> */}
           <TattooistInfoText>{tattooist.nickname}</TattooistInfoText>
         </TattooistInfoUnitBox>
 
@@ -69,16 +75,12 @@ const Tattooist = ({ tattooist }) => {
           <TattooistInfoText type="small">
             {tattooist.specialize}
           </TattooistInfoText>
-          {/* <TattooistInfoTitle>위치</TattooistInfoTitle> */}
-          {/* <TattooistInfoText>{tattooist.location}</TattooistInfoText> */}
         </TattooistInfoUnitBox>
 
         <TattooistInfoUnitBox>
           <TattooistInfoText type="description">
             {tattooist.description}
           </TattooistInfoText>
-          {/* <TattooistInfoTitle>주장르</TattooistInfoTitle> */}
-          {/* <TattooistInfoText>{tattooist.specialize}</TattooistInfoText> */}
         </TattooistInfoUnitBox>
 
       </TattooistInfoBox>

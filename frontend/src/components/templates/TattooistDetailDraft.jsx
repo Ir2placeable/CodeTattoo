@@ -12,7 +12,10 @@ import { getCookie } from "../../config/cookie";
  */
 
 const TattooistDetailDraft = () => {
+  // 도안 데이터
   const items = useOutletContext();
+
+  // 관리자 여부
   const [isAdmin, setIsAdmin] = useState(false);
   const params = useParams();
 

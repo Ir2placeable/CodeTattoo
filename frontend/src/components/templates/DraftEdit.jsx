@@ -18,23 +18,28 @@ import DropTags from '../organisms/upload/DropTags';
 const DraftEdit = () => {
   const { detail } = useOutletContext();
 
+  // 도안 수정, 도안 삭제 요청 API
   const [deleteDraft, editDraft] = useDraftEdit({
     draft_id: detail.draft_id,
     tattooist_id: detail.drawer_id
   })
-
+  // 팝업창 여부
   const [isOpen, setIsOpen] = useState(false);
+  // 팝업창 텍스트
   const [data, setData] = useState({});
 
+  // 도안 정보
   const [title, setTitle] = useState(detail.title);
   const [genre, setGenre] = useState(detail.genre);
   const [keywords, setKewords] = useState(detail.keywords);
   const [cost, setCost] =  useState(detail.cost);
 
+  // 도안 삭제
   const onDelete = () => {
     deleteDraft();
     window.location.replace('/drafts/best')
   }
+  // 도안 수정
   const onEdit = () => {
     const _cost = Number(cost);
 
@@ -48,6 +53,9 @@ const DraftEdit = () => {
     })
     window.location.replace('/drafts/best')
   }
+
+
+  // 팝업창 
   const onClick = (e) => {
     const text = e.target.innerText;
 

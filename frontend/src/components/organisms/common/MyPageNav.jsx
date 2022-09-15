@@ -6,8 +6,10 @@ import {
 } from "../../../styledComponents";
 import MyPageNavBtn from "../../atomic/common/MyPageNavBtn";
 
+/** 타투이스트 상세 페이지/ 네비게이션바 */
 const MyPageNav = () => {
   const navigate = useNavigate();
+  // URL 이동
   const onClick = useCallback((e) => {
     const path = e.target.id;
     navigate(`${path}`)

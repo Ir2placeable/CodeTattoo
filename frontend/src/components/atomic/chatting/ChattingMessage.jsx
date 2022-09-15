@@ -1,6 +1,11 @@
 import React from "react";
 import { ChatDiv, ChatContents, ChatDate, ChatImg } from "../../../styledComponents";
 
+/** 상위 컴포넌트 === ChattingRoom.jsx
+ * 채팅 페이지 / 채팅 메세지
+ * @param {Object} item 채팅 메세지 데이터 
+ */
+
 const ChattingMessage = ({ item }) => {
   return (
     <>

@@ -11,7 +11,7 @@ import { useNavigate } from 'react-router-dom';
 /**
  * 상위 컴포넌트 === Register.jsx
  * 회원가입 입력 감지 컴포넌트 / 회원가입 API
- * @param {boolean} isTattooist
+ * @param {boolean} isTattooist 유저/ 타투이스트 회원가입 구분 
  */
 const RegisterInput = ({ isTattooist }) => {
   // 이메일 유효성 검사
@@ -123,6 +123,7 @@ const RegisterInput = ({ isTattooist }) => {
   }
 
   const navigate = useNavigate();
+  // 회원가입 요청 API
   const registerRequest = async() => {
     const body = {
       filter: 'user',

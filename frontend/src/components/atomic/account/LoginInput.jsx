@@ -12,9 +12,11 @@ import { setCookie } from '../../../config/cookie';
 /**
  * 상위 컴포넌트 === Login.jsx
  * 로그인 입력 감지 컴포넌트 / 로그인 API
- * @param {boolean} isTattooist
+ * @param {boolean} isTattooist 유저/ 타투이스트 회원가입 구분 
  */
 const LoginInput = ({ isTattooist }) => {
+ 
+  // 로그인 데이터
   const [info, setInfo] = useState({
     email: '',
     pwd: ''
@@ -35,6 +37,7 @@ const LoginInput = ({ isTattooist }) => {
       [name]: value
     })
   }
+
   const onKeyUp = (e) => {
     if(e.key === "Enter"){
       if(e.target.name === 'email'){
@@ -68,6 +71,7 @@ const LoginInput = ({ isTattooist }) => {
     }
   }
 
+  // Login 요청 API
   const loginRequest = async() => {
     let _filter = "user";
 
@@ -97,7 +101,6 @@ const LoginInput = ({ isTattooist }) => {
         .then((ret) => {
           if(ret[0]){
             const id = pushCookie(ret[1])
-            // sendWebSocket(ret[1], id)
 
             setTimeout(() => {
               window.location.replace('/#/drafts/best');

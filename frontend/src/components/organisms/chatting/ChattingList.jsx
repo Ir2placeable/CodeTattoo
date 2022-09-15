@@ -5,12 +5,14 @@ import ChattingItem from "../../atomic/chatting/ChattingItem";
 
 /**
  * 상위 컴포넌트 === Chatting.jsx
- * 채팅 유저 목록
- * @param {Function} onClick 
+ * 채팅 페이지/ 채팅 유저 목록
+ * @param {Function} onClick Chatting Room에 데이터 전달 & Style 적용
  */
 
 const ChattingList = ({ onClick }) => {
   const chatList = useChatUserList();
+
+  console.log('chatlist: ', chatList)
 
   return (
     <>
