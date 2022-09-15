@@ -1,10 +1,8 @@
-MainServer/node_modules/
+main/node_modules/
 
-MainServer/config/
+main/config/
 
-MainServer/blockchainFiles/
-
-MainServer/test.js
+main/test.js
 
 .idea
 
