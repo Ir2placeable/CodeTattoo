@@ -105,15 +105,18 @@ const ChattingRoom = () => {
     ws.current.onmessage = (e) => {
       const data = JSON.parse(e.data);
 
+      console.log(data)
+
       const temp = {
-        id: data.create_at,
+        id: new Date().getTime(),
         content: data.content,
-        time: data.create_at,
+        created_at: data.created_at,
         mine: false,
         receiver: data.sender,
         is_image: data.is_image
       };
 
+      
       const prev = messages;
       prev.push(temp)
       setMessages([...prev]);
@@ -157,10 +160,10 @@ const ChattingRoom = () => {
     }
 
     const temp = {
-      id: body.created_at,
+      id: new Date().getTime(),
       mine: true,
       content: body.content,
-      time: body.created_at,
+      created_at: body.created_at,
       receiver: body.receiver,
       is_image: body.is_image
     };
@@ -169,7 +172,7 @@ const ChattingRoom = () => {
       .then((res) => {
         if(body.is_image){
           wsBody.content = res;
-          wsBody.is_image = false;
+          wsBody.is_image = true;
           temp.content = res;
         }
         ws.current.send(JSON.stringify(wsBody));

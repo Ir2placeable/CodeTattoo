@@ -12,6 +12,7 @@ import ChattingItem from "../../atomic/chatting/ChattingItem";
 const ChattingList = ({ onClick }) => {
   // get chatting list api
   const chatList = useChatUserList();
+  // const chatList = []
 
   return (
     <>

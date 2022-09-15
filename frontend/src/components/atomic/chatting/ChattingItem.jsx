@@ -68,7 +68,7 @@ const ChattingItem = ({ item, onClick }) => {
           </ChattingText>
         </ChattingTextDiv>
 
-        <ChattingReserv state={item.confirmed ? "confirmed" : "pending"} />
+        {/* <ChattingReserv state={item.confirmed ? "confirmed" : "pending"} /> */}
       </ChattingItemBox>
     </>
   );
