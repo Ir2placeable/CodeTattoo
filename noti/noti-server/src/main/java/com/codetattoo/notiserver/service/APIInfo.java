@@ -1,16 +1,17 @@
-package com.example.codetattoochat.service;
-import java.time.LocalDateTime;
+package com.codetattoo.notiserver.service;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
+
+// 서버 상태 정보 확인 클래스
 @Getter
 @Setter
 @Builder
-public class APIInfo { // 현재 API서버가 작동 중인지 확인하기 위한 함수
+public class APIInfo {
     private String app;
     private String ver;
 

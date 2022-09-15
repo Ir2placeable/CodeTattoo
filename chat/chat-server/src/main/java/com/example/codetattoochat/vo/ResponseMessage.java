@@ -9,11 +9,11 @@ import java.time.LocalDateTime;
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class ResponseMessage {
-    private Long id;
-    private String sender;
-    private String receiver;
-    private String content;
-    private LocalDateTime createdAt;
+    private Long id; // 메시지 id
+    private String sender; // 메시지 발송자
+    private String receiver; // 메시지 수신자
+    private String content; // 메시지 내용
+    private LocalDateTime createdAt; // 메시지 일자
 
     @Builder
     public ResponseMessage(

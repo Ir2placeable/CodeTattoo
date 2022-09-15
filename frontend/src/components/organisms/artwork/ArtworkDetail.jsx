@@ -28,7 +28,7 @@ const ArtworkDetail = ({ artwork, image }) => {
           </ArtworkInfoBlock>
           <ArtworkInfoBlock>
             <TattooistGenreLabel>작업자</TattooistGenreLabel>
-            <ArtworkInfoUnit>{artwork.tattooist_nickname}</ArtworkInfoUnit>
+            <ArtworkInfoUnit type="nickname">{artwork.tattooist_nickname}</ArtworkInfoUnit>
           </ArtworkInfoBlock>
           <ArtworkInfoBlock>
             <TattooistGenreLabel>부위</TattooistGenreLabel>

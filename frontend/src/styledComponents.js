@@ -825,6 +825,11 @@ export const ArtworkInfoUnit = styled.div`
   font-size: 24px;
   width: 120px;
   margin-right: 30px;
+  ${(props) =>
+    props.type === "nickname" &&
+    css`
+      width: 500px;
+    `}
 `;
 
 export const ArtworkTattooistNickname = styled.div``;

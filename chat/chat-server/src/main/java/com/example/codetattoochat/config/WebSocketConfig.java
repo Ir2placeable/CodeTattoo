@@ -16,6 +16,7 @@ public class WebSocketConfig implements WebSocketConfigurer{
     @Autowired
     SocketHandler socketHandler;
 
+    // 소켓 핸들러를 configuration하기 위한 클래스
     @Override
     public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
         registry.addHandler(socketHandler, "/chating").setAllowedOrigins("*");
