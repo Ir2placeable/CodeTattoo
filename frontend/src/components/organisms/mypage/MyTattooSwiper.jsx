@@ -92,6 +92,6 @@ export const StateTitle = styled.div`
 export const StateContentBox = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: space-evenly;
+  justify-content: center;
   height: 270px;
 `;
