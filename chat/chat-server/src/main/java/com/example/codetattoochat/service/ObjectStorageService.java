@@ -8,6 +8,7 @@ import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import com.amazonaws.services.s3.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.io.ByteArrayInputStream;
@@ -21,8 +22,13 @@ public class ObjectStorageService {
 
     final String endPoint = "https://kr.object.ncloudstorage.com";
     final String regionName = "kr-standard";
-    final String accessKey = "FDKsmR5tOoKNGPie5IK1";
-    final String secretKey = "rIsdHa0cITlo4QMfJcUP1dLQ7REwFG9u2lN3pzem";
+    @Value("${cloud.objectStorage.credentials.accessKey}")
+    private String accessKey; //Naver Cloud ObjectStorage access Key;
+    @Value("${cloud.objectStorage.credentials.secretKey}")
+    private String secretKey; //Naver Cloud ObjectStorage secret Key;
+
+//    final String accessKey = "FDKsmR5tOoKNGPie5IK1";
+//    final String secretKey = "rIsdHa0cITlo4QMfJcUP1dLQ7REwFG9u2lN3pzem";
 
     // S3 client
     final AmazonS3 s3 = AmazonS3ClientBuilder.standard()
@@ -30,18 +36,13 @@ public class ObjectStorageService {
             .withCredentials(new AWSStaticCredentialsProvider(new BasicAWSCredentials(accessKey, secretKey)))
             .build();
 
-
     String bucketName = "codetattoo";
+
     // create folder
-    String folderName = "chat/";
-
-    String objectName = "sample-object";
-    String filePath = "/tmp/sample.txt";
-
     public void DirUploadS3() {
         System.out.println("Called Dir Upload S3");
         // create folder
-        String folderName = "sample-folder/";
+        String folderName = "chat/";
 
         ObjectMetadata objectMetadata = new ObjectMetadata();
         objectMetadata.setContentLength(0L);

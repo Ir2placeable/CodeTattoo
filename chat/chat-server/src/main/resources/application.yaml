@@ -20,3 +20,9 @@ spring:
     show-sql: true
     hibernate:
       ddl-auto: update
+
+cloud :
+  objectStorage :
+    credentials :
+      accessKey: "FDKsmR5tOoKNGPie5IK1"
+      secretKey: "rIsdHa0cITlo4QMfJcUP1dLQ7REwFG9u2lN3pzem"
