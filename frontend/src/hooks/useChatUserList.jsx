@@ -16,7 +16,6 @@ const useChatUserList = () => {
         } else if (getCookie("tattooist_id")) {
             url = `tattooist/${getCookie("tattooist_id")}`;
         }
-
         const res = await axios.get(`${CHATAPIURL}/chat/list/${url}`);
         
         if(res.data.success){
@@ -24,7 +23,7 @@ const useChatUserList = () => {
         } else {
             console.log('get chatting user list fail')
         }
-    };
+    }
 
     useEffect(() => {
         sendRequest();

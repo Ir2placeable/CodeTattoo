@@ -158,7 +158,6 @@ const LoginInput = ({ isTattooist }) => {
       </AccountBtn>
 
       <AccountOtherDiv>
-        <AccountOtherBtn>비밀번호 찾기</AccountOtherBtn>
         <AccountOtherBtn onClick={goRegister}>회원가입</AccountOtherBtn>
       </AccountOtherDiv>
 

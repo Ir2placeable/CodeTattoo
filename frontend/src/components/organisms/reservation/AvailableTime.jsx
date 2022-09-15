@@ -45,8 +45,6 @@ const AvailableTime = ({ value, isAdmin, id }) => {
     value: value
   })
 
-  console.log('data: ', data)
-
   useEffect(() => {
     const temp = [];
     time.forEach(x => {
@@ -154,7 +152,6 @@ const AvailableTime = ({ value, isAdmin, id }) => {
       alert('상담 문의는 유저 로그인 상태에서 가능합니다.')
       return;
     } else {
-      toast.success("상담 요청이 되었습니다");
       const data = {
         customer_id: user,
         tattooist_id: id,
@@ -166,6 +163,8 @@ const AvailableTime = ({ value, isAdmin, id }) => {
         alert('예약을 원하는 날짜를 선택해주세요.')
         return;
       }
+
+      toast.success("상담 요청이 되었습니다");
       createReservation({ data })
         .then(() => {
           setTimeout(() => {
