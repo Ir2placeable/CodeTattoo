@@ -482,7 +482,7 @@ exports.reservation = async function(query) {
         const reservation = await Reservation.findOne({ _id : reservation_id })
         if (!reservation) { continue }
         const user = await User.findOne({ _id : reservation['customer_id'] })
-        if (!user) { throw 1 }
+        if (!user) { continue }
 
         const item = {
             reservation_id : reservation['_id'],
