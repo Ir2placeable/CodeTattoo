@@ -8,21 +8,28 @@ import {
   DetailDraftImgHover,
 } from "../../../styledComponents";
 
+/** 상위 컴포넌트 === TattooistDetailDraft.jsx 
+ * 타투이스트 상세 페이지 / 도안
+ * @param {Object} draft 도안 데이터
+*/
+
 const DetailDraft = ({ draft }) => {
+  // Hover Style
   const [hover, setHover] = useState(false);
 
   const navigate = useNavigate();
+  // 도안 상세 페이지 이동
   const goDetail = () => {
     navigate(`/draft/${draft.draft_id}/detail`);
   };
 
   const onMouseEnter = useCallback(() => {
     setHover(true);
-  }, []);
+  }, [hover]);
 
   const onMouseLeave = useCallback(() => {
     setHover(false);
-  }, []);
+  }, [hover]);
 
   return (
     <>

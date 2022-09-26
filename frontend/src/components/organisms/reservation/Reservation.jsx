@@ -1,42 +1,82 @@
+import moment from 'moment';
 import React, { memo } from 'react';
+import { useEffect } from 'react';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { getCookie } from '../../../config/cookie';
 import { 
-  ReservDiv, ReservInfoDiv, ReservDraftImg,
-  ReservText, ReservTextDiv, ReservLabel,
-  ReservTextBox, ReservBtnDiv, ReservBtn
+  ReservDiv, ReservBtnDiv, ReservBtn, 
 } from '../../../styledComponents';
+import ReservationInfo from './ReservationInfo';
 
-// 이미지 소스, 고객 닉네임, 예약 일정, 작업 가격
-// data: { reservation_id, image, user_id, user_nickname
-//          date, cost, procedure_status }
+/** 상위 컴포넌트 === ReservationList.jsx
+ * 예약/작업 페이지 / 예약 카드 컴포넌트
+ * @param {Object} 예약 정보 데이터
+ */
 const Reservation = memo(({ data }) => {
+  // 날짜
+  const [date, setDate] = useState('미확정');
+  // 가격
+  const [cost, setCost] = useState('미확정');
+
+  useEffect(() => {
+    if(data.date && data.time_slot){
+      const _date = "20" + String(data.date);
+      let tmp = moment(_date).format('YYYY년 MM월 DD일 ')
+
+      const t = String(data.time_slot).substring(0, 2)
+      const m = String(data.time_slot).substring(2)
+      
+      tmp += t + ':' + m
+
+      setDate(tmp);
+    }
+
+    if(data.cost){
+      const tmp = String(data.cost) + ' won';
+      setCost(tmp)
+    }
+  }, []);
+
+  const navigate = useNavigate();
+
+  const goChatting = () => {
+    navigate(`/chat/${getCookie('tattooist_id')}/${data.reservation_id}/room`)
+  }
+  const onClick = (e) => {
+    navigate(`/reservation/${data.reservation_id}`, {
+      state: data
+    })
+  }
+
   return (
     <>
       <ReservDiv>
 
-        <ReservInfoDiv>
-          <ReservDraftImg src={data.image} />
-          <ReservTextDiv>
-            <ReservText>
-              <ReservLabel>Customer</ReservLabel>
-              <ReservTextBox>{data.user_nickname}</ReservTextBox>
-            </ReservText>
-            <ReservText>
-              <ReservLabel>예약 일정</ReservLabel>
-              <ReservTextBox>{data.date}</ReservTextBox>
-            </ReservText>
-            <ReservText>
-              <ReservLabel>작업 가격</ReservLabel>
-              <ReservTextBox>{data.cost}</ReservTextBox>
-            </ReservText>
-          </ReservTextDiv>
+        <ReservationInfo 
+          image={data.image}
+          nickname={data.customer_nickname}
+          date={date}
+          cost={cost}
+          confirmed={data.confirmed}
+          procedure_status={data.procedure_status}
+        />
 
-          <ReservBtnDiv>
+        <ReservBtnDiv>
 
-            <ReservBtn>채팅 이동</ReservBtn>
-            <ReservBtn>{data.procedure_status}</ReservBtn>
+          <ReservBtn type="small" onClick={goChatting}>
+            채팅 이동
+          </ReservBtn>
 
-          </ReservBtnDiv>
-        </ReservInfoDiv>
+          <ReservBtn type="big" onClick={onClick}>
+            {data.confirmed ? (
+              <>작업 페이지</>
+            ) : (
+              <>예약 세부</>
+            )}
+          </ReservBtn>
+
+        </ReservBtnDiv>
 
       </ReservDiv>
     </>

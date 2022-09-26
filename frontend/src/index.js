@@ -3,18 +3,19 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import { BrowserRouter } from 'react-router-dom';
+import { BrowserRouter, HashRouter } from 'react-router-dom';
 import { CookiesProvider } from 'react-cookie';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <React.StrictMode>
     <CookiesProvider>
-      <BrowserRouter>
+      {/* <BrowserRouter>
         <App />
-      </BrowserRouter>
+      </BrowserRouter> */}
+      <HashRouter>
+        <App />
+      </HashRouter>
     </CookiesProvider>
-  </React.StrictMode>
 );
 
 // If you want to start measuring performance in your app, pass a function

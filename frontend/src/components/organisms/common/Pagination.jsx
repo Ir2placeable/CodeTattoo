@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from 'react';
-
+import React, { useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faArrowLeft,
@@ -11,7 +10,16 @@ import {
 import usePagination from '../../../hooks/usePagination';
 import { useLocation } from 'react-router-dom';
 
-const Pagination = ({ page, setPage, pages, setPages }) => {
+/** 페이지네이션
+ * @param {Number} page 현재 페이지 숫자
+ * @param {State} setPage page 상태 함수
+ * @param {Number} pages 전체 페이지 수 배열
+ * @param {State} setPages pages 상태 함수 
+ * @param {Number} items 페이지 당 보여줄 아이템 개수
+ * @returns 
+ */
+
+const Pagination = ({ page, setPage, pages, setPages, items }) => {
   const location = useLocation();
   
   const count = usePagination({
@@ -19,8 +27,7 @@ const Pagination = ({ page, setPage, pages, setPages }) => {
   });
 
   useEffect(() => {
-    // console.log(location.pathname)
-    const lastPage = Math.ceil(count / 12);
+    const lastPage = Math.ceil(count / items);
     const temp = [];
 
     for(let i = 1; i <= lastPage; i++){
@@ -30,7 +37,6 @@ const Pagination = ({ page, setPage, pages, setPages }) => {
   }, [count]);
 
   useEffect(() => {
-    // console.log('change page: ', page)
     window.scrollTo(0, 0)
   }, [page])
 

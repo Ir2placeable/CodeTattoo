@@ -3,14 +3,14 @@ import {
   EmptyBox,
   MyTattooMainBox,
   MyTattooContainer,
-  HorizontalLine,
 } from "../styledComponents";
 import MyTattoo from "../components/templates/MyTattoo";
-import { useOutletContext } from "react-router-dom";
 
-const ShowMyTattoo = () => {
-  console.log("Show MyTattoo");
-  const { tattoos } = useOutletContext();
+/** 마이 타투 페이지
+ * 상위 컴포넌트 === ShowMyPage.jsx
+ */
+
+const ShowMyTattoo = ({tattoos}) => {
   return (
     <>
       {tattoos.length === 0 ? (
@@ -18,8 +18,8 @@ const ShowMyTattoo = () => {
       ) : (
         <MyTattooMainBox>
           {tattoos &&
-            tattoos.map((tattoo) => (
-              <MyTattooContainer key={tattoo.tattoo_id}>
+            tattoos.map((tattoo, idx) => (
+              <MyTattooContainer key={idx}>
                 <MyTattoo tattoo={tattoo}></MyTattoo>
               </MyTattooContainer>
             ))}

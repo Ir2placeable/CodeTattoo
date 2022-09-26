@@ -2,17 +2,9 @@ import axios from 'axios';
 import React from 'react';
 import { APIURL } from '../config/key';
 
-// ### 작업 요청 (= 예약 생성)
-
-// *유저가 타투이스트에게 작업을 요청함*
-
-// - POST : /create/reservation
-// - Body : { user_id, tattooist_id, image, mime, cost, date, time_slot }
-//     - image, mime, cost → 도안 세부에서 “작업요청”
-//     - date, time_slot → 타투이스트 세부에서 “작업요청”
-//         - date: 220823
-//         - time_slot : 1030 (=10:30)
-// - Return : { success }
+/** 예약 생성 api
+ * @returns 예약 생성하는 api 호출 함수 반환
+ */
 const useCreateReservation = () => {
 
   const sendRequest = async({ data }) => {

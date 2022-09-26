@@ -8,8 +8,11 @@ import GoUploadBtn from '../components/atomic/draft/GoUploadBtn';
 import { getCookie } from '../config/cookie';
 import { useEffect } from 'react';
 
+/* 도안 목록 페이지 */
 const ShowDraftList = () => {
+  // 현재 페이지 상태 
   const [page, setPage] = useState(1);
+  // 전체 페이지 배열 상태
   const [pages, setPages] = useState([]);
 
   const location = useLocation();
@@ -19,7 +22,7 @@ const ShowDraftList = () => {
 
   return (
     <>
-
+    {/* 정렬 네비게이션 */}
     <SmallNav data={[
         {text: 'root', path: '/drafts'},
         {text: 'Best', path: '/drafts/best'},
@@ -27,16 +30,20 @@ const ShowDraftList = () => {
       ]}
         isSearch={true} loc={0} />
 
+    {/* 도안 업로드 버튼 */}
     {getCookie('tattooist_id') && (
       <GoUploadBtn />
     )}
 
+    {/* 도안 목록 */}
     <ContentsDiv>
       <Outlet context={{ page }} />
 
+    {/* 페이지네이션 */}
       <Pagination
         page={page} setPage={setPage}
         pages={pages} setPages={setPages}
+        items={12}
       />
     </ContentsDiv>
     </>

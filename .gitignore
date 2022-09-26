@@ -1,7 +1,10 @@
-backend/node_modules/
+main/node_modules/
 
-backend/config/
+main/config/
 
-backend/blockchainFiles/
+main/test.js
 
-backend/test.js
+.idea
+
+.DS_Store
+

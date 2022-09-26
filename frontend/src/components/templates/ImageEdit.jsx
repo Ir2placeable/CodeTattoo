@@ -1,9 +1,7 @@
 import axios from "axios";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import {
   getCookie,
-  removeCookie,
-  resetCookie,
   setCookie,
 } from "../../config/cookie";
 import { APIURL } from "../../config/key";
@@ -17,16 +15,24 @@ import {
 import ProfileImgChoice from "../atomic/edit/ProfileImgChoice";
 import ProfileUploadBtn from "../atomic/edit/ProfileUploadBtn";
 import Loader from "../atomic/common/Loader";
+import { useNavigate } from "react-router-dom";
 
+/**
+ * 상위 컴포넌트 === ShowProfileEdit.jsx 
+ * 프로필 이미지 편집 템플릿
+ */
 const ImageEdit = () => {
-  const [cookie, setCookie] = useState(getCookie("profile_img_src"));
+  // 로딩 여부
   const [loading, setLoading] = useState(false);
+  
+  // 이미지 (base64 형식)
   const [src, setSrc] = useState(getCookie("profile_img_src"));
   const [image, setImage] = useState({
     data: "",
     mime: "",
   });
 
+  // 이미지 파일 선택
   const onSelectFile = (e) => {
     if (e.target.files && e.target.files.length > 0) {
       const reader = new FileReader();
@@ -38,9 +44,9 @@ const ImageEdit = () => {
         setSrc(reader.result);
       });
     }
-    // console.log(src);
   };
-
+  
+  // 이미지 파싱
   const onLoad = () => {
     const parsing = src.split(",");
     let _mime = parsing[0].split(";")[0];
@@ -54,6 +60,8 @@ const ImageEdit = () => {
     });
   };
 
+  const navigate = useNavigate();
+  // 프로필 이미지 변경 요청 API
   const sendRequest = async () => {
     let url = `${APIURL}`;
     if (getCookie("user_id")) url += `/user/my-page/${getCookie("user_id")}`;
@@ -65,30 +73,28 @@ const ImageEdit = () => {
       mime: image.mime,
     });
 
+    
     if (res.data.success) {
-      alert("이미지 등록에 성공했습니다.");
+      setCookie("profile_img_src", res.data.image, { maxAge: 3000, path: "/" });
+
       if(getCookie("user_id")) {
-        window.location.replace(`/my-page/user/${getCookie("user_id")}`)
+        navigate(`/my-page/user/${getCookie("user_id")}`)
       } else {
-        window.location.replace(`/tattooist/${getCookie("tattooist_id")}/draft`)
+        navigate(`/tattooist/${getCookie("tattooist_id")}/draft`)
       }
+      window.location.reload()
+
     } else {
       alert("이미지 등록에 실패했습니다.");
     }
     setLoading(false);
   };
 
-  const pushCookie = (imgSrc) => {
-    setLoading(true);
-    resetCookie("profile_img_src");
-    setCookie("profile_img_src", imgSrc, { maxAge: 3000, path: "/" });
-  };
-
   const onSubmit = () => {
-    pushCookie(image.data);
+    setLoading(true)
     setTimeout(() => {
       sendRequest();
-    }, 3000)
+    }, 1000)
   };
 
   if (loading) {

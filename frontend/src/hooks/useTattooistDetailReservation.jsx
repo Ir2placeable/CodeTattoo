@@ -7,20 +7,10 @@ import { useParams } from 'react-router-dom';
 import { getCookie } from '../config/cookie';
 import { APIURL } from '../config/key';
 
-
-// ### 타투이스트 세부
-
-// - GET : /tattooist/:id/:filter
-//     - filter : draft, artwork, reservation
-//     - id : tattooist_id
-// - Query
-//     - User → **+ { user_id }**
-//     - filter = reservation → **+ { date }**
-// - Return : { success, tattooist, [data] }
-//     - tattooist = { tattooist_id, image, nickname, office, contact, description, specialize, followers, isFollowed }
-//     - filter = draft → data = { draft_id, image, like }
-//     - filter = artwork → data = { artwork_id, image, cost, timestamp }
-//     - filter = reservation → data = **{ time_slot }**
+/** 타투이스트 상세 페이지/ 해당 날짜의 예약 불가능한 시간 get API
+ * @param {Object} value 해당 날짜
+ * @returns 해당 날짜의 예약 불가능한 시간 배열
+ */
 const useTattooistDetailReservation = ({ value }) => {
   const [data, setData] = useState([]);
   const param = useParams();
@@ -34,10 +24,7 @@ const useTattooistDetailReservation = ({ value }) => {
     if(getCookie('user_id')){
       query += `&user_id=${getCookie('user_id')}`
     }
-    console.log('query: ', query);
     url += query;
-
-    console.log(url);
 
     const res = await axios.get(url)
 

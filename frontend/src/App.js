@@ -2,30 +2,25 @@
 import "./App.css";
 import { Reset } from "styled-reset";
 
-import React, { useEffect } from "react";
-import axios from "axios";
+import React from "react";
 import { Routes, Route } from "react-router-dom";
-
-import { APIURL } from "./config/key";
 import { MainPageDiv } from "./styledComponents";
+import 'react-toastify/dist/ReactToastify.css';
 
 // Components
-import Header from "./components/header/Header";
-import Footer from "./components/footer/Footer";
-import Login from "./components/account/Login";
-import Register from "./components/account/Register";
+import Header from "./components/organisms/header/Header";
+import Footer from "./components/organisms/footer/Footer";
+import Login from "./components/templates/Login";
+import Register from "./components/templates/Register";
 import MainPage from "./pages/MainPage";
 import ShowDraftDetail from "./pages/ShowDraftDetail";
-import ShowMyTattoo from "./pages/ShowMyTattoo";
 import ShowTattooistList from "./pages/ShowTattooistList";
 import TattooistList from "./components/templates/TattooistList";
 import ShowMyPage from "./pages/ShowMyPage";
-import Navigation from "./components/organisms/common/Navigation";
 import ShowEntry from "./pages/ShowEntry";
 import ShowDraftList from "./pages/ShowDraftList";
 import DraftList from "./components/templates/DraftList";
 import ShowDraftUpload from "./pages/ShowDraftUpload";
-import DraftUpload from "./components/templates/DraftUpload";
 import ShowScrap from "./pages/ShowScrap";
 import ShowTattooistDetail from "./pages/ShowTattooistDetail";
 import TattooistDetailDraft from "./components/templates/TattooistDetailDraft";
@@ -39,24 +34,17 @@ import TattooistSearch from "./components/templates/TattooistSearch";
 import ImageEdit from "./components/templates/ImageEdit";
 import DraftDetail from "./components/templates/DraftDetail";
 import DraftEdit from "./components/templates/DraftEdit";
-import { getCookie } from "./config/cookie";
 import ReservationList from "./components/templates/ReservationList";
 import Procedure from "./components/organisms/reservation/Procedure";
-import ChattingList from "./components/organisms/chatting/ChattingList";
+import Chatting from "./components/templates/Chatting";
 import PasswordEdit from "./components/templates/PasswordEdit";
 import DeleteAccount from "./components/templates/DeleteAccount";
+import ShowArtworkDetail from "./pages/ShowArtworkDetail";
+import ChattingRoomEntry from "./components/organisms/chatting/ChattingRoomEntry";
+import ChattingRoom from "./components/organisms/chatting/ChattingRoom";
+import ChattingReservation from "./components/organisms/chatting/ChattingReservation";
 
-
-// - GET : /scraps/:filter/:page
-//     - filter : draft, tattooist
-//     - page : integer type
-// - Query : { user_id }
 const App = () => {
-  const sendRequest = async () => {
-    const res = await axios.get(`${APIURL}/scraps/tattooist/1?user_id=${getCookie('user_id')}`, );
-
-    console.log('tattooist scrap: ',res);
-  };
 
   return (
     <div className="font-style">
@@ -64,14 +52,13 @@ const App = () => {
 
       {/* HEADER */}
       <Header />
-      {/* <Navigation /> */}
-      {/* Main Container */}
-      <MainPageDiv id="scroll" >
+      
+      {/* Main Container */}    
+      <MainPageDiv id="scroll">
         <Routes>
-
           {/* Main page */}
           <Route path="/" element={<MainPage />}>
-          
+
             {/* 도안 */}
             <Route path="drafts" element={<ShowDraftList />}>
               <Route path="best" element={<DraftList filter="drafts/best" />} />
@@ -81,9 +68,6 @@ const App = () => {
 
             {/* 도안 등록 - 타투이스트만 해당 */}
             <Route path="upload" element={<ShowDraftUpload />}/>
-
-            {/* 도안 상세 */}
-            {/* <Route path="draft/:draft_id" element={<ShowDraftDetail />} /> */}
 
             {/* 타투이스트 목록 */}
             <Route path="tattooists" element={<ShowTattooistList />}>
@@ -105,12 +89,12 @@ const App = () => {
               <Route path="detail" element={<DraftDetail />} />
               <Route path="edit" element={<DraftEdit />} />
             </Route>
-            {/* <Route path="draft/:draft_id/edit" element={<ShowDraftUpload />} /> */}
+
+            {/* 작업물 상세 */}
+            <Route path="artwork/:tattoo_id/:tattooist_id" element={<ShowArtworkDetail/>} />
 
             {/* 마이 페이지 */}
-            <Route path="my-page" element={<ShowMyPage />}>
-              <Route path="user/:user_id" element={<ShowMyTattoo />} />
-            </Route>
+            <Route path="my-page/user/:user_id" element={<ShowMyPage />}/>
 
             {/* 프로필 편집 */}
             <Route path="edit" element={<ShowProfileEdit/>}>
@@ -122,14 +106,25 @@ const App = () => {
 
             {/* 예약 */}
             <Route path="reservations" element={<ShowReservation />}>
-              <Route path="" element={<ReservationList />} />
-              <Route path=":reservation_id" element={<Procedure />} />
+              <Route path="confirmed" element={<ReservationList />} />
+              <Route path="pending" element={<ReservationList />} />
             </Route>
+
+            {/* 예약/작업 상세 페이지 */}
+            <Route path="reservation/:reservation_id" element={<Procedure />} />
 
             {/* 스크랩 */}
             <Route path="scraps" element={<ShowScrap />} >
               <Route path="draft" element={<DraftList filter="scraps/draft" />} />
               <Route path="tattooist" element={<TattooistList filter="scraps/tattooist"/>}/>
+            </Route>
+
+            {/* 채팅 */}
+            {/* id: user_id || tattooist_id */}
+            <Route path="chat/:id" element={<Chatting />}>
+              <Route path="" element={<ChattingRoomEntry />} />
+              <Route path=":reservation_id/room" element={<ChattingRoom />} />
+              <Route path=":reservation_id/reservation" element={<ChattingReservation />} />
             </Route>
 
           </Route>
@@ -142,8 +137,7 @@ const App = () => {
           {/* 엔트리 페이지 */}
           <Route path="/" element={<ShowEntry />} />
 
-          {/* 채팅 */}
-          <Route path="chat" element={<ChattingList />} />
+    
           
         </Routes>
       </MainPageDiv>

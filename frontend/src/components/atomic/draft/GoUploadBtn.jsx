@@ -3,9 +3,13 @@ import { useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { GoUpload } from '../../../styledComponents';
 
-const GoUploadBtn = memo(() => {
+/** 상위 컴포넌트 === ShowDraftList.jsx
+ * 도안 목록 페이지 / 도안 업로드 버튼
+ */
 
+const GoUploadBtn = memo(() => {
   const navigate = useNavigate();
+  // URL 이동
   const onClick = useCallback(() => {
     navigate('/upload');
   }, []);

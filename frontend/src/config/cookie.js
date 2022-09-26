@@ -1,9 +1,18 @@
+// 웹 쿠키 관리 파일
+
 import { Cookies } from "react-cookie";
 
 const cookies = new Cookies();
+const expires = new Date();
+
+expires.setDate(expires.getDate() + 1);
 
 export const setCookie = (name, value, options) => {
-  return cookies.set(name, value, {...options})
+  // return cookies.set(name, value, {...options})
+  return cookies.set(name, value, {
+    path: '/',
+    expires
+  })
 }
 
 export const getCookie = (name) => {

@@ -8,12 +8,16 @@ import {
 } from "../../styledComponents";
 import ProfileUploadBtn from "../atomic/edit/ProfileUploadBtn";
 import EyeIcon from "../atomic/edit/EyeIcon";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import { getCookie } from "../../config/cookie";
 import axios from "axios";
 import { APIURL } from "../../config/key";
 import Loader from "../atomic/common/Loader";
+
+/**
+ * 상위 컴포넌트 === ShowProfileEdit.jsx
+ * 비밀번호 변경 템플릿
+ */
 
 const PasswordEdit = () => {
   const [info, setInfo] = useState({
@@ -26,7 +30,7 @@ const PasswordEdit = () => {
   const { email, currentPwd, newPwd1, newPwd2 } = info;
 
   const [eyeClick, setEyeClick] = useState(false);
-  // 비동기 로딩
+  // 로딩 여부
   const [loading, setLoading] = useState(false);
 
   // 비밀번호 8자 미만일 시 true -> 비밀번호 재입력칸 비활성화
@@ -69,13 +73,16 @@ const PasswordEdit = () => {
 
   const onChange = (e) => {
     const { value, name } = e.target;
-    console.log(value, name);
     setInfo({
       ...info,
       [name]: value,
     });
   };
-
+  /** 로그인 요청 API 
+   * @param {String} email 이메일
+   * @param {String} pwd 현재 패스워드
+   * @returns 
+   */
   const sendLoginRequest = async (email, pwd) => {
     setLoading(true);
     let type = "";
@@ -98,6 +105,10 @@ const PasswordEdit = () => {
     }
   };
 
+  // 로그인 성공 시, 비밀번호 변경 요청 가능
+  /** 비밀번호 변경 API
+   * @param {String} pwd 변경 패스워드
+   */
   const sendPwdRequest = async (pwd) => {
     let type = "";
     let id = "";
@@ -128,7 +139,6 @@ const PasswordEdit = () => {
 
   const onSubmit = () => {
     const loginSuccess = sendLoginRequest(email, currentPwd);
-    // loading 시간
     setTimeout(() => {
       if (loginSuccess) {
         if (isPwdRight && !isPwdDiff) {

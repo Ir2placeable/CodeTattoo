@@ -6,6 +6,8 @@
 
 This project has been officially submitted in [2022 Open SW Development Contest](https://www.oss.kr/dev_competition).
 
+[🌐 웹사이트/Website](http://www.codetattoo.shop)
+
 <br/>
 
 ## 프로젝트 소개 : Abstract
@@ -35,12 +37,14 @@ Blockchain Data will be able to employ to find out a side effect or do cover-up/
 
 ## 영상자료 : Video Clips
 
+[CodeTattoo 프로토타입 시연영상](https://youtu.be/-PfPyhEekXo)
+
 <br/>
 
 
-## 시스템 구성도 : System structure
+## 전체 시스템 구조도 : System structure
 
-<img width="700" alt="코드타투 시스템 구성도" src="https://user-images.githubusercontent.com/24891555/181719277-65bfb1b5-99a2-4ab7-8439-8b26d5477945.png">
+<img width="700" alt="시스템 구조도 9 14" src="https://user-images.githubusercontent.com/24891555/190077738-7ac337ff-301e-44c2-b1db-8091a45da9c7.png">
 
 <br/>
 

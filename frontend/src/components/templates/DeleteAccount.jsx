@@ -1,4 +1,3 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import React, { useState, useRef } from "react";
 import {
@@ -14,6 +13,11 @@ import EyeIcon from "../atomic/edit/EyeIcon";
 import axios from "axios";
 import { APIURL } from "../../config/key";
 import Loader from "../atomic/common/Loader";
+
+/** 
+ * 상위 컴포넌트 === ShowProfileEdit.jsx
+ * 회원 탈퇴 템플릿 
+ */
 
 const DeleteAccount = () => {
   const [loading, setLoading] = useState(false);
@@ -36,6 +40,10 @@ const DeleteAccount = () => {
     });
   };
 
+  /** 회원 탈퇴 요청 API
+   * @param {String} email 
+   * @param {String} pwd 
+   */
   const sendDeleteRequest = async (email, pwd) => {
     setLoading(true);
     let type = "";
@@ -77,6 +85,7 @@ const DeleteAccount = () => {
     }, 2000);
   };
 
+  // 패스워드 가리기/보기
   const onEyeClick = () => {
     setEyeClick(eyeClick ? false : true);
   };

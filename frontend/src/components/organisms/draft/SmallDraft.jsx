@@ -1,28 +1,31 @@
 import React from "react";
 import { useEffect, useState } from "react";
-
 import {
   DraftHeartBox,
   SmallDraftImg,
   SmallDraftInfoBox,
   SmallDraftTitle,
 } from "../../../styledComponents";
-
 import HeartIcon from "../../atomic/draft/HeartIcon";
 
+/** 상위 컴포넌트 === DraftDetail.jsx 
+ * 도안 상세 페이지/ 도안
+ * @param {Object} draft 도안 데이터 
+ */
+
 const SmallDraft = ({ draft }) => {
+  // 로딩 여부
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     if (draft) {
-      // console.log("Small Draft", draft);
-      // console.log('draft.isScraped: ',draft.isScraped)
       setLoading(false);
     }
   }, [draft]);
 
   return (
     <>
+      {/* 도안 세부 정보  */}
       {loading ? (
         <div>loading...</div>
       ) : (

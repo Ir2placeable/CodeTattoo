@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import useDraftUpload from "../../hooks/useDraftUpload";
 import {
   ImgInfoDiv,
   LoadedImgDescDiv,
@@ -8,7 +7,6 @@ import {
 import ImgChoice from "../atomic/draft_upload/ImgChoice";
 import ImgLoaded from "../atomic/draft_upload/ImgLoaded";
 import ImgUploadBtn from "../atomic/draft_upload/ImgUploadBtn";
-import UploadDesc from "../organisms/upload/UploadDesc";
 import DropDown from "../organisms/upload/DropDown";
 import ImgText from "../atomic/draft_upload/ImgText";
 import DropTags from "../organisms/upload/DropTags";
@@ -16,30 +14,32 @@ import axios from "axios";
 import { APIURL } from "../../config/key";
 import { getCookie } from "../../config/cookie";
 
+
+/**
+ * 상위 컴포넌트 === ShowDraftUpload.jsx
+ * 도안 업로드 템플릿 
+ */
+
 const DraftUpload = () => {
-  //const sendRequest = useDraftUpload();
+  // 이미지 (base64 형식)
   const [src, setSrc] = useState(null);
-  // const [info, setInfo] = useState({
-  //   title: '',
-  //   description: ''
-  // })
-  //const [title, setTitle] = useState("");
+  // 도안 정보
   const [info, setInfo] = useState({
     title: "",
     cost: ""
   })
   const [image, setImage] = useState({
-    //width: 300,
-    //height: 300,
     data: "",
     mime: "",
   });
+  // 장르 데이터
   const [genre, setGenre] = useState("");
+  // 키워드 데이터
   const [keywords, setKewords] = useState([]);
   const { title, cost } = info;
 
-  //const {title, description} = info;
 
+  // 이미지 파일 선택
   const onSelectFile = (e) => {
     if (e.target.files && e.target.files.length > 0) {
       const reader = new FileReader();
@@ -48,12 +48,12 @@ const DraftUpload = () => {
       reader.readAsDataURL(e.target.files[0]);
 
       reader.addEventListener("load", () => {
-        //console.log('reader: ', reader);
         setSrc(reader.result);
       });
     }
   };
 
+  // 이미지 파싱
   const onLoad = () => {
     const parsing = src.split(",");
     let _mime = parsing[0].split(";")[0];
@@ -67,9 +67,9 @@ const DraftUpload = () => {
     });
   };
 
+  // 도안 등록 요청 API
   const sendRequest = async () => {
     const _cost = Number(cost);
-    console.log(_cost, typeof _cost)
     
     if(!_cost){
       alert('가격 정보는 숫자만 입력해주세요!')
@@ -89,8 +89,7 @@ const DraftUpload = () => {
     );
 
     if (res.data.success) {
-      console.log("도안 등록 성공");
-      window.location.replace("/drafts/best");
+      window.location.replace("/#/drafts/best");
     } else {
       console.log("도안 등록 실패");
     }
@@ -110,7 +109,6 @@ const DraftUpload = () => {
       ...info,
       [name]: value
     })
-    //setTitle(e.target.value);
   };
 
   return (
@@ -120,15 +118,13 @@ const DraftUpload = () => {
       <ImgInfoDiv>
         <ImgLoaded src={src} onLoad={onLoad} />
 
-        {/* <UploadDesc title={title} description={description}
-          onChange={onChange} /> */}
-
         <LoadedImgDescDiv>
           <ImgText text="도안 이름" />
           <LoadedImgTitle
             type="text"
-            placeholder="title"
+            placeholder="title (12자 이내)"
             name="title"
+            maxLength={"12"}
             value={title}
             onChange={onChange}
           />

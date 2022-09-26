@@ -1,59 +1,31 @@
-import React from "react";
-import { Outlet } from "react-router-dom";
+import React, { useState, useEffect } from "react";
 import MyPageProfile from "../components/organisms/mypage/MyPageProfile";
-import { getCookie } from "../config/cookie";
-import {
-  ContentsDiv,
-  HorizontalLine,
-  ListDiv,
-  MyPageDiv,
-} from "../styledComponents";
+import { HorizontalLine, ListDiv, MyPageDiv } from "../styledComponents";
 import useUserMyPage from "../hooks/useUserMyPage";
+import ShowMyTattoo from "./ShowMyTattoo";
 
+/* 유저 마이 페이지 */
 const ShowMyPage = () => {
-  /* User My Page Data */
-  const [data, profile] = useUserMyPage();
-  console.log(data);
-  const tattoos = [
-    {
-      tattoo_id: 1,
-      state: [
-        { id: 1, title: "STATE1", content: "Recover" },
-        { id: 2, title: "STATE2", content: "Retouch" },
-        { id: 3, title: "STATE3", content: "Tattoo" },
-        { id: 4, title: "STATE4", content: "Final" },
-      ],
-      tattooist_id: 101,
-    },
-    {
-      tattoo_id: 2,
-      state: [
-        { id: 1, title: "STATE1", content: "Recover" },
-        { id: 2, title: "STATE2", content: "Retouch" },
-        { id: 3, title: "STATE3", content: "Tattoo" },
-        { id: 4, title: "STATE4", content: "Final" },
-      ],
-      tattooist_id: 102,
-    },
-    {
-      tattoo_id: 3,
-      state: [
-        { id: 1, title: "STATE1", content: "Recover" },
-        { id: 2, title: "STATE2", content: "Retouch" },
-        { id: 3, title: "STATE3", content: "Tattoo" },
-        { id: 4, title: "STATE4", content: "Final" },
-      ],
-      tattooist_id: 103,
-    },
-  ];
+  const sendRequest = useUserMyPage();
+  const [profile, setProfile] = useState({});
+  const [tattoos, setTattoos] = useState([]);
+  
+  useEffect(() => {
+    sendRequest().then((ret) => {
+      setProfile(ret[0]);
+      setTattoos(ret[1]);
+    });
+  }, []);
 
   return (
     <>
       <MyPageDiv>
         <ListDiv>
+          {/* 유저 프로필 정보 */}
           <MyPageProfile profile={profile} />
           <HorizontalLine></HorizontalLine>
-          {getCookie("user_id") ? <Outlet context={{ tattoos }} /> : <Outlet />}
+          {/* 유저 마이 타투  */}
+          <ShowMyTattoo tattoos={tattoos} />
         </ListDiv>
       </MyPageDiv>
     </>

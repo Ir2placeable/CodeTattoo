@@ -1,16 +1,16 @@
 import React from "react";
 import { MyTattooImg, MyTattooStateBox } from "../../styledComponents";
-import MyTattooSwiper from "../organisms/MyTattooSwiper";
+import MyTattooSwiper from "../organisms/mypage/MyTattooSwiper";
 
+/**
+ * 상위 컴포넌트 === ShowMyTattoo.jsx
+ * 마이 타투 템플릿
+ */
 const MyTattoo = ({ tattoo }) => {
-  console.log("MyTattoo");
+
   return (
     <>
-      {tattoo.image ? (
-        <MyTattooImg src={tattoo.image} alt={tattoo.tattoo_id} />
-      ) : (
-        <MyTattooImg />
-      )}
+      {tattoo.image ? <MyTattooImg src={tattoo.image} /> : <MyTattooImg />}
       <MyTattooStateBox>
         <MyTattooSwiper states={tattoo.state} />
       </MyTattooStateBox>

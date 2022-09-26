@@ -4,7 +4,6 @@ import { faHeart } from '@fortawesome/free-solid-svg-icons';
 import { faHeart as heartReqular } from '@fortawesome/free-regular-svg-icons';
 import useHeartClick from '../../../hooks/useHeartClick';
 import { getCookie } from '../../../config/cookie';
-import { useCallback } from 'react';
 
 const heartIconStyle = {
   fontSize: `35px`,
@@ -12,12 +11,19 @@ const heartIconStyle = {
   color: 'red'
 }
 
+/** 상위 컴포넌트 === Draft.jsx && SmallDraft.jsx
+ * 도안 목록 페이지, 도안 상세 페이지 / 스크랩 버튼
+ * @param {Boolean} isScraped 스크랩 여부
+ * @param {String} draft_id 도안 아이디 
+ */
+
 const HeartIcon = ({ isScraped, draft_id }) => {
+  // Heart 클릭 여부
   const [heartClick, setHeartClick] = useState(false);
+  // 스크랩 요청, 스크랩 취소 요청 API
   const [scrap, unscrap] = useHeartClick({ draft_id });
 
   useEffect(() => {
-    // console.log('hearticon isScraped: ', isScraped)
     if(isScraped){
       setHeartClick(true);
     }

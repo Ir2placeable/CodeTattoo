@@ -1,26 +1,25 @@
-import React, { useState, useCallback } from "react";
+import React, { useCallback } from "react";
 import {
   MainNavigation,
   MainNavigationInner,
-  MainNavigationBtnStyle,
 } from "../../../styledComponents";
 import NavigationBtn from "../../atomic/common/NavigationBtn";
 import { getCookie } from "../../../config/cookie";
-import { useNavigate, useLocation } from "react-router-dom";
-import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+
+/** 메인 페이지 / 네비게이션바 */
 
 const Navigation = () => {
   const navigate = useNavigate();
+  // URL 이동
   const onClick = useCallback((e) => {
     const path = e.target.id;
-
-
     if(path === 'drafts' || path === 'tattooists'){
       navigate(`/${path}/best`);
     } else if(path === 'scraps'){
       navigate(`/${path}/draft`);
-    } else {
-      navigate(`/${path}`);
+    } else if(path === 'reservations') {
+      navigate(`/${path}/pending`);
     }
   }, []);
 
@@ -34,7 +33,7 @@ const Navigation = () => {
         { getCookie('user_id') ? (
           <NavigationBtn onClick={onClick} text="스크랩" path="scraps" />
         ) : getCookie('tattooist_id') ? (
-          <NavigationBtn onClick={onClick} text="예약" path="reservations" />
+          <NavigationBtn onClick={onClick} text="예약 / 작업" path="reservations" />
         ) : (
           <></>
         )}

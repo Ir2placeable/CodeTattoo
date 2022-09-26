@@ -5,22 +5,24 @@ import { APIURL } from '../../../config/key';
 import {
   ReservationDiv, DateDiv, TimeDiv,
   TimeText, TimeBox, Time, ReservRequestBtn,
-  TimeActiveBtn, TimeActiveDiv
+  TimeActiveBtn, TimeActiveDiv, ToastAlarmBox,
 } from '../../../styledComponents';
 import { useState } from 'react';
 import moment from 'moment';
 import { useEffect } from 'react';
 import useCreateReservation from '../../../hooks/useCreateReservation';
 import useTattooistDetailReservation from '../../../hooks/useTattooistDetailReservation';
+import { toast, ToastContainer } from "react-toastify";
+import { useNavigate } from 'react-router-dom';
 
+/** 상위 컴포넌트 === TattooistDetailReservation.jsx
+ *  타투이스트 마이 페이지 / 예약 일정 탭 / 예약 가능 시간 컴포넌트
+ * @param {Object} value 달력에서 선택한 날짜
+ * @param {Boolean} isAdmin 현재 로그인한 유저가 해당 타투이스트와 같은지 확인하는 상태값
+ * @param {String} id 현재 로그인한 유저 id
+ */
 const AvailableTime = ({ value, isAdmin, id }) => {
-  const time1 = [
-    "10:00", "10:30", "11:00", "11:30", 
-    "12:00", "12:30", "13:00", "13:30",
-    "14:00", "14:30", "15:00", "15:30", 
-    "16:00", "16:30", "17:00", "17:30",
-    "18:00", "18:30", "19:00", "19:30", 
-  ]
+  // 해당 날짜의 예약 가능 시간을 나타내는 상태
   const [time, setTime] = useState([
     { slot: "1000", flag: false }, { slot: "1030", flag: false },
     { slot: "1100", flag: false }, { slot: "1130", flag: false },
@@ -34,14 +36,16 @@ const AvailableTime = ({ value, isAdmin, id }) => {
     { slot: "1900", flag: false }, { slot: "1930", flag: false },
   ])
 
+  // 선택된 시간
   const [unavailable, setUnavailable] = useState([]);
+  // 이전에 선택된 시간
   const [prev, setPrev] = useState([]);
+  // 해당 날짜의 예약 불가능한 시간 가져오는 api
   const data = useTattooistDetailReservation({
     value: value
   })
 
   useEffect(() => {
-    // console.log(data)
     const temp = [];
     time.forEach(x => {
       const _time = Number(x.slot);
@@ -67,23 +71,26 @@ const AvailableTime = ({ value, isAdmin, id }) => {
 
   }, [value])
 
+  // 시간 선택 함수
   const onClick = (e) => {
     const date = moment(value).format('YYMMDD');
     const [t, m] = e.target.innerText.split(':');
     const time_slot = t + m;
 
     if(isAdmin){
-      const temp = unavailable;
+      let temp = unavailable;
 
       const dup = temp.findIndex( tmp => tmp.time_slot === time_slot)
 
       if(dup !== -1){
-        console.log('중복!')
+        temp = temp.filter(tmp => tmp.time_slot !== time_slot)
+        e.target.style.backgroundColor = '#484848';
+        setUnavailable(temp)
+        return;
       } else {
         temp.push({date, time_slot});
       }
       setUnavailable(temp);
-      console.log(unavailable)
 
       const temp2 = prev;
       temp2.push(e.target);
@@ -91,66 +98,87 @@ const AvailableTime = ({ value, isAdmin, id }) => {
 
       e.target.style.backgroundColor = '#2370DF';
     } else {
-      if(prev[0]){
-        prev[0].style.backgroundColor = '#484848';
-      }
 
-      setPrev([e.target]);
-      setUnavailable({ date, time_slot })
-      e.target.style.backgroundColor = '#2370DF';
+      const found = time.find(x => x.slot == time_slot)
+      if(!found.flag){
+        if(prev[0]){
+          prev[0].style.backgroundColor = '#484848';
+        }
+
+        setPrev([e.target]);
+        setUnavailable({ date, time_slot })
+        e.target.style.backgroundColor = '#2370DF';
+      }
     }
   }
 
+  // 에약 가능 시간 활성화
   const timeActive = async() => {
-    //console.log(unavailable)
     const res = await axios.post(`${APIURL}/remove/unavailable/${id}`, {
       unavailable
     })
 
     if(res.data.success){
       console.log('time active success')
-      window.location.replace('')
+      window.location.reload()
     } else {
       console.log('time active fail')
     }
   }
 
+  // 예약 가능 시간 비활성화
   const timeDeActive = async() => {
-    //console.log(unavailable)
     const res = await axios.post(`${APIURL}/create/unavailable/${id}`, {
       unavailable
     })
 
     if(res.data.success){
       console.log('time deactive success')
-      window.location.replace('')
+      window.location.reload()
     } else {
       console.log('time deactive fail')
     }
   }
 
+  // 예약 생성 api 함수
   const createReservation = useCreateReservation();
+  const navigate = useNavigate();
 
+  // 예약 생성
   const onCreateReservation = () => {
     const user = getCookie('user_id');
 
     if(!user){
-      alert('로그인이 필요합니다!')
+      alert('상담 문의는 유저 로그인 상태에서 가능합니다.')
       return;
     } else {
       const data = {
-        user_id: user,
+        customer_id: user,
         tattooist_id: id,
         date: unavailable.date,
         time_slot: unavailable.time_slot
       }
-      console.log(data)
-      createReservation({ data });
+
+      if(!data.date || !data.time_slot){
+        alert('예약을 원하는 날짜를 선택해주세요.')
+        return;
+      }
+
+      toast.success("상담 요청이 되었습니다");
+      createReservation({ data })
+        .then(() => {
+          setTimeout(() => {
+            navigate(`/chat/${user}`)
+          }, 3000)
+        })
     }
   }
 
   return (
     <>
+      <ToastAlarmBox>
+        <ToastContainer position="top-right" autoClose="1500" closeOnClick />
+      </ToastAlarmBox>
       <ReservationDiv>
 
         <DateDiv>

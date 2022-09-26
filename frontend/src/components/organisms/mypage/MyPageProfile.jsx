@@ -1,17 +1,16 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   MyPageProfileBox,
   ProfileImg,
   ProfileImgBox,
-  ProfileImgEdit,
   MyPageProfileInfoBox,
   MyPageProfileNickname,
-  MyPageProfileInfoList,
-  MyPageProfileInfo,
   MyPageProfileDescription,
   ProfileEdit,
   ProfileImgIcon,
-  TattooistInfoUnitBox, TattooistInfoTitle, TattooistInfoText
+  TattooistInfoUnitBox,
+  TattooistInfoTitle,
+  TattooistInfoText,
 } from "../../../styledComponents";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPenToSquare } from "@fortawesome/free-regular-svg-icons";
@@ -19,19 +18,39 @@ import { getCookie } from "../../../config/cookie";
 import { useNavigate } from "react-router-dom";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
 
+/** 상위 컴포넌트 === ShowMyPage.jsx 
+ * 유저 마이페이지, 타투이스트 상세 페이지 / 프로필
+ * @param {Object} profile 프로필 데이터
+ */
 const MyPageProfile = ({ profile }) => {
-  // ProfileEdit Event 추가
+  // 편집 가능 여부
+  const [edit, setEdit] = useState(false);
+
+  useEffect(() => {
+    const user = getCookie("user_id");
+    const tattooist = getCookie("tattooist_id");
+    if (profile) {
+      if (user) {
+        if (user === profile.user_id) {
+          setEdit(true);
+        }
+      } else if (tattooist) {
+        if (tattooist == profile.tattooist_id) {
+          setEdit(true);
+        }
+      }
+    }
+  }, [profile]);
+
   const navigate = useNavigate();
+  // 편집 페이지 이동
   const goEdit = () => {
     navigate("/edit/image");
   };
 
-  console.log('profile info: ', profile)
-
   return (
     <>
       <MyPageProfileBox>
-
         <ProfileImgBox size="profile">
           {profile.image ? (
             <ProfileImg size="profile" src={profile.image} />
@@ -44,44 +63,30 @@ const MyPageProfile = ({ profile }) => {
 
         <MyPageProfileInfoBox>
           <MyPageProfileNickname>{profile.nickname}</MyPageProfileNickname>
-          {/* <MyPageProfileInfoList>
-            {profile.location ? (
-              <MyPageProfileInfo>
-                Location : {profile.location}
-              </MyPageProfileInfo>
-            ) : null}
-            {profile.specialize ? (
-              <MyPageProfileInfo>
-                Specialize : {profile.specialize}
-              </MyPageProfileInfo>
-            ) : null}
-          </MyPageProfileInfoList> */}
-
-          <TattooistInfoUnitBox style={{
-            padding: '0'
-          }}>
+          <TattooistInfoUnitBox
+            style={{
+              padding: "0",
+            }}
+          >
             {profile.location && (
-            <>
-            <TattooistInfoTitle type="location">
-              위치
-            </TattooistInfoTitle>
-            <TattooistInfoText type="small">
-              {profile.location}
-            </TattooistInfoText>
-            </>
+              <>
+                <TattooistInfoTitle type="location">위치</TattooistInfoTitle>
+                <TattooistInfoText type="small">
+                  {profile.location}
+                </TattooistInfoText>
+              </>
             )}
             {profile.specialize && (
-            <>
-            <TattooistInfoTitle type="specialize">
-              특화분야
-            </TattooistInfoTitle>
-            <TattooistInfoText type="small">
-              {profile.specialize}
-            </TattooistInfoText>
-            </>
+              <>
+                <TattooistInfoTitle type="specialize">
+                  특화분야
+                </TattooistInfoTitle>
+                <TattooistInfoText type="small">
+                  {profile.specialize}
+                </TattooistInfoText>
+              </>
             )}
           </TattooistInfoUnitBox>
-
 
           {profile.description ? (
             <MyPageProfileDescription>
@@ -89,9 +94,8 @@ const MyPageProfile = ({ profile }) => {
             </MyPageProfileDescription>
           ) : null}
         </MyPageProfileInfoBox>
-
-        {getCookie("tattooist_id") === profile.tattooist_id ||
-        getCookie("user_id") === profile.user_id ? (
+        {/* 프로필 편집 버튼 */}
+        {edit ? (
           <ProfileEdit onClick={goEdit}>
             <FontAwesomeIcon icon={faPenToSquare} size="2x" />
           </ProfileEdit>

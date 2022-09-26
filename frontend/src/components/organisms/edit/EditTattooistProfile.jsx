@@ -2,7 +2,6 @@ import axios from "axios";
 import React, { useState, useRef } from "react";
 import { APIURL } from "../../../config/key";
 import {
-  getAllCookie,
   getCookie,
   removeCookie,
   setCookie,
@@ -14,7 +13,13 @@ import {
 } from "../../../styledComponents";
 import ProfileUploadBtn from "../../atomic/edit/ProfileUploadBtn";
 
+/** 상위 컴포넌트 === ProfileEdit.jsx
+ * 프로필 편집 페이지 / 타투이스트 프로필 편집
+ */
+
 const EditTattooistProfile = () => {
+
+  // 프로필 데이터
   const [info, setInfo] = useState({
     nickname: getCookie("nickname"),
     location: getCookie("profile_location"),
@@ -37,6 +42,7 @@ const EditTattooistProfile = () => {
     });
   };
 
+  // 타투이스트 프로필 편집 요청 API
   const sendRequest = async () => {
     const res = await axios.patch(
       `${APIURL}/tattooist/my-page/${getCookie("tattooist_id")}`,
@@ -52,9 +58,9 @@ const EditTattooistProfile = () => {
       console.log("프로필 수정 성공");
       pushCookie();
       if(getCookie("user_id")) {
-        window.location.replace(`/my-page/user/${getCookie("user_id")}`)
+        window.location.replace(`/#/my-page/user/${getCookie("user_id")}`)
       } else {
-        window.location.replace(`/tattooist/${getCookie("tattooist_id")}/draft`)
+        window.location.replace(`/#/tattooist/${getCookie("tattooist_id")}/draft`)
       }
     } else {
       console.log("프로필 수정 실패");
@@ -82,6 +88,7 @@ const EditTattooistProfile = () => {
   };
   return (
     <>
+     {/* 타투이스트 프로필 정보 입력란 */}
       <ProfileInfoInputBox>
         <ProfileInfoInputLabel htmlFor="input-nickname">
           Nickname
@@ -93,6 +100,7 @@ const EditTattooistProfile = () => {
           onChange={onChange}
           value={nickname}
           ref={nicknameInput}
+          maxLength="11"
         />
       </ProfileInfoInputBox>
       <ProfileInfoInputBox>
@@ -136,7 +144,7 @@ const EditTattooistProfile = () => {
           ref={descriptionInput}
         />
       </ProfileInfoInputBox>
-
+      {/* 등록 버튼 */}
       <ProfileUploadBtn onSubmit={onSubmit} type="profile" text="등록" />
     </>
   );
