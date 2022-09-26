@@ -26,7 +26,8 @@ import useConfirmReservation from '../../../hooks/useConfirmReservation';
 import EditProcedureImg from '../reservation/EditProcedureImg';
 import EditProcedureInfo from '../reservation/EditProcedureInfo';
 import Popup from '../draft/Popup';
-import { useNavigate, useOutletContext, useParams } from 'react-router-dom';
+import { useOutletContext, useParams } from 'react-router-dom';
+import { goChattingRoom, goReservConfirm, goReservPending } from '../../../config/navigate';
 
 
 /**
@@ -119,9 +120,9 @@ const ChattingReservation = () => {
         text: '정말로 이 예약을 확정하시겠습니까?',
         onRequest: function(){
           confirmReservation()
-          .then(() => [
-            window.location.replace('/#/reservations/confirmed')
-          ])
+          .then(() => {
+            goReservConfirm();
+          })
         }
       })
     }
@@ -133,16 +134,15 @@ const ChattingReservation = () => {
       onRequest: function(){
         rejectReservation()
         .then(() => {
-          window.location.replace("/#/reservations/pending")
+          goReservPending();
         })
       }
     })
   }
 
-  const navigate = useNavigate();
   const params = useParams();
   const goRoom = () => {
-    navigate(`/chat/${params.id}/${params.reservation_id}/room`)
+    goChattingRoom(params.id, params.reservation_id);
   }
   
   return (

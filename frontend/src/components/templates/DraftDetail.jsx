@@ -10,15 +10,15 @@ import {
 import SmallTattooist from "../organisms/tattooist/SmallTattooist";
 import SmallDraft from "../organisms/draft/SmallDraft";
 import Genre from "../organisms/draft/Genre";
-import { useOutletContext, useNavigate } from "react-router-dom";
+import { useOutletContext } from "react-router-dom";
 import { useState } from "react";
 import { useEffect } from "react";
 import { getCookie } from "../../config/cookie";
-
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGear } from "@fortawesome/free-solid-svg-icons";
 import useCreateReservation from "../../hooks/useCreateReservation";
 import { toast, ToastContainer } from "react-toastify";
+import { goChatting, goDraftEdit } from "../../config/navigate";
 
 /**
  * 상위 컴포넌트 === ShowDraftDetail.jsx
@@ -55,10 +55,9 @@ const DraftDetail = () => {
     }
   }, [detail]);
 
-  const navigate = useNavigate();
   // 도안 수정 페이지 이동
   const goEdit = () => {
-    navigate("../edit");
+    goDraftEdit(draft.draft_id);
   };
 
   const createReservation = useCreateReservation();
@@ -81,7 +80,7 @@ const DraftDetail = () => {
       createReservation({ data })
       .then(() => {
         setTimeout(() => {
-          navigate(`/chat/${user}`)
+          goChatting(user);
         }, 3000)
       })
     }

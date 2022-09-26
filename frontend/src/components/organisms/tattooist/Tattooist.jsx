@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from "react";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 import {
   ProfileImg,
   TattooistInfoBox,
@@ -12,6 +12,7 @@ import {
 } from "../../../styledComponents";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
+import { goTattooistDetail } from "../../../config/navigate";
 
 /** 상위 컴포넌트 === TattooistList.jsx
  * 타투이스트 목록 페이지/ 타투이스트
@@ -20,10 +21,10 @@ import { faUser } from "@fortawesome/free-solid-svg-icons";
 
 const Tattooist = ({ tattooist }) => {
   const tattooist_id = tattooist.tattooist_id;
-  const navigate = useNavigate();
+
   // 타투이스트 세부 페이지 이동
   const goDetail = useCallback(() => {
-    navigate(`/tattooist/${tattooist_id}/draft`);
+    goTattooistDetail(tattooist_id)
   }, [tattooist_id]);
 
   // Hover Style

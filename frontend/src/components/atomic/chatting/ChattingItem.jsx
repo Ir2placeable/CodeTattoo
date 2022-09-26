@@ -25,8 +25,8 @@ const ChattingItem = ({ item, onClick }) => {
   const [style, setStyle] = useState('')
 
   useEffect(() => {
-    const [, , , rid] = location.pathname.split('/')
-    if(rid === item.reservation_id){
+    const [, , , reserv_id] = location.pathname.split('/')
+    if(reserv_id === item.reservation_id){
       setStyle('click')
       onClick({ item, flag: true, path: location.pathname })
     } else {

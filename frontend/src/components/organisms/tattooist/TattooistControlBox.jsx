@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { getCookie } from "../../../config/cookie";
+import { goTattooistReservation } from "../../../config/navigate";
 import useFollowClick from "../../../hooks/useFollowClick";
 import { TattooistControl } from "../../../styledComponents";
 import TattooistBtn from "../../atomic/tattooist/TattooistBtn";
@@ -36,10 +37,9 @@ const TattooistControlBox = ({ tattooist }) => {
     }
   }, [following]);
 
-  const navigate = useNavigate();
   // 타투이스트 세부 예약 페이지 이동
   const goReservation = () => {
-    navigate(`/tattooist/${tattooist_id}/reservation`);
+    goTattooistReservation(tattooist_id);
   };
 
   return (

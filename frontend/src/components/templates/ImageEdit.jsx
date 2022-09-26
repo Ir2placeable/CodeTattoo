@@ -16,6 +16,7 @@ import ProfileImgChoice from "../atomic/edit/ProfileImgChoice";
 import ProfileUploadBtn from "../atomic/edit/ProfileUploadBtn";
 import Loader from "../atomic/common/Loader";
 import { useNavigate } from "react-router-dom";
+import { goMyPage, goTattooistDetail } from "../../config/navigate";
 
 /**
  * 상위 컴포넌트 === ShowProfileEdit.jsx 
@@ -60,7 +61,6 @@ const ImageEdit = () => {
     });
   };
 
-  const navigate = useNavigate();
   // 프로필 이미지 변경 요청 API
   const sendRequest = async () => {
     let url = `${APIURL}`;
@@ -78,9 +78,9 @@ const ImageEdit = () => {
       setCookie("profile_img_src", res.data.image, { maxAge: 3000, path: "/" });
 
       if(getCookie("user_id")) {
-        navigate(`/my-page/user/${getCookie("user_id")}`)
+        goMyPage(getCookie("user_id"));
       } else {
-        navigate(`/tattooist/${getCookie("tattooist_id")}/draft`)
+        goTattooistDetail(getCookie("tattooist_id"));
       }
       window.location.reload()
 

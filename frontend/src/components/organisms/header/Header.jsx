@@ -12,7 +12,8 @@ import HeaderBtnComp from "../../atomic/header/HeaderBtnComp";
 import { getCookie } from "../../../config/cookie";
 import LogoutBtn from "../../atomic/header/LogoutBtn";
 import GoMypage from "../../atomic/header/GoMypage";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
+import { goDraftList, goChatting } from "../../../config/navigate";
 
 /** 헤더 */
 
@@ -31,19 +32,17 @@ const Header = () => {
 
   // 메인 페이지 이동
   const goHome = () => {
-    window.location.replace("/#/drafts/best");
+    goDraftList();
   };
 
-  const navigate = useNavigate();
   // 채팅 페이지 이동
-  const goChatting = () => {
+  const goChattingPage = () => {
     let id = getCookie('user_id');
 
     if(!id){
       id = getCookie('tattooist_id')
     }
-
-    navigate(`/chat/${id}`)
+    goChatting(id);
   }
 
   return (
@@ -58,7 +57,7 @@ const Header = () => {
 
           {isLogin ? (
             <HeaderSubMenu>
-              <HeaderBtn type="chat" onClick={goChatting}>
+              <HeaderBtn type="chat" onClick={goChattingPage}>
                 채팅
               </HeaderBtn>
               <GoMypage />

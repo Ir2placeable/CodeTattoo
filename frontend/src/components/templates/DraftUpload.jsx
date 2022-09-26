@@ -13,6 +13,7 @@ import DropTags from "../organisms/upload/DropTags";
 import axios from "axios";
 import { APIURL } from "../../config/key";
 import { getCookie } from "../../config/cookie";
+import { goDraftList } from "../../config/navigate";
 
 
 /**
@@ -89,7 +90,7 @@ const DraftUpload = () => {
     );
 
     if (res.data.success) {
-      window.location.replace("/#/drafts/best");
+      goDraftList();
     } else {
       console.log("도안 등록 실패");
     }
