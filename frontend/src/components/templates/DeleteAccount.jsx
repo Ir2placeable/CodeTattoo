@@ -13,6 +13,7 @@ import EyeIcon from "../atomic/edit/EyeIcon";
 import axios from "axios";
 import { APIURL } from "../../config/key";
 import Loader from "../atomic/common/Loader";
+import { goEntry } from "../../config/navigate";
 
 /** 
  * 상위 컴포넌트 === ShowProfileEdit.jsx
@@ -76,7 +77,7 @@ const DeleteAccount = () => {
         }
 
         setTimeout(() => {
-          window.location.replace("/");
+          goEntry();
         }, 1000);
       } else {
         alert("회원 탈퇴 실패");

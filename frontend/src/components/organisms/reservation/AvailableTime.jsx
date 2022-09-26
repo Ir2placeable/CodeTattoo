@@ -14,6 +14,7 @@ import useCreateReservation from '../../../hooks/useCreateReservation';
 import useTattooistDetailReservation from '../../../hooks/useTattooistDetailReservation';
 import { toast, ToastContainer } from "react-toastify";
 import { useNavigate } from 'react-router-dom';
+import { goChatting } from '../../../config/navigate';
 
 /** 상위 컴포넌트 === TattooistDetailReservation.jsx
  *  타투이스트 마이 페이지 / 예약 일정 탭 / 예약 가능 시간 컴포넌트
@@ -142,7 +143,6 @@ const AvailableTime = ({ value, isAdmin, id }) => {
 
   // 예약 생성 api 함수
   const createReservation = useCreateReservation();
-  const navigate = useNavigate();
 
   // 예약 생성
   const onCreateReservation = () => {
@@ -168,7 +168,7 @@ const AvailableTime = ({ value, isAdmin, id }) => {
       createReservation({ data })
         .then(() => {
           setTimeout(() => {
-            navigate(`/chat/${user}`)
+            goChatting(user);
           }, 3000)
         })
     }

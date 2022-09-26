@@ -2,6 +2,7 @@ import React from "react";
 import { useCallback } from "react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { goDraftDetail } from "../../../config/navigate";
 import {
   DetailDraftImg,
   DetailDraftImgBox,
@@ -17,10 +18,9 @@ const DetailDraft = ({ draft }) => {
   // Hover Style
   const [hover, setHover] = useState(false);
 
-  const navigate = useNavigate();
   // 도안 상세 페이지 이동
   const goDetail = () => {
-    navigate(`/draft/${draft.draft_id}/detail`);
+    goDraftDetail(draft.draft_id);
   };
 
   const onMouseEnter = useCallback(() => {

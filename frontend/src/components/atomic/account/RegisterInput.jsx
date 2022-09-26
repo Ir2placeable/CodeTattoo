@@ -6,7 +6,7 @@ import {
   AccountInputDiv, AccountInputBox, AccountLabel,
   AccountInput, AccountBtn, InputErrorText
 } from '../../../styledComponents';
-import { useNavigate } from 'react-router-dom';
+import { goLogin } from '../../../config/navigate';
 
 /**
  * 상위 컴포넌트 === Register.jsx
@@ -122,7 +122,6 @@ const RegisterInput = ({ isTattooist }) => {
     }
   }
 
-  const navigate = useNavigate();
   // 회원가입 요청 API
   const registerRequest = async() => {
     const body = {
@@ -143,7 +142,7 @@ const RegisterInput = ({ isTattooist }) => {
 
     if(res.data.success) {
       alert('회원가입 성공! 환영합니다.')
-      navigate('/login');
+      goLogin();
     } else {
       alert('이미 존재하는 이메일입니다.')
     }

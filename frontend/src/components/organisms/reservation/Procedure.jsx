@@ -1,6 +1,6 @@
 import React from 'react';
 import { useState } from 'react';
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 import { getCookie } from '../../../config/cookie';
 import useProcedure from '../../../hooks/useProcedure';
 import { 
@@ -21,6 +21,7 @@ import Popup from '../draft/Popup';
 import ProcedureInputComp from './ProcedureInputComp';
 import TattooistCustomerInfo from './TattooistCustomerInfo';
 import ProcedureReservationInfo from './ProcedureReservationInfo';
+import { goReservConfirm, goReservPending } from '../../../config/navigate';
 
 /** 예약/작업 상세 페이지
  */
@@ -106,7 +107,6 @@ const Procedure = () => {
     setProcedureStatus(reservation.procedure_status)
   }, [reservation])
 
-  const navigate = useNavigate();
   const onChange = (e) => {
     const { name, value } = e.target;
 
@@ -133,9 +133,8 @@ const Procedure = () => {
       inks, niddle, depth, machine
     })
     .then(() => {
-      setProcedureStatus(false)
-
-      window.location.replace('/#/reservations/confirmed')
+      setProcedureStatus(false);
+      goReservConfirm();
     })
   }
 
@@ -174,9 +173,9 @@ const Procedure = () => {
         text: '정말로 이 예약을 확정하시겠습니까?',
         onRequest: function(){
           confirmReservation()
-          .then(() => [
-            window.location.replace('/#/reservations/confirmed')
-          ])
+          .then(() => {
+            goReservConfirm();
+          })
         }
       })
     }
@@ -190,7 +189,7 @@ const Procedure = () => {
       onRequest: function(){
         rejectReservation()
         .then(() => {
-          window.location.replace("/#/reservations/pending")
+          goReservPending();
         })
       }
     })
@@ -198,9 +197,9 @@ const Procedure = () => {
 
   const goList = () => {
     if(reservation.confirmed){
-      navigate('/reservations/confirmed')
+      goReservConfirm();
     } else {
-      navigate('/reservations/pending')
+      goReservPending();
     }
   }
 

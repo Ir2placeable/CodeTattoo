@@ -16,7 +16,7 @@ import DraftImage from "../../atomic/draft/DraftImage";
 import HeartIcon from "../../atomic/draft/HeartIcon";
 import UserIcon from "../../atomic/common/UserIcon";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { goDraftDetail, goTattooistDetail } from "../../../config/navigate";
 
 /** 상위 컴포넌트 === DraftList.jsx
  * 도안 목록 페이지 / 도안
@@ -42,17 +42,16 @@ const Draft = ({
   // Hover Style
   const [hover, setHover] = useState(false);
 
-  const navigate = useNavigate();
   const onHover = (e) => {
     setHover(hover ? false : true);
   };
 
   const goDetail = () => {
-    navigate(`/draft/${draft_id}/detail`);
+    goDraftDetail(draft_id);
   };
 
   const goTattooist = () => {
-    navigate(`/tattooist/${drawer_id}/draft`);
+    goTattooistDetail(drawer_id);
   };
 
   return (

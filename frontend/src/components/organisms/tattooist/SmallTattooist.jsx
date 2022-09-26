@@ -14,7 +14,7 @@ import { getCookie } from "../../../config/cookie";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
 import useFollowClick from "../../../hooks/useFollowClick";
-import { useNavigate } from "react-router-dom";
+import { goTattooistDetail } from "../../../config/navigate";
 
 /** 상위 컴포넌트 === DraftDetail.jsx
  * 도안 상세 페이지 / 타투이스트
@@ -46,10 +46,9 @@ const SmallTattooist = ({ tattooist }) => {
     }
   };
 
-  const navigate = useNavigate();
   // 타투이스트 세부 도안 페이지 이동
   const goTattooist = () => {
-    navigate(`/tattooist/${tattooist.drawer_id}/draft`);
+    goTattooistDetail(tattooist.drawer_id);
   };
 
   return (
