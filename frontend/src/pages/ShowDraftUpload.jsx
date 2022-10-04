@@ -1,5 +1,5 @@
 import React, { memo } from 'react';
-import DraftUpload from '../components/templates/DraftUpload';
+import { Outlet } from 'react-router-dom';
 import { ContentsDiv, UploadDiv } from '../styledComponents';
 
 /* 도안 업로드 페이지 */
@@ -8,8 +8,7 @@ const ShowDraftUpload = memo(() => {
     <>
     <ContentsDiv>
       <UploadDiv>
-        {/* 도안 업로드 */}
-        <DraftUpload />
+        <Outlet/>
       </UploadDiv>
     </ContentsDiv>
     </>
