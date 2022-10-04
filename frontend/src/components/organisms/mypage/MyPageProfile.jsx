@@ -15,8 +15,8 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPenToSquare } from "@fortawesome/free-regular-svg-icons";
 import { getCookie } from "../../../config/cookie";
-import { useNavigate } from "react-router-dom";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
+import { goEdit } from "../../../config/navigate";
 
 /** 상위 컴포넌트 === ShowMyPage.jsx 
  * 유저 마이페이지, 타투이스트 상세 페이지 / 프로필
@@ -42,10 +42,9 @@ const MyPageProfile = ({ profile }) => {
     }
   }, [profile]);
 
-  const navigate = useNavigate();
   // 편집 페이지 이동
-  const goEdit = () => {
-    navigate("/edit/image");
+  const goEditPage = () => {
+    goEdit();
   };
 
   return (
@@ -96,7 +95,7 @@ const MyPageProfile = ({ profile }) => {
         </MyPageProfileInfoBox>
         {/* 프로필 편집 버튼 */}
         {edit ? (
-          <ProfileEdit onClick={goEdit}>
+          <ProfileEdit onClick={goEditPage}>
             <FontAwesomeIcon icon={faPenToSquare} size="2x" />
           </ProfileEdit>
         ) : null}

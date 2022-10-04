@@ -1,6 +1,7 @@
 import React, { useCallback, useState } from 'react';
 import { HeaderBtn, HeaderBtnHover } from '../../../styledComponents';
 import { getAllCookie, resetCookie } from '../../../config/cookie';
+import { goEntry } from '../../../config/navigate';
 
 /** 상위 컴포넌트 === Header.jsx
  * 헤더 / 로그아웃 버튼
@@ -22,7 +23,7 @@ const LogoutBtn = () => {
     }
 
     setTimeout(() => {
-      window.location.replace('/#')
+      goEntry();
     }, 1000);
   }, []);
 

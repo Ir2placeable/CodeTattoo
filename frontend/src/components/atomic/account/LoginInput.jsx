@@ -6,8 +6,8 @@ import {
   AccountInputDiv, AccountInputBox, 
   AccountInput, AccountBtn, AccountOtherDiv, AccountOtherBtn
 } from '../../../styledComponents';
-import { useNavigate } from 'react-router-dom';
 import { setCookie } from '../../../config/cookie';
+import { goDraftList, goRegister } from '../../../config/navigate';
 
 /**
  * 상위 컴포넌트 === Login.jsx
@@ -103,18 +103,13 @@ const LoginInput = ({ isTattooist }) => {
             const id = pushCookie(ret[1])
 
             setTimeout(() => {
-              window.location.replace('/#/drafts/best');
+              goDraftList();
             }, 500)
           } else {
             return;
           }
         })
     }
-  }
-
-  const navigate = useNavigate();
-  const goRegister = () => {
-    navigate('/register')
   }
 
   return (

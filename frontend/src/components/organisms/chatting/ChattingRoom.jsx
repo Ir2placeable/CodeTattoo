@@ -21,7 +21,7 @@ import { useEffect } from "react";
 import { useState } from "react";
 import { useRef } from "react";
 import useChatRecord from "../../../hooks/useChatRecord";
-import { useNavigate, useOutletContext, useParams } from "react-router-dom";
+import { useOutletContext, useParams } from "react-router-dom";
 import ChattingMessage from "../../atomic/chatting/ChattingMessage";
 import ChattingImgChoice from "../../atomic/chatting/ChattingImgChoice";
 import useSendChat from "../../../hooks/useSendChat";
@@ -29,6 +29,7 @@ import { faArrowRightFromBracket } from "@fortawesome/free-solid-svg-icons";
 import { WEBSOCKETURL } from "../../../config/key";
 import moment from "moment";
 import { getCookie } from "../../../config/cookie";
+import { goChatting, goChattingReserv, goTattooistDetail } from "../../../config/navigate";
 
 /**
  * 상위 컴포넌트 === Chatting.jsx
@@ -222,19 +223,18 @@ const ChattingRoom = () => {
     });
   }
   
-  const goExit = (e) => {
-    window.location.replace(`/#/chat/${subject_id}`)
+  const goExit = () => {
+    goChatting(subject_id);
   }
 
   const goTattooisMyPage = () => {
     if(getCookie('user_id')){
-      window.location.replace(`/#/tattooist/${data.opponent_id}/draft`)
+      goTattooistDetail(data.opponent_id);
     }
   }
 
-  const navigate = useNavigate();
   const goReservation = () => {
-    navigate(`/chat/${params.id}/${params.reservation_id}/reservation`)
+    goChattingReserv(params.id, params.reservation_id);
   }
 
   return (

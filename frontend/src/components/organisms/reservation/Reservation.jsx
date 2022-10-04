@@ -4,6 +4,7 @@ import { useEffect } from 'react';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { getCookie } from '../../../config/cookie';
+import { goChattingRoom } from '../../../config/navigate';
 import { 
   ReservDiv, ReservBtnDiv, ReservBtn, 
 } from '../../../styledComponents';
@@ -41,8 +42,9 @@ const Reservation = memo(({ data }) => {
   const navigate = useNavigate();
 
   const goChatting = () => {
-    navigate(`/chat/${getCookie('tattooist_id')}/${data.reservation_id}/room`)
+    goChattingRoom(getCookie("tattooist_id"),data.reservation_id);
   }
+  
   const onClick = (e) => {
     navigate(`/reservation/${data.reservation_id}`, {
       state: data

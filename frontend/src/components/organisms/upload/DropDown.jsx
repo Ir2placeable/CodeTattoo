@@ -6,7 +6,6 @@ import {
 
 import DropNav from './DropNav';
 import DropDownItem from '../../atomic/draft_upload/DropDownItem';
-import { useCallback } from 'react';
 import { genre } from '../../../data';
 import { useRef } from 'react';
 import { useEffect } from 'react';

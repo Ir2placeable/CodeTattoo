@@ -13,6 +13,7 @@ import { getCookie } from "../../config/cookie";
 import axios from "axios";
 import { APIURL } from "../../config/key";
 import Loader from "../atomic/common/Loader";
+import { goMyPage, goTattooistDetail } from "../../config/navigate";
 
 /**
  * 상위 컴포넌트 === ShowProfileEdit.jsx
@@ -127,9 +128,9 @@ const PasswordEdit = () => {
     if (res.data.success) {
       alert("비밀번호 변경 성공!");
       if(getCookie("user_id")) {
-        window.location.replace(`/my-page/user/${getCookie("user_id")}`)
+        goMyPage(getCookie("user_id"));
       } else {
-        window.location.replace(`/tattooist/${getCookie("tattooist_id")}/draft`)
+        goTattooistDetail(getCookie("tattooist_id"));
       }
     } else {
       alert("비밀번호 변경 실패!");

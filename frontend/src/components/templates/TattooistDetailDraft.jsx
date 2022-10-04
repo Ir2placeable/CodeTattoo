@@ -2,9 +2,10 @@ import React from "react";
 import { useOutletContext } from "react-router-dom";
 import { GridDiv, MyPageAddBtn, MyPageAddBtnDiv } from "../../styledComponents";
 import { useState, useEffect } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import DetailDraft from "../organisms/tattooist/DetailDraft";
 import { getCookie } from "../../config/cookie";
+import { goUpload } from "../../config/navigate";
 
 /** 
  * 상위 컴포넌트 === ShowTattooistDetail.jsx
@@ -32,8 +33,9 @@ const TattooistDetailDraft = () => {
     e.target.innerText = '+';
   }
 
-  const navigate = useNavigate();
-
+  const goUploadPage = () => {
+    goUpload();
+  }
   return (
     <>
       <GridDiv>
@@ -50,7 +52,7 @@ const TattooistDetailDraft = () => {
             id="도안"
             onMouseEnter={onMouseEnter}
             onMouseLeave={onMouseLeave}
-            onClick={() => navigate('/upload')}
+            onClick={goUploadPage}
           >
             +
           </MyPageAddBtn>

@@ -12,6 +12,7 @@ import {
   ProfileInfoInputLabel,
 } from "../../../styledComponents";
 import ProfileUploadBtn from "../../atomic/edit/ProfileUploadBtn";
+import { goMyPage, goTattooistDetail } from "../../../config/navigate";
 
 /** 상위 컴포넌트 === ProfileEdit.jsx
  * 프로필 편집 페이지 / 타투이스트 프로필 편집
@@ -58,9 +59,9 @@ const EditTattooistProfile = () => {
       console.log("프로필 수정 성공");
       pushCookie();
       if(getCookie("user_id")) {
-        window.location.replace(`/#/my-page/user/${getCookie("user_id")}`)
+        goMyPage(getCookie("user_id"));
       } else {
-        window.location.replace(`/#/tattooist/${getCookie("tattooist_id")}/draft`)
+        goTattooistDetail(getCookie("tattooist_id"));
       }
     } else {
       console.log("프로필 수정 실패");

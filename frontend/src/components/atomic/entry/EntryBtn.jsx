@@ -1,6 +1,6 @@
 import React from "react";
 import { useCallback } from "react";
-import { useNavigate } from "react-router-dom";
+import { goDraftList, goLogin, goRegister } from "../../../config/navigate";
 import { EntryBtnDiv } from "../../../styledComponents";
 
 /** 상위 컴포넌트 === EntryBtns.jsx
@@ -9,15 +9,14 @@ import { EntryBtnDiv } from "../../../styledComponents";
  */
 
 const EntryBtn = ({ text }) => {
-  const navigate = useNavigate();
   // URL 이동
   const onClick = useCallback(() => {
     if (text === "로그인") {
-      navigate("/login");
+      goLogin();
     } else if (text === "회원가입") {
-      navigate("/register");
+      goRegister();
     } else if (text === "둘러보기") {
-      navigate("/drafts/best");
+      goDraftList();
     }
   }, []);
 
