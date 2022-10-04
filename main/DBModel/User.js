@@ -28,6 +28,12 @@ const userSchema = mongoose.Schema({
     },
     tattoos : {
         type : [String]
+    },
+    auctions : {
+        type : [String]
+    },
+    kakao_id : {
+        type : String
     }
 })
 

@@ -56,6 +56,9 @@ const tattooistSchema = mongoose.Schema({
     },
     unavailable : {
         type : [unavailableSchema]
+    },
+    kakao_id : {
+        type : String
     }
 })
 

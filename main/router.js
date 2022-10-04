@@ -48,7 +48,7 @@ server.use('/', (req, res, next) => {
 
 // 페이지 모음
 // 페이지 : 도안
-server.get('/drafts/:filter/:page', (req, res) => {
+server.get('/drafts/:filter/:genre/:page', (req, res) => {
     console.log('Page : Draft')
 
     page.draft(req.params, req.query)
@@ -161,7 +161,30 @@ server.get('/reservation/:id', (req, res) => {
             res.send(ErrorLogging(err))
         })
 })
+// 페이지 : 경매
+server.get('/auctions/:filter/:page', (req, res) => {
+    console.log('Page : Auctions')
 
+    page.auction(req.params)
+        .then((returned) => {
+            res.send({ success : true, count : returned.count, auctions : returned.return_value })
+        })
+        .catch((err) => {
+            res.send(ErrorLogging(err))
+        })
+})
+// 페이지 : 경매 세부
+server.get('/auction/:id', (req, res) => {
+    console.log('Page : Auction Detail')
+
+    page.auctionDetail(req.params, req.query)
+        .then((returned) => {
+            res.send({ success : true, auction : returned.return_value})
+        })
+        .catch((err) => {
+            res.send(ErrorLogging(err))
+        })
+})
 
 // 명령 모음
 // 명령 : 회원가입
@@ -439,7 +462,6 @@ server.post('/create/unavailable/:id', (req, res) => {
         .catch((err) => {
             res.send(ErrorLogging(err))
         })
-
 })
 // 명령 : 타투이스트 일정 비활성화 취소
 server.post('/remove/unavailable/:id', (req, res) => {
@@ -450,7 +472,16 @@ server.post('/remove/unavailable/:id', (req, res) => {
         .catch((err) => {
             res.send(ErrorLogging(err))
         })
-
+})
+// 명령 : 경매 등록
+server.post('/create/auction/:id', (req, res) => {
+    command.createAuction(req.params, req.body)
+        .then((returned) => {
+            res.send({ success : true })
+        })
+        .catch((err) => {
+            res.send(ErrorLogging(err))
+        })
 })
 
 
@@ -466,7 +497,6 @@ server.post('/create/reservation', (req, res) => {
         .catch((err) => {
             res.send(ErrorLogging(err))
         })
-
 })
 // 명령 : 예약 정보 수정
 server.patch('/reservation/:id', (req, res) => {

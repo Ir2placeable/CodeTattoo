@@ -14,7 +14,7 @@ const errorTable = {
     22 : "password 불일치",
     23 : "데이터 수정 실패",
     30 : "블록체인 정보 없음",
-    31 : "채팅 서버 연결 실패"
+    31 : "채팅 서버 연결 실패",
 }
 
 module.exports = errorTable

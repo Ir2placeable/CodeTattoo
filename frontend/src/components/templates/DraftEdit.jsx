@@ -41,7 +41,7 @@ const DraftEdit = () => {
   // 도안 삭제
   const onDelete = () => {
     deleteDraft();
-    window.location.replace('/drafts/best')
+    window.location.reload()
   }
   // 도안 수정
   const onEdit = () => {
@@ -55,7 +55,7 @@ const DraftEdit = () => {
     editDraft({
       title, genre, keywords, cost: _cost
     })
-    window.location.replace('/drafts/best')
+    window.location.reload()
   }
 
 

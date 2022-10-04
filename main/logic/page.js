@@ -5,6 +5,7 @@ const {Draft} = require("../DBModel/Draft");
 const {Tattooist} = require("../DBModel/Tattooist");
 const {User} = require("../DBModel/User");
 const {Reservation} = require("../DBModel/Reservation");
+const {Auction} = require("../DBModel/Auction")
 
 const blockchain = require('../module/blockchain')
 
@@ -13,32 +14,39 @@ exports.draft = async function(params, query) {
     let count
     let return_value
 
+    let query_line = {}
+    if (Global.genre.includes(params.genre)) {
+        query_line = { genre : params.genre }
+    }
+
+    let sort_line = {}
+    if (params.filter === 'best') {
+        sort_line = { like : -1 }
+    } else if (params.filter === 'all') {
+        sort_line = { timestamp : -1 }
+    } else if (params.filter === 'search') {
+        query_line = { title : {$regex : query.title }}
+    } else {
+        throw 6
+    }
+
     if (params.page === '0') {
-        if (params.filter === 'search') {
-            count = await Draft.find({ title : {$regex : query.title }}).count()
-        } else {
-            count = await Draft.count()
-        }
+        count = await Draft.find(query_line).count()
+
         // 탐색 결과 없음 오류
-        if(count === 0) { throw 10 }
+        if (count === 0) {
+            if (params.filter === 'search') {
+                throw 11
+            } else {
+                throw 10
+            }
+        }
 
         return {count, return_value}
     }
 
     const item_index_start = Global.draftShowLimit * (parseInt(params.page)-1)
-
-    let drafts;
-    if (params.filter === 'best') {
-        drafts = await Draft.find().sort({ like : -1 }).skip(item_index_start).limit(Global.draftShowLimit)
-    } else if (params.filter === 'all') {
-        drafts = await Draft.find().sort({ timestamp : -1 }).skip(item_index_start).limit(Global.draftShowLimit);
-    } else if (params.filter === 'search') {
-        drafts = await Draft.find({ title : {$regex : query.title }})
-
-        if (drafts.length === 0) { throw 11 }
-    } else {
-        throw 6
-    }
+    let drafts = await Draft.find(query_line).sort(sort_line).skip(item_index_start).limit(Global.draftShowLimit)
 
     return_value = []
     for await (let draft of drafts) {
@@ -46,6 +54,7 @@ exports.draft = async function(params, query) {
         if (!drawer) { throw 2 }
         const item = {
             draft_id : draft['_id'],
+            genre : draft['genre'],
             image : draft['image'],
             title : draft['title'],
             like : draft['like'],
@@ -281,6 +290,86 @@ const calcTakenTime = function(seconds) {
     const sec = seconds % 60 < 10 ? '0' + seconds % 60 : seconds % 60;
 
     return String(hour) + ":" + String(min) + ":" + String(sec)
+}
+// 경매 페이지
+exports.auction = async function(params) {
+    let count
+    let return_value
+
+    let query_line = {}
+    if (Global.genre.includes(params.genre)) {
+        query_line = { genre : params.genre }
+    }
+
+    if (params.page === '0') {
+        count = await Auction.find(query_line).count()
+
+        // 탐색 결과 없음 오류
+        if (count === 0) { throw 10 }
+
+        return {count, return_value}
+    }
+
+    const item_index_start = Global.auctionShowLimit * (parseInt(params.page)-1)
+    let auctions = await Auction.find(query_line).skip(item_index_start).limit(Global.auctionShowLimit)
+
+    return_value = []
+    for await (let auction of auctions) {
+        const item = {
+            auction_id : auction['_id'],
+            image : auction['image'],
+            genre : auction['genre'],
+            cost : auction['cost'],
+            bidder_count : auction['bidders'].length,
+        }
+
+        return_value.push(item)
+    }
+
+    return {count, return_value}
+}
+// 경메 세부 페이지
+exports.auctionDetail = async function(params, query) {
+    let return_value
+
+    const user = await User.findOne({ _id : query.user_id })
+    const auction = await Auction.findOne({ _id : params.id })
+
+    let bidders
+    for await (let bidder of auction['bidders']) {
+        bidders = []
+        const tattooist = await Tattooist.findOne({ _id : bidder['bidder_id'] })
+        if (!tattooist) { continue }
+
+        let isFollowed = false
+        if (user['follows'].includes(tattooist['_id'])) {
+            isFollowed = true
+        }
+
+        const item = {
+            drawer_id : tattooist['_id'],
+            drawer_image : tattooist['image'],
+            drawer_nickname : tattooist['nickname'],
+            drawer_location : tattooist['location'],
+            specialize : tattooist['specialize'],
+            draft_image : bidder['image'],
+            draft_cost : bidder['cost'],
+            isFollowed : isFollowed
+        }
+
+        bidders.push(item)
+    }
+
+    return_value = {
+        auction_id : auction['_id'],
+        image : auction['image'],
+        genre : auction['genre'],
+        cost : auction['cost'],
+        bidder_count : auction['bidders'].length,
+        bidders : bidders
+    }
+
+    return {return_value}
 }
 
 // 예약 세부 페이지

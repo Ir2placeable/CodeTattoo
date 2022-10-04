@@ -5,6 +5,7 @@ const {Reservation} = require("../DBModel/Reservation")
 const {Draft} = require("../DBModel/Draft");
 const {Tattooist} = require("../DBModel/Tattooist");
 const {Tattoo} = require("../DBModel/Tattoo")
+const {Auction} = require("../DBModel/Auction")
 
 const blockchain = require("../module/blockchain")
 const chatServer = require("../module/chatServer")
@@ -141,7 +142,7 @@ exports.tattooistPasswordEdit = async function(params, body) {
 // 유저 정보 변경
 exports.userInfoEdit= async function(params, body) {
     // 유저 데이터 변경
-    User.updateOne({ _id : params.id }, {$set : { nickname : body.nickname, location : body.location }}, (err, user) => {
+    User.updateOne({ _id : params.id }, {$set : { nickname : body.nickname, location : body.location, kakao_id : body.kakao_id }}, (err, user) => {
         if (!user) { throw 1 }
         if (err) { throw 23 }
     })
@@ -168,7 +169,7 @@ exports.userImageEdit = async function(params, body) {
 // 타투이스트 정보 변경
 exports.tattooistInfoEdit= async function(params, body) {
     // 타투이스트 데이터 변경
-    Tattooist.updateOne({ _id : params.id }, {$set : { nickname : body.nickname, location : body.location, specialize : body.specialize, description : body.description }}, (err, tattooist) => {
+    Tattooist.updateOne({ _id : params.id }, {$set : { nickname : body.nickname, location : body.location, specialize : body.specialize, description : body.description, kakao_id : body.kakao_id }}, (err, tattooist) => {
         if (!tattooist) { throw 2 }
         if (err) { throw 23 }
     })
@@ -308,6 +309,24 @@ exports.deleteUnavailable = async function(params, body) {
         await Tattooist.updateOne({ _id : params.id }, {$pull : { unavailable : unavailable }})
     }
 }
+// 경매 등록
+exports.createAuction = async function(params, body) {
+    let new_auction = new Auction()
+
+    // ImageStorage 사용 파라미터 준비
+    const imageStorage_params = { title : new_auction['_id'], image : body.image, mime : body.mime }
+    // 이미지 업로드 후, url 반환
+    const image_url = await imageStorage.upload(imageStorage_params)
+
+    new_auction['creator'] = params.id
+    new_auction['image'] = image_url
+    new_auction['genre'] = body.genre
+    new_auction['cost'] = body.cost
+
+    await new_auction.save()
+    await User.updateOne({ _id : params.id }, {$push : { auctions : new_auction['_id'] }})
+}
+
 
 // 예약 생성 (= 상담 요청)
 exports.createReservation = async function(body) {
@@ -430,5 +449,7 @@ exports.finishProcedure = async function(params, body) {
 
     await blockchain.invoke("endTattoo", reservation['tattoo_id'], blockchain_params)
     await Tattooist.updateOne({ _id : body.tattooist_id }, {$push : { artworks : reservation['tattoo_id'] }})
+    await chatServer.deleteChat({ reservation_id : reservation['_id'] })
     await Reservation.deleteOne({ _id : params.id })
 }
+
