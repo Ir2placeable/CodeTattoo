@@ -9,13 +9,21 @@ import { SmallNavigationBtn } from '../../../styledComponents';
  * @param {State} setSearch 
  */
 
-const SmallNavBtn = ({ path, text, onClick, setStyle }) => {
+const SmallNavBtn = ({ path, text, onClick, toggle }) => {
+  
+  let style = {}
+  if (toggle) {
+    style = {
+      color: "black",
+    }
+  }
+
   return (
     <>
       <SmallNavigationBtn
         id={path}
         onClick={onClick}
-        style={setStyle(text)}
+        style={style}
       >
         {text}
       </SmallNavigationBtn>

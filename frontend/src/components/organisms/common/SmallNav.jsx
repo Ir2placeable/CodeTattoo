@@ -5,11 +5,11 @@ import { SmallNavigation } from "../../../styledComponents";
 import SmallNavBtn from "../../atomic/common/SmallNavBtn";
 import NavSearch from "../../atomic/common/NavSearch";
 
-/** 도안 목록, 타투이스트 목록 페이지/ 네비게이션바 
+/** 도안 목록, 타투이스트 목록 페이지/ 네비게이션바
  * @param {Array} data 버튼 텍스트
  * @param {Boolean} isSearch 검색 여부
- * @param {Number} loc 네비게이션 위치 
- * @returns 
+ * @param {Number} loc 네비게이션 위치
+ * @returns
  */
 const SmallNav = ({ data, isSearch, loc }) => {
   const boxLoation = {
@@ -18,6 +18,10 @@ const SmallNav = ({ data, isSearch, loc }) => {
   // 네비게이션 버튼 선택 여부
   const [firstBtn, setFirstBtn] = useState(false);
   const [secondBtn, setSecondBtn] = useState(false);
+  const [thirdBtn, setThirdBtn] = useState(false);
+
+  const toggle = [ false, firstBtn, secondBtn, thirdBtn]
+
   // 검색 키워드
   const [search, setSearch] = useState("");
 
@@ -29,9 +33,11 @@ const SmallNav = ({ data, isSearch, loc }) => {
       setFirstBtn(true);
     } else if (path === data[2].path) {
       setSecondBtn(true);
+    } else if (path === data[3].path) {
+      setThirdBtn(true);
     } else {
       setFirstBtn(false);
-      setSearch('');
+      setSearch("");
     }
   }, [location.pathname]);
 
@@ -44,21 +50,18 @@ const SmallNav = ({ data, isSearch, loc }) => {
     if (path === data[1].path) {
       setFirstBtn(true);
       setSecondBtn(false);
+      setThirdBtn(false);
       navigate(data[1].path);
     } else if (path === data[2].path) {
       setFirstBtn(false);
       setSecondBtn(true);
+      setThirdBtn(false);
       navigate(data[2].path);
-    }
-  };
-  const setStyle = (text) => {
-    if (
-      (text === data[1].text && firstBtn) ||
-      (text === data[2].text && secondBtn)
-    ) {
-      return {
-        color: "black",
-      };
+    } else if (path === data[3].path) {
+      setFirstBtn(false);
+      setSecondBtn(false);
+      setThirdBtn(true);
+      navigate(data[3].path);
     }
   };
 
@@ -73,7 +76,7 @@ const SmallNav = ({ data, isSearch, loc }) => {
                 text={_data.text}
                 path={_data.path}
                 onClick={onClick}
-                setStyle={setStyle}
+                toggle={toggle[idx]}
               />
             );
           }

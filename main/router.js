@@ -475,7 +475,45 @@ server.post('/remove/unavailable/:id', (req, res) => {
 })
 // 명령 : 경매 등록
 server.post('/create/auction/:id', (req, res) => {
+    console.log('command : create auction')
+
     command.createAuction(req.params, req.body)
+        .then((returned) => {
+            res.send({ success : true })
+        })
+        .catch((err) => {
+            res.send(ErrorLogging(err))
+        })
+})
+// 명령 : 경매 삭제
+server.post('/remove/auction/:id', (req, res) => {
+    console.log('command : delete auction')
+
+    command.deleteAuction(req.params, req.body)
+        .then((returned) => {
+            res.send({ success : true })
+        })
+        .catch((err) => {
+            res.send(ErrorLogging(err))
+        })
+})
+// 명령 : 경매 응찰
+server.post('/auction/:id', (req, res) => {
+    console.log('command : reply auction')
+
+    command.bidAuction(req.params, req.body)
+        .then((returned) => {
+            res.send({ success : true })
+        })
+        .catch((err) => {
+            res.send(ErrorLogging(err))
+        })
+})
+// 명령 : 경매 입찰
+server.patch('/auction/:id', (req, res) => {
+    console.log('command : finish auction')
+
+    command.finishAuction(req.params, req.body)
         .then((returned) => {
             res.send({ success : true })
         })
@@ -561,7 +599,6 @@ server.post('/procedure/:id', (req, res) => {
         .catch((err) => {
             res.send(ErrorLogging(err))
         })
-
 })
 // 명령 : 작업 완료
 server.patch('/procedure/:id', (req, res) => {
@@ -574,8 +611,12 @@ server.patch('/procedure/:id', (req, res) => {
         .catch((err) => {
             res.send(ErrorLogging(err))
         })
-
 })
+// 명령 : 유저 이력 조회
+server.get('/user/my-tattoo/:id', (req, res) => {
+    console.log('command : my tattoo querying')
+})
+
 
 // 관리자 명령 모음
 // User 초기화

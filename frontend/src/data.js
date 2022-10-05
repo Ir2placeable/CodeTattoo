@@ -17,6 +17,12 @@ export const genre = [
   { text: '직접입력', name: 'selfInput' },
 ]
 
+export const auction = [
+  { text: "도안 요청", name: 'request'},
+  { text: "커버 업", name: 'coverUp'},
+  { text: "기타", name: 'etc'}
+]
+
 export const keywords = [
   { text: '꽃', name: 'flower' },
   { text: '고래', name: 'whale' },

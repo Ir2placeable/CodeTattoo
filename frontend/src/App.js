@@ -43,6 +43,12 @@ import ShowArtworkDetail from "./pages/ShowArtworkDetail";
 import ChattingRoomEntry from "./components/organisms/chatting/ChattingRoomEntry";
 import ChattingRoom from "./components/organisms/chatting/ChattingRoom";
 import ChattingReservation from "./components/organisms/chatting/ChattingReservation";
+import ShowAuctionList from "./pages/ShowAuctionList";
+import AuctionList from "./components/templates/AuctionList";
+import AuctionSearch from "./components/templates/AuctionSearch";
+import DraftUpload from "./components/templates/DraftUpload";
+import AuctionUpload from "./components/templates/AuctionUpload";
+import ShowAuctionDetail from "./pages/ShowAuctionDetail";
 
 const App = () => {
 
@@ -59,7 +65,7 @@ const App = () => {
           {/* Main page */}
           <Route path="/" element={<MainPage />}>
 
-            {/* 도안 */}
+            {/* 도안 목록 */}
             <Route path="drafts" element={<ShowDraftList />}>
               <Route path="best" element={<DraftList filter="drafts/best/else" />} />
               <Route path="all" element={<DraftList filter="drafts/all/else" />} />
@@ -70,9 +76,14 @@ const App = () => {
               <Route path="search/:title" element={<DraftSearch />} />
             </Route>
 
-            {/* 도안 등록 - 타투이스트만 해당 */}
-            <Route path="upload" element={<ShowDraftUpload />}/>
-
+            {/* 등록 페이지 */}
+            <Route path="upload" element={<ShowDraftUpload />}>
+              {/* 도안 등록 - 타투이스트만 해당 */}
+              <Route path="draft" element={<DraftUpload/>} />
+              {/* 경매 등록 - 유저만 해당 */}
+              <Route path="auction" element={<AuctionUpload/>}/>
+            </Route>
+            
             {/* 타투이스트 목록 */}
             <Route path="tattooists" element={<ShowTattooistList />}>
               <Route path="best" element={<TattooistList filter="tattooists/best" />} />
@@ -131,6 +142,16 @@ const App = () => {
               <Route path=":reservation_id/reservation" element={<ChattingReservation />} />
             </Route>
 
+            {/* 경매 목록 */}
+            <Route path="auction" element={<ShowAuctionList />}>
+              <Route path="all" element={<AuctionList filter="auction/all" />} />
+              <Route path="coverup" element={<AuctionList filter="auction/coverup" />} />
+              <Route path="request" element={<AuctionList filter="auction/request" />} />
+              <Route path="search/:title" element={<AuctionSearch />} />
+            </Route>
+
+            {/* 경매 상세 */}
+            <Route path="auction/:id" element={<ShowAuctionDetail/> } />
           </Route>
 
 

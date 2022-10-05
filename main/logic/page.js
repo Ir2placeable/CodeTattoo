@@ -365,6 +365,7 @@ exports.auctionDetail = async function(params, query) {
         image : auction['image'],
         genre : auction['genre'],
         cost : auction['cost'],
+        creator : auction['creator'],
         bidder_count : auction['bidders'].length,
         bidders : bidders
     }

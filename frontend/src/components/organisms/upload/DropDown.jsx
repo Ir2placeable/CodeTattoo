@@ -15,7 +15,7 @@ import { useEffect } from 'react';
  * @param {String} input 장르 상태
  * @param {Function} setInput input 상태 함수
  */
-const DropDown = memo(({ input, setInput }) => {
+const DropDown = memo(({ input, setInput, items }) => {
   // 드롭 다운 메뉴 열림 여부
   const [isOpen, setIsOpen] = useState(false);
   // 장르 선택 여부
@@ -59,7 +59,7 @@ const DropDown = memo(({ input, setInput }) => {
       { isOpen && (
         <DropList>
 
-          {genre.map((data) => (
+          {items.map((data) => (
             <DropDownItem key={data.name}
               text={data.text} onClick={onChoose} />
           ))}
