@@ -1,4 +1,4 @@
-export const genre = [
+export const genres = [
   { text: '올드스쿨', name: 'oldSchool' },
   { text: '뉴스쿨', name: 'newSchool' },
   { text: '재패니즈', name: 'japanese' },
@@ -13,6 +13,12 @@ export const genre = [
   { text: '수채화', name: 'waterColor' },
   { text: '커스텀 레터링', name: 'customLettering' },
   { text: '직접입력', name: 'selfInput' },
+]
+
+export const auction = [
+  { text: "도안 요청", name: 'request'},
+  { text: "커버 업", name: 'coverUp'},
+  { text: "기타", name: 'etc'}
 ]
 
 export const keywords = [

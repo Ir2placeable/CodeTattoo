@@ -33,6 +33,10 @@ export const goDraftEdit = (id) => {
     window.location.replace(`/#/draft/${id}/edit`);
 }
 
+export const goUpload = () => {
+    window.location.replace(`/#/upload/draft`);
+}
+
 // Artwork
 export const goArtworkDetail = (id, tattooist_id) => {
     window.location.replace(`/#/artwork/${id}/${tattooist_id}`);
@@ -47,9 +51,6 @@ export const goTattooistReservation = (id) => {
     window.location.replace(`/#/tattooist/${id}/reservation`);
 }
 
-export const goUpload = () => {
-    window.location.replace(`/#/upload`);
-}
 
 // Edit
 export const goEdit = () => {
@@ -76,4 +77,18 @@ export const goReservConfirm = () => {
 
 export const goReservPending = () => {
     window.location.replace(`/#/reservations/pending`);
+}
+
+// Auction
+
+export const goAuctionList = () => {
+    window.location.replace(`/#/auction/all`);
+}
+
+export const goAuctionDetail = (id) => {
+    window.location.replace(`/#/auction/${id}`);
+}
+
+export const goAuctionUpload = () => {
+    window.location.replace(`/#/upload/auction`);
 }

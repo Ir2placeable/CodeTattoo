@@ -13,7 +13,7 @@ import { getCookie } from "../../config/cookie";
 import useTattooistList from "../../hooks/useTattooistList";
 
 /**
- * 상위 컴포넌트 === ShowTattooist.jsx
+ * 상위 컴포넌트 === ShowTattooistList.jsx
  * 타투이스트 목록 템플릿 
  * @param {String} filter 추천순/ 최신순 
  */
