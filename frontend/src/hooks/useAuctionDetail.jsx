@@ -2,6 +2,7 @@ import axios from "axios";
 import { APIURL } from "../config/key";
 import { useEffect, useState } from "react";
 import { getCookie } from "../config/cookie";
+import { useParams } from "react-router-dom";
 
 const useAuctionDetail = () => {
     const [auction, setAuction] = useState({

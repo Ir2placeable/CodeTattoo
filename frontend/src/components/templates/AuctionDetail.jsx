@@ -1,7 +1,11 @@
-import { useParams } from "react-router-dom";
+const AuctionDetail = ({ detail }) => {
 
-const AuctionDetail = () => {
-    const param = useParams();
-}
+
+    return(
+        <>
+        
+        </>
+    )
+};
 
 export default AuctionDetail;
