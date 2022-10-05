@@ -14,7 +14,7 @@ import axios from "axios";
 import { APIURL } from "../../config/key";
 import { getCookie } from "../../config/cookie";
 import { goDraftList } from "../../config/navigate";
-
+import { genres } from "../../data";
 
 /**
  * 상위 컴포넌트 === ShowDraftUpload.jsx
@@ -139,13 +139,13 @@ const DraftUpload = () => {
           />
 
           <div style={{ display: "flex" }}>
-            <DropDown input={genre} setInput={setGenre} />
+            <DropDown input={genre} setInput={setGenre} items={genres} />
             <DropTags tags={keywords} setTags={setKewords} />
           </div>
         </LoadedImgDescDiv>
       </ImgInfoDiv>
 
-      <ImgUploadBtn onSubmit={onSubmit} />
+      <ImgUploadBtn onSubmit={onSubmit} text="도안 업로드" />
     </>
   );
 };

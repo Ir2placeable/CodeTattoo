@@ -20,6 +20,8 @@ const Navigation = () => {
       navigate(`/${path}/draft`);
     } else if(path === 'reservations') {
       navigate(`/${path}/pending`);
+    } else if(path === 'auction') {
+      navigate(`/${path}/all`);
     }
   }, []);
 
@@ -37,7 +39,7 @@ const Navigation = () => {
         ) : (
           <></>
         )}
-
+        <NavigationBtn onClick={onClick} text="경매" path="auction" />
       </MainNavigationInner>
     </MainNavigation>
 
