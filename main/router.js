@@ -561,7 +561,6 @@ server.post('/procedure/:id', (req, res) => {
         .catch((err) => {
             res.send(ErrorLogging(err))
         })
-
 })
 // 명령 : 작업 완료
 server.patch('/procedure/:id', (req, res) => {
@@ -574,8 +573,12 @@ server.patch('/procedure/:id', (req, res) => {
         .catch((err) => {
             res.send(ErrorLogging(err))
         })
-
 })
+// 명령 : 유저 이력 조회
+server.get('/user/my-tattoo/:id', (req, res) => {
+    console.log('command : my tattoo querying')
+})
+
 
 // 관리자 명령 모음
 // User 초기화

@@ -452,4 +452,4 @@ exports.finishProcedure = async function(params, body) {
     await chatServer.deleteChat({ reservation_id : reservation['_id'] })
     await Reservation.deleteOne({ _id : params.id })
 }
-
+// 타투 이력 조회
