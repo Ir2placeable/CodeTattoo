@@ -29,6 +29,13 @@ const auctionSchema = mongoose.Schema({
     },
     bidders : {
         type : [bidderSchema]
+    },
+    finished : {
+        type : Boolean,
+        default : false
+    },
+    winner : {
+        type : String
     }
 })
 

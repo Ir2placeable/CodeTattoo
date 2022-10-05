@@ -475,7 +475,45 @@ server.post('/remove/unavailable/:id', (req, res) => {
 })
 // 명령 : 경매 등록
 server.post('/create/auction/:id', (req, res) => {
+    console.log('command : create auction')
+
     command.createAuction(req.params, req.body)
+        .then((returned) => {
+            res.send({ success : true })
+        })
+        .catch((err) => {
+            res.send(ErrorLogging(err))
+        })
+})
+// 명령 : 경매 삭제
+server.post('/remove/auction/:id', (req, res) => {
+    console.log('command : delete auction')
+
+    command.deleteAuction(req.params, req.body)
+        .then((returned) => {
+            res.send({ success : true })
+        })
+        .catch((err) => {
+            res.send(ErrorLogging(err))
+        })
+})
+// 명령 : 경매 응찰
+server.post('/auction/:id', (req, res) => {
+    console.log('command : reply auction')
+
+    command.bidAuction(req.params, req.body)
+        .then((returned) => {
+            res.send({ success : true })
+        })
+        .catch((err) => {
+            res.send(ErrorLogging(err))
+        })
+})
+// 명령 : 경매 입찰
+server.patch('/auction/:id', (req, res) => {
+    console.log('command : finish auction')
+
+    command.finishAuction(req.params, req.body)
         .then((returned) => {
             res.send({ success : true })
         })

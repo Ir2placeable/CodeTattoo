@@ -326,7 +326,41 @@ exports.createAuction = async function(params, body) {
     await new_auction.save()
     await User.updateOne({ _id : params.id }, {$push : { auctions : new_auction['_id'] }})
 }
+// 경매 삭제
+exports.deleteAuction = async function(params, body) {
+    await User.updateOne({ _id : params.id }, {$pull : { auctions : body.auction_id }})
+    const auction = await Auction.findOne({ _id : body.auction_id })
 
+    // 이미지 삭제
+    await imageStorage.delete(auction['_id'])
+    for await (let bidder of auction['bidders']) {
+        const image_id = auction['_id'] + bidder['bidder_id']
+        await imageStorage.delete(image_id)
+    }
+
+    await Auction.deleteOne({ _id : body.auction_id })
+}
+// 경매 응찰
+exports.bidAuction = async function(params, body) {
+    const auction = await Auction.findOne({ _id : params.id })
+
+    // ImageStorage 사용 파라미터 준비
+    const imageStorage_params = { title : auction['_id'] + body.tattooist_id , image : body.image, mime : body.mime }
+    // 이미지 업로드 후, url 반환
+    const image_url = await imageStorage.upload(imageStorage_params)
+
+    const bidder = {
+        bidder_id : body.tattooist_id,
+        image : image_url,
+        cost : body.cost
+    }
+
+    await Auction.updateOne({ _id : params.id }, {$push : { bidders : bidder }})
+}
+// 경매 입찰
+exports.finishAuction = async function(params, body) {
+    await Auction.updateOne({ _id : params.id }, {$set : { finished : true, winner : body.drawer_id }})
+}
 
 // 예약 생성 (= 상담 요청)
 exports.createReservation = async function(body) {
