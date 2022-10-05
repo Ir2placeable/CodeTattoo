@@ -42,11 +42,7 @@ const DraftEdit = () => {
   // 도안 삭제
   const onDelete = () => {
     deleteDraft();
-<<<<<<< HEAD
-    window.location.reload()
-=======
     goDraftList();
->>>>>>> 8d9c633bae86597aa9a21bf8e8e369f631928d4d
   }
   // 도안 수정
   const onEdit = () => {
@@ -60,11 +56,7 @@ const DraftEdit = () => {
     editDraft({
       title, genre, keywords, cost: _cost
     })
-<<<<<<< HEAD
-    window.location.reload()
-=======
     goDraftList();
->>>>>>> 8d9c633bae86597aa9a21bf8e8e369f631928d4d
   }
 
 

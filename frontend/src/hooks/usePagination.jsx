@@ -23,7 +23,7 @@ const usePagination = ({ filter }) => {
       _filter = `/${a}/${b}`
 
       if(!query){
-        query = `/?`
+        query = `/0?`
       } else {
         query += '&'
       }
@@ -35,6 +35,8 @@ const usePagination = ({ filter }) => {
       }
 
       query += `${keyword}`
+    } else if(filter === '/drafts/best' || filter === '/drafts/all'){
+      _filter += '/else'
     }
 
     const res = await axios.get(`${APIURL}${_filter}/0${query}`);

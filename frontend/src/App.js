@@ -61,8 +61,12 @@ const App = () => {
 
             {/* 도안 */}
             <Route path="drafts" element={<ShowDraftList />}>
-              <Route path="best" element={<DraftList filter="drafts/best" />} />
-              <Route path="all" element={<DraftList filter="drafts/all" />} />
+              <Route path="best" element={<DraftList filter="drafts/best/else" />} />
+              <Route path="all" element={<DraftList filter="drafts/all/else" />} />
+              <Route path="best/scalp" element={<DraftList filter="drafts/best/scalp" />} />
+              <Route path="all/scalp" element={<DraftList filter="drafts/all/scalp" />} />
+              <Route path="best/eyebrow" element={<DraftList filter="drafts/best/eyebrow" />} />
+              <Route path="all/eyebrow" element={<DraftList filter="drafts/all/eyebrow" />} />
               <Route path="search/:title" element={<DraftSearch />} />
             </Route>
 

@@ -43,6 +43,7 @@ const DraftList = ({ filter }) => {
                 drawer_image={draft.drawer_image}
                 drawer_nickname={draft.drawer_nickname}
                 isScraped={draft.isScraped}
+                genre={draft.genre}
               />
             ))}
           </DraftMainBox>

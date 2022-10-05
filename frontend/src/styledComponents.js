@@ -1453,6 +1453,7 @@ export const DraftImgBox = styled.div`
   height: 400px;
   padding: 0 25px;
   border-radius: 8px;
+  position: relative;
 `;
 
 export const DraftDrawerDiv = styled.div`
@@ -1465,6 +1466,19 @@ export const DraftDrawerDiv = styled.div`
   cursor: pointer;
   margin-left: 10px;
 `;
+
+export const DraftGenreDiv = styled.div`
+position: absolute;
+top: 70px;
+right: 35px;
+z-index: 20;
+background-color: #666;
+padding: 7px 10px;
+color: white;
+border-radius: 5px;
+// font-weight: bold;
+font-size: 12px;
+`
 
 export const DraftDrawer = styled.p`
   margin-left: 10px;
