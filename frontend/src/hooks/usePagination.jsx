@@ -28,7 +28,7 @@ const usePagination = ({ filter }) => {
         query += '&'
       }
 
-      if(a === 'drafts'){
+      if(a === 'drafts' || a === 'auctions'){
         query += 'title='
       } else if(a === 'tattooists'){
         query += 'nickname='
@@ -36,14 +36,14 @@ const usePagination = ({ filter }) => {
 
       query += `${keyword}`
     }
-
+    
     const res = await axios.get(`${APIURL}${_filter}/0${query}`);
 
     if(res.data.success){
       setCount(res.data.count);
     } else {
+      console.log(`${APIURL}${_filter}/0${query}`);
       console.log('usePagination error');
-      console.log(res.data);
     }
 
   }

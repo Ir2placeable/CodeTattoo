@@ -17,7 +17,7 @@ const GoUploadBtn = memo(({type, text, filter}) => {
   const onClick = useCallback(() => {
     if (filter === "auction") {
       goAuctionUpload();
-    } else {
+    } else if (filter === "draft") {
       goUpload();
     }
   }, []);

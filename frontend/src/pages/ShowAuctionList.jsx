@@ -22,9 +22,9 @@ const ShowAuctionList = () => {
       <SmallNav
         data={[
           { text: "root", path: "/auction" },
-          { text: "전체", path: "/auction/all" },
-          { text: "커버 업", path: "/auction/coverup" },
-          { text: "도안 요청", path: "/auction/request" },
+          { text: "전체", path: "/auctions/all" },
+          { text: "커버 업", path: "/auctions/coverup" },
+          { text: "도안 요청", path: "/auctions/request" },
         ]}
         isSearch={true}
         loc={1.9}
@@ -36,13 +36,13 @@ const ShowAuctionList = () => {
         {/* 경매 목록 */}
         <Outlet context={{ page }} />
         {/* 페이지네이션 */}
-        {/* <Pagination
+        <Pagination
           page={page}
           setPage={setPage}
           pages={pages}
           setPages={setPages}
           items={6}
-        /> */}
+        />
       </ContentsDiv>
     </>
   );

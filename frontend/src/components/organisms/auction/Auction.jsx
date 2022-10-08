@@ -1,4 +1,4 @@
-import { AuctionBox, AuctionCommentBox, AuctionImgBox, AuctionInfoBox, AuctionTagBox } from "../../../styledComponents";
+import { AuctionBox, AuctionCommentBox, AuctionImg, AuctionInfoBox, AuctionTagBox } from "../../../styledComponents";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCommentDots } from "@fortawesome/free-regular-svg-icons";
 import { goAuctionDetail } from "../../../config/navigate";
@@ -20,7 +20,7 @@ const Auction = ({auction}) => {
         <>
         <AuctionBox>
             <AuctionTagBox type={auction.genre}>{auction.genre}</AuctionTagBox>
-            <AuctionImgBox src={auction.image} onClick={goDetail}/>
+            <AuctionImg src={auction.image} onClick={goDetail} type="list"/>
             <AuctionInfoBox>
                 {auction.cost} 원
             <AuctionCommentBox>
