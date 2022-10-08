@@ -316,7 +316,7 @@ exports.createAuction = async function(params, body) {
     let new_auction = new Auction()
 
     // ImageStorage 사용 파라미터 준비
-    const imageStorage_params = { title : new_auction['_id'], image : body.image, mime : body.mime }
+    const imageStorage_params = { title : String(new_auction['_id']), image : body.image, mime : body.mime }
     // 이미지 업로드 후, url 반환
     const image_url = await imageStorage.upload(imageStorage_params)
 
