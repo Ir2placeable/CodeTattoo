@@ -3,7 +3,7 @@
 const {User} = require("../DBModel/User");
 const {Tattooist} = require("../DBModel/Tattooist");
 const {Reservation} = require("../DBModel/Reservation")
-const chatServer = require("../config/serverAddress")
+const serverList = require("../config/serverAddress")
 const request = require('request')
 
 // 채팅 목록에 필요한 상대방의 정보 및 채팅방 정보를 반환한다.
@@ -40,7 +40,7 @@ exports.getProfile = async function(params, query) {
 
 // 채팅방 생성을 요청한다.
 exports.createChat = async function(params) {
-    const destination = chatServer.chatAPI + "chat/create"
+    const destination = serverList.chatAPI + "chat/create"
 
     request.post({
         headers : {'content-type' : 'application/json'},
@@ -54,7 +54,7 @@ exports.createChat = async function(params) {
 
 // 채팅방 삭제를 요청한다.
 exports.deleteChat = async function(params) {
-    const destination = chatServer.chatAPI + "chat/delete"
+    const destination = serverList.chatAPI + "chat/delete"
 
     request.post({
         headers : {'content-type' : 'application/json'},
