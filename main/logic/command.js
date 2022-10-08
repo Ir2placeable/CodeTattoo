@@ -28,7 +28,8 @@ exports.userLogin = async function(body) {
             image: user['image'],
             description: user['description'],
             location : user['location'],
-            email : user['email']
+            email : user['email'],
+            kakao_id : user['kakao_id']
         }
     });
 }
@@ -95,7 +96,8 @@ exports.tattooistLogin = async function(body) {
             description : tattooist['description'],
             specialize : tattooist['specialize'],
             location : tattooist['location'],
-            email : tattooist['email']
+            email : tattooist['email'],
+            kakao_id : tattooist['kakao_id']
         }
     })
 }
