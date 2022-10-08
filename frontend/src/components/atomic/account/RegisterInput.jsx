@@ -4,7 +4,7 @@ import { APIURL } from '../../../config/key';
 import axios from 'axios'
 import { 
   AccountInputDiv, AccountInputBox, AccountLabel,
-  AccountInput, AccountBtn, InputErrorText
+  AccountInput, AccountBtn, InputErrorText, KaKaoLogo
 } from '../../../styledComponents';
 import { goLogin } from '../../../config/navigate';
 
@@ -28,10 +28,11 @@ const RegisterInput = ({ isTattooist }) => {
     nickname: '',
     location: '',
     office: '',
-    contact: ''
+    contact: '',
+    kakao_id: ''
   })
 
-  const { email, pwd, pwd2, nickname, location, office, contact } = info;
+  const { email, pwd, pwd2, nickname, location, office, contact, kakao_id } = info;
   const emailInput = useRef();
   const pwdInput = useRef();
   const pwd2Input = useRef();
@@ -39,6 +40,7 @@ const RegisterInput = ({ isTattooist }) => {
   const locInput = useRef();
   const officeInput = useRef();
   const contactInput = useRef();
+  const kakaoInput = useRef();
 
   useEffect(() => {
     emailInput.current.focus();
@@ -110,13 +112,15 @@ const RegisterInput = ({ isTattooist }) => {
         locInput.current.focus();
       } else if(e.target.name === 'location'){
         if(!isTattooist){
-          onSubmit();
+          kakaoInput.current.focus()
         } else {
           officeInput.current.focus();
         }
       }else if(e.target.name === 'office') {
         contactInput.current.focus();
       } else if(e.target.name === 'contact') {
+        kakaoInput.current.focus()
+      } else if(e.target.name === 'kakao_id') {
         onSubmit();
       }
     }
@@ -130,6 +134,7 @@ const RegisterInput = ({ isTattooist }) => {
       pwd: pwd,
       nickname: nickname,
       location: location,
+      kakao_id: kakao_id
     }
 
     if(isTattooist){
@@ -233,7 +238,11 @@ const RegisterInput = ({ isTattooist }) => {
         </AccountInputBox>
 
         <AccountInputBox>
-          <AccountLabel>주소지 <span style={{color: 'red'}}>*</span></AccountLabel>
+          <AccountLabel>주소지 
+            {isTattooist && (
+              <span style={{color: 'red'}}>*</span>
+            )}
+          </AccountLabel>
           <AccountInput 
             type="text"
             name="location"
@@ -246,7 +255,7 @@ const RegisterInput = ({ isTattooist }) => {
           />
         </AccountInputBox>
 
-        {isTattooist ? (
+        {isTattooist && (
           <div>
             <AccountInputBox>
               <AccountLabel>Office <span style={{color: 'red'}}>*</span></AccountLabel>
@@ -275,9 +284,24 @@ const RegisterInput = ({ isTattooist }) => {
               />
             </AccountInputBox>
           </div>
-        ) : (
-          <div></div>
         )}
+
+        <AccountInputBox>
+          <AccountLabel>
+            <KaKaoLogo src="../../img/kakao.png" />
+            카카오톡 ID
+          </AccountLabel>
+          <AccountInput 
+            type="text"
+            name="kakao_id"
+            placeholder='카카오톡 ID(알림용, 선택)'
+            autoComplete='nope'
+            value={kakao_id}
+            ref={kakaoInput}
+            onChange={onChange}
+            onKeyUp={onKeyUp}
+          />
+        </AccountInputBox>
 
       </AccountInputDiv>
 

@@ -4,6 +4,7 @@ import { useLocation } from "react-router-dom";
 import { SmallNavigation } from "../../../styledComponents";
 import SmallNavBtn from "../../atomic/common/SmallNavBtn";
 import NavSearch from "../../atomic/common/NavSearch";
+import SmallNavDrop from "./SmallNavDrop";
 
 /** 도안 목록, 타투이스트 목록 페이지/ 네비게이션바
  * @param {Array} data 버튼 텍스트
@@ -26,18 +27,30 @@ const SmallNav = ({ data, isSearch, loc }) => {
   const [search, setSearch] = useState("");
 
   const location = useLocation();
+  
   useEffect(() => {
-    const path = location.pathname;
+    const path = location.pathname
 
-    if (path === data[0].path || path === data[1].path) {
-      setFirstBtn(true);
-    } else if (path === data[2].path) {
-      setSecondBtn(true);
-    } else if (path === data[3].path) {
-      setThirdBtn(true);
+    if(data[0].path === '/drafts'){
+      let [, , filter, ] = path.split('/')
+      filter = data[0].path + '/' + filter;
+
+      if(filter === data[1].path){
+        setFirstBtn(true)
+      } else if(filter === data[2].path){
+        setSecondBtn(true)
+      }
     } else {
-      setFirstBtn(false);
-      setSearch("");
+      if (path === data[0].path || path === data[1].path) {
+        setFirstBtn(true);
+      } else if (path === data[2].path) {
+        setSecondBtn(true);
+      } else if (path === data[3].path) {
+        setThirdBtn(true);
+      } else {
+        setFirstBtn(false);
+        setSearch("");
+      }
     }
   }, [location.pathname]);
 
@@ -51,12 +64,35 @@ const SmallNav = ({ data, isSearch, loc }) => {
       setFirstBtn(true);
       setSecondBtn(false);
       setThirdBtn(false);
-      navigate(data[1].path);
+
+      if(data[0].path === '/drafts'){
+        let [, , ,filter] = location.pathname.split('/')
+        if(filter == undefined){
+          filter=""
+        } else {
+          filter = '/' + filter
+        }
+        navigate(`${data[1].path}${filter}`);
+      } else {
+        navigate(data[1].path);
+      }
     } else if (path === data[2].path) {
       setFirstBtn(false);
       setSecondBtn(true);
       setThirdBtn(false);
-      navigate(data[2].path);
+
+      if(data[0].path === '/drafts'){
+        let [, , ,filter] = location.pathname.split('/')
+        if(filter == undefined){
+          filter=""
+        } else {
+          filter = '/' + filter
+        }
+
+        navigate(`${data[2].path}${filter}`);
+      } else {
+        navigate(data[2].path);
+      }
     } else if (path === data[3].path) {
       setFirstBtn(false);
       setSecondBtn(false);
@@ -88,6 +124,10 @@ const SmallNav = ({ data, isSearch, loc }) => {
             search={search}
             setSearch={setSearch}
           />
+        )}
+
+        {data[0].path === '/drafts' && (
+          <SmallNavDrop />
         )}
       </SmallNavigation>
     </>

@@ -26,14 +26,16 @@ const EditTattooistProfile = () => {
     location: getCookie("profile_location"),
     specialize: getCookie("profile_specialize"),
     description: getCookie("profile_desc"),
+    kakao_id: ''
   });
 
   const nicknameInput = useRef();
   const locationInput = useRef();
   const specializeInput = useRef();
   const descriptionInput = useRef();
+  const kakaoInput = useRef();
 
-  const { nickname, location, specialize, description } = info;
+  const { nickname, location, specialize, description, kakao_id } = info;
 
   const onChange = (e) => {
     const { value, name } = e.target;
@@ -52,6 +54,7 @@ const EditTattooistProfile = () => {
         location: location,
         specialize: specialize,
         description: description,
+        kakao_id: kakao_id
       }
     );
     
@@ -143,6 +146,20 @@ const EditTattooistProfile = () => {
           onChange={onChange}
           value={description}
           ref={descriptionInput}
+        />
+      </ProfileInfoInputBox>
+
+      <ProfileInfoInputBox>
+        <ProfileInfoInputLabel htmlFor="input-kakao_id">
+          KaKao ID
+        </ProfileInfoInputLabel>
+        <ProfileInfoInput
+          type="text"
+          name="kakao_id"
+          id="input-kakao_id"
+          onChange={onChange}
+          value={kakao_id}
+          ref={kakaoInput}
         />
       </ProfileInfoInputBox>
       {/* 등록 버튼 */}

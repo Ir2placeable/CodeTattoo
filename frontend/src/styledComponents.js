@@ -303,7 +303,16 @@ export const InputErrorText = styled.div`
 export const AccountLabel = styled.div`
   font-weight: bold;
   padding-bottom: 7px;
+  display: flex;
+  align-items: center;
 `;
+
+export const KaKaoLogo = styled.img`
+width: 20px;
+height: 20px;
+object-fit: cover;
+margin-right: 5px;
+`
 
 export const AccountInput = styled.input`
   width: 350px;
@@ -421,7 +430,54 @@ export const SmallNavigation = styled.div`
   border-radius: 8px;
   position: absolute;
   top: 30px;
+  background-color: white;
 `;
+
+export const SmallNavDropDown = styled.div`
+padding: 0 15px;
+height: 100%;
+box-shadow: 5px 5px 10px 0 rgba(72, 72, 72, 0.3);
+border-radius: 8px;
+display: flex;
+justify-content: center;
+align-items: center;
+position: absolute;
+right: -100px;
+top: 0;
+cursor: pointer;
+background-color: white;
+`
+
+export const SmallNavDropMenu = styled.div`
+background-color: white;
+width: 100%;
+position: absolute;
+z-index: 50;
+bottom: calc(-31px * 3 - 25px);
+left: 0;
+padding: 10px 0;
+// border-radius: 5px;
+// border: 1px solid rgba(72, 72, 72, .5);
+box-shadow: 5px 5px 10px 0 rgba(72, 72, 72, 0.3);
+border-radius: 8px;
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+`
+
+export const SmallNavDropItem = styled.div`
+width: 85%;
+text-align: center;
+line-height: 30px;
+cursor: pointer;
+border-bottom: 1px solid rgba(72, 72, 72, .3);
+
+&:hover{
+  font-weight: bold;
+  color: black;
+}
+`
 
 export const SmallNavigationBtn = styled.div`
   font-size: 18px;
@@ -1320,10 +1376,11 @@ export const ProfileInfoInputBox = styled.div`
 `;
 
 export const ProfileInfoInputLabel = styled.label`
-  flex-basis: 100px;
+  // flex-basis: 100px;
   margin-left: 125px;
   font-size: 32px;
   font-weight: 900;
+  // background-color: orange;
 `;
 
 export const PasswordInputLabel = styled.label`
