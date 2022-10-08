@@ -32,7 +32,7 @@ const ShowDraftList = () => {
 
     {/* 도안 업로드 버튼 */}
     {getCookie('tattooist_id') && (
-      <GoUploadBtn type="draft" text="도안 등록" />
+      <GoUploadBtn type="draft" text="도안 등록" filter="draft" />
     )}
 
     {/* 도안 목록 */}

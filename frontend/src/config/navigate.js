@@ -37,6 +37,13 @@ export const goUpload = () => {
     window.location.replace(`/#/upload/draft`);
 }
 
+export const goDraftScalp = () => {
+    window.location.replace('/#/drafts/best/scalp');
+}
+
+export const goDraftEyebrow = () => {
+    window.location.replace('/#/drafts/best/eyebrow');
+}
 // Artwork
 export const goArtworkDetail = (id, tattooist_id) => {
     window.location.replace(`/#/artwork/${id}/${tattooist_id}`);

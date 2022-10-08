@@ -19,11 +19,13 @@ const EditUserProfile = () => {
   const [info, setInfo] = useState({
     nickname: getCookie("nickname"),
     location: getCookie("location"),
+    kakao_id: ''
   });
 
   const nicknameInput = useRef();
   const locationInput = useRef();
-  const { nickname, location } = info;
+  const kakaoInput = useRef();
+  const { nickname, location, kakao_id } = info;
 
   const onChange = (e) => {
     const { value, name } = e.target;
@@ -40,6 +42,7 @@ const EditUserProfile = () => {
       {
         nickname: nickname,
         location: location,
+        kakao_id: kakao_id
       }
     );
 
@@ -99,6 +102,19 @@ const EditUserProfile = () => {
           onChange={onChange}
           value={location}
           ref={locationInput}
+        />
+      </ProfileInfoInputBox>
+      <ProfileInfoInputBox>
+        <ProfileInfoInputLabel htmlFor="input-kakao_id">
+          KaKao ID
+        </ProfileInfoInputLabel>
+        <ProfileInfoInput
+          type="text"
+          name="kakao_id"
+          id="input-kakao_id"
+          onChange={onChange}
+          value={kakao_id}
+          ref={kakaoInput}
         />
       </ProfileInfoInputBox>
       {/* 등록 버튼 */}

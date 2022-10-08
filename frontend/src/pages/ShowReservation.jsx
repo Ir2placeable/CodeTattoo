@@ -23,7 +23,7 @@ const ShowReservation = memo(() => {
           {text: 'Pending', path: '/reservations/pending'},
           {text: 'Confirmed', path: '/reservations/confirmed'},
         ]}
-        isSearch={false} loc={2.3}
+        isSearch={false} loc={2}
       />
 
       <ContentsDiv>
