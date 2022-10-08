@@ -612,7 +612,7 @@ server.patch('/procedure/:id', (req, res) => {
             res.send(ErrorLogging(err))
         })
 })
-// 명령 : 유저 이력 조회
+// 명령 : 유저 이력 조회 (미개발)
 server.get('/user/my-tattoo/:id', (req, res) => {
     console.log('command : my tattoo querying')
 })
@@ -642,6 +642,11 @@ server.get('/reset/tattoo', (req, res) => {
 // Reservation 초기화
 server.get('/reset/reservation', (req, res) => {
     admin.resetReservation()
+        .then(() => { res.send({ success : true })})
+})
+// Auction 초기화
+server.get('/reset/auction', (req, res) => {
+    admin.resetAuction()
         .then(() => { res.send({ success : true })})
 })
 // DB 전체 초기화
