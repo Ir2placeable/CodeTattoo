@@ -328,11 +328,10 @@ exports.auction = async function(params) {
 
     return {count, return_value}
 }
-// 경메 세부 페이지
+// 경매 세부 페이지
 exports.auctionDetail = async function(params, query) {
     let return_value
 
-    const user = await User.findOne({ _id : query.user_id })
     const auction = await Auction.findOne({ _id : params.id })
 
     let bidders
@@ -340,11 +339,6 @@ exports.auctionDetail = async function(params, query) {
         bidders = []
         const tattooist = await Tattooist.findOne({ _id : bidder['bidder_id'] })
         if (!tattooist) { continue }
-
-        let isFollowed = false
-        if (user['follows'].includes(tattooist['_id'])) {
-            isFollowed = true
-        }
 
         const item = {
             drawer_id : tattooist['_id'],
@@ -354,10 +348,19 @@ exports.auctionDetail = async function(params, query) {
             specialize : tattooist['specialize'],
             draft_image : bidder['image'],
             draft_cost : bidder['cost'],
-            isFollowed : isFollowed
+            isFollowed : false
         }
 
         bidders.push(item)
+    }
+
+    const user = await User.findOne({ _id : query.user_id })
+    if (!user) { throw 1 }
+
+    for (let bidder of bidders) {
+        if(user['follows'].includes(bidder.drawer_id)) {
+            bidder['isFollowed'] = true
+        }
     }
 
     return_value = {
