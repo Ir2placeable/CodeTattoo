@@ -665,6 +665,10 @@ server.get('/get/user', (req, res) => {
 server.get('/get/reservation', (req, res) => {
     admin.getReservation().then((result) => { res.send({ reservations : result }) })
 })
+// Auction 찾기
+server.get('/get/auction', (req, res) => {
+    admin.getAuction().then((result) => { res.send({ auctions : result }) })
+})
 
 // 블록체인 직접 요청
 // 블록체인에 데이터 기록 요청

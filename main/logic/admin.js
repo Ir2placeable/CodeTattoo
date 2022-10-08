@@ -5,6 +5,7 @@ const {Tattooist} = require("../DBModel/Tattooist")
 const {Draft} = require('../DBModel/Draft')
 const {Tattoo} = require('../DBModel/Tattoo')
 const {Reservation} = require('../DBModel/Reservation')
+const {Auction} = require('../DBModel/Auction')
 
 const imageStorage = require("../module/imageStorage");
 const blockchain = require("../module/blockchain");
@@ -34,6 +35,11 @@ exports.resetReservation = async function() {
     await Reservation.deleteMany({})
 }
 
+// 경매 DB 초기화
+exports.resetAuction = async function() {
+    await Auction.deleteMany({})
+}
+
 // DB를 초기 상태로 되돌린다.
 exports.resetAll = async function() {
     await User.deleteMany({})
@@ -41,6 +47,7 @@ exports.resetAll = async function() {
     await Tattooist.deleteMany({})
     await Tattoo.deleteMany({})
     await Reservation.deleteMany({})
+    await Auction.deleteMany({})
 }
 
 // 모든 도안 정보 반환
@@ -61,6 +68,11 @@ exports.getUser = async function() {
 // 모든 예약 정보 반환
 exports.getReservation = async function() {
     return Reservation.find()
+}
+
+// 모든 경매 정보 반환
+exports.getAuction = async function() {
+    return Auction.find()
 }
 
 // 블록체인에 데이터 기록

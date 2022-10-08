@@ -28,7 +28,8 @@ exports.userLogin = async function(body) {
             image: user['image'],
             description: user['description'],
             location : user['location'],
-            email : user['email']
+            email : user['email'],
+            kakao_id : user['kakao_id']
         }
     });
 }
@@ -95,7 +96,8 @@ exports.tattooistLogin = async function(body) {
             description : tattooist['description'],
             specialize : tattooist['specialize'],
             location : tattooist['location'],
-            email : tattooist['email']
+            email : tattooist['email'],
+            kakao_id : tattooist['kakao_id']
         }
     })
 }
@@ -314,7 +316,7 @@ exports.createAuction = async function(params, body) {
     let new_auction = new Auction()
 
     // ImageStorage 사용 파라미터 준비
-    const imageStorage_params = { title : new_auction['_id'], image : body.image, mime : body.mime }
+    const imageStorage_params = { title : String(new_auction['_id']), image : body.image, mime : body.mime }
     // 이미지 업로드 후, url 반환
     const image_url = await imageStorage.upload(imageStorage_params)
 
