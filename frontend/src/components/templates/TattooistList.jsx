@@ -14,8 +14,8 @@ import useTattooistList from "../../hooks/useTattooistList";
 
 /**
  * 상위 컴포넌트 === ShowTattooistList.jsx
- * 타투이스트 목록 템플릿 
- * @param {String} filter 추천순/ 최신순 
+ * 타투이스트 목록 템플릿
+ * @param {String} filter 추천순/ 최신순
  */
 
 const TattooistList = ({ filter }) => {
@@ -43,13 +43,17 @@ const TattooistList = ({ filter }) => {
                 <TattooistContainer key={tattooist.tattooist_id}>
                   {getCookie("tattooist_id") ? (
                     <>
-                    <TattooistControlDisabled/>
-                    <Tattooist tattooist={tattooist} />
+                      <TattooistControlDisabled />
+                      <Tattooist tattooist={tattooist} />
                     </>
                   ) : (
                     <>
-                    <Tattooist tattooist={tattooist} />
-                    <TattooistControlBox tattooist={tattooist} />
+                      <Tattooist tattooist={tattooist} />
+                      <TattooistControlBox 
+                        type={"tattooist"}
+                        id={tattooist.tattooist_id}
+                        isFollowed={tattooist.isFollowed}
+                      />
                     </>
                   )}
                 </TattooistContainer>

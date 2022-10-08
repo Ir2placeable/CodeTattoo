@@ -637,7 +637,18 @@ export const TattooistControl = styled.div`
   flex-direction: column;
   justify-content: center;
   position: relative;
-  left: -40px;
+
+  ${(props) => {
+    if (props.type === "tattooist") {
+      return css`
+        left: -40px;
+      `;
+    } else if (props.type === "bidder") {
+      return css`
+        margin: 0 50px;
+      `;
+    }
+  }}
 `;
 
 export const TattooistControlDisabled = styled.div`
@@ -831,9 +842,6 @@ export const SmallDraftBox = styled.div`
   flex-direction: column;
   padding: 20px;
   justify-content: center;
-  align-items: center;
-  // box-shadow: 5px 5px 15px 0px rgba(72, 72, 72, 0.5);
-
   position: relative;
 `;
 
@@ -852,9 +860,8 @@ export const DraftEditBtn = styled.div`
 `;
 
 export const SmallDraftImg = styled.img`
-  width: 400px;
-  height: 400px;
-  // object-fit: contain;
+  width: 540px;
+  height: 540px;
   object-fit: cover;
   box-sizing: border-box;
   border-radius: 8px;
@@ -867,7 +874,7 @@ export const SmallDraftImg = styled.img`
 export const SmallDraftInfoBox = styled.div`
   // background-color: orange;
   //display: flex;
-  width: 400px;
+  padding: 0 10px;
   line-height: 35px;
   // justify-content: space-between;
   //align-items: center;
@@ -883,13 +890,14 @@ export const SmallDraftTitle = styled.div`
 export const SmallTattooistBox = styled.div`
   flex-basis: 55%;
   padding: 20px;
+  margin-top: 20px;
   box-shadow: 5px 5px 15px 0px rgba(72, 72, 72, 0.5);
   display: flex;
   flex-direction: column;
   justify-content: center;
   border-radius: 8px;
-  // justify-content: space-evenly;
   align-items: center;
+  max-height: 500px;
 `;
 
 export const SmallTattooistProfileBox = styled.div`
@@ -1098,7 +1106,6 @@ export const ProfileImg = styled.img`
   color: #000;
   text-align: center;
   border-radius: 70%;
-  // object-fit: contain;
   object-fit: cover;
   z-index: 1;
   background-color: #aaa;
@@ -1618,28 +1625,41 @@ export const AuctionTagBox = styled.div`
   font-weight: 700;
   padding: 0 10px;
   border-radius: 10px;
-  margin-top: 25px;
-  margin-bottom: 10px;
   width: fit-content;
-  background-color: #c9cfdd;
   ${(props) => {
     if (props.type === "도안 요청") {
       return css`
-      background-color: #aac9fe;
+        background-color: #aac9fe;
+        margin-top: 25px;
+        margin-bottom: 10px;
       `;
     } else if (props.type === "커버 업") {
       return css`
-      background-color: #b7d0ed;
+        background-color: #b7d0ed;
+        margin-top: 25px;
+        margin-bottom: 10px;
       `;
     } else if (props.type === "기타") {
       return css`
-      background-color: #cad0ed;
-      `
+        background-color: #cad0ed;
+        margin-top: 25px;
+        margin-bottom: 10px;
+      `;
+    } else if (props.type === "detail") {
+      return css`
+        background-color: #cad0ed;
+        font-size: 24px;
+        line-height: 54px;
+        margin-right: 20px;
+        border-radius: 10px 0 0 10px;
+        min-width: 55px;
+        text-align: center;
+      `;
     }
   }}
 `;
 
-export const AuctionImgBox = styled.img`
+export const AuctionImg = styled.img`
   width: 270px;
   height: 270px;
   background-color: #6f6f6f;
@@ -1647,7 +1667,26 @@ export const AuctionImgBox = styled.img`
   box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.4);
   object-fit: cover;
   cursor: pointer;
-  `;
+
+  ${(props) => {
+    if (props.type === "list") {
+      return css`
+        width: 270px;
+        height: 270px;
+      `;
+    } else if (props.type === "detail") {
+      return css`
+        width: 400px;
+        height: 400px;
+      `;
+    } else if (props.type === "bidder") {
+      return css`
+        width: 300px;
+        height: 300px;
+      `;
+    }
+  }}
+`;
 
 export const AuctionInfoBox = styled.div`
   display: flex;
@@ -1662,6 +1701,161 @@ export const AuctionCommentBox = styled.div`
   display: flex;
   justify-content: space-between;
   width: fit-content;
+`;
+
+// *** Auction Detail ***
+
+export const AuctionDetailMainBox = styled.div`
+  width: 100%;
+  max-height: 550px;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 50px;
+`;
+
+export const AuctionDetailImgBox = styled.div`
+  flex-basis: 35%;
+`;
+
+export const AuctionDetailInfoBox = styled.div`
+  flex-basis: 15%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  // box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.4);
+  border-radius: 10px;
+  padding: 20px;
+`;
+
+export const AuctionDetailInfoItem = styled.div`
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  margin-bottom: 30px;
+  border-radius: 10px;
+  box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.4);
+  font-size: 18px;
+  font-weight: 700;
+`;
+
+export const AuctionBtnBox = styled.div`
+  position: fixed;
+  left: 50%;
+  transform: translate(-50%, 0);
+  top: 85%;
+  z-index: 10;
+  display: flex;
+  width: 250px;
+  justify-content: center;
+`;
+export const AuctionUserOption = styled.div`
+  border-radius: 10px;
+  width: 100px;
+  height: 50px;
+  color: white;
+  font-size: 20px;
+  font-weight: 700;
+  text-align: center;
+  line-height: 50px;
+  cursor: pointer;
+  margin: 0 10px;
+  ${(props) => {
+    if (props.type === "remove") {
+      return css`
+        background-color: #fa3747;
+        &:hover {
+          background-color: #c70023;
+        }
+      `;
+    } else if (props.type === "select") {
+      return css`
+        background-color: #0bdf81;
+        &:hover {
+          background-color: #00b64c;
+        }
+      `;
+    }
+  }}
+`;
+export const AuctionTattooistOption = styled.div`
+  border-radius: 10px;
+  width: 100px;
+  height: 50px;
+  color: white;
+  font-size: 20px;
+  font-weight: 700;
+  text-align: center;
+  line-height: 50px;
+  cursor: pointer;
+  margin: 0 10px;
+  background-color: black;
+`;
+
+export const BidderMainBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 1500px;
+`;
+
+export const BidderContainer = styled.div`
+  display: flex;
+  align-items: center;
+  margin: 25px 0;
+  height: 350px;
+  width: fit-content;
+  padding: 0 50px;
+  background-color: #efefef;
+  border-radius: 10px;
+  // box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.4);
+`;
+
+export const BidderCheckBox = styled.input`
+  width: 50px;
+  height: 50px;
+  cursor: pointer;
+  margin: 0 20px;
+`;
+export const BidderImgBox = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 300px;
+  height: 300px;
+  margin: 50px;
+`;
+
+export const BidderProfileBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  height: 300px;
+  align-items: center;
+  justify-content: space-evenly;
+  margin: 0 30px;
+  padding: 0 20px;
+  // background-color: white;
+  border-radius: 10px;
+  // box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.4);
+`;
+
+export const BidderProfileItem = styled.div`
+  font-weight: 700;
+
+  ${(props) => {
+    if (props.type === "nickname") {
+      return css`
+        font-size: 24px;
+      `;
+    } else if (props.type === "specialize") {
+      return css`
+        font-size: 15px;
+        border-radius: 10px;
+        padding: 5px 10px;
+        background-color: #afafaf;
+      `;
+    }
+  }}
 `;
 
 // *** Image Upload ***

@@ -49,6 +49,7 @@ import AuctionSearch from "./components/templates/AuctionSearch";
 import DraftUpload from "./components/templates/DraftUpload";
 import AuctionUpload from "./components/templates/AuctionUpload";
 import ShowAuctionDetail from "./pages/ShowAuctionDetail";
+import BidderUpload from "./components/templates/BidderUpload";
 
 const App = () => {
 
@@ -82,6 +83,8 @@ const App = () => {
               <Route path="draft" element={<DraftUpload/>} />
               {/* 경매 등록 - 유저만 해당 */}
               <Route path="auction" element={<AuctionUpload/>}/>
+              {/* 응찰 등록 - 타투이스트만 해당 */}
+              <Route path="auction/:id" element={<BidderUpload/>}/>
             </Route>
             
             {/* 타투이스트 목록 */}
@@ -143,7 +146,7 @@ const App = () => {
             </Route>
 
             {/* 경매 목록 */}
-            <Route path="auction" element={<ShowAuctionList />}>
+            <Route path="auctions" element={<ShowAuctionList />}>
               <Route path="all" element={<AuctionList filter="auction/all" />} />
               <Route path="coverup" element={<AuctionList filter="auction/coverup" />} />
               <Route path="request" element={<AuctionList filter="auction/request" />} />
