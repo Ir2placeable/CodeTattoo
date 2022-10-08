@@ -15,8 +15,10 @@ exports.draft = async function(params, query) {
     let return_value
 
     let query_line = {}
-    if (Global.genre.includes(params.genre)) {
-        query_line = { genre : params.genre }
+
+    const genre = Global.genres.find(ele => ele.filter === params.genre)
+    if (genre) {
+        query_line = { genre : genre.value }
     }
 
     let sort_line = {}
