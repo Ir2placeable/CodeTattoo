@@ -49,6 +49,7 @@ import AuctionSearch from "./components/templates/AuctionSearch";
 import DraftUpload from "./components/templates/DraftUpload";
 import AuctionUpload from "./components/templates/AuctionUpload";
 import ShowAuctionDetail from "./pages/ShowAuctionDetail";
+import BidderUpload from "./components/templates/BidderUpload";
 
 const App = () => {
 
@@ -67,8 +68,12 @@ const App = () => {
 
             {/* 도안 목록 */}
             <Route path="drafts" element={<ShowDraftList />}>
-              <Route path="best" element={<DraftList filter="drafts/best" />} />
-              <Route path="all" element={<DraftList filter="drafts/all" />} />
+              <Route path="best" element={<DraftList filter="drafts/best/else" />} />
+              <Route path="all" element={<DraftList filter="drafts/all/else" />} />
+              <Route path="best/scalp" element={<DraftList filter="drafts/best/scalp" />} />
+              <Route path="all/scalp" element={<DraftList filter="drafts/all/scalp" />} />
+              <Route path="best/eyebrow" element={<DraftList filter="drafts/best/eyebrow" />} />
+              <Route path="all/eyebrow" element={<DraftList filter="drafts/all/eyebrow" />} />
               <Route path="search/:title" element={<DraftSearch />} />
             </Route>
 
@@ -78,6 +83,8 @@ const App = () => {
               <Route path="draft" element={<DraftUpload/>} />
               {/* 경매 등록 - 유저만 해당 */}
               <Route path="auction" element={<AuctionUpload/>}/>
+              {/* 응찰 등록 - 타투이스트만 해당 */}
+              <Route path="auction/:id" element={<BidderUpload/>}/>
             </Route>
             
             {/* 타투이스트 목록 */}
@@ -139,7 +146,7 @@ const App = () => {
             </Route>
 
             {/* 경매 목록 */}
-            <Route path="auction" element={<ShowAuctionList />}>
+            <Route path="auctions" element={<ShowAuctionList />}>
               <Route path="all" element={<AuctionList filter="auction/all" />} />
               <Route path="coverup" element={<AuctionList filter="auction/coverup" />} />
               <Route path="request" element={<AuctionList filter="auction/request" />} />

@@ -18,7 +18,7 @@ const DraftSearch = memo(() => {
           '{title}'에 대한 검색결과 입니다. 
         </SearchResText>
 
-        <DraftList filter="drafts/search" title={title} />
+        <DraftList filter="drafts/search/0" title={title} />
       
     </>
   );

@@ -1,4 +1,6 @@
-export const genres = [
+export const genre = [
+  { text: '두피문신', name: 'scalp' },
+  { text: '눈썹문신', name: 'eyebrow' },
   { text: '올드스쿨', name: 'oldSchool' },
   { text: '뉴스쿨', name: 'newSchool' },
   { text: '재패니즈', name: 'japanese' },

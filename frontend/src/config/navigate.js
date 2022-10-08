@@ -92,3 +92,7 @@ export const goAuctionDetail = (id) => {
 export const goAuctionUpload = () => {
     window.location.replace(`/#/upload/auction`);
 }
+
+export const goBidderUpload = (id) => {
+    window.location.replace(`/#/upload/auction/${id}`)
+}

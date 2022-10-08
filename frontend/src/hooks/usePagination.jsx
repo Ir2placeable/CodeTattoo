@@ -23,27 +23,29 @@ const usePagination = ({ filter }) => {
       _filter = `/${a}/${b}`
 
       if(!query){
-        query = `/?`
+        query = `/0?`
       } else {
         query += '&'
       }
 
-      if(a === 'drafts'){
+      if(a === 'drafts' || a === 'auctions'){
         query += 'title='
       } else if(a === 'tattooists'){
         query += 'nickname='
       }
 
       query += `${keyword}`
+    } else if(filter === '/drafts/best' || filter === '/drafts/all'){
+      _filter += '/else'
     }
-
+    
     const res = await axios.get(`${APIURL}${_filter}/0${query}`);
 
     if(res.data.success){
       setCount(res.data.count);
     } else {
+      console.log(`${APIURL}${_filter}/0${query}`);
       console.log('usePagination error');
-      console.log(res.data);
     }
 
   }

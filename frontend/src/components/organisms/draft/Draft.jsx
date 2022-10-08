@@ -9,6 +9,7 @@ import {
   DraftImgDiv,
   DraftImgHoverDiv,
   DraftDrawerImgDiv,
+  DraftGenreDiv,
 } from "../../../styledComponents";
 
 import DraftTitle from "../../atomic/draft/DraftTitle";
@@ -38,6 +39,7 @@ const Draft = ({
   drawer_image,
   drawer_nickname,
   isScraped,
+  genre
 }) => {
   // Hover Style
   const [hover, setHover] = useState(false);
@@ -68,6 +70,10 @@ const Draft = ({
 
           <DraftDrawer>{drawer_nickname}</DraftDrawer>
         </DraftDrawerDiv>
+
+        <DraftGenreDiv>
+          {genre}
+        </DraftGenreDiv>
 
         <DraftImgDiv onClick={goDetail}>
           <DraftImage src={image} alt={title} id={draft_id} onHover={onHover} />
