@@ -21,7 +21,7 @@ const ShowAuctionList = () => {
       {/* 정렬 네비게이션 */}
       <SmallNav
         data={[
-          { text: "root", path: "/auction" },
+          { text: "root", path: "/auctions" },
           { text: "전체", path: "/auctions/all" },
           { text: "커버 업", path: "/auctions/coverup" },
           { text: "도안 요청", path: "/auctions/request" },
