@@ -9,10 +9,10 @@ import {
   AuctionTagBox,
 } from "../../styledComponents";
 
-/**
- * 
- * @param {*} param0 
- * @returns 
+/** 
+ * 상위 컴포넌트 === ShowAuctionDetail.jsx
+ * 경매 상세 템플릿
+ * @param {Object} detail 경매 상세 데이터 
  */
 
 const AuctionDetail = ({ detail }) => {

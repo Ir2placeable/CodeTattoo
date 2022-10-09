@@ -14,6 +14,11 @@ import { getCookie } from "../../config/cookie";
 import { goAuctionDetail } from "../../config/navigate";
 import { useParams } from "react-router-dom";
 
+/**
+ * 상위 컴포넌트 === ShowDraftUpload.jsx
+ * 응찰 업로드 템플릿 
+ */
+
 const BidderUpload = () => {
     const param = useParams();
     const auction_id = param.id;
@@ -64,7 +69,7 @@ const BidderUpload = () => {
       }
       
       const res = await axios.post(
-        `${APIURL}/create/auction/${auction_id}`,
+        `${APIURL}/auction/${auction_id}`,
         {
           image: image.data,
           mime: image.mime,
@@ -76,7 +81,7 @@ const BidderUpload = () => {
       if (res.data.success) {
         goAuctionDetail(auction_id);
       } else {
-        console.log("도안 등록 실패");
+        console.log(`${APIURL}/auction/${auction_id}`);
       }
     };
   
