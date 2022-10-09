@@ -4,7 +4,12 @@ const variable = {
     draftShowLimit : 12,
     tattooistShowLimit : 6,
     auctionShowLimit : 12,
-    genre : ['scalp', 'eyebrow', 'cover', 'request']
+    genres : [
+        { filter : 'eyebrow', value : '눈썹문신'},
+        { filter : 'scalp', value : '두피문신'},
+        { filter : 'cover', value : '흉터커버'},
+        { filter : 'request', value : '도안요청'}
+    ]
 }
 
 module.exports = variable
