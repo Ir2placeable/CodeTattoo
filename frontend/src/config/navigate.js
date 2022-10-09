@@ -82,7 +82,7 @@ export const goReservPending = () => {
 // Auction
 
 export const goAuctionList = () => {
-    window.location.replace(`/#/auction/all`);
+    window.location.replace(`/#/auctions/all`);
 }
 
 export const goAuctionDetail = (id) => {

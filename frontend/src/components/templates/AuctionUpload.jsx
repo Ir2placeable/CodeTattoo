@@ -15,6 +15,11 @@ import { getCookie } from "../../config/cookie";
 import { goAuctionList } from "../../config/navigate";
 import { auction } from "../../data";
 
+/**
+ * 상위 컴포넌트 === ShowDraftUpload.jsx
+ * 경매 업로드 템플릿 
+ */
+
 const AuctionUpload = () => {
   
   // 이미지 (base64 형식)
@@ -79,6 +84,7 @@ const AuctionUpload = () => {
     if (res.data.success) {
       goAuctionList();
     } else {
+      console.log(`${APIURL}/create/auction/${getCookie("user_id")}`);
       console.log("도안 등록 실패");
     }
   };

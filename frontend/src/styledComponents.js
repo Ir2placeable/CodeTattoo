@@ -1582,6 +1582,7 @@ export const AuctionListDiv = styled.div`
   justify-content: stretch;
   align-items: center;
   position: relative;
+  margin-bottom: 50px;
   // background-color: #4f4f4f;
 `;
 
