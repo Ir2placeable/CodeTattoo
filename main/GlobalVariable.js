@@ -7,7 +7,7 @@ const variable = {
     genres : [
         { filter : 'eyebrow', value : '눈썹문신'},
         { filter : 'scalp', value : '두피문신'},
-        { filter : 'cover', value : '흉터커버'},
+        { filter : 'coverup', value : '흉터커버'},
         { filter : 'request', value : '도안요청'}
     ]
 }
