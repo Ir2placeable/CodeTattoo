@@ -37,18 +37,28 @@ const SmallNav = ({ data, isSearch, loc }) => {
 
       if(filter === data[1].path){
         setFirstBtn(true)
+        setSecondBtn(false)
       } else if(filter === data[2].path){
+        setFirstBtn(false)
         setSecondBtn(true)
       }
     } else {
       if (path === data[0].path || path === data[1].path) {
         setFirstBtn(true);
+        setSecondBtn(false)
+        setThirdBtn(false)
       } else if (path === data[2].path) {
+        setFirstBtn(false)
         setSecondBtn(true);
+        setThirdBtn(false)
       } else if (path === data[3].path) {
+        setFirstBtn(false)
+        setSecondBtn(false)
         setThirdBtn(true);
       } else {
         setFirstBtn(false);
+        setSecondBtn(false)
+        setThirdBtn(false)
         setSearch("");
       }
     }
