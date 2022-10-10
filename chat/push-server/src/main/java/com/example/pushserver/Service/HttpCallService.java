@@ -48,19 +48,5 @@ public class HttpCallService {
         RestTemplate restTemplate = new RestTemplate();
         return restTemplate.exchange(url, method, entity,String.class);
     }
-
-    /**
-     * Http 요청 method
-     *
-     * @ param URI url 요청 URL 정보
-     * @ param HttpMethod method 요청 Method 정보
-     * @ param  HttpEntity<?> entity 요청 EntityClient 객체 정보
-     * @ return HttpEntity 생성된 HttpClient객체 정보 반환
-     */
-    public ResponseEntity<String> httpRequest(URI url, HttpMethod method, HttpEntity<?> entity){
-        RestTemplate restTemplate = new RestTemplate();
-        return restTemplate.exchange(url, method, entity,String.class);
-    }
-
-
+    
 }
