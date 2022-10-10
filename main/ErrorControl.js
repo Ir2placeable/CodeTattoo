@@ -7,6 +7,7 @@ const errorTable = {
     4 : "reservation id 입력 오류",
     5 : "tattoo_id 입력 오류",
     6 : "filter 입력 오류",
+    7 : "auction_id 입력 오류",
     10 : "탐색 결과 없음",
     11 : "검색 결과 없음",
     20 : "email 중복",

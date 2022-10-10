@@ -9,6 +9,7 @@ const {Auction} = require("../DBModel/Auction")
 
 const blockchain = require("../module/blockchain")
 const chatServer = require("../module/chatServer")
+const notiServer = require("../module/notiServer")
 const imageStorage = require("../module/imageStorage");
 
 // 유저 로그인
@@ -345,6 +346,7 @@ exports.deleteAuction = async function(params, body) {
 // 경매 응찰
 exports.bidAuction = async function(params, body) {
     const auction = await Auction.findOne({ _id : params.id })
+    if (!auction) { throw 7 }
 
     // ImageStorage 사용 파라미터 준비
     const imageStorage_params = { title : auction['_id'] + body.tattooist_id , image : body.image, mime : body.mime }
@@ -358,10 +360,36 @@ exports.bidAuction = async function(params, body) {
     }
 
     await Auction.updateOne({ _id : params.id }, {$push : { bidders : bidder }})
+
+    // 알림 전송
+    const user = await User.findOne({ _id : auction['creator'] })
+    if (!user) { throw 1 }
+    const tattooist = await Tattooist.findOne({ _id : body['tattooist_id'] })
+    if (!tattooist) { throw 2 }
+
+    const noti_params = {
+        user_id : user['_id'],
+        user_kakao : user['kakao_id'],
+        tattooist_id : tattooist['_id'],
+        tattooist_kakao : tattooist['kakao_id']
+    }
+    await notiServer.requestNotification(30, noti_params)
 }
 // 경매 입찰
 exports.finishAuction = async function(params, body) {
     await Auction.updateOne({ _id : params.id }, {$set : { finished : true, winner : body.drawer_id }})
+
+    // 알림 전송
+    const tattooist = await Tattooist.findOne({ _id : body.drawer_id })
+    if (!tattooist) { throw 2 }
+
+    const noti_params = {
+        user_id : undefined,
+        user_kakao : undefined,
+        tattooist_id : tattooist['_id'],
+        tattooist_kakao : tattooist['kakao']
+    }
+    await notiServer.requestNotification(32, noti_params)
 }
 
 // 예약 생성 (= 상담 요청)
@@ -378,6 +406,19 @@ exports.createReservation = async function(body) {
         reservation_id : new_reservation['_id']
     }
     await chatServer.createChat(chat_params)
+
+    const user = await User.findOne({ _id : body.customer_id })
+    if (!user) { throw 1 }
+    const tattooist = await Tattooist.findOne({ _id : body.tattooist_id })
+    if (!tattooist) { throw 2 }
+
+    const noti_params = {
+        user_id : user['_id'],
+        user_kakao : user['kakao_id'],
+        tattooist_id : tattooist['_id'],
+        tattooist_kakao : tattooist['kakao_id']
+    }
+    await notiServer.requestNotification(1, noti_params)
 }
 // 예약 정보 수정 : date, time_slot, cost 수정 Only
 exports.editReservation= async function(params, body) {
@@ -404,8 +445,20 @@ exports.confirmReservation= async function(params, body) {
         if (err) { throw 23 }
     })
 
-    // ***body.tattooist_id 이용 -> 해당 타투이스트에게 알림 전송 구현 필요***
-    // ***body.user_id 이용 -> 해당 유저에게 알림 전송 구현 필요***
+    const reservation = await Reservation.findOne({ _id : params.id })
+
+    const user = await User.findOne({ _id : reservation['customer_id'] })
+    if (!user) { throw 1 }
+    const tattooist = await Tattooist.findOne({ _id : reservation['tattooist_id'] })
+    if (!tattooist) { throw 2 }
+
+    const noti_params = {
+        user_id : user['_id'],
+        user_kakao : user['kakao_id'],
+        tattooist_id : tattooist['_id'],
+        tattooist_kakao : tattooist['kakao_id']
+    }
+    await notiServer.requestNotification(2, noti_params)
 }
 // 예약 거절
 exports.rejectReservation= async function(params, body) {
@@ -461,6 +514,15 @@ exports.beginProcedure = async function(params, body) {
     await new_tattoo.save()
     await Reservation.updateOne({ _id : params.id }, {$set : { procedure_status : true,  tattoo_id : new_tattoo['_id'] }})
     await User.updateOne({ _id : body.user_id }, {$push : { tattoos : new_tattoo['_id'] }})
+
+    // 알림 전송
+    const noti_params = {
+        user_id : user['_id'],
+        user_kakao : user['kakao_id'],
+        tattooist_id : tattooist['_id'],
+        tattooist_kakao : tattooist['kakao_id']
+    }
+    await notiServer.requestNotification(20, noti_params)
 }
 // 타투 작업 완료
 exports.finishProcedure = async function(params, body) {
@@ -487,5 +549,17 @@ exports.finishProcedure = async function(params, body) {
     await Tattooist.updateOne({ _id : body.tattooist_id }, {$push : { artworks : reservation['tattoo_id'] }})
     await chatServer.deleteChat({ reservation_id : reservation['_id'] })
     await Reservation.deleteOne({ _id : params.id })
+
+    // 알림 전송
+    const user = await User.findOne({ _id : reservation['customer_id'] })
+    if (!user) { throw 1 }
+
+    const noti_params = {
+        user_id : user['_id'],
+        user_kakao : user['kakao_id'],
+        tattooist_id : tattooist['_id'],
+        tattooist_kakao : tattooist['kakao_id']
+    }
+    await notiServer.requestNotification(21, noti_params)
 }
 // 타투 이력 조회
