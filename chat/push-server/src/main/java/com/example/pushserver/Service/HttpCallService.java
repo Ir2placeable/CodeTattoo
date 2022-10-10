@@ -48,5 +48,5 @@ public class HttpCallService {
         RestTemplate restTemplate = new RestTemplate();
         return restTemplate.exchange(url, method, entity,String.class);
     }
-    
+
 }

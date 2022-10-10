@@ -22,10 +22,50 @@ public class KakaoAPIController {
     @Autowired
     CustomMessageService customMessageService;
 
-    @GetMapping("/")
+    @GetMapping("/test")
     public String serviceStart(String code) {
         if(authService.getKakaoAuthToken(code)) {
             customMessageService.sendMyMessage();
+            return "메시지 전송 성공";
+        }else {
+            return "토큰발급 실패";
+        }
+    }
+
+    @GetMapping("/reservation")
+    public String reservationCall(String code) {
+        if(authService.getKakaoAuthToken(code)) {
+            customMessageService.sendReservationMessage();
+            return "메시지 전송 성공";
+        }else {
+            return "토큰발급 실패";
+        }
+    }
+
+    @GetMapping("/workstart")
+    public String workstartCall(String code) {
+        if(authService.getKakaoAuthToken(code)) {
+            customMessageService.sendWorkStartMessage();
+            return "메시지 전송 성공";
+        }else {
+            return "토큰발급 실패";
+        }
+    }
+
+    @GetMapping("/workfinish")
+    public String workfinishCall(String code) {
+        if(authService.getKakaoAuthToken(code)) {
+            customMessageService.sendWorkFinishMessage();
+            return "메시지 전송 성공";
+        }else {
+            return "토큰발급 실패";
+        }
+    }
+
+    @GetMapping("/auction")
+    public String auctionCall(String code) {
+        if(authService.getKakaoAuthToken(code)) {
+            customMessageService.sendAuctionMessage();
             return "메시지 전송 성공";
         }else {
             return "토큰발급 실패";
