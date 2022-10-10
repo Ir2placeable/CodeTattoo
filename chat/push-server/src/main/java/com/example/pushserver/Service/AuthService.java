@@ -31,7 +31,7 @@ public class AuthService extends HttpCallService{
         parameters.add("code", code);
         parameters.add("grant_type", "authorization_code");
         parameters.add("client_id", "dde99ab7b75e57429dd9cd2c8de94294");
-        parameters.add("redirect_url", "http://localhost:88");
+        parameters.add("redirect_url", "http://localhost:3030");
 
         HttpEntity<?> requestEntity = httpClientEntity(header, parameters);
 

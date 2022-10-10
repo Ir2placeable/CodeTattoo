@@ -22,22 +22,32 @@ public class KakaoAPIController {
     @Autowired
     CustomMessageService customMessageService;
 
-    @GetMapping("/kakao")
-    public ResponseEntity kakaoCall(@RequestParam String code) {
-        Gson gson = new Gson();
-        JsonObject temp = new JsonObject();
-        HttpHeaders responseHeaders = new HttpHeaders();
-        responseHeaders.add("Content-Type", "application/json; charset=UTF-8");
-
-        System.out.println("code = " + code);
+    @GetMapping("/")
+    public String serviceStart(String code) {
         if(authService.getKakaoAuthToken(code)) {
             customMessageService.sendMyMessage();
-            temp.addProperty("success", true);
-            return new ResponseEntity<>(gson.toJson(temp), responseHeaders, HttpStatus.OK);
+            return "메시지 전송 성공";
         }else {
-            temp.addProperty("success", "true");
-            temp.addProperty("success", false);
-            return new ResponseEntity<>(gson.toJson(temp), responseHeaders, HttpStatus.OK);
+            return "토큰발급 실패";
         }
     }
+
+//    @GetMapping("/kakao")
+//    public ResponseEntity kakaoCall(@RequestParam String code) {
+//        Gson gson = new Gson();
+//        JsonObject temp = new JsonObject();
+//        HttpHeaders responseHeaders = new HttpHeaders();
+//        responseHeaders.add("Content-Type", "application/json; charset=UTF-8");
+//
+//        System.out.println("code = " + code);
+//        if(authService.getKakaoAuthToken(code)) {
+//            customMessageService.sendMyMessage();
+//            temp.addProperty("success", true);
+//            return new ResponseEntity<>(gson.toJson(temp), responseHeaders, HttpStatus.OK);
+//        }else {
+//            temp.addProperty("success", "true");
+//            temp.addProperty("success", false);
+//            return new ResponseEntity<>(gson.toJson(temp), responseHeaders, HttpStatus.OK);
+//        }
+//    }
 }
