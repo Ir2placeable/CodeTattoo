@@ -336,9 +336,8 @@ exports.auctionDetail = async function(params, query) {
 
     const auction = await Auction.findOne({ _id : params.id })
 
-    let bidders
+    let bidders = []
     for await (let bidder of auction['bidders']) {
-        bidders = []
         const tattooist = await Tattooist.findOne({ _id : bidder['bidder_id'] })
         if (!tattooist) { continue }
 

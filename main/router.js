@@ -179,7 +179,7 @@ server.get('/auction/:id', (req, res) => {
 
     page.auctionDetail(req.params, req.query)
         .then((returned) => {
-            res.send({ success : true, auction : returned.return_value})
+            res.send({ success : true, auction : returned.return_value })
         })
         .catch((err) => {
             res.send(ErrorLogging(err))
