@@ -299,8 +299,9 @@ exports.auction = async function(params) {
     let return_value
 
     let query_line = {}
-    if (Global.genres.includes(params.genre)) {
-        query_line = { genre : params.genre }
+    const genre = Global.genres.find(ele => ele.filter === params.genre)
+    if (genre) {
+        query_line = { genre : genre.value }
     }
 
     if (params.page === '0') {
