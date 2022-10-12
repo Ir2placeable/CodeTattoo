@@ -19,6 +19,7 @@ const errorTable = {
 
     30 : "블록체인 정보 없음",
     31 : "채팅 서버 연결 실패",
+    32 : "푸시 서버 연결 실패"
 }
 
 module.exports = errorTable

@@ -9,7 +9,7 @@ const {Auction} = require("../DBModel/Auction")
 
 const blockchain = require("../module/blockchain")
 const chatServer = require("../module/chatServer")
-const notiServer = require("../module/notiServer")
+const pushServer = require("../module/pushServer")
 const imageStorage = require("../module/imageStorage");
 
 // 유저 로그인
@@ -373,7 +373,8 @@ exports.bidAuction = async function(params, body) {
         tattooist_id : tattooist['_id'],
         tattooist_kakao : tattooist['kakao_id']
     }
-    await notiServer.requestNotification(30, noti_params)
+    const push_success = await pushServer.requestNotification(30, noti_params)
+    if (!push_success) { throw 32 }
 }
 // 경매 입찰
 exports.finishAuction = async function(params, body) {
@@ -389,7 +390,8 @@ exports.finishAuction = async function(params, body) {
         tattooist_id : tattooist['_id'],
         tattooist_kakao : tattooist['kakao']
     }
-    await notiServer.requestNotification(32, noti_params)
+    const push_success = await pushServer.requestNotification(32, noti_params)
+    if (!push_success) { throw 32 }
 }
 
 // 예약 생성 (= 상담 요청)
@@ -405,7 +407,8 @@ exports.createReservation = async function(body) {
         tattooist_id : body.tattooist_id,
         reservation_id : new_reservation['_id']
     }
-    await chatServer.createChat(chat_params)
+    const chat_success = await chatServer.createChat(chat_params)
+    if (!chat_success) { throw 31 }
 
     const user = await User.findOne({ _id : body.customer_id })
     if (!user) { throw 1 }
@@ -418,7 +421,8 @@ exports.createReservation = async function(body) {
         tattooist_id : tattooist['_id'],
         tattooist_kakao : tattooist['kakao_id']
     }
-    await notiServer.requestNotification(1, noti_params)
+    const push_success = await pushServer.requestNotification(1, noti_params)
+    if (!push_success) { throw 32 }
 }
 // 예약 정보 수정 : date, time_slot, cost 수정 Only
 exports.editReservation= async function(params, body) {
@@ -458,7 +462,8 @@ exports.confirmReservation= async function(params, body) {
         tattooist_id : tattooist['_id'],
         tattooist_kakao : tattooist['kakao_id']
     }
-    await notiServer.requestNotification(2, noti_params)
+    const push_success = await pushServer.requestNotification(2, noti_params)
+    if (!push_success) { throw 32 }
 }
 // 예약 거절
 exports.rejectReservation= async function(params, body) {
@@ -477,7 +482,8 @@ exports.rejectReservation= async function(params, body) {
         tattooist_id : body.tattooist_id,
         reservation_id : params.id
     }
-    await chatServer.deleteChat(chat_params)
+    const chat_success = await chatServer.deleteChat(chat_params)
+    if(!chat_success) { throw 31 }
 }
 
 // 타투 작업 시작
@@ -522,7 +528,8 @@ exports.beginProcedure = async function(params, body) {
         tattooist_id : tattooist['_id'],
         tattooist_kakao : tattooist['kakao_id']
     }
-    await notiServer.requestNotification(20, noti_params)
+    const push_server = await pushServer.requestNotification(20, noti_params)
+    if (!push_success) { throw 32 }
 }
 // 타투 작업 완료
 exports.finishProcedure = async function(params, body) {
@@ -547,8 +554,9 @@ exports.finishProcedure = async function(params, body) {
 
     await blockchain.invoke("endTattoo", reservation['tattoo_id'], blockchain_params)
     await Tattooist.updateOne({ _id : body.tattooist_id }, {$push : { artworks : reservation['tattoo_id'] }})
-    await chatServer.deleteChat({ reservation_id : reservation['_id'] })
     await Reservation.deleteOne({ _id : params.id })
+    const chat_success = await chatServer.deleteChat({ reservation_id : reservation['_id'] })
+    if (!chat_success) { throw 31 }
 
     // 알림 전송
     const user = await User.findOne({ _id : reservation['customer_id'] })
@@ -560,6 +568,7 @@ exports.finishProcedure = async function(params, body) {
         tattooist_id : tattooist['_id'],
         tattooist_kakao : tattooist['kakao_id']
     }
-    await notiServer.requestNotification(21, noti_params)
+    const push_success = await pushServer.requestNotification(21, noti_params)
+    if (!push_success) { throw 32 }
 }
 // 타투 이력 조회
