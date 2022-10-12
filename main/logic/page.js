@@ -299,8 +299,9 @@ exports.auction = async function(params) {
     let return_value
 
     let query_line = {}
-    if (Global.genres.includes(params.genre)) {
-        query_line = { genre : params.genre }
+    const genre = Global.genres.find(ele => ele.filter === params.genre)
+    if (genre) {
+        query_line = { genre : genre.value }
     }
 
     if (params.page === '0') {
@@ -336,9 +337,8 @@ exports.auctionDetail = async function(params, query) {
 
     const auction = await Auction.findOne({ _id : params.id })
 
-    let bidders
+    let bidders = []
     for await (let bidder of auction['bidders']) {
-        bidders = []
         const tattooist = await Tattooist.findOne({ _id : bidder['bidder_id'] })
         if (!tattooist) { continue }
 

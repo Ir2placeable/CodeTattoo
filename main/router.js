@@ -179,7 +179,7 @@ server.get('/auction/:id', (req, res) => {
 
     page.auctionDetail(req.params, req.query)
         .then((returned) => {
-            res.send({ success : true, auction : returned.return_value})
+            res.send({ success : true, auction : returned.return_value })
         })
         .catch((err) => {
             res.send(ErrorLogging(err))
@@ -547,7 +547,6 @@ server.patch('/reservation/:id', (req, res) => {
         .catch((err) => {
             res.send(ErrorLogging(err))
         })
-
 })
 // 명령 : 예약 도안 수정
 server.post('/reservation/:id', (req, res) => {
@@ -560,7 +559,6 @@ server.post('/reservation/:id', (req, res) => {
         .catch((err) => {
             res.send(ErrorLogging(err))
         })
-
 })
 // 명령 : 예약 확정
 server.post('/confirm/reservation/:id', (req, res) => {
@@ -573,7 +571,6 @@ server.post('/confirm/reservation/:id', (req, res) => {
         .catch((err) => {
             res.send(ErrorLogging(err))
         })
-
 })
 // 명령 : 예약 불발
 server.post('/reject/reservation/:id', (req, res) => {
@@ -586,7 +583,6 @@ server.post('/reject/reservation/:id', (req, res) => {
         .catch((err) => {
             res.send(ErrorLogging(err))
         })
-
 })
 // 명령 : 작업 시작
 server.post('/procedure/:id', (req, res) => {
@@ -612,11 +608,30 @@ server.patch('/procedure/:id', (req, res) => {
             res.send(ErrorLogging(err))
         })
 })
-// 명령 : 유저 이력 조회 (미개발)
-server.get('/user/my-tattoo/:id', (req, res) => {
+// 명령 : 마이타투 이력 조회 (미개발)
+server.get('/my-tattoo/:id', (req, res) => {
     console.log('command : my tattoo querying')
-})
 
+    command.myTattooInfo(req.params)
+        .then((returned) => {
+            res.send({ success : true, tattoos : returned.return_value })
+        })
+        .catch((err) => {
+            res.send(ErrorLogging(err))
+        })
+})
+// 명령 : 마이타투 이력 제공
+server.post('/my-tattoo/:id', (req, res) => {
+    console.log('command : my tattoo send')
+
+    command.myTattooSend(req.params, req.body)
+        .then((returned) => {
+            res.send({ success : true })
+        })
+        .catch((err) => {
+            res.send(ErrorLogging(err))
+        })
+})
 
 // 관리자 명령 모음
 // User 초기화
