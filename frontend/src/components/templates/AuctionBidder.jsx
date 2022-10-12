@@ -56,7 +56,7 @@ const AuctionBidder = ({ bidders, auction_id, user_id }) => {
       <BidderMainBox>
         {bidders && bidders.map((bidder) => (
           <BidderContainer key={bidder.drawer_id}>
-            {getCookie("user_id") && (
+            {getCookie("user_id") === user_id && (
               <BidderCheckBox
                 type="checkbox"
                 onClick={(e) => {

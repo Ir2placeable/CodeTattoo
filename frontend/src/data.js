@@ -13,13 +13,13 @@ export const genres = [
   { text: '폴리네시안', name: 'polynesian' },
   { text: '컬러', name: 'color' },
   { text: '수채화', name: 'waterColor' },
-  { text: '커스텀 레터링', name: 'customLettering' },
+  { text: '커스텀레터링', name: 'customLettering' },
   { text: '직접입력', name: 'selfInput' },
 ]
 
 export const auction = [
-  { text: "도안 요청", name: 'request'},
-  { text: "커버 업", name: 'coverUp'},
+  { text: "도안요청", name: 'request'},
+  { text: "커버업", name: 'coverUp'},
   { text: "기타", name: 'etc'}
 ]
 
