@@ -571,4 +571,41 @@ exports.finishProcedure = async function(params, body) {
     const push_success = await pushServer.requestNotification(21, noti_params)
     if (!push_success) { throw 32 }
 }
-// 타투 이력 조회
+// 마이타투 이력 조회
+exports.myTattooInfo = async function(params) {
+    let return_value = []
+
+    const user = await User.findOne({ _id : params.id })
+    if (!user) { throw 1 }
+
+    for await (let tattoo_id of user['tattoos']) {
+        const tattoo_info = await blockchain.getTattooInfo(tattoo_id)
+        const item = {
+            tattoo_id : tattoo_id,
+            image : tattoo_info['image']
+        }
+
+        return_value.push(item)
+    }
+
+    return {return_value}
+}
+
+// 마이타투 이력 제공
+exports.myTattooSend = async function(params, body) {
+    const tattoo_history = await blockchain.getTattooHistory(params.id)
+    if (!tattoo_history) { throw 30 }
+
+    const reservation = await Reservation.findOne({ _id : body.reservation_id })
+    if (!reservation) { throw 4 }
+
+    const chat_params = {
+        history : tattoo_history,
+        user_id : reservation['customer_id'],
+        tattooist_id : reservation['tattooist_id'],
+        reservation_id : body.reservation_id
+    }
+
+    const chat_success = await chatServer.myTattooSendRequest(chat_params)
+    if (!chat_success) { throw 31 }
+}
