@@ -50,6 +50,7 @@ import DraftUpload from "./components/templates/DraftUpload";
 import AuctionUpload from "./components/templates/AuctionUpload";
 import ShowAuctionDetail from "./pages/ShowAuctionDetail";
 import BidderUpload from "./components/templates/BidderUpload";
+import ChattingMyTattoo from "./components/organisms/chatting/ChattingMyTattoo";
 
 const App = () => {
 
@@ -143,6 +144,7 @@ const App = () => {
               <Route path="" element={<ChattingRoomEntry />} />
               <Route path=":reservation_id/room" element={<ChattingRoom />} />
               <Route path=":reservation_id/reservation" element={<ChattingReservation />} />
+              <Route path=":reservation_id/my-tattoo" element={<ChattingMyTattoo />} />
             </Route>
 
             {/* 경매 목록 */}

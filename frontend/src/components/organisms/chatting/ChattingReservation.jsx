@@ -168,7 +168,7 @@ const ChattingReservation = () => {
           삭제된 예약입니다.
         </DeletedReservationChatting>
       ) : (
-      <ChatReservationBox>
+      <ChatReservationBox >
         <ChatDraftBox>
           {reservation.image ? (
             <ChatDraftImg src={reservation.image} />
@@ -226,7 +226,7 @@ const ChattingReservation = () => {
 
       <ChatInputDiv type="back">
       {/* onClick={onPlusClick} */}
-        <ChatBtn type="image" onClick={goRoom} >
+        <ChatBtn type="image" style={{marginLeft: '21px'}} onClick={goRoom} >
           <FontAwesomeIcon icon={faMinus} />
         </ChatBtn>
       </ChatInputDiv>

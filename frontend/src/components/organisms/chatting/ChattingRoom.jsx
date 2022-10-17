@@ -272,6 +272,7 @@ const ChattingRoom = () => {
             </ChatDeleteImgIcon>
           </ChatChoosedImgDiv>
         )}
+
         {/* onClick={onPlusClick} */}
         <ChatBtn type="image" onClick={goReservation}>
           <FontAwesomeIcon icon={faPlus} />

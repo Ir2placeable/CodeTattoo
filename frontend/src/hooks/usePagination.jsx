@@ -15,7 +15,7 @@ const usePagination = ({ filter }) => {
     let _filter = filter;
 
     if(getCookie('user_id')){
-      query = `/?user_id=${getCookie('user_id')}`
+      query = `?user_id=${getCookie('user_id')}`
     }
     
     if(filter.split('/')[2] === 'search'){

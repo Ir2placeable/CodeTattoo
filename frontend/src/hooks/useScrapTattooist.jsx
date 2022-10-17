@@ -13,7 +13,7 @@ const useScrapTattooist = ({ page }) => {
   const id = getCookie('user_id');
 
   const sendRequest = async() => {
-    const res = await axios.get(`${APIURL}/scraps/tattooist/${page}/?user_id=${id}`);
+    const res = await axios.get(`${APIURL}/scraps/tattooist/${page}?user_id=${id}`);
 
     if(res.data.success){
       setTattooists(res.data.tattooists);

@@ -34,6 +34,7 @@ const ChattingItem = ({ item, onClick }) => {
     }
 
   }, [location.pathname])
+
   
   return (
     <>

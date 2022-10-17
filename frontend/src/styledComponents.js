@@ -902,11 +902,11 @@ export const SmallDraftBox = styled.div`
 `;
 
 export const DraftEditBtn = styled.div`
-  font-size: 25px;
+  font-size: 30px;
   position: absolute;
   cursor: pointer;
-  top: 60px;
-  right: 95px;
+  top: 35px;
+  right: 40px;
   color: #bbb;
   transition: 0.3s;
 
@@ -3254,12 +3254,19 @@ export const ChattingRoomDiv = styled.div`
   position: relative;
 
   ${(props) => {
-    if (props.state === "entry")
+    if (props.state === "entry"){
       return css`
         display: flex;
         justify-content: center;
         align-items: center;
       `;
+    }
+    else if(props.state === 'mytattoo'){
+      return css`
+        padding-top: 0;
+        height: calc(610px - 90px);
+      `
+    }
   }}
 `;
 
@@ -3385,8 +3392,12 @@ export const ChatInputDiv = styled.div`
     if (props.type === "back") {
       return css`
         justify-content: start;
-        margin-left: 22px;
+        // margin-left: 22px;
       `;
+    } else if(props.type === 'back-two'){
+      return css`
+        justify-content: space-between;
+      `
     }
   }}
 `;
@@ -3438,7 +3449,8 @@ export const ChatBtn = styled.div`
   font-weight: bold;
   font-size: 18px;
   text-align: center;
-  width: 90px;
+  // width: 90px;
+  padding: 0 15px;
   margin: 0 10px;
   box-shadow: 5px 5px 15px 0px rgba(72, 72, 72, 0.5);
   ${(props) => {
@@ -3448,6 +3460,7 @@ export const ChatBtn = styled.div`
       `;
     } else if (props.type === "image") {
       return css`
+        padding: 0;
         background-color: #7aa500;
         overflow: hidden;
         border-radius: 70%;
@@ -3457,22 +3470,28 @@ export const ChatBtn = styled.div`
       `;
     } else if (props.type === "cancel") {
       return css`
-        padding: 5px 10px;
+        // padding: 5px 10px;
         background-color: #e60023;
         border: solid 3px #e60023;
       `;
     } else if (props.type === "modify") {
       return css`
-        padding: 5px 10px;
+        // padding: 5px 10px;
         background-color: #484848;
         border: solid 3px #484848;
       `;
     } else if (props.type === "confirm") {
       return css`
-        padding: 5px 10px;
+        // padding: 5px 10px;
         background-color: #19ce60;
         border: solid 3px #19ce60;
       `;
+    } else if(props.type === 'mytattoo'){
+      return css`
+      background-color: #2F55CD;
+      border: solid 3px #2F55CD;
+      margin-right: 21px;
+      `
     }
   }}
 `;
@@ -3579,3 +3598,44 @@ export const ExitChattingRoom = styled.div`
   z-index: 11;
   cursor: pointer;
 `;
+
+export const ChattingMyTattooDiv = styled.div`
+// background-color: orange;
+height: calc(100% - 20px);
+width: calc(100% - 20px);
+padding: 10px;
+display: flex;
+flex-wrap: wrap;
+justify-content: flex-start;
+align-items: flex-start;
+overflow-y: scroll;
+`
+
+export const ChattingMyTattooImgDiv = styled.div`
+width: calc(702px / 4);
+height: calc(702px / 4);
+border-radius: 3px;
+margin: 10px;
+
+// border: 3px solid #646464;
+// background-color: white;
+// cursor: pointer;
+
+// &:hover{
+//   border-color: white;
+// }
+`
+
+export const ChattingMyTattooImg = styled.img`
+width: 100%;
+height: 100%;
+object-fit: cover;
+
+border: 3px solid #646464;
+background-color: white;
+cursor: pointer;
+
+&:hover{
+  border-color: white;
+}
+`
