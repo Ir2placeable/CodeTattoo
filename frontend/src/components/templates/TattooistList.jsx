@@ -27,7 +27,7 @@ const TattooistList = ({ filter }) => {
     filter: filter,
     page: page,
   });
-
+  
   return (
     <>
       <ListDiv>

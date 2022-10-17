@@ -23,7 +23,7 @@ const usePagination = ({ filter }) => {
       _filter = `/${a}/${b}`
 
       if(!query){
-        query = `/0?`
+        query = `0?`
       } else {
         query += '&'
       }

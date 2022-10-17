@@ -4,7 +4,7 @@ import { SearchResText } from "../../styledComponents";
 import AuctionList from "./AuctionList";
 
 /**
- * 상위 컴포넌트 === ShowAuction.jsx
+ * 상위 컴포넌트 === ShowAuctionList.jsx
  * 경매 목록 템플릿 (검색)
  */
 

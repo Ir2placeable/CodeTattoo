@@ -13,12 +13,15 @@ import TattooistControlBox from "../organisms/tattooist/TattooistControlBox";
 import AuctionTattooistBtn from "../atomic/auction/AuctionTattooistBtn";
 
 /**
- *
- * @param {Object} bidders
- * @returns
- */
+ * 상위 컴포넌트 === ShowAuctionDetail.jsx
+ * 응찰자 목록 템플릿
+ * @param {Array} bidders 응찰자 리스트 
+ * @param {String} auction_id 경매 ID
+ * @param {String} user_id 유저 ID
+*/
 
 const AuctionBidder = ({ bidders, auction_id, user_id }) => {
+
   const [checkedInputs, setCheckedInputs] = useState([]);
   const [drawer, setDrawer] = useState();
   const [remove, bidder] = useAuctionUser({
@@ -51,9 +54,9 @@ const AuctionBidder = ({ bidders, auction_id, user_id }) => {
       {getCookie("tattooist_id") && (<AuctionTattooistBtn auction_id={auction_id}/>)}
       
       <BidderMainBox>
-        {bidders.map((bidder) => (
+        {bidders && bidders.map((bidder) => (
           <BidderContainer key={bidder.drawer_id}>
-            {getCookie("user_id") && (
+            {getCookie("user_id") === user_id && (
               <BidderCheckBox
                 type="checkbox"
                 onClick={(e) => {

@@ -2,6 +2,7 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 import { useState, useEffect } from "react";
 import { APIURL } from "../config/key";
+import { getCookie } from "../config/cookie";
 
 /** 경매 목록 페이지 / 경매 목록 데이터 API
  * @param {String} filter 전체 / 커버 업 / 도안 요청
@@ -15,13 +16,25 @@ const useAuctionList = ({ filter, page }) => {
     const title = param.title;
 
     const sendRequest = async () => {
+        let query = ""
 
-        const res = await axios.get(`${APIURL}/${filter}/${page}`);
+        if(getCookie('user_id')){
+          query = `?user_id=${getCookie('user_id')}`
+          if(title){
+            query += `&title=${title}`
+          }
+        } else {
+          if(title){
+            query = `?title=${title}`
+          }
+        }
+
+        const res = await axios.get(`${APIURL}/${filter}/${page}${query}`);
     
         if (res.data.success) {
           setAuctions(res.data.auctions);
         } else {
-          console.log("Auction List Get Request Fail");
+          console.log(`${APIURL}/${filter}/${page}${query}`);
         }
       };
     

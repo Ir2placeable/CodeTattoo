@@ -149,9 +149,9 @@ const App = () => {
 
             {/* 경매 목록 */}
             <Route path="auctions" element={<ShowAuctionList />}>
-              <Route path="all" element={<AuctionList filter="auction/all" />} />
-              <Route path="coverup" element={<AuctionList filter="auction/coverup" />} />
-              <Route path="request" element={<AuctionList filter="auction/request" />} />
+              <Route path="all" element={<AuctionList filter="auctions/all" />} />
+              <Route path="coverup" element={<AuctionList filter="auctions/coverup" />} />
+              <Route path="request" element={<AuctionList filter="auctions/request" />} />
               <Route path="search/:title" element={<AuctionSearch />} />
             </Route>
 

@@ -4,7 +4,12 @@ import { useEffect, useState } from "react";
 import { getCookie } from "../config/cookie";
 import { useParams } from "react-router-dom";
 
+/** 경매 상세 페이지 / 경매 상세 데이터 API
+ * @returns 경매 상세 데이터 반환
+ */
+
 const useAuctionDetail = () => {
+    
     const [auction, setAuction] = useState({
         auction_id: "",
         creator: "",

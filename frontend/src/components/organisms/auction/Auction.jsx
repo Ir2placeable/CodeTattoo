@@ -6,7 +6,6 @@ import { goAuctionDetail } from "../../../config/navigate";
 /** 상위 컴포넌트 === AuctionList.jsx
  * 경매 목록 페이지 / 경매
  * @param {Object} auction 경매 데이터 
- * @returns 
  */
 const Auction = ({auction}) => {
     

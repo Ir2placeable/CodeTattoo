@@ -299,8 +299,9 @@ exports.auction = async function(params) {
     let return_value
 
     let query_line = {}
-    if (Global.genre.includes(params.genre)) {
-        query_line = { genre : params.genre }
+    const genre = Global.genres.find(ele => ele.filter === params.genre)
+    if (genre) {
+        query_line = { genre : genre.value }
     }
 
     if (params.page === '0') {
@@ -336,9 +337,8 @@ exports.auctionDetail = async function(params, query) {
 
     const auction = await Auction.findOne({ _id : params.id })
 
-    let bidders
+    let bidders = []
     for await (let bidder of auction['bidders']) {
-        bidders = []
         const tattooist = await Tattooist.findOne({ _id : bidder['bidder_id'] })
         if (!tattooist) { continue }
 
@@ -356,12 +356,14 @@ exports.auctionDetail = async function(params, query) {
         bidders.push(item)
     }
 
-    const user = await User.findOne({ _id : query.user_id })
-    if (!user) { throw 1 }
+    if (query.user_id) {
+        const user = await User.findOne({ _id : query.user_id })
+        if (!user) { throw 1 }
 
-    for (let bidder of bidders) {
-        if(user['follows'].includes(bidder.drawer_id)) {
-            bidder['isFollowed'] = true
+        for (let bidder of bidders) {
+            if(user['follows'].includes(bidder.drawer_id)) {
+                bidder['isFollowed'] = true
+            }
         }
     }
 
