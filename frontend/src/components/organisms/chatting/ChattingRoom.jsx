@@ -29,7 +29,7 @@ import { faArrowRightFromBracket } from "@fortawesome/free-solid-svg-icons";
 import { WEBSOCKETURL } from "../../../config/key";
 import moment from "moment";
 import { getCookie } from "../../../config/cookie";
-import { goChatting, goChattingReserv, goTattooistDetail } from "../../../config/navigate";
+import { goChatting, goChattingMyTattoo, goChattingReserv, goTattooistDetail } from "../../../config/navigate";
 import ChattingPlusMenu from "../../atomic/chatting/ChattingPlusMenu";
 
 /**
@@ -236,10 +236,6 @@ const ChattingRoom = () => {
     }
   }
 
-  const goReservation = () => {
-    goChattingReserv(params.id, params.reservation_id);
-  }
-
   return (
     <>
     <ChattingRoomDiv>
@@ -276,12 +272,16 @@ const ChattingRoom = () => {
           </ChatChoosedImgDiv>
         )}
 
-        {/* onClick={onPlusClick} */}
-        <ChatBtn type="image" onClick={goReservation}>
+        {/* onClick={goReservation} */}
+        <ChatBtn type="image" 
+          onClick={() => setPlusClick(plusClick ? false : true)}
+        >
           <FontAwesomeIcon icon={faPlus} />
         </ChatBtn>
 
-        <ChattingPlusMenu />
+        {plusClick && (
+          <ChattingPlusMenu id={params.id} reserv_id={params.reservation_id} />
+        )}
 
         <ChattingImgChoice onSelectFile={onSelectFile} />
 

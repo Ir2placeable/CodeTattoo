@@ -77,6 +77,10 @@ export const goChattingReserv = (id, reserv_id) => {
     window.location.replace(`/#/chat/${id}/${reserv_id}/reservation`);
 }
 
+export const goChattingMyTattoo = (id, reserv_id) => {
+    window.location.replace(`/#/chat/${id}/${reserv_id}/my-tattoo`)
+}
+
 // Reservation 
 export const goReservConfirm = () => {
     window.location.replace(`/#/reservations/confirmed`);

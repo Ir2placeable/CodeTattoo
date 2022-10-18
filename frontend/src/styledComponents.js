@@ -3663,6 +3663,18 @@ position: absolute;
 top: -80px;
 left: 22px;
 z-index: 20;
+
+${(props) => {
+  if(props.type === 'tattooist'){
+    return css`
+      top: -35px;
+    `
+  } else if(props.type === ''){
+    return css`
+      display: none;
+    `
+  }
+}}
 `
 export const ChattingPlusItem = styled.div`
 width: 100%;

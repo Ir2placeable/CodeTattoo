@@ -20,9 +20,12 @@ const useMyTattoo = () => {
       reservation_id
     })
 
-    if(!res.data.success){
+    if(res.data.success){
+      return true;
+    } else {
       console.log('provide my tattoo fail')
       console.log(res)
+      return false;
     }
   }
 

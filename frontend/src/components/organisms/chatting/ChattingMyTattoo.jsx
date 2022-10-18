@@ -8,10 +8,12 @@ import {
   ChatInputDiv, ChattingMyTattooDiv, 
   ChattingMyTattooImg, 
   ChattingMyTattooImgDiv, 
-  ChattingRoomDiv 
+  ChattingRoomDiv, 
+  DeletedReservationChatting
 } from '../../../styledComponents';
 import MyTattooItem from '../../atomic/chatting/MyTattooItem';
-import { useOutletContext } from 'react-router-dom';
+import { useOutletContext, useParams } from 'react-router-dom';
+import { goChattingRoom } from '../../../config/navigate';
 
 const ChattingMyTattoo = () => {
   // 채팅 정보
@@ -22,6 +24,7 @@ const ChattingMyTattoo = () => {
   const [getMyTattoo, provideMyTattoo] = useMyTattoo()
   const [tattoos, setTattoos] = useState([])
   const [choices, setChoices] = useState([])
+  const params = useParams();
 
   useEffect(() => {
     const user_id = getCookie('user_id')
@@ -32,7 +35,7 @@ const ChattingMyTattoo = () => {
       })
   }, [])
 
-  // border-color: #F7FF00;
+  
   const onClick = (e, tattoo_id) => {
     let temp = choices;
 
@@ -49,47 +52,55 @@ const ChattingMyTattoo = () => {
     return true
   }
 
+  const goRoom = () => {
+    goChattingRoom(params.id, params.reservation_id)
+  }
+
+  const onSendMyTattoo = () => {
+    if(choices.length === 0){
+      alert('마이타투 이력을 선택해주세요!')
+      return;
+    }
+
+    choices.forEach((choice) => {
+      provideMyTattoo({
+        tattoo_id: choice,
+        reservation_id: params.reservation_id
+      })
+        .then(res => {
+          if(!res){
+            alert('마이타투 이력 전송 실패')
+            return;
+          }
+        })
+    })
+    
+  }
+
   return (
     <>
       <ChattingRoomDiv state="mytattoo">
-        <ChattingMyTattooDiv>
-          <MyTattooItem tattoo_id={0} 
-            image="../../img/react.jpg" 
-            onClick={onClick}
-          />
-
-          <MyTattooItem tattoo_id={1} 
-            image="../../img/react.jpg" 
-            onClick={onClick}
-          />
-
-          <MyTattooItem tattoo_id={2} 
-            image="../../img/react.jpg" 
-            onClick={onClick}
-          />
-
-          <MyTattooItem tattoo_id={3} 
-            image="../../img/react.jpg" 
-            onClick={onClick}
-          />
-
-          <MyTattooItem tattoo_id={4} 
-            image="../../img/react.jpg" 
-            onClick={onClick}
-          />
-
-          <MyTattooItem tattoo_id={5} 
-            image="../../img/react.jpg" 
-            onClick={onClick}
-          />
-
-        </ChattingMyTattooDiv>
+        {tattoos.length === 0 ? (
+          <DeletedReservationChatting style={{marginTop: '71px'}}>
+            마이타투 이력이 없습니다. 
+          </DeletedReservationChatting>
+        ) : (
+          <ChattingMyTattooDiv>
+            {tattoos.map(tattoo => (
+              <MyTattooItem key={tattoo.tattoo_id}
+                tattoo_id={tattoo.tattoo_id}
+                image={tattoo.image}
+                onClick={onClick}
+              />
+            ))}
+          </ChattingMyTattooDiv>
+        )}
 
         <ChatInputDiv type="back-two">
-          <ChatBtn type="image" style={{marginLeft: '21px'}}>
+          <ChatBtn type="image" style={{marginLeft: '21px'}} onClick={goRoom}>
             <FontAwesomeIcon icon={faMinus} />
           </ChatBtn>
-          <ChatBtn type="mytattoo">
+          <ChatBtn type="mytattoo" onClick={onSendMyTattoo}>
             나의 타투이력 제공
           </ChatBtn>
         </ChatInputDiv>
