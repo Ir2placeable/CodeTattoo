@@ -3454,6 +3454,8 @@ export const ChatBtn = styled.div`
   padding: 0 15px;
   margin: 0 10px;
   box-shadow: 5px 5px 15px 0px rgba(72, 72, 72, 0.5);
+
+  position: relative;
   ${(props) => {
     if (props.type === "submit") {
       return css`
@@ -3609,22 +3611,15 @@ display: flex;
 flex-wrap: wrap;
 justify-content: flex-start;
 align-items: flex-start;
+align-content: flex-start;
 overflow-y: scroll;
 `
 
 export const ChattingMyTattooImgDiv = styled.div`
-width: calc(702px / 4);
-height: calc(702px / 4);
+width: calc(809px / 4 - 22px);
+height: calc(809px / 4 - 22px);
 border-radius: 3px;
 margin: 10px;
-
-// border: 3px solid #646464;
-// background-color: white;
-// cursor: pointer;
-
-// &:hover{
-//   border-color: white;
-// }
 `
 
 export const ChattingMyTattooImg = styled.img`
@@ -3632,11 +3627,50 @@ width: 100%;
 height: 100%;
 object-fit: cover;
 
-border: 3px solid #646464;
+border-radius: 3px;
+border: 4px solid #646464;
 background-color: white;
 cursor: pointer;
 
+${(props) => {
+  if(props.type === 'click'){
+    return css`
+      border: 4px solid #f7ff00;
+
+      &:hover{
+        border-color: #f7ff00;
+      }
+    `
+  } else if(props.type === 'none'){
+    return css`
+      border: 4px solid #646464;
+
+      &:hover{
+        border-color: white;
+      }
+    `
+  }
+}}
+`
+
+export const ChattingPlusMenuDiv = styled.div`
+border-radius: 10px;
+background-color: #E6EFCC;
+width: 220px;
+overflow: hidden;
+
+position: absolute;
+top: -80px;
+left: 22px;
+z-index: 20;
+`
+export const ChattingPlusItem = styled.div`
+width: 100%;
+line-height: 45px;
+cursor: pointer;
+text-align: center;
+
 &:hover{
-  border-color: white;
+  background-color: #C4D68E;
 }
 `

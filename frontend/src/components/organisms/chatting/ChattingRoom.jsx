@@ -30,6 +30,7 @@ import { WEBSOCKETURL } from "../../../config/key";
 import moment from "moment";
 import { getCookie } from "../../../config/cookie";
 import { goChatting, goChattingReserv, goTattooistDetail } from "../../../config/navigate";
+import ChattingPlusMenu from "../../atomic/chatting/ChattingPlusMenu";
 
 /**
  * 상위 컴포넌트 === Chatting.jsx
@@ -49,6 +50,8 @@ const ChattingRoom = () => {
     image: '',
     mime: ''
   })
+  // 플러스 버튼 클릭 상태
+  const [plusClick, setPlusClick] = useState(false)
 
   const params = useParams();
   // 현재 로그인된 유저의 id
@@ -277,6 +280,8 @@ const ChattingRoom = () => {
         <ChatBtn type="image" onClick={goReservation}>
           <FontAwesomeIcon icon={faPlus} />
         </ChatBtn>
+
+        <ChattingPlusMenu />
 
         <ChattingImgChoice onSelectFile={onSelectFile} />
 

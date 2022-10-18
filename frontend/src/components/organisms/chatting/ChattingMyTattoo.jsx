@@ -10,8 +10,14 @@ import {
   ChattingMyTattooImgDiv, 
   ChattingRoomDiv 
 } from '../../../styledComponents';
+import MyTattooItem from '../../atomic/chatting/MyTattooItem';
+import { useOutletContext } from 'react-router-dom';
 
 const ChattingMyTattoo = () => {
+  // 채팅 정보
+  const { data } = useOutletContext();
+  // console.log(data)
+
   // { user_id }, { tattoo_id, reservation_id }
   const [getMyTattoo, provideMyTattoo] = useMyTattoo()
   const [tattoos, setTattoos] = useState([])
@@ -28,45 +34,54 @@ const ChattingMyTattoo = () => {
 
   // border-color: #F7FF00;
   const onClick = (e, tattoo_id) => {
-    // if(e.target !== e.currentTarget){
-    //   return;
-    // }
-    
     let temp = choices;
-    // const tattoo_id = e.target.id;
-    console.log('click: ', tattoo_id)
-    console.log(temp)
 
     const dup = temp.findIndex(id => id === tattoo_id)
 
     if(dup !== -1){ // 이미 선택했을 때, 선택 해제
       temp = temp.filter(id => id !== tattoo_id)
-      e.target.style.border = '3px solid #646464';
       setChoices(temp)
-      return;
+      return false
     }
 
     temp.push(tattoo_id)
-    e.target.style.border = '3px solid #f7ff00'
     setChoices(temp)
+    return true
   }
 
   return (
     <>
       <ChattingRoomDiv state="mytattoo">
         <ChattingMyTattooDiv>
+          <MyTattooItem tattoo_id={0} 
+            image="../../img/react.jpg" 
+            onClick={onClick}
+          />
 
-          <ChattingMyTattooImgDiv onClick={(e) => onClick(e, 1)}>
-            <ChattingMyTattooImg src="../../img/react.jpg" />
-          </ChattingMyTattooImgDiv>
+          <MyTattooItem tattoo_id={1} 
+            image="../../img/react.jpg" 
+            onClick={onClick}
+          />
 
-          <ChattingMyTattooImgDiv onClick={(e) => onClick(e, 2)}>
-            <ChattingMyTattooImg src="../../img/react.jpg" />
-          </ChattingMyTattooImgDiv>
+          <MyTattooItem tattoo_id={2} 
+            image="../../img/react.jpg" 
+            onClick={onClick}
+          />
 
-          <ChattingMyTattooImgDiv onClick={(e) => onClick(e, 3)}>
-            <ChattingMyTattooImg src="../../img/react.jpg" />
-          </ChattingMyTattooImgDiv>
+          <MyTattooItem tattoo_id={3} 
+            image="../../img/react.jpg" 
+            onClick={onClick}
+          />
+
+          <MyTattooItem tattoo_id={4} 
+            image="../../img/react.jpg" 
+            onClick={onClick}
+          />
+
+          <MyTattooItem tattoo_id={5} 
+            image="../../img/react.jpg" 
+            onClick={onClick}
+          />
 
         </ChattingMyTattooDiv>
 
