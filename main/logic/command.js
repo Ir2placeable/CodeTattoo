@@ -352,6 +352,11 @@ exports.bidAuction = async function(params, body) {
     const auction = await Auction.findOne({ _id : params.id })
     if (!auction) { throw 7 }
 
+    // 중복 응찰 불가
+    if (auction['bidders'].map(bidder => bidder['bidder_id']).includes(body.tattooist_id)) {
+        throw 24
+    }
+
     // ImageStorage 사용 파라미터 준비
     const imageStorage_params = { title : auction['_id'] + body.tattooist_id , image : body.image, mime : body.mime }
     // 이미지 업로드 후, url 반환

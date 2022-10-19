@@ -194,6 +194,7 @@ exports.tattooistDetail = async function(params, query) {
         description : tattooist['description'],
         specialize : tattooist['specialize'],
         followers : tattooist['follower'],
+        kakao_id : tattooist['kakao_id'],
         isFollowed : false,
     }
 
