@@ -61,7 +61,11 @@ exports.userSignOut = async function(body) {
     }
     // 유저가 팔로우한 타투이스트의 팔로우 수 감소
     for await (let tattooist_id of user['follows']) {
-        await Tattooist.updateOne({ _id : tattooist_id }, {$inc : { follower : -1 }})
+        await Tattooist.updateOne({ _id: tattooist_id }, {$inc: {follower: -1}})
+    }
+    // 유저가 생성한 경매 삭제
+    for await (let auction_id of user['auctions']) {
+        await Auction.deleteOne({ _id : auction_id })
     }
 
     // 유저 데이터 삭제
