@@ -86,8 +86,7 @@ exports.userSignOut = async function(body) {
     // 푸시 서버에 삭제 요청
     if (user['kakao_id']) {
         const push_params = {
-            id : user['_id'],
-            kakao_id : user['kakao_id']
+            id : user['_id']
         }
 
         const push_success = await pushServer.requestDelete('user', push_params)
@@ -172,8 +171,7 @@ exports.tattooistSignOut = async function(body) {
     // 푸시 서버에 삭제 요청
     if (tattooist['kakao_id']) {
         const push_params = {
-            id : tattooist['_id'],
-            kakao_id : tattooist['kakao_id']
+            id : tattooist['_id']
         }
 
         const push_success = await pushServer.requestDelete('tattooist', push_params)
