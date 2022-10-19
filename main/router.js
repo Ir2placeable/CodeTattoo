@@ -509,7 +509,7 @@ server.post('/auction/:id', (req, res) => {
             res.send(ErrorLogging(err))
         })
 })
-// 명령 : 경매 입찰
+// 명령 : 경매 낙찰
 server.patch('/auction/:id', (req, res) => {
     console.log('command : finish auction')
 

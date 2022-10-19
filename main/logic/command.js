@@ -385,10 +385,19 @@ exports.bidAuction = async function(params, body) {
     const push_success = await pushServer.requestNotification(30, noti_params)
     if (!push_success) { throw 32 }
 }
-// 경매 입찰
+// 경매 낙찰
 exports.finishAuction = async function(params, body) {
-    await Auction.updateOne({ _id : params.id }, {$set : { finished : true, winner : body.drawer_id }})
+    const auction = await Auction.updateOne({ _id : params.id }, {$set : { finished : true, winner : body.drawer_id }})
 
+    // 채팅 서버로 새로운 채팅 생성요청
+    const chat_params = {
+        user_id : auction['creator'],
+        tattooist_id : body['drawer_id'],
+        reservation_id : params.id
+    }
+    const chat_success = await chatServer.createChat(chat_params)
+    if (!chat_success) { throw 31 }
+    
     // 알림 전송
     const tattooist = await Tattooist.findOne({ _id : body.drawer_id })
     if (!tattooist) { throw 2 }
