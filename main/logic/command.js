@@ -43,6 +43,18 @@ exports.userRegister = async function(body) {
     // email 중복 통과, DB에 새로운 유저 정보 생성
     const new_user = new User(body)
     await new_user.save()
+
+    // 푸시 서버에 카톡 아이디 등록 요청
+    if (body.kakao_id) {
+        const push_params = {
+            id : user['_id'],
+            kakao_id : body['kakao_id']
+        }
+
+        const push_success = await pushServer.requestRegister('user', push_params)
+        if (!push_success) { throw 32 }
+    }
+
 }
 // 유저 회원탈퇴
 exports.userSignOut = async function(body) {
@@ -70,6 +82,17 @@ exports.userSignOut = async function(body) {
 
     // 유저 데이터 삭제
     await User.deleteOne({ email : body.email })
+
+    // 푸시 서버에 삭제 요청
+    if (user['kakao_id']) {
+        const push_params = {
+            id : user['_id'],
+            kakao_id : user['kakao_id']
+        }
+
+        const push_success = await pushServer.requestDelete('user', push_params)
+        if (!push_success) { throw 32 }
+    }
 }
 // 유저 비밀번호 변경
 exports.userPasswordEdit = async function(params, body) {
@@ -115,6 +138,17 @@ exports.tattooistRegister = async function(body) {
     // email 중복 통과 시, 입력된 데이터를 DB에 저장
     const new_tattooist = new Tattooist(body)
     await new_tattooist.save()
+
+    // 푸시 서버에 카톡 아이디 등록 요청
+    if (body.kakao_id) {
+        const push_params = {
+            id : tattooist['_id'],
+            kakao_id : body['kakao_id']
+        }
+
+        const push_success = await pushServer.requestRegister('tattooist', push_params)
+        if (!push_success) { throw 32 }
+    }
 }
 // 타투이스트 회원탈퇴
 exports.tattooistSignOut = async function(body) {
@@ -134,6 +168,17 @@ exports.tattooistSignOut = async function(body) {
 
     // 타투이스트 데이터 삭제
     await Tattooist.deleteOne({ email : body.email })
+
+    // 푸시 서버에 삭제 요청
+    if (tattooist['kakao_id']) {
+        const push_params = {
+            id : tattooist['_id'],
+            kakao_id : tattooist['kakao_id']
+        }
+
+        const push_success = await pushServer.requestDelete('tattooist', push_params)
+        if (!push_success) { throw 32 }
+    }
 }
 // 타투이스트 비밀번호 변경
 exports.tattooistPasswordEdit = async function(params, body) {
@@ -153,6 +198,17 @@ exports.userInfoEdit= async function(params, body) {
         if (!user) { throw 1 }
         if (err) { throw 23 }
     })
+
+    // 푸시 서버에 변경 요청
+    if (body['kakao_id']) {
+        const push_params = {
+            id : params.id,
+            kakao_id : body['kakao_id']
+        }
+
+        const push_success = await pushServer.requestModify('user', push_params)
+        if (!push_success) { throw 32 }
+    }
 }
 // 유저 이미지 변경
 exports.userImageEdit = async function(params, body) {
@@ -180,6 +236,17 @@ exports.tattooistInfoEdit= async function(params, body) {
         if (!tattooist) { throw 2 }
         if (err) { throw 23 }
     })
+
+    // 푸시 서버에 변경 요청
+    if (body['kakao_id']) {
+        const push_params = {
+            id : params.id,
+            kakao_id : body['kakao_id']
+        }
+
+        const push_success = await pushServer.requestModify('tattooist', push_params)
+        if (!push_success) { throw 32 }
+    }
 }
 // 타투이스트 이미지 변경
 exports.tattooistImageEdit = async function(params, body) {
