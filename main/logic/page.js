@@ -547,7 +547,8 @@ exports.userMyPage = async function(params) {
         user_id : user['_id'],
         nickname : user['nickname'],
         location : user['location'],
-        image : user['image']
+        image : user['image'],
+        kakao_id : user['kakao_id']
     }
 
     for await (let tattoo_id of user['tattoos']) {
