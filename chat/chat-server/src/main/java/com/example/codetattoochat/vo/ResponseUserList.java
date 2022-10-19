@@ -19,6 +19,8 @@ public class ResponseUserList {
     private String opponent_nickname;
     private String reservation_id;
     private Boolean confirmed;
+    private Boolean is_image;
+
     @Builder
     public ResponseUserList(
             Long id, // 유저 id
@@ -30,7 +32,8 @@ public class ResponseUserList {
             String opponent_image, // 자신이 아닌 상대방 image
             String opponent_nickname, // 자신이 아닌 상대방 닉네임
             String reservation_id, // 예약 id
-            Boolean confirmed // 예약 확정 정보
+            Boolean confirmed, // 예약 확정 정보
+            Boolean is_image// image여부
     ) {
         this.id = id;
         this.sender = sender;
@@ -42,6 +45,6 @@ public class ResponseUserList {
         this.opponent_nickname = opponent_nickname;
         this.reservation_id = reservation_id;
         this.confirmed = confirmed;
+        this.is_image = is_image;
     }
-
 }

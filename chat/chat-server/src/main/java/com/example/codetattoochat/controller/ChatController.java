@@ -315,7 +315,8 @@ public class ChatController {
                             .content(v.getContent())
                             .createdAt(v.getCreatedAt())
                             .reservation_id(v.getReservation_id())
-                                    .confirmed(confirmed)
+                            .confirmed(confirmed)
+                            .is_image(v.getIs_image())
                             .build());
                 }
                 check.clear();
@@ -349,6 +350,7 @@ public class ChatController {
                             .createdAt(v.getCreatedAt())
                             .reservation_id(v.getReservation_id())
                             .confirmed(confirmed)
+                            .is_image(v.getIs_image())
                             .build());
                 }
             }
@@ -372,6 +374,7 @@ public class ChatController {
             vtmp.addProperty("opponent_nickname", v.getOpponent_nickname());
             vtmp.addProperty("reservation_id", v.getReservation_id());
             vtmp.addProperty("confirmed", v.getConfirmed());
+            vtmp.addProperty("is_image", v.getIs_image());
             jArray.add(vtmp);
         }
         temp.add("userlist", jArray);
@@ -399,7 +402,7 @@ public class ChatController {
             }
             vtmp.addProperty("id", e.getId());
             vtmp.addProperty("content", e.getContent());
-            vtmp.addProperty("time", e.getCreatedAt());
+            vtmp.addProperty("created_at", e.getCreatedAt());
             vtmp.addProperty("mine", mine);
             vtmp.addProperty("receiver", e.getReceiver());
             vtmp.addProperty("is_image", e.getIs_image());

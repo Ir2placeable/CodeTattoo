@@ -22,10 +22,8 @@ public class ObjectStorageService {
 
     final String endPoint = "https://kr.object.ncloudstorage.com"; //Naver Cloud ObjectStorage End Point;
     final String regionName = "kr-standard"; //Naver Cloud ObjectStorage region Name;
-    @Value("${cloud.objectStorage.credentials.accessKey}")
-    private String accessKey; //Naver Cloud ObjectStorage access Key;
-    @Value("${cloud.objectStorage.credentials.secretKey}")
-    private String secretKey; //Naver Cloud ObjectStorage secret Key;
+    final String accessKey = "FDKsmR5tOoKNGPie5IK1";
+    final String secretKey = "rIsdHa0cITlo4QMfJcUP1dLQ7REwFG9u2lN3pzem";
 
     // S3 client
     final AmazonS3 s3 = AmazonS3ClientBuilder.standard() // S3에 접근하기 위한 객체 builc
