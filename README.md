@@ -10,6 +10,12 @@ This project has been officially submitted in [2022 Open SW Development Contest]
 
 <br/>
 
+## 프로젝트 문서 : Documentation
+
+[Notion](https://elfin-bottle-d20.notion.site/c0f37f92019e4b2da83548d6ad638917)
+
+<br/>
+
 ## 프로젝트 소개 : Abstract
 올바르고 안전한 타투문화를 전파하기 위해 시작된 오픈소스 프로젝트 입니다.
 
