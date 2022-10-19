@@ -476,6 +476,7 @@ const scrapDraft = async function(params, query) {
             image : draft['image'],
             title : draft['title'],
             like : draft['like'],
+            genre : draft['genre'],
             drawer_id : drawer['_id'],
             drawer_image : drawer['image'],
             drawer_nickname : drawer['nickname'],
