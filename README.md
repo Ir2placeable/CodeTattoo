@@ -8,4 +8,4 @@ This project has been officially submitted in [2022 Open SW Development Contest]
 
 ### [🌐 Prototype](http://www.codetattoo.shop)
 
-### [🚀 Project Docs](https://elfin-bottle-d20.notion.site/c0f37f92019e4b2da83548d6ad638917)
+### [🚀 About Project](https://elfin-bottle-d20.notion.site/c0f37f92019e4b2da83548d6ad638917)
