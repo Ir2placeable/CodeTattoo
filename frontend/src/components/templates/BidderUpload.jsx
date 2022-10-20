@@ -80,6 +80,9 @@ const BidderUpload = () => {
   
       if (res.data.success) {
         goAuctionDetail(auction_id);
+      } else if(res.data.code === 24) {
+          alert('이미 응찰 하였습니다.')
+          goAuctionDetail(auction_id);
       } else {
         console.log(`${APIURL}/auction/${auction_id}`);
       }

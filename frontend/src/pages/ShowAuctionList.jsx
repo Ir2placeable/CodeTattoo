@@ -26,8 +26,8 @@ const ShowAuctionList = () => {
           { text: "커버 업", path: "/auctions/coverup" },
           { text: "도안 요청", path: "/auctions/request" },
         ]}
-        isSearch={true}
-        loc={1.9}
+        isSearch={false}
+        loc={2.2}
       />
       {/* 도안 업로드 버튼 */}
       {getCookie("user_id") && <GoUploadBtn type="auction" text="글쓰기" filter="auction" />}
