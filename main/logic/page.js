@@ -194,6 +194,7 @@ exports.tattooistDetail = async function(params, query) {
         description : tattooist['description'],
         specialize : tattooist['specialize'],
         followers : tattooist['follower'],
+        kakao_id : tattooist['kakao_id'],
         isFollowed : false,
     }
 
@@ -475,6 +476,7 @@ const scrapDraft = async function(params, query) {
             image : draft['image'],
             title : draft['title'],
             like : draft['like'],
+            genre : draft['genre'],
             drawer_id : drawer['_id'],
             drawer_image : drawer['image'],
             drawer_nickname : drawer['nickname'],
@@ -547,7 +549,8 @@ exports.userMyPage = async function(params) {
         user_id : user['_id'],
         nickname : user['nickname'],
         location : user['location'],
-        image : user['image']
+        image : user['image'],
+        kakao_id : user['kakao_id']
     }
 
     for await (let tattoo_id of user['tattoos']) {
