@@ -2,6 +2,7 @@ import { ContentsDiv, HorizontalLine, ListDiv } from "../styledComponents";
 import AuctionDetail from "../components/templates/AuctionDetail";
 import useAuctionDetail from "../hooks/useAuctionDetail";
 import AuctionBidder from "../components/templates/AuctionBidder";
+import Pagination from "../components/organisms/common/Pagination";
 
 /* 경매 상세 페이지 */
 
@@ -18,7 +19,6 @@ const ShowAuctionDetail = () => {
   };
   const bidders = auction.bidders;
   
-  console.log(auction);
   return (
     <>
       {/* 경매 상세 */}

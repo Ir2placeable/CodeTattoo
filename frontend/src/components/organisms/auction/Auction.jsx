@@ -15,10 +15,18 @@ const Auction = ({auction}) => {
     const goDetail = () => {
         goAuctionDetail(auction.auction_id)
     }
+
+    let tagName = "기타";
+    if (auction.genre === "도안요청"){
+        tagName = "도안 요청";
+    } else if (auction.genre === "커버업") {
+        tagName = "커버 업";
+    } 
+
     return (
         <>
         <AuctionBox>
-            <AuctionTagBox type={auction.genre}>{auction.genre}</AuctionTagBox>
+            <AuctionTagBox type={tagName}>{tagName}</AuctionTagBox>
             <AuctionImg src={auction.image} onClick={goDetail} type="list"/>
             <AuctionInfoBox>
                 {auction.cost} 원

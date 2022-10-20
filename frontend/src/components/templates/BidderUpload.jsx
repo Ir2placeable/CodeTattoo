@@ -82,8 +82,11 @@ const BidderUpload = () => {
         goAuctionDetail(auction_id);
       } else if(res.data.code === 24) {
           alert('이미 응찰 하였습니다.')
+          console.log(res.data);
           goAuctionDetail(auction_id);
       } else {
+        alert('응찰이 불가능 합니다');
+        console.log(res.data);
         console.log(`${APIURL}/auction/${auction_id}`);
       }
     };
