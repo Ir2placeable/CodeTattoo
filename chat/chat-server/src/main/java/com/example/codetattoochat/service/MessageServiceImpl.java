@@ -88,7 +88,8 @@ public class MessageServiceImpl implements MessageService {
                     .receiver(String.valueOf(message[1]))
                     .content(String.valueOf(message[2]))
                     .createdAt(String.valueOf(message[3]))
-                            .reservation_id(String.valueOf(message[4]))
+                    .reservation_id(String.valueOf(message[4]))
+                    .is_image((Boolean) message[5])
                     .build());
         });
 

@@ -20,7 +20,7 @@ public interface MessageRepository extends JpaRepository<MessageEntity, Long> {
     );
 
 
-    @Query(value = "SELECT distinct sender, receiver, content, created_At, reservation_id " +
+    @Query(value = "SELECT distinct sender, receiver, content, created_At, reservation_id, is_image " +
             "FROM chat_msg m " +
             "WHERE m.sender = :sender OR m.receiver = :sender " +
             "ORDER BY m.id DESC",
