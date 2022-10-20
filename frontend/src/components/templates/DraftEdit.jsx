@@ -95,7 +95,7 @@ const DraftEdit = () => {
             value={title}
             onChange={(e) => {setTitle(e.target.value)}}
           />
-          <ImgText text="도안 이름" />
+          <ImgText text="도안 가격" />
           <LoadedImgTitle 
             type="text"
             placeholder="숫자만 입력해주세요. (단위: 원)"
