@@ -20,10 +20,10 @@ public class ObjectStorageService {
     @Autowired
     private MessageService messageService;
 
-    final String endPoint = "https://kr.object.ncloudstorage.com"; //Naver Cloud ObjectStorage End Point;
-    final String regionName = "kr-standard"; //Naver Cloud ObjectStorage region Name;
-    final String accessKey = "FDKsmR5tOoKNGPie5IK1";
-    final String secretKey = "rIsdHa0cITlo4QMfJcUP1dLQ7REwFG9u2lN3pzem";
+//    final String endPoint = "https://kr.object.ncloudstorage.com"; //Naver Cloud ObjectStorage End Point;
+//    final String regionName = "kr-standard"; //Naver Cloud ObjectStorage region Name;
+//    final String accessKey = "FDKsmR5tOoKNGPie5IK1";
+//    final String secretKey = "rIsdHa0cITlo4QMfJcUP1dLQ7REwFG9u2lN3pzem";
 
     // S3 client
     final AmazonS3 s3 = AmazonS3ClientBuilder.standard() // S3에 접근하기 위한 객체 builc
