@@ -70,11 +70,15 @@ const SmallTattooist = ({ tattooist }) => {
         <SmallTattooistInfoBox>
           <SmallTattooistNickname>
             {tattooist.drawer_nickname}
-            <TattooistBtn
-              content={following ? "UnFollow" : "Follow"}
-              event={onClick}
-              size={"small"}
-            />
+
+            {!getCookie('tattooist_id') && (
+              <TattooistBtn
+                content={following ? "UnFollow" : "Follow"}
+                event={onClick}
+                size={"small"}
+              />
+            )}
+            
           </SmallTattooistNickname>
 
           <SmallTattooistLocation>

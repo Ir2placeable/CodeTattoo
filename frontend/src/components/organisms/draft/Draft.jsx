@@ -18,6 +18,7 @@ import HeartIcon from "../../atomic/draft/HeartIcon";
 import UserIcon from "../../atomic/common/UserIcon";
 import { useState } from "react";
 import { goDraftDetail, goTattooistDetail } from "../../../config/navigate";
+import { getCookie } from "../../../config/cookie";
 
 /** 상위 컴포넌트 === DraftList.jsx
  * 도안 목록 페이지 / 도안
@@ -88,9 +89,12 @@ const Draft = ({
         <DraftImgInfo>
           <DraftTitle title={title} />
 
-          <DraftHeartBox>
-            <HeartIcon isScraped={isScraped} draft_id={draft_id} />
-          </DraftHeartBox>
+          {!getCookie('tattooist_id') && (
+            <DraftHeartBox>
+              <HeartIcon isScraped={isScraped} draft_id={draft_id} />
+            </DraftHeartBox>
+          )}
+      
         </DraftImgInfo>
       </DraftImgBox>
     </>

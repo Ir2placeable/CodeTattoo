@@ -1,5 +1,6 @@
 import React from "react";
 import { useEffect, useState } from "react";
+import { getCookie } from "../../../config/cookie";
 import {
   DraftHeartBox,
   SmallDraftImg,
@@ -33,12 +34,16 @@ const SmallDraft = ({ draft }) => {
           <SmallDraftImg src={draft.image} alt={draft.draft_id} />
           <SmallDraftInfoBox>
             <SmallDraftTitle>{draft.title}</SmallDraftTitle>
-            <DraftHeartBox>
-              <HeartIcon
-                isScraped={draft.isScraped}
-                draft_id={draft.draft_id}
-              />
-            </DraftHeartBox>
+
+            {!getCookie('tattooist_id') && (
+              <DraftHeartBox>
+                <HeartIcon
+                  isScraped={draft.isScraped}
+                  draft_id={draft.draft_id}
+                />
+              </DraftHeartBox>
+            )}
+            
           </SmallDraftInfoBox>
         </>
       )}

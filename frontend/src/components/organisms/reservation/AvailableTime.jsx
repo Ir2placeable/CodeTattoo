@@ -204,7 +204,7 @@ const AvailableTime = ({ value, isAdmin, id }) => {
             })}
           </TimeBox>
 
-          {!isAdmin ? (
+          {!isAdmin ? !getCookie('tattooist_id') && (
             <ReservRequestBtn onClick={onCreateReservation}>
               상담 문의
             </ReservRequestBtn>

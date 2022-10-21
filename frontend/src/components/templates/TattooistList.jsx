@@ -24,7 +24,7 @@ const TattooistList = ({ filter }) => {
 
   // 타투이스트 목록 데이터
   const tattooists = useTattooistList({
-    filter: filter,
+    filter: filter, 
     page: page,
   });
   

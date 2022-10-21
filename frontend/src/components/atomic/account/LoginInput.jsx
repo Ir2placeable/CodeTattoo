@@ -58,7 +58,7 @@ const LoginInput = ({ isTattooist }) => {
       setCookie("profile_desc", data.tattooist_info.description , {maxAge: 3000, path: '/'})
       setCookie("profile_location", data.tattooist_info.location , {maxAge: 3000, path: '/'})
       setCookie("profile_specialize", data.tattooist_info.specialize , {maxAge: 3000, path: '/'})
-
+      setCookie("kakao_id", data.tattooist_info.kakao_id)
       return data.tattooist_info.tattooist_id
     } else {
       setCookie("email", data.user_info.email , {maxAge: 3000, path: '/'})
@@ -66,7 +66,7 @@ const LoginInput = ({ isTattooist }) => {
       setCookie("user_id", data.user_info.user_id, {maxAge: 3000, path: '/'})
       setCookie("profile_img_src", data.user_info.image , {maxAge: 3000, path: '/'})
       setCookie("profile_location", data.user_info.location , {maxAge: 3000, path: '/'})
-
+      setCookie("kakao_id", data.user_info.kakao_id)
       return data.user_info.user_id
     }
   }

@@ -22,8 +22,12 @@ const usePagination = ({ filter }) => {
       const [ , a, b, keyword] = filter.split('/');
       _filter = `/${a}/${b}`
 
+      if(a === 'drafts'){
+        _filter += '/0'
+      }
+
       if(!query){
-        query = `0?`
+        query = `?`
       } else {
         query += '&'
       }

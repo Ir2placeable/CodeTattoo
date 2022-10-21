@@ -16,7 +16,7 @@ import TattooistBtn from "../../atomic/tattooist/TattooistBtn";
 
 const TattooistControlBox = ({ type, id, isFollowed }) => {
   // 팔로우 요청, 팔로우 취소 요청 API
-  const [follow, unfollow] = useFollowClick({ id });
+  const [follow, unfollow] = useFollowClick();
   // 팔로잉 여부
   const [following, setFollowing] = useState(false);
 
@@ -30,10 +30,10 @@ const TattooistControlBox = ({ type, id, isFollowed }) => {
     } else {
       if (following) {
         setFollowing(false);
-        unfollow();
+        unfollow({ tattooist_id: id });
       } else { 
         setFollowing(true);
-        follow();
+        follow({ tattooist_id: id });
       }
     }
   }, [following]);
@@ -45,7 +45,7 @@ const TattooistControlBox = ({ type, id, isFollowed }) => {
 
   return (
     <>
-      <TattooistControl type={type}>
+      <TattooistControl type={type} >
         <TattooistBtn
           content={following ? "UnFollow" : "Follow"}
           event={onClick}

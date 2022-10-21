@@ -31,7 +31,7 @@ const SmallNav = ({ data, isSearch, loc }) => {
   useEffect(() => {
     const path = location.pathname
 
-    if(data[0].path === '/drafts'){
+    if(data[0].path === '/drafts' || data[0].path === '/tattooists'){
       let [, , filter, ] = path.split('/')
       filter = data[0].path + '/' + filter;
 
@@ -43,24 +43,24 @@ const SmallNav = ({ data, isSearch, loc }) => {
         setSecondBtn(true)
       }
     } else {
-      if (path === data[0].path || path === data[1].path) {
-        setFirstBtn(true);
-        setSecondBtn(false)
-        setThirdBtn(false)
-      } else if (path === data[2].path) {
-        setFirstBtn(false)
-        setSecondBtn(true);
-        setThirdBtn(false)
-      } else if (path === data[3].path) {
-        setFirstBtn(false)
-        setSecondBtn(false)
-        setThirdBtn(true);
-      } else {
-        setFirstBtn(false);
-        setSecondBtn(false)
-        setThirdBtn(false)
-        setSearch("");
-      }
+        if (path === data[0].path || path === data[1].path) {
+          setFirstBtn(true);
+          setSecondBtn(false)
+          setThirdBtn(false)
+        } else if (path === data[2].path) {
+          setFirstBtn(false)
+          setSecondBtn(true);
+          setThirdBtn(false)
+        } else if (path === data[3].path) {
+          setFirstBtn(false)
+          setSecondBtn(false)
+          setThirdBtn(true);
+        } else {
+          setFirstBtn(false);
+          setSecondBtn(false)
+          setThirdBtn(false)
+          setSearch("");
+        }
     }
   }, [location.pathname]);
 

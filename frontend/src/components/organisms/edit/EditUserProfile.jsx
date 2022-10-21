@@ -19,7 +19,7 @@ const EditUserProfile = () => {
   const [info, setInfo] = useState({
     nickname: getCookie("nickname"),
     location: getCookie("location"),
-    kakao_id: ''
+    kakao_id: getCookie("kakao_id")
   });
 
   const nicknameInput = useRef();
@@ -60,19 +60,22 @@ const EditUserProfile = () => {
   };
 
   const pushCookie = () => {
-    removeCookie("nickname");
-    removeCookie("location");
+    // removeCookie("nickname");
+    // removeCookie("location");
+    // removeCookie("kakao_id")
 
     setCookie("nickname", info.nickname, { maxAge: 3000, path: "/" });
     setCookie("location", info.location, { maxAge: 3000, path: "/" });
+    setCookie("kakao_id", info.kakao_id)
   };
 
   const onSubmit = () => {
-    if (nickname && location) {
-      sendRequest();
-    } else {
-      alert("모든 정보를 입력해주세요");
-    }
+    // if (nickname && location) {
+    //   sendRequest();
+    // } else {
+    //   alert("모든 정보를 입력해주세요");
+    // }
+    sendRequest()
   };
   return (
     <>

@@ -94,9 +94,10 @@ const LoginInput = ({ isTattooist }) => {
     console.log('login response: ', res.data);
 
     if(res.data.success){
+      
       // 쿠키에 nickname, id 저장
       pushCookie(res.data);
-      //console.log(res.data)
+      // console.log(res.data)
 
       setTimeout(() => {
         window.location.replace('/drafts/best');

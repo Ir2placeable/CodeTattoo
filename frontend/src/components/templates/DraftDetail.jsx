@@ -109,9 +109,12 @@ const DraftDetail = () => {
         </SmallTattooistBox>
       </DraftDetailMainBox>
 
-      <DraftInQuiryBtn onClick={onCreateReservation}>
-        상담문의
-      </DraftInQuiryBtn>
+      {!getCookie('tattooist_id') && (
+        <DraftInQuiryBtn onClick={onCreateReservation}>
+          상담문의
+        </DraftInQuiryBtn>
+      )}
+      
     </ListDiv>
   );
 };
