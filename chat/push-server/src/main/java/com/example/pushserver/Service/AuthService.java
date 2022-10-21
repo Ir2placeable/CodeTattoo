@@ -19,6 +19,14 @@ public class AuthService extends HttpCallService{
     private static final String AUTH_URL = "https://kauth.kakao.com/oauth/token";
 
     public static String authToken;
+    public static String client_id = "f5dd209f82ba7318a08eac96c8ae0515";
+    public static String redirect_url = "http://localhost:3030/test";
+//    public boolean getAuthCode() {
+//        HttpHeaders header = new HttpHeaders();
+//        MultiValueMap<String, String> parameters = new LinkedMultiValueMap<>();
+//
+//        header.set()
+//    }
 
     public boolean getKakaoAuthToken(String code)  {
         HttpHeaders header = new HttpHeaders();
