@@ -14,4 +14,11 @@ module.exports = function(app){
       changeOrigin: true
     })
   )
+
+  app.use(
+    createProxyMiddleware(['/push'], {
+      target: "http://43.201.89.143:3030",
+      changeOrigin: true
+    })
+  )
 }

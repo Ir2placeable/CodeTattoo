@@ -322,6 +322,40 @@ export const AccountInput = styled.input`
   border-radius: 5px;
 `;
 
+export const KakaoCheckDiv = styled.div`
+// background-color: orange;
+width: 350px;
+margin: 0 auto 20px;
+display: flex;
+align-items: center;
+`
+
+export const KakaoCheckCircle = styled.div`
+font-size: 20px;
+color: #FFE800;
+// color: #CDCDCD;
+cursor: pointer;
+
+${(props) => {
+  if(props.type === 'click'){
+    return css`
+      color: #FFE800;
+    `
+  } else if(props.type === 'none'){
+    return css`
+      color: #CDCDCD;
+    `
+  }
+}}
+`
+export const KakaoLoginText = styled.div`
+color: #838383;
+font-size: 16px;
+margin-left: 8px;
+display: flex;
+align-items: center;
+`
+
 export const AccountBtn = styled.div`
   margin: 0 auto;
   width: 350px;

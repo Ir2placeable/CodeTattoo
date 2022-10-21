@@ -166,8 +166,6 @@ const App = () => {
 
           {/* 엔트리 페이지 */}
           <Route path="/" element={<ShowEntry />} />
-
-    
           
         </Routes>
       </MainPageDiv>

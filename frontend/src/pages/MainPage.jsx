@@ -4,10 +4,34 @@ import { MainContentsDiv } from "../styledComponents";
 import { Outlet, useLocation } from "react-router-dom";
 import Navigation from "../components/organisms/common/Navigation";
 import ShowEntry from "./ShowEntry";
+import { useEffect } from "react";
+import qs from 'qs'
+import { setCookie } from "../config/cookie";
+import { goDraftList } from "../config/navigate";
+import axios from "axios";
+import { PUSHURL } from "../config/key";
 
 /* 메인 페이지 */
 const MainPage = () => {
   const location = useLocation();
+
+  useEffect(() => {
+    const query = qs.parse(window.location.search, {
+      ignoreQueryPrefix: true
+    })
+    const code = query.code
+
+    if(location.pathname === '/' && code){
+      console.log('code: ', code)
+      setCookie('auth_code', code)
+
+      axios.get(`${PUSHURL}/test?code=${code}`)
+        .then((res) => {
+          console.log(res)
+          goDraftList()
+        })
+    }
+  }, [])
 
   return (
     <>
