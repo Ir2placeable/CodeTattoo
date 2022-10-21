@@ -162,7 +162,7 @@ server.get('/reservation/:id', (req, res) => {
         })
 })
 // 페이지 : 경매
-server.get('/auctions/:filter/:page', (req, res) => {
+server.get('/auctions/:genre/:page', (req, res) => {
     console.log('Page : Auctions')
 
     page.auction(req.params)
