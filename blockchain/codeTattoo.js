@@ -19,14 +19,14 @@ class CodeTattoo extends Contract {
         console.info('============= END : Initialize Ledger ===========');
     }
 
-    async newTattoo(ctx, key, owner_info, timestamp) {
+    async newTattoo(ctx, key, owner_info, timestamp, cost, image, body_part) {
         const new_tattoo = {
             state : 1,
             activator_id : owner_info,
             timestamp : timestamp,
-            cost : "",
-            image : "",
-            body_part : "",
+            cost : cost,
+            image : image,
+            body_part : body_part,
             inks : "",
             niddle : "",
             depth : "",
