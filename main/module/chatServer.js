@@ -5,7 +5,7 @@ const {Tattooist} = require("../DBModel/Tattooist");
 const {Reservation} = require("../DBModel/Reservation")
 const serverList = require("../config/serverAddress")
 const chatAPI = serverList.chatAPI
-const request = require('request')
+const request = require('sync-request')
 
 // 채팅 목록에 필요한 상대방의 정보 및 채팅방 정보를 반환한다.
 exports.getProfile = async function(params, query) {
@@ -42,42 +42,29 @@ exports.getProfile = async function(params, query) {
 // 채팅방 생성을 요청한다.
 exports.createChat = async function(params) {
     const destination = chatAPI + "create"
-    console.log(destination)
 
-    request.post({
-        headers : {'content-type' : 'application/json'},
-        url : destination,
-        body : params,
-        json : true
-    }, function(err, res, body) {
-        console.log(res)
+    const ret = await request('POST', destination, {
+        json : params
     })
+    return JSON.parse(ret.getBody('utf8')).success
 }
 
 // 채팅방 삭제를 요청한다.
 exports.deleteChat = async function(params) {
     const destination = chatAPI + "delete"
 
-    request.post({
-        headers : {'content-type' : 'application/json'},
-        url : destination,
-        body : params,
-        json : true
-    }, function(err, res, success) {
-        return success.success
+    const ret = await request('POST', destination, {
+        json : params
     })
+    return JSON.parse(ret.getBody('utf8')).success
 }
 
 // 채팅방에 마이타투 이력 전송을 요청한다.
 exports.myTattooSendRequest = async function(params) {
     const destination = chatAPI + "my-tattoo"
 
-    request.post({
-        headers : {'content-type' : 'application/json'},
-        url : destination,
-        body : params,
-        json : true
-    }, function(err, res, success) {
-        return success.success
+    const ret = await request('POST', destination, {
+        json : params
     })
+    return JSON.parse(ret.getBody('utf8')).success
 }
