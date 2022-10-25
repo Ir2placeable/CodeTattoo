@@ -42,14 +42,15 @@ exports.getProfile = async function(params, query) {
 // 채팅방 생성을 요청한다.
 exports.createChat = async function(params) {
     const destination = chatAPI + "create"
+    console.log(destination)
 
     request.post({
         headers : {'content-type' : 'application/json'},
         url : destination,
         body : params,
         json : true
-    }, function(err, res, success) {
-        return success
+    }, function(err, res, body) {
+        console.log(res)
     })
 }
 
@@ -63,7 +64,7 @@ exports.deleteChat = async function(params) {
         body : params,
         json : true
     }, function(err, res, success) {
-        return success
+        return success.success
     })
 }
 
@@ -77,6 +78,6 @@ exports.myTattooSendRequest = async function(params) {
         body : params,
         json : true
     }, function(err, res, success) {
-        return success
+        return success.success
     })
 }

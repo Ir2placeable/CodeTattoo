@@ -447,7 +447,7 @@ exports.bidAuction = async function(params, body) {
         tattooist_id : tattooist['_id'],
         tattooist_kakao : tattooist['kakao_id']
     }
-    const push_success = await pushServer.requestNotification(30, push_params)
+    const push_success = await pushServer.requestNotification('30', push_params)
     if (!push_success) { throw 32 }
 }
 // 경매 낙찰
