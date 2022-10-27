@@ -7,6 +7,15 @@ const serverList = require("../config/serverAddress")
 const chatAPI = serverList.chatAPI
 const request = require('sync-request')
 
+exports.chatIsAlive = async function() {
+    const destination = serverList.chatIsAlive
+
+    const ret = await request('POST', destination, {
+        json : { test : "test" }
+    })
+    return JSON.parse(ret.getBody('utf8')).success
+}
+
 // 채팅 목록에 필요한 상대방의 정보 및 채팅방 정보를 반환한다.
 exports.getProfile = async function(params, query) {
     let profile

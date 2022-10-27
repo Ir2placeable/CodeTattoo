@@ -3,6 +3,14 @@ const serverList = require("../config/serverAddress")
 const pushAPI = serverList.pushAPI
 const request = require('sync-request')
 
+exports.pushIsAlive = async function() {
+    const destination = serverList.pushIsAlive
+
+    const ret = await request('POST', destination, {
+        json : { test : "test"}
+    })
+    return JSON.parse(ret.getBody('utf8')).success
+}
 // 알림 서버에 알림을 요청한다.
 exports.requestNotification = async function(noti_case, params) {
     const destination = pushAPI + noti_case
