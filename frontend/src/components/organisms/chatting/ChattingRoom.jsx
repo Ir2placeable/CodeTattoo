@@ -26,11 +26,12 @@ import ChattingMessage from "../../atomic/chatting/ChattingMessage";
 import ChattingImgChoice from "../../atomic/chatting/ChattingImgChoice";
 import useSendChat from "../../../hooks/useSendChat";
 import { faArrowRightFromBracket } from "@fortawesome/free-solid-svg-icons";
-import { WEBSOCKETURL } from "../../../config/key";
+import { WEBSOCKETURL, PUSHURL } from "../../../config/key";
 import moment from "moment";
 import { getCookie } from "../../../config/cookie";
 import { goChatting, goChattingMyTattoo, goChattingReserv, goTattooistDetail } from "../../../config/navigate";
 import ChattingPlusMenu from "../../atomic/chatting/ChattingPlusMenu";
+import axios from "axios";
 
 /**
  * 상위 컴포넌트 === Chatting.jsx
@@ -120,7 +121,12 @@ const ChattingRoom = () => {
         is_image: data.is_image
       };
 
-      
+      // 문자 수신 카톡 메시지 PUSH
+      axios.post(`${PUSHURL}/push/kakao`, {
+        token: getCookie("auth_token"),
+        case_id: 31,
+      });
+
       const prev = messages;
       prev.push(temp)
       setMessages([...prev]);

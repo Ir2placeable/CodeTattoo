@@ -1,7 +1,7 @@
 import React, { memo } from 'react';
 import { getCookie } from '../../../config/cookie';
 import axios from 'axios';
-import { APIURL } from '../../../config/key';
+import { APIURL, PUSHURL } from '../../../config/key';
 import {
   ReservationDiv, DateDiv, TimeDiv,
   TimeText, TimeBox, Time, ReservRequestBtn,
@@ -168,6 +168,10 @@ const AvailableTime = ({ value, isAdmin, id }) => {
       createReservation({ data })
         .then(() => {
           setTimeout(() => {
+            axios.post(`${PUSHURL}/push/kakao`, {
+              token: getCookie("auth_token"),
+              case_id: 1,
+            });
             goChatting(user);
           }, 3000)
         })

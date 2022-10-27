@@ -9,7 +9,7 @@ import ImgLoaded from "../atomic/draft_upload/ImgLoaded";
 import ImgUploadBtn from "../atomic/draft_upload/ImgUploadBtn";
 import ImgText from "../atomic/draft_upload/ImgText";
 import axios from "axios";
-import { APIURL } from "../../config/key";
+import { APIURL, PUSHURL } from "../../config/key";
 import { getCookie } from "../../config/cookie";
 import { goAuctionDetail } from "../../config/navigate";
 import { useParams } from "react-router-dom";
@@ -74,17 +74,21 @@ const BidderUpload = () => {
           image: image.data,
           mime: image.mime,
           cost: _cost,
-          tattooist_id: getCookie("tattooist_id"),
+          tattooist_id: getCookie("tattooist_id"),  
         }
       );
   
       if (res.data.success) {
+        axios.post(`${PUSHURL}/push/kakao`, {
+          token: getCookie("auth_token"),
+          case_id: 30,
+        });
         goAuctionDetail(auction_id);
       } else if(res.data.code === 24) {
           alert('이미 응찰 하였습니다.')
           console.log(res.data);
           goAuctionDetail(auction_id);
-      } else {
+      } else if (res.data.code === 32) {
         alert('응찰이 불가능 합니다');
         console.log(res.data);
         console.log(`${APIURL}/auction/${auction_id}`);

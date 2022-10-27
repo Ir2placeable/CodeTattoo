@@ -5,7 +5,7 @@ import {
   SmallTattooistBox,
   DraftEditBtn,
   DraftInQuiryBtn,
-  ToastAlarmBox
+  ToastAlarmBox,
 } from "../../styledComponents";
 import SmallTattooist from "../organisms/tattooist/SmallTattooist";
 import SmallDraft from "../organisms/draft/SmallDraft";
@@ -19,6 +19,8 @@ import { faGear } from "@fortawesome/free-solid-svg-icons";
 import useCreateReservation from "../../hooks/useCreateReservation";
 import { toast, ToastContainer } from "react-toastify";
 import { goChatting, goDraftEdit } from "../../config/navigate";
+import axios from "axios";
+import { PUSHURL } from "../../config/key";
 
 /**
  * 상위 컴포넌트 === ShowDraftDetail.jsx
@@ -66,7 +68,7 @@ const DraftDetail = () => {
     const user = getCookie("user_id");
 
     if (!user) {
-      alert('상담 문의는 유저 로그인 상태에서 가능합니다.')
+      alert("상담 문의는 유저 로그인 상태에서 가능합니다.");
       return;
     } else {
       toast.success("상담 요청이 되었습니다");
@@ -77,18 +79,21 @@ const DraftDetail = () => {
         cost: genre.cost,
       };
 
-      createReservation({ data })
-      .then(() => {
+      createReservation({ data }).then(() => {
         setTimeout(() => {
+          // 상담 문의 카톡 메시지 PUSH
+          axios.post(`${PUSHURL}/push/kakao`, {
+            token: getCookie("auth_token"),
+            case_id: 1,
+          });
           goChatting(user);
-        }, 3000)
-      })
+        }, 3000);
+      });
     }
   };
 
   return (
     <ListDiv>
-
       <ToastAlarmBox>
         <ToastContainer position="top-right" autoClose="1500" closeOnClick />
       </ToastAlarmBox>
@@ -109,12 +114,11 @@ const DraftDetail = () => {
         </SmallTattooistBox>
       </DraftDetailMainBox>
 
-      {!getCookie('tattooist_id') && (
+      {!getCookie("tattooist_id") && (
         <DraftInQuiryBtn onClick={onCreateReservation}>
           상담문의
         </DraftInQuiryBtn>
       )}
-      
     </ListDiv>
   );
 };

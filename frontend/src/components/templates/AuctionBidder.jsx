@@ -11,17 +11,17 @@ import AuctionUserBtn from "../atomic/auction/AuctionUserBtn";
 import useAuctionUser from "../../hooks/useAuctionUser";
 import TattooistControlBox from "../organisms/tattooist/TattooistControlBox";
 import AuctionTattooistBtn from "../atomic/auction/AuctionTattooistBtn";
+import { useEffect } from "react";
 
 /**
  * 상위 컴포넌트 === ShowAuctionDetail.jsx
  * 응찰자 목록 템플릿
- * @param {Array} bidders 응찰자 리스트 
+ * @param {Array} bidders 응찰자 리스트
  * @param {String} auction_id 경매 ID
  * @param {String} user_id 유저 ID
-*/
+ */
 
 const AuctionBidder = ({ bidders, auction_id, user_id }) => {
-
   const [checkedInputs, setCheckedInputs] = useState([]);
   const [drawer, setDrawer] = useState();
   const [remove, bidder] = useAuctionUser({
@@ -32,9 +32,6 @@ const AuctionBidder = ({ bidders, auction_id, user_id }) => {
   // 경매 선택 Logic
   const changeHandler = (checked, id) => {
     if (checked) {
-      if (checkedInputs.length > 0) {
-        checkedInputs.pop();
-      }
       setCheckedInputs([...checkedInputs, id]);
       setDrawer(id);
     } else {
@@ -42,6 +39,9 @@ const AuctionBidder = ({ bidders, auction_id, user_id }) => {
       setCheckedInputs(checkedInputs.filter((item) => item !== id));
     }
   };
+
+  useEffect(() => {
+  }, [checkedInputs]);
 
   return (
     <>
@@ -51,31 +51,35 @@ const AuctionBidder = ({ bidders, auction_id, user_id }) => {
       )}
 
       {/* 경매 입찰 버튼 */}
-      {getCookie("tattooist_id") && (<AuctionTattooistBtn auction_id={auction_id}/>)}
-      
+      {getCookie("tattooist_id") && (
+        <AuctionTattooistBtn auction_id={auction_id} />
+      )}
+
       <BidderMainBox>
-        {bidders && bidders.map((bidder) => (
-          <BidderContainer key={bidder.drawer_id}>
-            {getCookie("user_id") === user_id && (
-              <BidderCheckBox
-                type="checkbox"
-                onClick={(e) => {
-                  changeHandler(e.target.checked, bidder.drawer_id);
-                }}
+        {bidders &&
+          bidders.map((bidder) => (
+            <BidderContainer key={bidder.drawer_id}>
+              {getCookie("user_id") === user_id && (
+                <BidderCheckBox
+                  type="checkbox"
+                  onClick={(e) => {
+                    changeHandler(e.target.checked, bidder.drawer_id);
+                    console.log(e);
+                  }}
+                  id={bidder.drawer_id}
+                  checked={
+                    checkedInputs.includes(bidder.drawer_id) ? true : false
+                  }
+                />
+              )}
+              <Bidder bidder={bidder} />
+              <TattooistControlBox
+                type={"bidder"}
                 id={bidder.drawer_id}
-                checked={
-                  checkedInputs.includes(bidder.drawer_id) ? true : false
-                }
+                isFollowed={bidder.isFollowed}
               />
-            )}
-            <Bidder bidder={bidder} />
-            <TattooistControlBox
-              type={"bidder"}
-              id={bidder.drawer_id}
-              isFollowed={bidder.isFollowed}
-            />
-          </BidderContainer>
-        ))}
+            </BidderContainer>
+          ))}
       </BidderMainBox>
     </>
   );
