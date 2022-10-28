@@ -39,8 +39,7 @@ exports.invoke = async function(function_name, key, data) {
     // 분기할 것
     if (function_name === 'newTattoo') {
         // state : 1
-        await contract.submitTransaction('newTattoo', key, data['owner_info'], Math.floor(Date.now() / 1000));
-        // await contract.submitTransaction('newTattoo', key, data['owner_info'], Math.floor(Date.now() / 1000), data['cost'], data['image'], data['body_part']);
+        await contract.submitTransaction('newTattoo', key, data['owner_info'], Math.floor(Date.now() / 1000), data['cost'], data['image'], data['body_part']);
     } else if (function_name === 'startTattoo') {
         // state : 2
         await contract.submitTransaction('startTattoo', key, data['tattooist_info'], Math.floor(Date.now() / 1000), data['cost'], data['image'], data['body_part'], data['inks'], data['niddle'], data['depth'], data['machine']);
