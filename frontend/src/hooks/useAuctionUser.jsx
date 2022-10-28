@@ -31,15 +31,11 @@ const useAuctionUser = ({ auction_id, drawer_id }) => {
 
     const res = await axios.patch(`${APIURL}/auction/${auction_id}`, {
       drawer_id: drawer_id,
+      token: getCookie("auth_token"),
     });
 
     if (res.data.success) {
       console.log("Bidder success");
-      // 경매 낙찰 카톡 메시지 PUSH
-      axios.post(`${PUSHURL}/push/kakao`, {
-        token: getCookie("auth_token"),
-        case_id: 32,
-      });
       goAuctionList();
     } else {
       alert(`응찰자를 선택해야 합니다`);

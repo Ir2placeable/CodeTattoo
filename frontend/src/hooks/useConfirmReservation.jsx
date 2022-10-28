@@ -16,16 +16,13 @@ const useConfirmReservation = ({ user_id, tattooist_id }) => {
 
   const confirmReservation = async() => {
     const res = await axios.post(`${APIURL}/confirm/reservation/${id}`, {
-      user_id, tattooist_id
+      user_id: user_id,
+      tattooist_id: tattooist_id,
+      token: getCookie("auth_token"),
     })
 
     if(res.data.success){
       console.log('confirm reservation success')
-      // 예약 확정 카톡 메시지 PUSH
-      axios.post(`${PUSHURL}/push/kakao`, {
-        token: getCookie("auth_token"),
-        case_id: 2,
-      });
     } else {
       console.log('confirm reservation fail')
     }
@@ -33,16 +30,13 @@ const useConfirmReservation = ({ user_id, tattooist_id }) => {
 
   const rejectReservation = async() => {
     const res = await axios.post(`${APIURL}/reject/reservation/${id}`, {
-      user_id, tattooist_id
+      user_id: user_id,
+      tattooist_id: tattooist_id,
+      token: getCookie("auth_token"),
     })
 
     if(res.data.success){
       console.log('reject reservation success')
-      // 예약 취소 카톡 메시지 PUSH
-      axios.post(`${PUSHURL}/push/kakao`, {
-        token: getCookie("auth_token"),
-        case_id: 3,
-      });
     } else {
       console.log('reject reservation fail')
     }

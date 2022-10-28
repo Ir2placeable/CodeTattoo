@@ -74,7 +74,8 @@ const BidderUpload = () => {
           image: image.data,
           mime: image.mime,
           cost: _cost,
-          tattooist_id: getCookie("tattooist_id"),  
+          tattooist_id: getCookie("tattooist_id"),
+          token: getCookie("auth_token"),
         }
       );
   

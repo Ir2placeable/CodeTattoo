@@ -10,4 +10,4 @@ export const REDIRECTURI = "http://localhost:3000"
 
 export const ERRORURI = `${REDIRECTURI}?error=access_denied&error_description=User%20denied%20access`
 
-export const KAKAOURL = `https://kauth.kakao.com/oauth/authorize?client_id=${APIKEY}&redirect_uri=${REDIRECTURI}&response_type=code`
+export const KAKAOURL = `https://kauth.kakao.com/oauth/authorize?client_id=${APIKEY}&redirect_uri=${REDIRECTURI}&response_type=code&scope=talk_message,friends`
