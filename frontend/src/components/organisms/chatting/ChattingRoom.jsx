@@ -11,7 +11,7 @@ import {
   ChatChoosedImgDiv,
   ChatChoosedImg,
   ChatDeleteImgIcon,
-  ChattingRoomDiv
+  ChattingRoomDiv,
 } from "../../../styledComponents";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faImage, faPlus, faUser, faXmark } from "@fortawesome/free-solid-svg-icons";
@@ -32,6 +32,7 @@ import { getCookie } from "../../../config/cookie";
 import { goChatting, goChattingMyTattoo, goChattingReserv, goTattooistDetail } from "../../../config/navigate";
 import ChattingPlusMenu from "../../atomic/chatting/ChattingPlusMenu";
 import axios from "axios";
+import MyTattooPopup from "./MyTattooPopup";
 
 /**
  * 상위 컴포넌트 === Chatting.jsx
@@ -118,7 +119,8 @@ const ChattingRoom = () => {
         created_at: data.created_at,
         mine: false,
         receiver: data.sender,
-        is_image: data.is_image
+        is_image: data.is_image,
+        tattoo_id: data.tattoo_id
       };
 
       const prev = messages;
@@ -144,7 +146,8 @@ const ChattingRoom = () => {
       content: content,
       created_at: now,
       enter_room: false,
-      is_image: false
+      is_image: false,
+      tattoo_id: ''
     };
 
     if(!body.content) {
@@ -160,7 +163,8 @@ const ChattingRoom = () => {
       content: body.content,
       created_at: body.created_at,
       is_image: body.is_image,
-      enter_room: false
+      enter_room: false,
+      tattoo_id: ''
     }
 
     const temp = {
@@ -238,6 +242,8 @@ const ChattingRoom = () => {
 
   return (
     <>
+    {/* <MyTattooPopup /> */}
+
     <ChattingRoomDiv>
       <ChattingRoomHeader>
         {data.opponent_image !== "undefined" ? (

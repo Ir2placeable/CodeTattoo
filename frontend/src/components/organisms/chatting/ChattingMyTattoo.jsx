@@ -14,10 +14,16 @@ import {
 import MyTattooItem from '../../atomic/chatting/MyTattooItem';
 import { useOutletContext, useParams } from 'react-router-dom';
 import { goChattingRoom } from '../../../config/navigate';
+import { useContext } from 'react';
+import { WebSocketContext } from '../../templates/Chatting';
+import moment from 'moment';
+import useSendChat from '../../../hooks/useSendChat';
 
 const ChattingMyTattoo = () => {
   // 채팅 정보
   const { data } = useOutletContext();
+  // 전역 웹소켓 변수
+  const ws = useContext(WebSocketContext)
 
   // { user_id }, { tattoo_id, reservation_id }
   const [getMyTattoo, provideMyTattoo] = useMyTattoo()
@@ -57,25 +63,47 @@ const ChattingMyTattoo = () => {
     goChattingRoom(params.id, params.reservation_id)
   }
 
+  const sendChat = useSendChat();
+  const sendChatting = async(tattoo_id) => {
+    const sender = params.id;
+    const reservation_id = params.reservation_id;
+    const created_at = moment().format('YYYY년 MM월 DD일 HH:mm:ss')
+    const body = {
+      sender, 
+      receiver: data.opponent_id,
+      reservation_id, 
+      content: '마이타투 이력이 전송되었습니다.',
+      created_at,
+      enter_room: false,
+      is_image: false,
+      tattoo_id
+    }
+
+    sendChat(body)
+  }
+
   const onSendMyTattoo = () => {
     if(choices.length === 0){
       alert('마이타투 이력을 선택해주세요!')
       return;
     }
 
-    choices.forEach((choice) => {
-      provideMyTattoo({
-        tattoo_id: choice,
-        reservation_id: params.reservation_id
-      })
-        .then(res => {
-          if(!res){
-            alert('마이타투 이력 전송 실패')
-            return;
-          }
-        })
-    })
+    // choices.forEach((choice) => {
+    //   provideMyTattoo({
+    //     tattoo_id: choice,
+    //     reservation_id: params.reservation_id
+    //   })
+    //     .then(res => {
+    //       if(!res){
+    //         alert('마이타투 이력 전송 실패')
+    //         return;
+    //       }
+    //     })
+    // })
     
+    choices.forEach((tattoo_id) => {
+      sendChatting(tattoo_id)
+    })
   }
 
   return (

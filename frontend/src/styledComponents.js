@@ -3403,6 +3403,17 @@ export const ChatContents = styled.div`
         line-height: 0;
         padding: 15px;
       `;
+    } else if (props.type === 'tattoo') {
+      return css`
+        cursor: pointer;
+        line-height: 55px;
+        padding: 5px 30px;
+        border: 5px solid #e8e9b2;
+
+        &:hover{
+          border-color: white;
+        }
+      `
     }
   }}
 `;
@@ -3728,3 +3739,42 @@ export const ChattingPlusItem = styled.div`
     background-color: #c4d68e;
   }
 `;
+
+export const MyTattooPopupDiv = styled.div`
+position: fixed;
+top: 0;
+left: 0;
+z-index: 100;
+width: 100%;
+height: 100%;
+background-color: rgba(0, 0, 0, .3);
+display: flex;
+justify-content: center;
+align-items: center;
+`
+
+export const MyTattooPopupBox = styled.div`
+width: 500px;
+height: 500px;
+background-color: white;
+`
+
+export const MyTattooPopupHeader = styled.div`
+width: 100%;
+line-height: 50px;
+text-align: center;
+position: relative;
+background-color: black;
+color: white;
+font-weight: bold;
+font-size: 20px;
+`
+
+export const CircleXmarkStyle = {
+  position: 'absolute',
+  alignItmes: 'center',
+  cursor: 'pointer',
+  right: '10px',
+  top: 'calc(25px/2)',
+  height: '25px'
+}
