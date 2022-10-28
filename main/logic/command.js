@@ -692,19 +692,5 @@ exports.myTattooSend = async function(params) {
         })
     }
 
-    // chat params
-    const reservation = await Reservation.findOne({ _id : body.reservation_id })
-    if (!reservation) { throw 4 }
-
-    const chat_params = {
-        user_id : reservation['customer_id'],
-        tattooist_id : reservation['tattooist_id'],
-        reservation_id : body.reservation_id,
-        token : body.token
-    }
-
-    const chat_success = await chatServer.myTattooSendRequest(chat_params)
-    if (!chat_success) { throw 31 }
-
     return return_value
 }
