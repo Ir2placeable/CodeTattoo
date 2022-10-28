@@ -608,9 +608,9 @@ server.patch('/procedure/:id', (req, res) => {
             res.send(ErrorLogging(err))
         })
 })
-// 명령 : 마이타투 이력 조회
+// 명령 : 마이타투 이력 리스트 조회
 server.get('/my-tattoo/:id', (req, res) => {
-    console.log('command : my tattoo querying')
+    console.log('command : my tattoo list querying')
 
     command.myTattooInfo(req.params)
         .then((returned) => {
@@ -620,9 +620,9 @@ server.get('/my-tattoo/:id', (req, res) => {
             res.send(ErrorLogging(err))
         })
 })
-// 명령 : 마이타투 이력 제공
+// 명령 : 마이타투 이력 디테일
 server.post('/my-tattoo/:id', (req, res) => {
-    console.log('command : my tattoo send')
+    console.log('command : my tattoo Detail')
 
     command.myTattooSend(req.params)
         .then((returned) => {
