@@ -598,7 +598,7 @@ server.post('/procedure/:id', (req, res) => {
 })
 // 명령 : 작업 완료
 server.patch('/procedure/:id', (req, res) => {
-    console.log('command : Begin Procedure')
+    console.log('command : Finish Procedure')
 
     command.finishProcedure(req.params, req.body)
         .then((returned) => {
@@ -608,7 +608,7 @@ server.patch('/procedure/:id', (req, res) => {
             res.send(ErrorLogging(err))
         })
 })
-// 명령 : 마이타투 이력 조회 (미개발)
+// 명령 : 마이타투 이력 조회
 server.get('/my-tattoo/:id', (req, res) => {
     console.log('command : my tattoo querying')
 
@@ -624,9 +624,9 @@ server.get('/my-tattoo/:id', (req, res) => {
 server.post('/my-tattoo/:id', (req, res) => {
     console.log('command : my tattoo send')
 
-    command.myTattooSend(req.params, req.body)
+    command.myTattooSend(req.params)
         .then((returned) => {
-            res.send({ success : true })
+            res.send({ success : true, history : returned })
         })
         .catch((err) => {
             res.send(ErrorLogging(err))
