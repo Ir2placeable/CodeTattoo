@@ -168,6 +168,7 @@ const AvailableTime = ({ value, isAdmin, id }) => {
       createReservation({ data })
         .then(() => {
           setTimeout(() => {
+            // 상담 문의 카톡 메시지 PUSH
             axios.post(`${PUSHURL}/push/kakao`, {
               token: getCookie("auth_token"),
               case_id: 1,

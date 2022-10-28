@@ -121,12 +121,6 @@ const ChattingRoom = () => {
         is_image: data.is_image
       };
 
-      // 문자 수신 카톡 메시지 PUSH
-      axios.post(`${PUSHURL}/push/kakao`, {
-        token: getCookie("auth_token"),
-        case_id: 31,
-      });
-
       const prev = messages;
       prev.push(temp)
       setMessages([...prev]);
