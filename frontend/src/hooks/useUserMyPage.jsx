@@ -16,7 +16,7 @@ const useUserMyPage = () => {
     if (res.data.success) {
       return [res.data.user_info, res.data.tattoos];
     } else {
-      console.log("Tattoo List Get Request Fail");
+      console.log("User My Page Get Request Fail");
       console.log(`${APIURL}/user/my-page/${getCookie("user_id")}`);
     }
   };

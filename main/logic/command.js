@@ -1,4 +1,5 @@
 // 코드 목적 : Main Server 로 요청한 명령을 처리하는 Business logic 을 수행한다.
+const Global = require("../GlobalVariable");
 
 const {User} = require("../DBModel/User");
 const {Reservation} = require("../DBModel/Reservation")
@@ -445,24 +446,35 @@ exports.bidAuction = async function(params, body) {
         user_id : user['_id'],
         user_kakao : user['kakao_id'],
         tattooist_id : tattooist['_id'],
-        tattooist_kakao : tattooist['kakao_id']
+        tattooist_kakao : tattooist['kakao_id'],
+        token : body.token
     }
-    const push_success = await pushServer.requestNotification(30, push_params)
+    const push_success = await pushServer.requestNotification('30', push_params)
     if (!push_success) { throw 32 }
 }
 // 경매 낙찰
 exports.finishAuction = async function(params, body) {
-    const auction = await Auction.updateOne({ _id : params.id }, {$set : { finished : true, winner : body.drawer_id }})
+    const auction = await Auction.findOne({ _id : params.id })
+    if (!auction) { throw 7 }
+
+    let new_reservation = new Reservation()
+    new_reservation['customer_id'] = auction['creator']
+    new_reservation['tattooist_id'] = body['drawer_id']
+    new_reservation['image'] = auction['image']
+
+    await new_reservation.save()
+    await Tattooist.updateOne({ _id : body.tattooist_id }, {$push : { reservations : new_reservation['_id'] }})
 
     // 채팅 서버로 새로운 채팅 생성요청
     const chat_params = {
         user_id : auction['creator'],
         tattooist_id : body['drawer_id'],
-        reservation_id : params.id
+        reservation_id : new_reservation['_id']
     }
+
     const chat_success = await chatServer.createChat(chat_params)
     if (!chat_success) { throw 31 }
-    
+
     // 알림 전송
     const tattooist = await Tattooist.findOne({ _id : body.drawer_id })
     if (!tattooist) { throw 2 }
@@ -471,10 +483,13 @@ exports.finishAuction = async function(params, body) {
         user_id : undefined,
         user_kakao : undefined,
         tattooist_id : tattooist['_id'],
-        tattooist_kakao : tattooist['kakao']
+        tattooist_kakao : tattooist['kakao'],
+        token : body.token
     }
     const push_success = await pushServer.requestNotification(32, push_params)
     if (!push_success) { throw 32 }
+
+    await Auction.updateOne({ _id : params.id }, {$set : { finished : true, winner : body.drawer_id }})
 }
 
 // 예약 생성 (= 상담 요청)
@@ -502,7 +517,8 @@ exports.createReservation = async function(body) {
         user_id : user['_id'],
         user_kakao : user['kakao_id'],
         tattooist_id : tattooist['_id'],
-        tattooist_kakao : tattooist['kakao_id']
+        tattooist_kakao : tattooist['kakao_id'],
+        token : body.token
     }
     const push_success = await pushServer.requestNotification(1, push_params)
     if (!push_success) { throw 32 }
@@ -543,7 +559,8 @@ exports.confirmReservation= async function(params, body) {
         user_id : user['_id'],
         user_kakao : user['kakao_id'],
         tattooist_id : tattooist['_id'],
-        tattooist_kakao : tattooist['kakao_id']
+        tattooist_kakao : tattooist['kakao_id'],
+        token : body.token
     }
     const push_success = await pushServer.requestNotification(2, push_params)
     if (!push_success) { throw 32 }
@@ -578,7 +595,8 @@ exports.rejectReservation= async function(params, body) {
         user_id : user['_id'],
         user_kakao : user['kakao_id'],
         tattooist_id : tattooist['_id'],
-        tattooist_kakao : tattooist['kakao_id']
+        tattooist_kakao : tattooist['kakao_id'],
+        token : body.token
     }
     const push_success = await pushServer.requestNotification(3, push_params)
     if (!push_success) { throw 32 }
@@ -603,7 +621,7 @@ exports.beginProcedure = async function(params, body) {
         },
         cost: reservation['cost'],
         image: reservation['image'],
-        body_part: reservation['body_part'],
+        body_part: reservation['body_part']
     }
     await blockchain.invoke("newTattoo", new_tattoo['_id'], blockchain_params)
 
@@ -624,7 +642,8 @@ exports.beginProcedure = async function(params, body) {
         user_id : user['_id'],
         user_kakao : user['kakao_id'],
         tattooist_id : tattooist['_id'],
-        tattooist_kakao : tattooist['kakao_id']
+        tattooist_kakao : tattooist['kakao_id'],
+        token : body.token
     }
     const push_success = await pushServer.requestNotification(20, push_params)
     if (!push_success) { throw 32 }
@@ -651,6 +670,7 @@ exports.finishProcedure = async function(params, body) {
     }
 
     await blockchain.invoke("endTattoo", reservation['tattoo_id'], blockchain_params)
+
     await Tattooist.updateOne({ _id : body.tattooist_id }, {$push : { artworks : reservation['tattoo_id'] }})
     await Reservation.deleteOne({ _id : params.id })
     const chat_success = await chatServer.deleteChat({ reservation_id : reservation['_id'] })
@@ -664,7 +684,8 @@ exports.finishProcedure = async function(params, body) {
         user_id : user['_id'],
         user_kakao : user['kakao_id'],
         tattooist_id : tattooist['_id'],
-        tattooist_kakao : tattooist['kakao_id']
+        tattooist_kakao : tattooist['kakao_id'],
+        token : body.token
     }
     const push_success = await pushServer.requestNotification(21, push_params)
     if (!push_success) { throw 32 }
@@ -690,20 +711,42 @@ exports.myTattooInfo = async function(params) {
 }
 
 // 마이타투 이력 제공
-exports.myTattooSend = async function(params, body) {
-    const tattoo_history = await blockchain.getTattooHistory(params.id)
+exports.myTattooSend = async function(params) {
+    let return_value = []
+
+    let tattoo_history = await blockchain.getTattooHistory(params.id)
     if (!tattoo_history) { throw 30 }
 
-    const reservation = await Reservation.findOne({ _id : body.reservation_id })
-    if (!reservation) { throw 4 }
+    // history 가공
+    tattoo_history = tattoo_history.reverse()
+    for (let transaction of tattoo_history) {
+        let tx_state = transaction.Record.state
+        if (tx_state === 1) { continue }
 
-    const chat_params = {
-        history : tattoo_history,
-        user_id : reservation['customer_id'],
-        tattooist_id : reservation['tattooist_id'],
-        reservation_id : body.reservation_id
+        return_value.push({
+            state : Global.blockchain_states[tx_state],
+            cost : transaction.Record.cost,
+            body_part : transaction.Record.body_part,
+            inks : transaction.Record.inks,
+            niddle : transaction.Record.niddle,
+            depth : transaction.Record.depth,
+            machine : transaction.Record.machine
+        })
     }
 
-    const chat_success = await chatServer.myTattooSendRequest(chat_params)
-    if (!chat_success) { throw 31 }
+    // // chat params
+    // const reservation = await Reservation.findOne({ _id : body.reservation_id })
+    // if (!reservation) { throw 4 }
+    //
+    // const chat_params = {
+    //     user_id : reservation['customer_id'],
+    //     tattooist_id : reservation['tattooist_id'],
+    //     reservation_id : body.reservation_id,
+    //     token : body.token
+    // }
+    //
+    // const chat_success = await chatServer.myTattooSendRequest(chat_params)
+    // if (!chat_success) { throw 31 }
+
+    return return_value
 }

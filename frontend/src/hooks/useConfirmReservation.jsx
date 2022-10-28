@@ -1,7 +1,8 @@
 import axios from 'axios';
 import React from 'react';
 import { useParams } from 'react-router-dom';
-import { APIURL } from '../config/key';
+import { APIURL, PUSHURL } from '../config/key';
+import { getCookie } from '../config/cookie';
 
 /** 예약 확정 / 취소 API 호출
  * 채팅 방 예약 페이지 || 예약 세부 페이지
@@ -15,7 +16,9 @@ const useConfirmReservation = ({ user_id, tattooist_id }) => {
 
   const confirmReservation = async() => {
     const res = await axios.post(`${APIURL}/confirm/reservation/${id}`, {
-      user_id, tattooist_id
+      user_id: user_id,
+      tattooist_id: tattooist_id,
+      token: getCookie("auth_token"),
     })
 
     if(res.data.success){
@@ -27,7 +30,9 @@ const useConfirmReservation = ({ user_id, tattooist_id }) => {
 
   const rejectReservation = async() => {
     const res = await axios.post(`${APIURL}/reject/reservation/${id}`, {
-      user_id, tattooist_id
+      user_id: user_id,
+      tattooist_id: tattooist_id,
+      token: getCookie("auth_token"),
     })
 
     if(res.data.success){

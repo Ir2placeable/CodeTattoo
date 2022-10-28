@@ -18,7 +18,6 @@ import { goChattingRoom } from '../../../config/navigate';
 const ChattingMyTattoo = () => {
   // 채팅 정보
   const { data } = useOutletContext();
-  // console.log(data)
 
   // { user_id }, { tattoo_id, reservation_id }
   const [getMyTattoo, provideMyTattoo] = useMyTattoo()
@@ -31,7 +30,9 @@ const ChattingMyTattoo = () => {
     getMyTattoo({user_id})
       .then(res => {
         // [tattoos]: { tattoo_id, image }
+        console.log(res);
         setTattoos(res)
+        console.log(tattoos);
       })
   }, [])
 
@@ -80,13 +81,13 @@ const ChattingMyTattoo = () => {
   return (
     <>
       <ChattingRoomDiv state="mytattoo">
-        {tattoos.length === 0 ? (
+        {tattoos && tattoos.length === 0 ? (
           <DeletedReservationChatting style={{marginTop: '71px'}}>
             마이타투 이력이 없습니다. 
           </DeletedReservationChatting>
         ) : (
           <ChattingMyTattooDiv>
-            {tattoos.map(tattoo => (
+            {tattoos && tattoos.map(tattoo => (
               <MyTattooItem key={tattoo.tattoo_id}
                 tattoo_id={tattoo.tattoo_id}
                 image={tattoo.image}

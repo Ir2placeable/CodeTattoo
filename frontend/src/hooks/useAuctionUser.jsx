@@ -1,6 +1,6 @@
 import axios from "axios";
 import { getCookie } from "../config/cookie";
-import { APIURL } from "../config/key";
+import { APIURL, PUSHURL} from "../config/key";
 import { goAuctionList } from "../config/navigate";
 
 /** 경매 상세 페이지 / 유저가 경매를 낙찰, 삭제 하는 API
@@ -31,6 +31,7 @@ const useAuctionUser = ({ auction_id, drawer_id }) => {
 
     const res = await axios.patch(`${APIURL}/auction/${auction_id}`, {
       drawer_id: drawer_id,
+      token: getCookie("auth_token"),
     });
 
     if (res.data.success) {

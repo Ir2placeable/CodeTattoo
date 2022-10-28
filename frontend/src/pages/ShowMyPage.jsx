@@ -12,6 +12,7 @@ const ShowMyPage = () => {
   
   useEffect(() => {
     sendRequest().then((ret) => {
+      console.log(ret);
       setProfile(ret[0]);
       setTattoos(ret[1]);
     });

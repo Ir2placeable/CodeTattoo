@@ -308,11 +308,11 @@ export const AccountLabel = styled.div`
 `;
 
 export const KaKaoLogo = styled.img`
-width: 20px;
-height: 20px;
-object-fit: cover;
-margin-right: 5px;
-`
+  width: 20px;
+  height: 20px;
+  object-fit: cover;
+  margin-right: 5px;
+`;
 
 export const AccountInput = styled.input`
   width: 350px;
@@ -323,38 +323,38 @@ export const AccountInput = styled.input`
 `;
 
 export const KakaoCheckDiv = styled.div`
-// background-color: orange;
-width: 350px;
-margin: 0 auto 20px;
-display: flex;
-align-items: center;
-`
+  // background-color: orange;
+  width: 350px;
+  margin: 0 auto 20px;
+  display: flex;
+  align-items: center;
+`;
 
 export const KakaoCheckCircle = styled.div`
-font-size: 20px;
-color: #FFE800;
-// color: #CDCDCD;
-cursor: pointer;
+  font-size: 20px;
+  color: #ffe800;
+  // color: #CDCDCD;
+  cursor: pointer;
 
-${(props) => {
-  if(props.type === 'click'){
-    return css`
-      color: #FFE800;
-    `
-  } else if(props.type === 'none'){
-    return css`
-      color: #CDCDCD;
-    `
-  }
-}}
-`
+  ${(props) => {
+    if (props.type === "click") {
+      return css`
+        color: #ffe800;
+      `;
+    } else if (props.type === "none") {
+      return css`
+        color: #cdcdcd;
+      `;
+    }
+  }}
+`;
 export const KakaoLoginText = styled.div`
-color: #838383;
-font-size: 16px;
-margin-left: 8px;
-display: flex;
-align-items: center;
-`
+  color: #838383;
+  font-size: 16px;
+  margin-left: 8px;
+  display: flex;
+  align-items: center;
+`;
 
 export const AccountBtn = styled.div`
   margin: 0 auto;
@@ -468,50 +468,50 @@ export const SmallNavigation = styled.div`
 `;
 
 export const SmallNavDropDown = styled.div`
-padding: 0 15px;
-height: 100%;
-box-shadow: 5px 5px 10px 0 rgba(72, 72, 72, 0.3);
-border-radius: 8px;
-display: flex;
-justify-content: center;
-align-items: center;
-position: absolute;
-right: -100px;
-top: 0;
-cursor: pointer;
-background-color: white;
-`
+  padding: 0 15px;
+  height: 100%;
+  box-shadow: 5px 5px 10px 0 rgba(72, 72, 72, 0.3);
+  border-radius: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  right: -100px;
+  top: 0;
+  cursor: pointer;
+  background-color: white;
+`;
 
 export const SmallNavDropMenu = styled.div`
-background-color: white;
-width: 100%;
-position: absolute;
-z-index: 50;
-bottom: calc(-31px * 3 - 25px);
-left: 0;
-padding: 10px 0;
-// border-radius: 5px;
-// border: 1px solid rgba(72, 72, 72, .5);
-box-shadow: 5px 5px 10px 0 rgba(72, 72, 72, 0.3);
-border-radius: 8px;
-display: flex;
-flex-direction: column;
-justify-content: center;
-align-items: center;
-`
+  background-color: white;
+  width: 100%;
+  position: absolute;
+  z-index: 50;
+  bottom: calc(-31px * 3 - 25px);
+  left: 0;
+  padding: 10px 0;
+  // border-radius: 5px;
+  // border: 1px solid rgba(72, 72, 72, .5);
+  box-shadow: 5px 5px 10px 0 rgba(72, 72, 72, 0.3);
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
 
 export const SmallNavDropItem = styled.div`
-width: 85%;
-text-align: center;
-line-height: 30px;
-cursor: pointer;
-border-bottom: 1px solid rgba(72, 72, 72, .3);
+  width: 85%;
+  text-align: center;
+  line-height: 30px;
+  cursor: pointer;
+  border-bottom: 1px solid rgba(72, 72, 72, 0.3);
 
-&:hover{
-  font-weight: bold;
-  color: black;
-}
-`
+  &:hover {
+    font-weight: bold;
+    color: black;
+  }
+`;
 
 export const SmallNavigationBtn = styled.div`
   font-size: 18px;
@@ -1549,17 +1549,17 @@ export const DraftDrawerDiv = styled.div`
 `;
 
 export const DraftGenreDiv = styled.div`
-position: absolute;
-top: 70px;
-right: 35px;
-z-index: 20;
-background-color: #666;
-padding: 7px 10px;
-color: white;
-border-radius: 5px;
-// font-weight: bold;
-font-size: 12px;
-`
+  position: absolute;
+  top: 70px;
+  right: 35px;
+  z-index: 20;
+  background-color: #666;
+  padding: 7px 10px;
+  color: white;
+  border-radius: 5px;
+  // font-weight: bold;
+  font-size: 12px;
+`;
 
 export const DraftDrawer = styled.p`
   margin-left: 10px;
@@ -1743,6 +1743,15 @@ export const AuctionTagBox = styled.div`
         font-size: 24px;
         line-height: 54px;
         margin-right: 20px;
+        border-radius: 10px 0 0 10px;
+        min-width: 55px;
+        text-align: center;
+      `;
+    } else if (props.type === "finish") {
+      return css`
+        background-color: #cad0ed;
+        font-size: 24px;
+        line-height: 54px;
         border-radius: 10px 0 0 10px;
         min-width: 55px;
         text-align: center;
@@ -3289,18 +3298,17 @@ export const ChattingRoomDiv = styled.div`
   position: relative;
 
   ${(props) => {
-    if (props.state === "entry"){
+    if (props.state === "entry") {
       return css`
         display: flex;
         justify-content: center;
         align-items: center;
       `;
-    }
-    else if(props.state === 'mytattoo'){
+    } else if (props.state === "mytattoo") {
       return css`
         padding-top: 0;
         height: calc(610px - 90px);
-      `
+      `;
     }
   }}
 `;
@@ -3429,10 +3437,10 @@ export const ChatInputDiv = styled.div`
         justify-content: start;
         // margin-left: 22px;
       `;
-    } else if(props.type === 'back-two'){
+    } else if (props.type === "back-two") {
       return css`
         justify-content: space-between;
-      `
+      `;
     }
   }}
 `;
@@ -3523,12 +3531,12 @@ export const ChatBtn = styled.div`
         background-color: #19ce60;
         border: solid 3px #19ce60;
       `;
-    } else if(props.type === 'mytattoo'){
+    } else if (props.type === "mytattoo") {
       return css`
-      background-color: #2F55CD;
-      border: solid 3px #2F55CD;
-      margin-right: 21px;
-      `
+        background-color: #2f55cd;
+        border: solid 3px #2f55cd;
+        margin-right: 21px;
+      `;
     }
   }}
 `;
@@ -3637,86 +3645,86 @@ export const ExitChattingRoom = styled.div`
 `;
 
 export const ChattingMyTattooDiv = styled.div`
-// background-color: orange;
-height: calc(100% - 20px);
-width: calc(100% - 20px);
-padding: 10px;
-display: flex;
-flex-wrap: wrap;
-justify-content: flex-start;
-align-items: flex-start;
-align-content: flex-start;
-overflow-y: scroll;
-`
+  // background-color: orange;
+  height: calc(100% - 20px);
+  width: calc(100% - 20px);
+  padding: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  align-items: flex-start;
+  align-content: flex-start;
+  overflow-y: scroll;
+`;
 
 export const ChattingMyTattooImgDiv = styled.div`
-width: calc(809px / 4 - 22px);
-height: calc(809px / 4 - 22px);
-border-radius: 3px;
-margin: 10px;
-`
+  width: calc(809px / 4 - 22px);
+  height: calc(809px / 4 - 22px);
+  border-radius: 3px;
+  margin: 10px;
+`;
 
 export const ChattingMyTattooImg = styled.img`
-width: 100%;
-height: 100%;
-object-fit: cover;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 
-border-radius: 3px;
-border: 4px solid #646464;
-background-color: white;
-cursor: pointer;
+  border-radius: 3px;
+  border: 4px solid #646464;
+  background-color: white;
+  cursor: pointer;
 
-${(props) => {
-  if(props.type === 'click'){
-    return css`
-      border: 4px solid #f7ff00;
+  ${(props) => {
+    if (props.type === "click") {
+      return css`
+        border: 4px solid #f7ff00;
 
-      &:hover{
-        border-color: #f7ff00;
-      }
-    `
-  } else if(props.type === 'none'){
-    return css`
-      border: 4px solid #646464;
+        &:hover {
+          border-color: #f7ff00;
+        }
+      `;
+    } else if (props.type === "none") {
+      return css`
+        border: 4px solid #646464;
 
-      &:hover{
-        border-color: white;
-      }
-    `
-  }
-}}
-`
+        &:hover {
+          border-color: white;
+        }
+      `;
+    }
+  }}
+`;
 
 export const ChattingPlusMenuDiv = styled.div`
-border-radius: 10px;
-background-color: #E6EFCC;
-width: 220px;
-overflow: hidden;
+  border-radius: 10px;
+  background-color: #e6efcc;
+  width: 220px;
+  overflow: hidden;
 
-position: absolute;
-top: -80px;
-left: 22px;
-z-index: 20;
+  position: absolute;
+  top: -80px;
+  left: 22px;
+  z-index: 20;
 
-${(props) => {
-  if(props.type === 'tattooist'){
-    return css`
-      top: -35px;
-    `
-  } else if(props.type === ''){
-    return css`
-      display: none;
-    `
-  }
-}}
-`
+  ${(props) => {
+    if (props.type === "tattooist") {
+      return css`
+        top: -35px;
+      `;
+    } else if (props.type === "") {
+      return css`
+        display: none;
+      `;
+    }
+  }}
+`;
 export const ChattingPlusItem = styled.div`
-width: 100%;
-line-height: 45px;
-cursor: pointer;
-text-align: center;
+  width: 100%;
+  line-height: 45px;
+  cursor: pointer;
+  text-align: center;
 
-&:hover{
-  background-color: #C4D68E;
-}
-`
+  &:hover {
+    background-color: #c4d68e;
+  }
+`;

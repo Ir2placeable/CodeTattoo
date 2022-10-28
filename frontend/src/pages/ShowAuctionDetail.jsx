@@ -1,4 +1,4 @@
-import { ContentsDiv, HorizontalLine, ListDiv } from "../styledComponents";
+import { AuctionTagBox, ContentsDiv, HorizontalLine, ListDiv } from "../styledComponents";
 import AuctionDetail from "../components/templates/AuctionDetail";
 import useAuctionDetail from "../hooks/useAuctionDetail";
 import AuctionBidder from "../components/templates/AuctionBidder";
@@ -16,6 +16,7 @@ const ShowAuctionDetail = () => {
     genre: auction.genre,
     cost: auction.cost,
     bidder_count: auction.bidder_count,
+    finished: auction.finished,
   };
   const bidders = auction.bidders;
   
@@ -24,9 +25,10 @@ const ShowAuctionDetail = () => {
       {/* 경매 상세 */}
       <ContentsDiv>
         <ListDiv>
+          {auction.finished && <AuctionTagBox type="detail">낙찰된 경매입니다.</AuctionTagBox>}
           <AuctionDetail detail={detail} />
           <HorizontalLine />
-          <AuctionBidder bidders={bidders} auction_id={detail.auction_id} user_id={detail.creator}/>
+          <AuctionBidder bidders={bidders} auction_id={auction.auction_id} user_id={auction.creator} finished={auction.finished}/>
         </ListDiv>
       </ContentsDiv>
     </>

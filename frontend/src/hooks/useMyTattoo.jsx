@@ -1,5 +1,6 @@
 import axios from 'axios';
 import React from 'react';
+import { getCookie } from '../config/cookie';
 import { APIURL } from '../config/key';
 
 
@@ -18,7 +19,8 @@ const useMyTattoo = () => {
   
   const provideMyTattoo = async({ tattoo_id, reservation_id }) => {
     const res = await axios.post(`${APIURL}/my-tattoo/${tattoo_id}`, {
-      reservation_id
+      reservation_id: reservation_id,
+      token: getCookie("auth_token"),
     })
 
     if(res.data.success){

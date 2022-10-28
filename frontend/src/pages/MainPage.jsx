@@ -22,12 +22,9 @@ const MainPage = () => {
     const code = query.code
 
     if(location.pathname === '/' && code){
-      console.log('code: ', code)
-      setCookie('auth_code', code)
-
-      axios.get(`${PUSHURL}/test?code=${code}`)
+      axios.get(`${PUSHURL}/login/kakao?code=${code}`)
         .then((res) => {
-          console.log(res)
+          setCookie('auth_token', res.data.token)
           goDraftList()
         })
     }
