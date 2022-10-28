@@ -8,6 +8,7 @@ const useMyTattoo = () => {
     const res = await axios.get(`${APIURL}/my-tattoo/${user_id}`)
 
     if(res.data.success){
+      console.log(res.data)
       return res.data.tattoos
     } else {
       console.log('my-tattoo api fail')
@@ -21,6 +22,7 @@ const useMyTattoo = () => {
     })
 
     if(res.data.success){
+      console.log(res.data)
       return true;
     } else {
       console.log('provide my tattoo fail')

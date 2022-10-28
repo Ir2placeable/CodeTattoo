@@ -24,7 +24,7 @@ import { goTattooistDetail } from "../../../config/navigate";
 const SmallTattooist = ({ tattooist }) => {
   const tattooist_id = tattooist.drawer_id;
   // 팔로우 요청, 팔로우 취소 요청 API
-  const [follow, unfollow] = useFollowClick({ tattooist_id });
+  const [follow, unfollow] = useFollowClick();
   // 팔로잉 여부
   const [following, setFollowing] = useState(false);
 
@@ -38,10 +38,10 @@ const SmallTattooist = ({ tattooist }) => {
     } else {
       if (following) {
         setFollowing(false);
-        unfollow();
+        unfollow({ tattooist_id });
       } else {
         setFollowing(true);
-        follow();
+        follow({ tattooist_id });
       }
     }
   };
