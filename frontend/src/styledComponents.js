@@ -3404,16 +3404,29 @@ export const ChatContents = styled.div`
         padding: 15px;
       `;
     } else if (props.type === 'tattoo') {
-      return css`
-        cursor: pointer;
-        line-height: 55px;
-        padding: 5px 30px;
-        border: 5px solid #e8e9b2;
+      if(props.who === 'me'){
+        return css`
+          cursor: pointer;
+          line-height: 55px;
+          padding: 5px 30px;
+          border: 5px solid #e8e9b2;
 
-        &:hover{
-          border-color: white;
-        }
-      `
+          &:hover{
+            border-color: white;
+          }
+        `
+      } else if(props.who === 'you'){
+        return css`
+          cursor: pointer;
+          line-height: 55px;
+          padding: 5px 30px;
+          border: 5px solid white;
+
+          &:hover{
+            border-color: #e8e9b2;
+          }
+        `
+      }
     }
   }}
 `;
@@ -3754,9 +3767,11 @@ align-items: center;
 `
 
 export const MyTattooPopupBox = styled.div`
-width: 500px;
-height: 500px;
+// width: 500px;
 background-color: white;
+display: flex;
+flex-direction: column;
+align-items: center;
 `
 
 export const MyTattooPopupHeader = styled.div`
@@ -3778,3 +3793,61 @@ export const CircleXmarkStyle = {
   top: 'calc(25px/2)',
   height: '25px'
 }
+
+export const MyTattooPopupImg = styled.img`
+object-fit: contain;
+border-radius: 3px;
+width: 200px;
+height: 200px;
+margin: 10px 0 20px;
+background-color: #EAEAEA;
+border: 1px solid #EAEAEA;
+`
+
+export const MyTattooStatus = styled.div`
+width: calc(100% - 70px);
+font-size: 20px;
+font-weight: bold;
+margin-bottom: 10px;
+`
+
+export const MyTattooInfoDiv = styled.div`
+padding: 10px 20px;
+padding-left: 0;
+margin: 0 30px 30px;
+border-radius: 5px;
+${(props) => {
+  if(props.color === 'green'){
+    return css`
+      background-color: #CDE3BD;
+    `
+  } else if(props.color === 'blue'){
+    return css`
+      background-color: #BDD5E3;
+    `
+  }
+}}
+`
+
+export const MyTattoooInfoBig = styled.div`
+display: flex;
+`
+
+export const MyTattooInfoSmall = styled.div`
+display: flex;
+margin: 10px 0;
+`
+
+export const MyTattooLabel = styled.p`
+width: 100px;
+line-height: 35px;
+text-align: center;
+`
+
+export const MyTattooInfo = styled.div`
+width: 230px;
+line-height: 35px;
+background-color: #F1F1F1;
+border-radius: 3px;
+padding: 0 10px;
+`

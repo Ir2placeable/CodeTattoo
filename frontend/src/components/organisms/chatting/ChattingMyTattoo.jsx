@@ -26,7 +26,7 @@ const ChattingMyTattoo = () => {
   const ws = useContext(WebSocketContext)
 
   // { user_id }, { tattoo_id, reservation_id }
-  const [getMyTattoo, provideMyTattoo] = useMyTattoo()
+  const [getMyTattoo, ] = useMyTattoo()
   const [tattoos, setTattoos] = useState([])
   const [choices, setChoices] = useState([])
   const params = useParams();
@@ -36,9 +36,7 @@ const ChattingMyTattoo = () => {
     getMyTattoo({user_id})
       .then(res => {
         // [tattoos]: { tattoo_id, image }
-        console.log(res);
         setTattoos(res)
-        console.log(tattoos);
       })
   }, [])
 
@@ -82,28 +80,25 @@ const ChattingMyTattoo = () => {
     sendChat(body)
   }
 
-  const onSendMyTattoo = () => {
+  const onSendMyTattoo = async() => {
     if(choices.length === 0){
       alert('마이타투 이력을 선택해주세요!')
       return;
     }
-
-    // choices.forEach((choice) => {
-    //   provideMyTattoo({
-    //     tattoo_id: choice,
-    //     reservation_id: params.reservation_id
-    //   })
-    //     .then(res => {
-    //       if(!res){
-    //         alert('마이타투 이력 전송 실패')
-    //         return;
-    //       }
-    //     })
-    // })
     
     choices.forEach((tattoo_id) => {
       sendChatting(tattoo_id)
     })
+  }
+
+  const sendMyTattoo = () => {
+    onSendMyTattoo()
+      .then(() => {
+
+        setTimeout(() => {
+          goRoom();
+        }, 1000)
+      })
   }
 
   return (
@@ -129,7 +124,7 @@ const ChattingMyTattoo = () => {
           <ChatBtn type="image" style={{marginLeft: '21px'}} onClick={goRoom}>
             <FontAwesomeIcon icon={faMinus} />
           </ChatBtn>
-          <ChatBtn type="mytattoo" onClick={onSendMyTattoo}>
+          <ChatBtn type="mytattoo" onClick={sendMyTattoo}>
             나의 타투이력 제공
           </ChatBtn>
         </ChatInputDiv>
