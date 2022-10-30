@@ -4,9 +4,9 @@ import './util/fcm'
 import "./App.css";
 import { Reset } from "styled-reset";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Routes, Route } from "react-router-dom";
-import { MainPageDiv } from "./styledComponents";
+import { MainPageDiv, ToastAlarmBox } from "./styledComponents";
 import 'react-toastify/dist/ReactToastify.css';
 
 // Components
