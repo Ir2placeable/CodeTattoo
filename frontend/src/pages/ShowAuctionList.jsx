@@ -41,7 +41,7 @@ const ShowAuctionList = () => {
           setPage={setPage}
           pages={pages}
           setPages={setPages}
-          items={6}
+          items={12}
         />
       </ContentsDiv>
     </>
