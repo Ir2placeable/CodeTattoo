@@ -154,17 +154,6 @@ exports.userInfoEdit= async function(params, body) {
         if (!user) { throw 1 }
         if (err) { throw 23 }
     })
-
-    // 푸시 서버에 변경 요청
-    if (body['kakao_id']) {
-        const push_params = {
-            id : params.id,
-            kakao_id : body['kakao_id']
-        }
-
-        const push_success = await pushServer.requestModify('user', push_params)
-        if (!push_success) { throw 32 }
-    }
 }
 // 유저 이미지 변경
 exports.userImageEdit = async function(params, body) {
@@ -192,17 +181,6 @@ exports.tattooistInfoEdit= async function(params, body) {
         if (!tattooist) { throw 2 }
         if (err) { throw 23 }
     })
-
-    // 푸시 서버에 변경 요청
-    if (body['kakao_id']) {
-        const push_params = {
-            id : params.id,
-            kakao_id : body['kakao_id']
-        }
-
-        const push_success = await pushServer.requestModify('tattooist', push_params)
-        if (!push_success) { throw 32 }
-    }
 }
 // 타투이스트 이미지 변경
 exports.tattooistImageEdit = async function(params, body) {
@@ -477,6 +455,8 @@ exports.createReservation = async function(body) {
         tattooist_kakao : tattooist['kakao_id'],
         token : body.token
     }
+
+    console.log(body.token)
     const push_success = await pushServer.requestNotification(1, push_params)
     if (!push_success) { throw 32 }
 }
