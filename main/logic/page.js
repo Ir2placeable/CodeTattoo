@@ -143,7 +143,7 @@ exports.tattooist = async function(params, query) {
     if (params.filter === 'best') {
         tattooists = await Tattooist.find().sort({ follower : -1 }).skip(item_index_start).limit(Global.tattooistShowLimit)
     } else if (params.filter === 'all') {
-        tattooists = await Tattooist.find().skip(item_index_start).limit(Global.tattooistShowLimit);
+        tattooists = await Tattooist.find().sort({ _id : -1 }).skip(item_index_start).limit(Global.tattooistShowLimit);
     } else if (params.filter === 'search') {
         tattooists = await Tattooist.find({ nickname : {$regex : query.nickname }})
 
