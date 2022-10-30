@@ -77,6 +77,7 @@ const DraftDetail = () => {
         tattooist_id: tattooist.drawer_id,
         image: draft.image,
         cost: genre.cost,
+        token: getCookie("auth_token"),
       };
 
       createReservation({ data }).then(() => {
