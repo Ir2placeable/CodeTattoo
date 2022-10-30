@@ -108,6 +108,7 @@ const LoginInput = ({ isTattooist }) => {
 
     if(!id || !fcm){
       console.log('id 또는 fcm 누락')
+      console.log(id, fcm)
       return false;
     }
 
@@ -132,17 +133,16 @@ const LoginInput = ({ isTattooist }) => {
         .then((ret) => {
           if(ret[0]){
             const id = pushCookie(ret[1])
-            goDraftList();
           }
         })
         .then(() => {
-          fcmToken();
+           fcmToken() 
         })
         .then(() => {
           if(kakaoClick === 'click'){
             window.location.replace(KAKAOURL)
           } else {
-            window.location.reload();
+            goDraftList();
           }
         })
     }
