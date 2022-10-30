@@ -1,9 +1,6 @@
 import axios from "axios";
 import React, { useState } from "react";
-import {
-  getCookie,
-  setCookie,
-} from "../../config/cookie";
+import { getCookie, setCookie } from "../../config/cookie";
 import { APIURL } from "../../config/key";
 import {
   EditImgBox,
@@ -19,13 +16,13 @@ import { useNavigate } from "react-router-dom";
 import { goMyPage, goTattooistDetail } from "../../config/navigate";
 
 /**
- * 상위 컴포넌트 === ShowProfileEdit.jsx 
+ * 상위 컴포넌트 === ShowProfileEdit.jsx
  * 프로필 이미지 편집 템플릿
  */
 const ImageEdit = () => {
   // 로딩 여부
   const [loading, setLoading] = useState(false);
-  
+
   // 이미지 (base64 형식)
   const [src, setSrc] = useState(getCookie("profile_img_src"));
   const [image, setImage] = useState({
@@ -36,17 +33,24 @@ const ImageEdit = () => {
   // 이미지 파일 선택
   const onSelectFile = (e) => {
     if (e.target.files && e.target.files.length > 0) {
-      const reader = new FileReader();
+      const maxSize = 10 * 1024 * 1024;
+      const fileSize = e.target.files[0].size;
+      if (maxSize < fileSize) {
+        alert("첨부 이미지 사이즈는 10MB를 초과할 수 없습니다");
+        return false;
+      } else {
+        const reader = new FileReader();
 
-      // base64 형식으로 읽어오기
-      reader.readAsDataURL(e.target.files[0]);
+        // base64 형식으로 읽어오기
+        reader.readAsDataURL(e.target.files[0]);
 
-      reader.addEventListener("load", () => {
-        setSrc(reader.result);
-      });
+        reader.addEventListener("load", () => {
+          setSrc(reader.result);
+        });
+      }
     }
   };
-  
+
   // 이미지 파싱
   const onLoad = () => {
     const parsing = src.split(",");
@@ -73,18 +77,17 @@ const ImageEdit = () => {
       mime: image.mime,
     });
 
-    
     if (res.data.success) {
       setCookie("profile_img_src", res.data.image, { maxAge: 3000, path: "/" });
 
-      if(getCookie("user_id")) {
+      if (getCookie("user_id")) {
         goMyPage(getCookie("user_id"));
       } else {
         goTattooistDetail(getCookie("tattooist_id"));
       }
-      window.location.reload()
+      window.location.reload();
     } else if (res.data.code === 8) {
-      alert("이미지 크기 10MB 초과")
+      alert("이미지 크기 10MB 초과");
     } else {
       alert("이미지 등록에 실패했습니다.");
     }
@@ -92,10 +95,10 @@ const ImageEdit = () => {
   };
 
   const onSubmit = () => {
-    setLoading(true)
+    setLoading(true);
     setTimeout(() => {
       sendRequest();
-    }, 1000)
+    }, 1000);
   };
 
   if (loading) {

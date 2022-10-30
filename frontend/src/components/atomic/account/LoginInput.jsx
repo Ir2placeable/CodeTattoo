@@ -112,9 +112,7 @@ const LoginInput = ({ isTattooist }) => {
         .then(() => {
           if(kakaoClick === 'click'){
             window.location.replace(KAKAOURL)
-          } else {
-            window.location.reload();
-          }
+          } 
         })
     }
   }
