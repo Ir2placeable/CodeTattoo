@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { useRef } from 'react';
-import { APIURL, KAKAOURL } from '../../../config/key';
+import { APIURL, KAKAOURL, PUSHURL } from '../../../config/key';
 import axios from 'axios'
 import { 
   AccountInputDiv, AccountInputBox, 
-  AccountInput, AccountBtn, AccountOtherDiv, AccountOtherBtn, KaKaoLogo, KakaoCheckDiv, KakaoCheckCircle, KakaoLoginText
+  AccountInput, AccountBtn, AccountOtherDiv, 
+  AccountOtherBtn, KaKaoLogo, KakaoCheckDiv, KakaoCheckCircle, KakaoLoginText
 } from '../../../styledComponents';
-import { setCookie } from '../../../config/cookie';
-import { goDraftList, goLogin, goRegister } from '../../../config/navigate';
+import { getCookie, setCookie } from '../../../config/cookie';
+import { goDraftList, goRegister } from '../../../config/navigate';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheckCircle } from '@fortawesome/free-regular-svg-icons';
 
@@ -96,6 +97,33 @@ const LoginInput = ({ isTattooist }) => {
     }
   }
 
+  const fcmToken = async() => {
+    let id = getCookie('user_id');
+    if(!id){
+      id = getCookie('tattooist_id');
+    }
+    const fcm = getCookie('fcm')
+
+    console.log(id, fcm)
+
+    if(!id || !fcm){
+      console.log('id 또는 fcm 누락')
+      return false;
+    }
+
+    const res = await axios.post(`${PUSHURL}/fcm/token`, { 
+      id, fcm
+    })
+
+    if(res.data.success){
+      return true;
+    } else {
+      console.log('post fcm fail')
+      console.log(res)
+      return false;
+    }
+  }
+
   const onSubmit = () => {
     if(!email || !pwd){
       alert('모든 정보를 입력해주세요.')
@@ -104,10 +132,11 @@ const LoginInput = ({ isTattooist }) => {
         .then((ret) => {
           if(ret[0]){
             const id = pushCookie(ret[1])
-
-          } else {
-            window.location.reload();
+            goDraftList();
           }
+        })
+        .then(() => {
+          fcmToken();
         })
         .then(() => {
           if(kakaoClick === 'click'){

@@ -1,3 +1,5 @@
+import './util/fcm'
+
 // App.js 스타일
 import "./App.css";
 import { Reset } from "styled-reset";

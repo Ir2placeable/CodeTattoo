@@ -34,14 +34,21 @@ const BidderUpload = () => {
   // 이미지 파일 선택
   const onSelectFile = (e) => {
     if (e.target.files && e.target.files.length > 0) {
-      const reader = new FileReader();
+      const maxSize = 10 * 1024 * 1024;
+      const fileSize = e.target.files[0].size;
+      if (maxSize < fileSize) {
+        alert("첨부 이미지 사이즈는 10MB를 초과할 수 없습니다");
+        return false;
+      } else {
+        const reader = new FileReader();
 
-      // base64 형식으로 읽어오기
-      reader.readAsDataURL(e.target.files[0]);
+        // base64 형식으로 읽어오기
+        reader.readAsDataURL(e.target.files[0]);
 
-      reader.addEventListener("load", () => {
-        setSrc(reader.result);
-      });
+        reader.addEventListener("load", () => {
+          setSrc(reader.result);
+        });
+      }
     }
   };
 

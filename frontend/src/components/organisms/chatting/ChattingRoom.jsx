@@ -17,7 +17,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faImage, faPlus, faUser, faXmark } from "@fortawesome/free-solid-svg-icons";
 import { useContext } from "react";
 import { WebSocketContext } from "../../templates/Chatting";
-import { useEffect } from "react";
+import { useEffect, useCallback } from "react";
 import { useState } from "react";
 import { useRef } from "react";
 import useChatRecord from "../../../hooks/useChatRecord";
@@ -31,8 +31,7 @@ import moment from "moment";
 import { getCookie } from "../../../config/cookie";
 import { goChatting, goChattingMyTattoo, goChattingReserv, goTattooistDetail } from "../../../config/navigate";
 import ChattingPlusMenu from "../../atomic/chatting/ChattingPlusMenu";
-import axios from "axios";
-import MyTattooPopup from "./MyTattooPopup";
+import { useSelector } from 'react-redux';
 
 /**
  * 상위 컴포넌트 === Chatting.jsx
@@ -68,6 +67,12 @@ const ChattingRoom = () => {
     // 스크롤 길이 === scrollRef.current.scrollHeight
     scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
   });
+
+  // const scrollToBottom = () => {
+  //   if (scrollRef.current) {
+  //     scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
+  //   }
+  // };
 
   useEffect(() => {
     if (!ws.current) {
@@ -205,16 +210,24 @@ const ChattingRoom = () => {
   };
 
 
+  // 이미지 파일 선택
   const onSelectFile = (e) => {
     if (e.target.files && e.target.files.length > 0) {
-      const reader = new FileReader();
+      const maxSize = 10 * 1024 * 1024;
+      const fileSize = e.target.files[0].size;
+      if (maxSize < fileSize) {
+        alert("첨부 이미지 사이즈는 10MB를 초과할 수 없습니다");
+        return false;
+      } else {
+        const reader = new FileReader();
 
-      // base64 형식으로 읽어오기
-      reader.readAsDataURL(e.target.files[0]);
+        // base64 형식으로 읽어오기
+        reader.readAsDataURL(e.target.files[0]);
 
-      reader.addEventListener("load", () => {
-        setSrc(reader.result);
-      });
+        reader.addEventListener("load", () => {
+          setSrc(reader.result);
+        });
+      }
     }
   };
 
