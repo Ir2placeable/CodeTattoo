@@ -67,13 +67,7 @@ const ChattingRoom = () => {
     // 스크롤 길이 === scrollRef.current.scrollHeight
     scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
   });
-
-  // const scrollToBottom = () => {
-  //   if (scrollRef.current) {
-  //     scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
-  //   }
-  // };
-
+  
   useEffect(() => {
     if (!ws.current) {
       ws.current = new WebSocket(WEBSOCKETURL);
@@ -127,6 +121,8 @@ const ChattingRoom = () => {
         is_image: data.is_image,
         tattoo_id: data.tattoo_id
       };
+
+      console.log(temp)
 
       const prev = messages;
       prev.push(temp)

@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { getCookie } from '../config/cookie';
 import { APIURL } from '../config/key';
 
 
@@ -14,8 +15,11 @@ const useMyTattoo = () => {
     }
   }
   
-  const getMyTattooDetail = async({ tattoo_id }) => {
-    const res = await axios.post(`${APIURL}/my-tattoo/${tattoo_id}`, {})
+  const getMyTattooDetail = async({ tattoo_id, reservation_id }) => {
+    const res = await axios.post(`${APIURL}/my-tattoo/${tattoo_id}`, {
+      reservation_id, 
+      token: getCookie('auto_token')
+    })
 
     if(res.data.success){
       return res.data.history;
