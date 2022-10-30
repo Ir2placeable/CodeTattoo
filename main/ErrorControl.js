@@ -8,6 +8,7 @@ const errorTable = {
     5 : "tattoo_id 입력 오류",
     6 : "filter 입력 오류",
     7 : "auction_id 입력 오류",
+    8 : "이미지 크기 초과",
 
     10 : "탐색 결과 없음",
     11 : "검색 결과 없음",

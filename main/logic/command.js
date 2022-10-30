@@ -456,7 +456,6 @@ exports.createReservation = async function(body) {
         token : body.token
     }
 
-    console.log(body.token)
     const push_success = await pushServer.requestNotification(1, push_params)
     if (!push_success) { throw 32 }
 }
