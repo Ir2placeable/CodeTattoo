@@ -1,9 +1,3 @@
-<<<<<<< HEAD
-// importScripts('https://www.gstatic.com/firebasejs/9.13.0/firebase-app.js');
-// importScripts('https://www.gstatic.com/firebasejs/9.13.0/firebase-messaging.js');
-
-=======
->>>>>>> 59cd20b9ca504f4cbb9fdc9323fae08f1b230e1e
 importScripts('https://www.gstatic.com/firebasejs/9.13.0/firebase-app-compat.js');
 importScripts('https://www.gstatic.com/firebasejs/9.13.0/firebase-messaging-compat.js');
 
