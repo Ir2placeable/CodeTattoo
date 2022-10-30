@@ -2,12 +2,12 @@
 
 const variable = {
     draftShowLimit : 12,
-    tattooistShowLimit : 6,
+    tattooistShowLimit : 8,
     auctionShowLimit : 12,
     genres : [
         { filter : 'eyebrow', value : '눈썹문신'},
         { filter : 'scalp', value : '두피문신'},
-        { filter : 'coverup', value : '흉터커버'},
+        { filter : 'coverup', value : '커버업'},
         { filter : 'request', value : '도안요청'}
     ],
     blockchain_states : ["작업중지", "예약확정", "작업시작", "작업완료", "리터치", "커버업"]
