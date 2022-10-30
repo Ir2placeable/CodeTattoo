@@ -421,6 +421,7 @@ exports.finishAuction = async function(params, body) {
         tattooist_kakao : tattooist['kakao'],
         token : body.token
     }
+
     const push_success = await pushServer.requestNotification(32, push_params)
     if (!push_success) { throw 32 }
 
