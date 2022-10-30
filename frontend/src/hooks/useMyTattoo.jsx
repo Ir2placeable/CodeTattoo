@@ -1,6 +1,4 @@
 import axios from 'axios';
-import React from 'react';
-import { getCookie } from '../config/cookie';
 import { APIURL } from '../config/key';
 
 

@@ -39,10 +39,8 @@ const ErrorLogging = function(errCode) {
 let connections = 0
 server.use('/', (req, res, next) => {
     connections += 1
-    console.log('------------------ ', connections ,' -----------------------------')
-    console.log('url : ', req.url)
-    console.log('query : ', req.query)
-    console.log('body : ', req.body)
+    console.log("\n", "------------------", connections, "------------------")
+    console.log(req.url)
     next()
 })
 
