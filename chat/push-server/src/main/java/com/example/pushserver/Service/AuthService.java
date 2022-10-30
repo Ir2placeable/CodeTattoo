@@ -19,14 +19,6 @@ public class AuthService extends HttpCallService{
     private static final String AUTH_URL = "https://kauth.kakao.com/oauth/token";
 
     public static String authToken;
-    public static String client_id = "f5dd209f82ba7318a08eac96c8ae0515";
-    public static String redirect_url = "http://localhost:3030/test";
-//    public boolean getAuthCode() {
-//        HttpHeaders header = new HttpHeaders();
-//        MultiValueMap<String, String> parameters = new LinkedMultiValueMap<>();
-//
-//        header.set()
-//    }
 
     public boolean getKakaoAuthToken(String code)  {
         HttpHeaders header = new HttpHeaders();
@@ -39,7 +31,8 @@ public class AuthService extends HttpCallService{
         parameters.add("code", code);
         parameters.add("grant_type", "authorization_code");
         parameters.add("client_id", "f5dd209f82ba7318a08eac96c8ae0515");
-        parameters.add("redirect_url", "http://localhost:3030");
+//        parameters.add("redirect_url", "http://localhost:3030"); // distribute
+        parameters.add("redirect_url", "http://localhost:3030/test"); // dev
 
         HttpEntity<?> requestEntity = httpClientEntity(header, parameters);
 
@@ -49,6 +42,7 @@ public class AuthService extends HttpCallService{
         refrashToken = jsonData.get("refresh_token").toString();
         if(accessToken.isEmpty() || refrashToken.isEmpty()) {
             logger.debug("토큰발급에 실패했습니다.");
+            authToken = "";
             return false;
         }else {
             authToken = accessToken;

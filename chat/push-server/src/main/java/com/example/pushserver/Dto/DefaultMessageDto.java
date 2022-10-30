@@ -7,6 +7,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class DefaultMessageDto {
+    private String receiver_uuids;
     private String objType;
     private String text;
     private String webUrl;

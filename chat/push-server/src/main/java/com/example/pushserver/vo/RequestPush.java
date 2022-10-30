@@ -18,6 +18,10 @@ public class RequestPush {
 
     @NotNull(message="Tattooist_kakao cannot be null")
     private String tattooist_kakao;
+
+    private String token;
+
+    private int case_id;
 }
 
 
