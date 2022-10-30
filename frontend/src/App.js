@@ -54,9 +54,13 @@ import ShowAuctionDetail from "./pages/ShowAuctionDetail";
 import BidderUpload from "./components/templates/BidderUpload";
 import ChattingMyTattoo from "./components/organisms/chatting/ChattingMyTattoo";
 import { ToastContainer } from 'react-toastify';
-import { ToastAlarmBox } from './styledComponents';
+import { getFcmToken } from './util/fcm';
 
 const App = () => {
+  
+  useEffect(() => {
+    getFcmToken()
+  }, [])
 
   return (
     <div className="font-style">

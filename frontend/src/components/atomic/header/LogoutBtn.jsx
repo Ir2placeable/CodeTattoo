@@ -23,7 +23,7 @@ const LogoutBtn = () => {
     }
 
     setTimeout(() => {
-      goEntry();
+      window.location.replace('/')
     }, 1000);
   }, []);
 
