@@ -7,7 +7,7 @@ import {
   AccountInput, AccountBtn, AccountOtherDiv, AccountOtherBtn, KaKaoLogo, KakaoCheckDiv, KakaoCheckCircle, KakaoLoginText
 } from '../../../styledComponents';
 import { setCookie } from '../../../config/cookie';
-import { goDraftList, goRegister } from '../../../config/navigate';
+import { goDraftList, goLogin, goRegister } from '../../../config/navigate';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheckCircle } from '@fortawesome/free-regular-svg-icons';
 
@@ -106,14 +106,14 @@ const LoginInput = ({ isTattooist }) => {
             const id = pushCookie(ret[1])
 
           } else {
-            return;
+            window.location.reload();
           }
         })
         .then(() => {
           if(kakaoClick === 'click'){
             window.location.replace(KAKAOURL)
           } else {
-            goDraftList()
+            window.location.reload();
           }
         })
     }
