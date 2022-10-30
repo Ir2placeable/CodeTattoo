@@ -37,13 +37,11 @@ const ErrorLogging = function(errCode) {
 
 // 처리 횟수 카운팅
 let connections = 0
-server.use('/', (err, req, res, next) => {
-    if (err.message === 'request entity too large'){
-        res.send(ErrorLogging(8))
-    } else {
-        connections += 1
-        next()
-    }
+server.use('/', (req, res, next) => {
+    connections += 1
+    console.log("\n", "------------------", connections, "------------------")
+    console.log(req.url)
+    next()
 })
 
 // 페이지 모음
