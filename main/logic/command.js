@@ -411,18 +411,18 @@ exports.finishAuction = async function(params, body) {
     if (!chat_success) { throw 31 }
 
     // 알림 전송
-    const tattooist = await Tattooist.findOne({ _id : body.drawer_id })
-    if (!tattooist) { throw 2 }
-
-    const push_params = {
-        user_id : undefined,
-        user_kakao : undefined,
-        tattooist_id : tattooist['_id'],
-        tattooist_kakao : tattooist['kakao'],
-        token : body.token
-    }
-    const push_success = await pushServer.requestNotification(32, push_params)
-    if (!push_success) { throw 32 }
+    // const tattooist = await Tattooist.findOne({ _id : body.drawer_id })
+    // if (!tattooist) { throw 2 }
+    //
+    // const push_params = {
+    //     user_id : undefined,
+    //     user_kakao : undefined,
+    //     tattooist_id : tattooist['_id'],
+    //     tattooist_kakao : tattooist['kakao'],
+    //     token : body.token
+    // }
+    // const push_success = await pushServer.requestNotification(32, push_params)
+    // if (!push_success) { throw 32 }
 
     await Auction.updateOne({ _id : params.id }, {$set : { finished : true, winner : body.drawer_id }})
 }

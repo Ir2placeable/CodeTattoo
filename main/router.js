@@ -38,14 +38,10 @@ const ErrorLogging = function(errCode) {
 // 처리 횟수 카운팅
 let connections = 0
 server.use('/', (err, req, res, next) => {
-    if (err instanceof PayloadTooLargeError) {
+    if (err.message === 'request entity too large'){
         res.send(ErrorLogging(8))
     } else {
         connections += 1
-        console.log('------------------ ', connections, ' -----------------------------')
-        console.log('url : ', req.url)
-        console.log('query : ', req.query)
-        console.log('body : ', req.body)
         next()
     }
 })
