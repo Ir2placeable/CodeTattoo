@@ -1,6 +1,7 @@
 import { getMessaging, getToken, onMessage } from "firebase/messaging";
 import { initializeApp } from "firebase/app";
 import { getCookie, setCookie } from "../config/cookie";
+import { toast } from "react-toastify";
 // Get registration token. Initially this makes a network call, once retrieved
 // subsequent calls to getToken will return from cache.
 
@@ -41,8 +42,7 @@ getToken(messaging, { vapidKey: 'BMMqiq4owTHw6_efpo8kgqV8Z3WSd-7G0aXT28qQSrxcauo
 
 onMessage(messaging, (payload) => {
     console.log('Message received. ', payload);
-    // ...
-    alert(payload.data.topic)
+    toast.success(payload.data.topic);
 });
 
 

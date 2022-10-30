@@ -19,13 +19,12 @@ import { faGear } from "@fortawesome/free-solid-svg-icons";
 import useCreateReservation from "../../hooks/useCreateReservation";
 import { toast, ToastContainer } from "react-toastify";
 import { goChatting, goDraftEdit } from "../../config/navigate";
-import axios from "axios";
-import { PUSHURL } from "../../config/key";
 
 /**
  * 상위 컴포넌트 === ShowDraftDetail.jsx
  * 도안 상세 템플릿
  */
+
 const DraftDetail = () => {
   // 소유자 여부 확인
   const [isAdmin, setIsAdmin] = useState(false);
