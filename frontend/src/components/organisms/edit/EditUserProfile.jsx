@@ -17,9 +17,9 @@ import { goMyPage, goTattooistDetail } from "../../../config/navigate";
 const EditUserProfile = () => {
   // 프로필 데이터
   const [info, setInfo] = useState({
-    nickname: getCookie("nickname"),
-    location: getCookie("location"),
-    kakao_id: getCookie("kakao_id")
+    nickname: getCookie("nickname") === "undefined" ? "": getCookie("nickname"),
+    location: getCookie("profile_location") === "undefined" ? "": getCookie("profile_location"),
+    kakao_id: getCookie("kakao_id") === "undefined" ? "": getCookie("kakao_id")
   });
 
   const nicknameInput = useRef();
@@ -60,21 +60,17 @@ const EditUserProfile = () => {
   };
 
   const pushCookie = () => {
-    // removeCookie("nickname");
-    // removeCookie("location");
-    // removeCookie("kakao_id")
-
     setCookie("nickname", info.nickname, { maxAge: 3000, path: "/" });
     setCookie("location", info.location, { maxAge: 3000, path: "/" });
     setCookie("kakao_id", info.kakao_id)
   };
 
   const onSubmit = () => {
-    // if (nickname && location) {
-    //   sendRequest();
-    // } else {
-    //   alert("모든 정보를 입력해주세요");
-    // }
+    if (nickname && location) {
+      sendRequest();
+    } else {
+      alert("모든 정보를 입력해주세요");
+    }
     sendRequest()
   };
   return (

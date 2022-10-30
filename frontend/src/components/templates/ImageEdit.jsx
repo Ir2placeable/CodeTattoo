@@ -83,7 +83,8 @@ const ImageEdit = () => {
         goTattooistDetail(getCookie("tattooist_id"));
       }
       window.location.reload()
-
+    } else if (res.data.code === 8) {
+      alert("이미지 크기 10MB 초과")
     } else {
       alert("이미지 등록에 실패했습니다.");
     }

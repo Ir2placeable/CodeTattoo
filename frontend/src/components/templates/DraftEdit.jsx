@@ -2,6 +2,7 @@ import React from 'react';
 import { useState } from 'react';
 import { useOutletContext } from 'react-router-dom';
 import { goDraftList } from '../../config/navigate';
+import { genres } from '../../data';
 import useDraftEdit from '../../hooks/useDraftEdit';
 import { 
   DraftEditDiv, ImgInfoDiv, LoadedImgDescDiv, 
@@ -105,7 +106,7 @@ const DraftEdit = () => {
           />
 
           <div style={{ display: "flex" }}>
-            <DropDown input={genre} setInput={setGenre} />
+            <DropDown input={genre} setInput={setGenre} items={genres} />
             <DropTags tags={keywords} setTags={setKewords} />
           </div>
         </LoadedImgDescDiv>

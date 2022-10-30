@@ -10,6 +10,8 @@ import {
 } from "../../../styledComponents";
 import ProfileImgChoice from "../../atomic/edit/ProfileImgChoice";
 
+
+// 삭제 
 const EditImg = () => {
   const [src, setSrc] = useState(null);
   const [image, setImage] = useState({
@@ -59,8 +61,12 @@ const EditImg = () => {
     if (res.data.success) {
       console.log("프로필 이미지 등록 성공");
       window.location.replace("/edit/profile");
+    } else if (res.data.code === 8) {
+      console.log("이미지 크기 10MB 초과")
+      window.location.replace("/edit/profile");
     } else {
       console.log("프로필 이미지 등록 실패");
+      window.location.replace("/edit/profile");
     }
   };
 
