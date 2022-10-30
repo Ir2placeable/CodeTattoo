@@ -154,17 +154,6 @@ exports.userInfoEdit= async function(params, body) {
         if (!user) { throw 1 }
         if (err) { throw 23 }
     })
-
-    // 푸시 서버에 변경 요청
-    if (body['kakao_id']) {
-        const push_params = {
-            id : params.id,
-            kakao_id : body['kakao_id']
-        }
-
-        const push_success = await pushServer.requestModify('user', push_params)
-        if (!push_success) { throw 32 }
-    }
 }
 // 유저 이미지 변경
 exports.userImageEdit = async function(params, body) {
@@ -192,17 +181,6 @@ exports.tattooistInfoEdit= async function(params, body) {
         if (!tattooist) { throw 2 }
         if (err) { throw 23 }
     })
-
-    // 푸시 서버에 변경 요청
-    if (body['kakao_id']) {
-        const push_params = {
-            id : params.id,
-            kakao_id : body['kakao_id']
-        }
-
-        const push_success = await pushServer.requestModify('tattooist', push_params)
-        if (!push_success) { throw 32 }
-    }
 }
 // 타투이스트 이미지 변경
 exports.tattooistImageEdit = async function(params, body) {
@@ -399,15 +377,15 @@ exports.bidAuction = async function(params, body) {
     const tattooist = await Tattooist.findOne({ _id : body['tattooist_id'] })
     if (!tattooist) { throw 2 }
 
-    const push_params = {
-        user_id : user['_id'],
-        user_kakao : user['kakao_id'],
-        tattooist_id : tattooist['_id'],
-        tattooist_kakao : tattooist['kakao_id'],
-        token : body.token
-    }
-    const push_success = await pushServer.requestNotification('30', push_params)
-    if (!push_success) { throw 32 }
+    // const push_params = {
+    //     user_id : user['_id'],
+    //     user_kakao : user['kakao_id'],
+    //     tattooist_id : tattooist['_id'],
+    //     tattooist_kakao : tattooist['kakao_id'],
+    //     token : body.token
+    // }
+    // const push_success = await pushServer.requestNotification('30', push_params)
+    // if (!push_success) { throw 32 }
 }
 // 경매 낙찰
 exports.finishAuction = async function(params, body) {
@@ -433,18 +411,18 @@ exports.finishAuction = async function(params, body) {
     if (!chat_success) { throw 31 }
 
     // 알림 전송
-    const tattooist = await Tattooist.findOne({ _id : body.drawer_id })
-    if (!tattooist) { throw 2 }
-
-    const push_params = {
-        user_id : undefined,
-        user_kakao : undefined,
-        tattooist_id : tattooist['_id'],
-        tattooist_kakao : tattooist['kakao'],
-        token : body.token
-    }
-    const push_success = await pushServer.requestNotification(32, push_params)
-    if (!push_success) { throw 32 }
+    // const tattooist = await Tattooist.findOne({ _id : body.drawer_id })
+    // if (!tattooist) { throw 2 }
+    //
+    // const push_params = {
+    //     user_id : undefined,
+    //     user_kakao : undefined,
+    //     tattooist_id : tattooist['_id'],
+    //     tattooist_kakao : tattooist['kakao'],
+    //     token : body.token
+    // }
+    // const push_success = await pushServer.requestNotification(32, push_params)
+    // if (!push_success) { throw 32 }
 
     await Auction.updateOne({ _id : params.id }, {$set : { finished : true, winner : body.drawer_id }})
 }
@@ -470,15 +448,16 @@ exports.createReservation = async function(body) {
     const tattooist = await Tattooist.findOne({ _id : body.tattooist_id })
     if (!tattooist) { throw 2 }
 
-    const push_params = {
-        user_id : user['_id'],
-        user_kakao : user['kakao_id'],
-        tattooist_id : tattooist['_id'],
-        tattooist_kakao : tattooist['kakao_id'],
-        token : body.token
-    }
-    const push_success = await pushServer.requestNotification(1, push_params)
-    if (!push_success) { throw 32 }
+    // const push_params = {
+    //     user_id : user['_id'],
+    //     user_kakao : user['kakao_id'],
+    //     tattooist_id : tattooist['_id'],
+    //     tattooist_kakao : tattooist['kakao_id'],
+    //     token : body.token
+    // }
+    //
+    // const push_success = await pushServer.requestNotification(1, push_params)
+    // if (!push_success) { throw 32 }
 }
 // 예약 정보 수정 : date, time_slot, cost 수정 Only
 exports.editReservation= async function(params, body) {
@@ -512,15 +491,15 @@ exports.confirmReservation= async function(params, body) {
     const tattooist = await Tattooist.findOne({ _id : reservation['tattooist_id'] })
     if (!tattooist) { throw 2 }
 
-    const push_params = {
-        user_id : user['_id'],
-        user_kakao : user['kakao_id'],
-        tattooist_id : tattooist['_id'],
-        tattooist_kakao : tattooist['kakao_id'],
-        token : body.token
-    }
-    const push_success = await pushServer.requestNotification(2, push_params)
-    if (!push_success) { throw 32 }
+    // const push_params = {
+    //     user_id : user['_id'],
+    //     user_kakao : user['kakao_id'],
+    //     tattooist_id : tattooist['_id'],
+    //     tattooist_kakao : tattooist['kakao_id'],
+    //     token : body.token
+    // }
+    // const push_success = await pushServer.requestNotification(2, push_params)
+    // if (!push_success) { throw 32 }
 }
 // 예약 거절
 exports.rejectReservation= async function(params, body) {
@@ -548,15 +527,15 @@ exports.rejectReservation= async function(params, body) {
     const tattooist = await Tattooist.findOne({ _id : body.tattooist_id })
     if (!tattooist) { throw 2 }
 
-    const push_params = {
-        user_id : user['_id'],
-        user_kakao : user['kakao_id'],
-        tattooist_id : tattooist['_id'],
-        tattooist_kakao : tattooist['kakao_id'],
-        token : body.token
-    }
-    const push_success = await pushServer.requestNotification(3, push_params)
-    if (!push_success) { throw 32 }
+    // const push_params = {
+    //     user_id : user['_id'],
+    //     user_kakao : user['kakao_id'],
+    //     tattooist_id : tattooist['_id'],
+    //     tattooist_kakao : tattooist['kakao_id'],
+    //     token : body.token
+    // }
+    // const push_success = await pushServer.requestNotification(3, push_params)
+    // if (!push_success) { throw 32 }
 }
 
 // 타투 작업 시작
@@ -595,15 +574,15 @@ exports.beginProcedure = async function(params, body) {
     await User.updateOne({ _id : body.user_id }, {$push : { tattoos : new_tattoo['_id'] }})
 
     // 알림 전송
-    const push_params = {
-        user_id : user['_id'],
-        user_kakao : user['kakao_id'],
-        tattooist_id : tattooist['_id'],
-        tattooist_kakao : tattooist['kakao_id'],
-        token : body.token
-    }
-    const push_success = await pushServer.requestNotification(20, push_params)
-    if (!push_success) { throw 32 }
+    // const push_params = {
+    //     user_id : user['_id'],
+    //     user_kakao : user['kakao_id'],
+    //     tattooist_id : tattooist['_id'],
+    //     tattooist_kakao : tattooist['kakao_id'],
+    //     token : body.token
+    // }
+    // const push_success = await pushServer.requestNotification(20, push_params)
+    // if (!push_success) { throw 32 }
 }
 // 타투 작업 완료
 exports.finishProcedure = async function(params, body) {
@@ -637,15 +616,15 @@ exports.finishProcedure = async function(params, body) {
     const user = await User.findOne({ _id : reservation['customer_id'] })
     if (!user) { throw 1 }
 
-    const push_params = {
-        user_id : user['_id'],
-        user_kakao : user['kakao_id'],
-        tattooist_id : tattooist['_id'],
-        tattooist_kakao : tattooist['kakao_id'],
-        token : body.token
-    }
-    const push_success = await pushServer.requestNotification(21, push_params)
-    if (!push_success) { throw 32 }
+    // const push_params = {
+    //     user_id : user['_id'],
+    //     user_kakao : user['kakao_id'],
+    //     tattooist_id : tattooist['_id'],
+    //     tattooist_kakao : tattooist['kakao_id'],
+    //     token : body.token
+    // }
+    // const push_success = await pushServer.requestNotification(21, push_params)
+    // if (!push_success) { throw 32 }
 }
 // 마이타투 이력 조회
 exports.myTattooInfo = async function(params) {

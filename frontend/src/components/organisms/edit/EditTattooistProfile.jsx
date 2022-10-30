@@ -22,11 +22,11 @@ const EditTattooistProfile = () => {
 
   // 프로필 데이터
   const [info, setInfo] = useState({
-    nickname: getCookie("nickname"),
-    location: getCookie("profile_location"),
-    specialize: getCookie("profile_specialize"),
-    description: getCookie("profile_desc"),
-    kakao_id: getCookie("kakao_id")
+    nickname: getCookie("nickname") === "undefined" ? "": getCookie("nickname"), 
+    location: getCookie("profile_location") === "undefined" ? "": getCookie("profile_location"),
+    specialize: getCookie("profile_specialize") === "undefined" ? "": getCookie("profile_specialize"),
+    description: getCookie("profile_desc") === "undefined" ? "": getCookie("profile_desc"),
+    kakao_id: getCookie("kakao_id") === "undefined" ? "": getCookie("kakao_id")
   });
 
   const nicknameInput = useRef();
@@ -72,12 +72,6 @@ const EditTattooistProfile = () => {
   };
 
   const pushCookie = () => {
-    // removeCookie("nickname");
-    // removeCookie("profile_location");
-    // removeCookie("profile_specialize");
-    // removeCookie("profile_des");
-    // removeCookie("kakao_id")
-
     setCookie("nickname", info.nickname, { maxAge: 3000, path: "/" });
     setCookie("profile_location", info.location, { maxAge: 3000, path: "/" });
     setCookie("profile_specialize", info.specialize, { maxAge: 3000, path: "/", });
@@ -86,11 +80,11 @@ const EditTattooistProfile = () => {
   };
 
   const onSubmit = () => {
-    // if (nickname && location && specialize && description) {
-    //   sendRequest();
-    // } else {
-    //   alert("모든 정보를 입력해주세요");
-    // }
+    if (nickname && location && specialize && description) {
+      sendRequest();
+    } else {
+      alert("모든 정보를 입력해주세요");
+    }
     sendRequest();
   };
   return (

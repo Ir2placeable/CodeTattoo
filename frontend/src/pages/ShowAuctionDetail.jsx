@@ -25,7 +25,6 @@ const ShowAuctionDetail = () => {
       {/* 경매 상세 */}
       <ContentsDiv>
         <ListDiv>
-          {auction.finished && <AuctionTagBox type="detail">낙찰된 경매입니다.</AuctionTagBox>}
           <AuctionDetail detail={detail} />
           <HorizontalLine />
           <AuctionBidder bidders={bidders} auction_id={auction.auction_id} user_id={auction.creator} finished={auction.finished}/>

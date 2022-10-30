@@ -19,8 +19,8 @@ import { useEffect } from "react";
  * @param {Array} bidders 응찰자 리스트
  * @param {String} auction_id 경매 ID
  * @param {String} user_id 유저 ID
- * @param {Boolean} finished 낙찰 종결 유무 
-*/
+ * @param {Boolean} finished 낙찰 종결 유무
+ */
 
 const AuctionBidder = ({ bidders, auction_id, user_id, finished }) => {
   const [checkedInputs, setCheckedInputs] = useState([]);
@@ -44,8 +44,7 @@ const AuctionBidder = ({ bidders, auction_id, user_id, finished }) => {
     }
   };
 
-  useEffect(() => {
-  }, [checkedInputs]);
+  useEffect(() => {}, [checkedInputs]);
 
   return (
     <>
@@ -63,7 +62,7 @@ const AuctionBidder = ({ bidders, auction_id, user_id, finished }) => {
         {bidders &&
           bidders.map((bidder) => (
             <BidderContainer key={bidder.drawer_id}>
-              {getCookie("user_id") === user_id && (
+              {getCookie("user_id") === user_id && finished === false && (
                 <BidderCheckBox
                   type="checkbox"
                   onClick={(e) => {

@@ -4,7 +4,8 @@ import { APIURL, KAKAOURL, PUSHURL } from '../../../config/key';
 import axios from 'axios'
 import { 
   AccountInputDiv, AccountInputBox, 
-  AccountInput, AccountBtn, AccountOtherDiv, AccountOtherBtn, KaKaoLogo, KakaoCheckDiv, KakaoCheckCircle, KakaoLoginText
+  AccountInput, AccountBtn, AccountOtherDiv, 
+  AccountOtherBtn, KaKaoLogo, KakaoCheckDiv, KakaoCheckCircle, KakaoLoginText
 } from '../../../styledComponents';
 import { getCookie, setCookie } from '../../../config/cookie';
 import { goDraftList, goRegister } from '../../../config/navigate';
@@ -132,7 +133,7 @@ const LoginInput = ({ isTattooist }) => {
           if(ret[0]){
             const id = pushCookie(ret[1])
           } else {
-            return;
+            window.location.reload();
           }
         })
         .then(() => {
