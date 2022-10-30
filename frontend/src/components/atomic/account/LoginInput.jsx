@@ -132,6 +132,7 @@ const LoginInput = ({ isTattooist }) => {
         .then((ret) => {
           if(ret[0]){
             const id = pushCookie(ret[1])
+            goDraftList();
           }
         })
         .then(() => {
