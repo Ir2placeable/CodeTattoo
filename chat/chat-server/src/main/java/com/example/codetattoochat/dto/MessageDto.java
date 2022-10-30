@@ -18,6 +18,7 @@ public class MessageDto {
     private String createdAt; // 메시지 일자
     private String reservation_id; // 예약 id
     private Boolean is_image; // 이미지/텍스트 여부
+    private String tattoo_id;
     @Builder
     public MessageDto(
             Long id,
@@ -26,7 +27,8 @@ public class MessageDto {
             String content,
             String createdAt,
             String reservation_id,
-            Boolean is_image
+            Boolean is_image,
+            String tattoo_id
     ) {
         this.id = id;
         this.sender = sender;
@@ -35,5 +37,6 @@ public class MessageDto {
         this.createdAt = createdAt;
         this.reservation_id = reservation_id;
         this.is_image = is_image;
+        this.tattoo_id = tattoo_id;
     }
 }

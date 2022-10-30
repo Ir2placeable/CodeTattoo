@@ -67,6 +67,18 @@ public class ChatController {
         return info;
     }
 
+    @PostMapping("/chat/my-tattoo")
+    public ResponseEntity test(@RequestBody RequestSend vo) {
+        log.info("test");
+        Gson gson = new Gson();
+        JsonObject temp = new JsonObject();
+        HttpHeaders responseHeaders = new HttpHeaders();
+        responseHeaders.add("Content-Type", "application/json; charset=UTF-8");
+        temp.addProperty("success", true);
+        return new ResponseEntity<>(gson.toJson(temp), responseHeaders,HttpStatus.OK);
+    }
+
+
     // 메시지 저장
     @PostMapping("/chat/send")
     public ResponseEntity send(@RequestBody RequestSend vo) {
@@ -94,6 +106,7 @@ public class ChatController {
                     .createdAt(vo.getCreated_at())
                     .reservation_id(vo.getReservation_id())
                     .is_image(vo.getIs_image())
+                    .tattoo_id(vo.getTattoo_id())
                     .build();
             String result = messageService.send(messageDto).getContent();
             if (result != null) {
@@ -112,6 +125,7 @@ public class ChatController {
                     .createdAt(vo.getCreated_at())
                     .reservation_id(vo.getReservation_id())
                     .is_image(vo.getIs_image())
+                    .tattoo_id(vo.getTattoo_id())
                     .build();
             if (messageService.send(messageDto).getReceiver() != null) {
                 temp.addProperty("success", true);
@@ -134,7 +148,7 @@ public class ChatController {
         JsonObject temp = new JsonObject();
         HttpHeaders responseHeaders = new HttpHeaders();
         responseHeaders.add("Content-Type", "application/json; charset=UTF-8");
-
+        System.out.println(vo);
         MessageDto messageDto = MessageDto.builder()
                 .sender(vo.getUser_id())
                 .receiver(vo.getTattooist_id())
@@ -406,6 +420,7 @@ public class ChatController {
             vtmp.addProperty("mine", mine);
             vtmp.addProperty("receiver", e.getReceiver());
             vtmp.addProperty("is_image", e.getIs_image());
+            vtmp.addProperty("tattoo_id", e.getTattoo_id());
             jArray.add(vtmp);
         }
         temp.addProperty("success", "true");

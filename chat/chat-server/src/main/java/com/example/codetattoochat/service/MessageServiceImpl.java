@@ -34,6 +34,7 @@ public class MessageServiceImpl implements MessageService {
                 .created_At(dto.getCreatedAt())
                 .reservation_id(dto.getReservation_id())
                 .is_image(dto.getIs_image())
+                .tattoo_id(dto.getTattoo_id())
                 .build();
 
         log.info("Message is {}", messageEntity);
@@ -46,6 +47,7 @@ public class MessageServiceImpl implements MessageService {
                 .content(dto.getContent())
                 .reservation_id(dto.getReservation_id())
                 .is_image(dto.getIs_image())
+                .tattoo_id(dto.getTattoo_id())
                 .build();
     }
 
@@ -88,7 +90,8 @@ public class MessageServiceImpl implements MessageService {
                     .receiver(String.valueOf(message[1]))
                     .content(String.valueOf(message[2]))
                     .createdAt(String.valueOf(message[3]))
-                            .reservation_id(String.valueOf(message[4]))
+                    .reservation_id(String.valueOf(message[4]))
+                    .is_image((Boolean) message[5])
                     .build());
         });
 
@@ -102,7 +105,7 @@ public class MessageServiceImpl implements MessageService {
         log.info("Message Service's Service Layer :: Call getMessageList Method!");
         Iterable<MessageEntity> messageList = messageRepository.findMessageList(reservation_id);
         List<MessageDto> messages = new ArrayList<>();
-
+        System.out.println(messageList);
         messageList.forEach(message -> {
             messages.add(MessageDto.builder()
                     .id(message.getId())
@@ -111,7 +114,8 @@ public class MessageServiceImpl implements MessageService {
                     .content(message.getContent())
                     .createdAt(message.getCreated_At())
                     .reservation_id(message.getReservation_id())
-                            .is_image(message.getIs_image())
+                    .is_image(message.getIs_image())
+                            .tattoo_id(message.getTattoo_id())
                     .build());
         });
 
