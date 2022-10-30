@@ -18,7 +18,7 @@ const useMyTattoo = () => {
   const getMyTattooDetail = async({ tattoo_id, reservation_id }) => {
     const res = await axios.post(`${APIURL}/my-tattoo/${tattoo_id}`, {
       reservation_id, 
-      token: getCookie('auto_token')
+      token: getCookie('auth_token')
     })
 
     if(res.data.success){

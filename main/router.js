@@ -622,7 +622,7 @@ server.get('/my-tattoo/:id', (req, res) => {
 server.post('/my-tattoo/:id', (req, res) => {
     console.log('command : my tattoo Detail')
 
-    command.myTattooSend(req.params)
+    command.myTattooSend(req.params, req.body)
         .then((returned) => {
             res.send({ success : true, history : returned })
         })
