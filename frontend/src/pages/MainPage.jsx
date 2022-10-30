@@ -29,7 +29,7 @@ const MainPage = () => {
         })
     }
   }, [])
-
+  
   return (
     <>
 

@@ -53,6 +53,8 @@ import AuctionUpload from "./components/templates/AuctionUpload";
 import ShowAuctionDetail from "./pages/ShowAuctionDetail";
 import BidderUpload from "./components/templates/BidderUpload";
 import ChattingMyTattoo from "./components/organisms/chatting/ChattingMyTattoo";
+import { ToastContainer } from 'react-toastify';
+import { ToastAlarmBox } from './styledComponents';
 
 const App = () => {
 
@@ -65,6 +67,9 @@ const App = () => {
       
       {/* Main Container */}    
       <MainPageDiv id="scroll">
+      <ToastAlarmBox>
+        <ToastContainer position="top-right" autoClose="1500" closeOnClick />
+      </ToastAlarmBox>
         <Routes>
           {/* Main page */}
           <Route path="/" element={<MainPage />}>
