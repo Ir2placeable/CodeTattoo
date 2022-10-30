@@ -18,6 +18,7 @@ import { useContext } from 'react';
 import { WebSocketContext } from '../../templates/Chatting';
 import moment from 'moment';
 import useSendChat from '../../../hooks/useSendChat';
+import { WEBSOCKETURL } from '../../../config/key';
 
 const ChattingMyTattoo = () => {
   // 채팅 정보
@@ -39,7 +40,6 @@ const ChattingMyTattoo = () => {
         setTattoos(res)
       })
   }, [])
-
   
   const onClick = (e, tattoo_id) => {
     let temp = choices;
@@ -94,7 +94,6 @@ const ChattingMyTattoo = () => {
   const sendMyTattoo = () => {
     onSendMyTattoo()
       .then(() => {
-
         setTimeout(() => {
           goRoom();
         }, 1000)

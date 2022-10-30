@@ -17,7 +17,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faImage, faPlus, faUser, faXmark } from "@fortawesome/free-solid-svg-icons";
 import { useContext } from "react";
 import { WebSocketContext } from "../../templates/Chatting";
-import { useEffect } from "react";
+import { useEffect, useCallback } from "react";
 import { useState } from "react";
 import { useRef } from "react";
 import useChatRecord from "../../../hooks/useChatRecord";
@@ -31,8 +31,7 @@ import moment from "moment";
 import { getCookie } from "../../../config/cookie";
 import { goChatting, goChattingMyTattoo, goChattingReserv, goTattooistDetail } from "../../../config/navigate";
 import ChattingPlusMenu from "../../atomic/chatting/ChattingPlusMenu";
-import axios from "axios";
-import MyTattooPopup from "./MyTattooPopup";
+import { useSelector } from 'react-redux';
 
 /**
  * 상위 컴포넌트 === Chatting.jsx
@@ -68,6 +67,12 @@ const ChattingRoom = () => {
     // 스크롤 길이 === scrollRef.current.scrollHeight
     scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
   });
+
+  // const scrollToBottom = () => {
+  //   if (scrollRef.current) {
+  //     scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
+  //   }
+  // };
 
   useEffect(() => {
     if (!ws.current) {
