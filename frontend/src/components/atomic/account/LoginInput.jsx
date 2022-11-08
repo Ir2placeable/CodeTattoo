@@ -18,8 +18,6 @@ import { faCheckCircle } from '@fortawesome/free-regular-svg-icons';
  * @param {boolean} isTattooist 유저/ 타투이스트 회원가입 구분 
  */
 const LoginInput = ({ isTattooist }) => {
-  // 카카오톡 푸시 설정 클릭
-  const [kakaoClick, setKakaoClick] = useState('none')
   // 로그인 데이터
   const [info, setInfo] = useState({
     email: '',
@@ -62,7 +60,6 @@ const LoginInput = ({ isTattooist }) => {
       setCookie("profile_desc", data.tattooist_info.description , {maxAge: 3000, path: '/'})
       setCookie("profile_location", data.tattooist_info.location , {maxAge: 3000, path: '/'})
       setCookie("profile_specialize", data.tattooist_info.specialize , {maxAge: 3000, path: '/'})
-      setCookie("kakao_id", data.tattooist_info.kakao_id)
       return data.tattooist_info.tattooist_id
     } else {
       setCookie("email", data.user_info.email , {maxAge: 3000, path: '/'})
@@ -70,7 +67,6 @@ const LoginInput = ({ isTattooist }) => {
       setCookie("user_id", data.user_info.user_id, {maxAge: 3000, path: '/'})
       setCookie("profile_img_src", data.user_info.image , {maxAge: 3000, path: '/'})
       setCookie("profile_location", data.user_info.location , {maxAge: 3000, path: '/'})
-      setCookie("kakao_id", data.user_info.kakao_id)
       return data.user_info.user_id
     }
   }
@@ -105,23 +101,9 @@ const LoginInput = ({ isTattooist }) => {
         .then((ret) => {
           if(ret[0]){
             const id = pushCookie(ret[1])
-          }
-        })
-        .then(() => {
-          if(kakaoClick === 'click'){
-            window.location.replace(KAKAOURL)
-          } else {
             goDraftList();
           }
         })
-    }
-  }
-
-  const onKakao = () => {
-    if(kakaoClick === 'none'){
-      setKakaoClick('click')
-    } else if(kakaoClick === 'click'){
-      setKakaoClick('none')
     }
   }
 
@@ -156,20 +138,6 @@ const LoginInput = ({ isTattooist }) => {
         </AccountInputBox>
 
       </AccountInputDiv>
-
-      <KakaoCheckDiv>
-        <KakaoCheckCircle onClick={onKakao} type={kakaoClick}>
-          <FontAwesomeIcon icon={faCheckCircle} />
-        </KakaoCheckCircle>
-
-        <KakaoLoginText >
-          카카오 로그인하고 푸쉬알림 받기
-          <KaKaoLogo src="../../img/kakao.png" 
-            style={{marginLeft: '5px'}}
-          />
-        </KakaoLoginText>
-        
-      </KakaoCheckDiv>
 
       <AccountBtn onClick={onSubmit}>
         {isTattooist ? (
