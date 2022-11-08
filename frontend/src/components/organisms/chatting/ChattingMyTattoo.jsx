@@ -76,7 +76,7 @@ const ChattingMyTattoo = () => {
       is_image: false,
       tattoo_id
     }
-
+    ws.current.send(JSON.stringify(body))
     sendChat(body)
   }
 
