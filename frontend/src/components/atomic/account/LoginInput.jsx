@@ -97,34 +97,6 @@ const LoginInput = ({ isTattooist }) => {
     }
   }
 
-  const fcmToken = async() => {
-    let id = getCookie('user_id');
-    if(!id){
-      id = getCookie('tattooist_id');
-    }
-    const fcm = getCookie('fcm')
-
-    console.log(id, fcm)
-
-    if(!id || !fcm){
-      console.log('id 또는 fcm 누락')
-      console.log(id, fcm)
-      return false;
-    }
-
-    const res = await axios.post(`${PUSHURL}/fcm/token`, { 
-      id, fcm
-    })
-
-    if(res.data.success){
-      return true;
-    } else {
-      console.log('post fcm fail')
-      console.log(res)
-      return false;
-    }
-  }
-
   const onSubmit = () => {
     if(!email || !pwd){
       alert('모든 정보를 입력해주세요.')
@@ -134,9 +106,6 @@ const LoginInput = ({ isTattooist }) => {
           if(ret[0]){
             const id = pushCookie(ret[1])
           }
-        })
-        .then(() => {
-           fcmToken() 
         })
         .then(() => {
           if(kakaoClick === 'click'){

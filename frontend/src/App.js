@@ -1,5 +1,3 @@
-import './util/fcm'
-
 // App.js 스타일
 import "./App.css";
 import { Reset } from "styled-reset";
@@ -54,13 +52,8 @@ import ShowAuctionDetail from "./pages/ShowAuctionDetail";
 import BidderUpload from "./components/templates/BidderUpload";
 import ChattingMyTattoo from "./components/organisms/chatting/ChattingMyTattoo";
 import { ToastContainer } from 'react-toastify';
-import { getFcmToken } from './util/fcm';
 
 const App = () => {
-  
-  useEffect(() => {
-    getFcmToken()
-  }, [])
 
   return (
     <div className="font-style">
