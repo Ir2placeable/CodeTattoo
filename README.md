@@ -9,3 +9,7 @@ This project has been officially submitted in [2022 Open SW Development Contest]
 ### [🌐 Prototype](http://www.codetattoo.shop)
 
 ### [🚀 About Project](https://code-tattoos-organization.gitbook.io/undefined/)
+
+### [📺 Introduction Video](https://youtu.be/JRE0ox7yvAM)
+
+### [📌 Demonstration Video](https://youtu.be/-PfPyhEekXo)
