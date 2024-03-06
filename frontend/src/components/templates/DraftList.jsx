@@ -3,6 +3,7 @@ import useDraftList from "../../hooks/useDraftList";
 import { ListDiv, EmptyBox, DraftMainBox } from "../../styledComponents";
 import Draft from "../organisms/draft/Draft";
 import { useOutletContext } from "react-router-dom";
+import drafts from "../../dummy/drafts";
 
 /**
  * 상위 컴포넌트 === ShowDraftList.jsx
@@ -14,10 +15,10 @@ const DraftList = ({ filter }) => {
   const { page } = useOutletContext();
 
   // 도안 목록 데이터
-  const drafts = useDraftList({
-    filter: filter,
-    page: page,
-  });
+  // const drafts = useDraftList({
+  //   filter: filter,
+  //   page: page,
+  // });
 
   return (
     <>
