@@ -1,0 +1,15 @@
+export default {
+  draft_id: "draft1",
+  image: `${process.env.PUBLIC_URL}/img/drafts/draft1.jpeg`,
+  title: "도안1",
+  like: 10,
+  isScraped: false,
+  drawer_id: "drawer1",
+  drawer_image: null,
+  drawer_nickname: "타투이스트1",
+  drawer_location: "서울",
+  isFollowed: false,
+  genre: "블랙",
+  keywords: ["꽃", "동물"],
+  cost: 50000,
+};
