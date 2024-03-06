@@ -14,7 +14,12 @@ import {
   ChattingRoomDiv,
 } from "../../../styledComponents";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faImage, faPlus, faUser, faXmark } from "@fortawesome/free-solid-svg-icons";
+import {
+  faImage,
+  faPlus,
+  faUser,
+  faXmark,
+} from "@fortawesome/free-solid-svg-icons";
 import { useContext } from "react";
 import { WebSocketContext } from "../../templates/Chatting";
 import { useEffect, useCallback } from "react";
@@ -29,17 +34,23 @@ import { faArrowRightFromBracket } from "@fortawesome/free-solid-svg-icons";
 import { WEBSOCKETURL, PUSHURL } from "../../../config/key";
 import moment from "moment";
 import { getCookie } from "../../../config/cookie";
-import { goChatting, goChattingMyTattoo, goChattingReserv, goTattooistDetail } from "../../../config/navigate";
+import {
+  goChatting,
+  goChattingMyTattoo,
+  goChattingReserv,
+  goTattooistDetail,
+} from "../../../config/navigate";
 import ChattingPlusMenu from "../../atomic/chatting/ChattingPlusMenu";
-import { useSelector } from 'react-redux';
+import { useSelector } from "react-redux";
+import { data, messages } from "../../../dummy/chat";
 
 /**
  * 상위 컴포넌트 === Chatting.jsx
  * 채팅 페이지 / 채팅 방
  */
 const ChattingRoom = () => {
-  // 채팅 정보 
-  const { data } = useOutletContext();
+  // 채팅 정보
+  // const { data } = useOutletContext();
   // 전역 웹소켓 변수
   const ws = useContext(WebSocketContext);
   // 전송할 채팅 텍스트 상태
@@ -48,11 +59,11 @@ const ChattingRoom = () => {
   const [src, setSrc] = useState(null);
   // 선택된 사진 base64 상태
   const [img, setImg] = useState({
-    image: '',
-    mime: ''
-  })
+    image: "",
+    mime: "",
+  });
   // 플러스 버튼 클릭 상태
-  const [plusClick, setPlusClick] = useState(false)
+  const [plusClick, setPlusClick] = useState(false);
 
   const params = useParams();
   // 현재 로그인된 유저의 id
@@ -67,7 +78,7 @@ const ChattingRoom = () => {
     // 스크롤 길이 === scrollRef.current.scrollHeight
     scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
   });
-  
+
   useEffect(() => {
     if (!ws.current) {
       ws.current = new WebSocket(WEBSOCKETURL);
@@ -94,52 +105,51 @@ const ChattingRoom = () => {
   }, []);
 
   // 채팅 내역 받아오는 api
-  const message = useChatRecord({
-    subject_id: subject_id,
-    reservation_id: reservation_id,
-  });
-  
-  // 채팅 내역 & 실시간 채팅 내용을 저장할 상태 배열
-  const [messages, setMessages] = useState([]);
+  // const message = useChatRecord({
+  //   subject_id: subject_id,
+  //   reservation_id: reservation_id,
+  // });
 
-  useEffect(() => {
-    setMessages(message);
-  }, [message, messages]);
+  // // 채팅 내역 & 실시간 채팅 내용을 저장할 상태 배열
+  // const [messages, setMessages] = useState([]);
 
-  if(ws.current){
-    ws.current.onmessage = (e) => {
-      const data = JSON.parse(e.data);
+  // useEffect(() => {
+  //   setMessages(message);
+  // }, [message, messages]);
 
-      console.log(data)
+  // if(ws.current){
+  //   ws.current.onmessage = (e) => {
+  //     const data = JSON.parse(e.data);
 
-      const temp = {
-        id: new Date().getTime(),
-        content: data.content,
-        created_at: data.created_at,
-        mine: false,
-        receiver: data.sender,
-        is_image: data.is_image,
-        tattoo_id: data.tattoo_id
-      };
+  //     console.log(data)
 
-      console.log(temp)
+  //     const temp = {
+  //       id: new Date().getTime(),
+  //       content: data.content,
+  //       created_at: data.created_at,
+  //       mine: false,
+  //       receiver: data.sender,
+  //       is_image: data.is_image,
+  //       tattoo_id: data.tattoo_id
+  //     };
 
-      const prev = messages;
-      prev.push(temp)
-      setMessages([...prev]);
-    };
-  }
+  //     console.log(temp)
+
+  //     const prev = messages;
+  //     prev.push(temp)
+  //     setMessages([...prev]);
+  //   };
+  // }
 
   // 채팅 전송 API
-  const sendChat = useSendChat()
+  const sendChat = useSendChat();
   const onSend = () => {
-
-    if(!content && (!src || !img.image || !img.mime)){
-      console.log('no content')
+    if (!content && (!src || !img.image || !img.mime)) {
+      console.log("no content");
       return;
     }
 
-    const now = moment().format('YYYY년 MM월 DD일 HH:mm:ss')
+    const now = moment().format("YYYY년 MM월 DD일 HH:mm:ss");
     const body = {
       sender: subject_id,
       receiver: data.opponent_id,
@@ -148,13 +158,13 @@ const ChattingRoom = () => {
       created_at: now,
       enter_room: false,
       is_image: false,
-      tattoo_id: ''
+      tattoo_id: "",
     };
 
-    if(!body.content) {
+    if (!body.content) {
       body.image = img.image;
       body.mime = img.mime;
-      body.is_image = true
+      body.is_image = true;
     }
 
     const wsBody = {
@@ -165,8 +175,8 @@ const ChattingRoom = () => {
       created_at: body.created_at,
       is_image: body.is_image,
       enter_room: false,
-      tattoo_id: ''
-    }
+      tattoo_id: "",
+    };
 
     const temp = {
       id: new Date().getTime(),
@@ -174,29 +184,28 @@ const ChattingRoom = () => {
       content: body.content,
       created_at: body.created_at,
       receiver: body.receiver,
-      is_image: body.is_image
+      is_image: body.is_image,
     };
 
-    sendChat(body)
-      .then((res) => {
-        if(body.is_image){
-          wsBody.content = res;
-          wsBody.is_image = true;
-          temp.content = res;
-        }
-        ws.current.send(JSON.stringify(wsBody));
+    sendChat(body).then((res) => {
+      if (body.is_image) {
+        wsBody.content = res;
+        wsBody.is_image = true;
+        temp.content = res;
+      }
+      ws.current.send(JSON.stringify(wsBody));
 
-        setContent("");
-        setSrc("");
-        setImg({
-          image: '',
-          mime: ""
-        })
-    
-        const prev = messages;
-        prev.push(temp)
-        setMessages([...prev]);
-      })
+      setContent("");
+      setSrc("");
+      setImg({
+        image: "",
+        mime: "",
+      });
+
+      const prev = messages;
+      prev.push(temp);
+      // setMessages([...prev]);
+    });
   };
 
   const onKeyUp = (e) => {
@@ -204,7 +213,6 @@ const ChattingRoom = () => {
       onSend();
     }
   };
-
 
   // 이미지 파일 선택
   const onSelectFile = (e) => {
@@ -237,86 +245,91 @@ const ChattingRoom = () => {
       image: _data,
       mime: _mime,
     });
-  }
-  
+  };
+
   const goExit = () => {
     goChatting(subject_id);
-  }
+  };
 
   const goTattooisMyPage = () => {
-    if(getCookie('user_id')){
+    if (getCookie("user_id")) {
       goTattooistDetail(data.opponent_id);
     }
-  }
+  };
 
   return (
     <>
-    {/* <MyTattooPopup /> */}
+      {/* <MyTattooPopup /> */}
 
-    <ChattingRoomDiv>
-      <ChattingRoomHeader>
-        {data.opponent_image !== "undefined" ? (
-          <ChattingImg src={data.opponent_image} onClick={goTattooisMyPage} />
-        ) : (
-          <ProfileImgIcon size="chat" onClick={goTattooisMyPage} >
-            <FontAwesomeIcon style={{ fontSize: "35px" }} icon={faUser} />
-          </ProfileImgIcon>
-        )}
+      <ChattingRoomDiv>
+        <ChattingRoomHeader>
+          {data.opponent_image !== "undefined" ? (
+            <ChattingImg src={data.opponent_image} onClick={goTattooisMyPage} />
+          ) : (
+            <ProfileImgIcon size="chat" onClick={goTattooisMyPage}>
+              <FontAwesomeIcon style={{ fontSize: "35px" }} icon={faUser} />
+            </ProfileImgIcon>
+          )}
 
-        <ChattingText size="main">{data.opponent_nickname}</ChattingText>
+          <ChattingText size="main">{data.opponent_nickname}</ChattingText>
 
-        <ExitChattingRoom onClick={goExit}>
-          <FontAwesomeIcon icon={faArrowRightFromBracket} />
-        </ExitChattingRoom>
-      </ChattingRoomHeader>
+          <ExitChattingRoom onClick={goExit}>
+            <FontAwesomeIcon icon={faArrowRightFromBracket} />
+          </ExitChattingRoom>
+        </ChattingRoomHeader>
 
-      <ChatBigDiv id="chat" ref={scrollRef}>
-        {messages.length !== 0 &&
-          messages.map((item) => <ChattingMessage key={item.id} item={item} />)}
-      </ChatBigDiv>
+        <ChatBigDiv id="chat" ref={scrollRef}>
+          {messages.length !== 0 &&
+            messages.map((item) => (
+              <ChattingMessage key={item.id} item={item} />
+            ))}
+        </ChatBigDiv>
 
+        <ChatInputDiv>
+          {src && (
+            <ChatChoosedImgDiv>
+              <ChatChoosedImg src={src} onLoad={onLoad} />
 
-      <ChatInputDiv>
-        {src && (
-          <ChatChoosedImgDiv>
-            <ChatChoosedImg src={src} onLoad={onLoad} />
+              <ChatDeleteImgIcon onClick={() => setSrc("")}>
+                <FontAwesomeIcon icon={faXmark} />
+              </ChatDeleteImgIcon>
+            </ChatChoosedImgDiv>
+          )}
 
-            <ChatDeleteImgIcon onClick={() => setSrc('')}>
-              <FontAwesomeIcon icon={faXmark} />
-            </ChatDeleteImgIcon>
-          </ChatChoosedImgDiv>
-        )}
+          {/* onClick={goReservation} */}
+          <ChatBtn
+            type="image"
+            onClick={() => setPlusClick(plusClick ? false : true)}
+          >
+            <FontAwesomeIcon icon={faPlus} />
+          </ChatBtn>
 
-        {/* onClick={goReservation} */}
-        <ChatBtn type="image" 
-          onClick={() => setPlusClick(plusClick ? false : true)}
-        >
-          <FontAwesomeIcon icon={faPlus} />
-        </ChatBtn>
+          {plusClick && (
+            <ChattingPlusMenu
+              id={params.id}
+              reserv_id={params.reservation_id}
+            />
+          )}
 
-        {plusClick && (
-          <ChattingPlusMenu id={params.id} reserv_id={params.reservation_id} />
-        )}
+          <ChattingImgChoice onSelectFile={onSelectFile} />
 
-        <ChattingImgChoice onSelectFile={onSelectFile} />
+          <ChatInput
+            type="text"
+            name="content"
+            value={content}
+            onChange={(e) => {
+              setContent(e.target.value);
+            }}
+            ref={contentInput}
+            onKeyUp={onKeyUp}
+            disabled={src ? true : false}
+          />
 
-        <ChatInput
-          type="text"
-          name="content"
-          value={content}
-          onChange={(e) => {
-            setContent(e.target.value);
-          }}
-          ref={contentInput}
-          onKeyUp={onKeyUp}
-          disabled={src ? true : false}
-        />
-
-        <ChatBtn type="submit" onClick={onSend}>
-          전송
-        </ChatBtn>
-      </ChatInputDiv>
-    </ChattingRoomDiv>
+          <ChatBtn type="submit" onClick={onSend}>
+            전송
+          </ChatBtn>
+        </ChatInputDiv>
+      </ChattingRoomDiv>
     </>
   );
 };

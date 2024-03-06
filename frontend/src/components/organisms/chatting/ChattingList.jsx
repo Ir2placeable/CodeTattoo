@@ -2,6 +2,7 @@ import React from "react";
 import useChatUserList from "../../../hooks/useChatUserList";
 import { ChattingListDiv, ChattingEmptyBox } from "../../../styledComponents";
 import ChattingItem from "../../atomic/chatting/ChattingItem";
+import chatList from "../../../dummy/chatList";
 
 /**
  * 상위 컴포넌트 === Chatting.jsx
@@ -11,7 +12,7 @@ import ChattingItem from "../../atomic/chatting/ChattingItem";
 
 const ChattingList = ({ onClick }) => {
   // get chatting list api
-  const chatList = useChatUserList();
+  // const chatList = useChatUserList();
   // const chatList = []
 
   return (
@@ -23,7 +24,7 @@ const ChattingList = ({ onClick }) => {
       ) : (
         <ChattingListDiv>
           {chatList.map((item) => (
-            <ChattingItem  key={item.createdAt} item={item} onClick={onClick} />
+            <ChattingItem key={item.createdAt} item={item} onClick={onClick} />
           ))}
         </ChattingListDiv>
       )}
