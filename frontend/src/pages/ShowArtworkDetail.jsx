@@ -8,22 +8,22 @@ import {
 import useArtworkDetail from "../hooks/useArtworkDetail";
 import ArtworkDetail from "../components/organisms/artwork/ArtworkDetail";
 import ArtworkState from "../components/organisms/artwork/ArtworkState";
-
+import { info, tattoo, image } from "../dummy/artwork";
 
 /* 작업물 상세 페이지 */
 const ShowArtworkDetail = () => {
-  const sendRequest = useArtworkDetail();
-  const [info, setInfo] = useState({});
-  const [tattoo, setTattoo] = useState([]);
-  const [image, setImage] = useState("");
-  
-  useEffect(() => {
-    sendRequest().then((ret) => {
-      setInfo(ret[0]);
-      setTattoo(ret[1]);
-      setImage(ret[2]);
-    });
-  }, []);
+  // const sendRequest = useArtworkDetail();
+  // const [info, setInfo] = useState({});
+  // const [tattoo, setTattoo] = useState([]);
+  // const [image, setImage] = useState("");
+
+  // useEffect(() => {
+  //   sendRequest().then((ret) => {
+  //     setInfo(ret[0]);
+  //     setTattoo(ret[1]);
+  //     setImage(ret[2]);
+  //   });
+  // }, []);
 
   return (
     <>
@@ -31,10 +31,10 @@ const ShowArtworkDetail = () => {
         <ListDiv>
           <ArtworkDetailMainBox>
             {/* 작업물 상세 정보 */}
-          <ArtworkDetail artwork={info} image={image} />
+            <ArtworkDetail artwork={info} image={image} />
             <HorizontalLine />
             {/* 작업물 상세 State */}
-            <ArtworkState tattoo={tattoo} image={image}/>
+            <ArtworkState tattoo={tattoo} image={image} />
           </ArtworkDetailMainBox>
         </ListDiv>
       </ContentsDiv>
