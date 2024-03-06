@@ -6,6 +6,7 @@ import {
 } from "../../styledComponents";
 import Auction from "../organisms/auction/Auction";
 import useAuctionList from "../../hooks/useAuctionList";
+import auctions from "../../dummy/auctions";
 
 /**
  * 상위 컴포넌트 === ShowAuctionList.jsx
@@ -18,11 +19,10 @@ const AuctionList = ({ filter }) => {
   const { page } = useOutletContext();
 
   // 경매 목록 데이터
-
-  const auctions = useAuctionList({
-    filter: filter,
-    page: page,
-  });
+  // const auctions = useAuctionList({
+  //   filter: filter,
+  //   page: page,
+  // });
 
   return (
     <>
