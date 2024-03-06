@@ -11,6 +11,7 @@ import TattooistControlBox from "../organisms/tattooist/TattooistControlBox";
 import { useOutletContext } from "react-router-dom";
 import { getCookie } from "../../config/cookie";
 import useTattooistList from "../../hooks/useTattooistList";
+import tattooists from "../../dummy/tattooists";
 
 /**
  * 상위 컴포넌트 === ShowTattooistList.jsx
@@ -23,11 +24,11 @@ const TattooistList = ({ filter }) => {
   const { page } = useOutletContext();
 
   // 타투이스트 목록 데이터
-  const tattooists = useTattooistList({
-    filter: filter, 
-    page: page,
-  });
-  
+  // const tattooists = useTattooistList({
+  //   filter: filter,
+  //   page: page,
+  // });
+
   return (
     <>
       <ListDiv>
@@ -50,7 +51,7 @@ const TattooistList = ({ filter }) => {
                   ) : (
                     <>
                       <Tattooist tattooist={tattooist} />
-                      <TattooistControlBox 
+                      <TattooistControlBox
                         type={"tattooist"}
                         id={tattooist.tattooist_id}
                         isFollowed={tattooist.isFollowed}
