@@ -1,14 +1,12 @@
-import moment from 'moment';
-import React, { memo } from 'react';
-import { useEffect } from 'react';
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { getCookie } from '../../../config/cookie';
-import { goChattingRoom } from '../../../config/navigate';
-import { 
-  ReservDiv, ReservBtnDiv, ReservBtn, 
-} from '../../../styledComponents';
-import ReservationInfo from './ReservationInfo';
+import moment from "moment";
+import React, { memo } from "react";
+import { useEffect } from "react";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { getCookie } from "../../../config/cookie";
+import { goChattingRoom } from "../../../config/navigate";
+import { ReservDiv, ReservBtnDiv, ReservBtn } from "../../../styledComponents";
+import ReservationInfo from "./ReservationInfo";
 
 /** 상위 컴포넌트 === ReservationList.jsx
  * 예약/작업 페이지 / 예약 카드 컴포넌트
@@ -16,46 +14,45 @@ import ReservationInfo from './ReservationInfo';
  */
 const Reservation = memo(({ data }) => {
   // 날짜
-  const [date, setDate] = useState('미확정');
+  const [date, setDate] = useState("미확정");
   // 가격
-  const [cost, setCost] = useState('미확정');
+  const [cost, setCost] = useState("미확정");
 
   useEffect(() => {
-    if(data.date && data.time_slot){
-      const _date = "20" + String(data.date);
-      let tmp = moment(_date).format('YYYY년 MM월 DD일 ')
+    // if(data.date && data.time_slot){
+    //   const _date = "20" + String(data.date);
+    //   let tmp = moment(_date).format('YYYY년 MM월 DD일 ')
 
-      const t = String(data.time_slot).substring(0, 2)
-      const m = String(data.time_slot).substring(2)
-      
-      tmp += t + ':' + m
+    //   const t = String(data.time_slot).substring(0, 2)
+    //   const m = String(data.time_slot).substring(2)
 
-      setDate(tmp);
-    }
+    //   tmp += t + ':' + m
 
-    if(data.cost){
-      const tmp = String(data.cost) + ' won';
-      setCost(tmp)
+    //   setDate(tmp);
+    // }
+
+    if (data.cost) {
+      const tmp = String(data.cost) + " won";
+      setCost(tmp);
     }
   }, []);
 
   const navigate = useNavigate();
 
   const goChatting = () => {
-    goChattingRoom(getCookie("tattooist_id"),data.reservation_id);
-  }
-  
+    goChattingRoom(getCookie("tattooist_id"), data.reservation_id);
+  };
+
   const onClick = (e) => {
     navigate(`/reservation/${data.reservation_id}`, {
-      state: data
-    })
-  }
+      state: data,
+    });
+  };
 
   return (
     <>
       <ReservDiv>
-
-        <ReservationInfo 
+        <ReservationInfo
           image={data.image}
           nickname={data.customer_nickname}
           date={date}
@@ -65,21 +62,14 @@ const Reservation = memo(({ data }) => {
         />
 
         <ReservBtnDiv>
-
           <ReservBtn type="small" onClick={goChatting}>
             채팅 이동
           </ReservBtn>
 
           <ReservBtn type="big" onClick={onClick}>
-            {data.confirmed ? (
-              <>작업 페이지</>
-            ) : (
-              <>예약 세부</>
-            )}
+            {data.confirmed ? <>작업 페이지</> : <>예약 세부</>}
           </ReservBtn>
-
         </ReservBtnDiv>
-
       </ReservDiv>
     </>
   );
